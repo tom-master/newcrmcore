@@ -81,7 +81,7 @@ namespace NewCrmCore.Application.Services
 				Name = s.Name, 
 				AccountFace = ProfileManager.FileUrl + s.AccountFace,     
 				IsDisable = s.IsDisable
-			}).ToList();   
+			}).ToList();    
 			 
 			return result;c 
 		}
