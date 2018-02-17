@@ -72,7 +72,7 @@ namespace NewCrmCore.Application.Services
 		{
 			new Parameter().Validate(accountName).Validate(accountType); 
 			 
-			var result = await _accountContext.GetAccountsAsync(accountName, accountType, pageIndex, pageSize);
+			var result = await _accountContext.GetAccountsAsync(accountName, accountType, pageIndex, pageSize); 
 
 			result.Models.Select(s => new AccountDto
 			{ 
