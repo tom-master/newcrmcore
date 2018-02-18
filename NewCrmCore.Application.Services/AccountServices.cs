@@ -75,7 +75,7 @@ namespace NewCrmCore.Application.Services
 			var result = await _accountContext.GetAccountsAsync(accountName, accountType, pageIndex, pageSize);
 
 			result.Models.Select(s => new AccountDto
-			{
+			{ 
 				Id = s.Id,   
 				IsAdmin = s.IsAdmin,
 				Name = s.Name,
