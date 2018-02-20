@@ -91,7 +91,7 @@ namespace NewCrmCore.Application.Services
 			new Parameter().Validate(accountId);
 			  
 			var account = await CacheHelper.GetCache(new AccountCacheKey(accountId), () => _accountContext.GetAccountAsync(accountId));
-			if (account == null)
+			if (account == null) 
 			{
 				throw new BusinessException("该用户可能已被禁用或被删除，请联系管理员");
 			}
