@@ -83,7 +83,7 @@ namespace NewCrmCore.Application.Services
 				IsDisable = s.IsDisable
 			}).ToList();  
 
-			return result;
+			return result;c
 		}
 		 
 		public async Task<AccountDto> GetAccountAsync(Int32 accountId)
