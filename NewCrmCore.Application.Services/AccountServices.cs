@@ -70,7 +70,7 @@ namespace NewCrmCore.Application.Services
 
 		public async Task<PagingModel<AccountDto>> GetAccountsAsync(String accountName, String accountType, Int32 pageIndex, Int32 pageSize)
 		{
-			new Parameter().Validate(accountName).Validate(accountType);
+			new Parameter().Validate(accountName).Validate(accountType); 
 			 
 			var result = await _accountContext.GetAccountsAsync(accountName, accountType, pageIndex, pageSize);
 
