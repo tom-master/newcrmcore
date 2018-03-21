@@ -85,7 +85,7 @@ namespace NewCrmCore.Application.Services
 
 			return result;
 		}
-
+		 
 		public async Task<AccountDto> GetAccountAsync(Int32 accountId)
 		{  
 			new Parameter().Validate(accountId);
