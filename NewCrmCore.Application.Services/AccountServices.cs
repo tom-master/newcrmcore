@@ -79,7 +79,7 @@ namespace NewCrmCore.Application.Services
 				Id = s.Id,  
 				IsAdmin = s.IsAdmin,
 				Name = s.Name,
-				AccountFace = ProfileManager.FileUrl + s.AccountFace,  
+				AccountFace = ProfileManager.FileUrl + s.AccountFace,   
 				IsDisable = s.IsDisable
 			}).ToList();  
 
