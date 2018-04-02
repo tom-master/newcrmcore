@@ -79,7 +79,7 @@ namespace NewCrmCore.Application.Services
 				Id = s.Id,
 				IsAdmin = s.IsAdmin,
 				Name = s.Name,
-				AccountFace = ProfileManager.FileUrl + s.AccountFace,
+				AccountFace = ProfileManager.FileUrl + s.AccountFace,  
 				IsDisable = s.IsDisable
 			}).ToList();  
 
@@ -87,7 +87,7 @@ namespace NewCrmCore.Application.Services
 		}
 
 		public async Task<AccountDto> GetAccountAsync(Int32 accountId)
-		{
+		{  
 			new Parameter().Validate(accountId);
 			  
 			var account = await CacheHelper.GetCache(new AccountCacheKey(accountId), () => _accountContext.GetAccountAsync(accountId));
