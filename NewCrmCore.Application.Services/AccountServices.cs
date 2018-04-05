@@ -76,7 +76,7 @@ namespace NewCrmCore.Application.Services
 
 			result.Models.Select(s => new AccountDto
 			{
-				Id = s.Id,
+				Id = s.Id,  
 				IsAdmin = s.IsAdmin,
 				Name = s.Name,
 				AccountFace = ProfileManager.FileUrl + s.AccountFace,  
