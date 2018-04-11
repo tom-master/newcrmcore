@@ -1,0 +1,207 @@
+﻿@using NewCRM.Dto
+@{
+    Layout = "~/Views/Shared/_LayoutApps.cshtml";
+
+    var accountResult = ViewData["Account"] as AccountDto;
+    var roles = ViewData["Roles"] as List<RoleDto>;
+    if (accountResult == null)
+    {
+        accountResult = new AccountDto();
+    }
+}
+
+<form action="/AccountManager/NewAccount" method="post" name="form" id="form">
+    <input type="hidden" name="id" value="@Request["accountId"]">
+    <div class="creatbox">
+        <div class="middle">
+            <p class="detile-title">
+                <strong>编辑用户</strong>
+            </p>
+            <div class="input-label">
+                <label class="label-text">用户名：</label>
+                <div class="label-box form-inline control-group">
+                    @{
+                        if (accountResult.Name == null)
+                        {
+                            <text>
+                                <input type="text" name="val_accountname" datatype="s4-12" ajaxurl="@Url.Action("CheckAccountNameExist","AccountManager")" nullmsg="请输入用户名" errormsg="用户名长度为4-12个字符">
+                            </text>
+                        }
+                        else
+                        {
+                            <text>
+                                <input type="text" readonly="readonly" name="val_accountname" datatype="s4-12" value="@accountResult.Name">
+                            </text>
+                        }
+                    }
+                    <span class="help-inline"></span>
+                </div>
+            </div>
+            <div class="input-label">
+                <label class="label-text">用户密码：</label>
+                <div class="label-box form-inline control-group">
+
+                    @{
+                        if (accountResult.Password == null)
+                        {
+                            <text>
+                                <input type="password" name="val_password" datatype="*" id="pwd" nullmsg="请输入用户密码" />
+                                <span class="help-inline"></span>
+                            </text>
+                        }
+                        else
+                        {
+                            <text>
+                                <input type="password" name="val_password" id="pwd">
+                                <span class="help-inline">[如果无需修改则不填]</span>
+                            </text>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="input-label">
+                <label class="label-text">用户类型：</label>
+                <div class="label-box form-inline">
+                    <label class="radio" style="margin-right: 10px">
+                        <input type="radio" name="val_type" value="1" @{ if (accountResult.IsAdmin) { <text> checked="checked" </text>  } }>用户
+                    </label>
+
+                    <label class="radio" style="margin-right: 10px">
+                        <input type="radio" name="val_type" value="2" @{ if (accountResult.IsAdmin) { <text> checked="checked" </text>  } }>管理员
+                    </label>
+                </div>
+            </div>
+            <div class="input-label input-label-permission @{
+                if (!accountResult.IsAdmin)
+                {
+                                                                   <text> hide </text>
+                }
+                else
+                {
+                                                                   <text> show </text>
+                }
+                                                           }">
+                <label class="label-text">用户角色：</label>
+                <div class="label-box form-inline">
+                    @{
+                        foreach (var item in roles)
+                        {
+                            if (accountResult.Roles != null && accountResult.Roles.Any(role => role.Id == item.Id))
+                            {
+                                <label class="checkbox" style="margin-right: 10px">
+                                    <input type="checkbox" onclick="javascript: selectorpower();" name="val_permission_id" id="@item.Id" ch checked="checked">
+                                    @item.Name
+                                </label>
+                                <input type="hidden" name="val_roleIds" id="roleIds" value="@String.Join(",",accountResult.Roles.Select(s=>s.Id).Intersect(roles.Select(a=>a.Id)))" />
+                            }
+                            else
+                            {
+                                <label class="checkbox" style="margin-right: 10px">
+                                    <input type="checkbox" onclick="javascript: selectorPower();" name="val_permission_id" id="@item.Id">
+                                    @item.Name
+                                </label>
+                                <input type="hidden" name="val_roleIds" id="roleIds" value="" />
+                            }
+                        }
+                    }
+                    <span class="help-inline"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-bar">
+        <div class="con">
+            <a class="btn btn-primary fr" id="btn-submit" href="javascript:;"><i class="icon-white icon-ok"></i> 确定</a>
+            <a class="btn fr" href="javascript:window.parent.closeDetailIframe();" style="margin-right: 10px"><i class="icon-chevron-up"></i> 返回用户列表</a>
+        </div>
+    </div>
+</form>
+@section ChildrenScript
+{
+    <script>
+        $(function () {
+            $('#form').Validform({
+                btnSubmit: '#btn-submit',
+                postonce: false,
+                showAllError: true,
+                tiptype: function (msg, o) {
+                    if (!o.obj.is('form')) {//验证表单元素时o.obj为该表单元素，全部验证通过提交表单时o.obj为该表单对象;
+                        var B = o.obj.parents('.control-group');
+                        var T = B.children('.help-inline');
+                        if (o.type === 2) {
+                            B.removeClass('error');
+                            T.text('');
+                        } else {
+                            B.addClass('error');
+                            T.text(msg);
+                        }
+                    }
+                },
+                ajaxPost: true,
+                callback: function (responseText) {
+                    var response = responseText;
+                    if (response.IsSuccess) {
+                        if ($('input[name="id"]').val()) { 
+                            if ($('#pwd').val() !== '') {
+                                NewCrm.msgbox.success('您修改了登陆密码，请重新登陆');
+                                setTimeout(function () {
+                                    top.location.reload()
+                                }, 1000)
+                            } else {
+                                $.dialog({
+                                    id: 'ajaxedit',
+                                    content: '修改成功，是否继续修改？',
+                                    okVal: '是',
+                                    ok: function () {
+                                        $.dialog.list['ajaxedit'].close();
+                                    },
+                                    cancel: function () {
+                                        window.parent.closeDetailIframe(function () {
+                                            window.parent.$('#pagination').trigger('currentPage');
+                                        });
+                                    }
+                                });
+                            }
+                        } else {
+                            $.dialog({
+                                id: 'ajaxedit',
+                                content: '添加成功，是否继续添加？',
+                                okVal: '是',
+                                ok: function () {
+                                    location.reload();
+                                    return false;
+                                },
+                                cancel: function () {
+                                    window.parent.closeDetailIframe(function () {
+                                        window.parent.$('#pagination').trigger('currentPage');
+                                    });
+                                }
+                            });
+                        }
+                    } else {
+                        NewCrm.msgbox.fail(response.Message);
+                    }
+                }
+            });
+
+            $('input[name="val_type"]').change(function () {
+                if (parseInt($(this).val()) === 2) {
+                    $('.input-label-permission').slideDown();
+                } else {
+                    $('.input-label-permission').slideUp();
+                }
+            });
+        });
+
+        function selectorPower() {
+            $('#roleIds').val('');
+            var ids = '';
+            $.each($('input[name="val_permission_id"]').filter(':checked'), function (k, v) {
+                ids += $(v).attr('id') + ',';
+            });
+            $('#roleIds').val(ids);
+        }
+    </script>
+
+}
+

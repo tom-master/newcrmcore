@@ -1,0 +1,120 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutApps.cshtml";
+}
+<div class="well well-small" style="margin-bottom:10px">
+    <div class="form-inline">
+        <label>类目名称：</label>
+        <input type="text" name="searchText" id="searchText" class="span2">
+        <a class="btn" menu="search" href="javascript:;" style="margin-left:10px"><i class="icon-search"></i> 搜索</a>
+        <a class="btn btn-primary fr" href="javascript:openDetailIframe('/AppTypes/CreateNewAppType');"><i class="icon-white icon-plus"></i> 创建新类目</a>
+    </div>
+</div>
+<table class="list-table">
+    <thead>
+        <tr class="col-name">
+            <th>类目名称</th>
+            <th style="width:150px">操作</th>
+        </tr>
+        <tr class="sep-row"><td colspan="100"></td></tr>
+        <tr class="toolbar">
+            <td colspan="100">
+                <b style="margin:0 10px">符合条件的记录</b>有<font class="list-count">0</font>条
+            </td>
+        </tr>
+        <tr class="sep-row"><td colspan="100"></td></tr>
+    </thead>
+    <tbody class="list-con"></tbody>
+    <tfoot>
+        <tr>
+            <td colspan="100">
+                <div class="pagination pagination-centered" id="pagination"></div>
+                <input id="pagination_setting" type="hidden" per="15">
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+<div id="detailIframe" style="background:#fff;position:fixed;z-index:1;top:-100px;left:0;width:100%;height:100%;display:none">
+    <iframe frameborder="0" style="width:100%;height:100%"></iframe>
+</div>
+@section ChildrenScript{
+    <script src="@Url.Content("~/Scripts/handlebars-v4.0.5.js")"></script>
+
+    <script id="li-template" type="text/x-handlebars-template">
+        {{#each Model}}
+        <tr class="list-bd">
+            <td style="text-align:left;padding-left:15px">
+                {{Name}}
+            </td>
+            <td>
+                <a href="javascript:openDetailIframe('/AppTypes/CreateNewAppType?appTypeId={{Id}}');" class="btn btn-link">编辑</a>
+                <a href="javascript:;" class="btn btn-link do-del" categoryid="{{Id}}">删除</a>
+            </td>
+        </tr>
+        {{/each}}
+    </script>
+
+
+    <script>
+        $(function () {
+            //加载列表
+            getPageList(0);
+            //删除
+            $('.list-con').on('click', '.do-del', function () {
+                var categoryid = $(this).attr('categoryid');
+                var name = $(this).parent().prev().text();
+                $.dialog({
+                    id: 'ajaxedit',
+                    //content: '删除 “' + name + '” 类目时，会将该类目下的所有应用归类到「未分类」类目下，是否继续？',
+                    content: '删除后将不可恢复！是否继续？',
+                    ok: function () {
+                        HROS.request.post('/AppTypes/RemoveAppType', { appTypeId: categoryid }, function (responseText) {
+                            if (responseText.IsSuccess) {
+                                $('#pagination').trigger('currentPage');
+                            } else {
+                                NewCrm.msgbox.fail(responseText.Message);
+                            }
+                        });
+                    },
+                    cancel: true
+                });
+            });
+            //搜索
+            $('a[menu=search]').click(function () {
+                getPageList(0);
+            });
+        });
+
+        function initPagination(current_page) {
+            $('#pagination').pagination(parseInt($('#pagination_setting').attr('count')), {
+                current_page: current_page,
+                items_per_page: 5,
+                num_display_entries: 3,
+                num_edge_entries: 1,
+                callback: getPageList,
+                prev_text: '上一页',
+                next_text: '下一页'
+            });
+        }
+
+        function getPageList(current_page) {
+            HROS.request.get('/AppTypes/GetAppTypes', {
+                pageIndex: current_page === 0 ? 1 : current_page + 1,
+                pageSize: 10,
+                searchText: $('#searchText').val()
+            }, function (responseText) {
+                if (responseText.IsSuccess) {
+                    var template = Handlebars.compile($('#li-template').html());
+                    $('#pagination_setting').attr('count', parseInt(responseText.TotalCount));
+                    $('.list-count').text(parseInt(responseText.TotalCount));
+                    $('.list-con').html(template(responseText));
+                    initPagination(current_page);
+                } else {
+                    NewCrm.msgbox.fail(responseText.Message);
+                }
+            });
+        }
+    </script>
+
+}
+

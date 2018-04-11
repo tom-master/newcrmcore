@@ -1,0 +1,109 @@
+﻿@model NewCRM.Dto.AppTypeDto
+@{
+    Layout = "~/Views/Shared/_LayoutApps.cshtml";
+}
+
+<form action="/AppTypes/CreateAppType?appTypeId=@Request["appTypeId"]" method="post" name="form" id="form">
+    <input type="hidden" name="ac" value="edit">
+    <div class="creatbox">
+        <div class="middle">
+            <p class="detile-title">
+                <strong>编辑类目</strong>
+            </p>
+            <div class="input-label">
+                <label class="label-text">类目名称：</label>
+                <div class="label-box form-inline control-group">
+                    @{
+                        if (Model != null)
+                        {
+                            <text>
+                                <input type="text" name="val_name" value="@Model.Name" datatype="*" ajaxurl="@Url.Action("CheckAppTypeName","AppTypes")" nullmsg="请输入类目名称">
+                            </text>
+                        }
+                        else
+                        {
+                            <text>
+                                <input type="text" name="val_name" value="" datatype="*" ajaxurl="@Url.Action("CheckAppTypeName","AppTypes")" nullmsg="请输入类目名称">
+                            </text>
+                        }
+                    }
+
+                    <span class="help-inline"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-bar">
+        <div class="con">
+            <a class="btn btn-primary fr" id="btn-submit" href="javascript:;"><i class="icon-white icon-ok"></i> 确定</a>
+            <a class="btn fr" href="javascript:window.parent.closeDetailIframe();" style="margin-right:10px"><i class="icon-chevron-up"></i> 返回类目列表</a>
+        </div>
+    </div>
+</form>
+@section ChildrenScript
+  {
+    <script>
+        $(function () {
+            $('#form').Validform({
+                btnSubmit: '#btn-submit',
+                postonce: false,
+                showAllError: true,
+                //msg：提示信息;
+                //o:{obj:*,type:*,curform:*}, obj指向的是当前验证的表单元素（或表单对象），type指示提示的状态，值为1、2、3、4， 1：正在检测/提交数据，2：通过验证，3：验证失败，4：提示ignore状态, curform为当前form对象;
+                //cssctl:内置的提示信息样式控制函数，该函数需传入两个参数：显示提示信息的对象 和 当前提示的状态（既形参o中的type）;
+                tiptype: function (msg, o) {
+                    if (!o.obj.is('form')) {//验证表单元素时o.obj为该表单元素，全部验证通过提交表单时o.obj为该表单对象;
+                        var B = o.obj.parents('.control-group');
+                        var T = B.children('.help-inline');
+                        if (o.type == 2) {
+                            B.removeClass('error');
+                            T.text('');
+                        } else {
+                            B.addClass('error');
+                            T.text(msg);
+                        }
+                    }
+                },
+                ajaxPost: true,
+                callback: function (responseText) {
+                    if (responseText.IsSuccess) {
+                        if ('@Request["appTypeId"]') {
+                         $.dialog({
+                             id: 'ajaxedit',
+                             content: '修改成功，是否继续修改？',
+                             okVal: '是',
+                             ok: function () {
+                                 $.dialog.list['ajaxedit'].close();
+                             },
+                             cancel: function () {
+                                 window.parent.closeDetailIframe(function () {
+                                     window.parent.$('#pagination').trigger('currentPage');
+                                 });
+                             }
+                         });
+                        } else {
+                            $.dialog({
+                                id: 'ajaxedit',
+                                content: '添加成功，是否继续添加？',
+                                okVal: '是',
+                                ok: function () {
+                                    location.reload();
+                                    return false;
+                                },
+                                cancel: function () {
+                                    window.parent.closeDetailIframe(function () {
+                                        window.parent.$('#pagination').trigger('currentPage');
+                                    });
+                                }
+                            });
+                        }
+                    } else {
+                        NewCrm.msgbox.fail(responseText.Message);
+                    }
+                }
+            });
+        });
+    </script>
+
+}
+

@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" href="~/favicon.ico" />
+    @RenderSection("ParentCss", false)
+</head>
+<body>
+    @RenderBody()
+</body>
+</html>
+
+@Scripts.Render("~/bundles/js")
+<script src="@Url.Content("~/Scripts/artDialog4.1.7/jquery.artDialog.js?skin=default")"></script>
+<script src="@Url.Content("~/Scripts/artDialog4.1.7/plugins/iframeTools.js")"></script>
+
+<script>
+    //配置artDialog全局默认参数
+    (function (config) {
+        config['lock'] = true;
+        config['fixed'] = true;
+        config['resize'] = false;
+        config['background'] = '#000';
+        config['opacity'] = 0.5;
+    })($.dialog.defaults);
+    //toolTip
+    $('[rel="tooltip"]').tooltip();
+    //表单提示
+    $("[datatype]").focusin(function () {
+        $(this).parent().addClass('info').children('.infomsg').show().siblings('.help-inline').hide();
+    }).focusout(function () {
+        $(this).parent().removeClass('info').children('.infomsg').hide().siblings('.help-inline').show();
+    });
+
+    openDetailIframe = function (url) {
+        //NewCrm.msgbox.loading('正在载入中，请稍后...');
+        $('#detailIframe iframe').attr('src', url).on('load', function () {
+            $('body').css('overflow', 'hidden');
+            //NewCrm.msgbox.close()
+            $('#detailIframe').animate({ 'top': 0, 'opacity': 'show' }, 500);
+        });
+    };
+    closeDetailIframe = function (callback) {
+        $('body').css('overflow', 'auto');
+        $('#detailIframe').animate({ 'top': '-100px', 'opacity': 'hide' }, 500, function () {
+            if (callback) {
+                callback && callback();
+            }
+        });
+    };
+
+    function alertInfo(msg, type) {
+        if (type) {
+            top.NewCrm.msgbox.info(msg);
+        } else {
+            top.NewCrm.msgbox.fail(msg);
+        }
+    }
+</script>
+
+@RenderSection("ParentScript", false)

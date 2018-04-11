@@ -1,0 +1,73 @@
+﻿@{
+    Layout = null;
+}
+<title>登陆</title>
+<link href="@Url.Content("~/Content/HoorayUI/css/login.css")" rel="stylesheet" />
+<div class="loading" style="display: none"></div>
+<div id="parentDiv">
+    <canvas id="Mycanvas"></canvas>
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="logo">
+                v8.7
+            </h1>
+            <form id="loginForm">
+                <div>
+                    <input type="text" name="accountname" id="accountname" value="admin" class="accountname" placeholder="用户名" autocomplete="off" />
+                </div>
+                <div>
+                    <input type="password" name="password" id="password" value="wasd123" class="password" placeholder="密码" oncontextmenu="return false" onpaste="return false" />
+                </div>
+                <button id="login">登 陆</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="@Url.Content("~/Scripts/jquery-3.2.1.min.js")"></script>
+<script src="@Url.Content("~/Scripts/dynamicBackground.js")"></script>
+<script>
+    $(function () {
+        $("#login").click(function (event) {
+            if (!$('#accountname').val() || !$('#password').val()) {
+                alert("请输入用户名和密码")
+                return false;
+            }
+
+            event.preventDefault();
+            beginLogin();
+            var loginParameter = {
+                Name: $('.accountname').val(),
+                Password: $('.password').val(),
+                IsRememberPasswrod: false
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/Desktop/landing',
+                data: { loginParameter },
+                success: function (responseText) {
+                    if (responseText.IsSuccess) {
+                        $('.loading').hide();
+                        location.href = '/Desktop/Index';
+                    } else {
+                        endLogin();
+                        alert('账号或密码错误')
+                    }
+                }
+            });
+        });
+    });
+
+    function beginLogin() {
+        $('form').fadeOut(500);
+        $('.wrapper').addClass('form-success');
+        $('.loading').show();
+        $('#parentDiv').hide();
+    }
+
+    function endLogin() {
+        $('form').fadeIn(500);
+        $('.wrapper').removeClass('form-success');
+        $('.loading').hide();
+        $('#parentDiv').show();
+    }
+</script>

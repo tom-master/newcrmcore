@@ -1,0 +1,54 @@
+﻿@using NewCRM.Dto
+@{
+    Layout = "~/Views/Shared/_LayoutApps.cshtml";
+    var wallpapers = ViewData["Wallpapers"] as IList<WallpaperDto>;
+
+    var accountConfig = ViewData["AccountConfig"] as ConfigDto;
+}
+
+<div class="title">
+    <ul>
+        <li class="focus">壁纸设置</li>
+        <li><a href="/DeskOptions/SetSkin">皮肤设置</a></li>
+    </ul>
+</div>
+<div class="wallpapertype form-inline">
+    <div class="btn-group fl">
+        <a class="btn disabled">系统壁纸</a><a class="btn" href="/DeskOptions/CustomWallPaper">自定义</a>
+    </div>
+    <div class="fr">
+        <label>显示方式：</label>
+        <select name="wallpapertype" id="wallpapertype" style="width: 100px">
+            <option name="fill" value="fill" @{ if (accountConfig.WallpaperMode == "fill") { <text> selected="selected" </text>  } }>填充</option>
+            <option name="adapted" value="adapted" @{if (accountConfig.WallpaperMode == "adapted") { <text> selected="selected" </text>  }}>适应</option>
+            <option name="tile" value="tile" @{ if (accountConfig.WallpaperMode == "tile") { <text> selected="selected" </text>  } }>平铺</option>
+            <option name="draw" value="draw" @{ if (accountConfig.WallpaperMode == "draw") { <text> selected="selected" </text>  } }>拉伸</option>
+            <option name="center" value="center" @{ if (accountConfig.WallpaperMode == "center") { <text> selected="selected" </text>  } }>居中</option>
+        </select>
+    </div>
+</div>
+<ul class="wallpaper">
+    @for (Int32 i = 0; i < wallpapers.Count; i++)
+    {
+        <li wpid="@wallpapers[i].Id" @if (i % 3 == 2) { <text> class="three" </text> }>
+            <img src="@wallpapers[i].Url" />
+            <div>@wallpapers[i].Title</div>
+        </li>
+    }
+</ul>
+
+@section ChildrenScript
+{
+    <script>
+        $(function () {
+            $("#wallpapertype").val(window.parent.HROS.CONFIG.wallpaperType.toLowerCase());
+            $("#wallpapertype").on('change', function () {
+                window.parent.HROS.wallpaper.update($('#wallpapertype').val(), '');
+            });
+
+            $('.wallpaper li').on('click', function () {
+                window.parent.HROS.wallpaper.update($('#wallpapertype').val(), $(this).attr('wpid'));
+            });
+        })
+    </script>
+}
