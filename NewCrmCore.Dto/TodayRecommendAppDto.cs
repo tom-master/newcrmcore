@@ -1,5 +1,5 @@
 ﻿using System;
-using NewCRM.Domain.ValueObject;
+using NewCrmCore.Domain.ValueObject;
 
 namespace NewCrmCore.Dto
 {

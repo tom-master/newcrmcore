@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Linq;
 using AutoMapper;
-using NewCRM.Domain.Entitys.Agent;
-using NewCRM.Domain.Entitys.Security;
-using NewCRM.Domain.Entitys.System;
-using NewCRM.Domain.ValueObject;
-using NewLib.Validate;
+using NewCrmCore.Domain.Entitys.Agent;
+using NewCrmCore.Domain.Entitys.Security;
+using NewCrmCore.Domain.Entitys.System;
+using NewCrmCore.Domain.ValueObject;
+using NewLibCore.Validate;
 
 namespace NewCrmCore.Dto.MapperProfile
 {

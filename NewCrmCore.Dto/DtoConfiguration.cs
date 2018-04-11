@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
-using NewCRM.Domain.Entitys;
-using NewCRM.Domain.Entitys.Agent;
-using NewCRM.Domain.Entitys.Security;
-using NewCRM.Domain.Entitys.System;
-using NewCRM.Dto.MapperProfile;
+using NewCrmCore.Domain.Entitys;
+using NewCrmCore.Domain.Entitys.Agent;
+using NewCrmCore.Domain.Entitys.Security;
+using NewCrmCore.Domain.Entitys.System;
+using NewCrmCore.Dto.MapperProfile;
 
 namespace NewCrmCore.Dto
 {
