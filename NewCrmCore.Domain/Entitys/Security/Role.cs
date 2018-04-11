@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using NewLib.Data.Mapper.MapperExtension;
+using NewLibCore.Data.Mapper.MapperExtension;
 
 namespace NewCRM.Domain.Entitys.Security
 {

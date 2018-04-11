@@ -1,5 +1,5 @@
 ﻿using System;
-using NewLib.Data.Mapper.MapperExtension;
+using NewLibCore.Data.Mapper.MapperExtension;
 
 namespace NewCRM.Domain.Entitys.System
 {
