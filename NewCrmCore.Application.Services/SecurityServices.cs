@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Domain.Entitys.Security;
+using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure.CommonTools.CustomException;
 using NewLibCore.Validate;

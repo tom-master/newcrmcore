@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using NewCRM.Domain.Services.Interface;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services;
@@ -11,6 +12,7 @@ using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
 using NewLibCore;
 using NewLibCore.Validate;
+using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.Application.Services
 {
