@@ -1,7 +1,7 @@
 ﻿using System;
 using NewLibCore.Data.Mapper.MapperExtension;
 
-namespace NewCRM.Domain.Entitys.Agent
+namespace NewCrmCore.Domain.Entitys.Agent
 {
 	public class AccountRole: DomainModelBase
 	{

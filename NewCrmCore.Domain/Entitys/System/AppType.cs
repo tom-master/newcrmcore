@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using NewLibCore.Data.Mapper.MapperExtension;
 
-namespace NewCRM.Domain.Entitys.System
+namespace NewCrmCore.Domain.Entitys.System
 {
 	[Description("应用类型"), Serializable]
 	public partial class AppType : DomainModelBase

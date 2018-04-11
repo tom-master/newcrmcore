@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
-using NewCRM.Domain.ValueObject;
+using NewCrmCore.Domain.ValueObject;
 using NewLibCore.Data.Mapper.MapperExtension;
 
-namespace NewCRM.Domain.Entitys.System
+namespace NewCrmCore.Domain.Entitys.System
 {
 	[Description("用户配置"), Serializable]
 	public partial class Config: DomainModelBase

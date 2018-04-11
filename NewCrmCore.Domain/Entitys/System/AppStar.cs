@@ -1,7 +1,7 @@
 ﻿using System;
 using NewLibCore.Data.Mapper.MapperExtension;
 
-namespace NewCRM.Domain.Entitys.System
+namespace NewCrmCore.Domain.Entitys.System
 {
 	public partial class AppStar : DomainModelBase
 	{

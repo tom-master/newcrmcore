@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using NewLibCore.Data.Mapper.MapperExtension;
 
-namespace NewCRM.Domain.Entitys.Security
+namespace NewCrmCore.Domain.Entitys.Security
 {
 	[Description("角色"), Serializable]
 	public partial class Role: DomainModelBase

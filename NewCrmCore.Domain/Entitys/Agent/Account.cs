@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using NewCRM.Domain.ValueObject;
+using NewCrmCore.Domain.ValueObject;
 using NewLibCore.Data.Mapper.MapperExtension;
 
-namespace NewCRM.Domain.Entitys.Agent
+namespace NewCrmCore.Domain.Entitys.Agent
 {
 	[Description("用户"), Serializable]
 	public partial class Account: DomainModelBase

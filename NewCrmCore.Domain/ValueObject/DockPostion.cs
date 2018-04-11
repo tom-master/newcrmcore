@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace NewCRM.Domain.ValueObject
+namespace NewCrmCore.Domain.ValueObject
 {
     /// <summary>
     /// 码头位置

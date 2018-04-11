@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using NewLibCore.Data.Mapper.MapperExtension;
 
-namespace NewCRM.Domain.Entitys.System
+namespace NewCrmCore.Domain.Entitys.System
 {
 	[Description("在线人数"), Serializable]
     public partial class Online : DomainModelBase

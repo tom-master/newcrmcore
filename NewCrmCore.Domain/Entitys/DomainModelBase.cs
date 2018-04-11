@@ -1,7 +1,7 @@
 ﻿using System;
 using NewLibCore.Data.Mapper.MapperExtension;
 
-namespace NewCRM.Domain.Entitys
+namespace NewCrmCore.Domain.Entitys
 {
 	[Serializable]
 	public abstract class DomainModelBase: PropertyMonitor

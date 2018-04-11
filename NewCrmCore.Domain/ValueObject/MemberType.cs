@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace NewCRM.Domain.ValueObject
+namespace NewCrmCore.Domain.ValueObject
 {
     /// <summary>
     /// 桌面成员类型

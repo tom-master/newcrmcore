@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace NewCRM.Domain.ValueObject
+namespace NewCrmCore.Domain.ValueObject
 {
     public enum AccountType
     {

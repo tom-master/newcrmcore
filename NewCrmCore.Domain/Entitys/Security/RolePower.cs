@@ -1,7 +1,7 @@
 ﻿using System;
 using NewLibCore.Data.Mapper.MapperExtension;
 
-namespace NewCRM.Domain.Entitys.Security
+namespace NewCrmCore.Domain.Entitys.Security
 {
 	public class RolePower: DomainModelBase
 	{

@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Threading;
 
-namespace NewCRM.Domain.Entitys
+namespace NewCrmCore.Domain.Entitys
 {
     public class PropertyArgs : EventArgs
     {
