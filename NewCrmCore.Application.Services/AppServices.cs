@@ -83,7 +83,7 @@ namespace NewCrmCore.Application.Services
 
 			var result = _appContext.GetAccountApps(accountId, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize, out totalCount);
 			var appTypes = AsyncContext.Run(() => GetAppTypesAsync());
-
+			   
 			return result.Select(app => new AppDto
 			{
 				Name = app.Name,
