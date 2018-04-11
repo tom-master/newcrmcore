@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace NewCRM.Domain.Services.Interface
+namespace NewCrmCore.Domain.Services.Interface
 {
-    public interface ISkinContext
+	public interface ISkinContext
     {
         /// <summary>
         /// 修改皮肤

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using NewCRM.Domain.Entitys.System;
-using NewCRM.Dto;
+using NewCrmCore.Domain.Entitys.System;
+using NewCrmCore.Dto;
 
-namespace NewCRM.Domain.Services.Interface
+namespace NewCrmCore.Domain.Services.Interface
 {
 	public interface IAppContext
 	{

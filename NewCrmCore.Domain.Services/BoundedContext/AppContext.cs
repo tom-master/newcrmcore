@@ -4,19 +4,18 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NewCRM.Domain.Entitys.System;
-using NewCRM.Domain.Services.Interface;
-using NewCRM.Domain.ValueObject;
-using NewCRM.Dto;
-using NewCRM.Infrastructure.CommonTools.CustomException;
-using NewCRM.Infrastructure.CommonTools.CustomExtension;
-using NewLib;
-using NewLib.Data.Mapper.InternalDataStore;
-using NewLib.Validate;
+using NewCrmCore.Domain.Entitys.System;
+using NewCrmCore.Domain.Services.Interface;
+using NewCrmCore.Domain.ValueObject;
+using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure.CommonTools.CustomException;
+using NewLibCore;
+using NewLibCore.Data.Mapper.InternalDataStore;
+using NewLibCore.Validate;
 
 namespace NewCRM.Domain.Services.BoundedContext
 {
-	public class AppContext:  IAppContext
+	public class AppContext: IAppContext
 	{
 		public async Task<Tuple<Int32, Int32>> GetAccountDevelopAppCountAndNotReleaseAppCountAsync(Int32 accountId)
 		{

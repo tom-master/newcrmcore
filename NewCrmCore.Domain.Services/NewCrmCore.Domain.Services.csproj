@@ -4,4 +4,28 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="NewCrmCore.Domain">
+      <HintPath>..\NewCrmCore.Domain\bin\Debug\netcoreapp2.0\NewCrmCore.Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="NewCrmCore.Dto">
+      <HintPath>..\NewCrmCore.Dto\bin\Debug\netcoreapp2.0\NewCrmCore.Dto.dll</HintPath>
+    </Reference>
+    <Reference Include="NewCrmCore.Infrastructure">
+      <HintPath>..\NewCrmCore.Infrastructure\bin\Debug\netcoreapp2.0\NewCrmCore.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="NewLibCore">
+      <HintPath>..\..\dev\NewLib\NewLibCore\bin\Debug\netstandard2.0\NewLibCore.dll</HintPath>
+    </Reference>
+    <Reference Include="NewLibCore.Data">
+      <HintPath>..\..\dev\NewLib\NewLibCore.Data\bin\Debug\netstandard2.0\NewLibCore.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="NewLibCore.Security">
+      <HintPath>..\..\dev\NewLib\NewLibCore.Security\bin\Debug\netstandard2.0\NewLibCore.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlClient">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\system.data.sqlclient\4.4.3\ref\netstandard2.0\System.Data.SqlClient.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

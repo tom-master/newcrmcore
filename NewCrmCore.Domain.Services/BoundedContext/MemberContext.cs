@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
-using NewCRM.Domain.Entitys.System;
-using NewCRM.Domain.Services.Interface;
-using NewCRM.Domain.ValueObject;
-using NewCRM.Infrastructure.CommonTools.CustomExtension;
-using NewLib.Data.Mapper.InternalDataStore;
-using NewLib.Validate;
+using NewCrmCore.Domain.Entitys.System;
+using NewCrmCore.Domain.Services.Interface;
+using NewCrmCore.Domain.ValueObject;
+using NewLibCore.Data.Mapper.InternalDataStore;
+using NewLibCore.Validate;
 
 namespace NewCRM.Domain.Services.BoundedContext
 {
@@ -17,7 +16,7 @@ namespace NewCRM.Domain.Services.BoundedContext
 		public async Task<List<Member>> GetMembersAsync(Int32 accountId)
 		{
 			new Parameter().Validate(accountId);
-			return await Task.Run<List<Member>>(() =>
+			return await Task.Run(() =>
 			{
 				using (var dataStore = new DataStore())
 				{

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using NewCRM.Domain.Entitys.System;
+using NewCrmCore.Domain.Entitys.System;
 
-namespace NewCRM.Domain.Services.Interface
+namespace NewCrmCore.Domain.Services.Interface
 {
 	public interface ILoggerContext
 	{

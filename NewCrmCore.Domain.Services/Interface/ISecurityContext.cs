@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using NewCRM.Domain.Entitys.Security;
+using NewCrmCore.Domain.Entitys.Security;
 
-namespace NewCRM.Domain.Services.Interface
+namespace NewCrmCore.Domain.Services.Interface
 {
 	public interface ISecurityContext
 	{

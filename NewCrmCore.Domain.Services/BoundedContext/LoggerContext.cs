@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
-using NewCRM.Domain.Entitys.System;
-using NewCRM.Domain.Services.Interface;
-using NewLib.Data.Mapper.InternalDataStore;
-using NewLib.Validate;
+using NewCrmCore.Domain.Entitys.System;
+using NewCrmCore.Domain.Services.Interface;
+using NewLibCore.Data.Mapper.InternalDataStore;
+using NewLibCore.Validate;
 
 namespace NewCRM.Domain.Services.BoundedContext
 {

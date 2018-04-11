@@ -4,11 +4,11 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NewCRM.Domain.Entitys.Security;
-using NewCRM.Domain.Services.Interface;
-using NewCRM.Infrastructure.CommonTools.CustomException;
-using NewLib.Data.Mapper.InternalDataStore;
-using NewLib.Validate;
+using NewCrmCore.Domain.Entitys.Security;
+using NewCrmCore.Domain.Services.Interface;
+using NewCrmCore.Infrastructure.CommonTools.CustomException;
+using NewLibCore.Data.Mapper.InternalDataStore;
+using NewLibCore.Validate;
 
 namespace NewCRM.Domain.Services.BoundedContext
 {

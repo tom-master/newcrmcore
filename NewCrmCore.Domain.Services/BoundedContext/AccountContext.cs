@@ -4,18 +4,18 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NewCRM.Domain.Entitys.Agent;
-using NewCRM.Domain.Entitys.Security;
-using NewCRM.Domain.Entitys.System;
-using NewCRM.Domain.Services.Interface;
-using NewCRM.Domain.ValueObject;
-using NewCRM.Infrastructure.CommonTools.CustomException;
-using NewLib;
-using NewLib.Data.Mapper.InternalDataStore;
-using NewLib.Security;
-using NewLib.Validate;
+using NewCrmCore.Domain.Entitys.Agent;
+using NewCrmCore.Domain.Entitys.Security;
+using NewCrmCore.Domain.Entitys.System;
+using NewCrmCore.Domain.Services.Interface;
+using NewCrmCore.Domain.ValueObject;
+using NewCrmCore.Infrastructure.CommonTools.CustomException;
+using NewLibCore;
+using NewLibCore.Data.Mapper.InternalDataStore;
+using NewLibCore.Security;
+using NewLibCore.Validate;
 
-namespace NewCRM.Domain.Services.BoundedContext
+namespace NewCrmCore.Domain.Services.BoundedContext
 {
 	public class AccountContext: IAccountContext
 	{
