@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.Security;
 using NewCrmCore.Domain.Services.Interface;
+using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Infrastructure.CommonTools.CustomException;
 using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;
@@ -40,27 +41,31 @@ namespace NewCRM.Domain.Services.BoundedContext
 			});
 		}
 
-		public List<Role> GetRoles(String roleName, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
+		public async Task<PagingModel<Role>> GetRolesAsync(String roleName, Int32 pageIndex, Int32 pageSize)
 		{
-			using (var dataStore = new DataStore())
+			return await Task.Run(() =>
 			{
-				var where = new StringBuilder();
-				var parameters = new List<SqlParameter>();
-				if (!String.IsNullOrEmpty(roleName))
+				using (var dataStore = new DataStore())
 				{
-					parameters.Add(new SqlParameter("@roleName", $@"%{roleName}%"));
-					where.Append($@" AND a.Name LIKE @roleName");
-				}
-				#region totalCount
-				{
-					var sql = $@"SELECT  COUNT(*) FROM dbo.Role AS a WHERE 1=1 {where} AND a.IsDeleted=0";
-					totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
-				}
-				#endregion
+					var paging = new PagingModel<Role>();
 
-				#region sql
-				{
-					var sql = $@"SELECT TOP (@pageSize) * FROM 
+					var where = new StringBuilder();
+					var parameters = new List<SqlParameter>();
+					if (!String.IsNullOrEmpty(roleName))
+					{
+						parameters.Add(new SqlParameter("@roleName", $@"%{roleName}%"));
+						where.Append($@" AND a.Name LIKE @roleName");
+					}
+					#region totalCount
+					{
+						var sql = $@"SELECT  COUNT(*) FROM dbo.Role AS a WHERE 1=1 {where} AND a.IsDeleted=0";
+						paging.TotalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
+					}
+					#endregion
+
+					#region sql
+					{
+						var sql = $@"SELECT TOP (@pageSize) * FROM 
                                 (
 	                                 SELECT
 	                                ROW_NUMBER() OVER(ORDER BY a.Id DESC) AS rownumber,
@@ -70,12 +75,15 @@ namespace NewCRM.Domain.Services.BoundedContext
                                     a.Id
 	                                FROM dbo.Role AS a WHERE 1=1 {where} AND a.IsDeleted=0
                                 ) AS aa WHERE aa.rownumber>@pageSize*(@pageIndex-1)";
-					parameters.Add(new SqlParameter("@pageIndex", pageIndex));
-					parameters.Add(new SqlParameter("@pageSize", pageSize));
-					return dataStore.Find<Role>(sql, parameters);
+						parameters.Add(new SqlParameter("@pageIndex", pageIndex));
+						parameters.Add(new SqlParameter("@pageSize", pageSize));
+						paging.Models = dataStore.Find<Role>(sql, parameters);
+					}
+					#endregion
+
+					return paging;
 				}
-				#endregion
-			}
+			});
 		}
 
 		public async Task<Boolean> CheckPermissionsAsync(Int32 accessAppId, params Int32[] roleIds)

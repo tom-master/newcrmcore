@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.Security;
+using NewCrmCore.Infrastructure.CommonTools;
 
 namespace NewCrmCore.Domain.Services.Interface
 {
@@ -21,7 +22,7 @@ namespace NewCrmCore.Domain.Services.Interface
 		/// <summary>
 		/// 获取角色列表
 		/// </summary>
-		List<Role> GetRoles(String roleName, Int32 pageIndex, Int32 pageSize, out Int32 totalCount);
+		Task<PagingModel<Role>> GetRolesAsync(String roleName, Int32 pageIndex, Int32 pageSize);
 
 		/// <summary>
 		/// 检查授权
