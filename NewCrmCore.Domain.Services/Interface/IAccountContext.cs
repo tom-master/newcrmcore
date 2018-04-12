@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.Agent;
 using NewCrmCore.Domain.Entitys.Security;
 using NewCrmCore.Domain.Entitys.System;
+using NewCrmCore.Infrastructure.CommonTools;
 
 namespace NewCrmCore.Domain.Services.Interface
 {
@@ -27,7 +28,7 @@ namespace NewCrmCore.Domain.Services.Interface
 		/// <summary>
 		/// 获取所有账户
 		/// </summary>
-		List<Account> GetAccounts(String accountName, String accountType, Int32 pageIndex, Int32 pageSize, out Int32 totalCount);
+		Task<PagingModel<Account>> GetAccountsAsync(String accountName, String accountType, Int32 pageIndex, Int32 pageSize);
 
 		/// <summary>
 		/// 获取单个账户
