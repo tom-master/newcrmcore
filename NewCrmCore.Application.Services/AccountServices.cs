@@ -8,6 +8,7 @@ using NewCrmCore.Domain.Services;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Infrastructure.CommonTools.CustomException;
 using NewLibCore;
 using NewLibCore.Security;
@@ -67,13 +68,13 @@ namespace NewCrmCore.Application.Services
 			};
 		}
 
-		public List<AccountDto> GetAccounts(String accountName, String accountType, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
+		public async Task<PagingModel<AccountDto>> GetAccountsAsync(String accountName, String accountType, Int32 pageIndex, Int32 pageSize)
 		{
 			new Parameter().Validate(accountName).Validate(accountType);
 
-			var result = _accountContext.GetAccounts(accountName, accountType, pageIndex, pageSize, out totalCount);
+			var result = await _accountContext.GetAccountsAsync(accountName, accountType, pageIndex, pageSize);
 
-			return result.Select(s => new AccountDto
+			result.Models.Select(s => new AccountDto
 			{
 				Id = s.Id,
 				IsAdmin = s.IsAdmin,
@@ -81,6 +82,8 @@ namespace NewCrmCore.Application.Services
 				AccountFace = ProfileManager.FileUrl + s.AccountFace,
 				IsDisable = s.IsDisable
 			}).ToList();
+
+			return result;
 		}
 
 		public async Task<AccountDto> GetAccountAsync(Int32 accountId)
