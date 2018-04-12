@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.System;
+using NewCrmCore.Infrastructure.CommonTools;
 
 namespace NewCrmCore.Domain.Services.Interface
 {
@@ -16,6 +17,6 @@ namespace NewCrmCore.Domain.Services.Interface
 		/// 获取日志列表
 		/// </summary>
 		/// <returns></returns>
-		IList<Log> GetLogs(Int32 accountId, Int32 logLevel, Int32 pageIndex, Int32 pageSize, out Int32 totalCount);
+		Task<PagingModel<Log>> GetLogsAsync(Int32 accountId, Int32 logLevel, Int32 pageIndex, Int32 pageSize);
 	}
 }

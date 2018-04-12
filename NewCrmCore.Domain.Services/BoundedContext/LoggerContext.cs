@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
+using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;
 
@@ -24,29 +25,33 @@ namespace NewCRM.Domain.Services.BoundedContext
 			});
 		}
 
-		public IList<Log> GetLogs(Int32 accountId, Int32 logLevel, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
+		public async Task<PagingModel<Log>> GetLogsAsync(Int32 accountId, Int32 logLevel, Int32 pageIndex, Int32 pageSize)
 		{
-
-			using (var dataStore = new DataStore())
+			new Parameter().Validate(accountId).Validate(logLevel);
+			return await Task.Run(() =>
 			{
-				var where = new StringBuilder();
-				var parameters = new List<SqlParameter>();
-				if (accountId != 0)
+				using (var dataStore = new DataStore())
 				{
-					parameters.Add(new SqlParameter("AccountId", accountId));
-					where.Append($@" AND a.AccountId=@AccountId");
-				}
+					var where = new StringBuilder();
+					var parameters = new List<SqlParameter>();
+					if (accountId != 0)
+					{
+						parameters.Add(new SqlParameter("AccountId", accountId));
+						where.Append($@" AND a.AccountId=@AccountId");
+					}
 
-				#region totalCount
-				{
-					var sql = $@"SELECT COUNT(*) FROM dbo.Log AS a WHERE 1=1 {where}";
-					totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
-				}
-				#endregion
+					var paging = new PagingModel<Log>();
 
-				#region sql
-				{
-					var sql = $@"SELECT TOP (@pageSize) * FROM 
+					#region totalCount
+					{
+						var sql = $@"SELECT COUNT(*) FROM dbo.Log AS a WHERE 1=1 {where}";
+						paging.TotalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
+					}
+					#endregion
+
+					#region sql
+					{
+						var sql = $@"SELECT TOP (@pageSize) * FROM 
                                 (
 	                                SELECT
 	                                ROW_NUMBER() OVER(ORDER BY a.Id DESC) AS rownumber, 
@@ -57,12 +62,15 @@ namespace NewCRM.Domain.Services.BoundedContext
 	                                a.Track
 	                                FROM dbo.Log AS a WHERE 1=1 {where}
                                 ) AS aa WHERE aa.rownumber>@pageSize*(@pageIndex-1)";
-					parameters.Add(new SqlParameter("@pageIndex", pageIndex));
-					parameters.Add(new SqlParameter("@pageSize", pageSize));
-					return dataStore.Find<Log>(sql, parameters);
+						parameters.Add(new SqlParameter("@pageIndex", pageIndex));
+						parameters.Add(new SqlParameter("@pageSize", pageSize));
+						paging.Models = dataStore.Find<Log>(sql, parameters);
+					}
+					#endregion
+
+					return paging;
 				}
-				#endregion
-			}
+			});
 		}
 	}
 }
