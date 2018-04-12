@@ -280,7 +280,7 @@ namespace NewCRM.Domain.Services.BoundedContext
 
 		public async Task ModifyWallpaperSourceAsync(String source, Int32 accountId)
 		{
-			new Parameter().Validate(source).Validate(accountId);
+			new Parameter().Validate(source).Validate(accountId); 
 			await Task.Run(() =>
 			{
 				using (var dataStore = new DataStore())
