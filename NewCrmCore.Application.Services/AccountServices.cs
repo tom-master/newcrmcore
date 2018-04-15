@@ -89,7 +89,7 @@ namespace NewCrmCore.Application.Services
 		public async Task<AccountDto> GetAccountAsync(Int32 accountId)
 		{
 			new Parameter().Validate(accountId);
-
+			  
 			var account = await CacheHelper.GetCache(new AccountCacheKey(accountId), () => _accountContext.GetAccountAsync(accountId));
 			if (account == null)
 			{
