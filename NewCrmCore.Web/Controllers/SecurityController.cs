@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NewCrmCore.Application.Services.Interface;
+using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
+using NewLibCore.Validate;
 
 namespace NewCrmCore.Web.Controllers
 {
@@ -92,20 +97,20 @@ namespace NewCrmCore.Web.Controllers
 		/// 获取所有的角色
 		/// </summary>
 		[HttpGet]
-		public ActionResult GetRoles(String roleName, Int32 pageIndex, Int32 pageSize)
+		public async Task<ActionResult> GetRoles(String roleName, Int32 pageIndex, Int32 pageSize)
 		{
 			#region 参数验证
 			new Parameter().Validate(roleName);
 			#endregion
 
 			var response = new ResponseModels<IList<RoleDto>>();
-			var result = _securityServices.GetRoles(roleName, pageIndex, pageSize, out var totalCount);
+			var result = await _securityServices.GetRolesAsync(roleName, pageIndex, pageSize);
 			response.IsSuccess = true;
 			response.Message = "获取角色列表成功";
-			response.Model = result;
-			response.TotalCount = totalCount;
+			response.Model = result.Models;
+			response.TotalCount = result.TotalCount;
 
-			return Json(response, JsonRequestBehavior.AllowGet);
+			return Json(response);
 		}
 
 		/// <summary>
@@ -164,7 +169,7 @@ namespace NewCrmCore.Web.Controllers
 			#endregion
 
 			var response = new ResponseModel();
-			var powerIds = forms["val_apps_id"].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(Int32.Parse).ToArray();
+			var powerIds = forms["val_apps_id"].ToString().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(Int32.Parse).ToArray();
 			if (powerIds.Any())
 			{
 				await _securityServices.AddPowerToCurrentRoleAsync(Int32.Parse(forms["val_roleId"]), powerIds);
@@ -192,7 +197,7 @@ namespace NewCrmCore.Web.Controllers
 			response.Message = "选择系统app成功";
 			response.Model = result;
 
-			return Json(response, JsonRequestBehavior.AllowGet);
+			return Json(response);
 		}
 
 		/// <summary>

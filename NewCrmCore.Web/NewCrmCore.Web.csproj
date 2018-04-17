@@ -377,6 +377,9 @@
     <Reference Include="NewCrmCore.Domain">
       <HintPath>..\NewCrmCore.Domain\bin\Debug\netcoreapp2.0\NewCrmCore.Domain.dll</HintPath>
     </Reference>
+    <Reference Include="NewCrmCore.Domain.Services">
+      <HintPath>..\NewCrmCore.Domain.Services\bin\Debug\netcoreapp2.0\NewCrmCore.Domain.Services.dll</HintPath>
+    </Reference>
     <Reference Include="NewCrmCore.Dto">
       <HintPath>..\NewCrmCore.Dto\bin\Debug\netcoreapp2.0\NewCrmCore.Dto.dll</HintPath>
     </Reference>

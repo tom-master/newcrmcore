@@ -1,12 +1,12 @@
 ﻿using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NewCrmCore.Application.Services.Interface;
 
 namespace NewCrmCore.Web.Controllers.ControllerHelper
 {
 	public class BaseController: Controller
 	{
-		[Dependency]
 		protected IAccountServices AccountServices { get; set; }
 
 		protected Int32 AccountId

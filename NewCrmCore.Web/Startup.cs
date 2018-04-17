@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NewCRM.Domain.Services.BoundedContext;
+using NewCRM.Domain.Services.Interface;
+using NewCRM.Web.Filter;
+using NewCrmCore.Application.Services;
+using NewCrmCore.Application.Services.Interface;
+using NewCrmCore.Domain.Services.BoundedContext;
+using NewCrmCore.Domain.Services.Interface;
 
 namespace NewCrmCore.Web
 {
@@ -29,11 +31,10 @@ namespace NewCrmCore.Web
 			services.AddTransient<IDeskServices, DeskServices>();
 			services.AddTransient<IWallpaperServices, WallpaperServices>();
 			services.AddTransient<ISkinServices, SkinServices>();
-			services.AddTransient<ICommentService, CommentService>();
 			services.AddTransient<ILoggerServices, LoggerServices>();
 
 			services.AddTransient<IAccountContext, AccountContext>();
-			services.AddTransient<IAppContext, AppContext>();
+			services.AddTransient<IAppContext, NewCRM.Domain.Services.BoundedContext.AppContext>();
 			services.AddTransient<IDeskContext, DeskContext>();
 			services.AddTransient<ILoggerContext, LoggerContext>();
 			services.AddTransient<IMemberContext, MemberContext>();

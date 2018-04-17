@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NewCrmCore.Infrastructure.CommonTools;
 
 namespace NewCRM.Web.Filter
 {
@@ -68,9 +69,11 @@ namespace NewCRM.Web.Filter
 			}
 			else
 			{
-				var response = new ResponseModel<dynamic>();
-				response.IsSuccess = false;
-				response.Message = message;
+				var response = new ResponseModel<dynamic>
+				{
+					IsSuccess = false,
+					Message = message
+				};
 
 				filterContext.Result = new JsonResult(response)
 				{

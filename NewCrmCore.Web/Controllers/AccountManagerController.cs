@@ -53,7 +53,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 获取所有账户
 		/// </summary>
 		[HttpGet]
-		public ActionResult Accounts(String accountName, String accountType, Int32 pageIndex, Int32 pageSize)
+		public async Task<ActionResult> Accounts(String accountName, String accountType, Int32 pageIndex, Int32 pageSize)
 		{
 			var response = new ResponseModels<IList<AccountDto>>();
 
@@ -61,12 +61,12 @@ namespace NewCrmCore.Web.Controllers
 			new Parameter().Validate(accountName).Validate(accountType);
 			#endregion
 
-			var accounts = AccountServices.GetAccounts(accountName, accountType, pageIndex, pageSize, out var totalCount);
-			if (accounts != null)
+			var result = await AccountServices.GetAccountsAsync(accountName, accountType, pageIndex, pageSize);
+			if (result != null)
 			{
-				response.TotalCount = totalCount;
+				response.TotalCount = result.TotalCount;
 				response.Message = "获取账户列表成功";
-				response.Model = accounts;
+				response.Model = result.Models;
 				response.IsSuccess = true;
 			}
 

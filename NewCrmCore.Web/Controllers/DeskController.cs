@@ -1,7 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NewCrmCore.Application.Services.Interface;
+using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
+using NewLibCore;
+using NewLibCore.Validate;
 
 namespace NewCrmCore.Web.Controllers
 {
@@ -149,7 +155,7 @@ namespace NewCrmCore.Web.Controllers
 			response.Message = "更新图标成功";
 			response.Model = ProfileManager.FileUrl + newIcon;
 
-			return Json(response, JsonRequestBehavior.AllowGet);
+			return Json(response );
 		}
 
 		/// <summary>

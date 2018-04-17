@@ -80,7 +80,7 @@ namespace NewCrmCore.Web.Controllers
 
 			var response = new ResponseModel<AccountDto>();
 
-			var account = await AccountServices.LoginAsync(loginParameter.Name, loginParameter.Password, Request.HttpContext.Connection.RemoteIpAddress);
+			var account = await AccountServices.LoginAsync(loginParameter.Name, loginParameter.Password, Request.HttpContext.Connection.RemoteIpAddress.ToString());
 			if (account != null)
 			{
 				var cookieTimeout = loginParameter.IsRememberPasswrod ? DateTime.Now.AddDays(7) : DateTime.Now.AddMinutes(30);

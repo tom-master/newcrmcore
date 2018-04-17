@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
+using NewLibCore.Validate;
 
 namespace NewCrmCore.Web.Controllers
 {
@@ -36,7 +39,7 @@ namespace NewCrmCore.Web.Controllers
 			response.IsSuccess = true;
 			response.Model = "头像上传成功";
 
-			return Json(response, JsonRequestBehavior.AllowGet);
+			return Json(response);
 		}
 
 		/// <summary>
@@ -90,7 +93,7 @@ namespace NewCrmCore.Web.Controllers
 			#endregion
 
 			var result = await AccountServices.CheckPasswordAsync(AccountId, param);
-			return Json(result ? new { status = "y", info = "" } : new { status = "n", info = "原始密码错误" }, JsonRequestBehavior.AllowGet);
+			return Json(result ? new { status = "y", info = "" } : new { status = "n", info = "原始密码错误" });
 		}
 	}
 }
