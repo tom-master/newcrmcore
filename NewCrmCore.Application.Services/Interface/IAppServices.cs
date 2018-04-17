@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure.CommonTools;
 
 namespace NewCrmCore.Application.Services.Interface
 {
@@ -31,13 +32,13 @@ namespace NewCrmCore.Application.Services.Interface
 		/// 获取所有的app
 		/// </summary>
 		/// <returns></returns>
-		List<AppDto> GetApps(Int32 accountId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize, out Int32 totalCount);
+		Task<PagingModel<AppDto>> GetAppsAsync(Int32 accountId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize);
 
 		/// <summary>
 		/// 获取用户的app
 		/// </summary>
 		/// <returns></returns>
-		List<AppDto> GetAccountApps(Int32 accountId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize, out Int32 totalCount);
+		Task<PagingModel<AppDto>> GetAccountAppsAsync(Int32 accountId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize);
 
 		/// <summary>
 		/// 根据appId获取App

@@ -128,7 +128,7 @@ namespace NewCrmCore.Web.Controllers
 			response.Message = "载入之前上传的壁纸成功";
 			response.Model = result;
 
-			return Json(response, JsonRequestBehavior.AllowGet);
+			return Json(response);
 		}
 
 		/// <summary>

@@ -74,8 +74,7 @@ namespace NewCrmCore.Application.Services
 
 			return await Task.Run(() =>
 			{
-				var totalCount = 0;
-				var result = _accountContext.GetAccounts(accountName, accountType, pageIndex, pageSize, out totalCount);
+				var result = _accountContext.GetAccounts(accountName, accountType, pageIndex, pageSize, out var totalCount);
 				var pagingModel = new PagingModel<AccountDto>();
 				pagingModel.TotalCount = totalCount;
 				pagingModel.Models = result.Select(s => new AccountDto

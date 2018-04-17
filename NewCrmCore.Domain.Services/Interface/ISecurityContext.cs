@@ -22,7 +22,7 @@ namespace NewCrmCore.Domain.Services.Interface
 		/// <summary>
 		/// 获取角色列表
 		/// </summary>
-		List<Role> GetRolesAsync(String roleName, Int32 pageIndex, Int32 pageSize, out Int32 totalCount);
+		List<Role> GetRoles(String roleName, Int32 pageIndex, Int32 pageSize, out Int32 totalCount);
 
 		/// <summary>
 		/// 检查授权

@@ -8,6 +8,7 @@ using NewCrmCore.Domain.Services;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Infrastructure.CommonTools.CustomException;
 using NewLibCore;
 using NewLibCore.Validate;
@@ -56,47 +57,59 @@ namespace NewCrmCore.Application.Services
 			return await _appContext.GetAccountDevelopAppCountAndNotReleaseAppCountAsync(accountId);
 		}
 
-		public List<AppDto> GetApps(Int32 accountId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
+		public async Task<PagingModel<AppDto>> GetAppsAsync(Int32 accountId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize)
 		{
 			new Parameter().Validate(accountId, true).Validate(orderId).Validate(searchText).Validate(pageIndex, true).Validate(pageSize);
-
-			var result = _appContext.GetApps(accountId, appTypeId, orderId, searchText, pageIndex, pageSize, out totalCount);
-			return result.Select(app => new AppDto
+			return await Task.Run(() =>
 			{
-				AppTypeId = app.AppTypeId,
-				AccountId = app.AccountId,
-				AddTime = app.AddTime.ToString("yyyy-MM-dd"),
-				UseCount = app.UseCount,
-				StartCount = app.StarCount,
-				Name = app.Name,
-				IconUrl = app.IsIconByUpload ? ProfileManager.FileUrl + app.IconUrl : app.IconUrl,
-				Remark = app.Remark,
-				AppStyle = (Int32)app.AppStyle,
-				Id = app.Id,
-				IsInstall = app.IsInstall
-			}).ToList();
+				var result = _appContext.GetApps(accountId, appTypeId, orderId, searchText, pageIndex, pageSize, out var totalCount);
+				return new PagingModel<AppDto>
+				{
+					TotalCount = totalCount,
+					Models = result.Select(app => new AppDto
+					{
+						AppTypeId = app.AppTypeId,
+						AccountId = app.AccountId,
+						AddTime = app.AddTime.ToString("yyyy-MM-dd"),
+						UseCount = app.UseCount,
+						StartCount = app.StarCount,
+						Name = app.Name,
+						IconUrl = app.IsIconByUpload ? ProfileManager.FileUrl + app.IconUrl : app.IconUrl,
+						Remark = app.Remark,
+						AppStyle = (Int32)app.AppStyle,
+						Id = app.Id,
+						IsInstall = app.IsInstall
+					}).ToList()
+				};
+			});
 		}
 
-		public List<AppDto> GetAccountApps(Int32 accountId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
+		public async Task<PagingModel<AppDto>> GetAccountAppsAsync(Int32 accountId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
 		{
 			new Parameter().Validate(accountId, true).Validate(searchText).Validate(appTypeId, true).Validate(appStyleId, true).Validate(pageIndex).Validate(pageSize);
 
-			var result = _appContext.GetAccountApps(accountId, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize, out totalCount);
-			var appTypes = AsyncContext.Run(() => GetAppTypesAsync());
-			   
-			return result.Select(app => new AppDto 
+			return await Task.Run(async () =>
 			{
-				Name = app.Name,
-				AppStyle = (Int32)app.AppStyle,
-				AppTypeName = appTypes.FirstOrDefault(appType => appType.Id == app.AppTypeId).Name,
-				UseCount = app.UseCount,
-				Id = app.Id,
-				IconUrl = app.IconUrl,
-				AppAuditState = (Int32)app.AppAuditState,
-				IsRecommand = app.IsRecommand,
-				AccountId = app.AccountId,
-				IsIconByUpload = app.IsIconByUpload
-			}).ToList();
+				var result = _appContext.GetAccountApps(accountId, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize, out var totalCount);
+				var appTypes = await GetAppTypesAsync();
+				return new PagingModel<AppDto>
+				{
+					TotalCount = totalCount,
+					Models = result.Select(app => new AppDto
+					{
+						Name = app.Name,
+						AppStyle = (Int32)app.AppStyle,
+						AppTypeName = appTypes.FirstOrDefault(appType => appType.Id == app.AppTypeId).Name,
+						UseCount = app.UseCount,
+						Id = app.Id,
+						IconUrl = app.IconUrl,
+						AppAuditState = (Int32)app.AppAuditState,
+						IsRecommand = app.IsRecommand,
+						AccountId = app.AccountId,
+						IsIconByUpload = app.IsIconByUpload
+					}).ToList()
+				};
+			});
 		}
 
 		public async Task<AppDto> GetAppAsync(Int32 appId)
