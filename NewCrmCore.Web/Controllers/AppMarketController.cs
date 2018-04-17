@@ -2,8 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NewCrmCore.Application.Services.Interface;
+using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
+using NewLibCore;
+using NewLibCore.Validate;
 
 namespace NewCrmCore.Web.Controllers
 {
@@ -99,24 +105,24 @@ namespace NewCrmCore.Web.Controllers
 		/// 获取所有的app
 		/// </summary>
 		[HttpGet]
-		public ActionResult GetApps(Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize)
+		public async Task<ActionResult> GetApps(Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize)
 		{
 			var response = new ResponseModels<IList<AppDto>>();
 
-			var result = _appServices.GetApps(AccountId, appTypeId, orderId, searchText, pageIndex, pageSize, out var totalCount);
+			var result = await _appServices.GetAppsAsync(AccountId, appTypeId, orderId, searchText, pageIndex, pageSize);
 			if (result != null)
 			{
-				response.TotalCount = totalCount;
+				response.TotalCount = result.TotalCount;
 				response.IsSuccess = true;
 				response.Message = "app列表获取成功";
-				response.Model = result;
+				response.Model = result.Models;
 			}
 			else
 			{
 				response.Message = "app列表获取失败";
 			}
 
-			return Json(response, JsonRequestBehavior.AllowGet);
+			return Json(response);
 		}
 
 		/// <summary> 
@@ -159,23 +165,23 @@ namespace NewCrmCore.Web.Controllers
 		/// 获取开发者（用户）的app
 		/// </summary>
 		[HttpGet]
-		public ActionResult GetAccountApps(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
+		public async Task<ActionResult> GetAccountApps(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
 		{
 			var response = new ResponseModels<IList<AppDto>>();
-			var result = _appServices.GetAccountApps(AccountId, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize, out var totalCount);
+			var result = await _appServices.GetAccountAppsAsync(AccountId, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize);
 			if (result != null)
 			{
-				response.TotalCount = totalCount;
+				response.TotalCount = result.TotalCount;
 				response.IsSuccess = true;
 				response.Message = "app列表获取成功";
-				response.Model = result;
+				response.Model = result.Models;
 			}
 			else
 			{
 				response.Message = "app列表获取失败";
 			}
 
-			return Json(response, JsonRequestBehavior.AllowGet);
+			return Json(response);
 		}
 
 		/// <summary>
@@ -213,7 +219,7 @@ namespace NewCrmCore.Web.Controllers
 			response.Message = "更新图标成功";
 			response.Model = ProfileManager.FileUrl + newIcon;
 
-			return Json(response, JsonRequestBehavior.AllowGet);
+			return Json(response);
 		}
 
 		/// <summary>
