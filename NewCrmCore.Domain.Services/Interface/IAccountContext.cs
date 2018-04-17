@@ -28,7 +28,7 @@ namespace NewCrmCore.Domain.Services.Interface
 		/// <summary>
 		/// 获取所有账户
 		/// </summary>
-		Task<PagingModel<Account>> GetAccountsAsync(String accountName, String accountType, Int32 pageIndex, Int32 pageSize);
+		List<Account> GetAccounts(String accountName, String accountType, Int32 pageIndex, Int32 pageSize, out Int32 totalCount);
 
 		/// <summary>
 		/// 获取单个账户

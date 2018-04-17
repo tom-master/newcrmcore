@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure.CommonTools;
 
 namespace NewCrmCore.Application.Services.Interface
 {
@@ -33,7 +34,7 @@ namespace NewCrmCore.Application.Services.Interface
 		/// <param name="pageSize"></param>
 		/// <param name="totalCount"></param>
 		/// <returns></returns>
-		List<AccountDto> GetAccounts(String accountName, String accountType, Int32 pageIndex, Int32 pageSize, out Int32 totalCount);
+		Task<PagingModel<AccountDto>> GetAccountsAsync(String accountName, String accountType, Int32 pageIndex, Int32 pageSize);
 
 		/// <summary>
 		/// 根据用户id获取用户

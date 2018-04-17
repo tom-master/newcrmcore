@@ -86,74 +86,72 @@ namespace NewCRM.Domain.Services.BoundedContext
 			});
 		}
 
-		public async Task<PagingModel<App>> GetAppsAsync(Int32 accountId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize)
+		public List<App> GetApps(Int32 accountId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
 		{
 			new Parameter().Validate(accountId, true).Validate(orderId).Validate(searchText).Validate(pageIndex, true).Validate(pageSize);
 
-			return await Task.Run(() =>
+			using (var dataStore = new DataStore())
 			{
-				using (var dataStore = new DataStore())
+				var parameters = new List<SqlParameter>
 				{
-					var parameters = new List<SqlParameter>
-					{
-						new SqlParameter("@AppAuditState", (Int32)AppAuditState.Pass),
-						new SqlParameter("@AppReleaseState", (Int32)AppReleaseState.Release)
-					};
+					new SqlParameter("@AppAuditState", (Int32)AppAuditState.Pass),
+					new SqlParameter("@AppReleaseState", (Int32)AppReleaseState.Release)
+				};
 
-					var where = new StringBuilder();
-					where.Append($@" WHERE 1=1 AND a.IsDeleted=0 AND a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState");
-					if (appTypeId != 0 && appTypeId != -1)//全部app
+				var where = new StringBuilder();
+				where.Append($@" WHERE 1=1 AND a.IsDeleted=0 AND a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState");
+				if (appTypeId != 0 && appTypeId != -1)//全部app
+				{
+					parameters.Add(new SqlParameter("@AppTypeId", appTypeId));
+					where.Append($@" AND a.AppTypeId=@AppTypeId");
+				}
+				else
+				{
+					if (appTypeId == -1)//用户制作的app
 					{
-						parameters.Add(new SqlParameter("@AppTypeId", appTypeId));
-						where.Append($@" AND a.AppTypeId=@AppTypeId");
+						parameters.Add(new SqlParameter("@accountId", accountId));
+						where.Append($@" AND a.AccountId=@accountId");
 					}
-					else
-					{
-						if (appTypeId == -1)//用户制作的app
-						{
-							parameters.Add(new SqlParameter("@accountId", accountId));
-							where.Append($@" AND a.AccountId=@accountId");
-						}
-					}
-					if (!String.IsNullOrEmpty(searchText))//关键字搜索
-					{
-						parameters.Add(new SqlParameter("@Name", $@"%{searchText}%"));
-						where.Append($@" AND a.Name LIKE @Name");
-					}
+				}
+				if (!String.IsNullOrEmpty(searchText))//关键字搜索
+				{
+					parameters.Add(new SqlParameter("@Name", $@"%{searchText}%"));
+					where.Append($@" AND a.Name LIKE @Name");
+				}
 
-					var orderBy = new StringBuilder();
-					switch (orderId)
+				var orderBy = new StringBuilder();
+				switch (orderId)
+				{
+					case 1:
 					{
-						case 1:
-						{
-							orderBy.Append($@" ORDER BY aa.AddTime DESC");
-							break;
-						}
-						case 2:
-						{
-							orderBy.Append($@" ORDER BY aa.UseCount DESC");
-							break;
-						}
-						case 3:
-						{
-							orderBy.Append($@" ORDER BY aa.StarCount DESC");
-							break;
-						}
+						orderBy.Append($@" ORDER BY aa.AddTime DESC");
+						break;
 					}
-
-					var paging = new PagingModel<App>();
-					#region totalCount
+					case 2:
 					{
-						var sql = $@"SELECT COUNT(*) FROM dbo.App AS a 
+						orderBy.Append($@" ORDER BY aa.UseCount DESC");
+						break;
+					}
+					case 3:
+					{
+						orderBy.Append($@" ORDER BY aa.StarCount DESC");
+						break;
+					}
+				}
+
+				var paging = new PagingModel<App>();
+				#region totalCount
+				{
+					var sql = $@"SELECT COUNT(*) FROM dbo.App AS a 
                                 LEFT JOIN dbo.AppStar AS a1
                                 ON a1.AppId=a.Id AND a1.IsDeleted=0 {where}";
-						paging.TotalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
-					}
-					#endregion
+					totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
+				}
+				#endregion
 
-					#region sql
-					{
-						var sql = $@"SELECT TOP (@pageSize) * FROM 
+				#region sql
+				{
+					var sql = $@"SELECT TOP (@pageSize) * FROM 
                                 (
 	                                SELECT 
 	                                    ROW_NUMBER() OVER(ORDER BY a.AddTime DESC) AS rownumber,
@@ -180,90 +178,85 @@ namespace NewCRM.Domain.Services.BoundedContext
 	                                    LEFT JOIN dbo.Member AS a1 ON a1.AccountId=a.AccountId AND a1.AppId=a.Id AND a1.IsDeleted=0
                                         {where}
                                 ) AS aa WHERE aa.rownumber>@pageSize*(@pageIndex-1) {orderBy}";
-						parameters.Add(new SqlParameter("@pageSize", pageSize));
-						parameters.Add(new SqlParameter("@pageIndex", pageIndex));
-						paging.Models = dataStore.Find<App>(sql, parameters);
-					}
-					#endregion
-
-					return paging;
+					parameters.Add(new SqlParameter("@pageSize", pageSize));
+					parameters.Add(new SqlParameter("@pageIndex", pageIndex));
+					return dataStore.Find<App>(sql, parameters);
 				}
-			});
+				#endregion
+			}
 		}
 
-		public async Task<PagingModel<App>> GetAccountAppsAsync(Int32 accountId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
+		public List<App> GetAccountApps(Int32 accountId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
 		{
 			new Parameter().Validate(accountId, true).Validate(searchText).Validate(appTypeId, true).Validate(appStyleId, true).Validate(pageIndex).Validate(pageSize);
-			return await Task.Run(() =>
+			using (var dataStore = new DataStore())
 			{
-				using (var dataStore = new DataStore())
+				var where = new StringBuilder();
+				where.Append($@" WHERE 1=1 AND a.IsDeleted=0 ");
+				var parameters = new List<SqlParameter>();
+
+				#region 条件筛选
+
+				if (accountId != default(Int32))
 				{
-					var where = new StringBuilder();
-					where.Append($@" WHERE 1=1 AND a.IsDeleted=0 ");
-					var parameters = new List<SqlParameter>();
+					parameters.Add(new SqlParameter("@accountId", accountId));
+					where.Append($@" AND a.AccountId=@accountId");
+				}
 
-					#region 条件筛选
+				//应用名称
+				if (!String.IsNullOrEmpty(searchText))
+				{
+					parameters.Add(new SqlParameter("@Name", $@"%{searchText}%"));
+					where.Append($@" AND a.Name LIKE @Name");
+				}
 
-					if (accountId != default(Int32))
+				//应用所属类型
+				if (appTypeId != 0)
+				{
+					parameters.Add(new SqlParameter("AppTypeId", appTypeId));
+					where.Append($@" AND a.AppTypeId=@AppTypeId");
+				}
+
+				//应用样式
+				if (appStyleId != 0)
+				{
+					var appStyle = EnumExtensions.ToEnum<AppStyle>(appStyleId);
+					parameters.Add(new SqlParameter("@AppStyle", (Int32)appStyle));
+					where.Append($@" AND a.AppStyle=@AppStyle");
+				}
+
+				if ((appState + "").Length > 0)
+				{
+					//app发布状态
+					var stats = appState.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+					if (stats[0] == "AppReleaseState")
 					{
-						parameters.Add(new SqlParameter("@accountId", accountId));
-						where.Append($@" AND a.AccountId=@accountId");
+						var appReleaseState = EnumExtensions.ToEnum<AppReleaseState>(Int32.Parse(stats[1]));
+						parameters.Add(new SqlParameter("AppReleaseState", (Int32)appReleaseState));
+						where.Append($@" AND a.AppReleaseState=@AppReleaseState ");
 					}
 
-					//应用名称
-					if (!String.IsNullOrEmpty(searchText))
+					//app应用审核状态
+					if (stats[0] == "AppAuditState")
 					{
-						parameters.Add(new SqlParameter("@Name", $@"%{searchText}%"));
-						where.Append($@" AND a.Name LIKE @Name");
+						var appAuditState = EnumExtensions.ToEnum<AppAuditState>(Int32.Parse(stats[1]));
+						parameters.Add(new SqlParameter("@AppAuditState", (Int32)appAuditState));
+						where.Append($@" AND a.AppAuditState=@AppAuditState");
 					}
+				}
 
-					//应用所属类型
-					if (appTypeId != 0)
-					{
-						parameters.Add(new SqlParameter("AppTypeId", appTypeId));
-						where.Append($@" AND a.AppTypeId=@AppTypeId");
-					}
+				#endregion
 
-					//应用样式
-					if (appStyleId != 0)
-					{
-						var appStyle = EnumExtensions.ToEnum<AppStyle>(appStyleId);
-						parameters.Add(new SqlParameter("@AppStyle", (Int32)appStyle));
-						where.Append($@" AND a.AppStyle=@AppStyle");
-					}
+				#region totalCount
+				{
+					var sql = $@"SELECT COUNT(*) FROM dbo.App AS a {where} ";
+					totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
+				}
+				#endregion
 
-					if ((appState + "").Length > 0)
-					{
-						//app发布状态
-						var stats = appState.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-						if (stats[0] == "AppReleaseState")
-						{
-							var appReleaseState = EnumExtensions.ToEnum<AppReleaseState>(Int32.Parse(stats[1]));
-							parameters.Add(new SqlParameter("AppReleaseState", (Int32)appReleaseState));
-							where.Append($@" AND a.AppReleaseState=@AppReleaseState ");
-						}
-
-						//app应用审核状态
-						if (stats[0] == "AppAuditState")
-						{
-							var appAuditState = EnumExtensions.ToEnum<AppAuditState>(Int32.Parse(stats[1]));
-							parameters.Add(new SqlParameter("@AppAuditState", (Int32)appAuditState));
-							where.Append($@" AND a.AppAuditState=@AppAuditState");
-						}
-					}
-
-					#endregion
-					var paging = new PagingModel<App>();
-					#region totalCount
-					{
-						var sql = $@"SELECT COUNT(*) FROM dbo.App AS a {where} ";
-						paging.TotalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
-					}
-					#endregion
-
-					#region sql
-					{
-						var sql = $@"SELECT TOP (@pageSize) * FROM 
+				#region sql
+				{
+					var sql = $@"SELECT TOP (@pageSize) * FROM 
 								(
 									SELECT
 									ROW_NUMBER() OVER(ORDER BY a.Id DESC) AS rownumber,
@@ -279,15 +272,13 @@ namespace NewCRM.Domain.Services.BoundedContext
 									a.IsIconByUpload
 									FROM dbo.App AS a {where} 
 								) AS aa WHERE aa.rownumber>@pageSize*(@pageIndex-1)";
-						parameters.Add(new SqlParameter("@pageIndex", pageIndex));
-						parameters.Add(new SqlParameter("@pageSize", pageSize));
-						paging.Models = dataStore.Find<App>(sql, parameters);
-					}
-					#endregion
-
-					return paging;
+					parameters.Add(new SqlParameter("@pageIndex", pageIndex));
+					parameters.Add(new SqlParameter("@pageSize", pageSize));
+					return dataStore.Find<App>(sql, parameters);
 				}
-			});
+				#endregion
+
+			}
 		}
 
 		public async Task<App> GetAppAsync(Int32 appId)

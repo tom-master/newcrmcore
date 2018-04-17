@@ -370,4 +370,15 @@
     <None Include="wwwroot\js\webuploader-0.1.5\webuploader.withoutimage.js" />
     <None Include="wwwroot\js\webuploader-0.1.5\webuploader.withoutimage.min.js" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="NewCrmCore.Dto">
+      <HintPath>..\NewCrmCore.Dto\bin\Debug\netcoreapp2.0\NewCrmCore.Dto.dll</HintPath>
+    </Reference>
+    <Reference Include="NewCrmCore.Infrastructure">
+      <HintPath>..\NewCrmCore.Infrastructure\bin\Debug\netcoreapp2.0\NewCrmCore.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="NewLibCore">
+      <HintPath>..\..\dev\NewLib\NewLibCore\bin\Debug\netstandard2.0\NewLibCore.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

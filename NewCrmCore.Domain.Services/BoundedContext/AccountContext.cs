@@ -135,44 +135,41 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			});
 		}
 
-		public async Task<PagingModel<Account>> GetAccountsAsync(String accountName, String accountType, Int32 pageIndex, Int32 pageSize)
+		public List<Account> GetAccounts(String accountName, String accountType, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
 		{
 			new Parameter().Validate(pageIndex).Validate(pageSize);
 
-			return await Task.Run(() =>
+			var where = new StringBuilder();
+			where.Append("WHERE 1=1 AND a.IsDeleted=0 ");
+			var parameters = new List<SqlParameter>();
+			if (!String.IsNullOrEmpty(accountName))
 			{
-				var where = new StringBuilder();
-				where.Append("WHERE 1=1 AND a.IsDeleted=0 ");
-				var parameters = new List<SqlParameter>();
-				if (!String.IsNullOrEmpty(accountName))
+				parameters.Add(new SqlParameter("@name", accountName));
+				where.Append(" AND a.Name=@name");
+			}
+
+			if (!String.IsNullOrEmpty(accountType))
+			{
+				var isAdmin = (EnumExtensions.ToEnum<AccountType>(Int32.Parse(accountType)) == AccountType.Admin) ? 1 : 0;
+				parameters.Add(new SqlParameter("@isAdmin", isAdmin));
+				where.Append($@" AND a.IsAdmin=@isAdmin");
+			}
+
+			using (var dataStore = new DataStore())
+			{
+
+
+				#region totalCount
 				{
-					parameters.Add(new SqlParameter("@name", accountName));
-					where.Append(" AND a.Name=@name");
-				}
-
-				if (!String.IsNullOrEmpty(accountType))
-				{
-					var isAdmin = (EnumExtensions.ToEnum<AccountType>(Int32.Parse(accountType)) == AccountType.Admin) ? 1 : 0;
-					parameters.Add(new SqlParameter("@isAdmin", isAdmin));
-					where.Append($@" AND a.IsAdmin=@isAdmin");
-				}
-
-				using (var dataStore = new DataStore())
-				{
-
-					var paging = new PagingModel<Account>();
-
-					#region totalCount
-					{
-						var sql = $@"SELECT COUNT(*) FROM dbo.Account AS a 
+					var sql = $@"SELECT COUNT(*) FROM dbo.Account AS a 
                                  INNER JOIN dbo.Config AS a1 ON a1.AccountId=a.Id AND a1.IsDeleted=0 {where} ";
-						paging.TotalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
-					}
-					#endregion
+					totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
+				}
+				#endregion
 
-					#region sql
-					{
-						var sql = $@"SELECT TOP (@pageSize) * FROM 
+				#region sql
+				{
+					var sql = $@"SELECT TOP (@pageSize) * FROM 
                             (
 	                            SELECT ROW_NUMBER() OVER(ORDER BY a.Id DESC) AS rownumber,
                                 a.Id,a.IsAdmin,a.Name,a.IsDisable,a1.AccountFace 
@@ -181,14 +178,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                            ON a1.AccountId=a.Id AND a1.IsDeleted=0
 	                            {where} 
                             ) AS a2 WHERE a2.rownumber>@pageSize*(@pageIndex-1)";
-						parameters.Add(new SqlParameter("@pageSize", pageSize));
-						parameters.Add(new SqlParameter("@pageIndex", pageIndex));
-						paging.Models = dataStore.Find<Account>(sql, parameters);
-					}
-					#endregion
-					return paging;
+					parameters.Add(new SqlParameter("@pageSize", pageSize));
+					parameters.Add(new SqlParameter("@pageIndex", pageIndex));
+					return dataStore.Find<Account>(sql, parameters);
 				}
-			});
+				#endregion
+			}
 		}
 
 		public async Task<Account> GetAccountAsync(Int32 accountId)

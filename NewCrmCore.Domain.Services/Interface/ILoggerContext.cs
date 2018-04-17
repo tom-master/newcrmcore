@@ -17,6 +17,6 @@ namespace NewCrmCore.Domain.Services.Interface
 		/// 获取日志列表
 		/// </summary>
 		/// <returns></returns>
-		Task<PagingModel<Log>> GetLogsAsync(Int32 accountId, Int32 logLevel, Int32 pageIndex, Int32 pageSize);
+		List<Log> GetLogs(Int32 accountId, Int32 logLevel, Int32 pageIndex, Int32 pageSize, out Int32 totalCount);
 	}
 }

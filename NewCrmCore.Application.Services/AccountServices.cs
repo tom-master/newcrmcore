@@ -70,28 +70,33 @@ namespace NewCrmCore.Application.Services
 
 		public async Task<PagingModel<AccountDto>> GetAccountsAsync(String accountName, String accountType, Int32 pageIndex, Int32 pageSize)
 		{
-			new Parameter().Validate(accountName).Validate(accountType); 
-			 
-			var result = await _accountContext.GetAccountsAsync(accountName, accountType, pageIndex, pageSize); 
+			new Parameter().Validate(accountName).Validate(accountType);
 
-			result.Models.Select(s => new AccountDto
-			{ 
-				Id = s.Id,   
-				IsAdmin = s.IsAdmin,
-				Name = s.Name, 
-				AccountFace = ProfileManager.FileUrl + s.AccountFace,     
-				IsDisable = s.IsDisable
-			}).ToList();    
-			 
-			return result;c 
+			return await Task.Run(() =>
+			{
+				var totalCount = 0;
+				var result = _accountContext.GetAccounts(accountName, accountType, pageIndex, pageSize, out totalCount);
+				var pagingModel = new PagingModel<AccountDto>();
+				pagingModel.TotalCount = totalCount;
+				pagingModel.Models = result.Select(s => new AccountDto
+				{
+					Id = s.Id,
+					IsAdmin = s.IsAdmin,
+					Name = s.Name,
+					AccountFace = ProfileManager.FileUrl + s.AccountFace,
+					IsDisable = s.IsDisable
+				}).ToList();
+
+				return pagingModel;
+			});
 		}
-		 
+
 		public async Task<AccountDto> GetAccountAsync(Int32 accountId)
-		{  
+		{
 			new Parameter().Validate(accountId);
-			  
+
 			var account = await CacheHelper.GetCache(new AccountCacheKey(accountId), () => _accountContext.GetAccountAsync(accountId));
-			if (account == null) 
+			if (account == null)
 			{
 				throw new BusinessException("该用户可能已被禁用或被删除，请联系管理员");
 			}
@@ -225,5 +230,6 @@ namespace NewCrmCore.Application.Services
 			new Parameter().Validate(accountId);
 			await _accountContext.RemoveAccountAsync(accountId);
 		}
+
 	}
 }
