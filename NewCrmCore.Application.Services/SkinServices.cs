@@ -70,6 +70,5 @@ namespace NewCrmCore.Application.Services
 		}
 
 		#endregion
-
 	}
 }

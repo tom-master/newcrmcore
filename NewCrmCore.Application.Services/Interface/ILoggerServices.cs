@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure.CommonTools;
 
 namespace NewCrmCore.Application.Services.Interface
 {
@@ -9,6 +9,6 @@ namespace NewCrmCore.Application.Services.Interface
 	{
 		Task AddLoggerAsync(LogDto log);
 
-		IList<LogDto> GetLogs(Int32 accountId, Int32 logLevel, Int32 pageIndex, Int32 pageSize, out Int32 totalCount);
+		Task<PagingModel<LogDto>> GetLogsAsync(Int32 accountId, Int32 logLevel, Int32 pageIndex, Int32 pageSize);
 	}
 }

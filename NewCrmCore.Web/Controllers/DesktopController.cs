@@ -1,8 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NewCrmCore.Application.Services.Interface;
+using NewCrmCore.Domain.ValueObject;
+using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure.CommonTools;
+using NewCrmCore.Infrastructure.CommonTools.CustomHelper;
 using NewCrmCore.Web.Controllers.ControllerHelper;
+using NewLibCore;
+using NewLibCore.Validate;
 using Newtonsoft.Json;
 
 namespace NewCrmCore.Web.Controllers
@@ -72,22 +80,15 @@ namespace NewCrmCore.Web.Controllers
 
 			var response = new ResponseModel<AccountDto>();
 
-			var account = await AccountServices.LoginAsync(loginParameter.Name, loginParameter.Password, Request.ServerVariables["REMOTE_ADDR"]);
+			var account = await AccountServices.LoginAsync(loginParameter.Name, loginParameter.Password, Request.HttpContext.Connection.RemoteIpAddress);
 			if (account != null)
 			{
+				var cookieTimeout = loginParameter.IsRememberPasswrod ? DateTime.Now.AddDays(7) : DateTime.Now.AddMinutes(30);
 				response.Message = "登陆成功";
 				response.IsSuccess = true;
-				Response.Cookies.Add(new HttpCookie("memberID")
-				{
-					Value = account.Id.ToString(),
-					Expires = loginParameter.IsRememberPasswrod ? DateTime.Now.AddDays(7) : DateTime.Now.AddMinutes(30)
-				});
 
-				Response.Cookies.Add(new HttpCookie("Account")
-				{
-					Value = JsonConvert.SerializeObject(new { AccountFace = ProfileManager.FileUrl + account.AccountFace, account.Name }),
-					Expires = loginParameter.IsRememberPasswrod ? DateTime.Now.AddDays(7) : DateTime.Now.AddMinutes(30)
-				});
+				Response.Cookies.Append("memberID", account.Id.ToString(), new CookieOptions { Expires = cookieTimeout });
+				Response.Cookies.Append("Account", JsonConvert.SerializeObject(new { AccountFace = ProfileManager.FileUrl + account.AccountFace, account.Name }), new CookieOptions { Expires = cookieTimeout });
 			}
 			return Json(response);
 		}
@@ -110,7 +111,7 @@ namespace NewCrmCore.Web.Controllers
 				response.IsSuccess = true;
 			}
 
-			return Json(response, JsonRequestBehavior.AllowGet);
+			return Json(response);
 		}
 
 		/// <summary>
@@ -136,7 +137,7 @@ namespace NewCrmCore.Web.Controllers
 			response.Model = skinName;
 			response.Message = "初始化皮肤成功";
 
-			return Json(response, JsonRequestBehavior.AllowGet);
+			return Json(response);
 		}
 
 		/// <summary>
@@ -151,14 +152,14 @@ namespace NewCrmCore.Web.Controllers
 			if (result.IsBing)
 			{
 				result.WallpaperSource = WallpaperSource.Bing.ToString().ToLower();
-				result.WallpaperUrl = AsyncContext.Run(BingHelper.GetEverydayBackgroundImageAsync);
+				result.WallpaperUrl = await BingHelper.GetEverydayBackgroundImageAsync();
 			}
 
 			response.IsSuccess = true;
 			response.Message = "初始化壁纸成功";
 			response.Model = result;
 
-			return Json(response, JsonRequestBehavior.AllowGet);
+			return Json(response);
 		}
 
 		/// <summary>
@@ -173,7 +174,7 @@ namespace NewCrmCore.Web.Controllers
 			response.Message = "初始化应用码头成功";
 			response.Model = result;
 
-			return Json(response, JsonRequestBehavior.AllowGet);
+			return Json(response);
 		}
 
 		/// <summary>
@@ -188,7 +189,7 @@ namespace NewCrmCore.Web.Controllers
 			response.Message = "获取我的应用成功";
 			response.Model = result;
 
-			return Json(response, JsonRequestBehavior.AllowGet);
+			return Json(response);
 		}
 
 		/// <summary>
@@ -203,7 +204,7 @@ namespace NewCrmCore.Web.Controllers
 			response.Message = "获取用户头像成功";
 			response.Model = ProfileManager.FileUrl + result;
 
-			return Json(response, JsonRequestBehavior.AllowGet);
+			return Json(response);
 		}
 
 		/// <summary>
@@ -238,7 +239,7 @@ namespace NewCrmCore.Web.Controllers
 				isResize = internalMemberResult.IsResize
 			};
 
-			return Json(response, JsonRequestBehavior.AllowGet);
+			return Json(response);
 		}
 	}
 }

@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NewCrmCore.Application.Services.Interface;
+using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
+using NewLibCore.Validate;
 
 namespace NewCrmCore.Web.Controllers
 {
@@ -59,7 +64,7 @@ namespace NewCrmCore.Web.Controllers
 			response.Model = result;
 			response.TotalCount = result.Count;
 
-			return Json(response, JsonRequestBehavior.AllowGet);
+			return Json(response);
 
 		}
 

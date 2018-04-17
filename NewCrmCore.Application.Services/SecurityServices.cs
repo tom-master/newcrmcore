@@ -6,6 +6,7 @@ using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Domain.Entitys.Security;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Infrastructure.CommonTools.CustomException;
 using NewLibCore.Validate;
 
@@ -39,16 +40,23 @@ namespace NewCrmCore.Application.Services
 			};
 		}
 
-		public List<RoleDto> GetRoles(String roleName, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
+		public async Task<PagingModel<RoleDto>> GetRolesAsync(String roleName, Int32 pageIndex, Int32 pageSize)
 		{
 			new Parameter().Validate(roleName);
-			var result = _securityContext.GetRoles(roleName, pageIndex, pageSize, out totalCount);
-			return result.Select(s => new RoleDto
+			return await Task.Run(() =>
 			{
-				Name = s.Name,
-				Id = s.Id,
-				RoleIdentity = s.RoleIdentity
-			}).ToList();
+				var result = _securityContext.GetRoles(roleName, pageIndex, pageSize, out var totalCount);
+				return new PagingModel<RoleDto>
+				{
+					TotalCount = totalCount,
+					Models = result.Select(s => new RoleDto
+					{
+						Name = s.Name,
+						Id = s.Id,
+						RoleIdentity = s.RoleIdentity
+					}).ToList()
+				};
+			});
 		}
 
 		public async Task<Boolean> CheckPermissionsAsync(Int32 accessAppId, params Int32[] roleIds)
