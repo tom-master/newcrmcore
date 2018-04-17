@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NewCrmCore.Application.Services.Interface;
+using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
+using NewLibCore.Validate;
 
 namespace NewCrmCore.Web.Controllers
 {
@@ -38,7 +43,7 @@ namespace NewCrmCore.Web.Controllers
 				ViewData["Account"] = await AccountServices.GetAccountAsync(accountId);
 			}
 
-			ViewData["Roles"] = _securityServices.GetRoles("", 1, 100, out var totalCount);
+			ViewData["Roles"] = (await _securityServices.GetRolesAsync("", 1, 100)).Models;
 			return View();
 		}
 
@@ -65,7 +70,7 @@ namespace NewCrmCore.Web.Controllers
 				response.IsSuccess = true;
 			}
 
-			return Json(response, JsonRequestBehavior.AllowGet);
+			return Json(response);
 		}
 
 		/// <summary>
@@ -92,11 +97,7 @@ namespace NewCrmCore.Web.Controllers
 				await AccountServices.ModifyAccountAsync(dto);
 				if (!String.IsNullOrEmpty(dto.Password))
 				{
-					Response.Cookies.Add(new HttpCookie("memberID")
-					{
-						Value = AccountId.ToString(),
-						Expires = DateTime.Now.AddDays(-1)
-					});
+					Response.Cookies.Append("memberID", AccountId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
 				}
 				response.Message = "修改账户成功";
 				response.IsSuccess = true;
@@ -135,7 +136,7 @@ namespace NewCrmCore.Web.Controllers
 			response.IsSuccess = true;
 			response.Message = "移除账户成功";
 
-			return Json(response, JsonRequestBehavior.AllowGet);
+			return Json(response);
 		}
 
 		/// <summary>
@@ -162,7 +163,7 @@ namespace NewCrmCore.Web.Controllers
 				response.Message = "启用账户成功";
 			}
 
-			return Json(response, JsonRequestBehavior.AllowGet);
+			return Json(response);
 		}
 
 		#region private method
@@ -172,7 +173,7 @@ namespace NewCrmCore.Web.Controllers
 			var roleIds = new List<RoleDto>();
 			if ((forms["val_roleIds"] + "").Length > 0)
 			{
-				roleIds = forms["val_roleIds"].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(role => new RoleDto
+				roleIds = forms["val_roleIds"].ToString().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(role => new RoleDto
 				{
 					Id = Int32.Parse(role)
 				}).ToList();

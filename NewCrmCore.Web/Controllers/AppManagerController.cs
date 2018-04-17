@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using NewCrmCore.Application.Services.Interface;
+using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
+using NewLibCore.Validate;
 
 namespace NewCrmCore.Web.Controllers
 {
-	public class AppManagerController : BaseController
+	public class AppManagerController: BaseController
 	{
 		private readonly IAppServices _appServices;
 
@@ -38,7 +42,7 @@ namespace NewCrmCore.Web.Controllers
 		public async Task<ActionResult> AppAudit(Int32 appId)
 		{
 			AppDto appResult = null;
-			if(appId != 0)// 如果appId为0则是新创建app
+			if (appId != 0)// 如果appId为0则是新创建app
 			{
 				appResult = await _appServices.GetAppAsync(appId);
 				ViewData["AppState"] = appResult.AppAuditState;
@@ -55,22 +59,21 @@ namespace NewCrmCore.Web.Controllers
 		/// 获取所有的app
 		/// </summary>
 		[HttpGet]
-		public ActionResult GetApps(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
+		public async Task<ActionResult> GetApps(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
 		{
 			var response = new ResponseModels<IList<AppDto>>();
-			var result = _appServices.GetAccountApps(0, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize, out var totalCount);
-
-			foreach(var appDto in result)
+			var result = await _appServices.GetAccountAppsAsync(0, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize);
+			foreach (var appDto in result.Models)
 			{
 				appDto.IsCreater = appDto.AccountId == AccountId;
 			}
 
-			response.TotalCount = totalCount;
+			response.TotalCount = result.TotalCount;
 			response.IsSuccess = true;
 			response.Message = "获取app列表成功";
-			response.Model = result;
+			response.Model = result.Models;
 
-			return Json(response, JsonRequestBehavior.AllowGet);
+			return Json(response);
 		}
 
 		/// <summary>
