@@ -33,13 +33,13 @@ namespace NewCRM.Web.Filter
 				return;
 			}
 
-			DependencyResolver.Current.GetService<ILoggerServices>().AddLoggerAsync(new LogDto
+			((ILoggerServices)filterContext.HttpContext.RequestServices.GetService(typeof(ILoggerServices))).AddLoggerAsync(new LogDto
 			{
 				Action = filterContext.RouteData.Values["action"].ToString(),
 				Controller = filterContext.RouteData.Values["controller"].ToString(),
 				ExceptionMessage = filterContext.Exception.Message,
 				Track = filterContext.Exception.StackTrace,
-				LogLevelEnum = exception ? LogLevel.Warning : LogLevel.Error,
+				LogLevelEnum = exception ? NewCrmCore.Domain.ValueObject.LogLevel.Warning : NewCrmCore.Domain.ValueObject.LogLevel.Error,
 				Id = new Random().Next(1, Int32.MaxValue),
 				AddTime = DateTime.Now.ToString(CultureInfo.CurrentCulture)
 			});
