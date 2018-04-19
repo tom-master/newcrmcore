@@ -209,7 +209,7 @@ namespace NewCrmCore.Web.Controllers
 		{
 			var response = new ResponseModel<dynamic>();
 
-			var skinPath = Server.MapPath(ConfigurationManager.AppSettings["PlantFormSkinPath"]);
+			var skinPath = ;
 			var result = _skinServices.GetAllSkinAsync(skinPath);
 			response.IsSuccess = true;
 			response.Message = "获取皮肤列表成功";
