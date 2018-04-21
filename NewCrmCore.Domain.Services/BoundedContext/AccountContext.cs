@@ -9,7 +9,6 @@ using NewCrmCore.Domain.Entitys.Security;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
-using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Infrastructure.CommonTools.CustomException;
 using NewLibCore;
 using NewLibCore.Data.Mapper.InternalDataStore;

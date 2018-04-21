@@ -10,6 +10,7 @@ using NewCrmCore.Application.Services;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Domain.Services.BoundedContext;
 using NewCrmCore.Domain.Services.Interface;
+using NewLibCore;
 
 namespace NewCrmCore.Web
 {
@@ -42,6 +43,8 @@ namespace NewCrmCore.Web
 			services.AddTransient<ISkinContext, SkinContext>();
 			services.AddTransient<IWallpaperContext, WallpaperContext>();
 
+			AppSettings.Init(Configuration.GetSection("AppSetting"));
+
 			services.AddMvc(config =>
 			{
 				//config.Filters.Add(new HandleErrorAttribute());
@@ -62,8 +65,11 @@ namespace NewCrmCore.Web
 			{
 				app.UseExceptionHandler("/Error");
 			}
-			app.UseForwardedHeaders(new ForwardedHeadersOptions { ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto });
 
+			
+
+			app.UseForwardedHeaders(new ForwardedHeadersOptions { ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto });
+			
 			app.UseStaticFiles();
 			app.UseMvcWithDefaultRoute();
 			app.UseMvc(routes =>

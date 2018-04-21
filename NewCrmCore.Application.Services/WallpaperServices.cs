@@ -60,7 +60,7 @@ namespace NewCrmCore.Application.Services
 				ShortUrl = s.ShortUrl,
 				Source = (Int32)s.Source,
 				Title = s.Title,
-				Url = ProfileManager.FileUrl + s.Url,
+				Url = AppSettings.Get<Settings>().FileUrl + s.Url,
 				Width = s.Width
 			}).ToList();
 		}

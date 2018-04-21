@@ -37,7 +37,7 @@ namespace NewCrmCore.Web.Controllers
 			if (Request.Cookies["memberID"] != null)
 			{
 				var account = await AccountServices.GetAccountAsync(AccountId);
-				account.AccountFace = ProfileManager.FileUrl + account.AccountFace;
+				account.AccountFace = AppSettings.Get<Settings>().FileUrl + account.AccountFace;
 				ViewData["Account"] = account;
 				ViewData["AccountConfig"] = await AccountServices.GetConfigAsync(account.Id);
 				ViewData["Desks"] = (await AccountServices.GetConfigAsync(account.Id)).DefaultDeskCount;
@@ -88,7 +88,7 @@ namespace NewCrmCore.Web.Controllers
 				response.IsSuccess = true;
 
 				Response.Cookies.Append("memberID", account.Id.ToString(), new CookieOptions { Expires = cookieTimeout });
-				Response.Cookies.Append("Account", JsonConvert.SerializeObject(new { AccountFace = ProfileManager.FileUrl + account.AccountFace, account.Name }), new CookieOptions { Expires = cookieTimeout });
+				Response.Cookies.Append("Account", JsonConvert.SerializeObject(new { AccountFace = AppSettings.Get<Settings>().FileUrl + account.AccountFace, account.Name }), new CookieOptions { Expires = cookieTimeout });
 			}
 			return Json(response);
 		}
@@ -202,7 +202,7 @@ namespace NewCrmCore.Web.Controllers
 			var result = (await AccountServices.GetConfigAsync(AccountId)).AccountFace;
 			response.IsSuccess = true;
 			response.Message = "获取用户头像成功";
-			response.Model = ProfileManager.FileUrl + result;
+			response.Model = AppSettings.Get<Settings>().FileUrl + result;
 
 			return Json(response);
 		}
@@ -228,7 +228,7 @@ namespace NewCrmCore.Web.Controllers
 				memberId = internalMemberResult.Id,
 				appId = internalMemberResult.AppId,
 				name = internalMemberResult.Name,
-				icon = internalMemberResult.IsIconByUpload ? ProfileManager.FileUrl + internalMemberResult.IconUrl : internalMemberResult.IconUrl,
+				icon = internalMemberResult.IsIconByUpload ? AppSettings.Get<Settings>().FileUrl + internalMemberResult.IconUrl : internalMemberResult.IconUrl,
 				width = internalMemberResult.Width,
 				height = internalMemberResult.Height,
 				isOnDock = internalMemberResult.IsOnDock,

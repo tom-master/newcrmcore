@@ -34,4 +34,5 @@ namespace NewCrmCore.Dto
 
 		public String Prefix { get; set; }
 	}
+
 }

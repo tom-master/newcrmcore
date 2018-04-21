@@ -42,7 +42,7 @@ namespace NewCrmCore.Application.Services
 			new Parameter().Validate(accountId);
 
 			var result = await _appContext.GetTodayRecommendAsync(accountId);
-			result.AppIcon = result.IsIconByUpload ? ProfileManager.FileUrl + result.AppIcon : result.AppIcon;
+			result.AppIcon = result.IsIconByUpload ? AppSettings.Get<Settings>().FileUrl + result.AppIcon : result.AppIcon;
 			if (result == null)
 			{
 				return new TodayRecommendAppDto();
@@ -74,7 +74,7 @@ namespace NewCrmCore.Application.Services
 						UseCount = app.UseCount,
 						StartCount = app.StarCount,
 						Name = app.Name,
-						IconUrl = app.IsIconByUpload ? ProfileManager.FileUrl + app.IconUrl : app.IconUrl,
+						IconUrl = app.IsIconByUpload ? AppSettings.Get<Settings>().FileUrl + app.IconUrl : app.IconUrl,
 						Remark = app.Remark,
 						AppStyle = (Int32)app.AppStyle,
 						Id = app.Id,

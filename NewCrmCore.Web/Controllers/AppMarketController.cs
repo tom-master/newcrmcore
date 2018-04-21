@@ -217,7 +217,7 @@ namespace NewCrmCore.Web.Controllers
 
 			response.IsSuccess = true;
 			response.Message = "更新图标成功";
-			response.Model = ProfileManager.FileUrl + newIcon;
+			response.Model = AppSettings.Get<Settings>().FileUrl + newIcon;
 
 			return Json(response);
 		}

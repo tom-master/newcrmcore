@@ -9,9 +9,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="NewCrmCore.Domain">
-      <HintPath>..\NewCrmCore.Domain\bin\Debug\netcoreapp2.0\NewCrmCore.Domain.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\NewCrmCore.Domain\NewCrmCore.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="NewLibCore">
       <HintPath>..\..\dev\NewLib\NewLibCore\bin\Debug\netstandard2.0\NewLibCore.dll</HintPath>
     </Reference>

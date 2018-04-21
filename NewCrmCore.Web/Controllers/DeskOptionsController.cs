@@ -177,7 +177,7 @@ namespace NewCrmCore.Web.Controllers
 
 			response.Message = "壁纸上传成功";
 			response.IsSuccess = true;
-			response.Model = new { Id = wallpaperResult.Item1, Url = ProfileManager.FileUrl + wallpaperResult.Item2 };
+			response.Model = new { Id = wallpaperResult.Item1, Url = AppSettings.Get<Settings>().FileUrl + wallpaperResult.Item2 };
 			return Json(response );
 		}
 
@@ -209,7 +209,7 @@ namespace NewCrmCore.Web.Controllers
 		{
 			var response = new ResponseModel<dynamic>();
 
-			var skinPath = ;
+			var skinPath ="" ;
 			var result = _skinServices.GetAllSkinAsync(skinPath);
 			response.IsSuccess = true;
 			response.Message = "获取皮肤列表成功";

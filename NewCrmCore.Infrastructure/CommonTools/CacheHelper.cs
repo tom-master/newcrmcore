@@ -10,7 +10,7 @@ namespace NewCrmCore.Domain.Services
 
 	public class CacheHelper
 	{
-		private static readonly ICacheQueryProvider _cacheQuery = new DefaultRedisQueryProvider();
+		private static readonly ICacheQueryProvider _cacheQuery = new DefaultRedisQueryProvider(0,"");
 
 		public static async Task<TModel> GetCache<TModel>(CacheKeyBase cache, Func<Task<TModel>> func) where TModel : class
 		{

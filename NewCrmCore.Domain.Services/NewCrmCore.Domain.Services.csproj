@@ -5,15 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="NewCrmCore.Domain">
-      <HintPath>..\NewCrmCore.Domain\bin\Debug\netcoreapp2.0\NewCrmCore.Domain.dll</HintPath>
-    </Reference>
-    <Reference Include="NewCrmCore.Dto">
-      <HintPath>..\NewCrmCore.Dto\bin\Debug\netcoreapp2.0\NewCrmCore.Dto.dll</HintPath>
-    </Reference>
-    <Reference Include="NewCrmCore.Infrastructure">
-      <HintPath>..\NewCrmCore.Infrastructure\bin\Debug\netcoreapp2.0\NewCrmCore.Infrastructure.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\NewCrmCore.Domain\NewCrmCore.Domain.csproj" />
+    <ProjectReference Include="..\NewCrmCore.Dto\NewCrmCore.Dto.csproj" />
+    <ProjectReference Include="..\NewCrmCore.Infrastructure\NewCrmCore.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="NewLibCore">
       <HintPath>..\..\dev\NewLib\NewLibCore\bin\Debug\netstandard2.0\NewLibCore.dll</HintPath>
     </Reference>

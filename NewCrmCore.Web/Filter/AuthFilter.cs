@@ -41,7 +41,7 @@ namespace NewCRM.Web.Filter
 				return;
 			}
 
-			var account = AsyncContext.Run(() => DependencyResolver.Current.GetService<IAccountServices>().GetAccountAsync(Int32.Parse(filterContext.HttpContext.Request.Cookies["memberID"].Value)));
+			var account = AsyncContext.Run(() => filterContext.HttpContext.RequestServices.GetService<IAccountServices>().GetAccountAsync(Int32.Parse(filterContext.HttpContext.Request.Cookies["memberID"].Value)));
 
 			var appId = Int32.Parse(filterContext.HttpContext.Request.Query["id"]);
 			var isPermission = AsyncContext.Run(() => DependencyResolver.Current.GetService<ISecurityServices>().CheckPermissionsAsync(appId, account.Roles.Select(role => role.Id).ToArray()));
