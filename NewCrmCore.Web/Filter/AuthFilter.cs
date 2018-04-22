@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Infrastructure.CommonTools;
 
 namespace NewCRM.Web.Filter
 {
-	public class AuthFilter: IAuthorizationFilter
+	public class AuthFilter: IAsyncAuthorizationFilter
 	{
 
-		public void OnAuthorization(AuthorizationFilterContext filterContext)
+		public async Task OnAuthorizationAsync(AuthorizationFilterContext filterContext)
 		{
 
 			if (ValidateToken(filterContext))
@@ -41,10 +43,10 @@ namespace NewCRM.Web.Filter
 				return;
 			}
 
-			var account = AsyncContext.Run(() => filterContext.HttpContext.RequestServices.GetService<IAccountServices>().GetAccountAsync(Int32.Parse(filterContext.HttpContext.Request.Cookies["memberID"].Value)));
+			var account = await ((IAccountServices)filterContext.HttpContext.RequestServices.GetService(typeof(IAccountServices))).GetAccountAsync(Int32.Parse(filterContext.HttpContext.Request.Cookies["memberID"]));
 
 			var appId = Int32.Parse(filterContext.HttpContext.Request.Query["id"]);
-			var isPermission = AsyncContext.Run(() => DependencyResolver.Current.GetService<ISecurityServices>().CheckPermissionsAsync(appId, account.Roles.Select(role => role.Id).ToArray()));
+			var isPermission = await ((ISecurityServices)filterContext.HttpContext.RequestServices.GetService(typeof(ISecurityServices))).CheckPermissionsAsync(appId, account.Roles.Select(role => role.Id).ToArray());
 
 			if (!isPermission)
 			{
