@@ -14,7 +14,7 @@ namespace NewCRM.Web.Filter
 		public async Task OnAuthorizationAsync(AuthorizationFilterContext filterContext)
 		{
 
-			if (ValidateToken(filterContext))
+			if (!ValidateToken(filterContext))
 			{
 				ReturnMessage(filterContext, "token验证失败！");
 				return;
@@ -86,8 +86,8 @@ namespace NewCRM.Web.Filter
 
 		private Boolean ValidateToken(AuthorizationFilterContext filterContext)
 		{
-			var token = filterContext.RouteData.Values["token"].ToString();
-			if (String.IsNullOrEmpty(token))
+			var token = filterContext.RouteData.Values["token"];
+			if (token == null || String.IsNullOrEmpty(token.ToString()))
 			{
 				//return false;
 			}
