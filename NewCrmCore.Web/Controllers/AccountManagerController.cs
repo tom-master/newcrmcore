@@ -15,10 +15,12 @@ namespace NewCrmCore.Web.Controllers
 	public class AccountManagerController: BaseController
 	{
 		private readonly ISecurityServices _securityServices;
+		private readonly IAccountServices _accountServices;
 
-		public AccountManagerController(ISecurityServices securityServices)
+		public AccountManagerController(ISecurityServices securityServices, IAccountServices accountServices)
 		{
 			_securityServices = securityServices;
+			_accountServices = accountServices;
 		}
 
 		#region 页面
@@ -40,7 +42,7 @@ namespace NewCrmCore.Web.Controllers
 		{
 			if (accountId != 0)
 			{
-				ViewData["Account"] = await AccountServices.GetAccountAsync(accountId);
+				ViewData["Account"] = await _accountServices.GetAccountAsync(accountId);
 			}
 
 			ViewData["Roles"] = (await _securityServices.GetRolesAsync("", 1, 100)).Models;
@@ -61,7 +63,7 @@ namespace NewCrmCore.Web.Controllers
 			new Parameter().Validate(accountName).Validate(accountType);
 			#endregion
 
-			var result = await AccountServices.GetAccountsAsync(accountName, accountType, pageIndex, pageSize);
+			var result = await _accountServices.GetAccountsAsync(accountName, accountType, pageIndex, pageSize);
 			if (result != null)
 			{
 				response.TotalCount = result.TotalCount;
@@ -87,14 +89,14 @@ namespace NewCrmCore.Web.Controllers
 			var dto = WapperAccountDto(forms);
 			if (dto.Id == 0)
 			{
-				await AccountServices.AddNewAccountAsync(dto);
+				await _accountServices.AddNewAccountAsync(dto);
 
 				response.Message = "创建新账户成功";
 				response.IsSuccess = true;
 			}
 			else
 			{
-				await AccountServices.ModifyAccountAsync(dto);
+				await _accountServices.ModifyAccountAsync(dto);
 				if (!String.IsNullOrEmpty(dto.Password))
 				{
 					Response.Cookies.Append("memberID", AccountId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
@@ -117,7 +119,7 @@ namespace NewCrmCore.Web.Controllers
 			new Parameter().Validate(param);
 			#endregion
 
-			var result = await AccountServices.CheckAccountNameExistAsync(param);
+			var result = await _accountServices.CheckAccountNameExistAsync(param);
 			return Json(result ? new { status = "y", info = "" } : new { status = "n", info = "用户名已存在" });
 		}
 
@@ -132,7 +134,7 @@ namespace NewCrmCore.Web.Controllers
 			#endregion
 
 			var response = new ResponseModel<String>();
-			await AccountServices.RemoveAccountAsync(accountId);
+			await _accountServices.RemoveAccountAsync(accountId);
 			response.IsSuccess = true;
 			response.Message = "移除账户成功";
 
@@ -152,13 +154,13 @@ namespace NewCrmCore.Web.Controllers
 			var response = new ResponseModel<String>();
 			if (!Boolean.Parse(isDisable))
 			{
-				await AccountServices.DisableAsync(accountId);
+				await _accountServices.DisableAsync(accountId);
 				response.IsSuccess = true;
 				response.Message = "禁用账户成功";
 			}
 			else
 			{
-				await AccountServices.EnableAsync(accountId);
+				await _accountServices.EnableAsync(accountId);
 				response.IsSuccess = true;
 				response.Message = "启用账户成功";
 			}

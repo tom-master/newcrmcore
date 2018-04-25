@@ -7,8 +7,6 @@ namespace NewCrmCore.Web.Controllers.ControllerHelper
 {
 	public class BaseController: Controller
 	{
-		protected IAccountServices AccountServices { get; set; }
-
 		protected Int32 AccountId
 		{
 			get

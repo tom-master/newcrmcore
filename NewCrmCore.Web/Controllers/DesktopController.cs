@@ -18,10 +18,12 @@ namespace NewCrmCore.Web.Controllers
 	public class DesktopController: BaseController
 	{
 		private readonly IDeskServices _deskServices;
+		private readonly IAccountServices _accountServices;
 
-		public DesktopController(IDeskServices deskServices)
+		public DesktopController(IDeskServices deskServices, IAccountServices accountServices)
 		{
 			_deskServices = deskServices;
+			_accountServices = accountServices;
 		}
 
 		#region 页面
@@ -36,11 +38,11 @@ namespace NewCrmCore.Web.Controllers
 			ViewBag.Title = "桌面";
 			if (Request.Cookies["memberID"] != null)
 			{
-				var account = await AccountServices.GetAccountAsync(AccountId);
+				var account = await _accountServices.GetAccountAsync(AccountId);
 				account.AccountFace = AppSettings.Get<Settings>().FileUrl + account.AccountFace;
 				ViewData["Account"] = account;
-				ViewData["AccountConfig"] = await AccountServices.GetConfigAsync(account.Id);
-				ViewData["Desks"] = (await AccountServices.GetConfigAsync(account.Id)).DefaultDeskCount;
+				ViewData["AccountConfig"] = await _accountServices.GetConfigAsync(account.Id);
+				ViewData["Desks"] = (await _accountServices.GetConfigAsync(account.Id)).DefaultDeskCount;
 
 				return View();
 			}
@@ -80,7 +82,7 @@ namespace NewCrmCore.Web.Controllers
 
 			var response = new ResponseModel<AccountDto>();
 
-			var account = await AccountServices.LoginAsync(loginParameter.Name, loginParameter.Password, Request.HttpContext.Connection.RemoteIpAddress.ToString());
+			var account = await _accountServices.LoginAsync(loginParameter.Name, loginParameter.Password, Request.HttpContext.Connection.RemoteIpAddress.ToString());
 			if (account != null)
 			{
 				var cookieTimeout = loginParameter.IsRememberPasswrod ? DateTime.Now.AddDays(7) : DateTime.Now.AddMinutes(30);
@@ -105,7 +107,7 @@ namespace NewCrmCore.Web.Controllers
 			#endregion
 
 			var response = new ResponseModel();
-			var result = await AccountServices.UnlockScreenAsync(AccountId, unlockPassword);
+			var result = await _accountServices.UnlockScreenAsync(AccountId, unlockPassword);
 			if (result)
 			{
 				response.IsSuccess = true;
@@ -120,7 +122,7 @@ namespace NewCrmCore.Web.Controllers
 		[HttpPost]
 		public async Task<ActionResult> Logout()
 		{
-			await AccountServices.LogoutAsync(AccountId);
+			await _accountServices.LogoutAsync(AccountId);
 			InternalLogout();
 			return new EmptyResult();
 		}
@@ -132,7 +134,7 @@ namespace NewCrmCore.Web.Controllers
 		public async Task<ActionResult> GetSkin()
 		{
 			var response = new ResponseModel<String>();
-			var skinName = (await AccountServices.GetConfigAsync(AccountId)).Skin;
+			var skinName = (await _accountServices.GetConfigAsync(AccountId)).Skin;
 			response.IsSuccess = true;
 			response.Model = skinName;
 			response.Message = "初始化皮肤成功";
@@ -147,7 +149,7 @@ namespace NewCrmCore.Web.Controllers
 		public async Task<ActionResult> GetWallpaper()
 		{
 			var response = new ResponseModel<ConfigDto>();
-			var result = await AccountServices.GetConfigAsync(AccountId);
+			var result = await _accountServices.GetConfigAsync(AccountId);
 
 			if (result.IsBing)
 			{
@@ -169,7 +171,7 @@ namespace NewCrmCore.Web.Controllers
 		public async Task<ActionResult> GetDockPos()
 		{
 			var response = new ResponseModel<String>();
-			var result = (await AccountServices.GetConfigAsync(AccountId)).DockPosition;
+			var result = (await _accountServices.GetConfigAsync(AccountId)).DockPosition;
 			response.IsSuccess = true;
 			response.Message = "初始化应用码头成功";
 			response.Model = result;
@@ -199,7 +201,7 @@ namespace NewCrmCore.Web.Controllers
 		public async Task<ActionResult> GetAccountFace()
 		{
 			var response = new ResponseModel<String>();
-			var result = (await AccountServices.GetConfigAsync(AccountId)).AccountFace;
+			var result = (await _accountServices.GetConfigAsync(AccountId)).AccountFace;
 			response.IsSuccess = true;
 			response.Message = "获取用户头像成功";
 			response.Model = AppSettings.Get<Settings>().FileUrl + result;
