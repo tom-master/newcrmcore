@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
 using NewLibCore.Validate;
@@ -10,6 +11,14 @@ namespace NewCrmCore.Web.Controllers
 {
 	public class AccountSettingController: BaseController
 	{
+
+		private IAccountServices _accountServices;
+
+		public AccountSettingController(IAccountServices accountServices)
+		{
+			_accountServices = accountServices;
+		}
+
 		#region 页面
 
 		/// <summary>
@@ -18,7 +27,7 @@ namespace NewCrmCore.Web.Controllers
 		[HttpGet]
 		public async Task<ActionResult> Index()
 		{
-			var account = await AccountServices.GetAccountAsync(AccountId);
+			var account = await _accountServices.GetAccountAsync(AccountId);
 			return View(account);
 		}
 
@@ -35,7 +44,7 @@ namespace NewCrmCore.Web.Controllers
 			#endregion
 
 			var response = new ResponseModel();
-			await AccountServices.ModifyAccountFaceAsync(AccountId, accountFace);
+			await _accountServices.ModifyAccountFaceAsync(AccountId, accountFace);
 			response.IsSuccess = true;
 			response.Model = "头像上传成功";
 
@@ -54,7 +63,7 @@ namespace NewCrmCore.Web.Controllers
 
 			var response = new ResponseModel();
 
-			await AccountServices.ModifyPasswordAsync(AccountId, forms["password"], Int32.Parse(forms["lockPwdIsEqLoginPwd"]) == 1);
+			await _accountServices.ModifyPasswordAsync(AccountId, forms["password"], Int32.Parse(forms["lockPwdIsEqLoginPwd"]) == 1);
 			InternalLogout();
 
 			response.Message = "账户密码修改成功";
@@ -74,7 +83,7 @@ namespace NewCrmCore.Web.Controllers
 			#endregion
 
 			var response = new ResponseModel();
-			await AccountServices.ModifyLockScreenPasswordAsync(AccountId, forms["lockpassword"]);
+			await _accountServices.ModifyLockScreenPasswordAsync(AccountId, forms["lockpassword"]);
 
 			response.Message = "锁屏密码修改成功";
 			response.IsSuccess = true;
@@ -92,7 +101,7 @@ namespace NewCrmCore.Web.Controllers
 			new Parameter().Validate(param);
 			#endregion
 
-			var result = await AccountServices.CheckPasswordAsync(AccountId, param);
+			var result = await _accountServices.CheckPasswordAsync(AccountId, param);
 			return Json(result ? new { status = "y", info = "" } : new { status = "n", info = "原始密码错误" });
 		}
 	}

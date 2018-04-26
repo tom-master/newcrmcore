@@ -16,10 +16,12 @@ namespace NewCrmCore.Web.Controllers
 	public class AppMarketController: BaseController
 	{
 		private readonly IAppServices _appServices;
+		private readonly IAccountServices _accountServices;
 
-		public AppMarketController(IAppServices appServices)
+		public AppMarketController(IAppServices appServices, IAccountServices accountServices)
 		{
 			_appServices = appServices;
+			_accountServices = accountServices;
 		}
 
 		#region 页面
@@ -31,7 +33,7 @@ namespace NewCrmCore.Web.Controllers
 		[HttpGet]
 		public async Task<ActionResult> Index()
 		{
-			var account = await AccountServices.GetAccountAsync(AccountId);
+			var account = await _accountServices.GetAccountAsync(AccountId);
 			if (account.IsAdmin)
 			{
 				ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();

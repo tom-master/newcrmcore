@@ -19,16 +19,19 @@ namespace NewCrmCore.Web.Controllers
 		private readonly ISkinServices _skinServices;
 		private readonly IDeskServices _deskServices;
 		private readonly IAppServices _appServices;
+		private readonly IAccountServices _accountServices;
 
 		public DeskOptionsController(IWallpaperServices wallpaperServices,
 			ISkinServices skinServices,
 			IDeskServices deskServices,
-			IAppServices appServices)
+			IAppServices appServices,
+			IAccountServices accountServices)
 		{
 			_wallpaperServices = wallpaperServices;
 			_skinServices = skinServices;
 			_deskServices = deskServices;
 			_appServices = appServices;
+			_accountServices = accountServices;
 		}
 
 
@@ -41,7 +44,7 @@ namespace NewCrmCore.Web.Controllers
 		[HttpGet]
 		public async Task<ActionResult> SystemWallPaper()
 		{
-			ViewData["AccountConfig"] = await AccountServices.GetConfigAsync(AccountId);
+			ViewData["AccountConfig"] = await _accountServices.GetConfigAsync(AccountId);
 			ViewData["Wallpapers"] = await _wallpaperServices.GetWallpapersAsync();
 
 			return View();
@@ -54,7 +57,7 @@ namespace NewCrmCore.Web.Controllers
 		[HttpGet]
 		public async Task<ActionResult> CustomWallPaper()
 		{
-			ViewData["AccountConfig"] = await AccountServices.GetConfigAsync(AccountId);
+			ViewData["AccountConfig"] = await _accountServices.GetConfigAsync(AccountId);
 			return View();
 		}
 
@@ -75,8 +78,8 @@ namespace NewCrmCore.Web.Controllers
 		[HttpGet]
 		public async Task<ActionResult> DeskSet()
 		{
-			ViewData["AccountConfig"] = await AccountServices.GetConfigAsync(AccountId);
-			ViewData["Desks"] = (await AccountServices.GetConfigAsync(AccountId)).DefaultDeskCount;
+			ViewData["AccountConfig"] = await _accountServices.GetConfigAsync(AccountId);
+			ViewData["Desks"] = (await _accountServices.GetConfigAsync(AccountId)).DefaultDeskCount;
 
 			return View();
 		}
@@ -178,7 +181,7 @@ namespace NewCrmCore.Web.Controllers
 			response.Message = "壁纸上传成功";
 			response.IsSuccess = true;
 			response.Model = new { Id = wallpaperResult.Item1, Url = AppSettings.Get<Settings>().FileUrl + wallpaperResult.Item2 };
-			return Json(response );
+			return Json(response);
 		}
 
 		/// <summary>
@@ -209,13 +212,13 @@ namespace NewCrmCore.Web.Controllers
 		{
 			var response = new ResponseModel<dynamic>();
 
-			var skinPath ="" ;
+			var skinPath = "";
 			var result = _skinServices.GetAllSkinAsync(skinPath);
 			response.IsSuccess = true;
 			response.Message = "获取皮肤列表成功";
-			response.Model = new { result, currentSkin = (await AccountServices.GetConfigAsync(AccountId)).Skin };
+			response.Model = new { result, currentSkin = (await _accountServices.GetConfigAsync(AccountId)).Skin };
 
-			return Json(response );
+			return Json(response);
 
 		}
 

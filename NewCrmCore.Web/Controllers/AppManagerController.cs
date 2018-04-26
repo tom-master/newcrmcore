@@ -14,10 +14,12 @@ namespace NewCrmCore.Web.Controllers
 	public class AppManagerController: BaseController
 	{
 		private readonly IAppServices _appServices;
+		private readonly IAccountServices _accountServices;
 
-		public AppManagerController(IAppServices appServices)
+		public AppManagerController(IAppServices appServices,IAccountServices accountServices)
 		{
 			_appServices = appServices;
+			_accountServices = accountServices;
 		}
 
 		#region 页面
@@ -159,7 +161,7 @@ namespace NewCrmCore.Web.Controllers
 			new Parameter().Validate(param);
 			#endregion
 
-			var result = await AccountServices.CheckAppNameAsync(param);
+			var result = await _accountServices.CheckAppNameAsync(param);
 			return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "应用名称已存在" });
 		}
 
@@ -173,7 +175,7 @@ namespace NewCrmCore.Web.Controllers
 			new Parameter().Validate(param);
 			#endregion
 
-			var result = await AccountServices.CheckAppUrlAsync(param);
+			var result = await _accountServices.CheckAppUrlAsync(param);
 			return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "应用Url已存在" });
 		}
 	}
