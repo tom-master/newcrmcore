@@ -6,16 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="NewLibCore" Version="1.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NewCrmCore.Domain\NewCrmCore.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="NewLibCore">
-      <HintPath>..\..\dev\NewLib\NewLibCore\bin\Debug\netstandard2.0\NewLibCore.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

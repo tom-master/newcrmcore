@@ -5,9 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="NewLibCore.Data">
-      <HintPath>..\..\dev\NewLib\NewLibCore.Data\bin\Debug\netstandard2.0\NewLibCore.Data.dll</HintPath>
-    </Reference>
+    <PackageReference Include="NewLibCore.Data" Version="1.0.1" />
   </ItemGroup>
 
 </Project>

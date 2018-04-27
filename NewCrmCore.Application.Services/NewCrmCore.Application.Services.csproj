@@ -11,15 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\NewCrmCore.Domain.Services\NewCrmCore.Domain.Services.csproj" />
     <ProjectReference Include="..\NewCrmCore.Dto\NewCrmCore.Dto.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="NewLibCore">
-      <HintPath>..\..\dev\NewLib\NewLibCore\bin\Debug\netstandard2.0\NewLibCore.dll</HintPath>
-    </Reference>
-    <Reference Include="NewLibCore.Security">
-      <HintPath>..\..\dev\NewLib\NewLibCore.Security\bin\Debug\netstandard2.0\NewLibCore.Security.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\NewCrmCore.Infrastructure\NewCrmCore.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

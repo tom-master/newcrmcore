@@ -5,21 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NewLibCore" Version="1.0.2" />
+    <PackageReference Include="NewLibCore.Data" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NewCrmCore.Domain\NewCrmCore.Domain.csproj" />
     <ProjectReference Include="..\NewCrmCore.Dto\NewCrmCore.Dto.csproj" />
     <ProjectReference Include="..\NewCrmCore.Infrastructure\NewCrmCore.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="NewLibCore">
-      <HintPath>..\..\dev\NewLib\NewLibCore\bin\Debug\netstandard2.0\NewLibCore.dll</HintPath>
-    </Reference>
-    <Reference Include="NewLibCore.Data">
-      <HintPath>..\..\dev\NewLib\NewLibCore.Data\bin\Debug\netstandard2.0\NewLibCore.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="NewLibCore.Security">
-      <HintPath>..\..\dev\NewLib\NewLibCore.Security\bin\Debug\netstandard2.0\NewLibCore.Security.dll</HintPath>
-    </Reference>
     <Reference Include="System.Data.SqlClient">
       <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\system.data.sqlclient\4.4.3\ref\netstandard2.0\System.Data.SqlClient.dll</HintPath>
     </Reference>

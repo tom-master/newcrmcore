@@ -5,6 +5,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
+    <PackageReference Include="NewLibCore" Version="1.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
@@ -13,6 +15,7 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Views\Log\Index.cshtml" />
     <None Include="wwwroot\css\HoorayUI\globle.css" />
     <None Include="wwwroot\css\HoorayUI\index.css" />
     <None Include="wwwroot\css\HoorayUI\login.css" />
@@ -372,20 +375,8 @@
     <None Include="wwwroot\js\webuploader-0.1.5\webuploader.withoutimage.min.js" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NewCrmCore.Application.Services\NewCrmCore.Application.Services.csproj" />
     <ProjectReference Include="..\NewCrmCore.Dto\NewCrmCore.Dto.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="NewCrmCore.Application.Services">
-      <HintPath>..\NewCrmCore.Application.Services\bin\Debug\netcoreapp2.0\NewCrmCore.Application.Services.dll</HintPath>
-    </Reference>
-    <Reference Include="NewCrmCore.Domain.Services">
-      <HintPath>..\NewCrmCore.Domain.Services\bin\Debug\netcoreapp2.0\NewCrmCore.Domain.Services.dll</HintPath>
-    </Reference>
-    <Reference Include="NewCrmCore.Infrastructure">
-      <HintPath>..\NewCrmCore.Infrastructure\bin\Debug\netcoreapp2.0\NewCrmCore.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="NewLibCore">
-      <HintPath>..\..\dev\NewLib\NewLibCore\bin\Debug\netstandard2.0\NewLibCore.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\NewCrmCore.Infrastructure\NewCrmCore.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

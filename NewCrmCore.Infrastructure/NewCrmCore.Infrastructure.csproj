@@ -5,12 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="NewLibCore.Data">
-      <HintPath>..\..\dev\NewLib\NewLibCore.Data\bin\Debug\netstandard2.0\NewLibCore.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\newtonsoft.json\10.0.1\lib\netstandard1.3\Newtonsoft.Json.dll</HintPath>
-    </Reference>
+    <PackageReference Include="NewLibCore.Data" Version="1.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
 </Project>
