@@ -1,3 +1,4 @@
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -10,6 +11,7 @@ using NewCrmCore.Application.Services;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Domain.Services.BoundedContext;
 using NewCrmCore.Domain.Services.Interface;
+using NewCrmCore.Dto;
 using NewLibCore;
 
 namespace NewCrmCore.Web
@@ -43,7 +45,7 @@ namespace NewCrmCore.Web
 			services.AddTransient<ISkinContext, SkinContext>();
 			services.AddTransient<IWallpaperContext, WallpaperContext>();
 
-			AppSettings.Init(Configuration.GetSection("AppSetting"));
+			AppSettings.Init(new Settings(), "Settings");
 
 			services.AddMvc(config =>
 			{
@@ -76,7 +78,7 @@ namespace NewCrmCore.Web
 			{
 				routes.MapRoute(
 					name: "Default",
-					template: "{controller}/{action}/{id?}",defaults: new { controller = "desktop", action = "index" });
+					template: "{controller}/{action}/{id?}", defaults: new { controller = "desktop", action = "index" });
 			});
 		}
 	}
