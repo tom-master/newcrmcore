@@ -36,7 +36,7 @@ namespace NewCrmCore.Web.Controllers
 		public async Task<ActionResult> Index()
 		{
 			ViewBag.Title = "桌面";
-			if (Request.Cookies["memberID"] != null)
+			if (HttpContext.Request.Cookies["memberID"] != null)
 			{
 				var account = await _accountServices.GetAccountAsync(AccountId);
 				account.AccountFace = AppSettings.Get<Settings>().FileUrl + account.AccountFace;
@@ -89,8 +89,8 @@ namespace NewCrmCore.Web.Controllers
 				response.Message = "登陆成功";
 				response.IsSuccess = true;
 
-				Response.Cookies.Append("memberID", account.Id.ToString(), new CookieOptions { Expires = cookieTimeout });
-				Response.Cookies.Append("Account", JsonConvert.SerializeObject(new { AccountFace = AppSettings.Get<Settings>().FileUrl + account.AccountFace, account.Name }), new CookieOptions { Expires = cookieTimeout });
+				HttpContext.Response.Cookies.Append("memberID", account.Id.ToString(), new CookieOptions { Expires = cookieTimeout });
+				HttpContext.Response.Cookies.Append("Account", JsonConvert.SerializeObject(new { AccountFace = AppSettings.Get<Settings>().FileUrl + account.AccountFace, account.Name }), new CookieOptions { Expires = cookieTimeout });
 			}
 			return Json(response);
 		}
