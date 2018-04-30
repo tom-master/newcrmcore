@@ -5,8 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NewLibCore.Data" Version="1.0.3" />
+    <PackageReference Include="NewLibCore" Version="1.0.3" />
+    <PackageReference Include="NewLibCore.Data" Version="1.0.5" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="NewCrmCore.Dto">
+      <HintPath>..\NewCrmCore.Dto\bin\Debug\netcoreapp2.0\NewCrmCore.Dto.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

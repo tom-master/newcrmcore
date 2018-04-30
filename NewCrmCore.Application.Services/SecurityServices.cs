@@ -7,7 +7,6 @@ using NewCrmCore.Domain.Entitys.Security;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure.CommonTools;
-using NewCrmCore.Infrastructure.CommonTools.CustomException;
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Application.Services

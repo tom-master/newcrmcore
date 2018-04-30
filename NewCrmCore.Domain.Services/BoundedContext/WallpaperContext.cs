@@ -6,7 +6,7 @@ using NewCRM.Domain.Services.Interface;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
-using NewCrmCore.Infrastructure.CommonTools.CustomException;
+using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
 using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;

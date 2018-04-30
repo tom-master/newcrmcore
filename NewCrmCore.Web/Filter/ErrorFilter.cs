@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Globalization;
-using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Dto;
-using NewCrmCore.Infrastructure.CommonTools.CustomException;
+using NewCrmCore.Infrastructure.CommonTools;
 
 namespace NewCRM.Web.Filter
 {

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace NewCrmCore.Infrastructure.CommonTools.CustomHelper
+namespace NewCrmCore.Infrastructure.CommonTools
 {
 	public class BingHelper
 	{

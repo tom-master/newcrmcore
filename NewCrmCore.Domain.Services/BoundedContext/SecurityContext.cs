@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.Security;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Dto;
-using NewCrmCore.Infrastructure.CommonTools.CustomException;
+using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
 using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;

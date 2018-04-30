@@ -9,7 +9,6 @@ using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure.CommonTools;
-using NewCrmCore.Infrastructure.CommonTools.CustomException;
 using NewLibCore;
 using NewLibCore.Validate;
 using static NewCrmCore.Infrastructure.CommonTools.CacheKey;

@@ -2,15 +2,16 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using NewCrmCore.Infrastructure.CommonTools;
+using NewCrmCore.Dto;
+using NewLibCore;
 using NewLibCore.Data.Redis.InternalHelper;
 
-namespace NewCrmCore.Domain.Services
+namespace NewCrmCore.Infrastructure.CommonTools
 {
 
 	public class CacheHelper
 	{
-		private static readonly ICacheQueryProvider _cacheQuery = new DefaultRedisQueryProvider(0,"");
+		private static readonly ICacheQueryProvider _cacheQuery = new DefaultRedisQueryProvider(0, AppSettings.Get<Settings>().Redis.Connection);
 
 		public static async Task<TModel> GetCache<TModel>(CacheKeyBase cache, Func<Task<TModel>> func) where TModel : class
 		{

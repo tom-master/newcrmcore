@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Domain.Entitys.Agent;
-using NewCrmCore.Domain.Services;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure.CommonTools;
-using NewCrmCore.Infrastructure.CommonTools.CustomException;
 using NewLibCore;
 using NewLibCore.Security;
 using NewLibCore.Validate;
