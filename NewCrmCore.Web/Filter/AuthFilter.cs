@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Infrastructure.CommonTools;
 
-namespace NewCRM.Web.Filter
+namespace NewCrmCore.Web.Filter
 {
 	public class AuthFilter: IAsyncAuthorizationFilter
 	{

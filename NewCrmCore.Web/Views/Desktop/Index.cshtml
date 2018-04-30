@@ -1,4 +1,4 @@
-﻿@using NewCRM.Dto
+﻿@using NewCrmCore.Dto
 @{
 
     Layout = "~/Views/Shared/_LayoutRoot.cshtml";
@@ -8,8 +8,8 @@
     var desks = (Int32)ViewData["Desks"];
 }
 @section ParentCss{
-    <link href="@Url.Content("~/Scripts/HoorayLibs/hooraylibs.css")" rel="stylesheet" />
-    <link href="@Url.Content("~/Content/HoorayUI/css/index.css")" rel="stylesheet" />
+    <link href="~/js/HoorayLibs/hooraylibs.css" />
+    <link href="~/css/HoorayUI/index.css" />
 }
 <div class="loading"></div>
 <div id="desktop">

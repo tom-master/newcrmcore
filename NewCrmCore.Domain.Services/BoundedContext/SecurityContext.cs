@@ -12,7 +12,7 @@ using NewLibCore;
 using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;
 
-namespace NewCRM.Domain.Services.BoundedContext
+namespace NewCrmCore.Domain.Services.BoundedContext
 {
 	public class SecurityContext: ISecurityContext
 	{

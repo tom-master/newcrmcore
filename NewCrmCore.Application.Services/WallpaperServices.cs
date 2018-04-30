@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using NewCRM.Domain.Services.Interface;
+using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.ValueObject;

@@ -1,16 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using NewLibCore.Security;
 
 namespace NewCrmCore.Dto
 {
 	public class Settings
 	{
+		private String _fileUrl;
+
+
 		public Database Database { get; set; }
 
 		public String Skin { get; set; }
 
-		public String FileUrl { get; set; }
+		public String FileUrl
+		{
+			get
+			{
+				if (_fileUrl == null)
+				{
+					return "";
+				}
+
+				return SensitiveDataSafetyProvider.Decrypt(_fileUrl);
+			}
+			set
+			{
+				_fileUrl = value;
+			}
+		}
 
 		public Redis Redis { get; set; }
 

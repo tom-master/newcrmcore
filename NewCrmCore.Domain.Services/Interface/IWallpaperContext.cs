@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.System;
 
-namespace NewCRM.Domain.Services.Interface
+namespace NewCrmCore.Domain.Services.Interface
 {
 	public interface IWallpaperContext
 	{

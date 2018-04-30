@@ -7,7 +7,7 @@ using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure.CommonTools;
 
-namespace NewCRM.Web.Filter
+namespace NewCrmCore.Web.Filter
 {
 	public sealed class ErrorFilter: IExceptionFilter
 	{
@@ -28,8 +28,6 @@ namespace NewCRM.Web.Filter
 					ContentType = "utf8",
 					StatusCode = 500
 				};
-
-				return;
 			}
 
 			((ILoggerServices)filterContext.HttpContext.RequestServices.GetService(typeof(ILoggerServices))).AddLoggerAsync(new LogDto

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
-using NewCRM.Domain.Services.Interface;
+using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
@@ -11,7 +11,7 @@ using NewLibCore;
 using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;
 
-namespace NewCRM.Domain.Services.BoundedContext
+namespace NewCrmCore.Domain.Services.BoundedContext
 {
 	public class WallpaperContext: IWallpaperContext
 	{
