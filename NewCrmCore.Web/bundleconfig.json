@@ -9,7 +9,7 @@
     ]
   },
   {
-    "outputFileName": "wwwroot/js/newcrm.js",
+    "outputFileName": "wwwroot/js/bundle.js",
     "inputFiles": [
       "wwwroot/js/jquery-3.2.1.min.js",
       "wwwroot/js/HoorayJs/jquery-browser.js",
@@ -22,8 +22,7 @@
     ],
     // Optionally specify minification options
     "minify": {
-      "enabled": true,
-      "renameLocals": true
+      "enabled": true
     },
     // Optionally generate .map file
     "sourceMap": false
