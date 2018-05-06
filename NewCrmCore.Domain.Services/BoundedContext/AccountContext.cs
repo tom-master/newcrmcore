@@ -124,7 +124,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 		{
 			new Parameter().Validate(wallPaperId);
 
-			return await Task.Run<Wallpaper>(() =>
+			return await Task.Run(() =>
 			{
 				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
 				{
