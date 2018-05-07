@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="NewLibCore" Version="1.0.3" />
-    <PackageReference Include="NewLibCore.Data" Version="1.0.6" />
+    <PackageReference Include="NewLibCore.Data" Version="1.0.7" />
   </ItemGroup>
 
   <ItemGroup>
