@@ -81,7 +81,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						 dataStore.Commit();
 						 return result;
 					 }
-					 catch (Exception)
+					 catch (Exception ex)
 					 {
 						 dataStore.Rollback();
 						 throw;
