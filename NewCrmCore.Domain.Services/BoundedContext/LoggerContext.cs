@@ -40,7 +40,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					where.Append($@" AND a.AccountId=@AccountId");
 				}
 
-
 				#region totalCount
 				{
 					var sql = $@"SELECT COUNT(*) FROM dbo.Log AS a WHERE 1=1 {where}";
