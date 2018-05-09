@@ -17,10 +17,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Log\Index.cshtml" />
-    <None Include="wwwroot\css\HoorayUI\globle.css" />
-    <None Include="wwwroot\css\HoorayUI\index.css" />
-    <None Include="wwwroot\css\HoorayUI\login.css" />
-    <None Include="wwwroot\css\HoorayUI\sys.css" />
+    <None Include="wwwroot\css\hoorayui\globle.css" />
+    <None Include="wwwroot\css\hoorayui\index.css" />
+    <None Include="wwwroot\css\hoorayui\login.css" />
+    <None Include="wwwroot\css\hoorayui\sys.css" />
     <None Include="wwwroot\images\skins\chrome.css" />
     <None Include="wwwroot\images\skins\chrome\chrome_s.gif" />
     <None Include="wwwroot\images\skins\chrome\chrome_s2.gif" />

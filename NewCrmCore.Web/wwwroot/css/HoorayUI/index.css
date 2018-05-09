@@ -146,7 +146,7 @@ input {
  */
 #update_browser_box {
     display: none;
-    background: url(../../HoorayUI/img/ui/update_browser_bg.png) repeat;
+    background: url(~/images/ui/update_browser_bg.png) repeat;
     position: absolute;
     z-index: 9998;
     top: 0;
@@ -189,7 +189,7 @@ input {
         }
 
     .update_browser .browser {
-        background: url(../../HoorayUI/img/ui/browser.png) no-repeat;
+        background: url(~/images/ui/browser.png) no-repeat;
         width: 640px;
         height: 128px;
         overflow: hidden;

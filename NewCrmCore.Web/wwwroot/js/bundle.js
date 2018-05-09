@@ -3205,7 +3205,7 @@ var appbtnTemp = template.compile(
 //桌面"添加应用"应用
 var addbtnTemp = template.compile(
     '<div class="appbtn add">' +
-    '<div><img src="../Content/HoorayUI/img/ui/addicon.png"></div>' +
+    '<div><img src="/images/ui/addicon.png"></div>' +
     '<span style="width:<%=appsize+10%>px;">添加应用</span>' +
     '</div>'
 );
@@ -5253,7 +5253,6 @@ HROS.base = (function () {
             return parseInt(HROS.CONFIG.memberID) !== 0 ? true : false;
         },
         getSkin: function (objSkin, callback) {
-            debugger
             if (objSkin === undefined) {
                 HROS.request.get('/Desktop/GetSkin', {}, function (responseText) {
                     
@@ -5324,7 +5323,7 @@ HROS.base = (function () {
             $('#window-skin').attr('id', 'window-skin-ready2remove');
             var css = document.createElement('link');
             css.rel = 'stylesheet';
-            css.href = '../Content/HoorayUI/img/skins/' + skin + '.css?' + version;
+            css.href = 'images/skins/' + skin + '.css?' + version;
             css.id = 'window-skin';
             document.getElementsByTagName('head')[0].appendChild(css);
             //新样式载入完毕后清空原样式
