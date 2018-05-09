@@ -3148,6 +3148,7 @@ NewCrm.msgbox.close = function () {
         }
     })("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=");
 })();
+/// <reference path="../jquery-3.2.1.min.js" />
 var version = '3.2.0';        //版本号
 var ajaxUrl = '';     //所有ajax操作指向页面
 var TEMP = {};
@@ -5252,8 +5253,10 @@ HROS.base = (function () {
             return parseInt(HROS.CONFIG.memberID) !== 0 ? true : false;
         },
         getSkin: function (objSkin, callback) {
+            debugger
             if (objSkin === undefined) {
                 HROS.request.get('/Desktop/GetSkin', {}, function (responseText) {
+                    
                     if (responseText.IsSuccess) {
                         if (typeof (callback) === 'function') {
                             callback && callback(responseText.Model);

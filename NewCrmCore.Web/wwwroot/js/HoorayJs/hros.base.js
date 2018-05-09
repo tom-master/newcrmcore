@@ -113,8 +113,6 @@ HROS.base = (function () {
                 $.ajax({
                     type: 'GET',
                     url: '/Index/GetSkin',
-                    data: { __: Date.now() },
-                    async: true,
                     success: function (skin) {
                         if (typeof (callback) === 'function') {
                             callback && callback(skin.data);
