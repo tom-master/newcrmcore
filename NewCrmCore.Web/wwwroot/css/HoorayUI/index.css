@@ -222,7 +222,7 @@ input {
 
 /*登录*/
 #lrbox {
-    background: url(../../HoorayUI/img/ui/loginbg.jpg) no-repeat center;
+    background: url(~/images/ui/loginbg.jpg) no-repeat center;
     position: absolute;
     z-index: 9997;
     top: -200%;
@@ -276,7 +276,7 @@ input {
         z-index: -1;
         width: 100%;
         height: 100%;
-        background: url(../../HoorayUI/img/ui/loginbg.jpg) no-repeat center;
+        background: url(~/images/ui/loginbg.jpg) no-repeat center;
         background-color: rgba(255, 255, 255, .5);
         -webkit-filter: blur(5px);
         filter: blur(5px);
@@ -531,7 +531,7 @@ input {
         height: 24px;
         margin-right: 12px;
         font-size: 0;
-        background: url(../../HoorayUI/img/ui/login_icon.png) no-repeat;
+        background: url(~/images/ui/login_icon.png) no-repeat;
         border-radius: 5px;
     }
 
@@ -609,12 +609,11 @@ input {
 }
 
 .radi {
-    -webkit-mask: url('../../HoorayUI/img/ui/circle_mask.png');
+    -webkit-mask: url('~/images/ui/circle_mask.png');
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: 50% 50%;
     -webkit-mask-size: 300%;
     -webkit-animation: radi 1.5s;
-
 }
 
 /*遮罩层*/
@@ -769,7 +768,7 @@ input {
     position: absolute;
     width: 330px;
     height: 200px;
-    background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat -200px -600px;
+    background: url(~/images/ui/desk_sprite.png) no-repeat -200px -600px;
     top: 50%;
     left: 50%;
     margin-top: -100px;
@@ -784,7 +783,7 @@ input {
         right: 4px;
         width: 24px;
         height: 24px;
-        background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat -510px -390px;
+        background: url(~/images/ui/desk_sprite.png) no-repeat -510px -390px;
     }
 
         #copyright .close:hover {
@@ -1116,7 +1115,7 @@ input {
     width: 100%;
     display: none;
     overflow: hidden;
-    background: url(../../HoorayUI/img/ui/window_mask_bg.png) repeat-x;
+    background: url(~/images/ui/window_mask_bg.png) repeat-x;
 }
 
     .window-mask div {
@@ -1128,7 +1127,7 @@ input {
     .window-mask .maskbg {
         margin-top: 70px;
         height: 75px;
-        background: url(../../HoorayUI/img/ui/window_mask_icon.png) no-repeat center;
+        background: url(~/images/ui/window_mask_icon.png) no-repeat center;
     }
 
 .window-mask-noflash {
@@ -1141,7 +1140,7 @@ input {
 .window-resize {
     position: absolute;
     overflow: hidden;
-    background: url(../../HoorayUI/img/ui/transparent.gif) repeat;
+    background: url(~/images/ui/transparent.gif) repeat;
     display: block;
 }
 
@@ -1223,7 +1222,7 @@ input {
     height: 18px;
     left: 6px;
     top: 2px;
-    background-image: url(../../HoorayUI/img/ui/google_ui_sprite.png);
+    background-image: url(~/images/ui/google_ui_sprite.png);
 }
 
 .set-bar {
@@ -1275,7 +1274,7 @@ input {
     .widget .move {
         width: 100%;
         height: 29px;
-        background: url(../../HoorayUI/img/ui/widget_title_bg.png) repeat-x;
+        background: url(~/images/img/ui/widget_title_bg.png) repeat-x;
         cursor: move;
         border-radius: 5px;
         display: none;
@@ -1286,7 +1285,7 @@ input {
         top: 4px;
         width: 21px;
         height: 21px;
-        background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat;
+        background: url(~/images/img/ui/desk_sprite.png) no-repeat;
     }
 
         .widget a.ha-close {
@@ -1350,7 +1349,7 @@ input {
         font-size: 0;
         width: 100%;
         height: 10px;
-        background: url(../../HoorayUI/img/ui/quick_view.png) center top;
+        background: url(~/images/ui/quick_view.png) center top;
         line-height: 0;
         overflow: hidden;
     }
@@ -1359,7 +1358,7 @@ input {
         font-size: 0;
         width: 100%;
         height: 10px;
-        background: url(../../HoorayUI/img/ui/quick_view.png) center bottom;
+        background: url(~/images/ui/quick_view.png) center bottom;
         line-height: 0;
         overflow: hidden;
     }
@@ -1378,22 +1377,22 @@ input {
 
     .quick_view_container .perfect_nine_t_l {
         float: left;
-        background: url(../../HoorayUI/img/ui/quick_view.png) left top;
+        background: url(~/images/ui/quick_view.png) left top;
     }
 
     .quick_view_container .perfect_nine_t_r {
         float: right;
-        background: url(../../HoorayUI/img/ui/quick_view.png) right top;
+        background: url(~/images/ui/quick_view.png) right top;
     }
 
     .quick_view_container .perfect_nine_b_l {
         float: left;
-        background: url(../../HoorayUI/img/ui/quick_view.png) left bottom;
+        background: url(~/images/ui/quick_view.png) left bottom;
     }
 
     .quick_view_container .perfect_nine_b_r {
         float: right;
-        background: url(../../HoorayUI/img/ui/quick_view.png) right bottom;
+        background: url(~/images/ui/quick_view.png) right bottom;
     }
 
     .quick_view_container .perfect_nine_middle {
@@ -1417,7 +1416,7 @@ input {
         position: absolute;
         font-size: 0;
         line-height: 0;
-        background: url(../../HoorayUI/img/ui/quick_view_body.png) repeat-y left;
+        background: url(~/images/ui/quick_view_body.png) repeat-y left;
         width: 100%;
     }
 
@@ -1425,7 +1424,7 @@ input {
         position: absolute;
         font-size: 0;
         line-height: 0;
-        background: url(../../HoorayUI/img/ui/quick_view.png) 0 -14px;
+        background: url(~/images/ui/quick_view.png) 0 -14px;
         width: 100%;
     }
 
@@ -1433,7 +1432,7 @@ input {
         position: absolute;
         font-size: 0;
         line-height: 0;
-        background: url(../../HoorayUI/img/ui/quick_view_body.png) repeat-y left;
+        background: url(~/images/ui/quick_view_body.png) repeat-y left;
         width: 100%;
     }
 
@@ -1441,7 +1440,7 @@ input {
         position: absolute;
         font-size: 0;
         line-height: 0;
-        background: url(../../HoorayUI/img/ui/quick_view_body.png) repeat-y right;
+        background: url(~/images/ui/quick_view_body.png) repeat-y right;
         width: 100%;
     }
 
@@ -1449,7 +1448,7 @@ input {
         position: absolute;
         font-size: 0;
         line-height: 0;
-        background: url(../../HoorayUI/img/ui/quick_view.png) right -14px;
+        background: url(~/images/ui/quick_view.png) right -14px;
         width: 100%;
     }
 
@@ -1457,12 +1456,12 @@ input {
         position: absolute;
         font-size: 0;
         line-height: 0;
-        background: url(../../HoorayUI/img/ui/quick_view_body.png) repeat-y right;
+        background: url(~/images/ui/quick_view_body.png) repeat-y right;
         width: 100%;
     }
 
     .quick_view_container .perfect_nine_context {
-        background: url(../../HoorayUI/img/ui/quick_view_body.png) repeat-y center -35px;
+        background: url(~/images/ui/quick_view_body.png) repeat-y center -35px;
         border: 0;
         margin-left: 15px;
         margin-right: 15px;
@@ -1478,7 +1477,7 @@ input {
     width: 40px;
     padding: 2px 0 0 25px;
     height: 22px;
-    background: url(../../HoorayUI/img/ui/open.png) -80px 0 no-repeat;
+    background: url(~/images/ui/open.png) -80px 0 no-repeat;
     color: white;
     position: relative;
 }
@@ -1510,7 +1509,7 @@ input {
     }
 
         .quick_view_container_list_in .appbtn:hover {
-            background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat -500px -100px;
+            background: url(~/images/ui/desk_sprite.png) no-repeat -500px -100px;
         }
 
         .quick_view_container_list_in .appbtn div {
@@ -1541,7 +1540,7 @@ input {
     -khtml-border-radius: 6px;
     -webkit-border-radius: 6px;
     border-radius: 6px;
-    background: url(../../HoorayUI/img/ui/scrollbar_bgy.png) repeat-y;
+    background: url(~/images/ui/scrollbar_bgy.png) repeat-y;
     display: none;
     z-index: 10;
 }
@@ -1556,7 +1555,7 @@ input {
     -webkit-border-radius: 5px;
     border-radius: 5px;
     height: 100%;
-    background: url(../../HoorayUI/img/ui/scrollbar_bg.png) repeat-y;
+    background: url(~/images/ui/scrollbar_bg.png) repeat-y;
     display: none;
 }
 
@@ -1597,7 +1596,7 @@ input {
     }
 
 .dock-middle {
-    background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat 0 0;
+    background: url(~/images/ui/desk_sprite.png) no-repeat 0 0;
 }
 
 .dock-top {
@@ -1726,7 +1725,7 @@ input {
     width: 20px;
     height: 20px;
     cursor: pointer;
-    background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat;
+    background: url(~/images/ui/desk_sprite.png) no-repeat;
 }
 
 .dock-tools .dock-tool-setting {
@@ -1812,7 +1811,7 @@ input {
     height: 40px;
     cursor: pointer;
     margin: 0 auto;
-    background: url(../../HoorayUI/img/ui/logo.png) no-repeat -40px 0;
+    background: url(~/images/ui/logo.png) no-repeat -40px 0;
 }
 
     .dock-tool-start:hover {
@@ -1842,7 +1841,7 @@ input {
 
 .dock-pagination .pagination-icon,
 .dock-pagination .pagination-icon-bg {
-    background-image: url(../../HoorayUI/img/ui/desk_sprite.png);
+    background-image: url(~/images/ui/desk_sprite.png);
 }
 
 .dock-pagination .pagination-icon-bg {
@@ -2049,7 +2048,7 @@ input {
         width: 177px;
         height: 30px;
         padding: 5px 0 5px 5px;
-        background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat -410px -200px;
+        background: url(~/images/ui/desk_sprite.png) no-repeat -410px -200px;
     }
 
         #startmenu-container .startmenu-selfinfo .startmenu-avatar {
@@ -2095,7 +2094,7 @@ input {
 
         #startmenu-container .startmenu li {
             list-style: none;
-            background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat -410px -300px;
+            background: url(~/images/ui/desk_sprite.png) no-repeat -410px -300px;
         }
 
             #startmenu-container .startmenu li a {
@@ -2106,14 +2105,14 @@ input {
             }
 
                 #startmenu-container .startmenu li a:hover {
-                    background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat -410px -465px;
+                    background: url(~/images/ui/desk_sprite.png) no-repeat -410px -465px;
                 }
 
     #startmenu-container .startmenu-exit {
         float: left;
         width: 182px;
         height: 44px;
-        background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat -410px -250px;
+        background: url(~/images/ui/desk_sprite.png) no-repeat -410px -250px;
         margin-top: -1px;
     }
 
@@ -2122,7 +2121,7 @@ input {
             width: 36px;
             height: 30px;
             margin: 7px auto 0;
-            background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat -500px -350px;
+            background: url(~/images/ui/desk_sprite.png) no-repeat -500px -350px;
         }
 
             #startmenu-container .startmenu-exit a:hover {
@@ -2136,7 +2135,7 @@ input {
         margin-top: 5px;
         height: 24px;
         width: 24px;
-        background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat -450px -390px;
+        background: url(~/images/ui/desk_sprite.png) no-repeat -450px -390px;
     }
 
         #startmenu-container .startmenu-feedback:hover {
@@ -2149,7 +2148,7 @@ input {
         margin-top: 5px;
         height: 24px;
         width: 24px;
-        background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat -450px -420px;
+        background: url(~/images/ui/desk_sprite.png) no-repeat -450px -420px;
     }
 
         #startmenu-container .startmenu-lock:hover {
@@ -2164,7 +2163,7 @@ input {
     top: 0;
     right: 20px;
     z-index: 20;
-    background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat -550px -635px;
+    background: url(~/images/ui/desk_sprite.png) no-repeat -550px -635px;
     display: none;
 }
 
@@ -2212,7 +2211,7 @@ input {
     cursor: pointer;
     margin: 6px 8px 0 0;
     padding: 0;
-    background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat -200px -160px;
+    background: url(~/images/ui/desk_sprite.png) no-repeat -200px -160px;
 }
 
     #pageletSearchButton:hover {
@@ -2230,7 +2229,7 @@ input {
 
     #search-suggest .resultBox {
         width: 212px;
-        background: url(../../HoorayUI/img/ui/suggess_list_bg.png) repeat-y;
+        background: url(~/images/ui/suggess_list_bg.png) repeat-y;
         margin: 0;
         padding-top: 5px;
         line-height: 0;
@@ -2253,7 +2252,7 @@ input {
 
             #search-suggest .resultList a:hover,
             #search-suggest .resultList a.selected {
-                background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat -550px -670px;
+                background: url(~/images/ui/desk_sprite.png) no-repeat -550px -670px;
             }
 
             #search-suggest .resultList a div {
@@ -2272,7 +2271,7 @@ input {
         width: 212px;
         height: 33px;
         padding-top: 10px;
-        background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat -550px -700px;
+        background: url(~/images/ui/desk_sprite.png) no-repeat -550px -700px;
     }
 
 /*任务栏*/
@@ -2282,7 +2281,7 @@ input {
     position: absolute;
     z-index: -1;
     bottom: 0;
-    background: url(../../HoorayUI/img/ui/task_bg1.png) repeat-x;
+    background: url(~/images/ui/task_bg1.png) repeat-x;
 }
 
 #task-bar-bg2 {
@@ -2291,7 +2290,7 @@ input {
     position: absolute;
     z-index: -1;
     bottom: 0;
-    background: url(../../HoorayUI/img/ui/task_bg2.png) repeat-x 0 41px;
+    background: url(~/images/ui/task_bg2.png) repeat-x 0 41px;
 }
 
 #task-bar {
@@ -2318,7 +2317,7 @@ input {
 #task-next {
     position: relative;
     z-index: 9990;
-    background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat -350px -259px;
+    background: url(~/images/ui/desk_sprite.png) no-repeat -350px -259px;
 }
 
     #task-next a {
@@ -2327,7 +2326,7 @@ input {
         height: 35px;
         margin-top: 20px;
         margin-left: 15px;
-        background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat -265px -450px;
+        background: url(~/images/ui/desk_sprite.png) no-repeat -265px -450px;
         cursor: pointer;
     }
 
@@ -2343,7 +2342,7 @@ input {
 #task-pre {
     position: relative;
     z-index: 9990;
-    background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat -350px -195px;
+    background: url(~/images/ui/desk_sprite.png) no-repeat -350px -195px;
 }
 
     #task-pre a {
@@ -2352,7 +2351,7 @@ input {
         height: 35px;
         margin-top: 20px;
         margin-left: 17px;
-        background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat -215px -450px;
+        background: url(~/images/ui/desk_sprite.png) no-repeat -215px -450px;
         cursor: pointer;
     }
 
@@ -2388,7 +2387,7 @@ input {
     vertical-align: middle;
     overflow: hidden;
     cursor: pointer;
-    background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat -200px -200px;
+    background: url(~/images/ui/desk_sprite.png) no-repeat -200px -200px;
 }
 
     .task-item:hover {
@@ -2440,7 +2439,7 @@ input {
 }
 
     #appmanage .amg_close {
-        background: url(../../HoorayUI/img/ui/desk_sprite.png) no-repeat -350px -350px;
+        background: url(~/images/ui/desk_sprite.png) no-repeat -350px -350px;
         cursor: pointer;
         width: 90px;
         height: 37px;
@@ -2458,7 +2457,7 @@ input {
         }
 
 #amg_dock_container {
-    background: url(../../HoorayUI/img/ui/amg_top.png) repeat-x;
+    background: url(~/images/ui/amg_top.png) repeat-x;
     height: 60px;
     overflow: hidden;
     padding: 10px;
@@ -2480,7 +2479,7 @@ input {
 }
 
 #appmanage .amg_line_y {
-    background: url(../../HoorayUI/img/ui/amg_line_y.png) repeat-y;
+    background: url(~/images/ui/amg_line_y.png) repeat-y;
     height: 100%;
     left: -1px;
     position: absolute;
@@ -2489,7 +2488,7 @@ input {
 }
 
 #amg_folder_container {
-    background: url(../../HoorayUI/img/ui/amg_body.png) repeat;
+    background: url(~/images/ui/amg_body.png) repeat;
     overflow: hidden;
     height: 100%;
 }
@@ -2530,23 +2529,23 @@ input {
     }
 
     #amg_folder_container .folder_bg1 {
-        background: url(../../HoorayUI/img/ui/amg_1.png) no-repeat right top;
+        background: url(~/images/ui/amg_1.png) no-repeat right top;
     }
 
     #amg_folder_container .folder_bg2 {
-        background: url(../../HoorayUI/img/ui/amg_2.png) no-repeat right top;
+        background: url(~/images/ui/amg_2.png) no-repeat right top;
     }
 
     #amg_folder_container .folder_bg3 {
-        background: url(../../HoorayUI/img/ui/amg_3.png) no-repeat right top;
+        background: url(~/images/ui/amg_3.png) no-repeat right top;
     }
 
     #amg_folder_container .folder_bg4 {
-        background: url(../../HoorayUI/img/ui/amg_4.png) no-repeat right top;
+        background: url(~/images/ui/amg_4.png) no-repeat right top;
     }
 
     #amg_folder_container .folder_bg5 {
-        background: url(../../HoorayUI/img/ui/amg_5.png) no-repeat right top;
+        background: url(~/images/ui/amg_5.png) no-repeat right top;
     }
 
     #amg_folder_container .folderOuter {
@@ -2574,7 +2573,7 @@ input {
         -khtml-border-radius: 6px;
         -webkit-border-radius: 6px;
         border-radius: 6px;
-        background: url(../../HoorayUI/img/ui/scrollbar_bgy.png) repeat-y;
+        background: url(~/images/ui/scrollbar_bgy.png) repeat-y;
         display: none;
         z-index: 10;
     }
@@ -2620,8 +2619,8 @@ input {
 .star-box,
 .star-box i,
 .star-box a {
-    background-image: url(../../HoorayUI/img/ui/app_spr_img.png);
-    _background-image: url(../../HoorayUI/img/ui/app_spr_img.gif);
+    background-image: url(~/images/ui/app_spr_img.png);
+    _background-image: url(~/images/ui/app_spr_img.gif);
     background-repeat: no-repeat;
 }
 
@@ -2737,7 +2736,7 @@ input {
     width: 60px;
     height: 16px;
     line-height: 16px;
-    background: url(../../HoorayUI/img/ui/share_icon.png) no-repeat;
+    background: url(~/images/ui/share_icon.png) no-repeat;
     cursor: pointer;
     color: #333;
 }
@@ -2792,7 +2791,7 @@ input {
     top: 30px;
     left: 30px;
     cursor: pointer;
-    background: url(../../HoorayUI/img/ui/forder_selector.png) no-repeat;
+    background: url(~/images/ui/forder_selector.png) no-repeat;
 }
 
     .folderSelector:hover {
@@ -2854,7 +2853,7 @@ input {
 }
 
     .fcDropdown_item:hover {
-        background: url(../../HoorayUI/img/ui/forder_selector.png) no-repeat 0 -100px;
+        background: url(~/images/ui/forder_selector.png) no-repeat 0 -100px;
     }
 
 .fcDropdown_img {
@@ -2880,7 +2879,7 @@ input {
 .popup-menu {
     position: absolute;
     z-index: 9990;
-    background: url(../../HoorayUI/img/ui/popup_menu.gif) repeat-y scroll 0 0 #FFFFFF;
+    background: url(~/images/ui/popup_menu.gif) repeat-y scroll 0 0 #FFFFFF;
     border: 1px solid #AEAEAE;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
     width: 125px;
@@ -2930,7 +2929,7 @@ input {
         left: 5px;
         height: 16px;
         width: 16px;
-        background: url(../../HoorayUI/img/ui/icon_main.png) no-repeat;
+        background: url(~/images/ui/icon_main.png) no-repeat;
     }
 
     .popup-menu .arrow {

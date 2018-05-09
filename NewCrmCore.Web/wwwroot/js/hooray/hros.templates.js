@@ -8,7 +8,7 @@ var appbtnTemp = template.compile(
 //桌面"添加应用"应用
 var addbtnTemp = template.compile(
 	'<li class="appbtn add">' +
-		'<div><img src="../Scripts/HoorayUI/img/ui/addicon.png"></div>' +
+		'<div><img src="~/images/ui/addicon.png"></div>' +
 		'<span>添加应用</span>' +
 	'</li>'
 );

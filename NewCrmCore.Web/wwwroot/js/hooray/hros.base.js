@@ -180,7 +180,7 @@ HROS.base = (function () {
             var css = document.createElement('link');
             css.rel = 'stylesheet';
 
-            css.href = '../Scripts/HoorayUI/img/skins/' + skin + '.css?' + version;
+            css.href = '~/images/skins/' + skin + '.css?' + version;
             css.id = 'window-skin';
             document.getElementsByTagName('head')[0].appendChild(css);
             //新样式载入完毕后清空原样式

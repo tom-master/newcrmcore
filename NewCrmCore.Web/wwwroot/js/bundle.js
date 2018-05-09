@@ -3374,13 +3374,13 @@ var editFolderDialogTemp = template.compile(
     '<div class="folderInput"><input type="text" class="folderName" id="folderName" value="<%=name%>"></div>' +
     '<div class="folderNameError">文件夹名称不能只包含空字符</div>' +
     '<div class="fcDropdown">' +
-    '<a class="fcDropdown_item" title="默认"><img class="fcDropdown_img" src="/Content/HoorayUI/img/ui/folder_default.png"></a>' +
-    '<a class="fcDropdown_item" title="文本"><img class="fcDropdown_img" src="/Content/HoorayUI/img/ui/folder_doc.png"></a>' +
-    '<a class="fcDropdown_item" title="游戏"><img class="fcDropdown_img" src="/Content/HoorayUI/img/ui/folder_game.png"></a>' +
-    '<a class="fcDropdown_item" title="生活"><img class="fcDropdown_img" src="/Content/HoorayUI/img/ui/folder_life.png"></a>' +
-    '<a class="fcDropdown_item" title="音乐"><img class="fcDropdown_img" src="/Content/HoorayUI/img/ui/folder_music.png"></a>' +
-    '<a class="fcDropdown_item" title="工具"><img class="fcDropdown_img" src="/Content/HoorayUI/img/ui/folder_tool.png"></a>' +
-    '<a class="fcDropdown_item" title="视频"><img class="fcDropdown_img" src="/Content/HoorayUI/img/ui/folder_video.png"></a>' +
+    '<a class="fcDropdown_item" title="默认"><img class="fcDropdown_img" src="~/css/hoorayui/img/ui/folder_default.png"></a>' +
+    '<a class="fcDropdown_item" title="文本"><img class="fcDropdown_img" src="~/css/hoorayui/img/ui/folder_doc.png"></a>' +
+    '<a class="fcDropdown_item" title="游戏"><img class="fcDropdown_img" src="~/css/hoorayui/img/ui/folder_game.png"></a>' +
+    '<a class="fcDropdown_item" title="生活"><img class="fcDropdown_img" src="~/css/hoorayui/img/ui/folder_life.png"></a>' +
+    '<a class="fcDropdown_item" title="音乐"><img class="fcDropdown_img" src="~/css/hoorayui/img/ui/folder_music.png"></a>' +
+    '<a class="fcDropdown_item" title="工具"><img class="fcDropdown_img" src="~/css/hoorayui/img/ui/folder_tool.png"></a>' +
+    '<a class="fcDropdown_item" title="视频"><img class="fcDropdown_img" src="~/css/hoorayui/img/ui/folder_video.png"></a>' +
     '</div>' +
     '</div>'
 );
@@ -7144,7 +7144,7 @@ HROS.popupMenu = (function () {
                             padding: 0,
                             content: editFolderDialogTemp({
                                 'name': '新建文件夹',
-                                'src': '/Content/HoorayUI/img/ui/folder_default.png'
+                                'src': '~/css/hoorayui/img/ui/folder_default.png'
                             }),
                             ok: function () {
                                 if ($('#folderName').val() != '') {
@@ -8263,7 +8263,7 @@ HROS.window = (function () {
                     type: type,
                     appid: appid,
                     realappid: appid,
-                    imgsrc: '/Content/HoorayUI/img/ui/default_icon.png',
+                    imgsrc: '~/css/hoorayui/img/ui/default_icon.png',
                     title: obj.title,
                     url: obj.url,
                     width: obj.width,
@@ -9006,7 +9006,7 @@ HROS.zoom = (function () {
 			**  使用SWFObject.js插入flash
 			**  http://www.cnblogs.com/wuxinxi007/archive/2009/10/27/1590709.html
 			*/
-            swfobject.embedSWF('../Scripts/HoorayJs/zoom.swf?onchange=HROS.zoom.check', 'zoombox', '10', '10', '6.0.0', 'expressInstall.swf', '', { allowScriptAccess: 'always', wmode: 'transparent', scale: 'noScale' }, { id: 'accessory_zoom', name: 'zoom_detect' });
+            swfobject.embedSWF('~/js/hooray/zoom.swf?onchange=HROS.zoom.check', 'zoombox', '10', '10', '6.0.0', 'expressInstall.swf', '', { allowScriptAccess: 'always', wmode: 'transparent', scale: 'noScale' }, { id: 'accessory_zoom', name: 'zoom_detect' });
         },
         /*
 		**  为什么会有个参数o？其实我也不知道

@@ -112,7 +112,7 @@ HROS.window = (function(){
 					type : type,
 					appid : appid,
 					realappid : appid,
-					imgsrc : '/scripts/HoorayUI/img/ui/default_icon.png',
+					imgsrc : '~/images/ui/default_icon.png',
 					title : obj.title,
 					url : obj.url,
 					width : obj.width,

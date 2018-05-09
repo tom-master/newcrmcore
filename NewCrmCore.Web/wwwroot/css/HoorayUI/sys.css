@@ -40,7 +40,7 @@ body {
 }
 
 .title {
-    background: url(../../HoorayUI/img/ui/app_spr_x.png) repeat-x 0 -40px #E6F2FA;
+    background: url(~/images/ui/app_spr_x.png) repeat-x 0 -40px #E6F2FA;
     border-bottom: 1px solid #DDD;
     padding-left: 10px;
     height: 27px;
@@ -50,7 +50,7 @@ body {
 }
 
 .title {
-    background-image: url(../../HoorayUI/img/ui/app_spr_x.png);
+    background-image: url(~/images/ui/app_spr_x.png);
     background-repeat: repeat-x;
     position: relative;
     height: 27px;
@@ -115,7 +115,7 @@ body {
 .input-label {
     float: left;
     width: 100%;
-    background: url(../../HoorayUI/img/ui/input-label.png) repeat-y;
+    background: url(~/images/ui/input-label.png) repeat-y;
     padding: 10px 0;
     line-height: 28px;
     border-bottom: 1px solid #eee;
@@ -146,7 +146,7 @@ body {
         font-weight: normal;
         height: 31px;
         text-align: center;
-        background: url(../../HoorayUI/img/ui/bought-table.png) repeat-x;
+        background: url(~/images/ui/bought-table.png) repeat-x;
         border-top: 1px solid #c4d5e0;
         border-bottom: 1px solid #c4d5e0;
         color: black;
@@ -330,7 +330,7 @@ body {
             display: none;
             width: 48px;
             height: 48px;
-            background: url(../../HoorayUI/img/ui/selected.png) no-repeat;
+            background: url(~/images/ui/selected.png) no-repeat;
             position: absolute;
             right: -15px;
             bottom: -15px;
@@ -367,7 +367,7 @@ body {
         float: left;
         width: 530px;
         height: 300px;
-        background-image: url(../../HoorayUI/img/ui/dock_setting.jpg);
+        background-image: url(~/images/ui/dock_setting.jpg);
     }
 
     .dock_setting .set_view_top {
@@ -473,7 +473,7 @@ body {
         margin: 0;
         height: 330px;
         overflow: hidden;
-        background: url(../../HoorayUI/img/ui/app_list.png);
+        background: url(~/images/ui/app_list.png);
     }
 
         .app-list-box .app-list li {
@@ -541,7 +541,7 @@ body {
     position: absolute;
     top: 21px;
     right: 20px;
-    background: url(../../HoorayUI/img/ui/app_spr_img.png) no-repeat;
+    background: url(~/images/ui/app_spr_img.png) no-repeat;
 }
 
 .btn-add-s {
@@ -581,12 +581,12 @@ body {
     }
 
 .btn-loading-s {
-    background: url(../../HoorayUI/img/ui/loading_24.gif) no-repeat;
+    background: url(~/images/ui/loading_24.gif) no-repeat;
 }
 
 .app-list .star-box,
 .app-list .star-box i {
-    background: url(../../HoorayUI/img/ui/app_spr_img.png) no-repeat;
+    background: url(~/images/ui/app_spr_img.png) no-repeat;
 }
 
 .app-list .star-box {
@@ -649,7 +649,7 @@ body {
     text-indent: 29px;
     overflow: hidden;
     color: #fff;
-    background: url(../../HoorayUI/img/ui/app_spr_img.png) no-repeat;
+    background: url(~/images/ui/app_spr_img.png) no-repeat;
     text-decoration: none;
 }
 
@@ -687,14 +687,14 @@ body {
         font-size: 12px;
         overflow: hidden;
         border-bottom: 1px solid #DDD;
-        background-image: url(../../HoorayUI/img/ui/app_spr_x.png);
+        background-image: url(~/images/ui/app_spr_x.png);
         background-repeat: repeat-x;
         background-position: 0 -37px;
     }
 
     .commend-day .star-box,
     .commend-day .star-box i {
-        background: url(../../HoorayUI/img/ui/app_spr_img.png) no-repeat;
+        background: url(~/images/ui/app_spr_img.png) no-repeat;
     }
 
     .commend-day .star-box {
@@ -727,7 +727,7 @@ body {
     margin: 10px 0 0 5px;
     overflow: hidden;
     padding: 7px 21px 45px;
-    background: url(../../HoorayUI/img/ui/commend_day.gif) no-repeat 0 0;
+    background: url(~/images/ui/commend_day.gif) no-repeat 0 0;
     _display: inline;
 }
 
@@ -787,7 +787,7 @@ body {
         font-size: 12px;
         overflow: hidden;
         border-bottom: 1px solid #DDD;
-        background-image: url(../../HoorayUI/img/ui/app_spr_x.png);
+        background-image: url(~/images/ui/app_spr_x.png);
         background-repeat: repeat-x;
         background-position: 0 -37px;
     }
@@ -808,7 +808,7 @@ body {
         line-height: 21px;
         overflow: hidden;
         color: #fff;
-        background: url(../../HoorayUI/img/ui/app_spr_img.png) no-repeat -129px -83px;
+        background: url(~/images/ui/app_spr_img.png) no-repeat -129px -83px;
         text-decoration: none;
     }
 
@@ -825,7 +825,7 @@ body {
     height: 48px;
     padding: 9px 0 8px 68px;
     border-bottom: 1px solid #DDD;
-    background: url(../../HoorayUI/img/ui/app_spr_x.png) repeat-x 0 -68px;
+    background: url(~/images/ui/app_spr_x.png) repeat-x 0 -68px;
 }
 
     .app-title img {
@@ -875,7 +875,7 @@ body {
     .grade-box .star-box,
     .grade-box .star-box i,
     .grade-box .star-box a {
-        background-image: url(../../HoorayUI/img/ui/app_spr_img.png);
+        background-image: url(~/images/ui/app_spr_img.png);
         _background-image: url(app_spr_img.gif);
         background-repeat: no-repeat;
     }
@@ -1151,7 +1151,7 @@ body {
             height: 16px;
             right: 0;
             bottom: 0;
-            background: url(../../HoorayUI/img/ui/selected.gif) no-repeat;
+            background: url(~/images/ui/selected.gif) no-repeat;
         }
 
     .alert_addapps .act .selected {
