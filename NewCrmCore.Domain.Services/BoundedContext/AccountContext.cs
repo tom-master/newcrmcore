@@ -90,7 +90,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			 });
 		}
 
-		public async Task<Config> GetConfigAsync(Int32 accountId)
+		public async Task<Config> GetConfigAsync(Int32 accountId) 
 		{
 			new Parameter().Validate(accountId);
 			return await Task.Run(() => 
