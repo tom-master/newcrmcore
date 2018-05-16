@@ -94,7 +94,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 		{
 			new Parameter().Validate(accountId);
 			return await Task.Run(() =>
-			 {
+			 { 
 				 using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
 				 {
 					 var sql = $@"SELECT 
