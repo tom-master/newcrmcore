@@ -101,7 +101,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a.Id,
 								a.Skin,  
 								a.AccountFace,
-								a.AppSize,
+								a.AppSize, 
 								a.AppVerticalSpacing,
 								a.AppHorizontalSpacing,
 								a.DefaultDeskNumber,
