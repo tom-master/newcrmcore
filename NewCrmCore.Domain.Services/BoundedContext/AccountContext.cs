@@ -99,7 +99,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				 {
 					 var sql = $@"SELECT 
 								a.Id,
-								a.Skin, 
+								a.Skin,  
 								a.AccountFace,
 								a.AppSize,
 								a.AppVerticalSpacing,
