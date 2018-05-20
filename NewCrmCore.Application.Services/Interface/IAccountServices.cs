@@ -34,7 +34,7 @@ namespace NewCrmCore.Application.Services.Interface
 		/// <param name="pageSize"></param>
 		/// <param name="totalCount"></param>
 		/// <returns></returns>
-		Task<PagingModel<AccountDto>> GetAccountsAsync(String accountName, String accountType, Int32 pageIndex, Int32 pageSize);
+		Task<PageList<AccountDto>> GetAccountsAsync(String accountName, String accountType, Int32 pageIndex, Int32 pageSize);
 
 		/// <summary>
 		/// 根据用户id获取用户
