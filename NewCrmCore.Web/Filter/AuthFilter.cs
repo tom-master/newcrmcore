@@ -38,7 +38,7 @@ namespace NewCrmCore.Web.Filter
 				return;
 			}
 			//文件夹
-			if (filterContext.HttpContext.Request.Form["type"] == "folder")
+			if (filterContext.HttpContext.Request.Query["type"] == "folder")
 			{
 				return;
 			}
