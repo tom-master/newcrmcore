@@ -5322,8 +5322,7 @@ HROS.base = (function () {
             //将原样式修改id，并载入新样式
             $('#window-skin').attr('id', 'window-skin-ready2remove');
             var css = document.createElement('link');
-            css.rel = 'stylesheet';
-            css.href = '../images/skins/' + skin + '.css?' + version;
+            css.href = 'images/skins/' + skin + '.css?' + version;
             css.id = 'window-skin';
             document.getElementsByTagName('head')[0].appendChild(css);
             //新样式载入完毕后清空原样式

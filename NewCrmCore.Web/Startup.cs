@@ -1,8 +1,10 @@
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using NewCrmCore.Application.Services;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Domain.Services.BoundedContext;
@@ -55,6 +57,7 @@ namespace NewCrmCore.Web
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 		{
+
 			if (env.IsDevelopment())
 			{
 				app.UseBrowserLink();
@@ -65,12 +68,10 @@ namespace NewCrmCore.Web
 				app.UseExceptionHandler("/Error");
 			}
 
-
-
 			app.UseForwardedHeaders(new ForwardedHeadersOptions { ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto });
+			app.UseMvcWithDefaultRoute();
 
 			app.UseStaticFiles();
-			app.UseMvcWithDefaultRoute();
 			app.UseMvc(routes =>
 			{
 				routes.MapRoute(

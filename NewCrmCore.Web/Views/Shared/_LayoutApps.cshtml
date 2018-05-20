@@ -1,20 +1,20 @@
 ﻿@{
-    Layout = "~/Views/Shared/_LayoutRoot.cshtml";
+	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
 }
 
 @section ParentCss
-{
-    <link href="~/css/hoorayui/globle.css" rel="stylesheet" />
-    <link href="~/js/hooray/lib/hooraylibs.css" rel="stylesheet" />
-    <link href="~/js/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/hoorayui/css/sys.css" rel="stylesheet" />
-    @RenderSection("ChildrenCss", false)
+	{
+	<link rel="stylesheet" href="~/css/hoorayui/globle.css" />
+	<link rel="stylesheet" href="~/js/hooray/lib/hooraylibs.css" />
+	<link rel="stylesheet" href="~/js/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/hoorayui/css/sys.css" />
+	@RenderSection("ChildrenCss", false)
 }
 
 @RenderBody()
 
 @section ParentScript
-{
-    @RenderSection("ChildrenScript", false)
+	{
+	@RenderSection("ChildrenScript", false)
 }
 
