@@ -77,8 +77,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             WHERE a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState AND a.IsRecommand=1";
 					var parameters = new List<SqlParameter>
 					{
-						new SqlParameter("@AppAuditState",(Int32)AppAuditState.Pass),
-						new SqlParameter("@AppReleaseState",(Int32)AppReleaseState.Release),
+						new SqlParameter("@AppAuditState", AppAuditState.Pass.ToInt32()),
+						new SqlParameter("@AppReleaseState", AppReleaseState.Release.ToInt32()),
 						new SqlParameter("@accountId",accountId)
 					};
 					return dataStore.FindOne<TodayRecommendAppDto>(sql, parameters);
@@ -94,8 +94,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				var parameters = new List<SqlParameter>
 				{
-					new SqlParameter("@AppAuditState", (Int32)AppAuditState.Pass),
-					new SqlParameter("@AppReleaseState", (Int32)AppReleaseState.Release)
+					new SqlParameter("@AppAuditState", AppAuditState.Pass.ToInt32()),
+					new SqlParameter("@AppReleaseState",  AppReleaseState.Release.ToInt32())
 				};
 
 				var where = new StringBuilder();
@@ -221,7 +221,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				if (appStyleId != 0)
 				{
 					var appStyle = EnumExtensions.ToEnum<AppStyle>(appStyleId);
-					parameters.Add(new SqlParameter("@AppStyle", (Int32)appStyle));
+					parameters.Add(new SqlParameter("@AppStyle", appStyle.ToInt32()));
 					where.Append($@" AND a.AppStyle=@AppStyle");
 				}
 
@@ -232,7 +232,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					if (stats[0] == "AppReleaseState")
 					{
 						var appReleaseState = EnumExtensions.ToEnum<AppReleaseState>(Int32.Parse(stats[1]));
-						parameters.Add(new SqlParameter("AppReleaseState", (Int32)appReleaseState));
+						parameters.Add(new SqlParameter("AppReleaseState", appReleaseState.ToInt32()));
 						where.Append($@" AND a.AppReleaseState=@AppReleaseState ");
 					}
 
@@ -240,7 +240,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					if (stats[0] == "AppAuditState")
 					{
 						var appAuditState = EnumExtensions.ToEnum<AppAuditState>(Int32.Parse(stats[1]));
-						parameters.Add(new SqlParameter("@AppAuditState", (Int32)appAuditState));
+						parameters.Add(new SqlParameter("@AppAuditState", appAuditState.ToInt32()));
 						where.Append($@" AND a.AppAuditState=@AppAuditState");
 					}
 				}
@@ -747,8 +747,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                 FROM  dbo.App AS a WHERE a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState AND a.IsDeleted=0 AND a.Id=@Id";
 							var parameters = new List<SqlParameter>
 							{
-								new SqlParameter("@AppAuditState",AppAuditState.Pass.ParseToInt32()),
-								new SqlParameter("@AppReleaseState",(Int32)AppReleaseState.Release),
+								new SqlParameter("@AppAuditState",AppAuditState.Pass.ToInt32()),
+								new SqlParameter("@AppReleaseState",AppReleaseState.Release.ToInt32()),
 								new SqlParameter("@Id",appId)
 							};
 							app = dataStore.FindOne<App>(sql, parameters);
