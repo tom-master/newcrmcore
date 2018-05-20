@@ -9,6 +9,6 @@ namespace NewCrmCore.Application.Services.Interface
 	{
 		Task AddLoggerAsync(LogDto log);
 
-		Task<PagingModel<LogDto>> GetLogsAsync(Int32 accountId, Int32 logLevel, Int32 pageIndex, Int32 pageSize);
+		Task<PageList<LogDto>> GetLogsAsync(Int32 accountId, Int32 logLevel, Int32 pageIndex, Int32 pageSize);
 	}
 }
