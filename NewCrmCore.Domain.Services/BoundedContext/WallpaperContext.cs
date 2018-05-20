@@ -10,6 +10,7 @@ using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
 using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;
+using NewCrmCore.Infrastructure.CommonTools.CustomExtension;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
 {
@@ -110,7 +111,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					var parameters = new List<SqlParameter>
 					{
 						new SqlParameter("@AccountId",accountId),
-						new SqlParameter("@Source",(Int32)WallpaperSource.Upload)
+						new SqlParameter("@Source", WallpaperSource.Upload.ToInt32())
 					};
 					return dataStore.Find<Wallpaper>(sql, parameters);
 				}
@@ -136,7 +137,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             FROM dbo.Wallpaper AS a WHERE a.Source=@Source AND a.IsDeleted=0";
 					var parameters = new List<SqlParameter>
 					{
-						new SqlParameter("@Source",(Int32)WallpaperSource.System)
+						new SqlParameter("@Source", WallpaperSource.System.ToInt32())
 					};
 					return dataStore.Find<Wallpaper>(sql, parameters);
 				}

@@ -7,6 +7,7 @@ using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure.CommonTools.CustomExtension;
 using NewLibCore;
 using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;
@@ -59,7 +60,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					if (isFolder)
 					{
 						parameters.Add(new SqlParameter("@Id", memberId));
-						parameters.Add(new SqlParameter("@MemberType", (Int32)MemberType.Folder));
+						parameters.Add(new SqlParameter("@MemberType",  MemberType.Folder.ToInt32()));
 						where.Append($@" AND a.Id=@Id AND a.MemberType=@MemberType");
 					}
 					else
@@ -222,7 +223,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								new SqlParameter("@Id", memberId),
 								new SqlParameter("@AccountId", accountId)
 							};
-							isFolder = (dataStore.FindSingleValue<Int32>(sql, parameters)) == (Int32)MemberType.Folder;
+							isFolder = (dataStore.FindSingleValue<Int32>(sql, parameters)) == MemberType.Folder.ToInt32();
 						}
 						#endregion
 
