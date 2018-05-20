@@ -1,5 +1,6 @@
 ﻿@using NewLibCore
-@model NewCrmCore.Dto.MemberDto
+@using NewCrmCore.Dto
+
 @{
     Layout = "~/Views/Shared/_LayoutApps.cshtml";
 }
@@ -18,7 +19,7 @@
                 <label class="label-text">应用图片：</label>
                 <div class="label-box form-inline control-group">
                     <div class="shortcutview">
-                        <img src="@(Model.IsIconByUpload?ProfileManager.FileUrl+Model.IconUrl:Model.IconUrl)">
+                        <img src="@(Model.IsIconByUpload?AppSettings.Get<Settings>().FileUrl+Model.IconUrl:Model.IconUrl)">
                     </div>
                     <a href="javascript:;" id="upload" class="btn fl" style="position: relative;">选择图片</a>
                     <div class="shortcut-selicon">
@@ -98,7 +99,7 @@
 </form>
 
 @section ChildrenScript
-{
+    {
     <script>
         $(function() {
             var uploader = WebUploader.create({
@@ -107,7 +108,7 @@
                 // swf文件路径
                 swf: '~/Scripts/webuploader-0.1.5/Uploader.swf',
                 // 文件接收服务端。
-                server: '@(ProfileManager.UploadUrl)/api/filestorage/upload?accountId=@Model.AccountId&uploadtype=icon',
+                server: '@(AppSettings.Get<Settings>().UploadUrl)/api/filestorage/upload?accountId=@Model.AccountId&uploadtype=icon',
                 // 选择文件的按钮。可选。
                 // 内部根据当前运行是创建，可能是input元素，也可能是flash.
                 pick: {
@@ -156,7 +157,7 @@
                             NewCrm.msgbox.fail("图标保存失败");
                         }
                     })
-                    
+
                 } else {
                     NewCrm.msgbox.fail("图标上传失败");
                 }

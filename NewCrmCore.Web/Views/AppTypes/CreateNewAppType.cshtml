@@ -1,48 +1,49 @@
 ﻿@model NewCrmCore.Dto.AppTypeDto
 @{
-    Layout = "~/Views/Shared/_LayoutApps.cshtml";
+	Layout = "~/Views/Shared/_LayoutApps.cshtml";
+	var appTypeId = Context.Request.Query["appTypeId"]
 }
 
-<form action="/AppTypes/CreateAppType?appTypeId=@Request["appTypeId"]" method="post" name="form" id="form">
-    <input type="hidden" name="ac" value="edit">
-    <div class="creatbox">
-        <div class="middle">
-            <p class="detile-title">
-                <strong>编辑类目</strong>
-            </p>
-            <div class="input-label">
-                <label class="label-text">类目名称：</label>
-                <div class="label-box form-inline control-group">
-                    @{
-                        if (Model != null)
-                        {
-                            <text>
-                                <input type="text" name="val_name" value="@Model.Name" datatype="*" ajaxurl="@Url.Action("CheckAppTypeName","AppTypes")" nullmsg="请输入类目名称">
-                            </text>
-                        }
-                        else
-                        {
-                            <text>
-                                <input type="text" name="val_name" value="" datatype="*" ajaxurl="@Url.Action("CheckAppTypeName","AppTypes")" nullmsg="请输入类目名称">
-                            </text>
-                        }
-                    }
+<form action="/AppTypes/CreateAppType?appTypeId=@appTypeId" method="post" name="form" id="form">
+	<input type="hidden" name="ac" value="edit">
+	<div class="creatbox">
+		<div class="middle">
+			<p class="detile-title">
+				<strong>编辑类目</strong>
+			</p>
+			<div class="input-label">
+				<label class="label-text">类目名称：</label>
+				<div class="label-box form-inline control-group">
+					@{
+						if (Model != null)
+						{
+							<text>
+								<input type="text" name="val_name" value="@Model.Name" datatype="*" ajaxurl="@Url.Action("CheckAppTypeName","AppTypes")" nullmsg="请输入类目名称">
+							</text>
+						}
+						else
+						{
+							<text>
+								<input type="text" name="val_name" value="" datatype="*" ajaxurl="@Url.Action("CheckAppTypeName","AppTypes")" nullmsg="请输入类目名称">
+							</text>
+						}
+					}
 
-                    <span class="help-inline"></span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="bottom-bar">
-        <div class="con">
-            <a class="btn btn-primary fr" id="btn-submit" href="javascript:;"><i class="icon-white icon-ok"></i> 确定</a>
-            <a class="btn fr" href="javascript:window.parent.closeDetailIframe();" style="margin-right:10px"><i class="icon-chevron-up"></i> 返回类目列表</a>
-        </div>
-    </div>
+					<span class="help-inline"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bottom-bar">
+		<div class="con">
+			<a class="btn btn-primary fr" id="btn-submit" href="javascript:;"><i class="icon-white icon-ok"></i> 确定</a>
+			<a class="btn fr" href="javascript:window.parent.closeDetailIframe();" style="margin-right:10px"><i class="icon-chevron-up"></i> 返回类目列表</a>
+		</div>
+	</div>
 </form>
 @section ChildrenScript
-  {
-    <script>
+	{
+	<script>
         $(function () {
             $('#form').Validform({
                 btnSubmit: '#btn-submit',
@@ -67,7 +68,7 @@
                 ajaxPost: true,
                 callback: function (responseText) {
                     if (responseText.IsSuccess) {
-                        if ('@Request["appTypeId"]') {
+                        if ('@appTypeId') {
                          $.dialog({
                              id: 'ajaxedit',
                              content: '修改成功，是否继续修改？',
@@ -103,7 +104,7 @@
                 }
             });
         });
-    </script>
+	</script>
 
 }
 

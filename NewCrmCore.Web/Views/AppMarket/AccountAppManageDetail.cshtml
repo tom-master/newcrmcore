@@ -1,134 +1,136 @@
-﻿@model NewCrmCore.Dto.AppDto
-@using NewLibCore
+﻿@using NewLibCore
+@using NewCrmCore.Dto
+
+@model AppDto
 <form action="" method="post" name="form" id="form">
-    <div class="creatbox">
-        <div class="middle">
-            <p class="detile-title">
-                @{
-                    if (Model.AppAuditState == 2)
-                    {<text>应用详情</text>
-                    }
-                    else if (Model.AppAuditState == 1)
-                    {
-                        <text>应用详情(审核中应用)</text>
-                    }
-                }
-            </p>
-            <div class="input-label">
-                <label class="label-text">应用图片：</label>
-                <div class="label-box form-inline control-group">
-                    <img src="@(Model.IsIconByUpload?ProfileManager.FileUrl+Model.IconUrl:Model.IconUrl)">
-                </div>
-            </div>
-            <div class="input-label">
-                <label class="label-text">应用名称：</label>
-                <div class="label-box form-inline control-group">
-                    @Model.Name
-                </div>
-            </div>
-            <div class="input-label">
-                <label class="label-text">应用分类：</label>
-                <div class="label-box form-inline control-group">
-                    @Model.AppTypeName
-                </div>
-            </div>
-            <div class="input-label">
-                <label class="label-text">应用地址：</label>
-                <div class="label-box form-inline control-group">
-                    @Model.AppUrl
-                </div>
-                <input type="hidden" name="val_url" value="@Model.AppUrl" />
-            </div>
-            <div class="input-label">
-                <label class="label-text">窗口大小：</label>
-                <div class="label-box form-inline control-group">
-                    宽：@{
-                        var w = Model.Width;
-                        <text>@w px</text>
-                    }，
+	<div class="creatbox">
+		<div class="middle">
+			<p class="detile-title">
+				@{
+					if (Model.AppAuditState == 2)
+					{<text>应用详情</text>
+				}
+				else if (Model.AppAuditState == 1)
+				{
+					<text>应用详情(审核中应用)</text>
+				}
+				}
+			</p>
+			<div class="input-label">
+				<label class="label-text">应用图片：</label>
+				<div class="label-box form-inline control-group">
+					<img src="@(Model.IsIconByUpload?AppSettings.Get<Settings>().FileUrl+Model.IconUrl:Model.IconUrl)">
+				</div>
+			</div>
+			<div class="input-label">
+				<label class="label-text">应用名称：</label>
+				<div class="label-box form-inline control-group">
+					@Model.Name
+				</div>
+			</div>
+			<div class="input-label">
+				<label class="label-text">应用分类：</label>
+				<div class="label-box form-inline control-group">
+					@Model.AppTypeName
+				</div>
+			</div>
+			<div class="input-label">
+				<label class="label-text">应用地址：</label>
+				<div class="label-box form-inline control-group">
+					@Model.AppUrl
+				</div>
+				<input type="hidden" name="val_url" value="@Model.AppUrl" />
+			</div>
+			<div class="input-label">
+				<label class="label-text">窗口大小：</label>
+				<div class="label-box form-inline control-group">
+					宽：@{
+						var w = Model.Width;
+						<text>@w px</text>
+					}，
 
-                    高：@{
-                        var h = Model.Height;<text>@h px</text>
-                    }
-                </div>
-                <input type="hidden" name="val_width" value="@Model.Width" />
-                <input type="hidden" name="val_height" value="@Model.Height" />
-            </div>
-            <div class="input-label">
-                <label class="label-text">应用类型：</label>
-                <div class="label-box form-inline control-group">
+					高：@{
+						var h = Model.Height;<text>@h px</text>
+					}
+				</div>
+				<input type="hidden" name="val_width" value="@Model.Width" />
+				<input type="hidden" name="val_height" value="@Model.Height" />
+			</div>
+			<div class="input-label">
+				<label class="label-text">应用类型：</label>
+				<div class="label-box form-inline control-group">
 
-                    @if (Model.AppStyle != 2)
-                    {
-                        @:应用
-                    }
-                    else
-                    {
-                        @:挂件
-                    }
+					@if (Model.AppStyle != 2)
+					{
+						@:应用
+					}
+					else
+					{
+						@:挂件
+					}
 
-                </div>
-            </div>
-            <div class="input-label input-label-isresize" @{ if (Model.AppStyle == 2) { <text> style="display:none" </text>           } }>
-                <label class="label-text">窗口是否拉伸：</label>
-                <div class="label-box form-inline control-group">
-                    @if (Model.IsResize)
-                    {
-                        <text>是</text>
-                    }
-                    else
-                    {
-                        <text>否</text>
-                    }
-                </div>
-            </div>
-            <div class="input-label input-label-isopenmax" @{ if (Model.AppStyle == 2 || Model.IsResize == false) { <text> style="display:none" </text>           } }>
-                <label class="label-text">打开默认最大化：</label>
-                <div class="label-box form-inline control-group">
-                    @if (Model.IsOpenMax)
-                    {<text>是</text>
-                    }
-                    else
-                    {<text>否</text>
-                    }
-                </div>
-            </div>
-            <div class="input-label input-label-isflash" @{ if (Model.AppStyle == 2) { <text> style="display:none" </text>           } }>
-                <label class="label-text">是否为Flash：</label>
-                <div class="label-box form-inline control-group">
-                    @if (Model.IsFlash)
-                    {
-                        <text>是</text>
-                    }
-                    else
-                    {
-                        <text>否</text>
-                    }
-                </div>
-            </div>
-            <div class="input-label">
-                <label class="label-text">应用介绍：</label>
-                <div class="label-box form-inline control-group">
-                    @Model.Remark
-                </div>
-            </div>
+				</div>
+			</div>
+			<div class="input-label input-label-isresize" @{ if (Model.AppStyle == 2) { <text> style="display:none" </text>  } }>
+				<label class="label-text">窗口是否拉伸：</label>
+				<div class="label-box form-inline control-group">
+					@if (Model.IsResize)
+					{
+						<text>是</text>
+					}
+					else
+					{
+						<text>否</text>
+					}
+				</div>
+			</div>
+			<div class="input-label input-label-isopenmax" @{ if (Model.AppStyle == 2 || Model.IsResize == false) { <text> style="display:none" </text>  } }>
+				<label class="label-text">打开默认最大化：</label>
+				<div class="label-box form-inline control-group">
+					@if (Model.IsOpenMax)
+					{<text>是</text>
+				}
+				else
+				{<text>否</text>
+			}
+				</div>
+			</div>
+			<div class="input-label input-label-isflash" @{ if (Model.AppStyle == 2) { <text> style="display:none" </text>  } }>
+				<label class="label-text">是否为Flash：</label>
+				<div class="label-box form-inline control-group">
+					@if (Model.IsFlash)
+					{
+						<text>是</text>
+					}
+					else
+					{
+						<text>否</text>
+					}
+				</div>
+			</div>
+			<div class="input-label">
+				<label class="label-text">应用介绍：</label>
+				<div class="label-box form-inline control-group">
+					@Model.Remark
+				</div>
+			</div>
 
-        </div>
-    </div>
-    <div class="bottom-bar">
-        <div class="con">
-            @if (Model.AppAuditState == 2 && Model.AppReleaseState == 2)
-            {<text>
-                <a class="btn btn-success fl" id="btn-release" href="javascript:;" appid="@Model.Id"><i class="icon-white icon-ok"></i> 发布应用</a>
-                &nbsp;
-                &nbsp;
-            </text>
-            }
+		</div>
+	</div>
+	<div class="bottom-bar">
+		<div class="con">
+			@if (Model.AppAuditState == 2 && Model.AppReleaseState == 2)
+			{<text>
+					<a class="btn btn-success fl" id="btn-release" href="javascript:;" appid="@Model.Id"><i class="icon-white icon-ok"></i> 发布应用</a>
+					&nbsp;
+					&nbsp;
+			</text>
+		}
 
-            <a class="btn" id="btn-preview" href="javascript:;"><i class="icon-eye-open"></i> 预览应用</a>
-            <a class="btn btn-primary fr" id="btn-submit" href="javascript:;"><i class="icon-white icon-ok"></i> 确定</a>
+			<a class="btn" id="btn-preview" href="javascript:;"><i class="icon-eye-open"></i> 预览应用</a>
+			<a class="btn btn-primary fr" id="btn-submit" href="javascript:;"><i class="icon-white icon-ok"></i> 确定</a>
 
-            <a class="btn fr" href="javascript:window.parent.closeDetailIframe();" style="margin-right: 10px"><i class="icon-chevron-up"></i> 返回应用列表</a>
-        </div>
-    </div>
+			<a class="btn fr" href="javascript:window.parent.closeDetailIframe();" style="margin-right: 10px"><i class="icon-chevron-up"></i> 返回应用列表</a>
+		</div>
+	</div>
 </form>

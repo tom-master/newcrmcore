@@ -1,70 +1,71 @@
 ﻿@model NewCrmCore.Dto.AccountDto
 
 @{
-    Layout = "~/Views/Shared/_LayoutApps.cshtml";
+	Layout = "~/Views/Shared/_LayoutApps.cshtml";
+	var requestTarget = Context.Request.Query["target"];
 }
 
 <div class="title">
-    <ul>
-        <li data-value="baseinfo" @{ if (Request["target"] == "baseinfo") { <text>
-            class="focus"
-            </text>  } }>
-            <a href="javascript:void(0);">基本信息</a>
-        </li>
+	<ul>
+		<li data-value="baseinfo" @{ if (requestTarget == "baseinfo") { <text>
+			class="focus"
+			</text>  } }>
+			<a href="javascript:void(0);">基本信息</a>
+		</li>
 
-        <li data-value="modifyface" @{ if (Request["target"] == "modifyface") { <text>
-            class="focus"
-            </text>  } }>
-            <a href="javascript:void(0);">修改头像</a>
-        </li>
+		<li data-value="modifyface" @{ if (requestTarget == "modifyface") { <text>
+			class="focus"
+			</text>  } }>
+			<a href="javascript:void(0);">修改头像</a>
+		</li>
 
-        <li data-value="accountsafe" @{ if (Request["target"] == "accountsafe") { <text>
-            class="focus"
-            </text>  } }>
-            <a href="javascript:void(0);">账号安全</a>
-        </li>
-    </ul>
+		<li data-value="accountsafe" @{ if (requestTarget == "accountsafe") { <text>
+			class="focus"
+			</text>  } }>
+			<a href="javascript:void(0);">账号安全</a>
+		</li>
+	</ul>
 </div>
 
 
 @{
-    if (Model != null)
-    {
-        switch (Request["target"])
-        {
-            case "baseinfo":
-            {
-                Html.RenderPartial("~/Views/AccountSetting/BaseInfo.cshtml", Model);
-                break;
-            }
-            case "modifyface":
-            {
-                Html.RenderPartial("~/Views/AccountSetting/ModifyFace.cshtml", Model);
-                break;
-            }
-            case "accountsafe":
-            {
+	if (Model != null)
+	{
+		switch (requestTarget)
+		{
+			case "baseinfo":
+			{
+				Html.RenderPartial("~/Views/AccountSetting/BaseInfo.cshtml", Model);
+				break;
+			}
+			case "modifyface":
+			{
+				Html.RenderPartial("~/Views/AccountSetting/ModifyFace.cshtml", Model);
+				break;
+			}
+			case "accountsafe":
+			{
 
-                Html.RenderPartial("~/Views/AccountSetting/AccountSafe.cshtml");
-                break;
-            }
-            default:
-            {
-                <text>
-                    @Html.Partial("~/Views/AccountSetting/BaseInfo.cshtml", Model);
-                </text>
-                break;
-            }
-        }
-    }
+				Html.RenderPartial("~/Views/AccountSetting/AccountSafe.cshtml");
+				break;
+			}
+			default:
+			{
+				<text>
+					@Html.Partial("~/Views/AccountSetting/BaseInfo.cshtml", Model);
+				</text>
+				break;
+			}
+		}
+	}
 }
 
 @section ChildrenScript
-{
-    <script>
+	{
+	<script>
         @{
-            if (Request["target"]==null)
-            {
+			if (String.IsNullOrEmpty(requestTarget))
+			{
                 <text>
                     $('.title ul > li').first().addClass('focus');
                 </text>
@@ -197,5 +198,5 @@
                 return false;
             }
         });
-    </script>
+	</script>
 }

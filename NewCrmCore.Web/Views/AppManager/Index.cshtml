@@ -242,7 +242,7 @@
 
             Handlebars.registerHelper('appendUrl', function (v1, v2) {
                 if (v1) {
-                    return "@(ProfileManager.FileUrl)"+v2
+                    return "@(AppSettings.Get<Settings>().FileUrl)"+v2
                 }
                 return v2
             })

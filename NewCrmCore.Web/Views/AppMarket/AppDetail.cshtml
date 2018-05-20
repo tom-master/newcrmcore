@@ -1,70 +1,72 @@
-﻿@model NewCrmCore.Dto.AppDto
-@using NewLibCore
+﻿@using NewLibCore
+@using NewCrmCore.Dto
+
+@model AppDto
 @{
-    Layout = "~/Views/Shared/_LayoutApps.cshtml";
+	Layout = "~/Views/Shared/_LayoutApps.cshtml";
 }
 
 <div class="detail-wrap">
-    <div class="app-contents">
-        <div class="mbox">
-            <div class="title">
-                <a href="javascript:window.parent.closeDetailIframe2(function(){window.parent.getPageList(0);});" class="btn-back">返回</a>
-            </div>
-            <div class="app-title">
-                <img src="@(Model.IsIconByUpload?ProfileManager.FileUrl+Model.IconUrl:Model.IconUrl)" alt="@Model.Name">
-                <span class="app-name">@Model.Name</span>
-                <span class="app-desc"><i>@Model.UseCount</i> 人在使用</span>
-                @{
+	<div class="app-contents">
+		<div class="mbox">
+			<div class="title">
+				<a href="javascript:window.parent.closeDetailIframe2(function(){window.parent.getPageList(0);});" class="btn-back">返回</a>
+			</div>
+			<div class="app-title">
+				<img src="@(Model.IsIconByUpload?AppSettings.Get<Settings>().FileUrl+Model.IconUrl:Model.IconUrl)" alt="@Model.Name">
+				<span class="app-name">@Model.Name</span>
+				<span class="app-desc"><i>@Model.UseCount</i> 人在使用</span>
+				@{
 
-                    if(((Boolean)ViewData["IsInstallApp"]))
-                    {<text>
-                    <a href="javascript:;" app_id="@Model.Id" app_type="@Model.AppStyle.ToString().ToLower()" class="btn-run">打开应用</a>
-                    </text>
-                    }
-                    else
-                    {<text>
-                    <a href="javascript:;" app_id="@Model.Id" app_type="@Model.AppStyle.ToString().ToLower()" class="btn-add">添加应用</a>
-                    </text>
-                    }
-                }
+					if (((Boolean)ViewData["IsInstallApp"]))
+					{<text>
+							<a href="javascript:;" app_id="@Model.Id" app_type="@Model.AppStyle.ToString().ToLower()" class="btn-run">打开应用</a>
+					</text>
+				}
+				else
+				{<text>
+						<a href="javascript:;" app_id="@Model.Id" app_type="@Model.AppStyle.ToString().ToLower()" class="btn-add">添加应用</a>
+				</text>
+			}
+				}
 
-                <div class="grade-box">
-                    <div class="star-num">@Model.StartCount.ToString("0.0")</div>
-                    <div class="star-box">
-                        <i style="width:@{var c = Model.StartCount*20; <text>@c%</text>}"></i>
-                        <ul>
-                            <li class="grade-1" num="1"><a href="javascript:;"><em>很不好用</em></a></li>
-                            <li class="grade-2" num="2"><a href="javascript:;"><em>体验一般般</em></a></li>
-                            <li class="grade-3" num="3"><a href="javascript:;"><em>比较好用</em></a></li>
-                            <li class="grade-4" num="4"><a href="javascript:;"><em>很好用</em></a></li>
-                            <li class="grade-5" num="5"><a href="javascript:;"><em>棒极了，推荐</em></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <h4>应用介绍</h4>
-            <h5>
+				<div class="grade-box">
+					<div class="star-num">@Model.StartCount.ToString("0.0")</div>
+					<div class="star-box">
+						<i style="width:@{var c = Model.StartCount*20; <text>@c%</text>}"></i>
+						<ul>
+							<li class="grade-1" num="1"><a href="javascript:;"><em>很不好用</em></a></li>
+							<li class="grade-2" num="2"><a href="javascript:;"><em>体验一般般</em></a></li>
+							<li class="grade-3" num="3"><a href="javascript:;"><em>比较好用</em></a></li>
+							<li class="grade-4" num="4"><a href="javascript:;"><em>很好用</em></a></li>
+							<li class="grade-5" num="5"><a href="javascript:;"><em>棒极了，推荐</em></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<h4>应用介绍</h4>
+			<h5>
 
-                @{
-                    if(Model.AccountId == 0)
-                    {<text><em>开发者：</em><b style="color:red">平台提供</b></text>
-                    }
-                    else
-                    {
-                        <text><em>开发者：</em><b style="color:red">@ViewData["AccountName"]</b></text>
-                    }
-                }
+				@{
+					if (Model.AccountId == 0)
+					{<text><em>开发者：</em><b style="color:red">平台提供</b></text>
+				}
+				else
+				{
+					<text><em>开发者：</em><b style="color:red">@ViewData["AccountName"]</b></text>
+				}
+				}
 
-                <em style="margin-left:10px">所属分类：</em>@Model.AppTypeName
-                <em style="margin-left:10px">发布时间：</em>@Model.AddTime
-            </h5>
-            <div class="app-text breakword">@Model.Remark</div>
-        </div>
-    </div>
+				<em style="margin-left:10px">所属分类：</em>@Model.AppTypeName
+				<em style="margin-left:10px">发布时间：</em>@Model.AddTime
+			</h5>
+			<div class="app-text breakword">@Model.Remark</div>
+		</div>
+	</div>
 </div>
 @section ChildrenScript
-{
-    <script>
+	{
+	<script>
         $(function () {
             //添加应用
             $('.btn-add').click(function () {
@@ -114,6 +116,6 @@
                 }
             });
         });
-    </script>
+	</script>
 }
 

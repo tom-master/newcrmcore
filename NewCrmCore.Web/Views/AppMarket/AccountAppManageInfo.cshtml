@@ -1,49 +1,51 @@
 ﻿@using NewLibCore
-@model NewCrmCore.Dto.AppDto
+@using NewCrmCore.Dto
+
+@model AppDto
 @{
-    Layout = "~/Views/Shared/_LayoutApps.cshtml";
-    var accountId = ViewData["AccountId"].ToString() ?? "0";
+	Layout = "~/Views/Shared/_LayoutApps.cshtml";
+	var accountId = ViewData["AccountId"].ToString() ?? "0";
 }
 
 @{
-    if(Model != null)
-    {
-        if((Int32)ViewData["AppState"] == 2)//已通过
-        {
-            <text>
-                @Html.Partial("~/Views/AppMarket/AccountAppManageDetail.cshtml", Model)
-            </text>
-        }
-        else
-        {
-            if((Int32)ViewData["AppState"] == 4 || (Int32)ViewData["AppState"] == 3)//未审核或未通过
-            {
-                <text>
-                    @Html.Partial("~/Views/AppManager/AppAudit.cshtml", Model)
-                </text>
-            }
-            else
-            {
-                <text>
-                    @Html.Partial("~/Views/AppMarket/AccountAppManageEdit.cshtml", Model)
-                </text>
-            }
-        }
-    }
-    else
-    {
-        <text>
-            @Html.Partial("~/Views/AppMarket/AccountAppManageNewApp.cshtml")
-        </text>
-    }
+	if (Model != null)
+	{
+		if ((Int32)ViewData["AppState"] == 2)//已通过
+		{
+			<text>
+				@Html.Partial("~/Views/AppMarket/AccountAppManageDetail.cshtml", Model)
+			</text>
+		}
+		else
+		{
+			if ((Int32)ViewData["AppState"] == 4 || (Int32)ViewData["AppState"] == 3)//未审核或未通过
+			{
+				<text>
+					@Html.Partial("~/Views/AppManager/AppAudit.cshtml", Model)
+				</text>
+			}
+			else
+			{
+				<text>
+					@Html.Partial("~/Views/AppMarket/AccountAppManageEdit.cshtml", Model)
+				</text>
+			}
+		}
+	}
+	else
+	{
+		<text>
+			@Html.Partial("~/Views/AppMarket/AccountAppManageNewApp.cshtml")
+		</text>
+	}
 
 
-    @section ChildrenCss{
-        <link href="~/js/webuploader-0.1.5/webuploader.css" rel="stylesheet" />
-    }
+	@section ChildrenCss{
+		<link href="~/js/webuploader-0.1.5/webuploader.css" rel="stylesheet" />
+	}
 
-    @section ChildrenScript{
-        <script>
+	@section ChildrenScript{
+		<script>
             $(function () {
                 var uploader = WebUploader.create({
                     // 选完文件后，是否自动上传。
@@ -51,7 +53,7 @@
                     // swf文件路径
                     swf: '../../js/webuploader-0.1.5/Uploader.swf',
                     // 文件接收服务端。
-                    server: '@(ProfileManager.UploadUrl)/api/filestorage/upload?accountId=@accountId&uploadtype=icon',
+                    server: '@(AppSettings.Get<Settings>().UploadUrl)/api/filestorage/upload?accountId=@accountId&uploadtype=icon',
                     // 选择文件的按钮。可选。
                     // 内部根据当前运行是创建，可能是input元素，也可能是flash.
                     pick: {
@@ -88,13 +90,13 @@
                 });
                 uploader.on('uploadSuccess', function (file, cb) {
                     if (cb[0].IsSuccess) {
-                        var urlPart = cb[0].Url
-                        if (parseInt('@Request["AppId"]') === 0) {
+						var urlPart = cb[0].Url
+						var appId = '@Context.Request.Query["AppId"]'
+                        if (parseInt(appId) === 0) {
                             $('#isIconByUpload').val('1');
                             $('#val_icon').val(urlPart)
-                        } else
-                        {
-                            HROS.request.post('/AppMarket/ModifyAppIcon',{ appId: '@Request["AppId"]', newIcon: urlPart },function (responseText) {
+                        } else {
+							HROS.request.post('/AppMarket/ModifyAppIcon', { appId: appId, newIcon: urlPart },function (responseText) {
                                 if (responseText.IsSuccess) {
                                     $('#isIconByUpload').val('1');
                                     $('.shortcutview img').attr('src', responseText.Model);
@@ -295,8 +297,8 @@
                     });
                 });
             });
-        </script>
-    }
+		</script>
+	}
 
 }
 

@@ -1,146 +1,147 @@
 ﻿@using NewCrmCore.Dto
 @using NewLibCore
 @{
-    Layout = "~/Views/Shared/_LayoutApps.cshtml";
+	Layout = "~/Views/Shared/_LayoutApps.cshtml";
 }
 @section ChildrenCss
-{
-    <style>
-        body {
-            margin: 10px 10px 0;
-        }
+	{
+	<style>
+		body {
+			margin: 10px 10px 0;
+		}
 
-        .appicon {
-            width: 32px;
-            height: 32px;
-        }
+		.appicon {
+			width: 32px;
+			height: 32px;
+		}
 
-        .appname {
-            margin-left: 10px;
-        }
-    </style>
+		.appname {
+			margin-left: 10px;
+		}
+	</style>
 
 }
 
 <div class="well well-small" style="margin-bottom:10px;padding-bottom:0">
-    <div class="form-inline">
-        <div class="control-group">
-            <label>名称：</label>
-            <input type="text" name="appName" id="appName" class="span3">
-            <a class="btn" menu="search" href="javascript:;" style="margin-left:10px"><i class="icon-search"></i> 搜索</a>
-            <a class="btn btn-primary fr" href="javascript:openDetailIframe('/AppMarket/AccountAppManageInfo?appId=0');"><i class="icon-white icon-plus"></i> 添加新应用</a>
-            <a class="btn fr" href="javascript:window.parent.closeDetailIframe2();" style="margin-right:10px"><i class="icon-arrow-left"></i> 返回应用市场</a>
-        </div>
-        <div class="control-group">
-            <label>分类：</label>
-            <select name="appType" id="appType" style="width:140px">
-                <option value="0">全部</option>
-                @{
-                    foreach (var appType in (List<AppTypeDto>)ViewData["AppTypes"])
-                    {
-                        <text>
-                            <option value="@appType.Id">@appType.Name</option></text>
-                    }
-                }
-            </select>
-            <label style="margin-left:10px">类型：</label>
-            <select name="appStyle" id="appStyle" style="width:140px">
-                <option value="0">全部</option>
-                @{
-                    foreach (var appStyle in (List<AppStyleDto>)ViewData["AppStyles"])
-                    {
-                        <text>
-                            <option value="@appStyle.Id">@appStyle.Name</option></text>
-                    }
-                }
-            </select>
-            <label style="margin-left:10px">状态：</label>
-            <select name="appState" id="appState" style="width: 140px">
-                <option value="0">全部</option>
-                @{
-                    foreach (var appState in (List<AppStateDto>)ViewData["AppStates"])
-                    {
-                        <text>
-                            <option value="@appState.Id" data-type="@appState.Type">@appState.Name</option></text>
-                    }
-                }
-            </select>
-        </div>
-    </div>
+	<div class="form-inline">
+		<div class="control-group">
+			<label>名称：</label>
+			<input type="text" name="appName" id="appName" class="span3">
+			<a class="btn" menu="search" href="javascript:;" style="margin-left:10px"><i class="icon-search"></i> 搜索</a>
+			<a class="btn btn-primary fr" href="javascript:openDetailIframe('/AppMarket/AccountAppManageInfo?appId=0');"><i class="icon-white icon-plus"></i> 添加新应用</a>
+			<a class="btn fr" href="javascript:window.parent.closeDetailIframe2();" style="margin-right:10px"><i class="icon-arrow-left"></i> 返回应用市场</a>
+		</div>
+		<div class="control-group">
+			<label>分类：</label>
+			<select name="appType" id="appType" style="width:140px">
+				<option value="0">全部</option>
+				@{
+					foreach (var appType in (List<AppTypeDto>)ViewData["AppTypes"])
+					{
+						<text>
+							<option value="@appType.Id">@appType.Name</option></text>
+					}
+				}
+			</select>
+			<label style="margin-left:10px">类型：</label>
+			<select name="appStyle" id="appStyle" style="width:140px">
+				<option value="0">全部</option>
+				@{
+					foreach (var appStyle in (List<AppStyleDto>)ViewData["AppStyles"])
+					{
+						<text>
+							<option value="@appStyle.Id">@appStyle.Name</option></text>
+					}
+				}
+			</select>
+			<label style="margin-left:10px">状态：</label>
+			<select name="appState" id="appState" style="width: 140px">
+				<option value="0">全部</option>
+				@{
+					foreach (var appState in (List<AppStateDto>)ViewData["AppStates"])
+					{
+						<text>
+							<option value="@appState.Id" data-type="@appState.Type">@appState.Name</option></text>
+					}
+				}
+			</select>
+		</div>
+	</div>
 </div>
 <table class="list-table">
-    <thead>
-        <tr class="col-name">
-            <th width="25%">应用名称</th>
-            <th width="25%">类型</th>
-            <th width="15%">分类</th>
-            <th width="15%">使用人数</th>
-            <th width="45%">操作</th>
-        </tr>
-        <tr class="sep-row"><td colspan="100"></td></tr>
-        <tr class="toolbar">
-            <td colspan="100">
-                <b style="margin: 0 10px">符合条件的记录</b>有<font class="list-count">0</font>条
-            </td>
-        </tr>
-        <tr class="sep-row"><td colspan="100"></td></tr>
-    </thead>
-    <tbody class="list-con"></tbody>
-    <tfoot>
-        <tr>
-            <td colspan="100">
-                <div class="pagination pagination-centered" style="margin: 5px 0">
-                    <div id="pagination"></div>
-                </div>
-                <input id="pagination_setting" type="hidden" per="10">
-            </td>
-        </tr>
-    </tfoot>
+	<thead>
+		<tr class="col-name">
+			<th width="25%">应用名称</th>
+			<th width="25%">类型</th>
+			<th width="15%">分类</th>
+			<th width="15%">使用人数</th>
+			<th width="45%">操作</th>
+		</tr>
+		<tr class="sep-row"><td colspan="100"></td></tr>
+		<tr class="toolbar">
+			<td colspan="100">
+				<b style="margin: 0 10px">符合条件的记录</b>有<font class="list-count">0</font>条
+			</td>
+		</tr>
+		<tr class="sep-row"><td colspan="100"></td></tr>
+	</thead>
+	<tbody class="list-con"></tbody>
+	<tfoot>
+		<tr>
+			<td colspan="100">
+				<div class="pagination pagination-centered" style="margin: 5px 0">
+					<div id="pagination"></div>
+				</div>
+				<input id="pagination_setting" type="hidden" per="10">
+			</td>
+		</tr>
+	</tfoot>
 </table>
 @{
-    if ((Request["appId"] + "").Length > 0)
-    {
-        <text>
-            <div id="detailIframe" style="background:#fff;position:fixed;z-index:1;top:0;left:0;width:100%; height: 100%;">
-                <iframe frameborder="0" src="/AppMarket/AccountAppManageInfo?appId=0" style="width:100%;height:100%"></iframe>
-            </div>
-        </text>
-    }
-    else
-    {
-        <text>
-            <div id="detailIframe" style="background:#fff;position:fixed;z-index:1;top:-100px;left:0;width:100%;height:100%;display:none">
-                <iframe frameborder="0" style="width:100%;height:100%"></iframe>
-            </div>
-        </text>
-    }
+	var appId = Context.Request.Query["appId"];
+	if (!String.IsNullOrEmpty(appId))
+	{
+		<text>
+			<div id="detailIframe" style="background:#fff;position:fixed;z-index:1;top:0;left:0;width:100%; height: 100%;">
+				<iframe frameborder="0" src="/AppMarket/AccountAppManageInfo?appId=0" style="width:100%;height:100%"></iframe>
+			</div>
+		</text>
+	}
+	else
+	{
+		<text>
+			<div id="detailIframe" style="background:#fff;position:fixed;z-index:1;top:-100px;left:0;width:100%;height:100%;display:none">
+				<iframe frameborder="0" style="width:100%;height:100%"></iframe>
+			</div>
+		</text>
+	}
 }
 
 
 @section ChildrenScript
-{
+	{
 
-    <script src="@Url.Content("~/Scripts/handlebars-v4.0.5.js")"></script>
+	<script src="@Url.Content("~/Scripts/handlebars-v4.0.5.js")"></script>
 
-    <script id="table-template" type="text/x-handlebars-template">
-        {{#each Model}}
-        <tr class="list-bd">
-            <td style="text-align:left;padding-left:15px">
-                <img src="{{appendUrl IsIconByUpload IconUrl}}" alt="{{Name}}" class="appicon">
-                <span class="appname">{{Name}}</span>
-            </td>
-            <td>{{convertstyle AppStyle}}</td>
-            <td>{{AppTypeName}}</td>
-            <td>{{UseCount}}</td>
-            <td>
-                <a href="javascript:openDetailIframe('/AppMarket/AccountAppManageInfo?appId={{Id}}');" class="btn btn-mini btn-link">详情</a>
-                <a href="javascript:;" class="btn btn-link do-del" appId="{{Id}}">删除</a>
-            </td>
+	<script id="table-template" type="text/x-handlebars-template">
+		{{#each Model}}
+		<tr class="list-bd">
+			<td style="text-align:left;padding-left:15px">
+				<img src="{{appendUrl IsIconByUpload IconUrl}}" alt="{{Name}}" class="appicon">
+				<span class="appname">{{Name}}</span>
+			</td>
+			<td>{{convertstyle AppStyle}}</td>
+			<td>{{AppTypeName}}</td>
+			<td>{{UseCount}}</td>
+			<td>
+				<a href="javascript:openDetailIframe('/AppMarket/AccountAppManageInfo?appId={{Id}}');" class="btn btn-mini btn-link">详情</a>
+				<a href="javascript:;" class="btn btn-link do-del" appId="{{Id}}">删除</a>
+			</td>
 
-        </tr>
-        {{/each}}
-    </script>
-    <script>
+		</tr>
+		{{/each}}
+	</script>
+	<script>
         $(function () {
             $('html').css({ 'overflow-y': 'hidden' });
 
@@ -216,10 +217,10 @@
 
             Handlebars.registerHelper('appendUrl', function (v1, v2) {
                 if (v1) {
-                    return "@(ProfileManager.FileUrl)"+v2
+                    return "@(AppSettings.Get<Settings>().FileUrl)"+v2
                 }
                 return v2
             })
         }
-    </script>
+	</script>
 }
