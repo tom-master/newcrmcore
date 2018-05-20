@@ -138,7 +138,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					}
 				}
 
-				var paging = new PagingModel<App>();
+				var paging = new PageList<App>();
 				#region totalCount
 				{
 					var sql = $@"SELECT COUNT(*) FROM dbo.App AS a 

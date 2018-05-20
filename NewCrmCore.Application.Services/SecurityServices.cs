@@ -39,13 +39,13 @@ namespace NewCrmCore.Application.Services
 			};
 		}
 
-		public async Task<PagingModel<RoleDto>> GetRolesAsync(String roleName, Int32 pageIndex, Int32 pageSize)
+		public async Task<PageList<RoleDto>> GetRolesAsync(String roleName, Int32 pageIndex, Int32 pageSize)
 		{
 			new Parameter().Validate(roleName);
 			return await Task.Run(() =>
 			{
 				var result = _securityContext.GetRoles(roleName, pageIndex, pageSize, out var totalCount);
-				return new PagingModel<RoleDto>
+				return new PageList<RoleDto>
 				{
 					TotalCount = totalCount,
 					Models = result.Select(s => new RoleDto
