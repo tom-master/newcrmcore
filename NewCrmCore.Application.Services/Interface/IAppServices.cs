@@ -32,13 +32,13 @@ namespace NewCrmCore.Application.Services.Interface
 		/// 获取所有的app
 		/// </summary>
 		/// <returns></returns>
-		Task<PagingModel<AppDto>> GetAppsAsync(Int32 accountId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize);
+		Task<PageList<AppDto>> GetAppsAsync(Int32 accountId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize);
 
 		/// <summary>
 		/// 获取用户的app
 		/// </summary>
 		/// <returns></returns>
-		Task<PagingModel<AppDto>> GetAccountAppsAsync(Int32 accountId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize);
+		Task<PageList<AppDto>> GetAccountAppsAsync(Int32 accountId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize);
 
 		/// <summary>
 		/// 根据appId获取App
