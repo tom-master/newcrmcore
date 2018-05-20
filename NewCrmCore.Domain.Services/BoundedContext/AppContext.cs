@@ -9,6 +9,7 @@ using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure.CommonTools;
+using NewCrmCore.Infrastructure.CommonTools.CustomExtension;
 using NewLibCore;
 using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;
@@ -746,7 +747,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                 FROM  dbo.App AS a WHERE a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState AND a.IsDeleted=0 AND a.Id=@Id";
 							var parameters = new List<SqlParameter>
 							{
-								new SqlParameter("@AppAuditState",(Int32)AppAuditState.Pass),
+								new SqlParameter("@AppAuditState",AppAuditState.Pass.ParseToInt32()),
 								new SqlParameter("@AppReleaseState",(Int32)AppReleaseState.Release),
 								new SqlParameter("@Id",appId)
 							};
