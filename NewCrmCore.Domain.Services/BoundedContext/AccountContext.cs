@@ -81,20 +81,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						 dataStore.Commit();
 						 return result;
 					 }
-					 catch (Exception ex)
+					 catch (Exception)
 					 {
-						 dataStore.Rollback(); 
+						 dataStore.Rollback();
 						 throw;
 					 }
 				 }
 			 });
 		}
-		 
-		public async Task<Config> GetConfigAsync(Int32 accountId) 
+
+		public async Task<Config> GetConfigAsync(Int32 accountId)
 		{
 			new Parameter().Validate(accountId);
-			return await Task.Run(() => 
-			 { 
+			return await Task.Run(() =>
+			 {
 				 using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
 				 {
 					 var sql = $@"SELECT 
