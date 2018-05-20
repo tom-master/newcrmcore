@@ -13,7 +13,7 @@ namespace NewCrmCore.Application.Services.Interface
 		/// <summary>
 		/// 获取全部的角色
 		/// </summary>
-		Task<PagingModel<RoleDto>> GetRolesAsync(String roleName, Int32 pageIndex, Int32 pageSize);
+		Task<PageList<RoleDto>> GetRolesAsync(String roleName, Int32 pageIndex, Int32 pageSize);
 
 		/// <summary>
 		/// 根据角色Id获取角色
