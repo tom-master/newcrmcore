@@ -83,7 +83,7 @@ namespace NewCrmCore.Application.Services
 			});
 		}
 
-		public async Task<PagingModel<AppDto>> GetAccountAppsAsync(Int32 accountId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
+		public async Task<PageList<AppDto>> GetAccountAppsAsync(Int32 accountId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
 		{
 			new Parameter().Validate(accountId, true).Validate(searchText).Validate(appTypeId, true).Validate(appStyleId, true).Validate(pageIndex).Validate(pageSize);
 
@@ -91,7 +91,7 @@ namespace NewCrmCore.Application.Services
 			{
 				var result = _appContext.GetAccountApps(accountId, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize, out var totalCount);
 				var appTypes = await GetAppTypesAsync();
-				return new PagingModel<AppDto>
+				return new PageList<AppDto>
 				{
 					TotalCount = totalCount,
 					Models = result.Select(app => new AppDto
