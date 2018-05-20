@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NewCrmCore.Infrastructure.CommonTools
 {
-	public class PagingModel<TModel>
+	public class PageList<TModel>
 	{
 		public Int32 TotalCount { get; set; }
 
