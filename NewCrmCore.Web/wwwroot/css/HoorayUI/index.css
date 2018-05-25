@@ -2933,7 +2933,7 @@ input {
     }
 
     .popup-menu .arrow {
-        background: none;
+        background: none; 
         top: 0;
         left: 108px;
         height: 20px;
