@@ -110,7 +110,7 @@ namespace NewCrmCore.Web.Controllers
 		public async Task<ActionResult> GetApps(Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize)
 		{
 			var response = new ResponseModels<IList<AppDto>>();
-
+			throw new Exception();
 			var result = await _appServices.GetAppsAsync(AccountId, appTypeId, orderId, searchText, pageIndex, pageSize);
 			if (result != null)
 			{

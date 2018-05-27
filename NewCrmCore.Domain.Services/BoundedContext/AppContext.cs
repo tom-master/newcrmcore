@@ -88,7 +88,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 		public List<App> GetApps(Int32 accountId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
 		{
-			new Parameter().Validate(accountId, true).Validate(orderId).Validate(searchText).Validate(pageIndex, true).Validate(pageSize);
+			new Parameter().Validate(accountId, true).Validate(orderId).Validate(pageIndex, true).Validate(pageSize);
 
 			using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
 			{

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace NewCrmCore.Infrastructure.CommonTools
+namespace NewCrmCore.Web.Controllers.ControllerHelper
 {
 	public class ResponseModel<T>
 	{

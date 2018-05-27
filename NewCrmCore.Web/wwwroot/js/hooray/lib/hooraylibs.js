@@ -2554,6 +2554,7 @@ NewCrm.msgbox.success = function (msg, timeout) {
     NewCrm.msgbox.show(msg, 4, timeout || 2000);
 };
 NewCrm.msgbox.fail = function (msg, timeout) {
+	
     NewCrm.msgbox.show(msg, 5, timeout || 2000);
 };
 NewCrm.msgbox.loading = function (msg) {

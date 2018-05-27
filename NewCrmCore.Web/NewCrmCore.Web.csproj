@@ -4,10 +4,33 @@
     <StartupObject></StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="wwwroot\js\hooray\hros.app.js" />
+    <Content Remove="wwwroot\js\hooray\hros.appmanage.js" />
+    <Content Remove="wwwroot\js\hooray\hros.base.js" />
+    <Content Remove="wwwroot\js\hooray\hros.copyright.js" />
+    <Content Remove="wwwroot\js\hooray\hros.core.js" />
+    <Content Remove="wwwroot\js\hooray\hros.desktop.js" />
+    <Content Remove="wwwroot\js\hooray\hros.dock.js" />
+    <Content Remove="wwwroot\js\hooray\hros.folderView.js" />
+    <Content Remove="wwwroot\js\hooray\hros.grid.js" />
+    <Content Remove="wwwroot\js\hooray\hros.hotkey.js" />
+    <Content Remove="wwwroot\js\hooray\hros.lock.js" />
+    <Content Remove="wwwroot\js\hooray\hros.maskBox.js" />
+    <Content Remove="wwwroot\js\hooray\hros.popupMenu.js" />
+    <Content Remove="wwwroot\js\hooray\hros.searchbar.js" />
+    <Content Remove="wwwroot\js\hooray\hros.startmenu.js" />
+    <Content Remove="wwwroot\js\hooray\hros.taskbar.js" />
+    <Content Remove="wwwroot\js\hooray\hros.templates.js" />
+    <Content Remove="wwwroot\js\hooray\hros.wallpaper.js" />
+    <Content Remove="wwwroot\js\hooray\hros.widget.js" />
+    <Content Remove="wwwroot\js\hooray\hros.window.js" />
+    <Content Remove="wwwroot\js\hooray\hros.zoom.js" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.6.375" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
-    <PackageReference Include="NewLibCore" Version="1.0.3" />
+    <PackageReference Include="NewLibCore" Version="1.0.4" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
   <ItemGroup>
@@ -322,28 +345,7 @@
     <None Include="wwwroot\js\fullAvatarEditor-2.3\scripts\fullAvatarEditor.js" />
     <None Include="wwwroot\js\fullAvatarEditor-2.3\scripts\swfobject.js" />
     <None Include="wwwroot\js\handlebars-v4.0.5.js" />
-    <None Include="wwwroot\js\hooray\hros.app.js" />
-    <None Include="wwwroot\js\hooray\hros.appmanage.js" />
-    <None Include="wwwroot\js\hooray\hros.base.js" />
-    <None Include="wwwroot\js\hooray\hros.copyright.js" />
-    <None Include="wwwroot\js\hooray\hros.core.js" />
-    <None Include="wwwroot\js\hooray\hros.desktop.js" />
-    <None Include="wwwroot\js\hooray\hros.dock.js" />
-    <None Include="wwwroot\js\hooray\hros.folderView.js" />
-    <None Include="wwwroot\js\hooray\hros.grid.js" />
-    <None Include="wwwroot\js\hooray\hros.hotkey.js" />
-    <None Include="wwwroot\js\hooray\hros.lock.js" />
-    <None Include="wwwroot\js\hooray\hros.maskBox.js" />
     <None Include="wwwroot\js\hooray\hros.min.js" />
-    <None Include="wwwroot\js\hooray\hros.popupMenu.js" />
-    <None Include="wwwroot\js\hooray\hros.searchbar.js" />
-    <None Include="wwwroot\js\hooray\hros.startmenu.js" />
-    <None Include="wwwroot\js\hooray\hros.taskbar.js" />
-    <None Include="wwwroot\js\hooray\hros.templates.js" />
-    <None Include="wwwroot\js\hooray\hros.wallpaper.js" />
-    <None Include="wwwroot\js\hooray\hros.widget.js" />
-    <None Include="wwwroot\js\hooray\hros.window.js" />
-    <None Include="wwwroot\js\hooray\hros.zoom.js" />
     <None Include="wwwroot\js\hooray\jquery-browser.js" />
     <None Include="wwwroot\js\hooray\zoom.swf" />
     <None Include="wwwroot\js\hooray\第1步：合并JS.bat" />

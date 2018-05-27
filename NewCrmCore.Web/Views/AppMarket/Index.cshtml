@@ -103,7 +103,7 @@
 
 @section ChildrenScript
 	{
-	<script src="@Url.Content("~/Scripts/handlebars-v4.0.5.js")"></script>
+	<script src="@Url.Content("~/js/handlebars-v4.0.5.js")"></script>
 
 	<script id="li-template" type="text/x-handlebars-template">
 		{{#each Model}}
@@ -265,14 +265,15 @@
             var appTypeId = $('#appType').val() === '' ? 0 : parseInt($('#appType').val());
             var orderId = $('#order').val() === '' ? 1 : parseInt($('#order').val());
             var outSideSearchText = '@Context.Request.Query["searchText"]';
-
+			
             HROS.request.get('/AppMarket/GetApps', {
                 appTypeId: appTypeId,
                 orderId: orderId,
                 searchText: outSideSearchText === '' ? $('#searchText').val() : outSideSearchText,
                 pageIndex: current_page === 0 ? 1 : current_page + 1,
                 pageSize: 5
-            }, function (responseText) {
+			}, function (responseText) {
+				debugger
                 if (responseText.IsSuccess) {
                     var liTemplate = Handlebars.compile($("#li-template").html());
                     $('.app-list').html(liTemplate(responseText));

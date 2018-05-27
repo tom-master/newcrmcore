@@ -2592,6 +2592,7 @@ NewCrm.msgbox.success = function (msg, timeout) {
     NewCrm.msgbox.show(msg, 4, timeout || 2000);
 };
 NewCrm.msgbox.fail = function (msg, timeout) {
+	
     NewCrm.msgbox.show(msg, 5, timeout || 2000);
 };
 NewCrm.msgbox.loading = function (msg) {
@@ -3429,7 +3430,7 @@ HROS.app = (function () {
 		*/
         init: function () {
             //绑定'应用市场'点击事件
-            $('#desk').on('click', '.add', function () {
+			$('#desk').on('click', '.add', function () {
                 HROS.window.createTemp({
                     appid: 'hoorayos-yysc',
                     title: '应用市场',
@@ -8263,7 +8264,7 @@ HROS.window = (function () {
                     type: type,
                     appid: appid,
                     realappid: appid,
-                    imgsrc: '~/images/ui/default_icon.png',
+                    imgsrc: '../images/ui/default_icon.png',
                     title: obj.title,
                     url: obj.url,
                     width: obj.width,
