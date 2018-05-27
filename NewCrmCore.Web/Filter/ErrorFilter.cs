@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure.CommonTools;
+using NewCrmCore.Web.Controllers.ControllerHelper;
 
 namespace NewCrmCore.Web.Filter
 {
@@ -17,16 +18,23 @@ namespace NewCrmCore.Web.Filter
 
 			var isAjaxRequest = filterContext.HttpContext.Request.IsAjaxRequest();
 			var exception = filterContext.Exception is BusinessException;
+
+			var response = new ResponseModel
+			{
+				IsSuccess = false,
+				Message = exception ? filterContext.Exception.Message : "出现未知错误，请重试"
+			};
+
+
 			if (isAjaxRequest)
 			{
-				filterContext.Result = new JsonResult(new
+				filterContext.Result = new JsonResult(response);
+			}
+			else
+			{
+				filterContext.Result = new ContentResult()
 				{
-					IsSuccess = false,
-					Message = exception ? filterContext.Exception.Message : "出现未知错误，请重试",
-				})
-				{
-					ContentType = "utf8",
-					StatusCode = 500
+					ContentType = "UTF8"
 				};
 			}
 
@@ -40,12 +48,6 @@ namespace NewCrmCore.Web.Filter
 				Id = new Random().Next(1, Int32.MaxValue),
 				AddTime = DateTime.Now.ToString(CultureInfo.CurrentCulture)
 			});
-
-			filterContext.Result = new ContentResult
-			{
-				ContentType = "UTF8",
-				Content = $@"<script>top.alertInfo('出现未知错误，请重试')</script>"
-			};
 		}
 	}
 

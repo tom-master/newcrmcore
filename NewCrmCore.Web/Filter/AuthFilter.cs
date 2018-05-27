@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Infrastructure.CommonTools;
+using NewCrmCore.Web.Controllers.ControllerHelper;
 
 namespace NewCrmCore.Web.Filter
 {
@@ -58,28 +59,28 @@ namespace NewCrmCore.Web.Filter
 
 		private void ReturnMessage(AuthorizationFilterContext filterContext, String message)
 		{
-			var notPermissionMessage = $@"<script>top.alertInfo('{message}',1)</script>";
 			var isAjaxRequest = filterContext.HttpContext.Request.IsAjaxRequest();
 
-			if (!isAjaxRequest)
+			var response = new ResponseModel
 			{
-				filterContext.Result = new ContentResult
+				IsSuccess = false,
+				Message = message
+			};
+
+			if (isAjaxRequest)
+			{
+				filterContext.Result = new JsonResult(response)
 				{
 					ContentType = "utf8",
-					Content = notPermissionMessage
+					StatusCode = 401
 				};
 			}
 			else
 			{
-				var response = new ResponseModel<dynamic>
+				filterContext.Result = new ContentResult()
 				{
-					IsSuccess = false,
-					Message = message
-				};
-
-				filterContext.Result = new JsonResult(response)
-				{
-					ContentType = "utf8"
+					ContentType = "utf8",
+					StatusCode = 401
 				};
 			}
 		}
