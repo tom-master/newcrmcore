@@ -59,9 +59,6 @@ namespace NewCrmCore.Web.Controllers
 		{
 			var response = new ResponseModels<IList<AccountDto>>();
 
-			#region 参数验证
-			new Parameter().Validate(accountName).Validate(accountType);
-			#endregion
 
 			var result = await _accountServices.GetAccountsAsync(accountName, accountType, pageIndex, pageSize);
 			if (result != null)

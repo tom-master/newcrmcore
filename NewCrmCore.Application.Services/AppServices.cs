@@ -84,7 +84,7 @@ namespace NewCrmCore.Application.Services
 
 		public async Task<PageList<AppDto>> GetAccountAppsAsync(Int32 accountId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
 		{
-			new Parameter().Validate(accountId, true).Validate(searchText).Validate(appTypeId, true).Validate(appStyleId, true).Validate(pageIndex).Validate(pageSize);
+			new Parameter().Validate(accountId, true).Validate(appTypeId, true).Validate(appStyleId, true).Validate(pageIndex).Validate(pageSize);
 
 			return await Task.Run(async () =>
 			{

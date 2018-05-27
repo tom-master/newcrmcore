@@ -58,7 +58,7 @@ namespace NewCrmCore.Web.Controllers
 		public async Task<ActionResult> GetAppTypes(Int32 pageIndex, Int32 pageSize, String searchText)
 		{
 			var response = new ResponseModels<IList<AppTypeDto>>();
-			var result = (await _appServices.GetAppTypesAsync()).Where(appType => searchText.Length == 0 || appType.Name.Contains(searchText)).OrderByDescending(d => d.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+			var result = (await _appServices.GetAppTypesAsync()).Where(appType => String.IsNullOrEmpty(searchText) || appType.Name.Contains(searchText)).OrderByDescending(d => d.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
 			response.Message = "app类型获取成功";
 			response.IsSuccess = true;
 			response.Model = result;

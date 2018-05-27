@@ -99,10 +99,6 @@ namespace NewCrmCore.Web.Controllers
 		[HttpGet]
 		public async Task<ActionResult> GetRoles(String roleName, Int32 pageIndex, Int32 pageSize)
 		{
-			#region 参数验证
-			new Parameter().Validate(roleName);
-			#endregion
-
 			var response = new ResponseModels<IList<RoleDto>>();
 			var result = await _securityServices.GetRolesAsync(roleName, pageIndex, pageSize);
 			response.IsSuccess = true;

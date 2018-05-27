@@ -41,7 +41,7 @@
 
 
 	@section ChildrenCss{
-		<link href="~/js/webuploader-0.1.5/webuploader.css"  />
+		<link href="../js/webuploader-0.1.5/webuploader.css" rel="stylesheet" />
 	}
 
 	@section ChildrenScript{
@@ -51,7 +51,7 @@
                     // 选完文件后，是否自动上传。
                     auto: true,
                     // swf文件路径
-                    swf: '../../js/webuploader-0.1.5/Uploader.swf',
+                    swf: '../js/webuploader-0.1.5/Uploader.swf',
                     // 文件接收服务端。
                     server: '@(AppSettings.Get<Settings>().UploadUrl)/api/filestorage/upload?accountId=@accountId&uploadtype=icon',
                     // 选择文件的按钮。可选。

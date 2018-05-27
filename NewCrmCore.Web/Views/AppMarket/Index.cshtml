@@ -273,7 +273,6 @@
                 pageIndex: current_page === 0 ? 1 : current_page + 1,
                 pageSize: 5
 			}, function (responseText) {
-				debugger
                 if (responseText.IsSuccess) {
                     var liTemplate = Handlebars.compile($("#li-template").html());
                     $('.app-list').html(liTemplate(responseText));

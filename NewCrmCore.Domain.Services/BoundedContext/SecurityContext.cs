@@ -46,7 +46,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 		{
 			using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
 			{
-
 				var where = new StringBuilder();
 				var parameters = new List<SqlParameter>();
 				if (!String.IsNullOrEmpty(roleName))
@@ -54,6 +53,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					parameters.Add(new SqlParameter("@roleName", $@"%{roleName}%"));
 					where.Append($@" AND a.Name LIKE @roleName");
 				}
+
 				#region totalCount
 				{
 					var sql = $@"SELECT  COUNT(*) FROM dbo.Role AS a WHERE 1=1 {where} AND a.IsDeleted=0";

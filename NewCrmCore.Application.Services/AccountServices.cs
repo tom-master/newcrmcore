@@ -67,8 +67,6 @@ namespace NewCrmCore.Application.Services
 
 		public async Task<PageList<AccountDto>> GetAccountsAsync(String accountName, String accountType, Int32 pageIndex, Int32 pageSize)
 		{
-			new Parameter().Validate(accountName).Validate(accountType);
-
 			return await Task.Run(() =>
 			{
 				var result = _accountContext.GetAccounts(accountName, accountType, pageIndex, pageSize, out var totalCount);
