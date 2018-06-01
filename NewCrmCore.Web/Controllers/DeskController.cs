@@ -110,7 +110,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 修改成员信息
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyMemberInfo(FormCollection forms)
+		public async Task<ActionResult> ModifyMemberInfo(IFormCollection forms)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);

@@ -55,7 +55,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 修改账户登陆密码
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyAccountPassword(FormCollection forms)
+		public async Task<ActionResult> ModifyAccountPassword(IFormCollection forms)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);
@@ -76,7 +76,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 修改锁屏密码
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyLockScreenPassword(FormCollection forms)
+		public async Task<ActionResult> ModifyLockScreenPassword(IFormCollection forms)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);

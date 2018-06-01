@@ -131,7 +131,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 添加角色
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> CreateRole(FormCollection forms, Int32 roleId = 0)
+		public async Task<ActionResult> CreateRole(IFormCollection forms, Int32 roleId = 0)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);
@@ -158,7 +158,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 将权限附加到角色中
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> AddPowerToRole(FormCollection forms)
+		public async Task<ActionResult> AddPowerToRole(IFormCollection forms)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);
@@ -221,7 +221,7 @@ namespace NewCrmCore.Web.Controllers
 
 		#region private method
 
-		private static RoleDto WapperRoleDto(FormCollection forms)
+		private static RoleDto WapperRoleDto(IFormCollection forms)
 		{
 			var roleId = 0;
 			if ((forms["roleId"] + "").Length > 0)

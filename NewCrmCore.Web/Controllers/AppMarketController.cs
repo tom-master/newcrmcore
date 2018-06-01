@@ -189,7 +189,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 修改app信息
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyAppInfo(FormCollection forms)
+		public async Task<ActionResult> ModifyAppInfo(IFormCollection forms)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);
@@ -227,7 +227,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 创建新的app
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> CreateApp(FormCollection forms)
+		public async Task<ActionResult> CreateApp(IFormCollection forms)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);
@@ -286,7 +286,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 封装从页面传入的forms表单到AppDto类型
 		/// </summary>
 		/// <returns></returns>
-		private static AppDto WrapperAppDto(FormCollection forms)
+		private static AppDto WrapperAppDto(IFormCollection forms)
 		{
 			var appDto = new AppDto
 			{

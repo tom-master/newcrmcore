@@ -91,7 +91,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpPost]
-		public async Task<ActionResult> CreateAppType(FormCollection forms, Int32 appTypeId = 0)
+		public async Task<ActionResult> CreateAppType(IFormCollection forms, Int32 appTypeId = 0)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);
@@ -134,7 +134,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 封装从页面传入的forms表单到AppTypeDto类型
 		/// </summary>
 		/// <returns></returns>
-		private static AppTypeDto WrapperAppTypeDto(FormCollection forms)
+		private static AppTypeDto WrapperAppTypeDto(IFormCollection forms)
 		{
 			var appTypeDto = new AppTypeDto
 			{
