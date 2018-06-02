@@ -76,7 +76,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 创建新账户
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> NewAccount(FormCollection forms)
+		public async Task<ActionResult> NewAccount(IFormCollection forms)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);
@@ -167,7 +167,7 @@ namespace NewCrmCore.Web.Controllers
 
 		#region private method
 
-		private AccountDto WapperAccountDto(FormCollection forms)
+		private AccountDto WapperAccountDto(IFormCollection forms)
 		{
 			var roleIds = new List<RoleDto>();
 			if ((forms["val_roleIds"] + "").Length > 0)

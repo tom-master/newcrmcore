@@ -91,20 +91,19 @@
 							if (accountResult.Roles != null && accountResult.Roles.Any(role => role.Id == item.Id))
 							{
 								<label class="checkbox" style="margin-right: 10px">
-									<input type="checkbox" onclick="javascript: selectorpower();" name="val_permission_id" id="@item.Id" ch checked="checked">
+									<input type="checkbox" onclick="javascript: selectRole();" name="val_permission_id" id="@item.Id" checked="checked">
 									@item.Name
 								</label>
-								<input type="hidden" name="val_roleIds" id="roleIds" value="@String.Join(",",accountResult.Roles.Select(s=>s.Id).Intersect(roles.Select(a=>a.Id)))" />
 							}
 							else
 							{
 								<label class="checkbox" style="margin-right: 10px">
-									<input type="checkbox" onclick="javascript: selectorPower();" name="val_permission_id" id="@item.Id">
+									<input type="checkbox" onclick="javascript: selectRole();" name="val_permission_id" id="@item.Id">
 									@item.Name
 								</label>
-								<input type="hidden" name="val_roleIds" id="roleIds" value="" />
 							}
 						}
+						<input type="hidden" name="val_roleIds" id="roleIds" value="@String.Join(",",accountResult.Roles.Select(s=>s.Id).Intersect(roles.Select(a=>a.Id)))" />
 					}
 					<span class="help-inline"></span>
 				</div>
@@ -195,7 +194,7 @@
 			});
 		});
 
-		function selectorPower() {
+		function selectRole() {
 			$('#roleIds').val('');
 			var ids = '';
 			$.each($('input[name="val_permission_id"]').filter(':checked'), function (k, v) {

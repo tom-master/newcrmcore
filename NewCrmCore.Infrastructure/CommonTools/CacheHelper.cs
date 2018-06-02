@@ -18,19 +18,19 @@ namespace NewCrmCore.Infrastructure.CommonTools
 			var cts = new CancellationTokenSource(cache.CancelToken);
 
 			TModel cacheResult = null;
-			try
-			{
-				cacheResult = await Task.Run(() => _cacheQuery.StringGetAsync<TModel>(cache.GetKey()), cts.Token);
-			}
-			catch (OperationCanceledException)
-			{
+			//try
+			//{
+			//	cacheResult = await Task.Run(() => _cacheQuery.StringGetAsync<TModel>(cache.GetKey()), cts.Token);
+			//}
+			//catch (OperationCanceledException)
+			//{
 
-			}
+			//}
 
-			if (cacheResult != null)
-			{
-				return cacheResult;
-			}
+			//if (cacheResult != null)
+			//{
+			//	return cacheResult;
+			//}
 
 			var dbResult = await func();
 			_cacheQuery.StringSet(cache.GetKey(), dbResult, cache.KeyTimeout);
