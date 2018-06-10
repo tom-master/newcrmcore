@@ -9,7 +9,7 @@ using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
-using NewLibCore;
+using NewCrmCore.Web.Filter;
 using NewLibCore.Validate;
 using Newtonsoft.Json;
 
@@ -32,7 +32,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 首页
 		/// </summary>
 		/// <returns></returns>
-		[HttpGet]
+		[HttpGet, DoNotCheckPermission]
 		public async Task<ActionResult> Index()
 		{
 			ViewBag.Title = "桌面";
@@ -54,7 +54,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 首页
 		/// </summary>
 		/// <returns></returns>
-		[HttpGet]
+		[HttpGet, DoNotCheckPermission]
 		public ActionResult Login()
 		{
 			var accountId = Request.Cookies["memberID"];
@@ -73,7 +73,7 @@ namespace NewCrmCore.Web.Controllers
 		/// <summary>
 		/// 登陆
 		/// </summary>
-		[HttpPost]
+		[HttpPost, DoNotCheckPermission]
 		public async Task<ActionResult> Landing(LoginParameter loginParameter)
 		{
 			#region 参数验证
@@ -212,7 +212,7 @@ namespace NewCrmCore.Web.Controllers
 		/// <summary>
 		/// 创建一个窗口
 		/// </summary>
-		[HttpGet]
+		[HttpGet, DoNotCheckPermission]
 		public async Task<ActionResult> CreateWindow(Int32 id, String type)
 		{
 

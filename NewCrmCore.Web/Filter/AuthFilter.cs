@@ -21,9 +21,13 @@ namespace NewCrmCore.Web.Filter
 				return;
 			}
 
-			var actionName = filterContext.RouteData.Values["action"].ToString().ToLower();
-			var controllerName = filterContext.RouteData.Values["controller"].ToString().ToLower();
-			if ((controllerName == "desktop" && actionName == "login") || actionName == "landing" || actionName == "index")
+			if (filterContext.Filters.Where(w => w.GetType() == typeof(DoNotCheckPermissionAttribute)).Any())
+			{
+				return;
+			}
+
+			//文件夹
+			if (filterContext.HttpContext.Request.Query["type"] == "folder")
 			{
 				return;
 			}
@@ -31,16 +35,6 @@ namespace NewCrmCore.Web.Filter
 			if (filterContext.HttpContext.Request.Cookies["memberID"] == null)
 			{
 				ReturnMessage(filterContext, "登陆超时，请刷新页面后重新登陆");
-				return;
-			}
-
-			if (actionName != "createwindow")
-			{
-				return;
-			}
-			//文件夹
-			if (filterContext.HttpContext.Request.Query["type"] == "folder")
-			{
 				return;
 			}
 
