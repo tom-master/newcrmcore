@@ -1,5 +1,4 @@
 ﻿@using NewCrmCore.Dto
-@using NewLibCore
 @model AppDto
 <form action="/AppMarket/ModifyAppInfo" method="post" name="form" id="form">
     <input type="hidden" name="val_Id" value="@Model.Id">
@@ -15,7 +14,7 @@
                     @{
                         <text>
                             <div class="shortcutview">
-                                <img src="@(Model.IsIconByUpload?AppSettings.Get<Settings>().FileUrl+Model.IconUrl:Model.IconUrl)">
+                                <img src="@(Model.IsIconByUpload?NewCrmCore.Infrastructure.Appsetting.FileUrl+Model.IconUrl:Model.IconUrl)">
                             </div>
                             <a href="javascript:;" id="upload" class="btn fl" style="position: relative;">选择图片</a>
                             <div class="shortcut-selicon">

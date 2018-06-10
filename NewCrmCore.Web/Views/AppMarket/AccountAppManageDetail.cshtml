@@ -1,5 +1,4 @@
-﻿@using NewLibCore
-@using NewCrmCore.Dto
+﻿@using NewCrmCore.Dto
 
 @model AppDto
 <form action="" method="post" name="form" id="form">
@@ -19,7 +18,7 @@
 			<div class="input-label">
 				<label class="label-text">应用图片：</label>
 				<div class="label-box form-inline control-group">
-					<img src="@(Model.IsIconByUpload?AppSettings.Get<Settings>().FileUrl+Model.IconUrl:Model.IconUrl)">
+					<img src="@(Model.IsIconByUpload?NewCrmCore.Infrastructure.Appsetting.FileUrl+Model.IconUrl:Model.IconUrl)">
 				</div>
 			</div>
 			<div class="input-label">

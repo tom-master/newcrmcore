@@ -13,7 +13,7 @@
 				<a href="javascript:window.parent.closeDetailIframe2(function(){window.parent.getPageList(0);});" class="btn-back">返回</a>
 			</div>
 			<div class="app-title">
-				<img src="@(Model.IsIconByUpload?AppSettings.Get<Settings>().FileUrl+Model.IconUrl:Model.IconUrl)" alt="@Model.Name">
+				<img src="@(Model.IsIconByUpload?NewCrmCore.Infrastructure.Appsetting.FileUrl+Model.IconUrl:Model.IconUrl)" alt="@Model.Name">
 				<span class="app-name">@Model.Name</span>
 				<span class="app-desc"><i>@Model.UseCount</i> 人在使用</span>
 				@{
