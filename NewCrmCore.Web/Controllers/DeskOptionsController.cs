@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
 using NewLibCore;
@@ -180,7 +181,7 @@ namespace NewCrmCore.Web.Controllers
 
 			response.Message = "壁纸上传成功";
 			response.IsSuccess = true;
-			response.Model = new { Id = wallpaperResult.Item1, Url = AppSettings.Get<Settings>().FileUrl + wallpaperResult.Item2 };
+			response.Model = new { Id = wallpaperResult.Item1, Url = Appsetting.FileUrl + wallpaperResult.Item2 };
 			return Json(response);
 		}
 

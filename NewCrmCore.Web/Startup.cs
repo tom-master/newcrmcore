@@ -43,9 +43,7 @@ namespace NewCrmCore.Web
 			services.AddTransient<ISecurityContext, SecurityContext>();
 			services.AddTransient<ISkinContext, SkinContext>();
 			services.AddTransient<IWallpaperContext, WallpaperContext>();
-
-			AppSettings.Init(new Settings(), "Settings");
-
+			 
 			services.AddMvc(config =>
 			{
 				config.Filters.Add(new ErrorFilter());

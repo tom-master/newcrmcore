@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
 using NewLibCore;
@@ -38,7 +39,7 @@ namespace NewCrmCore.Web.Controllers
 			if (HttpContext.Request.Cookies["memberID"] != null)
 			{
 				var account = await _accountServices.GetAccountAsync(AccountId);
-				account.AccountFace = AppSettings.Get<Settings>().FileUrl + account.AccountFace;
+				account.AccountFace = Appsetting.FileUrl + account.AccountFace;
 				ViewData["Account"] = account;
 				ViewData["AccountConfig"] = await _accountServices.GetConfigAsync(account.Id);
 				ViewData["Desks"] = (await _accountServices.GetConfigAsync(account.Id)).DefaultDeskCount;
@@ -89,7 +90,7 @@ namespace NewCrmCore.Web.Controllers
 				response.IsSuccess = true;
 
 				HttpContext.Response.Cookies.Append("memberID", account.Id.ToString(), new CookieOptions { Expires = cookieTimeout });
-				HttpContext.Response.Cookies.Append("Account", JsonConvert.SerializeObject(new { AccountFace = AppSettings.Get<Settings>().FileUrl + account.AccountFace, account.Name }), new CookieOptions { Expires = cookieTimeout });
+				HttpContext.Response.Cookies.Append("Account", JsonConvert.SerializeObject(new { AccountFace = Appsetting.FileUrl + account.AccountFace, account.Name }), new CookieOptions { Expires = cookieTimeout });
 			}
 			return Json(response);
 		}
@@ -203,7 +204,7 @@ namespace NewCrmCore.Web.Controllers
 			var result = (await _accountServices.GetConfigAsync(AccountId)).AccountFace;
 			response.IsSuccess = true;
 			response.Message = "获取用户头像成功";
-			response.Model = AppSettings.Get<Settings>().FileUrl + result;
+			response.Model = Appsetting.FileUrl + result;
 
 			return Json(response);
 		}
@@ -229,7 +230,7 @@ namespace NewCrmCore.Web.Controllers
 				memberId = internalMemberResult.Id,
 				appId = internalMemberResult.AppId,
 				name = internalMemberResult.Name,
-				icon = internalMemberResult.IsIconByUpload ? AppSettings.Get<Settings>().FileUrl + internalMemberResult.IconUrl : internalMemberResult.IconUrl,
+				icon = internalMemberResult.IsIconByUpload ? Appsetting.FileUrl + internalMemberResult.IconUrl : internalMemberResult.IconUrl,
 				width = internalMemberResult.Width,
 				height = internalMemberResult.Height,
 				isOnDock = internalMemberResult.IsOnDock,
