@@ -6,6 +6,7 @@ using NewCrmCore.Domain.Entitys.Agent;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
 using NewLibCore.Security;
@@ -77,7 +78,7 @@ namespace NewCrmCore.Application.Services
 					Id = s.Id,
 					IsAdmin = s.IsAdmin,
 					Name = s.Name,
-					AccountFace = AppSettings.Get<Settings>().FileUrl + s.AccountFace,
+					AccountFace = Appsetting.FileUrl + s.AccountFace,
 					IsDisable = s.IsDisable
 				}).ToList();
 

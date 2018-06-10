@@ -14,6 +14,7 @@ using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
 using NewLibCore.Validate;
 using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
+using NewCrmCore.Infrastructure;
 
 namespace NewCrmCore.Application.Services
 {
@@ -60,7 +61,7 @@ namespace NewCrmCore.Application.Services
 				ShortUrl = s.ShortUrl,
 				Source = (Int32)s.Source,
 				Title = s.Title,
-				Url = AppSettings.Get<Settings>().FileUrl + s.Url,
+				Url = Appsetting.FileUrl + s.Url,
 				Width = s.Width
 			}).ToList();
 		}

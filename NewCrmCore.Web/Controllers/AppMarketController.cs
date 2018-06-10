@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
 using NewLibCore;
@@ -218,7 +219,7 @@ namespace NewCrmCore.Web.Controllers
 
 			response.IsSuccess = true;
 			response.Message = "更新图标成功";
-			response.Model = AppSettings.Get<Settings>().FileUrl + newIcon;
+			response.Model = Appsetting.FileUrl + newIcon;
 
 			return Json(response);
 		}

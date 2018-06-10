@@ -7,6 +7,7 @@ using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
 using NewLibCore.Validate;
@@ -83,7 +84,7 @@ namespace NewCrmCore.Application.Services
 							memberId = member.Id,
 							appId = member.AppId,
 							name = member.Name,
-							icon = member.IsIconByUpload ? AppSettings.Get<Settings>().FileUrl + member.IconUrl : member.IconUrl,
+							icon = member.IsIconByUpload ? Appsetting.FileUrl + member.IconUrl : member.IconUrl,
 							width = member.Width,
 							height = member.Height,
 							isOnDock = member.IsOnDock,
@@ -96,7 +97,7 @@ namespace NewCrmCore.Application.Services
 								memberId = app.Id,
 								appId = app.AppId,
 								name = app.Name,
-								icon = member.IsIconByUpload ? AppSettings.Get<Settings>().FileUrl + member.IconUrl : member.IconUrl,
+								icon = member.IsIconByUpload ? Appsetting.FileUrl + member.IconUrl : member.IconUrl,
 								width = app.Width,
 								height = app.Height,
 								isOnDock = app.IsOnDock,
@@ -116,7 +117,7 @@ namespace NewCrmCore.Application.Services
 								memberId = member.Id,
 								appId = member.AppId,
 								name = member.Name,
-								icon = member.IsIconByUpload ? AppSettings.Get<Settings>().FileUrl + member.IconUrl : member.IconUrl,
+								icon = member.IsIconByUpload ? Appsetting.FileUrl + member.IconUrl : member.IconUrl,
 								width = member.Width,
 								height = member.Height,
 								isOnDock = member.IsOnDock,
