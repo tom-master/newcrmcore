@@ -128,9 +128,7 @@
                             name: '是',
                             callback: function () {
                                 $('#lockPwdIsEqLoginPwd').val('1')
-                                debugger
                                 $('#form').submit()
-
                             }
                         }
                     ]
@@ -140,9 +138,7 @@
         });
 
         $(function () {
-            debugger
             $('#hidden_frame').on('load', function () {
-                debugger
                 var responseText = $(this);
                 if (responseText.IsSuccess) {
                     window.parent.NewCrm.msgbox.success('登陆密码修改成功，请刷新页面后重新登陆');

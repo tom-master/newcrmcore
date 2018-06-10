@@ -18,5 +18,5 @@
 </div>
 <div class="input-label">
     <label class="label-text">最近一次登录IP：</label>
-    <div class="label-box form-inline">@(Request.ServerVariables["REMOTE_ADDR"] == "::1" ? "127.0.0.1" : Request.ServerVariables["REMOTE_ADDR"])</div>
+    <div class="label-box form-inline">@(Context.Request.HttpContext.Connection.RemoteIpAddress.ToString()== "::1" ? "127.0.0.1" : Context.Request.HttpContext.Connection.RemoteIpAddress.ToString())</div>
 </div>
