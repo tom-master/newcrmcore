@@ -11,6 +11,7 @@ using NewLibCore;
 using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;
 using NewCrmCore.Infrastructure.CommonTools.CustomExtension;
+using NewCrmCore.Infrastructure;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
 {
@@ -21,7 +22,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(wallpaper);
 			return await Task.Run(() =>
 			 {
-				 using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				 using (var dataStore = new DataStore(Appsetting.Database))
 				 {
 					 #region 前置条件验证
 					 {
@@ -69,7 +70,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 		{
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT
                             a.AccountId,
@@ -95,7 +96,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 		{
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT
                             a.AccountId,
@@ -122,7 +123,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 		{
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT
                             a.AccountId,
@@ -151,7 +152,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				if (Enum.TryParse(newMode, true, out WallpaperMode wallpaperMode))
 				{
-					using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+					using (var dataStore = new DataStore(Appsetting.Database))
 					{
 						var config = new Config();
 						config.ModeTo(wallpaperMode);
@@ -170,7 +171,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(newWallpaperId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var config = new Config();
 					config.NotFromBing().ModifyWallpaperId(newWallpaperId);
@@ -184,7 +185,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(wallpaperId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var parameters = new List<SqlParameter>
 					{
