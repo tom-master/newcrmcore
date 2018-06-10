@@ -8,6 +8,7 @@ using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Infrastructure.CommonTools.CustomExtension;
 using NewLibCore;
@@ -23,7 +24,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId);
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT a.Id FROM dbo.App AS a WHERE a.AccountId=@accountId AND a.IsDeleted=0";
 					var parameters = new List<SqlParameter>
@@ -40,7 +41,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 		{
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT a.Id,a.Name FROM dbo.AppType AS a WHERE a.IsDeleted=0";
 					return dataStore.Find<AppType>(sql);
@@ -53,7 +54,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId);
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT 
                             a.UseCount,
@@ -90,7 +91,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 		{
 			new Parameter().Validate(accountId, true).Validate(orderId).Validate(pageIndex, true).Validate(pageSize);
 
-			using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+			using (var dataStore = new DataStore(Appsetting.Database))
 			{
 				var parameters = new List<SqlParameter>
 				{
@@ -189,7 +190,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 		public List<App> GetAccountApps(Int32 accountId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
 		{
 			new Parameter().Validate(accountId, true).Validate(appTypeId, true).Validate(appStyleId, true).Validate(pageIndex).Validate(pageSize);
-			using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+			using (var dataStore = new DataStore(Appsetting.Database))
 			{
 				var where = new StringBuilder();
 				where.Append($@" WHERE 1=1 AND a.IsDeleted=0 ");
@@ -286,7 +287,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(appId);
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT 
                             a.Name,
@@ -329,7 +330,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(appId);
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT COUNT(*) FROM dbo.Member AS a WHERE a.AppId=@Id AND a.AccountId=@AccountId AND a.IsDeleted=0";
 					var parameters = new List<SqlParameter>
@@ -346,7 +347,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 		{
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var where = new StringBuilder();
 					where.Append(" WHERE 1=1 AND a.IsSystem=1 AND a.IsDeleted=0");
@@ -366,7 +367,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(appTypeName);
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT COUNT(*) FROM dbo.AppType AS a WHERE a.Name=@name AND a.IsDeleted=0";
 					var parameters = new List<SqlParameter>
@@ -383,7 +384,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(appId).Validate(starCount);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					#region 前置条件判断
 					{
@@ -415,7 +416,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 		{
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					#region app
 					{
@@ -431,7 +432,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(appId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var app = new App().Pass();
 					dataStore.ExecuteModify(app, a => a.Id == appId);
@@ -444,7 +445,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(appId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var app = new App().Deny();
 					dataStore.ExecuteModify(app, a => a.Id == appId);
@@ -457,7 +458,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(appId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					dataStore.OpenTransaction();
 					try
@@ -492,7 +493,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(appId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					dataStore.OpenTransaction();
 					try
@@ -529,7 +530,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(appId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					#region 发布app
 					{
@@ -546,7 +547,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(accountId).Validate(app);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					if (app.IsIconByUpload)
 					{
@@ -619,7 +620,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(appTypeId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					#region 前置条件验证
 					{
@@ -651,7 +652,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(appType);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					#region 前置条件验证
 					{
@@ -678,7 +679,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(appTypeName).Validate(appTypeId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					#region 前置条件验证
 					{
@@ -707,7 +708,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(appId).Validate(newIcon);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var app = new App();
 					app.ModifyIconUrl(newIcon);
@@ -721,7 +722,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(appId).Validate(deskNum);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					dataStore.OpenTransaction();
 					try

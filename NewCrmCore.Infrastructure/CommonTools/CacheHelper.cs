@@ -11,7 +11,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
 	public class CacheHelper
 	{
-		private static readonly ICacheQueryProvider _cacheQuery = new DefaultRedisQueryProvider(0, AppSettings.Get<Settings>().Redis.Connection);
+		private static readonly ICacheQueryProvider _cacheQuery = new DefaultRedisQueryProvider(0, Appsetting.Redis);
 
 		public static async Task<TModel> GetCache<TModel>(CacheKeyBase cache, Func<Task<TModel>> func) where TModel : class
 		{

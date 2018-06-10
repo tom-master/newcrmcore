@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.Security;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
 using NewLibCore.Data.Mapper.InternalDataStore;
@@ -20,7 +21,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 		{
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT a.RoleId, a.AppId FROM dbo.RolePower AS a WHERE a.IsDeleted=0";
 					return dataStore.Find<RolePower>(sql);
@@ -33,7 +34,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(roleId);
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT a.Name, a.RoleIdentity, a.Remark FROM dbo.Role AS a WHERE a.Id=@Id AND a.IsDeleted=0";
 					var parameters = new List<SqlParameter> { new SqlParameter("@Id", roleId) };
@@ -44,7 +45,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 		public List<Role> GetRoles(String roleName, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
 		{
-			using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+			using (var dataStore = new DataStore(Appsetting.Database))
 			{
 				var where = new StringBuilder();
 				var parameters = new List<SqlParameter>();
@@ -87,7 +88,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accessAppId).Validate(roleIds);
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					#region 检查app是否为系统app
 					{
@@ -118,7 +119,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(name);
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT COUNT(*) FROM dbo.Role AS a WHERE a.Name=@name AND a.IsDeleted=0";
 					var parameters = new List<SqlParameter>
@@ -135,7 +136,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(name);
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT COUNT(*) FROM dbo.Role AS a WHERE a.RoleIdentity=@RoleIdentity AND a.IsDeleted=0";
 					var parameters = new List<SqlParameter>
@@ -152,7 +153,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(role);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					#region 修改角色
 					{
@@ -169,7 +170,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(roleId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					dataStore.OpenTransaction();
 					try
@@ -221,7 +222,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(role);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					#region 添加角色
 					{
@@ -242,7 +243,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					throw new BusinessException("权限列表为空");
 				}
 
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					dataStore.OpenTransaction();
 					try

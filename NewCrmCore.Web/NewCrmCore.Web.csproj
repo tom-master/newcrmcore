@@ -30,7 +30,7 @@
     <PackageReference Include="BuildBundlerMinifier" Version="2.6.375" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
-    <PackageReference Include="NewLibCore" Version="1.0.4" />
+    <PackageReference Include="NewLibCore" Version="1.0.5" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
   <ItemGroup>

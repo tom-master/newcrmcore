@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure;
 using NewLibCore;
 using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;
@@ -19,7 +20,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(log);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					dataStore.ExecuteAdd(log);
 				}
@@ -30,7 +31,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 		{
 			new Parameter().Validate(accountId).Validate(logLevel);
 
-			using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+			using (var dataStore = new DataStore(Appsetting.Database))
 			{
 				var where = new StringBuilder();
 				var parameters = new List<SqlParameter>();

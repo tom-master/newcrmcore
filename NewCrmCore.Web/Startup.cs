@@ -48,7 +48,6 @@ namespace NewCrmCore.Web
 
 			services.AddMvc(config =>
 			{
-				//config.Filters.Add(new HandleErrorAttribute());
 				config.Filters.Add(new ErrorFilter());
 				config.Filters.Add(new AuthFilter());
 			}).AddJsonOptions(op => op.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver()); ;

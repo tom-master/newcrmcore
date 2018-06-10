@@ -2,8 +2,7 @@
 using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
-using NewCrmCore.Dto;
-using NewLibCore;
+using NewCrmCore.Infrastructure;
 using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;
 
@@ -19,7 +18,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(newSkin);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var config = new Config();
 					config.ModifySkin(newSkin);

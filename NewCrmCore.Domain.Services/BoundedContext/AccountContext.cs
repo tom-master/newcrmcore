@@ -9,7 +9,7 @@ using NewCrmCore.Domain.Entitys.Security;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
-using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
 using NewLibCore.Data.Mapper.InternalDataStore;
@@ -26,7 +26,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			return await Task.Run(() =>
 			 {
-				 using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				 using (var dataStore = new DataStore(Appsetting.Database))
 				 {
 					 Account result = null;
 					 try
@@ -95,7 +95,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId);
 			return await Task.Run(() =>
 			 {
-				 using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				 using (var dataStore = new DataStore(Appsetting.Database))
 				 {
 					 var sql = $@"SELECT 
 								a.Id,
@@ -126,7 +126,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT a.Url,a.Width,a.Height,a.Source FROM dbo.Wallpaper AS a WHERE a.Id=@wallpaperId AND a.IsDeleted=0";
 					var parameters = new List<SqlParameter> { new SqlParameter("@wallpaperId", wallPaperId) };
@@ -155,7 +155,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				where.Append($@" AND a.IsAdmin=@isAdmin");
 			}
 
-			using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+			using (var dataStore = new DataStore(Appsetting.Database))
 			{
 
 
@@ -191,7 +191,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId);
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT 
                             a1.AccountFace,
@@ -220,7 +220,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId);
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT
                             a1.Id,
@@ -240,7 +240,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 		{
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT a.RoleId,a.AppId FROM dbo.RolePower AS a WHERE a.IsDeleted=0";
 					return dataStore.Find<RolePower>(sql);
@@ -253,7 +253,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountName);
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT COUNT(*) FROM dbo.Account AS a WHERE a.Name=@name AND a.IsDeleted=0";
 					return dataStore.FindSingleValue<Int32>(sql, new List<SqlParameter> { new SqlParameter("@name", accountName) }) != 0 ? false : true;
@@ -266,7 +266,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId);
 			return await Task.Run<String>(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT a.LoginPassword FROM dbo.Account AS a WHERE a.Id=@accountId AND a.IsDeleted=0 AND a.IsDisable=0";
 					var parameters = new List<SqlParameter> { new SqlParameter("@accountId", accountId) };
@@ -280,7 +280,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(unlockPassword);
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					#region 获取锁屏密码
 					{
@@ -302,7 +302,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(name);
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT COUNT(*) FROM dbo.App AS a WHERE a.Name=@name AND a.IsDeleted=0 ";
 					var parameters = new List<SqlParameter>
@@ -320,7 +320,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(url);
 			return await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT COUNT(*) FROM dbo.App AS a WHERE a.AppUrl = @url AND a.IsDeleted=0";
 					var parameters = new List<SqlParameter>
@@ -338,7 +338,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					try
 					{
@@ -383,7 +383,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(account);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					try
 					{
@@ -454,7 +454,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(account);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					dataStore.OpenTransaction();
 					try
@@ -507,7 +507,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var account = new Account().Enable();
 					dataStore.ExecuteModify(account, acc => acc.Id == accountId);
@@ -520,7 +520,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var parameters = new List<SqlParameter> { new SqlParameter("@accountId", accountId) };
 					#region 前置条件验证
@@ -549,7 +549,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(newFace);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var config = new Config().ModifyAccountFace(newFace);
 					dataStore.ExecuteModify(config, conf => conf.AccountId == accountId);
@@ -562,9 +562,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(newPassword);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
-				{
-					var parameters = new List<SqlParameter>();
+				using (var dataStore = new DataStore(Appsetting.Database))
+				{ 
 					var account = new Account();
 					if (isTogetherSetLockPassword)
 					{
@@ -581,7 +580,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(newScreenPassword);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var account = new Account().ModifyLockScreenPassword(newScreenPassword);
 					dataStore.ExecuteModify(account, acc => acc.Id == accountId && !acc.IsDisable);
@@ -594,7 +593,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					dataStore.OpenTransaction();
 

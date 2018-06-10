@@ -5,6 +5,7 @@ using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure;
 using NewLibCore;
 using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;
@@ -18,7 +19,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(newDefaultDeskNumber);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var config = new Config();
 					config.ModifyDefaultDeskNumber(newDefaultDeskNumber);
@@ -32,7 +33,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(defaultDeskNumber).Validate(position);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var config = new Config();
 					var newPosition = EnumExtensions.ToEnum<DockPostion>(position);
@@ -47,7 +48,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var config = new Config();
 					config.DirectionToX();
@@ -61,7 +62,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var config = new Config();
 					config.DirectionToY();
@@ -75,7 +76,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(newSize);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var config = new Config();
 					config.ModifyAppSize(newSize);
@@ -89,7 +90,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(newSize);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var config = new Config();
 					config.ModifyAppVerticalSpacing(newSize);
@@ -104,7 +105,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(newSize);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var config = new Config();
 					config.ModifyAppHorizontalSpacing(newSize);
@@ -118,7 +119,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(memberId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var member = new Member();
 					member.OnDock();
@@ -132,7 +133,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(memberId).Validate(deskId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var member = new Member();
 					member.OutDock();
@@ -146,7 +147,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(memberId).Validate(folderId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var member = new Member();
 					member.OutDock().ModifyFolderId(folderId);
@@ -160,7 +161,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(memberId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var member = new Member();
 					member.OnDock().ModifyFolderId(0);
@@ -174,7 +175,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(memberId).Validate(folderId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var member = new Member();
 					member.ModifyFolderId(folderId);
@@ -188,7 +189,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(memberId).Validate(deskId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var member = new Member();
 					member.ModifyFolderId(0).ModifyDeskIndex(deskId);
@@ -202,7 +203,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(memberId).Validate(folderId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var member = new Member();
 					member.ModifyFolderId(folderId);
@@ -216,7 +217,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(memberId).Validate(deskId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					dataStore.OpenTransaction();
 					try
@@ -257,7 +258,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(accountId).Validate(memberId).Validate(deskId);
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var member = new Member();
 					member.OutDock().ModifyDeskIndex(deskId);
@@ -272,7 +273,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			await Task.Run(() =>
 			{
 				var folder = new Member(folderName, folderImg, 0, accountId, deskId, false);
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					dataStore.ExecuteAdd(folder);
 				}
@@ -284,7 +285,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			new Parameter().Validate(source).Validate(accountId); 
 			await Task.Run(() =>
 			{
-				using (var dataStore = new DataStore(AppSettings.Get<Settings>().Database.Value))
+				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var config = new Config();
 					if (source.ToLower() == WallpaperSource.Bing.ToString().ToLower())
