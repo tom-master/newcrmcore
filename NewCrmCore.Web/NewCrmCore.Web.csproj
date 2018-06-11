@@ -1,6 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
     <StartupObject></StartupObject>
   </PropertyGroup>
   <ItemGroup>
@@ -159,57 +160,6 @@
     <None Include="wwwroot\images\ui\task_bg2.png" />
     <None Include="wwwroot\images\ui\transparent.gif" />
     <None Include="wwwroot\images\ui\update_browser_bg.png" />
-    <None Include="wwwroot\images\ui\uploadui\20161221052343c83e.png" />
-    <None Include="wwwroot\images\ui\uploadui\201612210525110ee7.png" />
-    <None Include="wwwroot\images\ui\uploadui\20161221052706a907.png" />
-    <None Include="wwwroot\images\ui\uploadui\20161221053139f72d.png" />
-    <None Include="wwwroot\images\ui\uploadui\20161221053202cb81.png" />
-    <None Include="wwwroot\images\ui\uploadui\20161221053349c0a3.png" />
-    <None Include="wwwroot\images\ui\uploadui\20161221053538f747.png" />
-    <None Include="wwwroot\images\ui\uploadui\201612210535554b22.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\20171107104133c353.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\201711071042012416.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\20171107104514098d.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\20171107104627011b.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\2017110710490139c1.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\201711071049444746.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\20171107104953c6a2.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\2017110710510524e8.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\20171107105111d931.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\20171107105155f786.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\201711080935170c2c.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\201711080938219651.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\20171108093847f0e2.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\2017110809434041e0.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\201711080946548f88.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\201711080948590089.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\201711080951323699.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\201711080952595081.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\201711080954599a0b.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\201711080956213a88.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\20171108095701b41b.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\201711081001495901.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\20171108100215efbc.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\2017110810024792d9.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\2017110810061109fb" />
-    <None Include="wwwroot\images\ui\uploadui\201711081006450c75" />
-    <None Include="wwwroot\images\ui\uploadui\201711081010036ce8" />
-    <None Include="wwwroot\images\ui\uploadui\20171108101005467e" />
-    <None Include="wwwroot\images\ui\uploadui\20171108101027c962" />
-    <None Include="wwwroot\images\ui\uploadui\20171108101043c1bb" />
-    <None Include="wwwroot\images\ui\uploadui\201711081012020f46" />
-    <None Include="wwwroot\images\ui\uploadui\20171108102119620e" />
-    <None Include="wwwroot\images\ui\uploadui\20171108102243945a" />
-    <None Include="wwwroot\images\ui\uploadui\201711081024398ea8.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\20171108102539b3c5.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\201711081027462952.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\20171108102848adc7.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\20171108102855123f.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\20171108102954b3f7.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\201711081031064c8a.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\201711081031456424.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\201711081034446f9c.jpg" />
-    <None Include="wwwroot\images\ui\uploadui\20171108103519ad89.jpg" />
     <None Include="wwwroot\images\ui\warning.png" />
     <None Include="wwwroot\images\ui\widget_title_bg.png" />
     <None Include="wwwroot\images\ui\window_mask_bg.png" />
@@ -348,7 +298,6 @@
     <None Include="wwwroot\js\hooray\hros.min.js" />
     <None Include="wwwroot\js\hooray\jquery-browser.js" />
     <None Include="wwwroot\js\hooray\zoom.swf" />
-    <None Include="wwwroot\js\hooray\第1步：合并JS.bat" />
     <None Include="wwwroot\js\hooray\lib\devil.php" />
     <None Include="wwwroot\js\hooray\lib\gb_tip_layer.png" />
     <None Include="wwwroot\js\hooray\lib\gb_tip_layer_ie6.png" />

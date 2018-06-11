@@ -1,7 +1,7 @@
 ﻿@model NewCrmCore.Dto.AppTypeDto
 @{
 	Layout = "~/Views/Shared/_LayoutApps.cshtml";
-	var appTypeId = Context.Request.Query["appTypeId"]
+	var appTypeId = Context.Request.Query["appTypeId"];
 }
 
 <form action="/AppTypes/CreateAppType?appTypeId=@appTypeId" method="post" name="form" id="form">
