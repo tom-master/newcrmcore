@@ -8,7 +8,7 @@ namespace NewCrmCore.Infrastructure
 		{
 			get
 			{
-				var str = Environment.GetEnvironmentVariable("NewCrmDatabase");
+				var str = GetUserVar("NewCrmDatabase");
 				return str ?? "";
 			}
 		}
@@ -17,7 +17,7 @@ namespace NewCrmCore.Infrastructure
 		{
 			get
 			{
-				var str = Environment.GetEnvironmentVariable("NewCrmRedis");
+				var str = GetUserVar("NewCrmRedis");
 				return str ?? "";
 			}
 		}
@@ -26,7 +26,7 @@ namespace NewCrmCore.Infrastructure
 		{
 			get
 			{
-				var str = Environment.GetEnvironmentVariable("NewCrmMongodb");
+				var str = GetUserVar("NewCrmMongodb");
 				return str ?? "";
 			}
 		}
@@ -35,7 +35,7 @@ namespace NewCrmCore.Infrastructure
 		{
 			get
 			{
-				var str = Environment.GetEnvironmentVariable("NewCrmFileUploadUrl");
+				var str = GetUserVar("NewCrmFileUploadUrl");
 				return str ?? "";
 			}
 		}
@@ -44,9 +44,15 @@ namespace NewCrmCore.Infrastructure
 		{
 			get
 			{
-				var str = Environment.GetEnvironmentVariable("NewCrmFileUrl");
+				var str = GetUserVar("NewCrmFileUrl");
 				return str ?? "";
 			}
+		}
+
+
+		private static String GetUserVar(String varKey)
+		{
+			return Environment.GetEnvironmentVariable(varKey, EnvironmentVariableTarget.User);
 		}
 	}
 }
