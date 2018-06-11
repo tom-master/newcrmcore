@@ -49,6 +49,15 @@ namespace NewCrmCore.Infrastructure
 			}
 		}
 
+		public static String FileStorage
+		{
+			get
+			{
+				var str = GetUserVar("NewCrmCoreFileStorage");
+				return str ?? "";
+			}
+		}
+
 
 		private static String GetUserVar(String varKey)
 		{
