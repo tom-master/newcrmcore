@@ -36,7 +36,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.DeskIndex,
                             a.FolderId,
                             a.IsIconByUpload
-                            FROM dbo.Member AS a WHERE a.AccountId=@AccountId AND a.IsDeleted=0";
+                            FROM Member AS a WHERE a.AccountId=@AccountId AND a.IsDeleted=0";
 					var parameters = new List<ParameterMapper>
 					{
 						new ParameterMapper("@AccountId",accountId)
@@ -89,7 +89,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     a.Width,
                     a.AccountId,
                     a.IsIconByUpload
-                    FROM dbo.Member AS a WHERE a.AccountId=@AccountId {where} AND a.IsDeleted=0";
+                    FROM Member AS a WHERE a.AccountId=@AccountId {where} AND a.IsDeleted=0";
 					parameters.Add(new ParameterMapper("@AccountId", accountId));
 					return dataStore.FindOne<Member>(sql, parameters);
 				}
@@ -103,7 +103,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
-					var sql = $@"SELECT COUNT(*) FROM dbo.Member AS a WHERE a.Name=@name AND a.IsDeleted=0";
+					var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.Name=@name AND a.IsDeleted=0";
 					var parameters = new List<ParameterMapper>
 					{
 						new ParameterMapper("@name",name)
@@ -215,7 +215,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 						#region 判断是否为文件夹
 						{
-							var sql = $@"SELECT a.MemberType FROM dbo.Member AS a WHERE a.Id=@Id AND a.AccountId=@AccountId AND a.IsDeleted=0";
+							var sql = $@"SELECT a.MemberType FROM Member AS a WHERE a.Id=@Id AND a.AccountId=@AccountId AND a.IsDeleted=0";
 							var parameters = new List<ParameterMapper>
 							{
 								new ParameterMapper("@Id", memberId),
@@ -241,7 +241,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 							#region 获取appId
 							{
-								var sql = $@"SELECT a.AppId FROM dbo.Member AS a WHERE a.Id=@Id AND a.AccountId=@AccountId AND a.IsDeleted=0";
+								var sql = $@"SELECT a.AppId FROM Member AS a WHERE a.Id=@Id AND a.AccountId=@AccountId AND a.IsDeleted=0";
 								var parameters = new List<ParameterMapper>
 								{
 									new ParameterMapper("@Id", memberId),
@@ -253,7 +253,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 							App app = null;
 							#region 查询app
 							{
-								var sql = $@"SELECT a.UseCount FROM dbo.App AS a WHERE a.Id=@Id AND a.AccountId=@AccountId AND a.IsDeleted=0";
+								var sql = $@"SELECT a.UseCount FROM App AS a WHERE a.Id=@Id AND a.AccountId=@AccountId AND a.IsDeleted=0";
 								var parameters = new List<ParameterMapper>
 								{
 									new ParameterMapper("@Id",appId),

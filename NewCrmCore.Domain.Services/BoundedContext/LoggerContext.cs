@@ -40,7 +40,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 				#region totalCount
 				{
-					var sql = $@"SELECT COUNT(*) FROM dbo.Log AS a WHERE 1=1 {where}";
+					var sql = $@"SELECT COUNT(*) FROM Log AS a WHERE 1=1 {where}";
 					totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
 				}
 				#endregion
@@ -56,7 +56,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                                a.Action,
 	                                a.ExceptionMessage,
 	                                a.Track
-	                                FROM dbo.Log AS a WHERE 1=1 {where}
+	                                FROM Log AS a WHERE 1=1 {where}
                                 ) AS aa WHERE aa.rownumber>@pageSize*(@pageIndex-1)";
 					parameters.Add(new ParameterMapper("@pageIndex", pageIndex));
 					parameters.Add(new ParameterMapper("@pageSize", pageSize));

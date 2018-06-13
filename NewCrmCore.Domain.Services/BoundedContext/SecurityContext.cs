@@ -20,7 +20,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
-					var sql = $@"SELECT a.RoleId, a.AppId FROM dbo.RolePower AS a WHERE a.IsDeleted=0";
+					var sql = $@"SELECT a.RoleId, a.AppId FROM RolePower AS a WHERE a.IsDeleted=0";
 					return dataStore.Find<RolePower>(sql);
 				}
 			});
@@ -33,7 +33,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
-					var sql = $@"SELECT a.Name, a.RoleIdentity, a.Remark FROM dbo.Role AS a WHERE a.Id=@Id AND a.IsDeleted=0";
+					var sql = $@"SELECT a.Name, a.RoleIdentity, a.Remark FROM Role AS a WHERE a.Id=@Id AND a.IsDeleted=0";
 					var parameters = new List<ParameterMapper> { new ParameterMapper("@Id", roleId) };
 					return dataStore.FindOne<Role>(sql, parameters);
 				}
@@ -54,7 +54,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 				#region totalCount
 				{
-					var sql = $@"SELECT  COUNT(*) FROM dbo.Role AS a WHERE 1=1 {where} AND a.IsDeleted=0";
+					var sql = $@"SELECT  COUNT(*) FROM Role AS a WHERE 1=1 {where} AND a.IsDeleted=0";
 					totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
 				}
 				#endregion
@@ -69,7 +69,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                                a.RoleIdentity,
 	                                a.Remark,
                                     a.Id
-	                                FROM dbo.Role AS a WHERE 1=1 {where} AND a.IsDeleted=0
+	                                FROM Role AS a WHERE 1=1 {where} AND a.IsDeleted=0
                                 ) AS aa WHERE aa.rownumber>@pageSize*(@pageIndex-1)";
 					parameters.Add(new ParameterMapper("@pageIndex", pageIndex));
 					parameters.Add(new ParameterMapper("@pageSize", pageSize));
@@ -89,7 +89,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					#region 检查app是否为系统app
 					{
-						var sql = $@"SELECT COUNT(*) FROM dbo.App AS a WHERE a.Id=@Id AND a.IsDeleted=0 AND a.IsSystem=1";
+						var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.Id=@Id AND a.IsDeleted=0 AND a.IsSystem=1";
 						var parameters = new List<ParameterMapper>
 						{
 							new ParameterMapper("@Id",accessAppId)
@@ -103,7 +103,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					#endregion
 
 					{
-						var sql = $@"SELECT a.AppId FROM dbo.RolePower AS a WHERE a.RoleId IN({String.Join(",", roleIds)}) AND a.IsDeleted=0";
+						var sql = $@"SELECT a.AppId FROM RolePower AS a WHERE a.RoleId IN({String.Join(",", roleIds)}) AND a.IsDeleted=0";
 						var result = dataStore.Find<RolePower>(sql);
 						return result.Any(a => a.AppId == accessAppId);
 					}
@@ -118,7 +118,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
-					var sql = $@"SELECT COUNT(*) FROM dbo.Role AS a WHERE a.Name=@name AND a.IsDeleted=0";
+					var sql = $@"SELECT COUNT(*) FROM Role AS a WHERE a.Name=@name AND a.IsDeleted=0";
 					var parameters = new List<ParameterMapper>
 					{
 						new ParameterMapper("@name",name)
@@ -135,7 +135,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
-					var sql = $@"SELECT COUNT(*) FROM dbo.Role AS a WHERE a.RoleIdentity=@RoleIdentity AND a.IsDeleted=0";
+					var sql = $@"SELECT COUNT(*) FROM Role AS a WHERE a.RoleIdentity=@RoleIdentity AND a.IsDeleted=0";
 					var parameters = new List<ParameterMapper>
 					{
 						new ParameterMapper("@RoleIdentity",name)
@@ -178,7 +178,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						};
 						#region 前置条件验证
 						{
-							var sql = $@"SELECT COUNT(*) FROM dbo.AccountRole AS a WHERE a.RoleId=@roleId AND a.IsDeleted=0";
+							var sql = $@"SELECT COUNT(*) FROM AccountRole AS a WHERE a.RoleId=@roleId AND a.IsDeleted=0";
 							var result = dataStore.FindSingleValue<Int32>(sql, parameters);
 							if (result > 0)
 							{

@@ -35,8 +35,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						 #region 查询用户
 						 {
 							 var sql = @"SELECT a.Id,a.Name,a.LoginPassword,a1.AccountFace 
-                                    FROM dbo.Account AS a
-                                    INNER JOIN dbo.Config AS a1
+                                    FROM Account AS a
+                                    INNER JOIN Config AS a1
                                     ON a1.AccountId=a.Id 
                                     WHERE a.Name=@name AND a.IsDeleted=0 AND a.IsDisable=0";
 							 result = dataStore.Find<Account>(sql, new List<ParameterMapper> { new ParameterMapper("@name", accountName) }).FirstOrDefault();
@@ -111,7 +111,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a.WallpaperId,
 								a.IsBing,
 								a.AccountId
-								FROM dbo.Config AS a WHERE a.AccountId=@accountId AND a.IsDeleted=0";
+								FROM  Config AS a WHERE a.AccountId=@accountId AND a.IsDeleted=0";
 					 var parameters = new List<ParameterMapper> { new ParameterMapper("@accountId", accountId) };
 					 var result = dataStore.Find<Config>(sql, parameters).FirstOrDefault();
 					 return result;
@@ -127,7 +127,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
-					var sql = $@"SELECT a.Url,a.Width,a.Height,a.Source FROM dbo.Wallpaper AS a WHERE a.Id=@wallpaperId AND a.IsDeleted=0";
+					var sql = $@"SELECT a.Url,a.Width,a.Height,a.Source FROM Wallpaper AS a WHERE a.Id=@wallpaperId AND a.IsDeleted=0";
 					var parameters = new List<ParameterMapper> { new ParameterMapper("@wallpaperId", wallPaperId) };
 					return dataStore.Find<Wallpaper>(sql, parameters).FirstOrDefault();
 				}
@@ -160,8 +160,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 				#region totalCount
 				{
-					var sql = $@"SELECT COUNT(*) FROM dbo.Account AS a 
-                                 INNER JOIN dbo.Config AS a1 ON a1.AccountId=a.Id AND a1.IsDeleted=0 {where} ";
+					var sql = $@"SELECT COUNT(*) FROM Account AS a 
+                                 INNER JOIN Config AS a1 ON a1.AccountId=a.Id AND a1.IsDeleted=0 {where} ";
 					totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
 				}
 				#endregion
@@ -172,8 +172,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             (
 	                            SELECT ROW_NUMBER() OVER(ORDER BY a.Id DESC) AS rownumber,
                                 a.Id,a.IsAdmin,a.Name,a.IsDisable,a1.AccountFace 
-	                            FROM dbo.Account AS a 
-	                            INNER JOIN dbo.Config AS a1
+	                            FROM Account AS a 
+	                            INNER JOIN Config AS a1
 	                            ON a1.AccountId=a.Id AND a1.IsDeleted=0
 	                            {where} 
                             ) AS a2 WHERE a2.rownumber>@pageSize*(@pageIndex-1)";
@@ -204,8 +204,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.Name,
                             a.LockScreenPassword,
                             a.LoginPassword
-                            FROM dbo.Account AS a 
-                            INNER JOIN dbo.Config AS a1
+                            FROM Account AS a 
+                            INNER JOIN  Config AS a1
                             ON a1.AccountId=a.Id
                             WHERE a.Id=@accountId AND a.IsDeleted=0 AND a.IsDisable=0";
 					var parameters = new List<ParameterMapper> { new ParameterMapper("@accountId", accountId) };
@@ -225,8 +225,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a1.Id,
                             a1.Name,
                             a1.RoleIdentity
-                            FROM dbo.AccountRole AS a
-                            INNER JOIN dbo.Role AS a1
+                            FROM AccountRole AS a
+                            INNER JOIN Role AS a1
                             ON a1.Id=a.RoleId AND a1.IsDeleted=0 
                             WHERE a.AccountId=@accountId AND a.IsDeleted=0 ";
 					var parameters = new List<ParameterMapper> { new ParameterMapper("@accountId", accountId) };
@@ -241,7 +241,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
-					var sql = $@"SELECT a.RoleId,a.AppId FROM dbo.RolePower AS a WHERE a.IsDeleted=0";
+					var sql = $@"SELECT a.RoleId,a.AppId FROM RolePower AS a WHERE a.IsDeleted=0";
 					return dataStore.Find<RolePower>(sql);
 				}
 			});
@@ -254,7 +254,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
-					var sql = $@"SELECT COUNT(*) FROM dbo.Account AS a WHERE a.Name=@name AND a.IsDeleted=0";
+					var sql = $@"SELECT COUNT(*) FROM Account AS a WHERE a.Name=@name AND a.IsDeleted=0";
 					return dataStore.FindSingleValue<Int32>(sql, new List<ParameterMapper> { new ParameterMapper("@name", accountName) }) != 0 ? false : true;
 				}
 			});
@@ -267,7 +267,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
-					var sql = $@"SELECT a.LoginPassword FROM dbo.Account AS a WHERE a.Id=@accountId AND a.IsDeleted=0 AND a.IsDisable=0";
+					var sql = $@"SELECT a.LoginPassword FROM Account AS a WHERE a.Id=@accountId AND a.IsDeleted=0 AND a.IsDisable=0";
 					var parameters = new List<ParameterMapper> { new ParameterMapper("@accountId", accountId) };
 					return dataStore.FindSingleValue<String>(sql, parameters);
 				}
@@ -283,7 +283,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					#region 获取锁屏密码
 					{
-						var sql = $@"SELECT a.LockScreenPassword FROM dbo.Account AS a WHERE a.Id=@accountId AND a.IsDeleted=0 AND a.IsDisable=0";
+						var sql = $@"SELECT a.LockScreenPassword FROM Account AS a WHERE a.Id=@accountId AND a.IsDeleted=0 AND a.IsDisable=0";
 						var parameters = new List<ParameterMapper>
 						{
 							new ParameterMapper("@accountId",accountId)
@@ -303,7 +303,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
-					var sql = $@"SELECT COUNT(*) FROM dbo.App AS a WHERE a.Name=@name AND a.IsDeleted=0 ";
+					var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.Name=@name AND a.IsDeleted=0 ";
 					var parameters = new List<ParameterMapper>
 					{
 						new ParameterMapper("@name",name)
@@ -321,7 +321,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
-					var sql = $@"SELECT COUNT(*) FROM dbo.App AS a WHERE a.AppUrl = @url AND a.IsDeleted=0";
+					var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.AppUrl = @url AND a.IsDeleted=0";
 					var parameters = new List<ParameterMapper>
 					{
 						new ParameterMapper("@url",url)
@@ -524,8 +524,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					var parameters = new List<ParameterMapper> { new ParameterMapper("@accountId", accountId) };
 					#region 前置条件验证
 					{
-						var sql = $@"SELECT COUNT(*) FROM dbo.Role AS a
-                                INNER JOIN dbo.AccountRole AS a1
+						var sql = $@"SELECT COUNT(*) FROM Role AS a
+                                INNER JOIN AccountRole AS a1
                                 ON a1.AccountId=@accountId AND a1.RoleId=a.Id AND a1.IsDeleted=0
                                 WHERE a.IsDeleted=0 AND a.IsAllowDisable=0";
 						var result = dataStore.FindSingleValue<Int32>(sql, parameters);
@@ -562,7 +562,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			await Task.Run(() =>
 			{
 				using (var dataStore = new DataStore(Appsetting.Database))
-				{ 
+				{
 					var account = new Account();
 					if (isTogetherSetLockPassword)
 					{
@@ -605,7 +605,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								new ParameterMapper("@accountId",accountId)
 							};
 
-							var sql = $@"SELECT a.IsAdmin FROM dbo.Account AS a WHERE a.Id=@accountId AND a.IsDeleted=0 AND a.IsDisable=0";
+							var sql = $@"SELECT a.IsAdmin FROM Account AS a WHERE a.Id=@accountId AND a.IsDeleted=0 AND a.IsDisable=0";
 							var isAdmin = Boolean.Parse(dataStore.FindSingleValue<String>(sql, parameters));
 							if (isAdmin)
 							{

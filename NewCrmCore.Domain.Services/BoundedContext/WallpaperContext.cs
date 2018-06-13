@@ -23,7 +23,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				 {
 					 #region 前置条件验证
 					 {
-						 var sql = $@"SELECT COUNT(*) FROM dbo.Wallpaper AS a WHERE a.AccountId=@AccountId AND a.IsDeleted=0";
+						 var sql = $@"SELECT COUNT(*) FROM Wallpaper AS a WHERE a.AccountId=@AccountId AND a.IsDeleted=0";
 						 var parameters = new List<ParameterMapper>
 						 {
 							new ParameterMapper("@AccountId",wallpaper.AccountId)
@@ -46,7 +46,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 					 #region 获取返回值
 					 {
-						 var sql = $@"SELECT a.Id,a.Url FROM dbo.Wallpaper AS a WHERE a.Id=@parameters AND a.IsDeleted=0";
+						 var sql = $@"SELECT a.Id,a.Url FROM Wallpaper AS a WHERE a.Id=@parameters AND a.IsDeleted=0";
 						 var parameters = new List<ParameterMapper>
 						 {
 							new ParameterMapper("@Id",newWallpaperId)
@@ -79,7 +79,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.Title,
                             a.Url,
                             a.Width
-                            FROM dbo.Wallpaper AS a WHERE a.Md5=@Md5 AND a.IsDeleted=0";
+                            FROM Wallpaper AS a WHERE a.Md5=@Md5 AND a.IsDeleted=0";
 					var parameters = new List<ParameterMapper>
 					{
 						new ParameterMapper("@Md5",md5)
@@ -105,7 +105,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.Title,
                             a.Url,
                             a.Width
-                            FROM dbo.Wallpaper AS a WHERE a.AccountId=@AccountId AND a.Source=@Source AND a.IsDeleted=0";
+                            FROM Wallpaper AS a WHERE a.AccountId=@AccountId AND a.Source=@Source AND a.IsDeleted=0";
 					var parameters = new List<ParameterMapper>
 					{
 						new ParameterMapper("@AccountId",accountId),
@@ -132,7 +132,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.Title,
                             a.Url,
                             a.Width
-                            FROM dbo.Wallpaper AS a WHERE a.Source=@Source AND a.IsDeleted=0";
+                            FROM Wallpaper AS a WHERE a.Source=@Source AND a.IsDeleted=0";
 					var parameters = new List<ParameterMapper>
 					{
 						new ParameterMapper("@Source", WallpaperSource.System.ToInt32())
@@ -191,7 +191,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					};
 					#region 前置条件验证
 					{
-						var sql = $@"SELECT COUNT(*) FROM dbo.Config AS a WHERE a.AccountId=@AccountId AND a.WallpaperId=@WallpaperId AND a.IsDeleted=0";
+						var sql = $@"SELECT COUNT(*) FROM Config AS a WHERE a.AccountId=@AccountId AND a.WallpaperId=@WallpaperId AND a.IsDeleted=0";
 						var result = dataStore.FindSingleValue<Int32>(sql, parameters);
 						if (result > 0)
 						{

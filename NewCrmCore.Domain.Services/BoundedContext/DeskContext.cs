@@ -227,7 +227,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						var set = new StringBuilder();
 						#region 查询成员是否在应用码头中
 						{
-							var sql = $@"SELECT COUNT(*) FROM dbo.Member AS a WHERE a.Id=0 AND a.AccountId=0 AND a.IsDeleted=0 AND IsOnDock=1";
+							var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.Id=0 AND a.AccountId=0 AND a.IsDeleted=0 AND IsOnDock=1";
 							if (dataStore.FindSingleValue<Int32>(sql) > 0)
 							{
 								member.OutDock();

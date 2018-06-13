@@ -25,7 +25,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
-					var sql = $@"SELECT a.Id FROM dbo.App AS a WHERE a.AccountId=@accountId AND a.IsDeleted=0";
+					var sql = $@"SELECT a.Id FROM App AS a WHERE a.AccountId=@accountId AND a.IsDeleted=0";
 					var parameters = new List<ParameterMapper>
 					{
 						new ParameterMapper("@accountId",accountId)
@@ -42,7 +42,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
-					var sql = $@"SELECT a.Id,a.Name FROM dbo.AppType AS a WHERE a.IsDeleted=0";
+					var sql = $@"SELECT a.Id,a.Name FROM AppType AS a WHERE a.IsDeleted=0";
 					return dataStore.Find<AppType>(sql);
 				}
 			});
@@ -63,7 +63,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.Remark,
                             a.AppStyle AS Style,
                             (
-		                        SELECT AVG(stars.StartNum) FROM dbo.AppStar AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId
+		                        SELECT AVG(stars.StartNum) FROM AppStar AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId
                             ) AS AppStars,
                             (
 	                            CASE 
@@ -72,8 +72,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								END
                             ) AS IsInstall,
                             ISNULL(a.IsIconByUpload,0) AS IsIconByUpload
-                            FROM dbo.App AS a 
-							LEFT JOIN dbo.Member AS a2 ON a2.AccountId=@accountId AND a2.IsDeleted=0 AND a2.AppId=a.Id
+                            FROM App AS a 
+							LEFT JOIN Member AS a2 ON a2.AccountId=@accountId AND a2.IsDeleted=0 AND a2.AppId=a.Id
                             WHERE a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState AND a.IsRecommand=1";
 					var parameters = new List<ParameterMapper>
 					{
@@ -142,8 +142,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				var paging = new PageList<App>();
 				#region totalCount
 				{
-					var sql = $@"SELECT COUNT(*) FROM dbo.App AS a 
-                                LEFT JOIN dbo.AppStar AS a1
+					var sql = $@"SELECT COUNT(*) FROM App AS a 
+                                LEFT JOIN AppStar AS a1
                                 ON a1.AppId=a.Id AND a1.IsDeleted=0 {where}";
 					totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
 				}
@@ -160,7 +160,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                                    a.AddTime,
 	                                    a.UseCount,
 	                                    (
-		                                    SELECT AVG(stars.StartNum) FROM dbo.AppStar AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId
+		                                    SELECT AVG(stars.StartNum) FROM AppStar AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId
 	                                    ) AS StarCount,
 	                                    a.Name,
 	                                    a.IconUrl,
@@ -174,8 +174,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 		                                    END
 	                                    ) AS IsInstall,
                                         a.IsIconByUpload
-	                                    FROM dbo.App AS a
-	                                    LEFT JOIN dbo.Member AS a1 ON a1.AccountId=a.AccountId AND a1.AppId=a.Id AND a1.IsDeleted=0
+	                                    FROM App AS a
+	                                    LEFT JOIN Member AS a1 ON a1.AccountId=a.AccountId AND a1.AppId=a.Id AND a1.IsDeleted=0
                                         {where}
                                 ) AS aa WHERE aa.rownumber>@pageSize*(@pageIndex-1) {orderBy}";
 					parameters.Add(new ParameterMapper("@pageSize", pageSize));
@@ -249,7 +249,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 				#region totalCount
 				{
-					var sql = $@"SELECT COUNT(*) FROM dbo.App AS a {where} ";
+					var sql = $@"SELECT COUNT(*) FROM App AS a {where} ";
 					totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
 				}
 				#endregion
@@ -270,7 +270,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 									a.AppTypeId,
 									a.AccountId,
 									a.IsIconByUpload
-									FROM dbo.App AS a {where} 
+									FROM App AS a {where} 
 								) AS aa WHERE aa.rownumber>@pageSize*(@pageIndex-1)";
 					parameters.Add(new ParameterMapper("@pageIndex", pageIndex));
 					parameters.Add(new ParameterMapper("@pageSize", pageSize));
@@ -294,7 +294,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.Remark,
                             a.UseCount,
                             (
-		                      SELECT AVG(stars.StartNum) FROM dbo.AppStar AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId
+		                      SELECT AVG(stars.StartNum) FROM AppStar AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId
 	                        ) AS StarCount,
                             a.AddTime,
                             a.AccountId,
@@ -311,8 +311,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.AppTypeId,
                             a2.Name AS AccountName,
                             a.IsIconByUpload
-                            FROM dbo.App AS a 
-                            LEFT JOIN dbo.Account AS a2
+                            FROM App AS a 
+                            LEFT JOIN Account AS a2
                             ON a2.Id=a.AccountId AND a2.IsDeleted=0 AND a2.IsDisable=0
                             WHERE a.Id=@Id AND a.IsDeleted=0";
 					var parameters = new List<ParameterMapper>
@@ -331,7 +331,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
-					var sql = $@"SELECT COUNT(*) FROM dbo.Member AS a WHERE a.AppId=@Id AND a.AccountId=@AccountId AND a.IsDeleted=0";
+					var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.AppId=@Id AND a.AccountId=@AccountId AND a.IsDeleted=0";
 					var parameters = new List<ParameterMapper>
 					{
 						new ParameterMapper("@Id",appId),
@@ -355,7 +355,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						where.Append($@" AND a.Id IN({String.Join(",", appIds)})");
 					}
 
-					var sql = $@"SELECT a.Id,a.Name,a.IconUrl FROM dbo.App AS a {where}";
+					var sql = $@"SELECT a.Id,a.Name,a.IconUrl FROM App AS a {where}";
 					return dataStore.Find<App>(sql);
 				}
 			});
@@ -368,7 +368,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
-					var sql = $@"SELECT COUNT(*) FROM dbo.AppType AS a WHERE a.Name=@name AND a.IsDeleted=0";
+					var sql = $@"SELECT COUNT(*) FROM AppType AS a WHERE a.Name=@name AND a.IsDeleted=0";
 					var parameters = new List<ParameterMapper>
 					{
 						new ParameterMapper("@name",appTypeName)
@@ -387,7 +387,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					#region 前置条件判断
 					{
-						var sql = $@"SELECT COUNT(*) FROM dbo.AppStar AS a WHERE a.AccountId=@accountId AND a.AppId=@appId AND a.IsDeleted=0";
+						var sql = $@"SELECT COUNT(*) FROM AppStar AS a WHERE a.AccountId=@accountId AND a.AppId=@appId AND a.IsDeleted=0";
 						var parameters = new List<ParameterMapper>
 						{
 							new ParameterMapper("@accountId",accountId),
@@ -627,7 +627,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						{
 							new ParameterMapper("@AppTypeId",appTypeId)
 						};
-						var sql = $@"SELECT COUNT(*) FROM dbo.App AS a WHERE a.AppTypeId=@AppTypeId AND a.IsDeleted=0";
+						var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.AppTypeId=@AppTypeId AND a.IsDeleted=0";
 						if (dataStore.FindSingleValue<Int32>(sql, parameters) > 0)
 						{
 							throw new BusinessException($@"当前分类下已有绑定app,不能删除当前分类");
@@ -655,7 +655,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					#region 前置条件验证
 					{
-						var sql = $@"SELECT COUNT(*) FROM dbo.AppType AS a WHERE a.Name=@name AND a.IsDeleted=0";
+						var sql = $@"SELECT COUNT(*) FROM AppType AS a WHERE a.Name=@name AND a.IsDeleted=0";
 						var result = dataStore.FindSingleValue<Int32>(sql, new List<ParameterMapper> { new ParameterMapper("@name", appType.Name) });
 						if (result > 0)
 						{
@@ -682,7 +682,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					#region 前置条件验证
 					{
-						var sql = $@"SELECT COUNT(*) FROM dbo.AppType AS a WHERE a.Name=@name AND a.IsDeleted=0";
+						var sql = $@"SELECT COUNT(*) FROM AppType AS a WHERE a.Name=@name AND a.IsDeleted=0";
 						var result = dataStore.FindSingleValue<Int32>(sql, new List<ParameterMapper> { new ParameterMapper("@name", appTypeName) });
 						if (result > 0)
 						{
@@ -744,7 +744,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                 a.IsFlash,
                                 a.IsDraw,
                                 a.IsIconByUpload
-                                FROM  dbo.App AS a WHERE a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState AND a.IsDeleted=0 AND a.Id=@Id";
+                                FROM  App AS a WHERE a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState AND a.IsDeleted=0 AND a.Id=@Id";
 							var parameters = new List<ParameterMapper>
 							{
 								new ParameterMapper("@AppAuditState",AppAuditState.Pass.ToInt32()),
