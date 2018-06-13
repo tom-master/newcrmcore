@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
-using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.Entitys.System;
+using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
-using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
-using NewLibCore;
+using NewCrmCore.Infrastructure.CommonTools.CustomExtension;
 using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;
-using NewCrmCore.Infrastructure.CommonTools.CustomExtension;
-using NewCrmCore.Infrastructure;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
 {
