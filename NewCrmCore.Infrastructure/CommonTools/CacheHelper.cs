@@ -17,7 +17,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 		{
 			var cts = new CancellationTokenSource(cache.CancelToken);
 
-			TModel cacheResult = null;
+			//TModel cacheResult = null;
 			//try
 			//{
 			//	cacheResult = await Task.Run(() => _cacheQuery.StringGetAsync<TModel>(cache.GetKey()), cts.Token);
