@@ -40,9 +40,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.FolderId,
                             a.IsIconByUpload
                             FROM dbo.Member AS a WHERE a.AccountId=@AccountId AND a.IsDeleted=0";
-					var parameters = new List<SqlParameter>
+					var parameters = new List<ParameterMapper>
 					{
-						new SqlParameter("@AccountId",accountId)
+						new ParameterMapper("@AccountId",accountId)
 					};
 					return dataStore.Find<Member>(sql, parameters);
 				}
@@ -57,16 +57,16 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var where = new StringBuilder();
-					var parameters = new List<SqlParameter>();
+					var parameters = new List<ParameterMapper>();
 					if (isFolder)
 					{
-						parameters.Add(new SqlParameter("@Id", memberId));
-						parameters.Add(new SqlParameter("@MemberType",  MemberType.Folder.ToInt32()));
+						parameters.Add(new ParameterMapper("@Id", memberId));
+						parameters.Add(new ParameterMapper("@MemberType",  MemberType.Folder.ToInt32()));
 						where.Append($@" AND a.Id=@Id AND a.MemberType=@MemberType");
 					}
 					else
 					{
-						parameters.Add(new SqlParameter("@Id", memberId));
+						parameters.Add(new ParameterMapper("@Id", memberId));
 						where.Append($@" AND a.AppId=@Id");
 					}
 
@@ -93,7 +93,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     a.AccountId,
                     a.IsIconByUpload
                     FROM dbo.Member AS a WHERE a.AccountId=@AccountId {where} AND a.IsDeleted=0";
-					parameters.Add(new SqlParameter("@AccountId", accountId));
+					parameters.Add(new ParameterMapper("@AccountId", accountId));
 					return dataStore.FindOne<Member>(sql, parameters);
 				}
 			});
@@ -107,9 +107,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT COUNT(*) FROM dbo.Member AS a WHERE a.Name=@name AND a.IsDeleted=0";
-					var parameters = new List<SqlParameter>
+					var parameters = new List<ParameterMapper>
 					{
-						new SqlParameter("@name",name)
+						new ParameterMapper("@name",name)
 					};
 
 					return dataStore.FindSingleValue<Int32>(sql, parameters) > 0;
@@ -219,10 +219,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						#region 判断是否为文件夹
 						{
 							var sql = $@"SELECT a.MemberType FROM dbo.Member AS a WHERE a.Id=@Id AND a.AccountId=@AccountId AND a.IsDeleted=0";
-							var parameters = new List<SqlParameter>
+							var parameters = new List<ParameterMapper>
 							{
-								new SqlParameter("@Id", memberId),
-								new SqlParameter("@AccountId", accountId)
+								new ParameterMapper("@Id", memberId),
+								new ParameterMapper("@AccountId", accountId)
 							};
 							isFolder = (dataStore.FindSingleValue<Int32>(sql, parameters)) == MemberType.Folder.ToInt32();
 						}
@@ -245,10 +245,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 							#region 获取appId
 							{
 								var sql = $@"SELECT a.AppId FROM dbo.Member AS a WHERE a.Id=@Id AND a.AccountId=@AccountId AND a.IsDeleted=0";
-								var parameters = new List<SqlParameter>
+								var parameters = new List<ParameterMapper>
 								{
-									new SqlParameter("@Id", memberId),
-									new SqlParameter("@AccountId", accountId)
+									new ParameterMapper("@Id", memberId),
+									new ParameterMapper("@AccountId", accountId)
 								};
 								appId = dataStore.FindSingleValue<Int32>(sql, parameters);
 							}
@@ -257,10 +257,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 							#region 查询app
 							{
 								var sql = $@"SELECT a.UseCount FROM dbo.App AS a WHERE a.Id=@Id AND a.AccountId=@AccountId AND a.IsDeleted=0";
-								var parameters = new List<SqlParameter>
+								var parameters = new List<ParameterMapper>
 								{
-									new SqlParameter("@Id",appId),
-									new SqlParameter("@AccountId",accountId)
+									new ParameterMapper("@Id",appId),
+									new ParameterMapper("@AccountId",accountId)
 								};
 								app = dataStore.FindOne<App>(sql, parameters);
 							}

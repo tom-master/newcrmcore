@@ -27,9 +27,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					 #region 前置条件验证
 					 {
 						 var sql = $@"SELECT COUNT(*) FROM dbo.Wallpaper AS a WHERE a.AccountId=@AccountId AND a.IsDeleted=0";
-						 var parameters = new List<SqlParameter>
+						 var parameters = new List<ParameterMapper>
 						 {
-							new SqlParameter("@AccountId",wallpaper.AccountId)
+							new ParameterMapper("@AccountId",wallpaper.AccountId)
 						 };
 						 var result = dataStore.FindSingleValue<Int32>(sql, parameters);
 						 if (result > 6)
@@ -50,9 +50,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					 #region 获取返回值
 					 {
 						 var sql = $@"SELECT a.Id,a.Url FROM dbo.Wallpaper AS a WHERE a.Id=@parameters AND a.IsDeleted=0";
-						 var parameters = new List<SqlParameter>
+						 var parameters = new List<ParameterMapper>
 						 {
-							new SqlParameter("@Id",newWallpaperId)
+							new ParameterMapper("@Id",newWallpaperId)
 						 };
 						 var result = dataStore.FindOne<Wallpaper>(sql, parameters);
 						 if (result != null)
@@ -83,9 +83,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.Url,
                             a.Width
                             FROM dbo.Wallpaper AS a WHERE a.Md5=@Md5 AND a.IsDeleted=0";
-					var parameters = new List<SqlParameter>
+					var parameters = new List<ParameterMapper>
 					{
-						new SqlParameter("@Md5",md5)
+						new ParameterMapper("@Md5",md5)
 					};
 					return dataStore.FindOne<Wallpaper>(sql, parameters);
 				}
@@ -109,10 +109,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.Url,
                             a.Width
                             FROM dbo.Wallpaper AS a WHERE a.AccountId=@AccountId AND a.Source=@Source AND a.IsDeleted=0";
-					var parameters = new List<SqlParameter>
+					var parameters = new List<ParameterMapper>
 					{
-						new SqlParameter("@AccountId",accountId),
-						new SqlParameter("@Source", WallpaperSource.Upload.ToInt32())
+						new ParameterMapper("@AccountId",accountId),
+						new ParameterMapper("@Source", WallpaperSource.Upload.ToInt32())
 					};
 					return dataStore.Find<Wallpaper>(sql, parameters);
 				}
@@ -136,9 +136,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.Url,
                             a.Width
                             FROM dbo.Wallpaper AS a WHERE a.Source=@Source AND a.IsDeleted=0";
-					var parameters = new List<SqlParameter>
+					var parameters = new List<ParameterMapper>
 					{
-						new SqlParameter("@Source", WallpaperSource.System.ToInt32())
+						new ParameterMapper("@Source", WallpaperSource.System.ToInt32())
 					};
 					return dataStore.Find<Wallpaper>(sql, parameters);
 				}
@@ -187,10 +187,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
-					var parameters = new List<SqlParameter>
+					var parameters = new List<ParameterMapper>
 					{
-						new SqlParameter("@WallpaperId",wallpaperId),
-						new SqlParameter("@AccountId",accountId)
+						new ParameterMapper("@WallpaperId",wallpaperId),
+						new ParameterMapper("@AccountId",accountId)
 					};
 					#region 前置条件验证
 					{

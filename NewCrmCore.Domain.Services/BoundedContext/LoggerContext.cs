@@ -34,10 +34,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			using (var dataStore = new DataStore(Appsetting.Database))
 			{
 				var where = new StringBuilder();
-				var parameters = new List<SqlParameter>();
+				var parameters = new List<ParameterMapper>();
 				if (accountId != 0)
 				{
-					parameters.Add(new SqlParameter("AccountId", accountId));
+					parameters.Add(new ParameterMapper("AccountId", accountId));
 					where.Append($@" AND a.AccountId=@AccountId");
 				}
 
@@ -61,8 +61,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                                a.Track
 	                                FROM dbo.Log AS a WHERE 1=1 {where}
                                 ) AS aa WHERE aa.rownumber>@pageSize*(@pageIndex-1)";
-					parameters.Add(new SqlParameter("@pageIndex", pageIndex));
-					parameters.Add(new SqlParameter("@pageSize", pageSize));
+					parameters.Add(new ParameterMapper("@pageIndex", pageIndex));
+					parameters.Add(new ParameterMapper("@pageSize", pageSize));
 					return dataStore.Find<Log>(sql, parameters);
 				}
 				#endregion
