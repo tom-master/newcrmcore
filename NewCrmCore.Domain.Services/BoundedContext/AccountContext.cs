@@ -40,7 +40,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                     INNER JOIN dbo.Config AS a1
                                     ON a1.AccountId=a.Id 
                                     WHERE a.Name=@name AND a.IsDeleted=0 AND a.IsDisable=0";
-							 result = dataStore.Find<Account>(sql, new List<SqlParameter> { new SqlParameter("@name", accountName) }).FirstOrDefault();
+							 result = dataStore.Find<Account>(sql, new List<ParameterMapper> { new ParameterMapper("@name", accountName) }).FirstOrDefault();
 							 if (result == null)
 							 {
 								 throw new BusinessException($"该用户不存在或被禁用{accountName}");
@@ -113,7 +113,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a.IsBing,
 								a.AccountId
 								FROM dbo.Config AS a WHERE a.AccountId=@accountId AND a.IsDeleted=0";
-					 var parameters = new List<SqlParameter> { new SqlParameter("@accountId", accountId) };
+					 var parameters = new List<ParameterMapper> { new ParameterMapper("@accountId", accountId) };
 					 var result = dataStore.Find<Config>(sql, parameters).FirstOrDefault();
 					 return result;
 				 }
@@ -129,7 +129,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT a.Url,a.Width,a.Height,a.Source FROM dbo.Wallpaper AS a WHERE a.Id=@wallpaperId AND a.IsDeleted=0";
-					var parameters = new List<SqlParameter> { new SqlParameter("@wallpaperId", wallPaperId) };
+					var parameters = new List<ParameterMapper> { new ParameterMapper("@wallpaperId", wallPaperId) };
 					return dataStore.Find<Wallpaper>(sql, parameters).FirstOrDefault();
 				}
 			});
@@ -141,17 +141,17 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			var where = new StringBuilder();
 			where.Append("WHERE 1=1 AND a.IsDeleted=0 ");
-			var parameters = new List<SqlParameter>();
+			var parameters = new List<ParameterMapper>();
 			if (!String.IsNullOrEmpty(accountName))
 			{
-				parameters.Add(new SqlParameter("@name", accountName));
+				parameters.Add(new ParameterMapper("@name", accountName));
 				where.Append(" AND a.Name=@name");
 			}
 
 			if (!String.IsNullOrEmpty(accountType))
 			{
 				var isAdmin = (EnumExtensions.ToEnum<AccountType>(Int32.Parse(accountType)) == AccountType.Admin) ? 1 : 0;
-				parameters.Add(new SqlParameter("@isAdmin", isAdmin));
+				parameters.Add(new ParameterMapper("@isAdmin", isAdmin));
 				where.Append($@" AND a.IsAdmin=@isAdmin");
 			}
 
@@ -178,8 +178,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                            ON a1.AccountId=a.Id AND a1.IsDeleted=0
 	                            {where} 
                             ) AS a2 WHERE a2.rownumber>@pageSize*(@pageIndex-1)";
-					parameters.Add(new SqlParameter("@pageSize", pageSize));
-					parameters.Add(new SqlParameter("@pageIndex", pageIndex));
+					parameters.Add(new ParameterMapper("@pageSize", pageSize));
+					parameters.Add(new ParameterMapper("@pageIndex", pageIndex));
 					return dataStore.Find<Account>(sql, parameters);
 				}
 				#endregion
@@ -209,7 +209,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             INNER JOIN dbo.Config AS a1
                             ON a1.AccountId=a.Id
                             WHERE a.Id=@accountId AND a.IsDeleted=0 AND a.IsDisable=0";
-					var parameters = new List<SqlParameter> { new SqlParameter("@accountId", accountId) };
+					var parameters = new List<ParameterMapper> { new ParameterMapper("@accountId", accountId) };
 					return dataStore.FindOne<Account>(sql, parameters);
 				}
 			});
@@ -230,7 +230,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             INNER JOIN dbo.Role AS a1
                             ON a1.Id=a.RoleId AND a1.IsDeleted=0 
                             WHERE a.AccountId=@accountId AND a.IsDeleted=0 ";
-					var parameters = new List<SqlParameter> { new SqlParameter("@accountId", accountId) };
+					var parameters = new List<ParameterMapper> { new ParameterMapper("@accountId", accountId) };
 					return dataStore.Find<Role>(sql, parameters);
 				}
 			});
@@ -256,7 +256,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT COUNT(*) FROM dbo.Account AS a WHERE a.Name=@name AND a.IsDeleted=0";
-					return dataStore.FindSingleValue<Int32>(sql, new List<SqlParameter> { new SqlParameter("@name", accountName) }) != 0 ? false : true;
+					return dataStore.FindSingleValue<Int32>(sql, new List<ParameterMapper> { new ParameterMapper("@name", accountName) }) != 0 ? false : true;
 				}
 			});
 		}
@@ -269,7 +269,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT a.LoginPassword FROM dbo.Account AS a WHERE a.Id=@accountId AND a.IsDeleted=0 AND a.IsDisable=0";
-					var parameters = new List<SqlParameter> { new SqlParameter("@accountId", accountId) };
+					var parameters = new List<ParameterMapper> { new ParameterMapper("@accountId", accountId) };
 					return dataStore.FindSingleValue<String>(sql, parameters);
 				}
 			});
@@ -285,9 +285,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					#region 获取锁屏密码
 					{
 						var sql = $@"SELECT a.LockScreenPassword FROM dbo.Account AS a WHERE a.Id=@accountId AND a.IsDeleted=0 AND a.IsDisable=0";
-						var parameters = new List<SqlParameter>
+						var parameters = new List<ParameterMapper>
 						{
-							new SqlParameter("@accountId",accountId)
+							new ParameterMapper("@accountId",accountId)
 						};
 						var password = dataStore.FindSingleValue<String>(sql, parameters);
 						return PasswordUtil.ComparePasswords(password, unlockPassword);
@@ -305,9 +305,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT COUNT(*) FROM dbo.App AS a WHERE a.Name=@name AND a.IsDeleted=0 ";
-					var parameters = new List<SqlParameter>
+					var parameters = new List<ParameterMapper>
 					{
-						new SqlParameter("@name",name)
+						new ParameterMapper("@name",name)
 					};
 					return dataStore.FindSingleValue<Int32>(sql, parameters) > 0;
 				}
@@ -323,9 +323,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT COUNT(*) FROM dbo.App AS a WHERE a.AppUrl = @url AND a.IsDeleted=0";
-					var parameters = new List<SqlParameter>
+					var parameters = new List<ParameterMapper>
 					{
-						new SqlParameter("@url",url)
+						new ParameterMapper("@url",url)
 					};
 
 					return dataStore.FindSingleValue<Int32>(sql, parameters) > 0;
@@ -522,7 +522,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
-					var parameters = new List<SqlParameter> { new SqlParameter("@accountId", accountId) };
+					var parameters = new List<ParameterMapper> { new ParameterMapper("@accountId", accountId) };
 					#region 前置条件验证
 					{
 						var sql = $@"SELECT COUNT(*) FROM dbo.Role AS a
@@ -601,9 +601,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					{
 						#region 前置条件验证
 						{
-							var parameters = new List<SqlParameter>
+							var parameters = new List<ParameterMapper>
 							{
-								new SqlParameter("@accountId",accountId)
+								new ParameterMapper("@accountId",accountId)
 							};
 
 							var sql = $@"SELECT a.IsAdmin FROM dbo.Account AS a WHERE a.Id=@accountId AND a.IsDeleted=0 AND a.IsDisable=0";

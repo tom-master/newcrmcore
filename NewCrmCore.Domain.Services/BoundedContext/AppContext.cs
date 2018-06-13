@@ -27,9 +27,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT a.Id FROM dbo.App AS a WHERE a.AccountId=@accountId AND a.IsDeleted=0";
-					var parameters = new List<SqlParameter>
+					var parameters = new List<ParameterMapper>
 					{
-						new SqlParameter("@accountId",accountId)
+						new ParameterMapper("@accountId",accountId)
 					};
 					var result = dataStore.Find<App>(sql, parameters);
 					return new Tuple<Int32, Int32>(result.Count, result.Count(a => a.AppReleaseState == AppReleaseState.UnRelease));
@@ -76,11 +76,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             FROM dbo.App AS a 
 							LEFT JOIN dbo.Member AS a2 ON a2.AccountId=@accountId AND a2.IsDeleted=0 AND a2.AppId=a.Id
                             WHERE a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState AND a.IsRecommand=1";
-					var parameters = new List<SqlParameter>
+					var parameters = new List<ParameterMapper>
 					{
-						new SqlParameter("@AppAuditState", AppAuditState.Pass.ToInt32()),
-						new SqlParameter("@AppReleaseState", AppReleaseState.Release.ToInt32()),
-						new SqlParameter("@accountId",accountId)
+						new ParameterMapper("@AppAuditState", AppAuditState.Pass.ToInt32()),
+						new ParameterMapper("@AppReleaseState", AppReleaseState.Release.ToInt32()),
+						new ParameterMapper("@accountId",accountId)
 					};
 					return dataStore.FindOne<TodayRecommendAppDto>(sql, parameters);
 				}
@@ -93,30 +93,30 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			using (var dataStore = new DataStore(Appsetting.Database))
 			{
-				var parameters = new List<SqlParameter>
+				var parameters = new List<ParameterMapper>
 				{
-					new SqlParameter("@AppAuditState", AppAuditState.Pass.ToInt32()),
-					new SqlParameter("@AppReleaseState",  AppReleaseState.Release.ToInt32())
+					new ParameterMapper("@AppAuditState", AppAuditState.Pass.ToInt32()),
+					new ParameterMapper("@AppReleaseState",  AppReleaseState.Release.ToInt32())
 				};
 
 				var where = new StringBuilder();
 				where.Append($@" WHERE 1=1 AND a.IsDeleted=0 AND a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState");
 				if (appTypeId != 0 && appTypeId != -1)//全部app
 				{
-					parameters.Add(new SqlParameter("@AppTypeId", appTypeId));
+					parameters.Add(new ParameterMapper("@AppTypeId", appTypeId));
 					where.Append($@" AND a.AppTypeId=@AppTypeId");
 				}
 				else
 				{
 					if (appTypeId == -1)//用户制作的app
 					{
-						parameters.Add(new SqlParameter("@accountId", accountId));
+						parameters.Add(new ParameterMapper("@accountId", accountId));
 						where.Append($@" AND a.AccountId=@accountId");
 					}
 				}
 				if (!String.IsNullOrEmpty(searchText))//关键字搜索
 				{
-					parameters.Add(new SqlParameter("@Name", $@"%{searchText}%"));
+					parameters.Add(new ParameterMapper("@Name", $@"%{searchText}%"));
 					where.Append($@" AND a.Name LIKE @Name");
 				}
 
@@ -179,8 +179,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                                    LEFT JOIN dbo.Member AS a1 ON a1.AccountId=a.AccountId AND a1.AppId=a.Id AND a1.IsDeleted=0
                                         {where}
                                 ) AS aa WHERE aa.rownumber>@pageSize*(@pageIndex-1) {orderBy}";
-					parameters.Add(new SqlParameter("@pageSize", pageSize));
-					parameters.Add(new SqlParameter("@pageIndex", pageIndex));
+					parameters.Add(new ParameterMapper("@pageSize", pageSize));
+					parameters.Add(new ParameterMapper("@pageIndex", pageIndex));
 					return dataStore.Find<App>(sql, parameters);
 				}
 				#endregion
@@ -194,27 +194,27 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				var where = new StringBuilder();
 				where.Append($@" WHERE 1=1 AND a.IsDeleted=0 ");
-				var parameters = new List<SqlParameter>();
+				var parameters = new List<ParameterMapper>();
 
 				#region 条件筛选
 
 				if (accountId != default(Int32))
 				{
-					parameters.Add(new SqlParameter("@accountId", accountId));
+					parameters.Add(new ParameterMapper("@accountId", accountId));
 					where.Append($@" AND a.AccountId=@accountId");
 				}
 
 				//应用名称
 				if (!String.IsNullOrEmpty(searchText))
 				{
-					parameters.Add(new SqlParameter("@Name", $@"%{searchText}%"));
+					parameters.Add(new ParameterMapper("@Name", $@"%{searchText}%"));
 					where.Append($@" AND a.Name LIKE @Name");
 				}
 
 				//应用所属类型
 				if (appTypeId != 0)
 				{
-					parameters.Add(new SqlParameter("AppTypeId", appTypeId));
+					parameters.Add(new ParameterMapper("AppTypeId", appTypeId));
 					where.Append($@" AND a.AppTypeId=@AppTypeId");
 				}
 
@@ -222,7 +222,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				if (appStyleId != 0)
 				{
 					var appStyle = EnumExtensions.ToEnum<AppStyle>(appStyleId);
-					parameters.Add(new SqlParameter("@AppStyle", appStyle.ToInt32()));
+					parameters.Add(new ParameterMapper("@AppStyle", appStyle.ToInt32()));
 					where.Append($@" AND a.AppStyle=@AppStyle");
 				}
 
@@ -233,7 +233,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					if (stats[0] == "AppReleaseState")
 					{
 						var appReleaseState = EnumExtensions.ToEnum<AppReleaseState>(Int32.Parse(stats[1]));
-						parameters.Add(new SqlParameter("AppReleaseState", appReleaseState.ToInt32()));
+						parameters.Add(new ParameterMapper("AppReleaseState", appReleaseState.ToInt32()));
 						where.Append($@" AND a.AppReleaseState=@AppReleaseState ");
 					}
 
@@ -241,7 +241,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					if (stats[0] == "AppAuditState")
 					{
 						var appAuditState = EnumExtensions.ToEnum<AppAuditState>(Int32.Parse(stats[1]));
-						parameters.Add(new SqlParameter("@AppAuditState", appAuditState.ToInt32()));
+						parameters.Add(new ParameterMapper("@AppAuditState", appAuditState.ToInt32()));
 						where.Append($@" AND a.AppAuditState=@AppAuditState");
 					}
 				}
@@ -273,8 +273,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 									a.IsIconByUpload
 									FROM dbo.App AS a {where} 
 								) AS aa WHERE aa.rownumber>@pageSize*(@pageIndex-1)";
-					parameters.Add(new SqlParameter("@pageIndex", pageIndex));
-					parameters.Add(new SqlParameter("@pageSize", pageSize));
+					parameters.Add(new ParameterMapper("@pageIndex", pageIndex));
+					parameters.Add(new ParameterMapper("@pageSize", pageSize));
 					return dataStore.Find<App>(sql, parameters);
 				}
 				#endregion
@@ -316,9 +316,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             LEFT JOIN dbo.Account AS a2
                             ON a2.Id=a.AccountId AND a2.IsDeleted=0 AND a2.IsDisable=0
                             WHERE a.Id=@Id AND a.IsDeleted=0";
-					var parameters = new List<SqlParameter>
+					var parameters = new List<ParameterMapper>
 					{
-						new SqlParameter("@Id",appId)
+						new ParameterMapper("@Id",appId)
 					};
 					return dataStore.FindOne<App>(sql, parameters);
 				}
@@ -333,10 +333,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT COUNT(*) FROM dbo.Member AS a WHERE a.AppId=@Id AND a.AccountId=@AccountId AND a.IsDeleted=0";
-					var parameters = new List<SqlParameter>
+					var parameters = new List<ParameterMapper>
 					{
-						new SqlParameter("@Id",appId),
-						new SqlParameter("@AccountId",accountId)
+						new ParameterMapper("@Id",appId),
+						new ParameterMapper("@AccountId",accountId)
 					};
 					return dataStore.FindSingleValue<Int32>(sql, parameters) > 0 ? true : false;
 				}
@@ -370,9 +370,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT COUNT(*) FROM dbo.AppType AS a WHERE a.Name=@name AND a.IsDeleted=0";
-					var parameters = new List<SqlParameter>
+					var parameters = new List<ParameterMapper>
 					{
-						new SqlParameter("@name",appTypeName)
+						new ParameterMapper("@name",appTypeName)
 					};
 					return dataStore.FindSingleValue<Int32>(sql, parameters) > 0;
 				}
@@ -389,10 +389,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					#region 前置条件判断
 					{
 						var sql = $@"SELECT COUNT(*) FROM dbo.AppStar AS a WHERE a.AccountId=@accountId AND a.AppId=@appId AND a.IsDeleted=0";
-						var parameters = new List<SqlParameter>
+						var parameters = new List<ParameterMapper>
 						{
-							new SqlParameter("@accountId",accountId),
-							new SqlParameter("@appId",appId)
+							new ParameterMapper("@accountId",accountId),
+							new ParameterMapper("@appId",appId)
 						};
 						var result = dataStore.FindSingleValue<Int32>(sql, parameters);
 						if (result > 0)
@@ -624,9 +624,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					#region 前置条件验证
 					{
-						var parameters = new List<SqlParameter>
+						var parameters = new List<ParameterMapper>
 						{
-							new SqlParameter("@AppTypeId",appTypeId)
+							new ParameterMapper("@AppTypeId",appTypeId)
 						};
 						var sql = $@"SELECT COUNT(*) FROM dbo.App AS a WHERE a.AppTypeId=@AppTypeId AND a.IsDeleted=0";
 						if (dataStore.FindSingleValue<Int32>(sql, parameters) > 0)
@@ -657,7 +657,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					#region 前置条件验证
 					{
 						var sql = $@"SELECT COUNT(*) FROM dbo.AppType AS a WHERE a.Name=@name AND a.IsDeleted=0";
-						var result = dataStore.FindSingleValue<Int32>(sql, new List<SqlParameter> { new SqlParameter("@name", appType.Name) });
+						var result = dataStore.FindSingleValue<Int32>(sql, new List<ParameterMapper> { new ParameterMapper("@name", appType.Name) });
 						if (result > 0)
 						{
 							throw new BusinessException($@"分类:{appType.Name},已存在");
@@ -684,7 +684,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					#region 前置条件验证
 					{
 						var sql = $@"SELECT COUNT(*) FROM dbo.AppType AS a WHERE a.Name=@name AND a.IsDeleted=0";
-						var result = dataStore.FindSingleValue<Int32>(sql, new List<SqlParameter> { new SqlParameter("@name", appTypeName) });
+						var result = dataStore.FindSingleValue<Int32>(sql, new List<ParameterMapper> { new ParameterMapper("@name", appTypeName) });
 						if (result > 0)
 						{
 							throw new BusinessException($@"分类:{appTypeName},已存在");
@@ -746,11 +746,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                 a.IsDraw,
                                 a.IsIconByUpload
                                 FROM  dbo.App AS a WHERE a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState AND a.IsDeleted=0 AND a.Id=@Id";
-							var parameters = new List<SqlParameter>
+							var parameters = new List<ParameterMapper>
 							{
-								new SqlParameter("@AppAuditState",AppAuditState.Pass.ToInt32()),
-								new SqlParameter("@AppReleaseState",AppReleaseState.Release.ToInt32()),
-								new SqlParameter("@Id",appId)
+								new ParameterMapper("@AppAuditState",AppAuditState.Pass.ToInt32()),
+								new ParameterMapper("@AppReleaseState",AppReleaseState.Release.ToInt32()),
+								new ParameterMapper("@Id",appId)
 							};
 							app = dataStore.FindOne<App>(sql, parameters);
 
