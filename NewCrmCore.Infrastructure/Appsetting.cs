@@ -61,7 +61,32 @@ namespace NewCrmCore.Infrastructure
 
 		private static String GetUserVar(String varKey)
 		{
-			return Environment.GetEnvironmentVariable(varKey, EnvironmentVariableTarget.User);
+			var v1 = Environment.GetEnvironmentVariable(varKey);
+
+			if (v1 != null)
+			{
+				return v1;
+			}
+
+			var v2 = Environment.GetEnvironmentVariable(varKey, EnvironmentVariableTarget.Machine);
+			if (v2 != null)
+			{
+				return v2;
+			}
+
+			var v3 = Environment.GetEnvironmentVariable(varKey, EnvironmentVariableTarget.Process);
+			if (v3 != null)
+			{
+				return v3;
+			}
+
+			var v4 = Environment.GetEnvironmentVariable(varKey, EnvironmentVariableTarget.User);
+			if (v4 != null)
+			{
+				return v4;
+			}
+
+			return "";
 		}
 	}
 }
