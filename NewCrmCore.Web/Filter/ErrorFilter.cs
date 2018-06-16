@@ -22,7 +22,7 @@ namespace NewCrmCore.Web.Filter
 			var response = new ResponseModel
 			{
 				IsSuccess = false,
-				Message = exception ? filterContext.Exception.Message : "出现未知错误，请重试"
+				Message = filterContext.Exception.ToString()
 			};
 
 
@@ -44,7 +44,7 @@ namespace NewCrmCore.Web.Filter
 				Controller = filterContext.RouteData.Values["controller"].ToString(),
 				ExceptionMessage = filterContext.Exception.Message,
 				Track = filterContext.Exception.StackTrace,
-				LogLevelEnum = exception ? NewCrmCore.Domain.ValueObject.LogLevel.Warning : NewCrmCore.Domain.ValueObject.LogLevel.Error,
+				LogLevelEnum = exception ? Domain.ValueObject.LogLevel.Warning : Domain.ValueObject.LogLevel.Error,
 				Id = new Random().Next(1, Int32.MaxValue),
 				AddTime = DateTime.Now.ToString(CultureInfo.CurrentCulture)
 			});
