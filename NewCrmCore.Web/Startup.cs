@@ -62,7 +62,10 @@ namespace NewCrmCore.Web
 				app.UseExceptionHandler("/Error");
 			}
 
-			app.UseForwardedHeaders(new ForwardedHeadersOptions { ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto });
+			app.UseForwardedHeaders(new ForwardedHeadersOptions
+			{
+				ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+			});
 			app.UseMvcWithDefaultRoute();
 
 			app.UseStaticFiles();

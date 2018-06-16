@@ -44,7 +44,7 @@ namespace NewCrmCore.Web.Controllers
 				ViewData["AccountConfig"] = await _accountServices.GetConfigAsync(account.Id);
 				ViewData["Desks"] = (await _accountServices.GetConfigAsync(account.Id)).DefaultDeskCount;
 
-				return View();
+				return View(account);
 			}
 
 			return RedirectToAction("Login", "Desktop");

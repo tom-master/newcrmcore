@@ -33,7 +33,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 			//}
 
 			var dbResult = await func();
-			_cacheQuery.StringSet(cache.GetKey(), dbResult, cache.KeyTimeout);
+			//_cacheQuery.StringSet(cache.GetKey(), dbResult, cache.KeyTimeout);
 			return dbResult;
 		}
 

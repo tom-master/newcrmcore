@@ -1,6 +1,5 @@
 ﻿@using NewCrmCore.Dto
 @{
-
 	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
 
 	var account = ViewData["Account"] as AccountDto;
@@ -8,8 +7,8 @@
 	var desks = (Int32)ViewData["Desks"];
 }
 @section ParentCss{
-	<link rel="stylesheet" href="~/js/hooray/lib/hooraylibs.css" />
-	<link rel="stylesheet" href="~/css/hoorayui/index.css" />
+	<link rel="stylesheet" href="/js/hooray/lib/hooraylibs.css" />
+	<link rel="stylesheet" href="/css/hoorayui/index.css" />
 }
 <div class="loading"></div>
 <div id="desktop">
@@ -142,7 +141,8 @@
 @section ParentScript{
 
 	<script>
-        $(function () {
+		$(function () {
+			debugger
             document.body.onselectstart = document.body.ondrag = function () {
                 return false;
             };
