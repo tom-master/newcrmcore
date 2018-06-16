@@ -9,7 +9,7 @@ namespace NewCrmCore.Domain.Entitys.System
 	/// 成员
 	/// </summary>
 	[Serializable, Description("成员")]
-	public partial class Member : DomainModelBase
+	public partial class Member: DomainModelBase
 	{
 		#region private field
 
@@ -401,220 +401,220 @@ namespace NewCrmCore.Domain.Entitys.System
 
 		public Member ModifyWidth(Int32 width)
 		{
-			if(width <= 0)
+			if (width <= 0)
 			{
 				throw new ArgumentException($@"{nameof(width)} less than or equal to zero");
 			}
 
 			Width = width;
-			OnPropertyChanged(nameof(Width));
+			OnPropertyChanged(new PropertyArgs(nameof(Width), Width));
 			return this;
 		}
 
 		public Member ModifyHeight(Int32 height)
 		{
-			if(height <= 0)
+			if (height <= 0)
 			{
 				throw new ArgumentException($@"{nameof(height)} less than or equal to zero");
 			}
 
 			Height = height;
-			OnPropertyChanged(nameof(Height));
+			OnPropertyChanged(new PropertyArgs(nameof(Height), Height));
 			return this;
 		}
 
 		public Member ModifyFolderId(Int32 folderId)
 		{
 			FolderId = folderId;
-			OnPropertyChanged(nameof(FolderId));
+			OnPropertyChanged(new PropertyArgs(nameof(FolderId), FolderId));
 			return this;
 		}
 
 		public Member ModifyName(String name)
 		{
-			if(String.IsNullOrEmpty(name))
+			if (String.IsNullOrEmpty(name))
 			{
 				throw new ArgumentException($@"{nameof(name)} is null");
 			}
 
 			Name = name;
-			OnPropertyChanged(nameof(Name));
+			OnPropertyChanged(new PropertyArgs(nameof(Name), Name));
 			return this;
 		}
 
 		public Member ModifyIconUrl(String iconUrl)
 		{
-			if(String.IsNullOrEmpty(iconUrl))
+			if (String.IsNullOrEmpty(iconUrl))
 			{
 				throw new ArgumentException($@"{nameof(iconUrl)} is null");
 			}
 
 			IconUrl = iconUrl;
-			OnPropertyChanged(nameof(IconUrl));
+			OnPropertyChanged(new PropertyArgs(nameof(IconUrl), IconUrl));
 			return this;
 		}
 
 		public Member ModifyAppUrl(String appUrl)
 		{
-			if(String.IsNullOrEmpty(appUrl))
+			if (String.IsNullOrEmpty(appUrl))
 			{
 				throw new ArgumentException($@"{nameof(appUrl)} is null");
 			}
 
 			AppUrl = appUrl;
-			OnPropertyChanged(nameof(AppUrl));
+			OnPropertyChanged(new PropertyArgs(nameof(AppUrl), AppUrl));
 			return this;
 		}
 
 		public Member OnDock()
 		{
 			IsOnDock = true;
-			OnPropertyChanged(nameof(IsOnDock));
+			OnPropertyChanged(new PropertyArgs(nameof(IsOnDock), IsOnDock));
 			return this;
 		}
 
 		public Member OutDock()
 		{
 			IsOnDock = false;
-			OnPropertyChanged(nameof(IsOnDock));
+			OnPropertyChanged(new PropertyArgs(nameof(IsOnDock), IsOnDock));
 			return this;
 		}
 
 		public Member Max()
 		{
 			IsMax = true;
-			OnPropertyChanged(nameof(IsMax));
+			OnPropertyChanged(new PropertyArgs(nameof(IsMax), IsMax));
 			return this;
 		}
 
 		public Member NotMax()
 		{
 			IsMax = false;
-			OnPropertyChanged(nameof(IsMax));
+			OnPropertyChanged(new PropertyArgs(nameof(IsMax), IsMax));
 			return this;
 		}
 
 		public Member Full()
 		{
 			IsFull = true;
-			OnPropertyChanged(nameof(IsFull));
+			OnPropertyChanged(new PropertyArgs(nameof(IsFull), IsFull));
 			return this;
 		}
 
 		public Member NotFull()
 		{
 			IsFull = false;
-			OnPropertyChanged(nameof(IsFull));
+			OnPropertyChanged(new PropertyArgs(nameof(IsFull), IsFull));
 			return this;
 		}
 
 		public Member Setbar()
 		{
 			IsSetbar = true;
-			OnPropertyChanged(nameof(IsSetbar));
+			OnPropertyChanged(new PropertyArgs(nameof(IsSetbar), IsSetbar));
 			return this;
 		}
 
 		public Member NotSetbar()
 		{
 			IsSetbar = false;
-			OnPropertyChanged(nameof(IsSetbar));
+			OnPropertyChanged(new PropertyArgs(nameof(IsSetbar), IsSetbar));
 			return this;
 		}
 
 		public Member OpenMax()
 		{
 			IsOpenMax = true;
-			OnPropertyChanged(nameof(IsOpenMax));
+			OnPropertyChanged(new PropertyArgs(nameof(IsOpenMax), IsOpenMax));
 			return this;
 		}
 
 		public Member NotOpenMax()
 		{
 			IsOpenMax = false;
-			OnPropertyChanged(nameof(IsOpenMax));
+			OnPropertyChanged(new PropertyArgs(nameof(IsOpenMax), IsOpenMax));
 			return this;
 		}
 
 		public Member Lock()
 		{
 			IsLock = true;
-			OnPropertyChanged(nameof(IsLock));
+			OnPropertyChanged(new PropertyArgs(nameof(IsLock), IsLock));
 			return this;
 		}
 
 		public Member NotLock()
 		{
 			IsLock = false;
-			OnPropertyChanged(nameof(IsLock));
+			OnPropertyChanged(new PropertyArgs(nameof(IsLock), IsLock));
 			return this;
 		}
 
 		public Member Flash()
 		{
 			IsFlash = true;
-			OnPropertyChanged(nameof(IsFlash));
+			OnPropertyChanged(new PropertyArgs(nameof(IsFlash), IsFlash));
 			return this;
 		}
 
 		public Member NotFlash()
 		{
 			IsFlash = false;
-			OnPropertyChanged(nameof(IsFlash));
+			OnPropertyChanged(new PropertyArgs(nameof(IsFlash), IsFlash));
 			return this;
 		}
 
 		public Member Draw()
 		{
 			IsDraw = true;
-			OnPropertyChanged(nameof(IsDraw));
+			OnPropertyChanged(new PropertyArgs(nameof(IsDraw), IsDraw));
 			return this;
 		}
 
 		public Member NotDraw()
 		{
 			IsDraw = false;
-			OnPropertyChanged(nameof(IsDraw));
+			OnPropertyChanged(new PropertyArgs(nameof(IsDraw), IsDraw));
 			return this;
 		}
 
 		public Member Resize()
 		{
 			IsResize = true;
-			OnPropertyChanged(nameof(IsResize));
+			OnPropertyChanged(new PropertyArgs(nameof(IsResize), IsResize));
 			return this;
 		}
 
 		public Member NotResize()
 		{
 			IsResize = false;
-			OnPropertyChanged(nameof(IsResize));
+			OnPropertyChanged(new PropertyArgs(nameof(IsResize), IsResize));
 			return this;
 		}
 
 		public Member ModifyDeskIndex(Int32 deskIndex)
 		{
-			if(deskIndex <= 0)
+			if (deskIndex <= 0)
 			{
 				throw new ArgumentException($@"{nameof(deskIndex)} less than or equal to zero");
 			}
 
 			DeskIndex = deskIndex;
-			OnPropertyChanged(nameof(DeskIndex));
+			OnPropertyChanged(new PropertyArgs(nameof(DeskIndex), DeskIndex));
 			return this;
 		}
 
 		public Member IconNotFromUpload()
 		{
 			IsIconByUpload = false;
-			OnPropertyChanged(nameof(IsIconByUpload));
+			OnPropertyChanged(new PropertyArgs(nameof(IsIconByUpload), IsIconByUpload));
 			return this;
 		}
 
 		public Member IconFromUpload()
 		{
 			IsIconByUpload = true;
-			OnPropertyChanged(nameof(IsIconByUpload));
+			OnPropertyChanged(new PropertyArgs(nameof(IsIconByUpload), IsIconByUpload));
 			return this;
 		}
 	}
