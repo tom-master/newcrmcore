@@ -243,7 +243,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		public Config ModifyAccountId(Int32 accountId)
 		{
 			AccountId = accountId;
-			OnPropertyChanged(nameof(AccountId));
+			OnPropertyChanged(new PropertyArgs(nameof(AccountId), AccountId));
 			return this;
 		}
 
@@ -255,7 +255,7 @@ namespace NewCrmCore.Domain.Entitys.System
 			}
 
 			Skin = skin;
-			OnPropertyChanged(nameof(Skin));
+			OnPropertyChanged(new PropertyArgs(nameof(Skin), Skin));
 			return this;
 		}
 
@@ -267,7 +267,7 @@ namespace NewCrmCore.Domain.Entitys.System
 			}
 
 			AccountFace = accountFace;
-			OnPropertyChanged(nameof(AccountFace));
+			OnPropertyChanged(new PropertyArgs(nameof(AccountFace), AccountFace));
 			return this;
 		}
 
@@ -288,8 +288,7 @@ namespace NewCrmCore.Domain.Entitys.System
 			}
 
 			AppSize = appSize;
-			OnPropertyChanged(nameof(AppSize));
-
+			OnPropertyChanged(new PropertyArgs(nameof(AppSize), AppSize));
 			return this;
 		}
 
@@ -310,7 +309,7 @@ namespace NewCrmCore.Domain.Entitys.System
 			}
 
 			AppVerticalSpacing = appVerticalSpacing;
-			OnPropertyChanged(nameof(AppVerticalSpacing));
+			OnPropertyChanged(new PropertyArgs(nameof(AppVerticalSpacing), AppVerticalSpacing));
 			return this;
 		}
 
@@ -331,7 +330,7 @@ namespace NewCrmCore.Domain.Entitys.System
 			}
 
 			AppHorizontalSpacing = appHorizontalSpacing;
-			OnPropertyChanged(nameof(AppHorizontalSpacing));
+			OnPropertyChanged(new PropertyArgs(nameof(AppHorizontalSpacing), AppHorizontalSpacing));
 			return this;
 		}
 
@@ -343,7 +342,7 @@ namespace NewCrmCore.Domain.Entitys.System
 			}
 
 			DefaultDeskNumber = deskNumber;
-			OnPropertyChanged(nameof(DefaultDeskNumber));
+			OnPropertyChanged(new PropertyArgs(nameof(DefaultDeskNumber), DefaultDeskNumber));
 			return this;
 		}
 
@@ -355,74 +354,74 @@ namespace NewCrmCore.Domain.Entitys.System
 			}
 
 			DefaultDeskCount = deskCount;
-			OnPropertyChanged(nameof(DefaultDeskCount));
+			OnPropertyChanged(new PropertyArgs(nameof(DefaultDeskCount), DefaultDeskCount));
 			return this;
 		}
 
 		public Config ModeTo(WallpaperMode mode)
 		{
 			WallpaperMode = mode;
-			OnPropertyChanged(nameof(WallpaperMode));
+			OnPropertyChanged(new PropertyArgs(nameof(WallpaperMode), WallpaperMode));
 			return this;
 		}
 		public Config DisplayToTile()
 		{
 			WallpaperMode = WallpaperMode.Tile;
-			OnPropertyChanged(nameof(WallpaperMode));
+			OnPropertyChanged(new PropertyArgs(nameof(WallpaperMode), WallpaperMode));
 			return this;
 		}
 		public Config DisplayToDraw()
 		{
 			WallpaperMode = WallpaperMode.Draw;
-			OnPropertyChanged(nameof(WallpaperMode));
+			OnPropertyChanged(new PropertyArgs(nameof(WallpaperMode), WallpaperMode));
 			return this;
 		}
 		public Config DisplayToCenter()
 		{
 			WallpaperMode = WallpaperMode.Center;
-			OnPropertyChanged(nameof(WallpaperMode));
+			OnPropertyChanged(new PropertyArgs(nameof(WallpaperMode), WallpaperMode));
 			return this;
 		}
 
 		public Config FromBing()
 		{
 			IsBing = true;
-			OnPropertyChanged(nameof(IsBing));
+			OnPropertyChanged(new PropertyArgs(nameof(IsBing), IsBing));
 			return this;
 		}
 
 		public Config NotFromBing()
 		{
 			IsBing = false;
-			OnPropertyChanged(nameof(IsBing));
+			OnPropertyChanged(new PropertyArgs(nameof(IsBing), IsBing));
 			return this;
 		}
 
 		public Config DirectionToX()
 		{
 			AppXy = AppAlignMode.X;
-			OnPropertyChanged(nameof(AppXy));
+			OnPropertyChanged(new PropertyArgs(nameof(AppXy), AppXy));
 			return this;
 		}
 
 		public Config DirectionToY()
 		{
 			AppXy = AppAlignMode.Y;
-			OnPropertyChanged(nameof(AppXy));
+			OnPropertyChanged(new PropertyArgs(nameof(AppXy), AppXy));
 			return this;
 		}
 
 		public Config PositionTo(DockPostion postion)
 		{
 			DockPosition = postion;
-			OnPropertyChanged(nameof(DockPosition));
+			OnPropertyChanged(new PropertyArgs(nameof(DockPosition), DockPosition));
 			return this;
 		}
 
 		public Config ModifyWallpaperId(Int32 wallpaperId)
 		{
 			WallpaperId = wallpaperId;
-			OnPropertyChanged(nameof(WallpaperId));
+			OnPropertyChanged(new PropertyArgs(nameof(WallpaperId), WallpaperId));
 			return this;
 		}
 	}
