@@ -124,7 +124,7 @@ namespace NewCrmCore.Domain.Entitys.Security
 			}
 
 			Name = roleName;
-			OnPropertyChanged(nameof(Name));
+			OnPropertyChanged(new PropertyArgs(nameof(Name), Name));
 			return this;
 		}
 
@@ -137,7 +137,7 @@ namespace NewCrmCore.Domain.Entitys.Security
 
 			Powers.ToList().Clear();
 			Powers = appIds.Select(appId => new RolePower(Id, appId));
-			OnPropertyChanged(nameof(Powers));
+			OnPropertyChanged(new PropertyArgs(nameof(Powers), Powers));
 			return this;
 		}
 	}

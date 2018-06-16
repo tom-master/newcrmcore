@@ -459,7 +459,7 @@ namespace NewCrmCore.Domain.Entitys.System
 			}
 
 			Name = appName;
-			OnPropertyChanged(nameof(appName));
+			OnPropertyChanged(new PropertyArgs(nameof(Name), Name));
 			return this;
 		}
 
@@ -471,7 +471,7 @@ namespace NewCrmCore.Domain.Entitys.System
 			}
 
 			IconUrl = iconUrl;
-			OnPropertyChanged(nameof(iconUrl));
+			OnPropertyChanged(new PropertyArgs(nameof(IconUrl), IconUrl));
 			return this;
 		}
 
@@ -483,7 +483,7 @@ namespace NewCrmCore.Domain.Entitys.System
 			}
 
 			Width = width;
-			OnPropertyChanged(nameof(Width));
+			OnPropertyChanged(new PropertyArgs(nameof(Width), Width));
 			return this;
 		}
 
@@ -495,91 +495,94 @@ namespace NewCrmCore.Domain.Entitys.System
 			}
 
 			Height = height;
-			OnPropertyChanged(nameof(Height));
+
+			OnPropertyChanged(new PropertyArgs(nameof(Height), Height));
 			return this;
 		}
 
 		public App IncreaseUseCount()
 		{
 			UseCount += 1;
-			OnPropertyChanged(nameof(UseCount));
+			OnPropertyChanged(new PropertyArgs(nameof(UseCount), UseCount));
 			return this;
 		}
 
 		public App DecreaseUseCount()
 		{
 			UseCount -= 1;
-			OnPropertyChanged(nameof(UseCount));
+			OnPropertyChanged(new PropertyArgs(nameof(UseCount), UseCount));
 			return this;
 		}
 
 		public App Max()
 		{
 			IsMax = true;
-			OnPropertyChanged(nameof(IsMax));
+			OnPropertyChanged(new PropertyArgs(nameof(IsMax), IsMax));
 			return this;
 		}
 
 		public App NotMax()
 		{
 			IsMax = false;
-			OnPropertyChanged(nameof(IsMax));
+			OnPropertyChanged(new PropertyArgs(nameof(IsMax), IsMax));
 			return this;
 		}
 
 		public App Full()
 		{
 			IsFull = true;
-			OnPropertyChanged(nameof(IsFull));
+			OnPropertyChanged(new PropertyArgs(nameof(IsFull), IsFull));
 			return this;
 		}
 
 		public App NotFull()
 		{
 			IsFull = false;
-			OnPropertyChanged(nameof(IsFull));
+			OnPropertyChanged(new PropertyArgs(nameof(IsFull), IsFull));
+
 			return this;
 		}
 
 		public App Setbar()
 		{
 			IsSetbar = true;
-			OnPropertyChanged(nameof(IsSetbar));
+			OnPropertyChanged(new PropertyArgs(nameof(IsSetbar), IsSetbar));
 			return this;
 		}
 
 		public App NotSetbar()
 		{
 			IsSetbar = false;
-			OnPropertyChanged(nameof(IsSetbar));
+			OnPropertyChanged(new PropertyArgs(nameof(IsSetbar), IsSetbar));
 			return this;
 		}
 
 		public App OpenMax()
 		{
 			IsOpenMax = true;
-			OnPropertyChanged(nameof(IsOpenMax));
+			OnPropertyChanged(new PropertyArgs(nameof(IsOpenMax), IsOpenMax));
 			return this;
 		}
 
 		public App NotOpenMax()
 		{
 			IsOpenMax = false;
-			OnPropertyChanged(nameof(IsOpenMax));
+			OnPropertyChanged(new PropertyArgs(nameof(IsOpenMax), IsOpenMax));
 			return this;
 		}
 
 		public App Lock()
 		{
 			IsLock = true;
-			OnPropertyChanged(nameof(IsLock));
+			IsOpenMax = false;
+			OnPropertyChanged(new PropertyArgs(nameof(IsLock), IsLock), new PropertyArgs(nameof(IsOpenMax), IsOpenMax));
 			return this;
 		}
 
 		public App NotLock()
 		{
 			IsLock = false;
-			OnPropertyChanged(nameof(IsLock));
+			OnPropertyChanged(new PropertyArgs(nameof(IsLock), IsLock));
 			return this;
 		}
 
@@ -587,147 +590,147 @@ namespace NewCrmCore.Domain.Entitys.System
 		public App System()
 		{
 			IsSystem = true;
-			OnPropertyChanged(nameof(IsSystem));
+			OnPropertyChanged(new PropertyArgs(nameof(IsSystem), IsSystem));
 			return this;
 		}
 
 		public App NotSystem()
 		{
 			IsSystem = false;
-			OnPropertyChanged(nameof(IsSystem));
+			OnPropertyChanged(new PropertyArgs(nameof(IsSystem), IsSystem));
 			return this;
 		}
 
 		public App Flash()
 		{
 			IsFlash = true;
-			OnPropertyChanged(nameof(IsFlash));
+			OnPropertyChanged(new PropertyArgs(nameof(IsFlash), IsFlash));
 			return this;
 		}
 
 		public App NotFlash()
 		{
 			IsFlash = false;
-			OnPropertyChanged(nameof(IsFlash));
+			OnPropertyChanged(new PropertyArgs(nameof(IsFlash), IsFlash));
 			return this;
 		}
 
 		public App Draw()
 		{
 			IsDraw = true;
-			OnPropertyChanged(nameof(IsDraw));
+			OnPropertyChanged(new PropertyArgs(nameof(IsDraw), IsDraw));
 			return this;
 		}
 
 		public App NotDraw()
 		{
 			IsDraw = false;
-			OnPropertyChanged(nameof(IsDraw));
+			OnPropertyChanged(new PropertyArgs(nameof(IsDraw), IsDraw));
 			return this;
 		}
 
 		public App Resize()
 		{
 			IsResize = true;
-			OnPropertyChanged(nameof(IsResize));
+			OnPropertyChanged(new PropertyArgs(nameof(IsResize), IsResize));
 			return this;
 		}
 
 		public App NotResize()
 		{
 			IsResize = false;
-			OnPropertyChanged(nameof(IsResize));
+			OnPropertyChanged(new PropertyArgs(nameof(IsResize), IsResize));
 			return this;
 		}
 
 		public App ModifyAppTypeId(Int32 appTypeId)
 		{
 			AppTypeId = appTypeId;
-			OnPropertyChanged(nameof(AppTypeId));
+			OnPropertyChanged(new PropertyArgs(nameof(AppTypeId), AppTypeId));
 			return this;
 		}
 
 		public App Recommand()
 		{
 			IsRecommand = true;
-			OnPropertyChanged(nameof(IsRecommand));
+			OnPropertyChanged(new PropertyArgs(nameof(IsRecommand), IsRecommand));
 			return this;
 		}
 
 		public App CancelRecommand()
 		{
 			IsRecommand = false;
-			OnPropertyChanged(nameof(IsRecommand));
+			OnPropertyChanged(new PropertyArgs(nameof(IsRecommand), IsRecommand));
 			return this;
 		}
 
 		public App AppRelease()
 		{
 			AppReleaseState = AppReleaseState.Release;
-			OnPropertyChanged(nameof(AppReleaseState));
+			OnPropertyChanged(new PropertyArgs(nameof(AppReleaseState), AppReleaseState));
 			return this;
 		}
 
 		public App AppUnrelease()
 		{
 			AppReleaseState = AppReleaseState.UnRelease;
-			OnPropertyChanged(nameof(AppReleaseState));
+			OnPropertyChanged(new PropertyArgs(nameof(AppReleaseState), AppReleaseState));
 			return this;
 		}
 
 		public App Wait()
 		{
 			AppAuditState = AppAuditState.Wait;
-			OnPropertyChanged(nameof(AppAuditState));
+			OnPropertyChanged(new PropertyArgs(nameof(AppAuditState), AppAuditState));
 			return this;
 		}
 
 		public App Pass()
 		{
 			AppAuditState = AppAuditState.Pass;
-			OnPropertyChanged(nameof(AppAuditState));
+			OnPropertyChanged(new PropertyArgs(nameof(AppAuditState), AppAuditState));
 			return this;
 		}
 
 		public App Deny()
 		{
 			AppAuditState = AppAuditState.Deny;
-			OnPropertyChanged(nameof(AppAuditState));
+			OnPropertyChanged(new PropertyArgs(nameof(AppAuditState), AppAuditState));
 			return this;
 		}
 
 		public App UnAuditState()
 		{
 			AppAuditState = AppAuditState.UnAuditState;
-			OnPropertyChanged(nameof(AppAuditState));
+			OnPropertyChanged(new PropertyArgs(nameof(AppAuditState), AppAuditState));
 			return this;
 		}
 
 		public App StyleToApp()
 		{
 			AppStyle = AppStyle.App;
-			OnPropertyChanged(nameof(AppStyle));
+			OnPropertyChanged(new PropertyArgs(nameof(AppStyle), AppStyle));
 			return this;
 		}
 
 		public App StyleToWidget()
 		{
 			AppStyle = AppStyle.Widget;
-			OnPropertyChanged(nameof(AppStyle));
+			OnPropertyChanged(new PropertyArgs(nameof(AppStyle), AppStyle));
 			return this;
 		}
 
 		public App IconNotFromUpload()
 		{
 			IsIconByUpload = false;
-			OnPropertyChanged(nameof(IsIconByUpload));
+			OnPropertyChanged(new PropertyArgs(nameof(IsIconByUpload), IsIconByUpload));
 			return this;
 		}
 
 		public App IconFromUpload()
 		{
 			IsIconByUpload = true;
-			OnPropertyChanged(nameof(IsIconByUpload));
+			OnPropertyChanged(new PropertyArgs(nameof(IsIconByUpload), IsIconByUpload));
 			return this;
 		}
 
@@ -739,7 +742,7 @@ namespace NewCrmCore.Domain.Entitys.System
 			}
 
 			AppUrl = newAppUrl;
-			OnPropertyChanged(nameof(AppUrl));
+			OnPropertyChanged(new PropertyArgs(nameof(AppUrl), AppUrl));
 			return this;
 		}
 
@@ -750,7 +753,7 @@ namespace NewCrmCore.Domain.Entitys.System
 				throw new ArgumentException($@"{nameof(newRemark)} is null");
 			}
 			Remark = newRemark;
-			OnPropertyChanged(nameof(Remark));
+			OnPropertyChanged(new PropertyArgs(nameof(Remark), Remark));
 			return this;
 		}
 	}

@@ -5,7 +5,7 @@ using NewLibCore.Data.Mapper.MapperExtension;
 namespace NewCrmCore.Domain.Entitys.System
 {
 	[Description("应用类型"), Serializable]
-	public partial class AppType : DomainModelBase
+	public partial class AppType: DomainModelBase
 	{
 		#region private field
 
@@ -68,25 +68,25 @@ namespace NewCrmCore.Domain.Entitys.System
 	{
 		public AppType ModifyName(String appTypeName)
 		{
-			if(String.IsNullOrEmpty(appTypeName))
+			if (String.IsNullOrEmpty(appTypeName))
 			{
 				throw new ArgumentException($@"{nameof(appTypeName)} is null");
 			}
 
 			Name = appTypeName;
-			OnPropertyChanged(nameof(Name));
+			OnPropertyChanged(new PropertyArgs(nameof(Name), Name));
 			return this;
 		}
 
 		public AppType ModifyRemark(String remark)
 		{
-			if(String.IsNullOrEmpty(remark))
+			if (String.IsNullOrEmpty(remark))
 			{
 				throw new ArgumentException($@"{nameof(remark)} is null");
 			}
 
 			Remark = remark;
-			OnPropertyChanged(nameof(Remark));
+			OnPropertyChanged(new PropertyArgs(nameof(Remark), Remark));
 			return this;
 		}
 	}
