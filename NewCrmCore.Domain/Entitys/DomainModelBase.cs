@@ -1,5 +1,6 @@
 ﻿using System;
 using NewLibCore.Data.Mapper.MapperExtension;
+using NewLibCore.Data.Mapper.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys
 {
@@ -79,7 +80,7 @@ namespace NewCrmCore.Domain.Entitys
 		public void Remove()
 		{
 			IsDeleted = true;
-			OnPropertyChanged(nameof(IsDeleted));
+			OnPropertyChanged(new PropertyArgs(nameof(IsDeleted), IsDeleted));
 		}
 
 		#endregion

@@ -208,7 +208,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
 			}
 
 			LoginPassword = password;
-			OnPropertyChanged(nameof(LoginPassword));
+			OnPropertyChanged(new PropertyArgs(nameof(LoginPassword), password));
 			return this;
 		}
 
@@ -220,21 +220,21 @@ namespace NewCrmCore.Domain.Entitys.Agent
 			}
 
 			LockScreenPassword = password;
-			OnPropertyChanged(nameof(LockScreenPassword));
+			OnPropertyChanged(new PropertyArgs(nameof(LockScreenPassword), password));
 			return this;
 		}
 
 		public Account Enable()
 		{
 			IsDisable = false;
-			OnPropertyChanged(nameof(Enable));
+			OnPropertyChanged(new PropertyArgs(nameof(IsDisable), IsDisable));
 			return this;
 		}
 
 		public Account Disable()
 		{
 			IsDisable = true;
-			OnPropertyChanged(nameof(IsDisable));
+			OnPropertyChanged(new PropertyArgs(nameof(IsDisable), IsDisable));
 			return this;
 		}
 
@@ -242,14 +242,14 @@ namespace NewCrmCore.Domain.Entitys.Agent
 		{
 			IsOnline = true;
 			LastLoginTime = DateTime.Now;
-			OnPropertyChanged(nameof(IsOnline), nameof(LastLoginTime));
+			OnPropertyChanged(new PropertyArgs(nameof(IsOnline), IsOnline), new PropertyArgs(nameof(LastLoginTime), LastLoginTime));
 			return this;
 		}
 
 		public Account Offline()
 		{
 			IsOnline = false;
-			OnPropertyChanged(nameof(IsOnline));
+			OnPropertyChanged(new PropertyArgs(nameof(IsOnline), IsOnline));
 			return this;
 		}
 
@@ -262,7 +262,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
 
 			Roles.ToList().Clear();
 			Roles = roleIds.Select(roleId => new AccountRole(Id, roleId));
-			OnPropertyChanged(nameof(Roles));
+			OnPropertyChanged(new PropertyArgs(nameof(Roles), Roles));
 			return this;
 		}
 	}
