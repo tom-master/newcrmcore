@@ -5,6 +5,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using NewCrmCore.Infrastructure;
 
 namespace NewCrmCore.FileServices.Controllers
 {
@@ -29,7 +30,7 @@ namespace NewCrmCore.FileServices.Controllers
 				return;
 			}
 
-			Url = FullPath.Substring(FullPath.IndexOf("/", StringComparison.Ordinal));
+			Url = FullPath.Replace(Appsetting.FileStorage, "");
 		}
 
 		public FileType GetFileType(string fileType)

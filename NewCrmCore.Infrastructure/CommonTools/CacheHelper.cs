@@ -42,18 +42,18 @@ namespace NewCrmCore.Infrastructure.CommonTools
 		/// </summary>
 		public static void RemoveOldKeyWhenModify(params CacheKeyBase[] caches)
 		{
-			if (!caches.Any())
-			{
-				return;
-			}
+			//if (!caches.Any())
+			//{
+			//	return;
+			//}
 
-			foreach (var cache in caches)
-			{
-				if (_cacheQuery.KeyExists(cache.GetKey()))
-				{
-					_cacheQuery.KeyDelete(cache.GetKey());
-				}
-			}
+			//foreach (var cache in caches)
+			//{
+			//	if (_cacheQuery.KeyExists(cache.GetKey()))
+			//	{
+			//		_cacheQuery.KeyDelete(cache.GetKey());
+			//	}
+			//}
 		}
 
 	}
