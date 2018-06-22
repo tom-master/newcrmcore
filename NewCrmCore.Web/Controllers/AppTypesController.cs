@@ -12,7 +12,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Web.Controllers
 {
-	public class AppTypesController: BaseController
+	public class AppTypesController : BaseController
 	{
 		private readonly IAppServices _appServices;
 
@@ -51,25 +51,10 @@ namespace NewCrmCore.Web.Controllers
 
 		#endregion
 
-		/// <summary>
-		/// 获取所有app类型
-		/// </summary>
-		[HttpGet]
-		public async Task<ActionResult> GetAppTypes(Int32 pageIndex, Int32 pageSize, String searchText)
-		{
-			var response = new ResponseModels<IList<AppTypeDto>>();
-			var result = (await _appServices.GetAppTypesAsync()).Where(appType => String.IsNullOrEmpty(searchText) || appType.Name.Contains(searchText)).OrderByDescending(d => d.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
-			response.Message = "app类型获取成功";
-			response.IsSuccess = true;
-			response.Model = result;
-			response.TotalCount = result.Count;
-
-			return Json(response);
-
-		}
+		#region 移除应用类型
 
 		/// <summary>
-		/// 删除app类型
+		/// 移除应用类型
 		/// </summary>
 		[HttpPost]
 		public async Task<ActionResult> Remove(Int32 appTypeId)
@@ -86,8 +71,12 @@ namespace NewCrmCore.Web.Controllers
 			return Json(response);
 		}
 
+		#endregion
+
+		#region 创建应用类型
+
 		/// <summary>
-		/// 创建新的app类型
+		/// 创建应用类型
 		/// </summary>
 		/// <returns></returns>
 		[HttpPost]
@@ -113,9 +102,12 @@ namespace NewCrmCore.Web.Controllers
 			return Json(response);
 		}
 
+		#endregion
+
+		#region 检查类型名称
 
 		/// <summary>
-		/// 检查应用类型名称
+		/// 检查类型名称
 		/// </summary>
 		[HttpPost]
 		public async Task<ActionResult> CheckName(String param)
@@ -127,6 +119,29 @@ namespace NewCrmCore.Web.Controllers
 			var result = await _appServices.CheckAppTypeNameAsync(param);
 			return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "类型名称已存在" });
 		}
+
+		#endregion
+
+		#region 获取所有应用类型
+
+		/// <summary>
+		/// 获取所有应用类型
+		/// </summary>
+		[HttpGet]
+		public async Task<ActionResult> GetAppTypes(Int32 pageIndex, Int32 pageSize, String searchText)
+		{
+			var response = new ResponseModels<IList<AppTypeDto>>();
+			var result = (await _appServices.GetAppTypesAsync()).Where(appType => String.IsNullOrEmpty(searchText) || appType.Name.Contains(searchText)).OrderByDescending(d => d.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+			response.Message = "app类型获取成功";
+			response.IsSuccess = true;
+			response.Model = result;
+			response.TotalCount = result.Count;
+
+			return Json(response);
+
+		}
+
+		#endregion
 
 		#region private method
 
