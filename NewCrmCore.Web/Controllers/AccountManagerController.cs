@@ -37,7 +37,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 创建新账户
 		/// </summary>
 		[HttpGet]
-		public async Task<ActionResult> CreateNewAccount(Int32 accountId = 0)
+		public async Task<ActionResult> Account(Int32 accountId = 0)
 		{
 			if (accountId != 0)
 			{
@@ -58,7 +58,6 @@ namespace NewCrmCore.Web.Controllers
 		{
 			var response = new ResponseModels<IList<AccountDto>>();
 
-
 			var result = await _accountServices.GetAccountsAsync(accountName, accountType, pageIndex, pageSize);
 			if (result != null)
 			{
@@ -75,7 +74,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 创建新账户
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> NewAccount(IFormCollection forms)
+		public async Task<ActionResult> CreateAccount(IFormCollection forms)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);
@@ -109,7 +108,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 检查账户名是否已经存在
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> CheckAccountNameExist(String param)
+		public async Task<ActionResult> CheckName(String param)
 		{
 			#region 参数验证
 			new Parameter().Validate(param);
@@ -141,32 +140,39 @@ namespace NewCrmCore.Web.Controllers
 		/// 修改账户为禁用状态
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ChangeAccountStatus(Int32 accountId, String isDisable)
+		public async Task<ActionResult> AccountEnable(Int32 accountId)
 		{
 			#region 参数验证
 			new Parameter().Validate(accountId).Validate(isDisable);
 			#endregion
 
 			var response = new ResponseModel<String>();
-			if (!Boolean.Parse(isDisable))
-			{
-				await _accountServices.DisableAsync(accountId);
-				response.IsSuccess = true;
-				response.Message = "禁用账户成功";
-			}
-			else
-			{
-				await _accountServices.EnableAsync(accountId);
-				response.IsSuccess = true;
-				response.Message = "启用账户成功";
-			}
+            await _accountServices.EnableAsync(accountId);
+            response.IsSuccess = true;
+            response.Message = "启用账户成功";
 
-			return Json(response);
+            return Json(response);										    
 		}
 
-		#region private method
 
-		private AccountDto WapperAccountDto(IFormCollection forms)
+        [HttpPost]
+        public async Task<ActionResult> AccountDisable(Int32 accountId)
+        {
+            #region 参数验证
+            new Parameter().Validate(accountId);
+            #endregion
+
+            var response = new ResponseModel<String>();
+            await _accountServices.DisableAsync(accountId);
+            response.IsSuccess = true;
+            response.Message = "禁用账户成功";
+
+            return Json(response);
+        }
+
+        #region private method
+
+        private AccountDto WapperAccountDto(IFormCollection forms)
 		{
 			var roleIds = new List<RoleDto>();
 			if ((forms["val_roleIds"] + "").Length > 0)

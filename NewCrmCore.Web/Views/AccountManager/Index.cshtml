@@ -121,7 +121,16 @@
                     id: 'edit',
                     content: isDisable ? '确定要启用 “' + name + '” 该账户么？' : '确定要禁用 “' + name + '” 该账户么？',
                     ok: function () {
-                        HROS.request.post('/AccountManager/ChangeAccountStatus', { accountId: parseInt(memberid), isDisable: isDisable }, function (responseText) {
+                        let url = '';
+                        if (isDisable) {
+                            url = '/AccountManager/AccountDisable';
+                        } else{
+                            url = '/AccountManager/AccountEnable';
+                        }
+
+
+
+                        HROS.request.post(url, { accountId: parseInt(memberid) }, function (responseText) {
                             if (responseText.IsSuccess) {
                                 $('#pagination').trigger('currentPage');
                             } else {

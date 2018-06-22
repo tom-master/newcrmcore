@@ -12,7 +12,7 @@
 	var accountId = Context.Request.Query["accountId"];
 }
 
-<form action="/AccountManager/NewAccount" method="post" name="form" id="form">
+<form action="/AccountManager/CreateAccount" method="post" name="form" id="form">
 	<input type="hidden" name="id" value="@(accountId.FirstOrDefault()??"0")">
 	<div class="creatbox">
 		<div class="middle">
@@ -26,7 +26,7 @@
 						if (accountResult.Name == null)
 						{
 							<text>
-								<input type="text" name="val_accountname" datatype="s4-12" ajaxurl="@Url.Action("CheckAccountNameExist","AccountManager")" nullmsg="请输入用户名" errormsg="用户名长度为4-12个字符">
+								<input type="text" name="val_accountname" datatype="s4-12" ajaxurl="@Url.Action("CheckName","AccountManager")" nullmsg="请输入用户名" errormsg="用户名长度为4-12个字符">
 							</text>
 						}
 						else
