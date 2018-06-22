@@ -14,7 +14,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Web.Controllers
 {
-	public class AppMarketController: BaseController
+	public class AppMarketController : BaseController
 	{
 		private readonly IAppServices _appServices;
 		private readonly IAccountServices _accountServices;
@@ -104,8 +104,148 @@ namespace NewCrmCore.Web.Controllers
 
 		#endregion
 
+		#region 应用打分
+
+		/// <summary> 
+		/// 应用打分
+		/// </summary>
+		[HttpPost]
+		public async Task<ActionResult> ModifyStar(Int32 appId, Int32 starCount)
+		{
+			#region 参数验证
+			new Parameter().Validate(appId).Validate(starCount);
+			#endregion
+
+			var response = new ResponseModel();
+			await _appServices.ModifyAppStarAsync(AccountId, appId, starCount);
+			response.IsSuccess = true;
+			response.Message = "打分成功";
+
+			return Json(response);
+		}
+
+		#endregion
+
+		#region 安装应用
+
 		/// <summary>
-		/// 获取所有的app
+		/// 安装应用
+		/// </summary>
+		[HttpPost]
+		public async Task<ActionResult> Install(Int32 appId, Int32 deskNum)
+		{
+			#region 参数验证
+			new Parameter().Validate(appId).Validate(deskNum);
+			#endregion
+
+			var response = new ResponseModel();
+			await _appServices.InstallAppAsync(AccountId, appId, deskNum);
+			response.IsSuccess = true;
+			response.Message = "安装成功";
+
+			return Json(response);
+		}
+
+		#endregion
+
+		#region 更新图标 
+		
+		/// <summary>
+		/// 更新图标
+		/// </summary>
+		[HttpPost]
+		public async Task<ActionResult> ModifyIcon(Int32 appId, String newIcon)
+		{
+			#region 参数验证
+			new Parameter().Validate(appId).Validate(newIcon);
+			#endregion
+
+			var response = new ResponseModel<String>();
+			await _appServices.ModifyAppIconAsync(AccountId, appId, newIcon);
+
+			response.IsSuccess = true;
+			response.Message = "更新图标成功";
+			response.Model = Appsetting.FileUrl + newIcon;
+
+			return Json(response);
+		}
+
+		#endregion
+
+		#region 创建应用
+
+		/// <summary>
+		/// 创建应用
+		/// </summary>
+		[HttpPost]
+		public async Task<ActionResult> Create(IFormCollection forms)
+		{
+			#region 参数验证
+			new Parameter().Validate(forms);
+			#endregion
+
+			var response = new ResponseModel();
+
+			var appDto = WrapperAppDto(forms);
+			appDto.AccountId = AccountId;
+			await _appServices.CreateNewAppAsync(appDto);
+
+			response.IsSuccess = true;
+			response.Message = "app创建成功";
+
+			return Json(response);
+		}
+
+		#endregion
+
+		#region 发布应用
+
+		/// <summary>
+		/// 发布应用
+		/// </summary>
+		[HttpPost]
+		public async Task<ActionResult> Release(Int32 appId)
+		{
+			#region 参数验证
+			new Parameter().Validate(appId);
+			#endregion
+
+			var response = new ResponseModel();
+			await _appServices.ReleaseAppAsync(appId);
+			response.IsSuccess = true;
+			response.Message = "app发布成功";
+
+			return Json(response);
+		}
+
+		#endregion
+
+		#region 修改应用信息
+
+		/// <summary>
+		/// 修改应用信息
+		/// </summary>
+		[HttpPost]
+		public async Task<ActionResult> ModifyInfo(IFormCollection forms)
+		{
+			#region 参数验证
+			new Parameter().Validate(forms);
+			#endregion
+
+			var response = new ResponseModel();
+			await _appServices.ModifyAccountAppInfoAsync(AccountId, WrapperAppDto(forms));
+			response.IsSuccess = true;
+			response.Message = "修改app信息成功";
+
+			return Json(response);
+		}
+
+		#endregion
+
+		#region 获取所有应用
+
+		/// <summary>
+		/// 获取所有应用
 		/// </summary>
 		[HttpGet]
 		public async Task<ActionResult> GetApps(Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize)
@@ -127,44 +267,12 @@ namespace NewCrmCore.Web.Controllers
 			return Json(response);
 		}
 
-		/// <summary> 
-		/// 给app打分
-		/// </summary>
-		[HttpPost]
-		public async Task<ActionResult> ModifyStar(Int32 appId, Int32 starCount)
-		{
-			#region 参数验证
-			new Parameter().Validate(appId).Validate(starCount);
-			#endregion
+		#endregion
 
-			var response = new ResponseModel();
-			await _appServices.ModifyAppStarAsync(AccountId, appId, starCount);
-			response.IsSuccess = true;
-			response.Message = "打分成功";
-
-			return Json(response);
-		}
+		#region 获取账户下应用
 
 		/// <summary>
-		/// 安装app
-		/// </summary>
-		[HttpPost]
-		public async Task<ActionResult> Install(Int32 appId, Int32 deskNum)
-		{
-			#region 参数验证
-			new Parameter().Validate(appId).Validate(deskNum);
-			#endregion
-
-			var response = new ResponseModel();
-			await _appServices.InstallAppAsync(AccountId, appId, deskNum);
-			response.IsSuccess = true;
-			response.Message = "安装成功";
-
-			return Json(response);
-		}
-
-		/// <summary>
-		/// 获取开发者（用户）的app
+		/// 获取账户下应用
 		/// </summary>
 		[HttpGet]
 		public async Task<ActionResult> GetAccountApps(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
@@ -186,86 +294,12 @@ namespace NewCrmCore.Web.Controllers
 			return Json(response);
 		}
 
-		/// <summary>
-		/// 修改app信息
-		/// </summary>
-		[HttpPost]
-		public async Task<ActionResult> ModifyInfo(IFormCollection forms)
-		{
-			#region 参数验证
-			new Parameter().Validate(forms);
-			#endregion
+		#endregion
 
-			var response = new ResponseModel();
-			await _appServices.ModifyAccountAppInfoAsync(AccountId, WrapperAppDto(forms));
-			response.IsSuccess = true;
-			response.Message = "修改app信息成功";
-
-			return Json(response);
-		}
+		#region 移除账户中应用
 
 		/// <summary>
-		/// 更新图标
-		/// </summary>
-		[HttpPost]
-		public async Task<ActionResult> ModifyIcon(Int32 appId, String newIcon)
-		{
-			#region 参数验证
-			new Parameter().Validate(appId).Validate(newIcon);
-			#endregion
-
-			var response = new ResponseModel<String>();
-			await _appServices.ModifyAppIconAsync(AccountId, appId, newIcon);
-
-			response.IsSuccess = true;
-			response.Message = "更新图标成功";
-			response.Model = Appsetting.FileUrl + newIcon;
-
-			return Json(response);
-		}
-
-		/// <summary>
-		/// 创建新的app
-		/// </summary>
-		[HttpPost]
-		public async Task<ActionResult> Create(IFormCollection forms)
-		{
-			#region 参数验证
-			new Parameter().Validate(forms);
-			#endregion
-
-			var response = new ResponseModel();
-
-			var appDto = WrapperAppDto(forms);
-			appDto.AccountId = AccountId;
-			await _appServices.CreateNewAppAsync(appDto);
-
-			response.IsSuccess = true;
-			response.Message = "app创建成功";
-
-			return Json(response);
-		}
-
-		/// <summary>
-		/// 审核通过后发布app
-		/// </summary>
-		[HttpPost]
-		public async Task<ActionResult> Release(Int32 appId)
-		{
-			#region 参数验证
-			new Parameter().Validate(appId);
-			#endregion
-
-			var response = new ResponseModel();
-			await _appServices.ReleaseAppAsync(appId);
-			response.IsSuccess = true;
-			response.Message = "app发布成功";
-
-			return Json(response);
-		}
-
-		/// <summary>
-		/// 删除用户开发的app
+		/// 移除账户中应用
 		/// </summary>
 		[HttpPost]
 		public async Task<ActionResult> Remove(Int32 appId)
@@ -281,6 +315,8 @@ namespace NewCrmCore.Web.Controllers
 
 			return Json(response);
 		}
+
+		#endregion
 
 		#region private method
 		/// <summary>
