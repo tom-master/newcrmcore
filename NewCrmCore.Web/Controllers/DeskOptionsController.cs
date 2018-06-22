@@ -13,7 +13,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Web.Controllers
 {
-	public class DeskOptionsController: BaseController
+	public class DeskOptionsController : BaseController
 	{
 
 		private readonly IWallpaperServices _wallpaperServices;
@@ -86,23 +86,7 @@ namespace NewCrmCore.Web.Controllers
 		}
 		#endregion
 
-		/// <summary>
-		/// 设置壁纸显示模式
-		/// </summary>
-		[HttpPost]
-		public async Task<ActionResult> ModifyDisplayModel(String wallPaperShowType)
-		{
-			#region 参数验证
-			new Parameter().Validate(wallPaperShowType);
-			#endregion
-
-			var response = new ResponseModel();
-			await _wallpaperServices.ModifyWallpaperModeAsync(AccountId, wallPaperShowType);
-			response.IsSuccess = true;
-			response.Message = "壁纸显示模式设置成功";
-
-			return Json(response);
-		}
+		#region 设置壁纸
 
 		/// <summary>
 		/// 设置壁纸
@@ -122,26 +106,15 @@ namespace NewCrmCore.Web.Controllers
 			return Json(response);
 		}
 
-		/// <summary>
-		/// 载入用户之前上传的壁纸
-		/// </summary>
-		[HttpGet]
-		public async Task<ActionResult> GetUploadWallPapers()
-		{
-			var response = new ResponseModel<IList<WallpaperDto>>();
-			var result = await _wallpaperServices.GetUploadWallpaperAsync(AccountId);
-			response.IsSuccess = true;
-			response.Message = "载入之前上传的壁纸成功";
-			response.Model = result;
+		#endregion
 
-			return Json(response);
-		}
+		#region 删除壁纸
 
 		/// <summary>
-		/// 删除上传的壁纸
+		/// 删除壁纸
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> RemoveUploadWallpaper(Int32 wallPaperId)
+		public async Task<ActionResult> RemoveWallpaper(Int32 wallPaperId)
 		{
 			#region 参数验证
 			new Parameter().Validate(wallPaperId);
@@ -154,6 +127,10 @@ namespace NewCrmCore.Web.Controllers
 
 			return Json(response);
 		}
+
+		#endregion
+
+		#region 上传壁纸
 
 		/// <summary>
 		/// 上传壁纸     
@@ -185,6 +162,10 @@ namespace NewCrmCore.Web.Controllers
 			return Json(response);
 		}
 
+		#endregion
+
+		#region 网络壁纸
+
 		/// <summary>
 		/// 网络壁纸
 		/// </summary>
@@ -205,23 +186,9 @@ namespace NewCrmCore.Web.Controllers
 			return Json(response);
 		}
 
-		/// <summary>
-		/// 获取全部的皮肤
-		/// </summary>
-		[HttpGet]
-		public async Task<ActionResult> GetSkins()
-		{
-			var response = new ResponseModel<dynamic>();
-
-			var skinPath = "";
-			var result = _skinServices.GetAllSkinAsync(skinPath);
-			response.IsSuccess = true;
-			response.Message = "获取皮肤列表成功";
-			response.Model = new { result, currentSkin = (await _accountServices.GetConfigAsync(AccountId)).Skin };
-
-			return Json(response);
-
-		}
+		#endregion
+	
+		#region 更换皮肤
 
 		/// <summary>
 		/// 更换皮肤
@@ -242,42 +209,94 @@ namespace NewCrmCore.Web.Controllers
 			return Json(response);
 		}
 
-		/// <summary>
-		/// 更换默认显示的桌面
-		/// </summary>
-		[HttpPost]
-		public async Task<ActionResult> ModifyDefaultDesk(Int32 deskNum)
-		{
-			#region 参数验证
-			new Parameter().Validate(deskNum);
-			#endregion
+		#endregion
 
-			var response = new ResponseModel();
-			await _deskServices.ModifyDefaultDeskNumberAsync(AccountId, deskNum);
+		#region 载入上传壁纸
+
+		/// <summary>
+		/// 载入上传壁纸
+		/// </summary>
+		[HttpGet]
+		public async Task<ActionResult> GetUploadWallPapers()
+		{
+			var response = new ResponseModel<IList<WallpaperDto>>();
+			var result = await _wallpaperServices.GetUploadWallpaperAsync(AccountId);
 			response.IsSuccess = true;
-			response.Message = "更换默认桌面成功";
+			response.Message = "载入之前上传的壁纸成功";
+			response.Model = result;
 
 			return Json(response);
 		}
 
+		#endregion
+
+		#region 获取全部皮肤
+
 		/// <summary>
-		/// 更换图标的排列方向
+		/// 获取全部皮肤
+		/// </summary>
+		[HttpGet]
+		public async Task<ActionResult> GetSkins()
+		{
+			var response = new ResponseModel<dynamic>();
+
+			var skinPath = "";
+			var result = _skinServices.GetAllSkinAsync(skinPath);
+			response.IsSuccess = true;
+			response.Message = "获取皮肤列表成功";
+			response.Model = new { result, currentSkin = (await _accountServices.GetConfigAsync(AccountId)).Skin };
+
+			return Json(response);
+
+		}
+
+		#endregion
+
+		#region 更改码头位置
+
+		/// <summary>
+		/// 更改码头位置
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyXy(String appXy)
+		public async Task<ActionResult> ModifyDockPosition(String pos, Int32 deskNum)
 		{
 			#region 参数验证
-			new Parameter().Validate(appXy);
+			new Parameter().Validate(pos).Validate(deskNum);
 			#endregion
 
 			var response = new ResponseModel();
-
-			await _appServices.ModifyAppDirectionAsync(AccountId, appXy);
+			await _deskServices.ModifyDockPositionAsync(AccountId, deskNum, pos);
 			response.IsSuccess = true;
-			response.Message = "更换图标排列方向成功";
+			response.Message = "更改码头的位置成功";
 
 			return Json(response);
 		}
+
+		#endregion
+
+		#region 修改壁纸来源
+
+		/// <summary>
+		/// 修改壁纸来源
+		/// </summary>
+		[HttpPost]
+		public async Task<ActionResult> ModifyWallpaperSource(String source)
+		{
+			#region 参数验证
+			new Parameter().Validate(source);
+			#endregion
+
+			var response = new ResponseModel();
+			await _deskServices.ModifyWallpaperSourceAsync(source, AccountId);
+			response.IsSuccess = true;
+			response.Message = "更改壁纸来源成功";
+
+			return Json(response);
+		}
+
+		#endregion
+
+		#region 更改图标大小
 
 		/// <summary>
 		/// 更改图标大小
@@ -297,23 +316,76 @@ namespace NewCrmCore.Web.Controllers
 			return Json(response);
 		}
 
+		#endregion
+
+		#region 更换默认显示桌面
+
 		/// <summary>
-		/// 更改应用图标的垂直间距
+		/// 更换默认显示桌面
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyVerticalSpace(Int32 appVertical)
+		public async Task<ActionResult> ModifyDefaultDesk(Int32 deskNum)
 		{
 			#region 参数验证
-			new Parameter().Validate(appVertical);
+			new Parameter().Validate(deskNum);
 			#endregion
 
 			var response = new ResponseModel();
-			await _appServices.ModifyAppVerticalSpacingAsync(AccountId, appVertical);
+			await _deskServices.ModifyDefaultDeskNumberAsync(AccountId, deskNum);
 			response.IsSuccess = true;
-			response.Message = "更改图标垂直间距成功";
+			response.Message = "更换默认桌面成功";
 
 			return Json(response);
 		}
+
+		#endregion
+
+		#region 更换图标排列方向
+
+		/// <summary>
+		/// 更换图标排列方向
+		/// </summary>
+		[HttpPost]
+		public async Task<ActionResult> ModifyXy(String appXy)
+		{
+			#region 参数验证
+			new Parameter().Validate(appXy);
+			#endregion
+
+			var response = new ResponseModel();
+
+			await _appServices.ModifyAppDirectionAsync(AccountId, appXy);
+			response.IsSuccess = true;
+			response.Message = "更换图标排列方向成功";
+
+			return Json(response);
+		}
+
+		#endregion
+
+		#region 设置壁纸显示模式
+
+		/// <summary>
+		/// 设置壁纸显示模式
+		/// </summary>
+		[HttpPost]
+		public async Task<ActionResult> ModifyDisplayModel(String wallPaperShowType)
+		{
+			#region 参数验证
+			new Parameter().Validate(wallPaperShowType);
+			#endregion
+
+			var response = new ResponseModel();
+			await _wallpaperServices.ModifyWallpaperModeAsync(AccountId, wallPaperShowType);
+			response.IsSuccess = true;
+			response.Message = "壁纸显示模式设置成功";
+
+			return Json(response);
+		}
+
+		#endregion
+
+		#region 更改图标的水平间距
 
 		/// <summary>
 		/// 更改图标的水平间距
@@ -333,40 +405,29 @@ namespace NewCrmCore.Web.Controllers
 			return Json(response);
 		}
 
+		#endregion
+
+		#region 更改应用图标垂直间距
+
 		/// <summary>
-		/// 更改码头的位置
+		/// 更改应用图标垂直间距
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyDockPosition(String pos, Int32 deskNum)
+		public async Task<ActionResult> ModifyVerticalSpace(Int32 appVertical)
 		{
 			#region 参数验证
-			new Parameter().Validate(pos).Validate(deskNum);
+			new Parameter().Validate(appVertical);
 			#endregion
 
 			var response = new ResponseModel();
-			await _deskServices.ModifyDockPositionAsync(AccountId, deskNum, pos);
+			await _appServices.ModifyAppVerticalSpacingAsync(AccountId, appVertical);
 			response.IsSuccess = true;
-			response.Message = "更改码头的位置成功";
+			response.Message = "更改图标垂直间距成功";
 
 			return Json(response);
 		}
 
-		/// <summary>
-		/// 修改壁纸来源
-		/// </summary>
-		[HttpPost]
-		public async Task<ActionResult> ModifyWallpaperSource(String source)
-		{
-			#region 参数验证
-			new Parameter().Validate(source);
-			#endregion
+		#endregion
 
-			var response = new ResponseModel();
-			await _deskServices.ModifyWallpaperSourceAsync(source, AccountId);
-			response.IsSuccess = true;
-			response.Message = "更改壁纸来源成功";
-
-			return Json(response);
-		}
 	}
 }

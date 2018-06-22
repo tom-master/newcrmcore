@@ -105,7 +105,7 @@
             $('.wapppapercustom .view').on('click', 'li a', function (event) {
                 event.stopPropagation();
                 var id = $(this).parent().attr('id');
-                HROS.request.post("/DeskOptions/RemoveUploadWallpaper", { wallPaperId: id }, function (responseText) {
+                HROS.request.post("/DeskOptions/RemoveWallpaper", { wallPaperId: id }, function (responseText) {
                     if (responseText.IsSuccess) {
                         NewCrm.msgbox.success('壁纸移除成功');
                         $('#' + id).remove();
