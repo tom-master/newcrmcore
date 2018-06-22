@@ -9,9 +9,8 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Web.Controllers
 {
-	public class AccountSettingController: BaseController
+	public class AccountSettingController : BaseController
 	{
-
 		private IAccountServices _accountServices;
 
 		public AccountSettingController(IAccountServices accountServices)
@@ -33,6 +32,31 @@ namespace NewCrmCore.Web.Controllers
 
 		#endregion
 
+		#region 修改锁屏密码
+
+		/// <summary>
+		/// 修改锁屏密码
+		/// </summary>
+		[HttpPost]
+		public async Task<ActionResult> ModifyLockPassword(IFormCollection forms)
+		{
+			#region 参数验证
+			new Parameter().Validate(forms);
+			#endregion
+
+			var response = new ResponseModel();
+			await _accountServices.ModifyLockScreenPasswordAsync(AccountId, forms["lockpassword"]);
+
+			response.Message = "锁屏密码修改成功";
+			response.IsSuccess = true;
+
+			return Json(response);
+		}
+
+		#endregion
+
+		#region 上传账户头像
+
 		/// <summary>
 		///上传账户头像
 		/// </summary>
@@ -50,6 +74,10 @@ namespace NewCrmCore.Web.Controllers
 
 			return Json(response);
 		}
+
+		#endregion
+
+		#region 修改账户登陆密码
 
 		/// <summary>
 		/// 修改账户登陆密码
@@ -72,24 +100,9 @@ namespace NewCrmCore.Web.Controllers
 			return Json(response);
 		}
 
-		/// <summary>
-		/// 修改锁屏密码
-		/// </summary>
-		[HttpPost]
-		public async Task<ActionResult> ModifyLockPassword(IFormCollection forms)
-		{
-			#region 参数验证
-			new Parameter().Validate(forms);
-			#endregion
+		#endregion
 
-			var response = new ResponseModel();
-			await _accountServices.ModifyLockScreenPasswordAsync(AccountId, forms["lockpassword"]);
-
-			response.Message = "锁屏密码修改成功";
-			response.IsSuccess = true;
-
-			return Json(response);
-		}
+		#region 检查旧密码和输入的密码是否一致
 
 		/// <summary>
 		/// 检查旧密码和输入的密码是否一致
@@ -104,5 +117,7 @@ namespace NewCrmCore.Web.Controllers
 			var result = await _accountServices.CheckPasswordAsync(AccountId, param);
 			return Json(result ? new { status = "y", info = "" } : new { status = "n", info = "原始密码错误" });
 		}
+
+		#endregion
 	}
 }
