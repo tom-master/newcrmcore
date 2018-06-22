@@ -40,6 +40,94 @@ namespace NewCrmCore.Web.Controllers
 
 		#endregion
 
+		#region 更新图标
+		
+		/// <summary>
+		/// 更新图标
+		/// </summary>
+		[HttpPost]
+		public async Task<ActionResult> ModifyIcon(Int32 memberId, String newIcon)
+		{
+			#region 参数验证
+			new Parameter().Validate(memberId).Validate(newIcon);
+			#endregion
+
+			var response = new ResponseModel<String>();
+			await _deskServices.ModifyMemberIconAsync(AccountId, memberId, newIcon);
+
+			response.IsSuccess = true;
+			response.Message = "更新图标成功";
+			response.Model = Appsetting.FileUrl + newIcon;
+
+			return Json(response);
+		}
+
+		#endregion
+
+		#region 新建文件夹
+
+		/// <summary>
+		/// 新建文件夹
+		/// </summary>
+		[HttpPost]
+		public async Task<ActionResult> CreateFolder(String folderName, String folderImg, Int32 deskId)
+		{
+			#region 参数验证
+			new Parameter().Validate(folderName).Validate(folderImg).Validate(deskId);
+			#endregion
+
+			var response = new ResponseModel();
+			await _deskServices.CreateNewFolderAsync(folderName, folderImg, deskId, AccountId);
+			response.IsSuccess = true;
+			response.Message = "新建文件夹成功";
+
+			return Json(response);
+		}
+
+		#endregion
+
+		#region 卸载桌面成员
+
+		/// <summary>
+		/// 卸载桌面成员
+		/// </summary>
+		[HttpPost]
+		public async Task<ActionResult> Uninstall(Int32 memberId)
+		{
+			#region 参数验证
+			new Parameter().Validate(memberId);
+			#endregion
+
+			var response = new ResponseModel();
+			await _deskServices.UninstallMemberAsync(AccountId, memberId);
+			response.IsSuccess = true;
+			response.Message = "卸载成功";
+
+			return Json(response);
+		}
+
+		#endregion
+
+		#region 检查成员名称
+
+		/// <summary>
+		/// 检查成员名称
+		/// </summary>
+		[HttpPost]
+		public async Task<ActionResult> CheckName(String param)
+		{
+			#region 参数验证
+			new Parameter().Validate(param);
+			#endregion
+
+			var result = await _deskServices.CheckMemberNameAsync(param);
+			return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "成员名称已存在" });
+		}
+
+		#endregion
+
+		#region 桌面成员移动
+
 		/// <summary>
 		/// 桌面成员移动
 		/// </summary>
@@ -89,23 +177,9 @@ namespace NewCrmCore.Web.Controllers
 			return Json(response);
 		}
 
-		/// <summary>
-		/// 修改文件夹的信息
-		/// </summary>
-		[HttpPost]
-		public async Task<ActionResult> ModifyFolderInfo(String name, String icon, Int32 memberId)
-		{
-			#region 参数验证
-			new Parameter().Validate(name).Validate(icon).Validate(memberId);
-			#endregion
+		#endregion
 
-			var response = new ResponseModel();
-			await _deskServices.ModifyFolderInfoAsync(AccountId, name, icon, memberId);
-			response.IsSuccess = true;
-			response.Message = "修改成功";
-
-			return Json(response);
-		}
+		#region 修改成员信息
 
 		/// <summary>
 		/// 修改成员信息
@@ -139,75 +213,29 @@ namespace NewCrmCore.Web.Controllers
 			return Json(response);
 		}
 
-		/// <summary>
-		/// 更新图标
-		/// </summary>
-		[HttpPost]
-		public async Task<ActionResult> ModifyIcon(Int32 memberId, String newIcon)
-		{
-			#region 参数验证
-			new Parameter().Validate(memberId).Validate(newIcon);
-			#endregion
-
-			var response = new ResponseModel<String>();
-			await _deskServices.ModifyMemberIconAsync(AccountId, memberId, newIcon);
-
-			response.IsSuccess = true;
-			response.Message = "更新图标成功";
-			response.Model = Appsetting.FileUrl + newIcon;
-
-			return Json(response);
-		}
+		#endregion
+		 
+		#region 修改文件夹信息
 
 		/// <summary>
-		/// 卸载桌面的成员
+		/// 修改文件夹信息
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> Uninstall(Int32 memberId)
+		public async Task<ActionResult> ModifyFolderInfo(String name, String icon, Int32 memberId)
 		{
 			#region 参数验证
-			new Parameter().Validate(memberId);
+			new Parameter().Validate(name).Validate(icon).Validate(memberId);
 			#endregion
 
 			var response = new ResponseModel();
-			await _deskServices.UninstallMemberAsync(AccountId, memberId);
+			await _deskServices.ModifyFolderInfoAsync(AccountId, name, icon, memberId);
 			response.IsSuccess = true;
-			response.Message = "卸载成功";
+			response.Message = "修改成功";
 
 			return Json(response);
 		}
 
-		/// <summary>
-		/// 新建文件夹
-		/// </summary>
-		/// <returns></returns>
-		[HttpPost]
-		public async Task<ActionResult> CreateFolder(String folderName, String folderImg, Int32 deskId)
-		{
-			#region 参数验证
-			new Parameter().Validate(folderName).Validate(folderImg).Validate(deskId);
-			#endregion
+		#endregion
 
-			var response = new ResponseModel();
-			await _deskServices.CreateNewFolderAsync(folderName, folderImg, deskId, AccountId);
-			response.IsSuccess = true;
-			response.Message = "新建文件夹成功";
-
-			return Json(response);
-		}
-
-		/// <summary>
-		/// 检查成员名称
-		/// </summary>
-		[HttpPost]
-		public async Task<ActionResult> CheckName(String param)
-		{
-			#region 参数验证
-			new Parameter().Validate(param);
-			#endregion
-
-			var result = await _deskServices.CheckMemberNameAsync(param);
-			return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "成员名称已存在" });
-		}
 	}
 }
