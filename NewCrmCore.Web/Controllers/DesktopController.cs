@@ -15,7 +15,7 @@ using Newtonsoft.Json;
 
 namespace NewCrmCore.Web.Controllers
 {
-	public class DesktopController: BaseController
+	public class DesktopController : BaseController
 	{
 		private readonly IDeskServices _deskServices;
 		private readonly IAccountServices _accountServices;
@@ -69,6 +69,7 @@ namespace NewCrmCore.Web.Controllers
 
 		#endregion
 
+		#region 登陆
 
 		/// <summary>
 		/// 登陆
@@ -95,6 +96,10 @@ namespace NewCrmCore.Web.Controllers
 			return Json(response);
 		}
 
+		#endregion
+
+		#region 解锁屏幕
+
 		/// <summary>
 		/// 解锁屏幕
 		/// </summary>
@@ -116,6 +121,10 @@ namespace NewCrmCore.Web.Controllers
 			return Json(response);
 		}
 
+		#endregion
+
+		#region 账户登出
+
 		/// <summary>
 		/// 账户登出
 		/// </summary>
@@ -127,8 +136,12 @@ namespace NewCrmCore.Web.Controllers
 			return new EmptyResult();
 		}
 
+		#endregion
+
+		#region 获取皮肤
+
 		/// <summary>
-		/// 初始化皮肤
+		/// 获取皮肤
 		/// </summary>
 		[HttpGet]
 		public async Task<ActionResult> GetSkin()
@@ -142,8 +155,12 @@ namespace NewCrmCore.Web.Controllers
 			return Json(response);
 		}
 
+		#endregion
+
+		#region 获取壁纸
+
 		/// <summary>
-		/// 初始化壁纸
+		/// 获取壁纸
 		/// </summary>
 		[HttpGet]
 		public async Task<ActionResult> GetWallpaper()
@@ -164,53 +181,12 @@ namespace NewCrmCore.Web.Controllers
 			return Json(response);
 		}
 
-		/// <summary>
-		/// 初始化应用码头
-		/// </summary>
-		[HttpGet]
-		public async Task<ActionResult> GetDockPos()
-		{
-			var response = new ResponseModel<String>();
-			var result = (await _accountServices.GetConfigAsync(AccountId)).DockPosition;
-			response.IsSuccess = true;
-			response.Message = "初始化应用码头成功";
-			response.Model = result;
+		#endregion
 
-			return Json(response);
-		}
+		#region 创建窗口
 
 		/// <summary>
-		/// 获取我的应用
-		/// </summary>
-		[HttpGet]
-		public async Task<ActionResult> GetAccountDeskMembers()
-		{
-			var response = new ResponseModel<IDictionary<String, IList<dynamic>>>();
-			var result = await _deskServices.GetDeskMembersAsync(AccountId);
-			response.IsSuccess = true;
-			response.Message = "获取我的应用成功";
-			response.Model = result;
-
-			return Json(response);
-		}
-
-		/// <summary>
-		/// 获取用户头像
-		/// </summary>
-		[HttpGet]
-		public async Task<ActionResult> GetAccountFace()
-		{
-			var response = new ResponseModel<String>();
-			var result = (await _accountServices.GetConfigAsync(AccountId)).AccountFace;
-			response.IsSuccess = true;
-			response.Message = "获取用户头像成功";
-			response.Model = Appsetting.FileUrl + result;
-
-			return Json(response);
-		}
-
-		/// <summary>
-		/// 创建一个窗口
+		/// 创建窗口
 		/// </summary>
 		[HttpGet, DoNotCheckPermission]
 		public async Task<ActionResult> CreateWindow(Int32 id, String type)
@@ -243,5 +219,65 @@ namespace NewCrmCore.Web.Controllers
 
 			return Json(response);
 		}
+
+		#endregion
+
+		#region 获取账户头像
+
+		/// <summary>
+		/// 获取账户头像
+		/// </summary>
+		[HttpGet]
+		public async Task<ActionResult> GetAccountFace()
+		{
+			var response = new ResponseModel<String>();
+			var result = (await _accountServices.GetConfigAsync(AccountId)).AccountFace;
+			response.IsSuccess = true;
+			response.Message = "获取用户头像成功";
+			response.Model = Appsetting.FileUrl + result;
+
+			return Json(response);
+		}
+
+		#endregion
+
+		#region 初始化应用码头
+
+		/// <summary>
+		/// 初始化应用码头
+		/// </summary>
+		[HttpGet]
+		public async Task<ActionResult> GetDockPos()
+		{
+			var response = new ResponseModel<String>();
+			var result = (await _accountServices.GetConfigAsync(AccountId)).DockPosition;
+			response.IsSuccess = true;
+			response.Message = "初始化应用码头成功";
+			response.Model = result;
+
+			return Json(response);
+		}
+
+		#endregion
+
+		#region 获取账户安装的应用
+
+		/// <summary>
+		/// 获取账户安装的应用
+		/// </summary>
+		[HttpGet]
+		public async Task<ActionResult> GetAccountDeskMembers()
+		{
+			var response = new ResponseModel<IDictionary<String, IList<dynamic>>>();
+			var result = await _deskServices.GetDeskMembersAsync(AccountId);
+			response.IsSuccess = true;
+			response.Message = "获取我的应用成功";
+			response.Model = result;
+
+			return Json(response);
+		}
+
+		#endregion
+	
 	}
 }
