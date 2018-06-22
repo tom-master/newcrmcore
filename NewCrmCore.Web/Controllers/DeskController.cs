@@ -200,9 +200,12 @@ namespace NewCrmCore.Web.Controllers
 		/// 检查成员名称
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> CheckMemberName(String param)
+		public async Task<ActionResult> CheckName(String param)
 		{
+			#region 参数验证
 			new Parameter().Validate(param);
+			#endregion
+
 			var result = await _deskServices.CheckMemberNameAsync(param);
 			return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "成员名称已存在" });
 		}
