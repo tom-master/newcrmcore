@@ -37,7 +37,7 @@ namespace NewCrmCore.Web.Controllers
 		///上传账户头像
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyAccountFace(String accountFace)
+		public async Task<ActionResult> ModifyFace(String accountFace)
 		{
 			#region 参数验证
 			new Parameter().Validate(accountFace);
@@ -55,7 +55,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 修改账户登陆密码
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyAccountPassword(IFormCollection forms)
+		public async Task<ActionResult> ModifyPassword(IFormCollection forms)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);
@@ -76,7 +76,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 修改锁屏密码
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyLockScreenPassword(IFormCollection forms)
+		public async Task<ActionResult> ModifyLockPassword(IFormCollection forms)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);

@@ -27,7 +27,7 @@
                     break;
                 case 5:
                     if (msg.type == 0) {
-                        HROS.request.post('/AccountSetting/ModifyAccountFace', { accountFace: msg.content.avatarUrls }, function (responseText) {
+                        HROS.request.post('/AccountSetting/ModifyFace', { accountFace: msg.content.avatarUrls }, function (responseText) {
                             if (responseText.IsSuccess) {
                                 NewCrm.msgbox.success('账户头像上传成功，刷新查看');
                                 window.parent.HROS.startmenu.getAvatar();
