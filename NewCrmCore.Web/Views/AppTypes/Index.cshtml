@@ -68,7 +68,7 @@
                     //content: '删除 “' + name + '” 类目时，会将该类目下的所有应用归类到「未分类」类目下，是否继续？',
                     content: '删除后将不可恢复！是否继续？',
                     ok: function () {
-                        HROS.request.post('/AppTypes/RemoveAppType', { appTypeId: categoryid }, function (responseText) {
+                        HROS.request.post('/AppTypes/Remove', { appTypeId: categoryid }, function (responseText) {
                             if (responseText.IsSuccess) {
                                 $('#pagination').trigger('currentPage');
                             } else {
@@ -98,7 +98,7 @@
         }
 
         function getPageList(current_page) {
-            HROS.request.get('/AppTypes/GetAppTypes', {
+            HROS.request.get('/AppTypes/GetTypes', {
                 pageIndex: current_page === 0 ? 1 : current_page + 1,
                 pageSize: 10,
                 searchText: $('#searchText').val()

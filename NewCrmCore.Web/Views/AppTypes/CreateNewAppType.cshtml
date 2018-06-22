@@ -4,7 +4,7 @@
 	var appTypeId = Context.Request.Query["appTypeId"];
 }
 
-<form action="/AppTypes/CreateAppType?appTypeId=@appTypeId" method="post" name="form" id="form">
+<form action="/AppTypes/Create?appTypeId=@appTypeId" method="post" name="form" id="form">
 	<input type="hidden" name="ac" value="edit">
 	<div class="creatbox">
 		<div class="middle">
@@ -18,13 +18,13 @@
 						if (Model != null)
 						{
 							<text>
-								<input type="text" name="val_name" value="@Model.Name" datatype="*" ajaxurl="@Url.Action("CheckAppTypeName","AppTypes")" nullmsg="请输入类目名称">
+								<input type="text" name="val_name" value="@Model.Name" datatype="*" ajaxurl="@Url.Action("CheckName","AppTypes")" nullmsg="请输入类目名称">
 							</text>
 						}
 						else
 						{
 							<text>
-								<input type="text" name="val_name" value="" datatype="*" ajaxurl="@Url.Action("CheckAppTypeName","AppTypes")" nullmsg="请输入类目名称">
+								<input type="text" name="val_name" value="" datatype="*" ajaxurl="@Url.Action("CheckName","AppTypes")" nullmsg="请输入类目名称">
 							</text>
 						}
 					}
