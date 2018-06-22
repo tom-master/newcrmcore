@@ -68,28 +68,28 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					}
 
 					var sql = $@"SELECT 
-                    a.MemberType,
-                    a.AppId,
-                    a.AppUrl,
-                    a.DeskIndex,
-                    a.FolderId,
-                    a.Height,
-                    a.IconUrl,
-                    a.Id,
-                    a.IsDraw,
-                    a.IsFlash,
-                    a.IsFull,
-                    a.IsLock,
-                    a.IsMax,
-                    a.IsOnDock,
-                    a.IsOpenMax,
-                    a.IsResize,
-                    a.IsSetbar,
-                    a.Name,
-                    a.Width,
-                    a.AccountId,
-                    a.IsIconByUpload
-                    FROM Member AS a WHERE a.AccountId=@AccountId {where} AND a.IsDeleted=0";
+								a.MemberType,
+								a.AppId,
+								a.AppUrl,
+								a.DeskIndex,
+								a.FolderId,
+								a.Height,
+								a.IconUrl,
+								a.Id,
+								a.IsDraw,
+								a.IsFlash,
+								a.IsFull,
+								a.IsLock,
+								a.IsMax,
+								a.IsOnDock,
+								a.IsOpenMax,
+								a.IsResize,
+								a.IsSetbar,
+								a.Name,
+								a.Width,
+								a.AccountId,
+								a.IsIconByUpload
+								FROM Member AS a WHERE a.AccountId=@AccountId {where} AND a.IsDeleted=0";
 					parameters.Add(new ParameterMapper("@AccountId", accountId));
 					return dataStore.FindOne<Member>(sql, parameters);
 				}
@@ -250,7 +250,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								appId = dataStore.FindSingleValue<Int32>(sql, parameters);
 							}
 							#endregion
+
 							App app = null;
+
 							#region 查询app
 							{
 								var sql = $@"SELECT a.UseCount FROM App AS a WHERE a.Id=@Id AND a.AccountId=@AccountId AND a.IsDeleted=0";

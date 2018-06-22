@@ -10,7 +10,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
 {
-	public class LoggerContext: ILoggerContext
+	public class LoggerContext : ILoggerContext
 	{
 		public async Task AddLoggerAsync(Log log)
 		{
@@ -47,17 +47,13 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 				#region sql
 				{
-					var sql = $@"SELECT TOP (@pageSize) * FROM 
-                                (
-	                                SELECT
-	                                ROW_NUMBER() OVER(ORDER BY a.Id DESC) AS rownumber, 
+					var sql = $@" SELECT
 	                                a.LogLevelEnum,
 	                                a.Controller,
 	                                a.Action,
 	                                a.ExceptionMessage,
 	                                a.Track
-	                                FROM Log AS a WHERE 1=1 {where}
-                                ) AS aa WHERE aa.rownumber>@pageSize*(@pageIndex-1)";
+	                                FROM Log AS a WHERE 1=1 {where} LIMIT @pageSize*(@pageIndex-1),@pageSize";
 					parameters.Add(new ParameterMapper("@pageIndex", pageIndex));
 					parameters.Add(new ParameterMapper("@pageSize", pageSize));
 					return dataStore.Find<Log>(sql, parameters);

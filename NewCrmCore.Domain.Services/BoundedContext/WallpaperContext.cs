@@ -189,6 +189,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						new ParameterMapper("@WallpaperId",wallpaperId),
 						new ParameterMapper("@AccountId",accountId)
 					};
+
 					#region 前置条件验证
 					{
 						var sql = $@"SELECT COUNT(*) FROM Config AS a WHERE a.AccountId=@AccountId AND a.WallpaperId=@WallpaperId AND a.IsDeleted=0";

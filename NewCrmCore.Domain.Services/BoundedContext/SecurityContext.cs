@@ -61,16 +61,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 				#region sql
 				{
-					var sql = $@"SELECT TOP (@pageSize) * FROM 
-                                (
-	                                 SELECT
-	                                ROW_NUMBER() OVER(ORDER BY a.Id DESC) AS rownumber,
-	                                a.Name,
-	                                a.RoleIdentity,
-	                                a.Remark,
-                                    a.Id
-	                                FROM Role AS a WHERE 1=1 {where} AND a.IsDeleted=0
-                                ) AS aa WHERE aa.rownumber>@pageSize*(@pageIndex-1)";
+					var sql = $@"SELECT
+								a.Name,
+								a.RoleIdentity,
+								a.Remark,
+								a.Id
+								FROM Role AS a WHERE 1=1 {where} AND a.IsDeleted=0 LIMIT @pageSize*(@pageIndex-1),@pageSize";
 					parameters.Add(new ParameterMapper("@pageIndex", pageIndex));
 					parameters.Add(new ParameterMapper("@pageSize", pageSize));
 					return dataStore.Find<Role>(sql, parameters);

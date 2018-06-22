@@ -17,7 +17,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
 {
-	public class AccountContext: IAccountContext
+	public class AccountContext : IAccountContext
 	{
 		public async Task<Account> ValidateAsync(String accountName, String password, String requestIp)
 		{
@@ -156,8 +156,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			using (var dataStore = new DataStore(Appsetting.Database))
 			{
-
-
 				#region totalCount
 				{
 					var sql = $@"SELECT COUNT(*) FROM Account AS a 
@@ -168,15 +166,16 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 				#region sql
 				{
-					var sql = $@"SELECT TOP (@pageSize) * FROM 
-                            (
-	                            SELECT ROW_NUMBER() OVER(ORDER BY a.Id DESC) AS rownumber,
-                                a.Id,a.IsAdmin,a.Name,a.IsDisable,a1.AccountFace 
+					var sql = $@"SELECT 
+								a.Id,
+								a.IsAdmin,
+								a.Name,
+								a.IsDisable,
+								a1.AccountFace 
 	                            FROM Account AS a 
 	                            INNER JOIN Config AS a1
 	                            ON a1.AccountId=a.Id AND a1.IsDeleted=0
-	                            {where} 
-                            ) AS a2 WHERE a2.rownumber>@pageSize*(@pageIndex-1)";
+	                            {where} LIMIT @pageSize*(@pageIndex-1),@PageSize";
 					parameters.Add(new ParameterMapper("@pageSize", pageSize));
 					parameters.Add(new ParameterMapper("@pageIndex", pageIndex));
 					return dataStore.Find<Account>(sql, parameters);
@@ -222,13 +221,13 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var sql = $@"SELECT
-                            a1.Id,
-                            a1.Name,
-                            a1.RoleIdentity
-                            FROM AccountRole AS a
-                            INNER JOIN Role AS a1
-                            ON a1.Id=a.RoleId AND a1.IsDeleted=0 
-                            WHERE a.AccountId=@accountId AND a.IsDeleted=0 ";
+								a1.Id,
+								a1.Name,
+								a1.RoleIdentity
+								FROM AccountRole AS a
+								INNER JOIN Role AS a1
+								ON a1.Id=a.RoleId AND a1.IsDeleted=0 
+								WHERE a.AccountId=@accountId AND a.IsDeleted=0 ";
 					var parameters = new List<ParameterMapper> { new ParameterMapper("@accountId", accountId) };
 					return dataStore.Find<Role>(sql, parameters);
 				}

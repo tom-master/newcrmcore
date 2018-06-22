@@ -15,7 +15,7 @@ using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.Application.Services
 {
-	public class AppServices: IAppServices
+	public class AppServices : IAppServices
 	{
 		private readonly IAppContext _appContext;
 		private readonly IDeskContext _deskContext;
@@ -44,7 +44,7 @@ namespace NewCrmCore.Application.Services
 			result.AppIcon = result.IsIconByUpload ? Appsetting.FileUrl + result.AppIcon : result.AppIcon;
 			if (result == null)
 			{
-				return new TodayRecommendAppDto();
+				result = new TodayRecommendAppDto();
 			}
 
 			return result;

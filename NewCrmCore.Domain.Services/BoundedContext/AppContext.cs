@@ -16,7 +16,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
 {
-	public class AppContext: IAppContext
+	public class AppContext : IAppContext
 	{
 		public async Task<Tuple<Int32, Int32>> GetAccountDevelopAppCountAndNotReleaseAppCountAsync(Int32 accountId)
 		{
@@ -123,61 +123,57 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				switch (orderId)
 				{
 					case 1:
-					{
-						orderBy.Append($@" ORDER BY aa.AddTime DESC");
-						break;
-					}
+						{
+							orderBy.Append($@" ORDER BY aa.AddTime DESC");
+							break;
+						}
 					case 2:
-					{
-						orderBy.Append($@" ORDER BY aa.UseCount DESC");
-						break;
-					}
+						{
+							orderBy.Append($@" ORDER BY aa.UseCount DESC");
+							break;
+						}
 					case 3:
-					{
-						orderBy.Append($@" ORDER BY aa.StarCount DESC");
-						break;
-					}
+						{
+							orderBy.Append($@" ORDER BY aa.StarCount DESC");
+							break;
+						}
 				}
 
 				var paging = new PageList<App>();
 				#region totalCount
 				{
 					var sql = $@"SELECT COUNT(*) FROM App AS a 
-                                LEFT JOIN AppStar AS a1
-                                ON a1.AppId=a.Id AND a1.IsDeleted=0 {where}";
+								 LEFT JOIN AppStar AS a1 ON a1.AppId=a.Id AND a1.IsDeleted=0 
+								 {where}";
 					totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
 				}
 				#endregion
 
 				#region sql
 				{
-					var sql = $@"SELECT TOP (@pageSize) * FROM 
-                                (
-	                                SELECT 
-	                                    ROW_NUMBER() OVER(ORDER BY a.AddTime DESC) AS rownumber,
-	                                    a.AppTypeId,
-	                                    a.AccountId,
-	                                    a.AddTime,
-	                                    a.UseCount,
-	                                    (
-		                                    SELECT AVG(stars.StartNum) FROM AppStar AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId
-	                                    ) AS StarCount,
-	                                    a.Name,
-	                                    a.IconUrl,
-	                                    a.Remark,
-	                                    a.AppStyle,
-	                                    a.Id,
-	                                    (
-		                                    CASE 
-			                                    WHEN a1.Id IS NOT NULL THEN CAST(1 AS BIT)
-			                                    ELSE CAST(0 AS BIT)
-		                                    END
-	                                    ) AS IsInstall,
-                                        a.IsIconByUpload
-	                                    FROM App AS a
-	                                    LEFT JOIN Member AS a1 ON a1.AccountId=a.AccountId AND a1.AppId=a.Id AND a1.IsDeleted=0
-                                        {where}
-                                ) AS aa WHERE aa.rownumber>@pageSize*(@pageIndex-1) {orderBy}";
+					var sql = $@"SELECT 
+	                            a.AppTypeId,
+	                            a.AccountId,
+	                            a.AddTime,
+	                            a.UseCount,
+	                            (
+		                            SELECT AVG(stars.StartNum) FROM AppStar AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId
+	                            ) AS StarCount,
+	                            a.Name,
+	                            a.IconUrl,
+	                            a.Remark,
+	                            a.AppStyle,
+	                            a.Id,
+	                            (
+		                            CASE 
+			                            WHEN a1.Id IS NOT NULL THEN CAST(1 AS BIT)
+			                            ELSE CAST(0 AS BIT)
+		                            END
+	                            ) AS IsInstall,
+                                a.IsIconByUpload
+	                            FROM App AS a
+	                            LEFT JOIN Member AS a1 ON a1.AccountId=a.AccountId AND a1.AppId=a.Id AND a1.IsDeleted=0
+                                {where} {orderBy} LIMIT @pageSize*(@pageIndex-1),@pageSize ";
 					parameters.Add(new ParameterMapper("@pageSize", pageSize));
 					parameters.Add(new ParameterMapper("@pageIndex", pageIndex));
 					return dataStore.Find<App>(sql, parameters);
@@ -256,22 +252,18 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 				#region sql
 				{
-					var sql = $@"SELECT TOP (@pageSize) * FROM 
-								(
-									SELECT
-									ROW_NUMBER() OVER(ORDER BY a.Id DESC) AS rownumber,
-									a.Name,
-									a.AppStyle,
-									a.UseCount,
-									a.Id,
-									a.IconUrl,
-									a.AppAuditState,
-									a.IsRecommand,
-									a.AppTypeId,
-									a.AccountId,
-									a.IsIconByUpload
-									FROM App AS a {where} 
-								) AS aa WHERE aa.rownumber>@pageSize*(@pageIndex-1)";
+					var sql = $@"SELECT
+								a.Name,
+								a.AppStyle,
+								a.UseCount,
+								a.Id,
+								a.IconUrl,
+								a.AppAuditState,
+								a.IsRecommand,
+								a.AppTypeId,
+								a.AccountId,
+								a.IsIconByUpload
+								FROM App AS a {where} LIMIT @pageSize*(@pageIndex-1),@pageSize";
 					parameters.Add(new ParameterMapper("@pageIndex", pageIndex));
 					parameters.Add(new ParameterMapper("@pageSize", pageSize));
 					return dataStore.Find<App>(sql, parameters);
