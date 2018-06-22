@@ -200,7 +200,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 检查角色名称
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> CheckRoleName(String param)
+		public async Task<ActionResult> CheckName(String param)
 		{
 			new Parameter().Validate(param);
 			var result = await _securityServices.CheckRoleNameAsync(param);

@@ -22,13 +22,13 @@
                         if (roleResult.Name == null)
                         {
                             <text>
-                                <input type="text" class="text" name="val_roleName" id="val_roleName" ajaxurl="@Url.Action("CheckRoleName","Security")" value="" datatype="*" nullmsg="请输入角色标识" />
+                                <input type="text" class="text" name="val_roleName" id="val_roleName" ajaxurl="@Url.Action("CheckName","Security")" value="" datatype="*" nullmsg="请输入角色标识" />
                             </text>
                         }
                         else
                         {
                             <text>
-                                <input type="text" class="text" name="val_roleName" id="val_roleName" ajaxurl="@Url.Action("CheckRoleName","Security")" value="@roleResult.Name" datatype="*" nullmsg="请输入角色标识" />
+                                <input type="text" class="text" name="val_roleName" id="val_roleName" ajaxurl="@Url.Action("CheckName","Security")" value="@roleResult.Name" datatype="*" nullmsg="请输入角色标识" />
                             </text>
                         }
                     }
