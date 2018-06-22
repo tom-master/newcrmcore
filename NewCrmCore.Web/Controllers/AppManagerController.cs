@@ -99,7 +99,7 @@ namespace NewCrmCore.Web.Controllers
 		/// app审核不通过
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> DenyAsync(Int32 appId)
+		public async Task<ActionResult> Deny(Int32 appId)
 		{
 			#region 参数验证	
 			new Parameter().Validate(appId);
@@ -154,7 +154,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 检查应用名称
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> CheckAppName(String param)
+		public async Task<ActionResult> CheckName(String param)
 		{
 			#region 参数验证
 			new Parameter().Validate(param);
@@ -168,7 +168,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 检查应用Url
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> CheckAppUrl(String param)
+		public async Task<ActionResult> CheckUrl(String param)
 		{
 			#region 参数验证
 			new Parameter().Validate(param);
