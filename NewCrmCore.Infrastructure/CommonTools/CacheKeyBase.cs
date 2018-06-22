@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Threading;
 
 namespace NewCrmCore.Infrastructure.CommonTools
 {
 	public abstract class CacheKeyBase
-	{
-		private Int32 _identity = 0;
+	{ 
+		private CancellationTokenSource _cancellationTokenSource;
+		private Int32 randomSeed = new Random(DateTime.Now.Millisecond).Next(1, 20);
 
-		protected CacheKeyBase(Int32 identity)
+		protected CacheKeyBase()
 		{
-			_identity = identity;
+			_cancellationTokenSource = new CancellationTokenSource(new TimeSpan(0, 0, 3));
 		}
 
 		protected virtual String CachePrefix
@@ -19,16 +21,14 @@ namespace NewCrmCore.Infrastructure.CommonTools
 			}
 		}
 
-		public abstract String Key { get; protected set; }
-
 		/// <summary>
-		/// 查询超时时间
+		/// 获取取消标识
 		/// </summary>
-		public virtual TimeSpan CancelToken
+		public virtual CancellationToken CancelToken
 		{
 			get
 			{
-				return new TimeSpan(0, 0, 3);
+				return _cancellationTokenSource.Token;
 			}
 		}
 
@@ -39,18 +39,15 @@ namespace NewCrmCore.Infrastructure.CommonTools
 		{
 			get
 			{
-				return new TimeSpan(0, 30, 0);
+				return new TimeSpan(0, randomSeed, 0);
 			}
 		}
 
-		protected virtual String ProcessKey()
-		{
-			return String.Format(Key, CachePrefix, _identity);
-		}
-
+		protected abstract String FormatKey();
+		 
 		public String GetKey()
 		{
-			return ProcessKey();
+			return FormatKey();
 		}
 	}
 }

@@ -15,46 +15,44 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
 		public static async Task<TModel> GetCache<TModel>(CacheKeyBase cache, Func<Task<TModel>> func) where TModel : class
 		{
-			var cts = new CancellationTokenSource(cache.CancelToken);
 
-			//TModel cacheResult = null;
-			//try
-			//{
-			//	cacheResult = await Task.Run(() => _cacheQuery.StringGetAsync<TModel>(cache.GetKey()), cts.Token);
-			//}
-			//catch (OperationCanceledException)
-			//{
+			TModel cacheResult = null;
+			try
+			{
+				cacheResult = await Task.Run(() => _cacheQuery.StringGetAsync<TModel>(cache.GetKey()), cache.CancelToken);
+			}
+			catch (OperationCanceledException)
+			{
 
-			//}
+			}
 
-			//if (cacheResult != null)
-			//{
-			//	return cacheResult;
-			//}
+			if (cacheResult != null)
+			{
+				return cacheResult;
+			}
 
 			var dbResult = await func();
-			//_cacheQuery.StringSet(cache.GetKey(), dbResult, cache.KeyTimeout);
+			_cacheQuery.StringSet(cache.GetKey(), dbResult, cache.KeyTimeout);
 			return dbResult;
 		}
 
 		/// <summary>
 		/// 更新时移除旧的缓存键
 		/// </summary>
-		public static void RemoveOldKeyWhenModify(params CacheKeyBase[] caches)
+		public static async Task RemoveOldKeyWhenModify(params CacheKeyBase[] caches)
 		{
-			//if (!caches.Any())
-			//{
-			//	return;
-			//}
+			if (!caches.Any())
+			{
+				return;
+			}
 
-			//foreach (var cache in caches)
-			//{
-			//	if (_cacheQuery.KeyExists(cache.GetKey()))
-			//	{
-			//		_cacheQuery.KeyDelete(cache.GetKey());
-			//	}
-			//}
+			await Task.Run(() =>
+			{
+				foreach (var cache in caches)
+				{
+					_cacheQuery.KeyDelete(cache.GetKey());
+				}
+			});
 		}
-
 	}
 }
