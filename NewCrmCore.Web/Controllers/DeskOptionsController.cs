@@ -90,7 +90,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 设置壁纸显示模式
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyWallpaperDisplayModel(String wallPaperShowType)
+		public async Task<ActionResult> ModifyDisplayModel(String wallPaperShowType)
 		{
 			#region 参数验证
 			new Parameter().Validate(wallPaperShowType);
@@ -141,7 +141,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 删除上传的壁纸
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> RemoveWallpaper(Int32 wallPaperId)
+		public async Task<ActionResult> RemoveUploadWallpaper(Int32 wallPaperId)
 		{
 			#region 参数验证
 			new Parameter().Validate(wallPaperId);
@@ -189,7 +189,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 网络壁纸
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> WebWallPaper(String webUrl)
+		public async Task<ActionResult> WebWallpaper(String webUrl)
 		{
 			#region 参数验证
 			new Parameter().Validate(webUrl);
@@ -264,7 +264,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 更换图标的排列方向
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyAppXy(String appXy)
+		public async Task<ActionResult> ModifyXy(String appXy)
 		{
 			#region 参数验证
 			new Parameter().Validate(appXy);
@@ -283,7 +283,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 更改图标大小
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyAppSize(Int32 appSize)
+		public async Task<ActionResult> ModifySize(Int32 appSize)
 		{
 			#region 参数验证
 			new Parameter().Validate(appSize);
@@ -301,7 +301,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 更改应用图标的垂直间距
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyAppVertical(Int32 appVertical)
+		public async Task<ActionResult> ModifyVerticalSpace(Int32 appVertical)
 		{
 			#region 参数验证
 			new Parameter().Validate(appVertical);
@@ -319,7 +319,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 更改图标的水平间距
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyAppHorizontal(Int32 appHorizontal)
+		public async Task<ActionResult> ModifyHorizontalSpace(Int32 appHorizontal)
 		{
 			#region 参数验证
 			new Parameter().Validate(appHorizontal);

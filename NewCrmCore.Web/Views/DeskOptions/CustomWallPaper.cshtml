@@ -105,7 +105,7 @@
             $('.wapppapercustom .view').on('click', 'li a', function (event) {
                 event.stopPropagation();
                 var id = $(this).parent().attr('id');
-                HROS.request.post("/DeskOptions/RemoveWallpaper", { wallPaperId: id }, function (responseText) {
+                HROS.request.post("/DeskOptions/RemoveUploadWallpaper", { wallPaperId: id }, function (responseText) {
                     if (responseText.IsSuccess) {
                         NewCrm.msgbox.success('壁纸移除成功');
                         $('#' + id).remove();
@@ -142,7 +142,7 @@
             if (!webUrl) {
                 NewCrm.msgbox.info('请输入一个合法的url地址');
             } else {
-                HROS.request.post("/DeskOptions/WebWallPaper", { webUrl: webUrl }, function (responseText) {
+                HROS.request.post("/DeskOptions/WebWallpaper", { webUrl: webUrl }, function (responseText) {
                     if (parseInt(responseText.Model.Item1) === 0) {
                         NewCrm.msgbox.fail('未能获取到所指定的网络图片');
                     } else {

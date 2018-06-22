@@ -3505,7 +3505,7 @@ HROS.app = (function () {
         updateXY: function (i) {
             if (HROS.CONFIG.appXY !== i) {
                 if (HROS.base.checkLogin()) {
-                    HROS.request.post('/DeskOptions/ModifyAppXy', { appXy: i }, function (responseText) {
+                    HROS.request.post('/DeskOptions/ModifyXy', { appXy: i }, function (responseText) {
                         if (responseText.IsSuccess) {
                             HROS.CONFIG.appXY = i.toLowerCase();
                             HROS.deskTop.resize();
@@ -3525,7 +3525,7 @@ HROS.app = (function () {
                 HROS.CONFIG.appSize = i;
                 HROS.deskTop.resize();
                 if (HROS.base.checkLogin()) {
-                    HROS.request.post('/DeskOptions/ModifyAppSize', { appSize: i }, function (responseText) {
+                    HROS.request.post('/DeskOptions/ModifySize', { appSize: i }, function (responseText) {
                         if (responseText.IsSuccess) {
                             NewCrm.msgbox.success('更新应用显示尺寸成功');
                         } else {
@@ -3544,7 +3544,7 @@ HROS.app = (function () {
                 HROS.CONFIG.appVerticalSpacing = i;
                 HROS.deskTop.resize();
                 if (HROS.base.checkLogin()) {
-                    HROS.request.post('/DeskOptions/ModifyAppVertical', { appVertical: i }, function (responseText) {
+                    HROS.request.post('/DeskOptions/ModifyVerticalSpace', { appVertical: i }, function (responseText) {
                         if (responseText.IsSuccess) {
                             NewCrm.msgbox.success('更新应用垂直间距成功');
                         } else {
@@ -3562,7 +3562,7 @@ HROS.app = (function () {
                 HROS.CONFIG.appHorizontalSpacing = i;
                 HROS.deskTop.resize();
                 if (HROS.base.checkLogin()) {
-                    HROS.request.post('/DeskOptions/ModifyAppHorizontal', { appHorizontal: i }, function (responseText) {
+                    HROS.request.post('/DeskOptions/ModifyHorizontalSpace', { appHorizontal: i }, function (responseText) {
                         if (responseText.IsSuccess) {
                             NewCrm.msgbox.success('更新应用水平间距成功');
                         } else {
@@ -7827,7 +7827,7 @@ HROS.wallpaper = (function () {
             }
             if (HROS.base.checkLogin()) {
                 if (wallpaperId === '') {
-                    HROS.request.post('/DeskOptions/ModifyWallpaperDisplayModel', { wallPaperShowType: wallpaperShowType }, function (responseText) {
+                    HROS.request.post('/DeskOptions/ModifyDisplayModel', { wallPaperShowType: wallpaperShowType }, function (responseText) {
                         if (responseText.IsSuccess) {
                             NewCrm.msgbox.success("壁纸显示模式设置成功！")
                             done();
