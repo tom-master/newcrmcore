@@ -12,7 +12,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Web.Controllers
 {
-	public class SecurityController: BaseController
+	public class SecurityController : BaseController
 	{
 		private readonly ISecurityServices _securityServices;
 		private readonly IAppServices _appServices;
@@ -93,21 +93,7 @@ namespace NewCrmCore.Web.Controllers
 
 		#endregion
 
-		/// <summary>
-		/// 获取所有的角色
-		/// </summary>
-		[HttpGet]
-		public async Task<ActionResult> GetRoles(String roleName, Int32 pageIndex, Int32 pageSize)
-		{
-			var response = new ResponseModels<IList<RoleDto>>();
-			var result = await _securityServices.GetRolesAsync(roleName, pageIndex, pageSize);
-			response.IsSuccess = true;
-			response.Message = "获取角色列表成功";
-			response.Model = result.Models;
-			response.TotalCount = result.TotalCount;
-
-			return Json(response);
-		}
+		#region 移除角色
 
 		/// <summary>
 		/// 移除角色
@@ -126,6 +112,10 @@ namespace NewCrmCore.Web.Controllers
 
 			return Json(response);
 		}
+
+		#endregion
+
+		#region 添加角色
 
 		/// <summary>
 		/// 添加角色
@@ -154,11 +144,85 @@ namespace NewCrmCore.Web.Controllers
 			return Json(response);
 		}
 
+		#endregion
+
+		#region 选择应用
+
 		/// <summary>
-		/// 将权限附加到角色中
+		/// 选择应用
+		/// </summary>
+		[HttpGet]
+		public async Task<ActionResult> GetSystemApp(String appIds)
+		{
+			var response = new ResponseModel<IList<AppDto>>();
+			var internalAppIds = appIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(Int32.Parse).ToArray();
+			var result = await _appServices.GetSystemAppAsync(internalAppIds);
+			response.IsSuccess = true;
+			response.Message = "选择系统app成功";
+			response.Model = result;
+
+			return Json(response);
+		}
+
+		#endregion
+
+		#region 获取所有角色
+
+		/// <summary>
+		/// 获取所有角色
+		/// </summary>
+		[HttpGet]
+		public async Task<ActionResult> GetRoles(String roleName, Int32 pageIndex, Int32 pageSize)
+		{
+			var response = new ResponseModels<IList<RoleDto>>();
+			var result = await _securityServices.GetRolesAsync(roleName, pageIndex, pageSize);
+			response.IsSuccess = true;
+			response.Message = "获取角色列表成功";
+			response.Model = result.Models;
+			response.TotalCount = result.TotalCount;
+
+			return Json(response);
+		}
+
+		#endregion
+
+		#region 检查角色名称
+
+		/// <summary>
+		/// 检查角色名称
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> AddPowerToRole(IFormCollection forms)
+		public async Task<ActionResult> CheckName(String param)
+		{
+			new Parameter().Validate(param);
+			var result = await _securityServices.CheckRoleNameAsync(param);
+			return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "角色名称已存在" });
+		}
+
+		#endregion
+
+		#region 检查角色标识
+
+		/// <summary>
+		/// 检查角色标识
+		/// </summary>
+		[HttpPost]
+		public async Task<ActionResult> CheckRoleIdentity(String param)
+		{
+			new Parameter().Validate(param);
+			var result = await _securityServices.CheckRoleIdentityAsync(param);
+			return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "角色标识已存在" });
+		}
+
+		#endregion
+
+		#region 将应用附加到角色
+
+		/// <summary>
+		/// 将应用附加到角色
+		/// </summary>
+		[HttpPost]
+		public async Task<ActionResult> AddAppToRole(IFormCollection forms)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);
@@ -180,44 +244,7 @@ namespace NewCrmCore.Web.Controllers
 			return Json(response);
 		}
 
-		/// <summary>
-		/// 选择系统app
-		/// </summary>
-		[HttpGet]
-		public async Task<ActionResult> GetSystemApp(String appIds)
-		{
-			var response = new ResponseModel<IList<AppDto>>();
-			var internalAppIds = appIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(Int32.Parse).ToArray();
-			var result = await _appServices.GetSystemAppAsync(internalAppIds);
-			response.IsSuccess = true;
-			response.Message = "选择系统app成功";
-			response.Model = result;
-
-			return Json(response);
-		}
-
-		/// <summary>
-		/// 检查角色名称
-		/// </summary>
-		[HttpPost]
-		public async Task<ActionResult> CheckName(String param)
-		{
-			new Parameter().Validate(param);
-			var result = await _securityServices.CheckRoleNameAsync(param);
-			return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "角色名称已存在" });
-		}
-
-		/// <summary>
-		/// 检查角色标识
-		/// </summary>
-		[HttpPost]
-		public async Task<ActionResult> CheckRoleIdentity(String param)
-		{
-			new Parameter().Validate(param);
-			var result = await _securityServices.CheckRoleIdentityAsync(param);
-			return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "角色标识已存在" });
-		}
-
+		#endregion
 
 		#region private method
 

@@ -9,7 +9,7 @@ using NewCrmCore.Web.Controllers.ControllerHelper;
 
 namespace NewCrmCore.Web.Controllers
 {
-	public class LogController: BaseController
+	public class LogController : BaseController
 	{
 		private readonly ILoggerServices _loggerServices;
 
@@ -31,6 +31,8 @@ namespace NewCrmCore.Web.Controllers
 
 		#endregion
 
+		#region 获取日志列表
+
 		/// <summary>
 		/// 获取日志列表
 		/// </summary>
@@ -46,5 +48,7 @@ namespace NewCrmCore.Web.Controllers
 
 			return Json(response);
 		}
+
+		#endregion
 	}
 }
