@@ -3733,7 +3733,7 @@ HROS.app = (function () {
                 callback && callback();
             }
             if (HROS.base.checkLogin()) {
-                HROS.request.post('/Desk/UninstallMember', { memberId: parseInt(id) }, function (responseText) {
+                HROS.request.post('/Desk/Uninstall', { memberId: parseInt(id) }, function (responseText) {
                     if (responseText.IsSuccess) {
                         done();
                         NewCrm.msgbox.success('移除成功，刷新后查看')
@@ -7148,7 +7148,7 @@ HROS.popupMenu = (function () {
                             }),
                             ok: function () {
                                 if ($('#folderName').val() != '') {
-                                    HROS.request.post('/Desk/CreateNewFolder', {
+                                    HROS.request.post('/Desk/CreateFolder', {
                                         folderName: $('#folderName').val(),
                                         folderImg: $('.folderSelector img').attr('src'),
                                         deskId: HROS.CONFIG.desk

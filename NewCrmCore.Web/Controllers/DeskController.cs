@@ -143,7 +143,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 更新图标
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyMemberIcon(Int32 memberId, String newIcon)
+		public async Task<ActionResult> ModifyIcon(Int32 memberId, String newIcon)
 		{
 			#region 参数验证
 			new Parameter().Validate(memberId).Validate(newIcon);
@@ -163,7 +163,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 卸载桌面的成员
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> UninstallMember(Int32 memberId)
+		public async Task<ActionResult> Uninstall(Int32 memberId)
 		{
 			#region 参数验证
 			new Parameter().Validate(memberId);
@@ -182,7 +182,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpPost]
-		public async Task<ActionResult> CreateNewFolder(String folderName, String folderImg, Int32 deskId)
+		public async Task<ActionResult> CreateFolder(String folderName, String folderImg, Int32 deskId)
 		{
 			#region 参数验证
 			new Parameter().Validate(folderName).Validate(folderImg).Validate(deskId);

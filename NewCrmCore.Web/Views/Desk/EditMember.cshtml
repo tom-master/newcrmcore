@@ -147,7 +147,7 @@
 
                 if (cb[0].IsSuccess) {
                     var urlPart = cb[0].Url
-                    HROS.request.post('/Desk/ModifyMemberIcon',{ memberId: '@Model.Id', newIcon: urlPart },function () {
+                    HROS.request.post('/Desk/ModifyIcon',{ memberId: '@Model.Id', newIcon: urlPart },function () {
                         if (responseText.IsSuccess) {
                             $('#isIconByUpload').val('1');
                             $('.shortcutview img').attr('src', responseText.Model);
