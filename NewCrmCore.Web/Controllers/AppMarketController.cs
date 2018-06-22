@@ -131,7 +131,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 给app打分
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyAppStart(Int32 appId, Int32 starCount)
+		public async Task<ActionResult> ModifyStar(Int32 appId, Int32 starCount)
 		{
 			#region 参数验证
 			new Parameter().Validate(appId).Validate(starCount);
@@ -149,7 +149,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 安装app
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> InstallApp(Int32 appId, Int32 deskNum)
+		public async Task<ActionResult> Install(Int32 appId, Int32 deskNum)
 		{
 			#region 参数验证
 			new Parameter().Validate(appId).Validate(deskNum);
@@ -190,7 +190,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 修改app信息
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyAppInfo(IFormCollection forms)
+		public async Task<ActionResult> ModifyInfo(IFormCollection forms)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);
@@ -208,7 +208,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 更新图标
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyAppIcon(Int32 appId, String newIcon)
+		public async Task<ActionResult> ModifyIcon(Int32 appId, String newIcon)
 		{
 			#region 参数验证
 			new Parameter().Validate(appId).Validate(newIcon);
@@ -228,7 +228,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 创建新的app
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> CreateApp(IFormCollection forms)
+		public async Task<ActionResult> Create(IFormCollection forms)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);
@@ -250,7 +250,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 审核通过后发布app
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ReleaseApp(Int32 appId)
+		public async Task<ActionResult> Release(Int32 appId)
 		{
 			#region 参数验证
 			new Parameter().Validate(appId);
@@ -268,7 +268,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 删除用户开发的app
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> RemoveApp(Int32 appId)
+		public async Task<ActionResult> Remove(Int32 appId)
 		{
 			#region 参数验证
 			new Parameter().Validate(appId);

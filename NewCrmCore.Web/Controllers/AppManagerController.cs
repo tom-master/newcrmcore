@@ -135,7 +135,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 删除app
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> RemoveApp(Int32 appId)
+		public async Task<ActionResult> Remove(Int32 appId)
 		{
 			#region 参数验证	
 			new Parameter().Validate(appId);

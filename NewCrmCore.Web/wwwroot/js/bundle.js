@@ -3712,7 +3712,7 @@ HROS.app = (function () {
                 callback && callback();
             }
             if (HROS.base.checkLogin()) {
-                HROS.request.post('/AppMarket/InstallApp', { appId: id, deskNum: HROS.CONFIG.desk }, function (responseText) {
+                HROS.request.post('/AppMarket/Install', { appId: id, deskNum: HROS.CONFIG.desk }, function (responseText) {
                     if (responseText.IsSuccess) {
                         done();
                     } else {

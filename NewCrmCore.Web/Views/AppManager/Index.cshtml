@@ -157,7 +157,7 @@
                     id: 'del',
                     content: '确定要删除 “' + appname + '” 该应用么？',
                     ok: function () {
-                        HROS.request.post('/AppManager/RemoveApp', { appId: appid }, function (responseText) {
+                        HROS.request.post('/AppManager/Remove', { appId: appid }, function (responseText) {
                             if (responseText.IsSuccess) {
                                 $('#pagination').trigger('currentPage');
                             } else {

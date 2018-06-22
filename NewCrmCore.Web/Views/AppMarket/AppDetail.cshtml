@@ -100,7 +100,7 @@
                 var num = $(this).attr('num');
                 if (!isNaN(num) && /^[1-5]$/.test(num)) {
                     if (window.parent.parent.HROS.base.checkLogin()) {
-                        HROS.request.post('/AppMarket/ModifyAppStart', { appId: '@Model.Id', starCount: num }, function (responseText) {
+                        HROS.request.post('/AppMarket/ModifyStar', { appId: '@Model.Id', starCount: num }, function (responseText) {
                             if (responseText.IsSuccess) {
                                 NewCrm.msgbox.success("打分成功！");
                                 setTimeout(function () {
