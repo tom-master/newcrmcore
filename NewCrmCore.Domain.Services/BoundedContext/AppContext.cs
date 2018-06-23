@@ -16,7 +16,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
 {
-	public class AppContext : IAppContext
+	public class AppContext: IAppContext
 	{
 		public async Task<Tuple<Int32, Int32>> GetAccountDevelopAppCountAndNotReleaseAppCountAsync(Int32 accountId)
 		{
@@ -123,20 +123,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				switch (orderId)
 				{
 					case 1:
-						{
-							orderBy.Append($@" ORDER BY aa.AddTime DESC");
-							break;
-						}
+					{
+						orderBy.Append($@" ORDER BY aa.AddTime DESC");
+						break;
+					}
 					case 2:
-						{
-							orderBy.Append($@" ORDER BY aa.UseCount DESC");
-							break;
-						}
+					{
+						orderBy.Append($@" ORDER BY aa.UseCount DESC");
+						break;
+					}
 					case 3:
-						{
-							orderBy.Append($@" ORDER BY aa.StarCount DESC");
-							break;
-						}
+					{
+						orderBy.Append($@" ORDER BY aa.StarCount DESC");
+						break;
+					}
 				}
 
 				var paging = new PageList<App>();
@@ -263,9 +263,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a.AppTypeId,
 								a.AccountId,
 								a.IsIconByUpload
-								FROM App AS a {where} LIMIT @pageSize*(@pageIndex-1),@pageSize";
-					parameters.Add(new ParameterMapper("@pageIndex", pageIndex));
-					parameters.Add(new ParameterMapper("@pageSize", pageSize));
+								FROM App AS a {where} LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
+
 					return dataStore.Find<App>(sql, parameters);
 				}
 				#endregion

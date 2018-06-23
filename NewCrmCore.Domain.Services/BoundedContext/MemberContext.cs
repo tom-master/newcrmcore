@@ -58,7 +58,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					if (isFolder)
 					{
 						parameters.Add(new ParameterMapper("@Id", memberId));
-						parameters.Add(new ParameterMapper("@MemberType",  MemberType.Folder.ToInt32()));
+						parameters.Add(new ParameterMapper("@MemberType", MemberType.Folder.ToInt32()));
 						where.Append($@" AND a.Id=@Id AND a.MemberType=@MemberType");
 					}
 					else

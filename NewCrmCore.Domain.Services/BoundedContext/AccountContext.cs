@@ -17,7 +17,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
 {
-	public class AccountContext : IAccountContext
+	public class AccountContext: IAccountContext
 	{
 		public async Task<Account> ValidateAsync(String accountName, String password, String requestIp)
 		{
@@ -175,9 +175,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                            FROM Account AS a 
 	                            INNER JOIN Config AS a1
 	                            ON a1.AccountId=a.Id AND a1.IsDeleted=0
-	                            {where} LIMIT @pageSize*(@pageIndex-1),@PageSize";
-					parameters.Add(new ParameterMapper("@pageSize", pageSize));
-					parameters.Add(new ParameterMapper("@pageIndex", pageIndex));
+	                            {where} LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
 					return dataStore.Find<Account>(sql, parameters);
 				}
 				#endregion

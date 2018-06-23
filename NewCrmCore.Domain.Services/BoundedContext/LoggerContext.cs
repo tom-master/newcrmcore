@@ -53,9 +53,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                                a.Action,
 	                                a.ExceptionMessage,
 	                                a.Track
-	                                FROM Log AS a WHERE 1=1 {where} LIMIT @pageSize*(@pageIndex-1),@pageSize";
-					parameters.Add(new ParameterMapper("@pageIndex", pageIndex));
-					parameters.Add(new ParameterMapper("@pageSize", pageSize));
+	                                FROM Log AS a WHERE 1=1 {where} LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
 					return dataStore.Find<Log>(sql, parameters);
 				}
 				#endregion
