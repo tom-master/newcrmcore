@@ -81,7 +81,7 @@ namespace NewCrmCore.Web.Controllers
 		public async Task<ActionResult> Enable(Int32 accountId)
 		{
 			#region 参数验证
-			new Parameter().Validate(accountId).Validate(isDisable);
+			new Parameter().Validate(accountId);
 			#endregion
 
 			var response = new ResponseModel<String>();
