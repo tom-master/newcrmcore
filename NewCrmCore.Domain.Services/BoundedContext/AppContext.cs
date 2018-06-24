@@ -67,11 +67,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             ) AS AppStars,
                             (
 	                            CASE 
-								WHEN a2.Id IS NULL THEN CAST(0 AS BIT)
-								ELSE CAST(1 AS BIT)
+								WHEN a2.Id IS NULL THEN FALSE
+								ELSE TRUE
 								END
                             ) AS IsInstall,
-                            ISNULL(a.IsIconByUpload,0) AS IsIconByUpload
+                            IFNULL(a.IsIconByUpload,0) AS IsIconByUpload
                             FROM App AS a 
 							LEFT JOIN Member AS a2 ON a2.AccountId=@accountId AND a2.IsDeleted=0 AND a2.AppId=a.Id
                             WHERE a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState AND a.IsRecommand=1";
@@ -124,17 +124,17 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					case 1:
 					{
-						orderBy.Append($@" ORDER BY aa.AddTime DESC");
+						orderBy.Append($@" ORDER BY a.AddTime DESC");
 						break;
 					}
 					case 2:
 					{
-						orderBy.Append($@" ORDER BY aa.UseCount DESC");
+						orderBy.Append($@" ORDER BY a.UseCount DESC");
 						break;
 					}
 					case 3:
 					{
-						orderBy.Append($@" ORDER BY aa.StarCount DESC");
+						orderBy.Append($@" ORDER BY (SELECT AVG(stars.StartNum) FROM AppStar AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId) DESC");
 						break;
 					}
 				}
@@ -166,16 +166,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                            a.Id,
 	                            (
 		                            CASE 
-			                            WHEN a1.Id IS NOT NULL THEN CAST(1 AS BIT)
-			                            ELSE CAST(0 AS BIT)
+			                            WHEN a1.Id IS NOT NULL THEN FALSE
+			                            ELSE TRUE
 		                            END
 	                            ) AS IsInstall,
                                 a.IsIconByUpload
 	                            FROM App AS a
 	                            LEFT JOIN Member AS a1 ON a1.AccountId=a.AccountId AND a1.AppId=a.Id AND a1.IsDeleted=0
-                                {where} {orderBy} LIMIT @pageSize*(@pageIndex-1),@pageSize ";
-					parameters.Add(new ParameterMapper("@pageSize", pageSize));
-					parameters.Add(new ParameterMapper("@pageIndex", pageIndex));
+                                {where} {orderBy} LIMIT {pageSize * (pageIndex - 1)},{pageSize }";
 					return dataStore.Find<App>(sql, parameters);
 				}
 				#endregion
