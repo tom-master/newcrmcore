@@ -4,7 +4,7 @@ using System.DrawingCore;
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using NewCrmCore.Infrastructure;
+//using NewCrmCore.Infrastructure;
 
 namespace NewCrmCore.FileServices.Controllers
 {
@@ -56,7 +56,7 @@ namespace NewCrmCore.FileServices.Controllers
 					return Json(responses);
 				}
 
-				if (String.IsNullOrEmpty(Appsetting.FileStorage))
+				if (String.IsNullOrEmpty($@"C:\files"/*Appsetting.FileStorage*/))
 				{
 					responses.Add(new
 					{
@@ -78,57 +78,50 @@ namespace NewCrmCore.FileServices.Controllers
 							IsSuccess = false,
 							Message = $@"后缀名为：{fileExtension}的文件禁止上传"
 						});
+
+						continue;
 					}
-					else
+
+					var requestFile = RequestFile.Create(accountId, uploadType, fileExtension);
+					if (!requestFile.CreatePhysicalFile(file))
 					{
-						var requestFile = RequestFile.Create(accountId, uploadType, fileExtension);
-						var stream = file.OpenReadStream();
-						var bytes = new byte[stream.Length];
-
-						using (var fileStream = new FileStream(requestFile.FullPath, FileMode.Create, FileAccess.Write))
+						responses.Add(new
 						{
-							stream.Read(bytes, 0, bytes.Length);
-							fileStream.Write(bytes, 0, bytes.Length);
-						}
+							IsSuccess = false,
+							Message = $@"文件上传失败"
+						});
 
-						if (!System.IO.File.Exists(requestFile.FullPath))
-						{
-							responses.Add(new
-							{
-								IsSuccess = false,
-								Message = $@"文件上传失败"
-							});
-						}
-
-						using (var originalImage = Image.FromFile(requestFile.FullPath))
-						{
-							requestFile.Image = originalImage;
-
-							if (requestFile.FileType == FileType.Icon)
-							{
-								requestFile.GetReducedImage(49, 49);
-								responses.Add(new { IsSuccess = true, requestFile.Url });
-							}
-							else if (requestFile.FileType == FileType.Face)
-							{
-								requestFile.GetReducedImage(20, 20);
-								return Json(new { avatarUrls = requestFile.Url, msg = "", success = true });
-							}
-							else
-							{
-								responses.Add(new
-								{
-									IsSuccess = true,
-									originalImage.Width,
-									originalImage.Height,
-									Title = "",
-									requestFile.Url,
-									Md5 = requestFile.GetMD5(stream),
-								});
-							}
-						}
-
+						continue;
 					}
+
+					//using (var originalImage = Image.FromFile(requestFile.FullPath))
+					//{
+					//	requestFile.Image = originalImage;
+
+					//	if (requestFile.FileType == FileType.Icon)
+					//	{
+					//		requestFile.GetReducedImage(49, 49);
+					//		responses.Add(new { IsSuccess = true, requestFile.Url });
+					//	}
+					//	else if (requestFile.FileType == FileType.Face)
+					//	{
+					//		requestFile.GetReducedImage(20, 20);
+					//		return Json(new { avatarUrls = requestFile.Url, msg = "", success = true });
+					//	}
+					//	else
+					//	{
+					//		responses.Add(new
+					//		{
+					//			IsSuccess = true,
+					//			originalImage.Width,
+					//			originalImage.Height,
+					//			Title = "",
+					//			requestFile.Url,
+					//			Md5 = requestFile.GetMD5(stream),
+					//		});
+					//	}
+					//}
+
 				}
 			}
 			catch (Exception ex)

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Http;
-using NewCrmCore.Infrastructure;
+//using NewCrmCore.Infrastructure;
 
 namespace NewCrmCore.FileServices.Controllers
 {
@@ -26,8 +26,6 @@ namespace NewCrmCore.FileServices.Controllers
 
 		public String Url { get; set; }
 
-		public Image Image { get; set; }
-
 		public FileType FileType { get; set; }
 
 		public void ResetUrl()
@@ -37,7 +35,7 @@ namespace NewCrmCore.FileServices.Controllers
 				return;
 			}
 
-			Url = FullPath.Replace(Appsetting.FileStorage, "");
+			Url = FullPath.Replace($@"C:\files", "");
 		}
 
 		public static FileType GetFileType(string fileType)
@@ -86,7 +84,7 @@ namespace NewCrmCore.FileServices.Controllers
 				requestFile = new RequestImage();
 			}
 
-			var fileFullPath = $@"{Appsetting.FileStorage}/{accountId}/{middlePath}/";
+			var fileFullPath = $@"C:\files/{accountId}/{middlePath}/";
 			var fileName = $@"{Guid.NewGuid().ToString().Replace("-", "")}.{fileExtension}";
 			if (!Directory.Exists(fileFullPath))
 			{
@@ -101,9 +99,21 @@ namespace NewCrmCore.FileServices.Controllers
 			return requestFile;
 		}
 
+		public virtual Boolean CreatePhysicalFile(IFormFile file)
+		{
+			var stream = file.OpenReadStream();
+			var bytes = new byte[stream.Length];
 
+			using (var fileStream = new FileStream(FullPath, FileMode.Create, FileAccess.Write))
+			{
+				stream.Read(bytes, 0, bytes.Length);
+				fileStream.Write(bytes, 0, bytes.Length);
+			}
 
-		public virtual void GetReducedImage(int width, int height)
+			return File.Exists(FullPath);
+		}
+
+		protected virtual void CreateThumbnail(int width, int height)
 		{
 			throw new NotImplementedException();
 		}
@@ -111,7 +121,37 @@ namespace NewCrmCore.FileServices.Controllers
 
 	internal sealed class RequestImage : RequestFile
 	{
-		public override void GetReducedImage(int width, int height)
+		public Image Image { get; set; }
+
+		public override bool CreatePhysicalFile(IFormFile file)
+		{
+			try
+			{
+				base.CreatePhysicalFile(file);
+
+				using (var originalImage = Image.FromFile(FullPath))
+				{
+					Image = originalImage;
+
+					if (FileType == FileType.Icon)
+					{
+						CreateThumbnail(49, 49);
+					}
+					else if (FileType == FileType.Face)
+					{
+						CreateThumbnail(20, 20);
+					}
+				}
+				return true;
+
+			}
+			catch (Exception)
+			{
+				return false;
+			}
+		}
+
+		protected override void CreateThumbnail(int width, int height)
 		{
 			// 源图宽度及高度 
 			var imageFromWidth = Image.Width;
