@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.ComponentModel;
 using System.DrawingCore;
 using System.DrawingCore.Imaging;
@@ -6,8 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using Microsoft.AspNetCore.Http;
-//using NewCrmCore.Infrastructure;
 
 namespace NewCrmCore.FileServices.Controllers
 {
@@ -35,7 +34,7 @@ namespace NewCrmCore.FileServices.Controllers
 				return;
 			}
 
-			Url = FullPath.Replace($@"C:/files", "");
+			Url = FullPath.Replace(Appsetting.FileStorage, "");
 		}
 
 		internal static FileType GetFileType(string fileType)
@@ -84,7 +83,7 @@ namespace NewCrmCore.FileServices.Controllers
 				requestFile = new RequestImage();
 			}
 
-			var path = $@"C:/files/{accountId}/{internalFileType}/";
+			var path = $@"{Appsetting.FileStorage}/{accountId}/{internalFileType}/";
 			var fileName = $@"{Guid.NewGuid().ToString().Replace("-", "")}.{fileExtension}";
 			if (!Directory.Exists(path))
 			{
@@ -154,7 +153,7 @@ namespace NewCrmCore.FileServices.Controllers
 				return false;
 			}
 		}
-
+		
 		private void CreateThumbnail(int width, int height)
 		{
 			// 源图宽度及高度 
@@ -178,7 +177,7 @@ namespace NewCrmCore.FileServices.Controllers
 
 					//将图片以指定的格式保存到到指定的位置
 					var newName = $@"small_{Guid.NewGuid().ToString().Replace("-", "")}.png";
-					var newFileFullPath = $@"{Path}{newName}";
+					var newFileFullPath = System.IO.Path.Combine(Path, newName);
 					FullPath = newFileFullPath;
 					ParseToRelativePath();
 					reducedImage.Save(newFileFullPath, ImageFormat.Png);

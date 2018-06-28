@@ -1,10 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
-using System.DrawingCore;
-using System.IO;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-//using NewCrmCore.Infrastructure;
 
 namespace NewCrmCore.FileServices.Controllers
 {
@@ -56,7 +52,7 @@ namespace NewCrmCore.FileServices.Controllers
 					return Json(responses);
 				}
 
-				if (String.IsNullOrEmpty($@"C:/files"/*Appsetting.FileStorage*/))
+				if (String.IsNullOrEmpty(Appsetting.FileStorage))
 				{
 					responses.Add(new
 					{
