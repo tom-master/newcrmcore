@@ -127,7 +127,10 @@ namespace NewCrmCore.FileServices.Controllers
 		{
 			try
 			{
-				base.CreatePhysicalFile(file);
+				if (!base.CreatePhysicalFile(file))
+				{
+					return false;
+				}
 
 				using (var originalImage = Image.FromFile(FullPath))
 				{
@@ -143,7 +146,6 @@ namespace NewCrmCore.FileServices.Controllers
 					}
 				}
 				return true;
-
 			}
 			catch (Exception)
 			{

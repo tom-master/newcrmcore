@@ -71,7 +71,7 @@ namespace NewCrmCore.FileServices.Controllers
 				{
 					var file = files[i];
 					var fileExtension = RequestFile.GetFileExtension(file);
-					if (!String.IsNullOrEmpty(fileExtension))
+					if (String.IsNullOrEmpty(fileExtension))
 					{
 						responses.Add(new
 						{
@@ -135,7 +135,5 @@ namespace NewCrmCore.FileServices.Controllers
 
 			return Json(responses);
 		}
-
-
 	}
 }
