@@ -56,7 +56,7 @@ namespace NewCrmCore.FileServices.Controllers
 					return Json(responses);
 				}
 
-				if (String.IsNullOrEmpty($@"C:\files"/*Appsetting.FileStorage*/))
+				if (String.IsNullOrEmpty($@"C:/files"/*Appsetting.FileStorage*/))
 				{
 					responses.Add(new
 					{
@@ -82,7 +82,7 @@ namespace NewCrmCore.FileServices.Controllers
 						continue;
 					}
 
-					var requestFile = RequestFile.Create(accountId, uploadType, fileExtension);
+					var requestFile = RequestFile.BuilderRequestFile(accountId, uploadType, fileExtension);
 					if (!requestFile.CreatePhysicalFile(file))
 					{
 						responses.Add(new
@@ -94,34 +94,7 @@ namespace NewCrmCore.FileServices.Controllers
 						continue;
 					}
 
-					//using (var originalImage = Image.FromFile(requestFile.FullPath))
-					//{
-					//	requestFile.Image = originalImage;
-
-					//	if (requestFile.FileType == FileType.Icon)
-					//	{
-					//		requestFile.GetReducedImage(49, 49);
-					//		responses.Add(new { IsSuccess = true, requestFile.Url });
-					//	}
-					//	else if (requestFile.FileType == FileType.Face)
-					//	{
-					//		requestFile.GetReducedImage(20, 20);
-					//		return Json(new { avatarUrls = requestFile.Url, msg = "", success = true });
-					//	}
-					//	else
-					//	{
-					//		responses.Add(new
-					//		{
-					//			IsSuccess = true,
-					//			originalImage.Width,
-					//			originalImage.Height,
-					//			Title = "",
-					//			requestFile.Url,
-					//			Md5 = requestFile.GetMD5(stream),
-					//		});
-					//	}
-					//}
-
+					responses.Add(requestFile.GetResult());
 				}
 			}
 			catch (Exception ex)

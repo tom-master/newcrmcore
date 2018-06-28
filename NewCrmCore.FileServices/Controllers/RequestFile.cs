@@ -13,32 +13,32 @@ namespace NewCrmCore.FileServices.Controllers
 {
 	internal class RequestFile
 	{
-		public static String[] ExtensionBlackList
+		internal static String[] ExtensionBlackList
 		{
 			get { return new[] { ".exe", ".bat", ".bat" }; }
 		}
 
-		public String Path { get; set; }
+		internal String Path { get; set; }
 
-		public String Name { get; set; }
+		internal String Name { get; set; }
 
-		public String FullPath { get; set; }
+		internal String FullPath { get; set; }
 
-		public String Url { get; set; }
+		internal String Url { get; set; }
 
-		public FileType FileType { get; set; }
+		internal FileType FileType { get; set; }
 
-		public void ResetUrl()
+		internal void ParseToRelativePath()
 		{
 			if (String.IsNullOrEmpty(FullPath))
 			{
 				return;
 			}
 
-			Url = FullPath.Replace($@"C:\files", "");
+			Url = FullPath.Replace($@"C:/files", "");
 		}
 
-		public static FileType GetFileType(string fileType)
+		internal static FileType GetFileType(string fileType)
 		{
 			if (fileType.ToLower() == FileType.Wallpaper.ToString().ToLower())
 			{
@@ -56,7 +56,7 @@ namespace NewCrmCore.FileServices.Controllers
 			throw new Exception($@"{fileType}:未被识别为有效的上传类型");
 		}
 
-		public static string GetFileExtension(IFormFile file)
+		internal static string GetFileExtension(IFormFile file)
 		{
 			string fileExtension;
 			if (file.FileName.StartsWith("__avatar"))
@@ -75,31 +75,31 @@ namespace NewCrmCore.FileServices.Controllers
 			return !ExtensionBlackList.Any(d => d.ToLower() == fileExtension) ? fileExtension.ToLower() : "";
 		}
 
-		public static RequestFile Create(String accountId, String fileType, String fileExtension)
+		internal static RequestFile BuilderRequestFile(String accountId, String fileType, String fileExtension)
 		{
-			var middlePath = GetFileType(fileType);
+			var internalFileType = GetFileType(fileType);
 			var requestFile = new RequestFile();
-			if (middlePath == FileType.Icon || middlePath == FileType.Wallpaper || middlePath == FileType.Face)
+			if (internalFileType == FileType.Icon || internalFileType == FileType.Wallpaper || internalFileType == FileType.Face)
 			{
 				requestFile = new RequestImage();
 			}
 
-			var fileFullPath = $@"C:\files/{accountId}/{middlePath}/";
+			var path = $@"C:/files/{accountId}/{internalFileType}/";
 			var fileName = $@"{Guid.NewGuid().ToString().Replace("-", "")}.{fileExtension}";
-			if (!Directory.Exists(fileFullPath))
+			if (!Directory.Exists(path))
 			{
-				Directory.CreateDirectory(fileFullPath);
+				Directory.CreateDirectory(path);
 			}
 
-			requestFile.Path = fileFullPath;
+			requestFile.Path = path;
 			requestFile.Name = fileName;
-			requestFile.FullPath = $@"{fileFullPath}{fileName}";
-			requestFile.FileType = middlePath;
-			requestFile.ResetUrl();
+			requestFile.FullPath = System.IO.Path.Combine(path, fileName);
+			requestFile.FileType = internalFileType;
+			requestFile.ParseToRelativePath();
 			return requestFile;
 		}
 
-		public virtual Boolean CreatePhysicalFile(IFormFile file)
+		internal virtual Boolean CreatePhysicalFile(IFormFile file)
 		{
 			var stream = file.OpenReadStream();
 			var bytes = new byte[stream.Length];
@@ -113,7 +113,7 @@ namespace NewCrmCore.FileServices.Controllers
 			return File.Exists(FullPath);
 		}
 
-		protected virtual void CreateThumbnail(int width, int height)
+		internal virtual dynamic GetResult()
 		{
 			throw new NotImplementedException();
 		}
@@ -121,9 +121,13 @@ namespace NewCrmCore.FileServices.Controllers
 
 	internal sealed class RequestImage : RequestFile
 	{
-		public Image Image { get; set; }
+		private Image Image { get; set; }
 
-		public override bool CreatePhysicalFile(IFormFile file)
+		internal Int32 Width { get; set; }
+
+		internal Int32 Height { get; set; }
+
+		internal override bool CreatePhysicalFile(IFormFile file)
 		{
 			try
 			{
@@ -132,10 +136,8 @@ namespace NewCrmCore.FileServices.Controllers
 					return false;
 				}
 
-				using (var originalImage = Image.FromFile(FullPath))
+				using (Image = Image.FromFile(FullPath))
 				{
-					Image = originalImage;
-
 					if (FileType == FileType.Icon)
 					{
 						CreateThumbnail(49, 49);
@@ -153,12 +155,13 @@ namespace NewCrmCore.FileServices.Controllers
 			}
 		}
 
-		protected override void CreateThumbnail(int width, int height)
+		private void CreateThumbnail(int width, int height)
 		{
 			// 源图宽度及高度 
 			var imageFromWidth = Image.Width;
 			var imageFromHeight = Image.Height;
-
+			Width = width;
+			Height = height;
 			try
 			{
 				// 生成的缩略图实际宽度及高度.如果指定的高和宽比原图大，则返回原图；否则按照指定高宽生成图片
@@ -177,7 +180,7 @@ namespace NewCrmCore.FileServices.Controllers
 					var newName = $@"small_{Guid.NewGuid().ToString().Replace("-", "")}.png";
 					var newFileFullPath = $@"{Path}{newName}";
 					FullPath = newFileFullPath;
-					ResetUrl();
+					ParseToRelativePath();
 					reducedImage.Save(newFileFullPath, ImageFormat.Png);
 				}
 			}
@@ -186,26 +189,33 @@ namespace NewCrmCore.FileServices.Controllers
 				throw new Exception(ex.ToString());
 			}
 		}
+
+		internal override dynamic GetResult()
+		{
+			return new
+			{
+				IsSuccess = true,
+				Width,
+				Height,
+				Title = "",
+				Url,
+				Md5 = this.GetMD5(),
+			};
+		}
 	}
 
 	internal static class RequestFileExtension
 	{
-		public static String GetMD5(this RequestFile requestFile, Stream stream)
+		public static String GetMD5(this RequestFile requestFile)
 		{
-			if (stream == null)
-			{
-				return "";
-			}
-			var md5 = new MD5CryptoServiceProvider();
-			md5.ComputeHash(stream);
-			var b = md5.Hash;
-			md5.Clear();
+			var cryptoServiceProvider = new MD5CryptoServiceProvider();
+			cryptoServiceProvider.ComputeHash(File.ReadAllBytes(requestFile.FullPath));
 			var sb = new StringBuilder(32);
-			foreach (var t in b)
+			foreach (var t in cryptoServiceProvider.Hash)
 			{
 				sb.Append(t.ToString("X2"));
 			}
-
+			cryptoServiceProvider.Clear();
 			return sb.ToString();
 		}
 	}
