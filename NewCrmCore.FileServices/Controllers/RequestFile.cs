@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using System.DrawingCore;
 using System.DrawingCore.Imaging;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Http;
@@ -9,8 +11,13 @@ using NewCrmCore.Infrastructure;
 
 namespace NewCrmCore.FileServices.Controllers
 {
-	internal sealed class RequestFile
+	internal class RequestFile
 	{
+		public static String[] ExtensionBlackList
+		{
+			get { return new[] { ".exe", ".bat", ".bat" }; }
+		}
+
 		public String Path { get; set; }
 
 		public String Name { get; set; }
@@ -33,7 +40,7 @@ namespace NewCrmCore.FileServices.Controllers
 			Url = FullPath.Replace(Appsetting.FileStorage, "");
 		}
 
-		public FileType GetFileType(string fileType)
+		public static FileType GetFileType(string fileType)
 		{
 			if (fileType.ToLower() == FileType.Wallpaper.ToString().ToLower())
 			{
@@ -67,10 +74,44 @@ namespace NewCrmCore.FileServices.Controllers
 				fileExtension = file.FileName.Substring(file.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1);
 			}
 
-			return fileExtension.ToLower();
+			return !ExtensionBlackList.Any(d => d.ToLower() == fileExtension) ? fileExtension.ToLower() : "";
 		}
 
-		public void GetReducedImage(int width, int height)
+		public static RequestFile Create(String accountId, String fileType, String fileExtension)
+		{
+			var middlePath = GetFileType(fileType);
+			var requestFile = new RequestFile();
+			if (middlePath == FileType.Icon || middlePath == FileType.Wallpaper || middlePath == FileType.Face)
+			{
+				requestFile = new RequestImage();
+			}
+
+			var fileFullPath = $@"{Appsetting.FileStorage}/{accountId}/{middlePath}/";
+			var fileName = $@"{Guid.NewGuid().ToString().Replace("-", "")}.{fileExtension}";
+			if (!Directory.Exists(fileFullPath))
+			{
+				Directory.CreateDirectory(fileFullPath);
+			}
+
+			requestFile.Path = fileFullPath;
+			requestFile.Name = fileName;
+			requestFile.FullPath = $@"{fileFullPath}{fileName}";
+			requestFile.FileType = middlePath;
+			requestFile.ResetUrl();
+			return requestFile;
+		}
+
+
+
+		public virtual void GetReducedImage(int width, int height)
+		{
+			throw new NotImplementedException();
+		}
+	}
+
+	internal sealed class RequestImage : RequestFile
+	{
+		public override void GetReducedImage(int width, int height)
 		{
 			// 源图宽度及高度 
 			var imageFromWidth = Image.Width;
@@ -103,8 +144,11 @@ namespace NewCrmCore.FileServices.Controllers
 				throw new Exception(ex.ToString());
 			}
 		}
+	}
 
-		public String Calculate(Stream stream)
+	internal static class RequestFileExtension
+	{
+		public static String GetMD5(this RequestFile requestFile, Stream stream)
 		{
 			if (stream == null)
 			{
@@ -126,8 +170,16 @@ namespace NewCrmCore.FileServices.Controllers
 
 	internal enum FileType
 	{
+		[Description("壁纸")]
 		Wallpaper = 1,
+
+		[Description("头像")]
 		Face = 2,
-		Icon = 3
+
+		[Description("图标")]
+		Icon = 3,
+
+		[Description("文件")]
+		File = 4
 	}
 }

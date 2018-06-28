@@ -9,10 +9,8 @@ using NewCrmCore.Infrastructure;
 namespace NewCrmCore.FileServices.Controllers
 {
 	[Route("api/filestorage")]
-	public class FileController: Controller
+	public class FileController : Controller
 	{
-		private static readonly String[] _denyUploadTypes = { ".exe", ".bat", ".bat" };
-
 		[Route("upload"), HttpPost, HttpOptions]
 		public IActionResult Upload()
 		{
@@ -73,8 +71,7 @@ namespace NewCrmCore.FileServices.Controllers
 				{
 					var file = files[i];
 					var fileExtension = RequestFile.GetFileExtension(file);
-
-					if (_denyUploadTypes.Any(d => d.ToLower() == fileExtension))
+					if (!String.IsNullOrEmpty(fileExtension))
 					{
 						responses.Add(new
 						{
@@ -84,9 +81,9 @@ namespace NewCrmCore.FileServices.Controllers
 					}
 					else
 					{
+						var requestFile = RequestFile.Create(accountId, uploadType, fileExtension);
 						var stream = file.OpenReadStream();
 						var bytes = new byte[stream.Length];
-						var requestFile = CreateRequestFile(accountId, uploadType, fileExtension);
 
 						using (var fileStream = new FileStream(requestFile.FullPath, FileMode.Create, FileAccess.Write))
 						{
@@ -126,10 +123,11 @@ namespace NewCrmCore.FileServices.Controllers
 									originalImage.Height,
 									Title = "",
 									requestFile.Url,
-									Md5 = requestFile.Calculate(stream),
+									Md5 = requestFile.GetMD5(stream),
 								});
 							}
 						}
+
 					}
 				}
 			}
@@ -145,25 +143,6 @@ namespace NewCrmCore.FileServices.Controllers
 			return Json(responses);
 		}
 
-		private static RequestFile CreateRequestFile(String accountId, String fileType, String fileExtension)
-		{
-			var requestFile = new RequestFile();
-
-			var middlePath = requestFile.GetFileType(fileType);
-			var fileFullPath = $@"{Appsetting.FileStorage}/{accountId}/{middlePath}/";
-			var fileName = $@"{Guid.NewGuid().ToString().Replace("-", "")}.{fileExtension}";
-			if (!Directory.Exists(fileFullPath))
-			{
-				Directory.CreateDirectory(fileFullPath);
-			}
-
-			requestFile.Path = fileFullPath;
-			requestFile.Name = fileName;
-			requestFile.FullPath = $@"{fileFullPath}{fileName}";
-			requestFile.FileType = middlePath;
-			requestFile.ResetUrl();
-			return requestFile;
-		}
 
 	}
 }
