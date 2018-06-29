@@ -10,7 +10,7 @@ namespace NewCrmCore.FileServices.Controllers
 		public static ReqeustUpload Create(String uploadType)
 		{
 			uploadType = uploadType.ToLower();
-			if (uploadType == FileType.Wallpaper.ToString().ToLower() || uploadType == FileType.Face.ToString().ToLower() || uploadType == FileType.Icon.ToString().ToLower())
+			if (uploadType == FileType.Wallpaper.ToString().ToLower())
 			{
 				return new RequestImage() { FileType = FileType.Wallpaper };
 			}
