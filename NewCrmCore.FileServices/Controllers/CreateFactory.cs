@@ -12,7 +12,15 @@ namespace NewCrmCore.FileServices.Controllers
 			uploadType = uploadType.ToLower();
 			if (uploadType == FileType.Wallpaper.ToString().ToLower() || uploadType == FileType.Face.ToString().ToLower() || uploadType == FileType.Icon.ToString().ToLower())
 			{
-				return new RequestImage() { FileType = FileType.Wallpaper | FileType.Face | FileType.Icon };
+				return new RequestImage() { FileType = FileType.Wallpaper };
+			}
+			if (uploadType == FileType.Face.ToString().ToLower())
+			{
+				return new RequestImage() { FileType = FileType.Face };
+			}
+			if (uploadType == FileType.Icon.ToString().ToLower())
+			{
+				return new RequestImage() { FileType = FileType.Icon };
 			}
 
 			throw new Exception($@"{uploadType}:未被识别为有效的上传类型");
