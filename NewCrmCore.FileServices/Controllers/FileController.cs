@@ -52,7 +52,7 @@ namespace NewCrmCore.FileServices.Controllers
 					return Json(responses);
 				}
 
-				if (String.IsNullOrEmpty(Appsetting.FileStorage))
+				if (String.IsNullOrEmpty($@"C:/files"))
 				{
 					responses.Add(new
 					{
@@ -66,7 +66,10 @@ namespace NewCrmCore.FileServices.Controllers
 				for (var i = 0; i < files.Count; i++)
 				{
 					var file = files[i];
-					var fileExtension = RequestFile.GetFileExtension(file);
+
+					var request1 = CreateFactory.Create(uploadType);
+
+					var fileExtension = request1.CheckFileExtension(file);
 					if (String.IsNullOrEmpty(fileExtension))
 					{
 						responses.Add(new
@@ -78,8 +81,8 @@ namespace NewCrmCore.FileServices.Controllers
 						continue;
 					}
 
-					var requestFile = RequestFile.BuilderRequestFile(accountId, uploadType, fileExtension);
-					if (!requestFile.CreatePhysicalFile(file))
+					var requestFile = request1.BuilderRequestFile(accountId, fileExtension);
+					if (!requestFile.CreateFile(file))
 					{
 						responses.Add(new
 						{
