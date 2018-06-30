@@ -1,18 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
-using System.DrawingCore;
-using System.IO;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using NewCrmCore.Infrastructure;
 
 namespace NewCrmCore.FileServices.Controllers
 {
 	[Route("api/filestorage")]
-	public class FileController: Controller
+	public class FileController : Controller
 	{
-		private static readonly String[] _denyUploadTypes = { ".exe", ".bat", ".bat" };
-
 		[Route("upload"), HttpPost, HttpOptions]
 		public IActionResult Upload()
 		{
@@ -58,7 +52,7 @@ namespace NewCrmCore.FileServices.Controllers
 					return Json(responses);
 				}
 
-				if (String.IsNullOrEmpty(Appsetting.FileStorage))
+				if (String.IsNullOrEmpty($@"C:/files"))
 				{
 					responses.Add(new
 					{
@@ -72,65 +66,33 @@ namespace NewCrmCore.FileServices.Controllers
 				for (var i = 0; i < files.Count; i++)
 				{
 					var file = files[i];
-					var fileExtension = RequestFile.GetFileExtension(file);
 
-					if (_denyUploadTypes.Any(d => d.ToLower() == fileExtension))
+					var requestUpload = CreateFactory.Create(uploadType);
+					var fileExtension = requestUpload.CheckFileExtension(file);
+					if (String.IsNullOrEmpty(fileExtension))
 					{
 						responses.Add(new
 						{
 							IsSuccess = false,
 							Message = $@"后缀名为：{fileExtension}的文件禁止上传"
 						});
+
+						continue;
 					}
-					else
+
+					var requestFile = requestUpload.BuilderRequestFile(accountId, fileExtension);
+					if (!requestFile.CreateFile(file))
 					{
-						var stream = file.OpenReadStream();
-						var bytes = new byte[stream.Length];
-						var requestFile = CreateRequestFile(accountId, uploadType, fileExtension);
-
-						using (var fileStream = new FileStream(requestFile.FullPath, FileMode.Create, FileAccess.Write))
+						responses.Add(new
 						{
-							stream.Read(bytes, 0, bytes.Length);
-							fileStream.Write(bytes, 0, bytes.Length);
-						}
+							IsSuccess = false,
+							Message = $@"文件上传失败"
+						});
 
-						if (!System.IO.File.Exists(requestFile.FullPath))
-						{
-							responses.Add(new
-							{
-								IsSuccess = false,
-								Message = $@"文件上传失败"
-							});
-						}
-
-						using (var originalImage = Image.FromFile(requestFile.FullPath))
-						{
-							requestFile.Image = originalImage;
-
-							if (requestFile.FileType == FileType.Icon)
-							{
-								requestFile.GetReducedImage(49, 49);
-								responses.Add(new { IsSuccess = true, requestFile.Url });
-							}
-							else if (requestFile.FileType == FileType.Face)
-							{
-								requestFile.GetReducedImage(20, 20);
-								return Json(new { avatarUrls = requestFile.Url, msg = "", success = true });
-							}
-							else
-							{
-								responses.Add(new
-								{
-									IsSuccess = true,
-									originalImage.Width,
-									originalImage.Height,
-									Title = "",
-									requestFile.Url,
-									Md5 = requestFile.Calculate(stream),
-								});
-							}
-						}
+						continue;
 					}
+
+					responses.Add(requestFile.GetResult());
 				}
 			}
 			catch (Exception ex)
@@ -144,26 +106,5 @@ namespace NewCrmCore.FileServices.Controllers
 
 			return Json(responses);
 		}
-
-		private static RequestFile CreateRequestFile(String accountId, String fileType, String fileExtension)
-		{
-			var requestFile = new RequestFile();
-
-			var middlePath = requestFile.GetFileType(fileType);
-			var fileFullPath = $@"{Appsetting.FileStorage}/{accountId}/{middlePath}/";
-			var fileName = $@"{Guid.NewGuid().ToString().Replace("-", "")}.{fileExtension}";
-			if (!Directory.Exists(fileFullPath))
-			{
-				Directory.CreateDirectory(fileFullPath);
-			}
-
-			requestFile.Path = fileFullPath;
-			requestFile.Name = fileName;
-			requestFile.FullPath = $@"{fileFullPath}{fileName}";
-			requestFile.FileType = middlePath;
-			requestFile.ResetUrl();
-			return requestFile;
-		}
-
 	}
 }
