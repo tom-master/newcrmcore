@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace NewCrmCore.FileServices.Controllers
@@ -77,6 +79,21 @@ namespace NewCrmCore.FileServices.Controllers
 		public Boolean CreateFile(IFormFile file)
 		{
 			return InternalCreateFile(file);
+		}
+
+		protected String GetMD5()
+		{
+			var md5 = new MD5CryptoServiceProvider();
+			md5.ComputeHash(File.Open(FullPath, FileMode.Open));
+			var b = md5.Hash;
+			md5.Clear();
+			var sb = new StringBuilder(32);
+			foreach (var t in b)
+			{
+				sb.Append(t.ToString("X2"));
+			}
+
+			return sb.ToString();
 		}
 	}
 

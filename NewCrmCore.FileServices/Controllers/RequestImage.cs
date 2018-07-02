@@ -76,7 +76,15 @@ namespace NewCrmCore.FileServices.Controllers
 
 		public override dynamic GetResult()
 		{
-			throw new NotImplementedException();
+			return new
+			{
+				IsSuccess = true,
+				Width,
+				Height,
+				Title = "",
+				Url,
+				Md5 = GetMD5()
+			};
 		}
 	}
 }
