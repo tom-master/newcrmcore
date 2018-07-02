@@ -67,7 +67,7 @@ namespace NewCrmCore.FileServices.Controllers
 				{
 					var file = files[i];
 
-					var requestUpload = CreateFactory.Create(uploadType);
+					var requestUpload = CreateFactory.CreateRequestUpload(uploadType);
 					var fileExtension = requestUpload.CheckFileExtension(file);
 					if (String.IsNullOrEmpty(fileExtension))
 					{

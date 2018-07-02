@@ -12,7 +12,7 @@ namespace NewCrmCore.FileServices.Controllers
 	{
 		public String FullPath { get; set; }
 
-		protected static String[] ExtensionBlackList
+		protected virtual String[] ExtensionBlackList
 		{
 			get { return new[] { ".exe", ".bat", ".bat" }; }
 		}
@@ -20,7 +20,7 @@ namespace NewCrmCore.FileServices.Controllers
 		protected String Path { get; set; }
 
 		protected String Name { get; set; }
-		 
+
 		protected String Url { get; set; }
 
 		public FileType FileType { get; set; }
