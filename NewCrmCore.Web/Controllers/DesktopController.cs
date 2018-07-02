@@ -15,7 +15,7 @@ using Newtonsoft.Json;
 
 namespace NewCrmCore.Web.Controllers
 {
-	public class DesktopController : BaseController
+	public class DesktopController: BaseController
 	{
 		private readonly IDeskServices _deskServices;
 		private readonly IAccountServices _accountServices;
@@ -188,7 +188,7 @@ namespace NewCrmCore.Web.Controllers
 		/// <summary>
 		/// 创建窗口
 		/// </summary>
-		[HttpGet, DoNotCheckPermission]
+		[HttpGet]
 		public async Task<ActionResult> CreateWindow(Int32 id, String type)
 		{
 
@@ -278,6 +278,6 @@ namespace NewCrmCore.Web.Controllers
 		}
 
 		#endregion
-	
+
 	}
 }

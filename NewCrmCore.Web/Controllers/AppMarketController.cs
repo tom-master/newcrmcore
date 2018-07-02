@@ -14,7 +14,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Web.Controllers
 {
-	public class AppMarketController : BaseController
+	public class AppMarketController: BaseController
 	{
 		private readonly IAppServices _appServices;
 		private readonly IAccountServices _accountServices;
@@ -47,7 +47,6 @@ namespace NewCrmCore.Web.Controllers
 			ViewData["TodayRecommendApp"] = await _appServices.GetTodayRecommendAsync(AccountId);
 			ViewData["AccountName"] = account.Name;
 			ViewData["AccountApp"] = await _appServices.GetAccountDevelopAppCountAndNotReleaseAppCountAsync(AccountId);
-
 			return View();
 		}
 
@@ -149,7 +148,7 @@ namespace NewCrmCore.Web.Controllers
 		#endregion
 
 		#region 更新图标 
-		
+
 		/// <summary>
 		/// 更新图标
 		/// </summary>
@@ -262,8 +261,7 @@ namespace NewCrmCore.Web.Controllers
 			else
 			{
 				response.Message = "app列表获取失败";
-			}
-
+			} 
 			return Json(response);
 		}
 

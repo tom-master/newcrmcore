@@ -73,7 +73,8 @@ namespace NewCrmCore.Web.Filter
 				filterContext.Result = new ContentResult()
 				{
 					ContentType = "utf8",
-					StatusCode = 401
+					StatusCode = 401,
+					Content = @"<script>(function(){top.NewCrm.msgbox.fail('" + response.Message + "');})()</script>"
 				};
 			}
 		}
