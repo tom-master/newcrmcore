@@ -38,7 +38,7 @@ namespace NewCrmCore.FileServices.Controllers
 				return;
 			}
 
-			Url = FullPath.Replace($@"C:/files", "");
+			Url = FullPath.Replace(Appsetting.FileStorage, "");
 		}
 
 		protected String GetMD5()
@@ -58,7 +58,7 @@ namespace NewCrmCore.FileServices.Controllers
 
 		public ReqeustUpload BuilderRequestFile(String accountId, String fileExtension)
 		{
-			var path = $@"C:/files/{accountId}/{FileType}/";
+			var path = $@"{Appsetting.FileStorage}/{accountId}/{FileType}/";
 			var fileName = $@"{Guid.NewGuid().ToString().Replace("-", "")}.{fileExtension}";
 			if (!Directory.Exists(path))
 			{

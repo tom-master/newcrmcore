@@ -52,7 +52,7 @@ namespace NewCrmCore.FileServices.Controllers
 					return Json(responses);
 				}
 
-				if (String.IsNullOrEmpty($@"C:/files"))
+				if (String.IsNullOrEmpty(Appsetting.FileStorage))
 				{
 					responses.Add(new
 					{
