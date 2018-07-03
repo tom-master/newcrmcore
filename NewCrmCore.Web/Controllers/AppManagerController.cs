@@ -27,7 +27,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 首页
 		/// </summary>
 		[HttpGet]
-		public async Task<ActionResult> Index()
+		public async Task<IActionResult> Index()
 		{
 			ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();
 			ViewData["AppStyles"] = _appServices.GetAppStyles().ToList();
@@ -40,7 +40,7 @@ namespace NewCrmCore.Web.Controllers
 		/// app审核
 		/// </summary>
 		[HttpGet]
-		public async Task<ActionResult> AppAudit(Int32 appId)
+		public async Task<IActionResult> AppAudit(Int32 appId)
 		{
 			AppDto appResult = null;
 			if (appId != 0)// 如果appId为0则是新创建app
@@ -62,7 +62,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 审核通过
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> Pass(Int32 appId)
+		public async Task<IActionResult> Pass(Int32 appId)
 		{
 			#region 参数验证	
 			new Parameter().Validate(appId);
@@ -84,7 +84,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 删除app
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> Remove(Int32 appId)
+		public async Task<IActionResult> Remove(Int32 appId)
 		{
 			#region 参数验证	
 			new Parameter().Validate(appId);
@@ -106,7 +106,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 审核不通过
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> Deny(Int32 appId)
+		public async Task<IActionResult> Deny(Int32 appId)
 		{
 			#region 参数验证	
 			new Parameter().Validate(appId);
@@ -128,7 +128,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 获取所有应用
 		/// </summary>
 		[HttpGet]
-		public async Task<ActionResult> GetApps(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
+		public async Task<IActionResult> GetApps(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
 		{
 			var response = new ResponseModels<IList<AppDto>>();
 			var result = await _appServices.GetAccountAppsAsync(0, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize);
@@ -153,7 +153,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 检查应用名称
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> CheckName(String param)
+		public async Task<IActionResult> CheckName(String param)
 		{
 			#region 参数验证
 			new Parameter().Validate(param);
@@ -171,7 +171,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 检查应用Url
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> CheckUrl(String param)
+		public async Task<IActionResult> CheckUrl(String param)
 		{
 			#region 参数验证
 			new Parameter().Validate(param);
@@ -189,7 +189,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 设置应用为今日推荐
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> Recommend(Int32 appId)
+		public async Task<IActionResult> Recommend(Int32 appId)
 		{
 			#region 参数验证	
 			new Parameter().Validate(appId);
