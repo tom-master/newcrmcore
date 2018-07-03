@@ -4,7 +4,7 @@
 
 <div class="title">
     <ul>
-        <li><a href="/DeskOptions/SystemWallPaper">壁纸设置</a></li>
+        <li><a href="/Desk/SystemWallPaper">壁纸设置</a></li>
         <li class="focus">皮肤设置</li>
     </ul>
 </div>
@@ -19,7 +19,7 @@
         });
 
         function loadAllSkin(callback) {
-            HROS.request.get('/DeskOptions/GetSkins', {}, function (responseText) {
+			HROS.request.get('/Desk/GetSkins', {}, function (responseText) {
                 if (responseText.IsSuccess) {
                     var html = '';
                     $.each(responseText.Model.result.Result, function (k, v) {
@@ -41,7 +41,7 @@
                 var skin = $(this).attr('skin');
                 $('.skin li').removeClass('selected');
                 $(this).addClass('selected');
-                HROS.request.post('/DeskOptions/ModifySkin', { skin: skin }, function (responseText) {
+				HROS.request.post('/Desk/ModifySkin', { skin: skin }, function (responseText) {
                     if (responseText.IsSuccess) {
                         window.parent.NewCrm.msgbox.success("皮肤设置成功，如果没有更新请刷新页面");
                         setTimeout(function () {

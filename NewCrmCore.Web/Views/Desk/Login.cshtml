@@ -48,12 +48,12 @@
 			}
 			$.ajax({
 				type: 'POST',
-				url: '/Desktop/landing',
+				url: '/Desk/landing',
 				data: { loginParameter },
 				success: function (responseText) {
 					if (responseText.IsSuccess) {
 						$('.loading').hide();
-						location.href = '/Desktop/Index';
+						location.href = '/Desk/Index';
 					} else {
 						endLogin();
 						alert('账号或密码错误')

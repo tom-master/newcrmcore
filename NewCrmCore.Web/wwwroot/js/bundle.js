@@ -3505,7 +3505,7 @@ HROS.app = (function () {
         updateXY: function (i) {
             if (HROS.CONFIG.appXY !== i) {
                 if (HROS.base.checkLogin()) {
-                    HROS.request.post('/DeskOptions/ModifyXy', { appXy: i }, function (responseText) {
+					HROS.request.post('/Desk/ModifyXy', { appXy: i }, function (responseText) {
                         if (responseText.IsSuccess) {
                             HROS.CONFIG.appXY = i.toLowerCase();
                             HROS.deskTop.resize();
@@ -3525,7 +3525,7 @@ HROS.app = (function () {
                 HROS.CONFIG.appSize = i;
                 HROS.deskTop.resize();
                 if (HROS.base.checkLogin()) {
-                    HROS.request.post('/DeskOptions/ModifySize', { appSize: i }, function (responseText) {
+					HROS.request.post('/Desk/ModifySize', { appSize: i }, function (responseText) {
                         if (responseText.IsSuccess) {
                             NewCrm.msgbox.success('更新应用显示尺寸成功');
                         } else {
@@ -3544,7 +3544,7 @@ HROS.app = (function () {
                 HROS.CONFIG.appVerticalSpacing = i;
                 HROS.deskTop.resize();
                 if (HROS.base.checkLogin()) {
-                    HROS.request.post('/DeskOptions/ModifyVerticalSpace', { appVertical: i }, function (responseText) {
+					HROS.request.post('/Desk/ModifyVerticalSpace', { appVertical: i }, function (responseText) {
                         if (responseText.IsSuccess) {
                             NewCrm.msgbox.success('更新应用垂直间距成功');
                         } else {
@@ -3562,7 +3562,7 @@ HROS.app = (function () {
                 HROS.CONFIG.appHorizontalSpacing = i;
                 HROS.deskTop.resize();
                 if (HROS.base.checkLogin()) {
-                    HROS.request.post('/DeskOptions/ModifyHorizontalSpace', { appHorizontal: i }, function (responseText) {
+					HROS.request.post('/Desk/ModifyHorizontalSpace', { appHorizontal: i }, function (responseText) {
                         if (responseText.IsSuccess) {
                             NewCrm.msgbox.success('更新应用水平间距成功');
                         } else {
@@ -3578,7 +3578,7 @@ HROS.app = (function () {
 		*/
         get: function () {
             HROS.VAR.isAppMoving = true;
-            HROS.request.get('/Desktop/GetAccountDeskMembers', {}, function (responseText) {
+			HROS.request.get('/Desk/GetAccountDeskMembers', {}, function (responseText) {
                 if (responseText.IsSuccess) {
                     HROS.VAR.isAppMoving = false;
                     if (typeof responseText === 'object') {
@@ -5245,7 +5245,7 @@ HROS.base = (function () {
             });
         },
         logout: function () {
-            HROS.request.post('/Desktop/Logout', {}, function (responseText) {
+			HROS.request.post('/Desk/Logout', {}, function (responseText) {
                 location.reload();
             })
         },
@@ -5254,7 +5254,7 @@ HROS.base = (function () {
         },
         getSkin: function (objSkin, callback) {
             if (objSkin === undefined) {
-                HROS.request.get('/Desktop/GetSkin', {}, function (responseText) {
+				HROS.request.get('/Desk/GetSkin', {}, function (responseText) {
                     
                     if (responseText.IsSuccess) {
                         if (typeof (callback) === 'function') {
@@ -5450,7 +5450,7 @@ HROS.deskTop = (function () {
         },
         updateDefaultDesk: function (i) {
             if (HROS.base.checkLogin()) {
-                HROS.request.post('/DeskOptions/ModifyDefaultDesk', { deskNum: i }, function (responseText) {
+				HROS.request.post('/Desk/ModifyDefaultDesk', { deskNum: i }, function (responseText) {
                     if (responseText.IsSuccess) {
                         NewCrm.msgbox.success('默认桌面更新成功');
                         $('.dock-pagination').find('a').each(function (k, v) {
@@ -5466,7 +5466,7 @@ HROS.deskTop = (function () {
         },
         modifyWallpaperSource: function (value) {
             if (HROS.base.checkLogin()) {
-                HROS.request.post('/DeskOptions/ModifyWallpaperSource', { source: value }, function (responseText) {
+				HROS.request.post('/Desk/ModifyWallpaperSource', { source: value }, function (responseText) {
                     if (responseText.IsSuccess) {
                         HROS.wallpaper.get(function () { HROS.wallpaper.set() });
                     } else {
@@ -5522,7 +5522,7 @@ HROS.dock = (function () {
                     HROS.window.createTemp({
                         appid: 'hoorayos-zmsz',
                         title: '桌面设置',
-                        url: '/DeskOptions/DeskSet',
+						url: '/Desk/DeskSet',
                         width: 750,
                         height: 450,
                         isflash: false
@@ -5538,7 +5538,7 @@ HROS.dock = (function () {
                     HROS.window.createTemp({
                         appid: 'hoorayos-ztsz',
                         title: '主题设置',
-                        url: '/DeskOptions/SystemWallPaper',
+						url: '/Desk/SystemWallPaper',
                         width: 580,
                         height: 520,
                         isflash: false
@@ -5636,7 +5636,7 @@ HROS.dock = (function () {
                     HROS.app.dataAllDockToDesk(HROS.CONFIG.desk);
                 }
                 if (HROS.base.checkLogin()) {
-                    HROS.request.post('/DeskOptions/ModifyDockPosition', { pos: pos, deskNum: HROS.CONFIG.desk }, function (responseText) {
+					HROS.request.post('/Desk/ModifyDockPosition', { pos: pos, deskNum: HROS.CONFIG.desk }, function (responseText) {
                         if (responseText.IsSuccess) {
                             NewCrm.msgbox.success('应用码头位置更新成功');
                             //更新码头位置
@@ -5705,7 +5705,7 @@ HROS.dock = (function () {
             }
         },
         getPos: function (callback) {
-            HROS.request.get('/Desktop/GetDockPos', {}, function (responseText) {
+			HROS.request.get('/Desk/GetDockPos', {}, function (responseText) {
                 if (responseText.IsSuccess) {
                     HROS.CONFIG.dockPos = responseText.Model;
                     if (typeof (callback) === 'function') {
@@ -6321,7 +6321,7 @@ HROS.lock = (function () {
             });
             $('body').on('click', '#lockbtn', function () {
                 if ($('#lockpassword').val() !== '') {
-                    HROS.request.post('/Desktop/UnlockScreen', { unlockPassword: $('#lockpassword').val() }, function (responseText) {
+					HROS.request.post('/Desk/UnlockScreen', { unlockPassword: $('#lockpassword').val() }, function (responseText) {
                         if (responseText.IsSuccess) {
                             HROS.lock.hide();
                         } else {
@@ -7208,7 +7208,7 @@ HROS.popupMenu = (function () {
                         HROS.window.createTemp({
                             appid: 'hoorayos-ztsz',
                             title: '主题设置',
-                            url: '/DeskOptions/SystemWallPaper',
+							url: '/Desk/SystemWallPaper',
                             width: 580,
                             height: 520,
                             isflash: false
@@ -7223,7 +7223,7 @@ HROS.popupMenu = (function () {
                         HROS.window.createTemp({
                             appid: 'hoorayos-zmsz',
                             title: '桌面设置',
-                            url: '/DeskOptions/DeskSet',
+							url: '/Desk/DeskSet',
                             width: 750,
                             height: 450,
                             isflash: false
@@ -7497,7 +7497,7 @@ HROS.startmenu = (function () {
 		**  获取头像
 		*/
         getAvatar: function () {
-            HROS.request.get('/Desktop/GetAccountFace', {}, function (responseText) {
+			HROS.request.get('/Desk/GetAccountFace', {}, function (responseText) {
                 if (responseText.IsSuccess) {
                     $('#startmenu-container .startmenu-avatar img').attr('src', responseText.Model);
                 }
@@ -7679,7 +7679,7 @@ HROS.wallpaper = (function () {
 		**	通过ajax到后端获取壁纸信息，同时设置壁纸
 		*/
         get: function (callback) {
-            HROS.request.get('/Desktop/GetWallpaper', {}, function (responseText) {
+			HROS.request.get('/Desk/GetWallpaper', {}, function (responseText) {
                 if (responseText.IsSuccess) {
                     var values = responseText.Model;
                     HROS.CONFIG.wallpaperState = values.WallpaperSource;
@@ -7827,14 +7827,14 @@ HROS.wallpaper = (function () {
             }
             if (HROS.base.checkLogin()) {
                 if (wallpaperId === '') {
-                    HROS.request.post('/DeskOptions/ModifyDisplayModel', { wallPaperShowType: wallpaperShowType }, function (responseText) {
+					HROS.request.post('/Desk/ModifyDisplayModel', { wallPaperShowType: wallpaperShowType }, function (responseText) {
                         if (responseText.IsSuccess) {
                             NewCrm.msgbox.success("壁纸显示模式设置成功！")
                             done();
                         }
                     })
                 } else {
-                    HROS.request.post('/DeskOptions/ModifyWallpaper', { wallpaperId: wallpaperId }, function (responseText) {
+					HROS.request.post('/Desk/ModifyWallpaper', { wallpaperId: wallpaperId }, function (responseText) {
                         if (responseText.IsSuccess) {
                             NewCrm.msgbox.success("壁纸设置成功！")
                             done();
@@ -8433,7 +8433,7 @@ HROS.window = (function () {
                     }
                 }
 
-                HROS.request.get('/Desktop/CreateWindow', { id: realappid, type: type }, function (responseText) {
+				HROS.request.get('/Desk/CreateWindow', { id: realappid, type: type }, function (responseText) {
                     if (responseText.IsSuccess) {
                         var app = responseText.Model;
                         nextDo({

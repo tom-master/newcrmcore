@@ -8,12 +8,12 @@
 <div class="title">
     <ul>
         <li class="focus">壁纸设置</li>
-        <li><a href="/DeskOptions/SetSkin">皮肤设置</a></li>
+        <li><a href="/Desk/SetSkin">皮肤设置</a></li>
     </ul>
 </div>
 <div class="wallpapertype form-inline">
     <div class="btn-group fl">
-        <a class="btn" href="/DeskOptions/SystemWallPaper">系统壁纸</a><a class="btn disabled">自定义</a>
+        <a class="btn" href="/Desk/SystemWallPaper">系统壁纸</a><a class="btn disabled">自定义</a>
     </div>
     <div class="fr">
         <label>显示方式：</label>
@@ -84,7 +84,7 @@
                         ShortUrl: ""
                     };
 
-                    HROS.request.post('/DeskOptions/UploadWallPaper', { wallpaper: model }, function () {
+					HROS.request.post('/Desk/UploadWallPaper', { wallpaper: model }, function () {
                         if (responseText.IsSuccess) {
                             $('.wapppapercustom .view ul').append('<li id="' + responseText.Model.Id + '" style="background-image:url(' + responseText.Model.Url + ')"><a href="javascript:;">删 除</a></li>');
                             window.parent.HROS.wallpaper.update($('#wallpapertype').val(), responseText.Model.Id);
@@ -105,7 +105,7 @@
             $('.wapppapercustom .view').on('click', 'li a', function (event) {
                 event.stopPropagation();
                 var id = $(this).parent().attr('id');
-                HROS.request.post("/DeskOptions/RemoveWallpaper", { wallPaperId: id }, function (responseText) {
+				HROS.request.post("/Desk/RemoveWallpaper", { wallPaperId: id }, function (responseText) {
                     if (responseText.IsSuccess) {
                         NewCrm.msgbox.success('壁纸移除成功');
                         $('#' + id).remove();
@@ -123,7 +123,7 @@
         });
 
         function GetAllUploadWallPaper() {
-            HROS.request.get("/DeskOptions/GetUploadWallPapers", function (responseText) {
+			HROS.request.get("/Desk/GetUploadWallPapers", function (responseText) {
                 if (responseText.IsSuccess) {
                     var liElement = '';
                     $.each(responseText.Model, function (k, v) {
@@ -142,7 +142,7 @@
             if (!webUrl) {
                 NewCrm.msgbox.info('请输入一个合法的url地址');
             } else {
-                HROS.request.post("/DeskOptions/WebWallpaper", { webUrl: webUrl }, function (responseText) {
+				HROS.request.post("/Desk/WebWallpaper", { webUrl: webUrl }, function (responseText) {
                     if (parseInt(responseText.Model.Item1) === 0) {
                         NewCrm.msgbox.fail('未能获取到所指定的网络图片');
                     } else {
