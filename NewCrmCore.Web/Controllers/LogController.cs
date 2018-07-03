@@ -24,7 +24,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public ActionResult Index()
+		public IActionResult Index()
 		{
 			return View();
 		}
@@ -37,7 +37,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 获取日志列表
 		/// </summary>
 		[HttpGet]
-		public async Task<ActionResult> GetLogs(Int32 accountId, Int32 loglevel, Int32 pageIndex, Int32 pageSize)
+		public async Task<IActionResult> GetLogs(Int32 accountId, Int32 loglevel, Int32 pageIndex, Int32 pageSize)
 		{
 			var response = new ResponseModels<IList<LogDto>>();
 			var result = await _loggerServices.GetLogsAsync(accountId, loglevel, pageIndex, pageSize);
