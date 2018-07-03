@@ -43,7 +43,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<ActionResult> SystemWallPaper()
+		public async Task<IActionResult> SystemWallPaper()
 		{
 			ViewData["AccountConfig"] = await _accountServices.GetConfigAsync(AccountId);
 			ViewData["Wallpapers"] = await _wallpaperServices.GetWallpapersAsync();
@@ -56,7 +56,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<ActionResult> CustomWallPaper()
+		public async Task<IActionResult> CustomWallPaper()
 		{
 			ViewData["AccountConfig"] = await _accountServices.GetConfigAsync(AccountId);
 			return View();
@@ -67,7 +67,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public ActionResult SetSkin()
+		public IActionResult SetSkin()
 		{
 			return View();
 		}
@@ -77,7 +77,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<ActionResult> DeskSet()
+		public async Task<IActionResult> DeskSet()
 		{
 			ViewData["AccountConfig"] = await _accountServices.GetConfigAsync(AccountId);
 			ViewData["Desks"] = (await _accountServices.GetConfigAsync(AccountId)).DefaultDeskCount;
@@ -92,7 +92,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 设置壁纸
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyWallpaper(Int32 wallpaperId)
+		public async Task<IActionResult> ModifyWallpaper(Int32 wallpaperId)
 		{
 			#region 参数验证
 			new Parameter().Validate(wallpaperId);
@@ -114,7 +114,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 删除壁纸
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> RemoveWallpaper(Int32 wallPaperId)
+		public async Task<IActionResult> RemoveWallpaper(Int32 wallPaperId)
 		{
 			#region 参数验证
 			new Parameter().Validate(wallPaperId);
@@ -136,7 +136,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 上传壁纸     
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> UploadWallPaper(WallpaperDto wallpaper)
+		public async Task<IActionResult> UploadWallPaper(WallpaperDto wallpaper)
 		{
 			#region 参数验证
 			new Parameter().Validate(wallpaper);
@@ -170,7 +170,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 网络壁纸
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> WebWallpaper(String webUrl)
+		public async Task<IActionResult> WebWallpaper(String webUrl)
 		{
 			#region 参数验证
 			new Parameter().Validate(webUrl);
@@ -187,14 +187,14 @@ namespace NewCrmCore.Web.Controllers
 		}
 
 		#endregion
-	
+
 		#region 更换皮肤
 
 		/// <summary>
 		/// 更换皮肤
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifySkin(String skin)
+		public async Task<IActionResult> ModifySkin(String skin)
 		{
 			#region 参数验证
 			new Parameter().Validate(skin);
@@ -217,7 +217,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 载入上传壁纸
 		/// </summary>
 		[HttpGet]
-		public async Task<ActionResult> GetUploadWallPapers()
+		public async Task<IActionResult> GetUploadWallPapers()
 		{
 			var response = new ResponseModel<IList<WallpaperDto>>();
 			var result = await _wallpaperServices.GetUploadWallpaperAsync(AccountId);
@@ -236,7 +236,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 获取全部皮肤
 		/// </summary>
 		[HttpGet]
-		public async Task<ActionResult> GetSkins()
+		public async Task<IActionResult> GetSkins()
 		{
 			var response = new ResponseModel<dynamic>();
 
@@ -258,7 +258,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 更改码头位置
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyDockPosition(String pos, Int32 deskNum)
+		public async Task<IActionResult> ModifyDockPosition(String pos, Int32 deskNum)
 		{
 			#region 参数验证
 			new Parameter().Validate(pos).Validate(deskNum);
@@ -280,7 +280,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 修改壁纸来源
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyWallpaperSource(String source)
+		public async Task<IActionResult> ModifyWallpaperSource(String source)
 		{
 			#region 参数验证
 			new Parameter().Validate(source);
@@ -302,7 +302,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 更改图标大小
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifySize(Int32 appSize)
+		public async Task<IActionResult> ModifySize(Int32 appSize)
 		{
 			#region 参数验证
 			new Parameter().Validate(appSize);
@@ -324,7 +324,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 更换默认显示桌面
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyDefaultDesk(Int32 deskNum)
+		public async Task<IActionResult> ModifyDefaultDesk(Int32 deskNum)
 		{
 			#region 参数验证
 			new Parameter().Validate(deskNum);
@@ -346,7 +346,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 更换图标排列方向
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyXy(String appXy)
+		public async Task<IActionResult> ModifyXy(String appXy)
 		{
 			#region 参数验证
 			new Parameter().Validate(appXy);
@@ -369,7 +369,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 设置壁纸显示模式
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyDisplayModel(String wallPaperShowType)
+		public async Task<IActionResult> ModifyDisplayModel(String wallPaperShowType)
 		{
 			#region 参数验证
 			new Parameter().Validate(wallPaperShowType);
@@ -391,7 +391,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 更改图标的水平间距
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyHorizontalSpace(Int32 appHorizontal)
+		public async Task<IActionResult> ModifyHorizontalSpace(Int32 appHorizontal)
 		{
 			#region 参数验证
 			new Parameter().Validate(appHorizontal);
@@ -413,7 +413,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 更改应用图标垂直间距
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyVerticalSpace(Int32 appVertical)
+		public async Task<IActionResult> ModifyVerticalSpace(Int32 appVertical)
 		{
 			#region 参数验证
 			new Parameter().Validate(appVertical);
