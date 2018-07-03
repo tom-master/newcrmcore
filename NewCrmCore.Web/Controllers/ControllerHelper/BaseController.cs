@@ -19,11 +19,6 @@ namespace NewCrmCore.Web.Controllers.ControllerHelper
 				}
 				return 0;
 			}
-		}
-
-		protected void InternalLogout()
-		{
-			Response.Cookies.Append("memberID", AccountId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
-		}
+		} 
 	}
 }

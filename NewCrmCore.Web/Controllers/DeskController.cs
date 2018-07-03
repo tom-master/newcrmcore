@@ -351,7 +351,7 @@ namespace NewCrmCore.Web.Controllers
 		public async Task<IActionResult> Logout()
 		{
 			await _accountServices.LogoutAsync(AccountId);
-			InternalLogout();
+			Response.Cookies.Append("memberID", AccountId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
 			return new EmptyResult();
 		}
 

@@ -20,7 +20,7 @@ namespace NewCrmCore.Web.Filter
 				return;
 			}
 
-			if (filterContext.Filters.Where(w => w.GetType() == typeof(DoNotCheckPermissionAttribute)).Any())
+			if (filterContext.ActionDescriptor.FilterDescriptors.Any(a => a.Filter is DoNotCheckPermissionAttribute))
 			{
 				return;
 			}
@@ -81,13 +81,12 @@ namespace NewCrmCore.Web.Filter
 
 		private Boolean ValidateToken(AuthorizationFilterContext filterContext)
 		{
+			return true;
 			var token = filterContext.RouteData.Values["token"];
 			if (token == null || String.IsNullOrEmpty(token.ToString()))
 			{
 				//return false;
 			}
-
-			return true;
 		}
 	}
 }
