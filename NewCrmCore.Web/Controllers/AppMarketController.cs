@@ -14,7 +14,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Web.Controllers
 {
-	public class AppMarketController: BaseController
+	public class AppMarketController : BaseController
 	{
 		private readonly IAppServices _appServices;
 		private readonly IAccountServices _accountServices;
@@ -32,7 +32,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<ActionResult> Index()
+		public async Task<IActionResult> Index()
 		{
 			var account = await _accountServices.GetAccountAsync(AccountId);
 			if (account.IsAdmin)
@@ -55,7 +55,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<ActionResult> AppDetail(Int32 appId)
+		public async Task<IActionResult> AppDetail(Int32 appId)
 		{
 			#region 参数验证
 			new Parameter().Validate(appId);
@@ -73,7 +73,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<ActionResult> AccountAppManage()
+		public async Task<IActionResult> AccountAppManage()
 		{
 			ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();
 			ViewData["AppStyles"] = _appServices.GetAppStyles().ToList();
@@ -87,7 +87,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<ActionResult> AccountAppManageInfo(Int32 appId)
+		public async Task<IActionResult> AccountAppManageInfo(Int32 appId)
 		{
 			AppDto result = null;
 			if (appId != 0)// 如果appId为0则是新创建app
@@ -109,7 +109,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 应用打分
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyStar(Int32 appId, Int32 starCount)
+		public async Task<IActionResult> ModifyStar(Int32 appId, Int32 starCount)
 		{
 			#region 参数验证
 			new Parameter().Validate(appId).Validate(starCount);
@@ -131,7 +131,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 安装应用
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> Install(Int32 appId, Int32 deskNum)
+		public async Task<IActionResult> Install(Int32 appId, Int32 deskNum)
 		{
 			#region 参数验证
 			new Parameter().Validate(appId).Validate(deskNum);
@@ -153,7 +153,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 更新图标
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyIcon(Int32 appId, String newIcon)
+		public async Task<IActionResult> ModifyIcon(Int32 appId, String newIcon)
 		{
 			#region 参数验证
 			new Parameter().Validate(appId).Validate(newIcon);
@@ -177,7 +177,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 创建应用
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> Create(IFormCollection forms)
+		public async Task<IActionResult> Create(IFormCollection forms)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);
@@ -203,7 +203,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 发布应用
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> Release(Int32 appId)
+		public async Task<IActionResult> Release(Int32 appId)
 		{
 			#region 参数验证
 			new Parameter().Validate(appId);
@@ -225,7 +225,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 修改应用信息
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyInfo(IFormCollection forms)
+		public async Task<IActionResult> ModifyInfo(IFormCollection forms)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);
@@ -247,7 +247,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 获取所有应用
 		/// </summary>
 		[HttpGet]
-		public async Task<ActionResult> GetApps(Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize)
+		public async Task<IActionResult> GetApps(Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize)
 		{
 			var response = new ResponseModels<IList<AppDto>>();
 			var result = await _appServices.GetAppsAsync(AccountId, appTypeId, orderId, searchText, pageIndex, pageSize);
@@ -261,7 +261,7 @@ namespace NewCrmCore.Web.Controllers
 			else
 			{
 				response.Message = "app列表获取失败";
-			} 
+			}
 			return Json(response);
 		}
 
@@ -273,7 +273,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 获取账户下应用
 		/// </summary>
 		[HttpGet]
-		public async Task<ActionResult> GetAccountApps(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
+		public async Task<IActionResult> GetAccountApps(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
 		{
 			var response = new ResponseModels<IList<AppDto>>();
 			var result = await _appServices.GetAccountAppsAsync(AccountId, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize);
@@ -300,7 +300,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 移除账户中应用
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> Remove(Int32 appId)
+		public async Task<IActionResult> Remove(Int32 appId)
 		{
 			#region 参数验证
 			new Parameter().Validate(appId);
