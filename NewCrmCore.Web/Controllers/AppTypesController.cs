@@ -28,7 +28,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public ActionResult Index()
+		public IActionResult Index()
 		{
 			return View();
 		}
@@ -38,7 +38,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<ActionResult> CreateNewAppType(Int32 appTypeId = 0)
+		public async Task<IActionResult> CreateNewAppType(Int32 appTypeId = 0)
 		{
 			AppTypeDto result = null;
 			if (appTypeId != 0)
@@ -57,7 +57,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 移除应用类型
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> Remove(Int32 appTypeId)
+		public async Task<IActionResult> Remove(Int32 appTypeId)
 		{
 			#region 参数验证
 			new Parameter().Validate(appTypeId);
@@ -80,7 +80,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpPost]
-		public async Task<ActionResult> Create(IFormCollection forms, Int32 appTypeId = 0)
+		public async Task<IActionResult> Create(IFormCollection forms, Int32 appTypeId = 0)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);
@@ -110,7 +110,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 检查类型名称
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> CheckName(String param)
+		public async Task<IActionResult> CheckName(String param)
 		{
 			#region 参数验证
 			new Parameter().Validate(param);
@@ -128,7 +128,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 获取所有应用类型
 		/// </summary>
 		[HttpGet]
-		public async Task<ActionResult> GetAppTypes(Int32 pageIndex, Int32 pageSize, String searchText)
+		public async Task<IActionResult> GetAppTypes(Int32 pageIndex, Int32 pageSize, String searchText)
 		{
 			var response = new ResponseModels<IList<AppTypeDto>>();
 			var result = (await _appServices.GetAppTypesAsync()).Where(appType => String.IsNullOrEmpty(searchText) || appType.Name.Contains(searchText)).OrderByDescending(d => d.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
