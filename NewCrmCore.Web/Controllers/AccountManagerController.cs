@@ -28,7 +28,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 首页
 		/// </summary>
 		[HttpGet]
-		public ActionResult Index()
+		public IActionResult Index()
 		{
 			return View();
 		}
@@ -37,7 +37,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 创建新账户
 		/// </summary>
 		[HttpGet]
-		public async Task<ActionResult> Account(Int32 accountId = 0)
+		public async Task<IActionResult> Account(Int32 accountId = 0)
 		{
 			if (accountId != 0)
 			{
@@ -56,7 +56,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 移除账户
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> RemoveAccount(Int32 accountId)
+		public async Task<IActionResult> RemoveAccount(Int32 accountId)
 		{
 			#region 参数验证
 			new Parameter().Validate(accountId);
@@ -78,7 +78,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 账户启用
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> Enable(Int32 accountId)
+		public async Task<IActionResult> Enable(Int32 accountId)
 		{
 			#region 参数验证
 			new Parameter().Validate(accountId);
@@ -100,7 +100,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 账户禁用
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> Disable(Int32 accountId)
+		public async Task<IActionResult> Disable(Int32 accountId)
 		{
 			#region 参数验证
 			new Parameter().Validate(accountId);
@@ -122,7 +122,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 创建新账户
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> CreateAccount(IFormCollection forms)
+		public async Task<IActionResult> CreateAccount(IFormCollection forms)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);
@@ -160,7 +160,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 获取所有账户
 		/// </summary>
 		[HttpGet]
-		public async Task<ActionResult> Accounts(String accountName, String accountType, Int32 pageIndex, Int32 pageSize)
+		public async Task<IActionResult> Accounts(String accountName, String accountType, Int32 pageIndex, Int32 pageSize)
 		{
 			var response = new ResponseModels<IList<AccountDto>>();
 
@@ -184,7 +184,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 检查账户名是否已经存在
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> CheckName(String param)
+		public async Task<IActionResult> CheckName(String param)
 		{
 			#region 参数验证
 			new Parameter().Validate(param);
