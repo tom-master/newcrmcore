@@ -7,6 +7,7 @@ using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
+using NewCrmCore.Web.Filter;
 using NewLibCore;
 using NewLibCore.Validate;
 
@@ -144,7 +145,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 登陆
 		/// </summary>
 		[HttpPost, DoNotCheckPermission]
-		public async Task<IActionResult> Landing(LoginParameter loginParameter)
+		public async Task<IActionResult> Landing([FromBody]LoginParameter loginParameter)
 		{
 			#region 参数验证
 			new Parameter().Validate(loginParameter);
@@ -155,7 +156,7 @@ namespace NewCrmCore.Web.Controllers
 			var account = await _accountServices.LoginAsync(loginParameter.Name, loginParameter.Password, Request.HttpContext.Connection.RemoteIpAddress.ToString());
 			if (account != null)
 			{
-				var cookieTimeout = loginParameter.IsRememberPasswrod ? DateTime.Now.AddDays(7) : DateTime.Now.AddMinutes(30);
+				var cookieTimeout = loginParameter.IsRememberPasswrod ? DateTime.Now.AddDays(7) : DateTime.Now.AddMinutes(10);
 				response.Message = "登陆成功";
 				response.IsSuccess = true;
 
