@@ -33,7 +33,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet, DoNotCheckPermission]
-		public async Task<ActionResult> Index()
+		public async Task<IActionResult> Index()
 		{
 			ViewBag.Title = "桌面";
 			if (HttpContext.Request.Cookies["memberID"] != null)
@@ -55,7 +55,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet, DoNotCheckPermission]
-		public ActionResult Login()
+		public IActionResult Login()
 		{
 			var accountId = Request.Cookies["memberID"];
 			if (accountId != null)
@@ -75,7 +75,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 登陆
 		/// </summary>
 		[HttpPost, DoNotCheckPermission]
-		public async Task<ActionResult> Landing(LoginParameter loginParameter)
+		public async Task<IActionResult> Landing(LoginParameter loginParameter)
 		{
 			#region 参数验证
 			new Parameter().Validate(loginParameter);
@@ -105,7 +105,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpPost]
-		public async Task<ActionResult> UnlockScreen(String unlockPassword)
+		public async Task<IActionResult> UnlockScreen(String unlockPassword)
 		{
 			#region 参数验证
 			new Parameter().Validate(unlockPassword);
@@ -129,7 +129,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 账户登出
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> Logout()
+		public async Task<IActionResult> Logout()
 		{
 			await _accountServices.LogoutAsync(AccountId);
 			InternalLogout();
@@ -144,7 +144,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 获取皮肤
 		/// </summary>
 		[HttpGet]
-		public async Task<ActionResult> GetSkin()
+		public async Task<IActionResult> GetSkin()
 		{
 			var response = new ResponseModel<String>();
 			var skinName = (await _accountServices.GetConfigAsync(AccountId)).Skin;
@@ -163,7 +163,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 获取壁纸
 		/// </summary>
 		[HttpGet]
-		public async Task<ActionResult> GetWallpaper()
+		public async Task<IActionResult> GetWallpaper()
 		{
 			var response = new ResponseModel<ConfigDto>();
 			var result = await _accountServices.GetConfigAsync(AccountId);
@@ -189,7 +189,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 创建窗口
 		/// </summary>
 		[HttpGet]
-		public async Task<ActionResult> CreateWindow(Int32 id, String type)
+		public async Task<IActionResult> CreateWindow(Int32 id, String type)
 		{
 
 			#region 参数验证
@@ -228,7 +228,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 获取账户头像
 		/// </summary>
 		[HttpGet]
-		public async Task<ActionResult> GetAccountFace()
+		public async Task<IActionResult> GetAccountFace()
 		{
 			var response = new ResponseModel<String>();
 			var result = (await _accountServices.GetConfigAsync(AccountId)).AccountFace;
@@ -247,7 +247,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 初始化应用码头
 		/// </summary>
 		[HttpGet]
-		public async Task<ActionResult> GetDockPos()
+		public async Task<IActionResult> GetDockPos()
 		{
 			var response = new ResponseModel<String>();
 			var result = (await _accountServices.GetConfigAsync(AccountId)).DockPosition;
@@ -266,7 +266,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 获取账户安装的应用
 		/// </summary>
 		[HttpGet]
-		public async Task<ActionResult> GetAccountDeskMembers()
+		public async Task<IActionResult> GetAccountDeskMembers()
 		{
 			var response = new ResponseModel<IDictionary<String, IList<dynamic>>>();
 			var result = await _deskServices.GetDeskMembersAsync(AccountId);
