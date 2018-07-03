@@ -5522,7 +5522,7 @@ HROS.dock = (function () {
                     HROS.window.createTemp({
                         appid: 'hoorayos-zmsz',
                         title: '桌面设置',
-						url: '/Desk/DeskSet',
+						url: '/Desk/ConfigDesk',
                         width: 750,
                         height: 450,
                         isflash: false
@@ -6612,7 +6612,7 @@ HROS.popupMenu = (function () {
 
             $('.app-menu a[menu="edit"]').off('click').on('click', function () {
                 if (HROS.base.checkLogin()) {
-                    $.dialog.open('/Desk/EditMember?memberId=' + obj.attr('realappid'), {
+					$.dialog.open('/Desk/ConfigMember?memberId=' + obj.attr('realappid'), {
                         id: 'editdialog',
                         title: '编辑应用“' + obj.children('span').text() + '”',
                         width: 600,
@@ -7223,7 +7223,7 @@ HROS.popupMenu = (function () {
                         HROS.window.createTemp({
                             appid: 'hoorayos-zmsz',
                             title: '桌面设置',
-							url: '/Desk/DeskSet',
+							url: '/Desk/ConfigDesk',
                             width: 750,
                             height: 450,
                             isflash: false

@@ -78,7 +78,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<IActionResult> EditMember(Int32 memberId)
+		public async Task<IActionResult> ConfigMember(Int32 memberId)
 		{
 			#region 参数验证
 			new Parameter().Validate(memberId);
@@ -106,7 +106,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<IActionResult> CustomWallPaper()
+		public async Task<IActionResult> CustomizeWallpaper()
 		{
 			ViewData["AccountConfig"] = await _accountServices.GetConfigAsync(AccountId);
 			return View();
@@ -117,7 +117,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public IActionResult SetSkin()
+		public IActionResult ConfigSkin()
 		{
 			return View();
 		}
@@ -127,7 +127,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<IActionResult> DeskSet()
+		public async Task<IActionResult> ConfigDesk()
 		{
 			ViewData["AccountConfig"] = await _accountServices.GetConfigAsync(AccountId);
 			ViewData["Desks"] = (await _accountServices.GetConfigAsync(AccountId)).DefaultDeskCount;
