@@ -28,7 +28,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<ActionResult> EditMember(Int32 memberId)
+		public async Task<IActionResult> EditMember(Int32 memberId)
 		{
 			#region 参数验证
 			new Parameter().Validate(memberId);
@@ -46,7 +46,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 更新图标
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyIcon(Int32 memberId, String newIcon)
+		public async Task<IActionResult> ModifyIcon(Int32 memberId, String newIcon)
 		{
 			#region 参数验证
 			new Parameter().Validate(memberId).Validate(newIcon);
@@ -70,7 +70,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 新建文件夹
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> CreateFolder(String folderName, String folderImg, Int32 deskId)
+		public async Task<IActionResult> CreateFolder(String folderName, String folderImg, Int32 deskId)
 		{
 			#region 参数验证
 			new Parameter().Validate(folderName).Validate(folderImg).Validate(deskId);
@@ -92,7 +92,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 卸载桌面成员
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> Uninstall(Int32 memberId)
+		public async Task<IActionResult> Uninstall(Int32 memberId)
 		{
 			#region 参数验证
 			new Parameter().Validate(memberId);
@@ -114,7 +114,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 检查成员名称
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> CheckName(String param)
+		public async Task<IActionResult> CheckName(String param)
 		{
 			#region 参数验证
 			new Parameter().Validate(param);
@@ -132,7 +132,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 桌面成员移动
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> MemberMove(String moveType, Int32 memberId, Int32 from, Int32 to)
+		public async Task<IActionResult> MemberMove(String moveType, Int32 memberId, Int32 from, Int32 to)
 		{
 			#region 参数验证
 			new Parameter().Validate(moveType).Validate(memberId);
@@ -185,7 +185,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 修改成员信息
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyMemberInfo(IFormCollection forms)
+		public async Task<IActionResult> ModifyMemberInfo(IFormCollection forms)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);
@@ -221,7 +221,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 修改文件夹信息
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> ModifyFolderInfo(String name, String icon, Int32 memberId)
+		public async Task<IActionResult> ModifyFolderInfo(String name, String icon, Int32 memberId)
 		{
 			#region 参数验证
 			new Parameter().Validate(name).Validate(icon).Validate(memberId);
