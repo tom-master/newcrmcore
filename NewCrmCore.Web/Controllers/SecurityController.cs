@@ -32,7 +32,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public ActionResult Index()
+		public IActionResult Index()
 		{
 			return View();
 		}
@@ -42,7 +42,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<ActionResult> CreateNewRole(Int32 roleId = default(Int32))
+		public async Task<IActionResult> CreateNewRole(Int32 roleId = default(Int32))
 		{
 			if (roleId != 0)
 			{
@@ -57,7 +57,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<ActionResult> AttachmentPowerAsync(Int32 roleId)
+		public async Task<IActionResult> AttachmentPowerAsync(Int32 roleId)
 		{
 			#region 参数验证
 			new Parameter().Validate(roleId);
@@ -83,7 +83,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<ActionResult> AddSystemAppGotoPower()
+		public async Task<IActionResult> AddSystemAppGotoPower()
 		{
 			ViewData["SystemApp"] = await _appServices.GetSystemAppAsync();
 			return View();
@@ -99,7 +99,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 移除角色
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> RemoveRole(Int32 roleId)
+		public async Task<IActionResult> RemoveRole(Int32 roleId)
 		{
 			#region 参数验证
 			new Parameter().Validate(roleId);
@@ -121,7 +121,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 添加角色
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> CreateRole(IFormCollection forms, Int32 roleId = 0)
+		public async Task<IActionResult> CreateRole(IFormCollection forms, Int32 roleId = 0)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);
@@ -152,7 +152,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 选择应用
 		/// </summary>
 		[HttpGet]
-		public async Task<ActionResult> GetSystemApp(String appIds)
+		public async Task<IActionResult> GetSystemApp(String appIds)
 		{
 			var response = new ResponseModel<IList<AppDto>>();
 			var internalAppIds = appIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(Int32.Parse).ToArray();
@@ -172,7 +172,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 获取所有角色
 		/// </summary>
 		[HttpGet]
-		public async Task<ActionResult> GetRoles(String roleName, Int32 pageIndex, Int32 pageSize)
+		public async Task<IActionResult> GetRoles(String roleName, Int32 pageIndex, Int32 pageSize)
 		{
 			var response = new ResponseModels<IList<RoleDto>>();
 			var result = await _securityServices.GetRolesAsync(roleName, pageIndex, pageSize);
@@ -192,7 +192,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 检查角色名称
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> CheckName(String param)
+		public async Task<IActionResult> CheckName(String param)
 		{
 			new Parameter().Validate(param);
 			var result = await _securityServices.CheckRoleNameAsync(param);
@@ -207,7 +207,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 检查角色标识
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> CheckRoleIdentity(String param)
+		public async Task<IActionResult> CheckRoleIdentity(String param)
 		{
 			new Parameter().Validate(param);
 			var result = await _securityServices.CheckRoleIdentityAsync(param);
@@ -222,7 +222,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 将应用附加到角色
 		/// </summary>
 		[HttpPost]
-		public async Task<ActionResult> AddAppToRole(IFormCollection forms)
+		public async Task<IActionResult> AddAppToRole(IFormCollection forms)
 		{
 			#region 参数验证
 			new Parameter().Validate(forms);
