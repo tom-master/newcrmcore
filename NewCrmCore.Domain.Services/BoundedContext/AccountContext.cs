@@ -522,9 +522,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					#region 前置条件验证
 					{
 						var sql = $@"SELECT COUNT(*) FROM Role AS a
-                                INNER JOIN AccountRole AS a1
-                                ON a1.AccountId=@accountId AND a1.RoleId=a.Id AND a1.IsDeleted=0
-                                WHERE a.IsDeleted=0 AND a.IsAllowDisable=0";
+									INNER JOIN AccountRole AS a1
+									ON a1.AccountId=@accountId AND a1.RoleId=a.Id AND a1.IsDeleted=0
+									WHERE a.IsDeleted=0 AND a.IsAllowDisable=0";
 						var result = dataStore.FindSingleValue<Int32>(sql, parameters);
 						if (result > 0)
 						{
