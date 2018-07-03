@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using NewCrmCore.Application.Services.Interface;
@@ -8,12 +9,11 @@ using NewCrmCore.Web.Controllers.ControllerHelper;
 
 namespace NewCrmCore.Web.Filter
 {
-	public class AuthFilter: IAsyncAuthorizationFilter
+	public class AuthFilter : IAsyncAuthorizationFilter
 	{
 
 		public async Task OnAuthorizationAsync(AuthorizationFilterContext filterContext)
 		{
-
 			if (!ValidateToken(filterContext))
 			{
 				ReturnMessage(filterContext, "token验证失败！");
@@ -33,7 +33,7 @@ namespace NewCrmCore.Web.Filter
 
 			if (filterContext.HttpContext.Request.Cookies["memberID"] == null)
 			{
-				ReturnMessage(filterContext, "登陆超时，请刷新页面后重新登陆");
+				ReturnMessage(filterContext, "会话过期，请刷新页面后重新登陆");
 				return;
 			}
 

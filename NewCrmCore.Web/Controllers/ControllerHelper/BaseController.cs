@@ -5,7 +5,7 @@ using NewCrmCore.Application.Services.Interface;
 
 namespace NewCrmCore.Web.Controllers.ControllerHelper
 {
-	public class BaseController: Controller
+	public class BaseController : Controller
 	{
 		protected Int32 AccountId
 		{
