@@ -6,14 +6,7 @@ namespace NewCrmCore.Domain.Entitys.System
 {
 	[Description("在线人数"), Serializable]
     public partial class Online : DomainModelBase
-    {
-        #region private field
-
-        private String _ipAddress;
-
-        private Int32 _accountId;
-		#endregion
-
+    { 
 		#region public property
 
 		/// <summary>
