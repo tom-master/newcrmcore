@@ -4,38 +4,18 @@ using NewLibCore.Data.Mapper.MapperExtension;
 namespace NewCrmCore.Domain.Entitys.Agent
 {
 	public class AccountRole: DomainModelBase
-	{
-		#region private field
-		private Int32 _accountId;
-
-		private Int32 _roleId;
-		#endregion
-
+	{ 
 		#region public property
 		[PropertyRequired]
 		public Int32 AccountId
 		{
-			get
-			{
-				return _accountId;
-			}
-			private set
-			{
-				_accountId = value;
-			}
+			get; private set;
 		}
 
 		[PropertyRequired]
 		public Int32 RoleId
 		{
-			get
-			{
-				return _roleId;
-			}
-			private set
-			{
-				_roleId = value;
-			}
+			get; private set;
 		}
 
 		#endregion
