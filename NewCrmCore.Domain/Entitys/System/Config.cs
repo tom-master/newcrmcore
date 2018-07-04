@@ -6,51 +6,19 @@ using NewLibCore.Data.Mapper.MapperExtension;
 namespace NewCrmCore.Domain.Entitys.System
 {
 	[Description("用户配置"), Serializable]
-	public partial class Config: DomainModelBase
+	public partial class Config : DomainModelBase
 	{
-		#region private field
 
-		private String _skin;
-
-		private Int32 _appSize;
-
-		private String _accountFace;
-
-		private Int32 _appVerticalSpacing;
-
-		private Int32 _appHorizontalSpacing;
-
-		private Int32 _defaultDeskNumber;
-
-		private Int32 _defaultDeskCount;
-
-		private WallpaperMode _wallpaperMode;
-
-		private Boolean _isBing;
-
-		private AppAlignMode _appXy;
-
-		private DockPostion _dockPosition;
-
-		private Int32 _accountId;
-
-		private Int32 _wallpaperId;
-
-		#endregion
 
 		#region public property
 
 		/// <summary>
 		/// 皮肤
 		/// </summary>
-		[PropertyRequired,InputRange(10)]
+		[PropertyRequired, InputRange(10)]
 		public String Skin
 		{
-			get { return _skin; }
-			private set
-			{
-				_skin = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -59,11 +27,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired, InputRange(150)]
 		public String AccountFace
 		{
-			get { return _accountFace; }
-			private set
-			{
-				_accountFace = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -72,11 +36,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public Int32 AppSize
 		{
-			get { return _appSize; }
-			private set
-			{
-				_appSize = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -85,11 +45,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public Int32 AppVerticalSpacing
 		{
-			get { return _appVerticalSpacing; }
-			private set
-			{
-				_appVerticalSpacing = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -98,24 +54,15 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public Int32 AppHorizontalSpacing
 		{
-			get { return _appHorizontalSpacing; }
-			private set
-			{
-				_appHorizontalSpacing = value;
-			}
+			get; private set;
 		}
-
 		/// <summary>
 		/// 默认桌面编号
 		/// </summary>
 		[PropertyDefaultValue(typeof(Int32), 1)]
 		public Int32 DefaultDeskNumber
 		{
-			get { return _defaultDeskNumber; }
-			private set
-			{
-				_defaultDeskNumber = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -124,11 +71,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(Int32), 5)]
 		public Int32 DefaultDeskCount
 		{
-			get { return _defaultDeskCount; }
-			private set
-			{
-				_defaultDeskCount = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -137,11 +80,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public WallpaperMode WallpaperMode
 		{
-			get { return _wallpaperMode; }
-			private set
-			{
-				_wallpaperMode = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -150,11 +89,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(Boolean), false)]
 		public Boolean IsBing
 		{
-			get { return _isBing; }
-			private set
-			{
-				_isBing = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -163,11 +98,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public AppAlignMode AppXy
 		{
-			get { return _appXy; }
-			private set
-			{
-				_appXy = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -176,11 +107,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(DockPostion), DockPostion.Top)]
 		public DockPostion DockPosition
 		{
-			get { return _dockPosition; }
-			private set
-			{
-				_dockPosition = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -189,11 +116,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public Int32 AccountId
 		{
-			get { return _accountId; }
-			private set
-			{
-				_accountId = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -202,11 +125,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public Int32 WallpaperId
 		{
-			get { return _wallpaperId; }
-			private set
-			{
-				_wallpaperId = value;
-			}
+			get; private set;
 		}
 
 		#endregion

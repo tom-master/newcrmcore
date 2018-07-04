@@ -5,11 +5,7 @@ namespace NewCrmCore.Domain.Entitys.System
 {
 	public partial class AppStar : DomainModelBase
 	{
-		private Int32 _accountId;
 
-		public Int32 _appId;
-
-		public Double _startNum;
 
 		/// <summary>
 		/// 账号
@@ -17,11 +13,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public Int32 AccountId
 		{
-			get { return _accountId; }
-			private set
-			{
-				_accountId = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -30,11 +22,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public Int32 AppId
 		{
-			get { return _appId; }
-			private set
-			{
-				_appId = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -43,11 +31,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public Double StartNum
 		{
-			get { return _startNum; }
-			private set
-			{
-				_startNum = value;
-			}
+			get; private set;
 		}
 
 		public AppStar(Int32 accountId, Int32 appId, Double startNum)

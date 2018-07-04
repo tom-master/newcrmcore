@@ -7,12 +7,7 @@ namespace NewCrmCore.Domain.Entitys.System
 	[Description("应用类型"), Serializable]
 	public partial class AppType : DomainModelBase
 	{
-		#region private field
-
-		private String _name;
-
-		private String _remark;
-		#endregion
+		 
 
 		#region public proptery
 
@@ -22,11 +17,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired, InputRange(10)]
 		public String Name
 		{
-			get { return _name; }
-			private set
-			{
-				_name = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -35,11 +26,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(String), ""), InputRange(50)]
 		public String Remark
 		{
-			get { return _remark; }
-			private set
-			{
-				_remark = value;
-			}
+			get; private set;
 		}
 
 		#endregion
