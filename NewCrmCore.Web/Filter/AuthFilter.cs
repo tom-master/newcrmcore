@@ -82,11 +82,6 @@ namespace NewCrmCore.Web.Filter
 		private Boolean ValidateToken(AuthorizationFilterContext filterContext)
 		{
 			return true;
-			var token = filterContext.RouteData.Values["token"];
-			if (token == null || String.IsNullOrEmpty(token.ToString()))
-			{
-				//return false;
-			}
 		}
 	}
 }
