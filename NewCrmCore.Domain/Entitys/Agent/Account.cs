@@ -8,40 +8,15 @@ using NewLibCore.Data.Mapper.MapperExtension;
 namespace NewCrmCore.Domain.Entitys.Agent
 {
 	[Description("用户"), Serializable]
-	public partial class Account: DomainModelBase
+	public partial class Account : DomainModelBase
 	{
-		private String _name;
-
-		private String _loginPassword;
-
-		private String _lockScreenPassword;
-
-		private Boolean _isDisable;
-
-		private DateTime _lastLoginTime;
-
-		private Boolean _isOnline;
-
-		private Boolean _isAdmin;
-
-		private Int32 _configId;
-
-		private IEnumerable<AccountRole> _roles;
-
 		/// <summary>
 		/// 用户名
 		/// </summary>
 		[PropertyRequired, InputRange(10)]
 		public String Name
 		{
-			get
-			{
-				return _name;
-			}
-			private set
-			{
-				_name = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -50,14 +25,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
 		[PropertyRequired, InputRange(6, 8)]
 		public String LoginPassword
 		{
-			get
-			{
-				return _loginPassword;
-			}
-			private set
-			{
-				_loginPassword = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -66,14 +34,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
 		[PropertyRequired, InputRange(6, 8)]
 		public String LockScreenPassword
 		{
-			get
-			{
-				return _lockScreenPassword;
-			}
-			private set
-			{
-				_lockScreenPassword = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -82,14 +43,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
 		[PropertyDefaultValue(typeof(Boolean), false)]
 		public Boolean IsDisable
 		{
-			get
-			{
-				return _isDisable;
-			}
-			private set
-			{
-				_isDisable = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -98,14 +52,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
 		[DateTimeDefaultValue]
 		public DateTime LastLoginTime
 		{
-			get
-			{
-				return _lastLoginTime;
-			}
-			private set
-			{
-				_lastLoginTime = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -114,14 +61,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
 		[PropertyDefaultValue(typeof(Boolean), false)]
 		public Boolean IsOnline
 		{
-			get
-			{
-				return _isOnline;
-			}
-			private set
-			{
-				_isOnline = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -130,14 +70,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
 		[PropertyDefaultValue(typeof(Boolean), false)]
 		public Boolean IsAdmin
 		{
-			get
-			{
-				return _isAdmin;
-			}
-			private set
-			{
-				_isAdmin = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -146,31 +79,20 @@ namespace NewCrmCore.Domain.Entitys.Agent
 		[PropertyRequired]
 		public Int32 ConfigId
 		{
-			get
-			{
-				return _configId;
-			}
-			private set
-			{
-				_configId = value;
-			}
+			get; private set;
 		}
 
-		public String AccountFace { get; set; }
+		public String AccountFace
+		{
+			get; private set;
+		}
 
 		/// <summary>
 		/// 用户角色
 		/// </summary>
 		public IEnumerable<AccountRole> Roles
 		{
-			get
-			{
-				return _roles;
-			}
-			private set
-			{
-				_roles = value;
-			}
+			get; private set;
 		}
 
 		#region ctor
