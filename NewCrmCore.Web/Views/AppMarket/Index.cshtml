@@ -133,10 +133,8 @@
             //加载列表
             getPageList(0);
 
-            openDetailIframe2 = function (url) {
-                //NewCrm.msgbox.loading('正在载入中，请稍后...');
-                $('#detailIframe iframe').attr('src', url).on('load', function () {
-                    //NewCrm.msgbox.close()
+            openDetailIframe2 = function (url) { 
+                $('#detailIframe iframe').attr('src', url).on('load', function () { 
                     $('#detailIframe').animate({
                         'left': '60px',
                         'opacity': 'show'

@@ -44,7 +44,7 @@ namespace NewCrmCore.Web.Controllers
 		public async Task<IActionResult> Index()
 		{
 			ViewBag.Title = "桌面";
-			if (HttpContext.Request.Cookies["memberID"] != null)
+			if (HttpContext.Request.Cookies["Account"] != null)
 			{
 				var account = await _accountServices.GetAccountAsync(AccountId);
 				account.AccountFace = Appsetting.FileUrl + account.AccountFace;
@@ -65,7 +65,7 @@ namespace NewCrmCore.Web.Controllers
 		[HttpGet, DoNotCheckPermission]
 		public IActionResult Login()
 		{
-			var accountId = Request.Cookies["memberID"];
+			var accountId = Request.Cookies["Account"];
 			if (accountId != null)
 			{
 				return RedirectToAction("Index", "Desktop");
@@ -160,8 +160,8 @@ namespace NewCrmCore.Web.Controllers
 				response.Message = "登陆成功";
 				response.IsSuccess = true;
 
-				HttpContext.Response.Cookies.Append("memberID", account.Id.ToString(), new CookieOptions { Expires = cookieTimeout });
-				HttpContext.Response.Cookies.Append("Account", JsonConvert.SerializeObject(new { AccountFace = Appsetting.FileUrl + account.AccountFace, account.Name }), new CookieOptions { Expires = cookieTimeout });
+				HttpContext.Response.Cookies.Append("Account", JsonConvert.SerializeObject(new { Id = account.Id.ToString(), AccountFace = Appsetting.FileUrl + account.AccountFace, account.Name }), new CookieOptions { Expires = cookieTimeout });
+
 			}
 			return Json(response);
 		}
@@ -351,7 +351,7 @@ namespace NewCrmCore.Web.Controllers
 		public async Task<IActionResult> Logout()
 		{
 			await _accountServices.LogoutAsync(AccountId);
-			Response.Cookies.Append("memberID", AccountId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
+			Response.Cookies.Append("Account", AccountId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
 			return new EmptyResult();
 		}
 

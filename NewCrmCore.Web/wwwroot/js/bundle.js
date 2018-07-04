@@ -5163,7 +5163,7 @@ HROS.base = (function () {
                 config['opacity'] = 0.5;
             })($.dialog.defaults);
             //更新当前用户ID
-            HROS.CONFIG.memberID = $.cookie('memberID');
+			HROS.CONFIG.memberID = $.cookie('memberID').Id;
             //阻止弹出浏览器默认右键菜单
             $('body').on('contextmenu', function () {
                 return false;
