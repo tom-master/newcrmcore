@@ -8,53 +8,24 @@ namespace NewCrmCore.Domain.Entitys.System
 	[Serializable, Description("壁纸")]
 	public partial class Wallpaper : DomainModelBase
 	{
-		#region private field
-
-		private String _title;
-
-		private String _url;
-
-		private String _shortUrl;
-
-		private WallpaperSource _source;
-
-		private String _description;
-
-		private Int32 _width;
-
-		private Int32 _height;
-
-		private Int32 _accountId;
-
-		private String _md5;
-		#endregion
-
 		#region public property
 
 		/// <summary>
 		/// 标题
 		/// </summary>
-		[PropertyRequired,InputRange(15)]
+		[PropertyRequired, InputRange(15)]
 		public String Title
 		{
-			get { return _title; }
-			private set
-			{
-				_title = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
 		/// 图片地址
 		/// </summary>
-		[PropertyRequired,InputRange(150)]
+		[PropertyRequired, InputRange(150)]
 		public String Url
 		{
-			get { return _url; }
-			private set
-			{
-				_url = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -63,11 +34,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(String), "")]
 		public String ShortUrl
 		{
-			get { return _shortUrl; }
-			private set
-			{
-				_shortUrl = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -76,11 +43,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public WallpaperSource Source
 		{
-			get { return _source; }
-			private set
-			{
-				_source = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -89,11 +52,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(String), ""), InputRange(50)]
 		public String Description
 		{
-			get { return _description; }
-			private set
-			{
-				_description = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -102,11 +61,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public Int32 Width
 		{
-			get { return _width; }
-			private set
-			{
-				_width = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -115,11 +70,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public Int32 Height
 		{
-			get { return _height; }
-			private set
-			{
-				_height = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -128,11 +79,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public Int32 AccountId
 		{
-			get { return _accountId; }
-			private set
-			{
-				_accountId = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -141,11 +88,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public String Md5
 		{
-			get { return _md5; }
-			private set
-			{
-				_md5 = value;
-			}
+			get; private set;
 		}
 
 		#endregion
