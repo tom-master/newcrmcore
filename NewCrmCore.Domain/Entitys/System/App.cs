@@ -9,61 +9,6 @@ namespace NewCrmCore.Domain.Entitys.System
 	[Serializable, Description("应用")]
 	public partial class App : DomainModelBase
 	{
-		#region private field
-
-		public String _name;
-
-		public String _iconUrl;
-
-		public String _appUrl;
-
-		public String _remark;
-
-		public Int32 _width;
-
-		public Int32 _height;
-
-		public Int32 _useCount;
-
-		public Boolean _isMax;
-
-		public Boolean _isFull;
-
-		public Boolean _isSetbar;
-
-		public Boolean _isOpenMax;
-
-		public Boolean _isLock;
-
-		public Boolean _isSystem;
-
-		public Boolean _isFlash;
-
-		public Boolean _isDraw;
-
-		public Boolean _isResize;
-
-		public Int32 _accountId;
-
-		public Int32 _appTypeId;
-
-		public Boolean _isRecommand;
-
-		public AppAuditState _appAuditState;
-
-		public AppReleaseState _appReleaseState;
-
-		public AppStyle _appStyle;
-
-		public Boolean _isInstall;
-
-		public Double _starCount;
-
-		public String _accountName;
-
-		public Boolean _isIconByUpload;
-		#endregion
-
 		#region public property
 
 		/// <summary>
@@ -72,11 +17,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired, InputRange(10)]
 		public String Name
 		{
-			get { return _name; }
-			private set
-			{
-				_name = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -85,11 +26,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired, InputRange(150)]
 		public String IconUrl
 		{
-			get { return _iconUrl; }
-			private set
-			{
-				_iconUrl = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -98,11 +35,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired, InputRange(150)]
 		public String AppUrl
 		{
-			get { return _appUrl; }
-			private set
-			{
-				_appUrl = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -111,11 +44,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[InputRange(50), PropertyDefaultValue(typeof(String), "")]
 		public String Remark
 		{
-			get { return _remark; }
-			private set
-			{
-				_remark = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -124,11 +53,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public Int32 Width
 		{
-			get { return _width; }
-			private set
-			{
-				_width = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -137,11 +62,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public Int32 Height
 		{
-			get { return _height; }
-			private set
-			{
-				_height = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -150,11 +71,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(Int32), 0)]
 		public Int32 UseCount
 		{
-			get { return _useCount; }
-			private set
-			{
-				_useCount = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -163,11 +80,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(Boolean), false)]
 		public Boolean IsMax
 		{
-			get { return _isMax; }
-			private set
-			{
-				_isMax = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -176,11 +89,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(Boolean), false)]
 		public Boolean IsFull
 		{
-			get { return _isFull; }
-			private set
-			{
-				_isFull = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -189,11 +98,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(Boolean), false)]
 		public Boolean IsSetbar
 		{
-			get { return _isSetbar; }
-			private set
-			{
-				_isSetbar = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -202,11 +107,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(Boolean), false)]
 		public Boolean IsOpenMax
 		{
-			get { return _isOpenMax; }
-			private set
-			{
-				_isOpenMax = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -215,11 +116,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(Boolean), false)]
 		public Boolean IsLock
 		{
-			get { return _isLock; }
-			private set
-			{
-				_isLock = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -228,11 +125,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(Boolean), false)]
 		public Boolean IsSystem
 		{
-			get { return _isSystem; }
-			private set
-			{
-				_isSystem = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -241,11 +134,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(Boolean), false)]
 		public Boolean IsFlash
 		{
-			get { return _isFlash; }
-			private set
-			{
-				_isFlash = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -254,11 +143,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(Boolean), false)]
 		public Boolean IsDraw
 		{
-			get { return _isDraw; }
-			private set
-			{
-				_isDraw = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -267,11 +152,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(Boolean), false)]
 		public Boolean IsResize
 		{
-			get { return _isResize; }
-			private set
-			{
-				_isResize = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -280,11 +161,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public Int32 AccountId
 		{
-			get { return _accountId; }
-			private set
-			{
-				_accountId = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -293,11 +170,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public Int32 AppTypeId
 		{
-			get { return _appTypeId; }
-			private set
-			{
-				_appTypeId = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -306,11 +179,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(Boolean), false)]
 		public Boolean IsRecommand
 		{
-			get { return _isRecommand; }
-			private set
-			{
-				_isRecommand = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -319,11 +188,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(AppAuditState), AppAuditState.UnAuditState)]
 		public AppAuditState AppAuditState
 		{
-			get { return _appAuditState; }
-			private set
-			{
-				_appAuditState = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -332,11 +197,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(AppReleaseState), AppReleaseState.UnRelease)]
 		public AppReleaseState AppReleaseState
 		{
-			get { return _appReleaseState; }
-			private set
-			{
-				_appReleaseState = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -345,11 +206,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public AppStyle AppStyle
 		{
-			get { return _appStyle; }
-			private set
-			{
-				_appStyle = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -358,11 +215,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(Boolean), false)]
 		public Boolean IsInstall
 		{
-			get { return _isInstall; }
-			private set
-			{
-				_isInstall = value;
-			}
+			get; private set;
 		}
 
 		[PropertyDefaultValue(typeof(Double), 0.0)]
@@ -377,11 +230,7 @@ namespace NewCrmCore.Domain.Entitys.System
 
 		public String AccountName
 		{
-			get { return _accountName; }
-			private set
-			{
-				_accountName = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -390,11 +239,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(Boolean), false)]
 		public Boolean IsIconByUpload
 		{
-			get { return _isIconByUpload; }
-			private set
-			{
-				_isIconByUpload = value;
-			}
+			get; private set;
 		}
 
 		#endregion
@@ -452,7 +297,6 @@ namespace NewCrmCore.Domain.Entitys.System
 	/// </summary>
 	public partial class App
 	{
-
 		public App ModifyName(String appName)
 		{
 			if (String.IsNullOrEmpty(appName))
