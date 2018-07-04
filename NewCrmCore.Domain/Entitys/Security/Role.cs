@@ -7,21 +7,9 @@ using NewLibCore.Data.Mapper.MapperExtension;
 namespace NewCrmCore.Domain.Entitys.Security
 {
 	[Description("角色"), Serializable]
-	public partial class Role: DomainModelBase
+	public partial class Role : DomainModelBase
 	{
-		#region private field
 
-		private String _name;
-
-		private String _roleIdentity;
-
-		private String _remark;
-
-		private Boolean _isAllowDisable;
-
-		private IEnumerable<RolePower> _powers;
-
-		#endregion
 
 		#region public property
 
@@ -31,24 +19,15 @@ namespace NewCrmCore.Domain.Entitys.Security
 		[PropertyRequired, InputRange(10)]
 		public String Name
 		{
-			get { return _name; }
-			private set
-			{
-				_name = value;
-			}
+			get; private set;
 		}
-
 		/// <summary>
 		/// 角色标识
 		/// </summary>
 		[PropertyRequired, InputRange(20)]
 		public String RoleIdentity
 		{
-			get { return _roleIdentity; }
-			private set
-			{
-				_roleIdentity = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -57,11 +36,7 @@ namespace NewCrmCore.Domain.Entitys.Security
 		[InputRange(50), PropertyDefaultValue(typeof(String), "")]
 		public String Remark
 		{
-			get { return _remark; }
-			private set
-			{
-				_remark = value;
-			}
+			get; private set;
 		}
 
 		/// <summary>
@@ -70,20 +45,12 @@ namespace NewCrmCore.Domain.Entitys.Security
 		[PropertyDefaultValue(typeof(Boolean), false)]
 		public Boolean IsAllowDisable
 		{
-			get { return _isAllowDisable; }
-			private set
-			{
-				_isAllowDisable = value;
-			}
+			get; private set;
 		}
 
 		public IEnumerable<RolePower> Powers
 		{
-			get { return _powers; }
-			private set
-			{
-				_powers = value;
-			}
+			get; private set;
 		}
 
 		#endregion
