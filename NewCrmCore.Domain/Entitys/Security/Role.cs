@@ -28,7 +28,7 @@ namespace NewCrmCore.Domain.Entitys.Security
 		/// <summary>
 		/// 名称
 		/// </summary>
-		[PropertyRequired, InputRange(6)]
+		[PropertyRequired, InputRange(10)]
 		public String Name
 		{
 			get { return _name; }
@@ -41,7 +41,7 @@ namespace NewCrmCore.Domain.Entitys.Security
 		/// <summary>
 		/// 角色标识
 		/// </summary>
-		[PropertyRequired, InputRange(10)]
+		[PropertyRequired, InputRange(20)]
 		public String RoleIdentity
 		{
 			get { return _roleIdentity; }
@@ -54,7 +54,7 @@ namespace NewCrmCore.Domain.Entitys.Security
 		/// <summary>
 		/// 备注
 		/// </summary>
-		[InputRange(20), PropertyDefaultValue(typeof(String), "")]
+		[InputRange(50), PropertyDefaultValue(typeof(String), "")]
 		public String Remark
 		{
 			get { return _remark; }

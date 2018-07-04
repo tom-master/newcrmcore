@@ -34,7 +34,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		/// <summary>
 		/// 标题
 		/// </summary>
-		[PropertyRequired]
+		[PropertyRequired,InputRange(15)]
 		public String Title
 		{
 			get { return _title; }
@@ -47,7 +47,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		/// <summary>
 		/// 图片地址
 		/// </summary>
-		[PropertyRequired]
+		[PropertyRequired,InputRange(150)]
 		public String Url
 		{
 			get { return _url; }

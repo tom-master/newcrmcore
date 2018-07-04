@@ -9,7 +9,7 @@ namespace NewCrmCore.Domain.Entitys.System
 	/// 成员
 	/// </summary>
 	[Serializable, Description("成员")]
-	public partial class Member: DomainModelBase
+	public partial class Member : DomainModelBase
 	{
 		#region private field
 
@@ -112,7 +112,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		/// <summary>
 		/// 名称
 		/// </summary>
-		[PropertyRequired, InputRange(6)]
+		[PropertyRequired, InputRange(10)]
 		public String Name
 		{
 			get { return _name; }
@@ -125,7 +125,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		/// <summary>
 		/// 图标地址
 		/// </summary>
-		[PropertyRequired]
+		[PropertyRequired, InputRange(150)]
 		public String IconUrl
 		{
 			get { return _iconUrl; }
@@ -138,7 +138,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		/// <summary>
 		/// app地址
 		/// </summary>
-		[PropertyRequired]
+		[PropertyRequired, InputRange(150)]
 		public String AppUrl
 		{
 			get { return _appUrl; }

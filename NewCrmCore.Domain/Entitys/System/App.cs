@@ -7,7 +7,7 @@ namespace NewCrmCore.Domain.Entitys.System
 {
 
 	[Serializable, Description("应用")]
-	public partial class App: DomainModelBase
+	public partial class App : DomainModelBase
 	{
 		#region private field
 
@@ -69,7 +69,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		/// <summary>
 		/// 名称
 		/// </summary>
-		[PropertyRequired, InputRange(6)]
+		[PropertyRequired, InputRange(10)]
 		public String Name
 		{
 			get { return _name; }
@@ -82,7 +82,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		/// <summary>
 		/// 图标地址
 		/// </summary>
-		[PropertyRequired]
+		[PropertyRequired, InputRange(150)]
 		public String IconUrl
 		{
 			get { return _iconUrl; }
@@ -95,7 +95,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		/// <summary>
 		/// app地址
 		/// </summary>
-		[PropertyRequired]
+		[PropertyRequired, InputRange(150)]
 		public String AppUrl
 		{
 			get { return _appUrl; }
@@ -355,6 +355,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		/// <summary>
 		/// 是否安装
 		/// </summary>
+		[PropertyDefaultValue(typeof(Boolean), false)]
 		public Boolean IsInstall
 		{
 			get { return _isInstall; }
@@ -364,6 +365,7 @@ namespace NewCrmCore.Domain.Entitys.System
 			}
 		}
 
+		[PropertyDefaultValue(typeof(Double), 0.0)]
 		public Double StarCount
 		{
 			get { return _starCount; }

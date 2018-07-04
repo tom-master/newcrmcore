@@ -41,7 +41,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		/// <summary>
 		/// 类名
 		/// </summary>
-		[PropertyRequired]
+		[PropertyRequired,InputRange(25)]
 		public String Controller
 		{
 			get { return _controller; }
@@ -54,7 +54,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		/// <summary>
 		/// 方法名
 		/// </summary>
-		[PropertyRequired]
+		[PropertyRequired, InputRange(30)]
 		public String Action
 		{
 			get { return _action; }
@@ -67,7 +67,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		/// <summary>
 		/// 异常信息
 		/// </summary>
-		[PropertyRequired]
+		[PropertyRequired, InputRange(1000)]
 		public String ExceptionMessage
 		{
 			get { return _exceptionMessage; }

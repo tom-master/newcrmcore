@@ -43,7 +43,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		/// <summary>
 		/// 皮肤
 		/// </summary>
-		[PropertyRequired]
+		[PropertyRequired,InputRange(10)]
 		public String Skin
 		{
 			get { return _skin; }
@@ -56,7 +56,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		/// <summary>
 		/// 用户头像
 		/// </summary>
-		[PropertyRequired]
+		[PropertyRequired, InputRange(150)]
 		public String AccountFace
 		{
 			get { return _accountFace; }

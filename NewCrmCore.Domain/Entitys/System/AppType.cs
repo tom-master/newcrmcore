@@ -5,7 +5,7 @@ using NewLibCore.Data.Mapper.MapperExtension;
 namespace NewCrmCore.Domain.Entitys.System
 {
 	[Description("应用类型"), Serializable]
-	public partial class AppType: DomainModelBase
+	public partial class AppType : DomainModelBase
 	{
 		#region private field
 
@@ -19,7 +19,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		/// <summary>
 		/// 名称
 		/// </summary>
-		[PropertyRequired, InputRange(1, 6)]
+		[PropertyRequired, InputRange(10)]
 		public String Name
 		{
 			get { return _name; }

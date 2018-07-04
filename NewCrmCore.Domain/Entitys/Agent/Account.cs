@@ -31,7 +31,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
 		/// <summary>
 		/// 用户名
 		/// </summary>
-		[PropertyRequired, InputRange(6)]
+		[PropertyRequired, InputRange(10)]
 		public String Name
 		{
 			get
