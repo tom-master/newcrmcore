@@ -14,7 +14,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		/// <summary>
 		/// 名称
 		/// </summary>
-		[PropertyRequired, InputRange(10)]
+		[PropertyRequired, InputRange(2, 10)]
 		public String Name
 		{
 			get; private set;

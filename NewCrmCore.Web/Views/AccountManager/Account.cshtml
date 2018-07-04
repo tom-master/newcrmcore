@@ -26,13 +26,13 @@
 						if (accountResult.Name == null)
 						{
 							<text>
-								<input type="text" name="val_accountname" datatype="s4-12" ajaxurl="@Url.Action("CheckName","AccountManager")" nullmsg="请输入用户名" errormsg="用户名长度为4-12个字符">
+								<input type="text" name="val_accountname" datatype="s2-10" ajaxurl="@Url.Action("CheckName","AccountManager")" nullmsg="请输入用户名" errormsg="用户名长度为2-10个字符">
 							</text>
 						}
 						else
 						{
 							<text>
-								<input type="text" readonly="readonly" name="val_accountname" datatype="s4-12" value="@accountResult.Name">
+								<input type="text" readonly="readonly" name="val_accountname" value="@accountResult.Name">
 							</text>
 						}
 					}
@@ -42,19 +42,17 @@
 			<div class="input-label">
 				<label class="label-text">用户密码：</label>
 				<div class="label-box form-inline control-group">
-
+					<input type="password" name="val_password" datatype="s6-12" id="pwd" nullmsg="请输入用户密码" errormsg="用户密码长度为6-12个字符" />
 					@{
 						if (accountResult.Password == null)
 						{
 							<text>
-								<input type="password" name="val_password" datatype="*" id="pwd" nullmsg="请输入用户密码" />
 								<span class="help-inline"></span>
 							</text>
 						}
 						else
 						{
 							<text>
-								<input type="password" name="val_password" id="pwd">
 								<span class="help-inline">[如果无需修改则不填]</span>
 							</text>
 						}
@@ -151,7 +149,7 @@
 							} else {
 								$.dialog({
 									id: 'ajaxedit',
-									content: '修改成功，是否继续修改？',
+									content: '修改成功，是否继续修改?',
 									okVal: '是',
 									ok: function () {
 										$.dialog.list['ajaxedit'].close();
@@ -166,7 +164,7 @@
 						} else {
 							$.dialog({
 								id: 'ajaxedit',
-								content: '添加成功，是否继续添加？',
+								content: '添加成功，是否继续添加?',
 								okVal: '是',
 								ok: function () {
 									location.reload();

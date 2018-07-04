@@ -22,11 +22,11 @@
 					@{
 						if (rolePowerResult.Name == null)
 						{
-							<text> <input disabled="disabled" type="checkbox" name="val_name" value="" datatype="*" nullmsg="请输入权限名称"></text>
+							<text> <input disabled="disabled" type="checkbox" name="val_name" value="" datatype="s2-10" nullmsg="请输入角色名称" errormsg="角色名称长度为2-10个字符" ></text>
 						}
 						else
 						{
-							<text> <input disabled="disabled" type="text" name="val_name" value="@rolePowerResult.Name" datatype="*" nullmsg="请输入权限名称"></text>
+							<text> <input disabled="disabled" type="text" name="val_name" value="@rolePowerResult.Name" datatype="s2-10" nullmsg="请输入角色名称" errormsg="角色名称长度为2-10个字符"></text>
 						}
 					}
 

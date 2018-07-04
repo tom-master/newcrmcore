@@ -16,7 +16,7 @@ namespace NewCrmCore.Domain.Entitys.Security
 		/// <summary>
 		/// 名称
 		/// </summary>
-		[PropertyRequired, InputRange(10)]
+		[PropertyRequired, InputRange(2,10)]
 		public String Name
 		{
 			get; private set;
@@ -24,7 +24,7 @@ namespace NewCrmCore.Domain.Entitys.Security
 		/// <summary>
 		/// 角色标识
 		/// </summary>
-		[PropertyRequired, InputRange(20)]
+		[PropertyRequired, InputRange(2,20)]
 		public String RoleIdentity
 		{
 			get; private set;

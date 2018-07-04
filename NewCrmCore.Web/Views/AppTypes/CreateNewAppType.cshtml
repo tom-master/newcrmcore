@@ -18,13 +18,13 @@
 						if (Model != null)
 						{
 							<text>
-								<input type="text" name="val_name" value="@Model.Name" datatype="*" ajaxurl="@Url.Action("CheckName","AppTypes")" nullmsg="请输入类目名称">
+								<input type="text" name="val_name" value="@Model.Name" datatype="s2-10" nullmsg="请输入应用类型名称" errormsg="应用类型名称长度为2-10个字符" ajaxurl="@Url.Action("CheckName","AppTypes")">
 							</text>
 						}
 						else
 						{
 							<text>
-								<input type="text" name="val_name" value="" datatype="*" ajaxurl="@Url.Action("CheckName","AppTypes")" nullmsg="请输入类目名称">
+								<input type="text" name="val_name" value="" datatype="s2-10" nullmsg="请输入应用类型名称" errormsg="应用类型名称长度为2-10个字符" ajaxurl="@Url.Action("CheckName","AppTypes")">
 							</text>
 						}
 					}

@@ -22,13 +22,13 @@
                         if (roleResult.Name == null)
                         {
                             <text>
-                                <input type="text" class="text" name="val_roleName" id="val_roleName" ajaxurl="@Url.Action("CheckName","Security")" value="" datatype="*" nullmsg="请输入角色标识" />
+                                <input type="text" class="text" name="val_roleName" id="val_roleName" ajaxurl="@Url.Action("CheckName","Security")" value="" datatype="s2-10" nullmsg="请输入角色名称" errormsg="角色名称长度为2-10个字符" />
                             </text>
                         }
                         else
                         {
                             <text>
-                                <input type="text" class="text" name="val_roleName" id="val_roleName" ajaxurl="@Url.Action("CheckName","Security")" value="@roleResult.Name" datatype="*" nullmsg="请输入角色标识" />
+                                <input type="text" class="text" name="val_roleName" id="val_roleName" ajaxurl="@Url.Action("CheckName","Security")" value="@roleResult.Name" datatype="s2-10" nullmsg="请输入角色名称" errormsg="角色名称长度为2-10个字符" />
                             </text>
                         }
                     }
@@ -44,13 +44,13 @@
                         if (roleResult.RoleIdentity == null)
                         {
                             <text>
-                                <input type="text" class="text" name="val_roleIdentity" id="val_roleIdentity" ajaxurl="@Url.Action("CheckRoleIdentity","Security")" value="" datatype="*" nullmsg="请输入角色名称" />
+                                <input type="text" class="text" name="val_roleIdentity" id="val_roleIdentity" ajaxurl="@Url.Action("CheckRoleIdentity","Security")" value="" datatype="s2-20" nullmsg="请输入角色标识" errormsg="角色标识长度为2-20个字符" />
                             </text>
                         }
                         else
                         {
                             <text>
-                                <input type="text" disabled="disabled" class="text" name="val_roleIdentity" id="val_roleIdentity" value="@roleResult.RoleIdentity" datatype="*" nullmsg="请输入角色名称" />
+                                <input type="text" disabled="disabled" class="text" name="val_roleIdentity" id="val_roleIdentity" value="@roleResult.RoleIdentity"   datatype="s2-20" nullmsg="请输入角色标识" errormsg="角色标识长度为2-20个字符" />
                             </text>
                         }
                     }

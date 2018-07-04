@@ -13,7 +13,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
 		/// <summary>
 		/// 用户名
 		/// </summary>
-		[PropertyRequired, InputRange(10)]
+		[PropertyRequired, InputRange(4,10)]
 		public String Name
 		{
 			get; private set;
@@ -22,7 +22,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
 		/// <summary>
 		/// 登陆密码
 		/// </summary>
-		[PropertyRequired, InputRange(6, 8)]
+		[PropertyRequired, InputRange(6, 12)]
 		public String LoginPassword
 		{
 			get; private set;
@@ -31,7 +31,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
 		/// <summary>
 		/// 锁屏密码
 		/// </summary>
-		[PropertyRequired, InputRange(6, 8)]
+		[PropertyRequired, InputRange(6, 12)]
 		public String LockScreenPassword
 		{
 			get; private set;
