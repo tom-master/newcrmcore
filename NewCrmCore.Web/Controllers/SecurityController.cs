@@ -49,7 +49,6 @@ namespace NewCrmCore.Web.Controllers
 			{
 				ViewData["RoleResult"] = await _securityServices.GetRoleAsync(roleId);
 			}
-			await CacheHelper.GetOrSetCache(new GlobalUniqueTokenCacheKey(AccountId), () => TimeToken.GetTokenAsync());
 			return View();
 		}
 
@@ -72,7 +71,6 @@ namespace NewCrmCore.Web.Controllers
 			}
 
 			var result = await _appServices.GetSystemAppAsync(role.Powers.Select(s => s.Id).ToArray());
-			await CacheHelper.GetOrSetCache(new GlobalUniqueTokenCacheKey(AccountId), () => TimeToken.GetTokenAsync());
 			return View(result);
 		}
 

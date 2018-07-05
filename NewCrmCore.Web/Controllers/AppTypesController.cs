@@ -46,7 +46,6 @@ namespace NewCrmCore.Web.Controllers
 			{
 				result = (await _appServices.GetAppTypesAsync()).FirstOrDefault(appType => appType.Id == appTypeId);
 			}
-			await CacheHelper.GetOrSetCache(new GlobalUniqueTokenCacheKey(AccountId), () => TimeToken.GetTokenAsync());
 			return View(result);
 		}
 

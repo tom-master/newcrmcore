@@ -46,7 +46,6 @@ namespace NewCrmCore.Web.Controllers
 				ViewData["Account"] = await _accountServices.GetAccountAsync(accountId);
 			}
 			ViewData["Roles"] = (await _securityServices.GetRolesAsync("", 1, 100)).Models;
-			await CacheHelper.GetOrSetCache(new GlobalUniqueTokenCacheKey(accountId), () => TimeToken.GetTokenAsync());
 			return View();
 		}
 

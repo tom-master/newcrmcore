@@ -87,7 +87,6 @@ namespace NewCrmCore.Web.Controllers
 			#endregion
 
 			var result = await _deskServices.GetMemberAsync(AccountId, memberId);
-			await CacheHelper.GetOrSetCache(new GlobalUniqueTokenCacheKey(AccountId), () => TimeToken.GetTokenAsync());
 			return View(result);
 		}
 

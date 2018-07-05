@@ -28,7 +28,6 @@ namespace NewCrmCore.Web.Controllers
 		public async Task<IActionResult> Index()
 		{
 			var account = await _accountServices.GetAccountAsync(AccountId);
-			await CacheHelper.GetOrSetCache(new GlobalUniqueTokenCacheKey(AccountId), () => TimeToken.GetTokenAsync());
 			return View(account);
 		}
 

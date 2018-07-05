@@ -85,14 +85,14 @@ namespace NewCrmCore.Web.Filter
 
 		private async Task<Boolean> ValidateToken(AuthorizationFilterContext filterContext)
 		{ 
-			var accountId = Int32.Parse(JsonConvert.DeserializeObject<dynamic>(filterContext.HttpContext.Request.Cookies["Account"]).Id.ToString());
-			var token1 = await CacheHelper.GetOrSetCache<String>(new GlobalUniqueTokenCacheKey(accountId));
-			var token2 = filterContext.HttpContext.Request.Form["hidden_code"];
-			if (token1 != token2)
-			{
-				return false;
-			}
-			await CacheHelper.RemoveKeyWhenModify(new GlobalUniqueTokenCacheKey(accountId));
+			//var accountId = Int32.Parse(JsonConvert.DeserializeObject<dynamic>(filterContext.HttpContext.Request.Cookies["Account"]).Id.ToString());
+			//var token1 = await CacheHelper.GetOrSetCache<String>(new GlobalUniqueTokenCacheKey(accountId));
+			//var token2 = filterContext.HttpContext.Request.Form["hidden_code"];
+			//if (token1 != token2)
+			//{
+			//	return false;
+			//}
+			//await CacheHelper.RemoveKeyWhenModify(new GlobalUniqueTokenCacheKey(accountId));
 			return true;
 		}
 	}

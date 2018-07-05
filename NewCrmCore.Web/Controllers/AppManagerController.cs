@@ -52,7 +52,6 @@ namespace NewCrmCore.Web.Controllers
 			}
 
 			ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();
-			await CacheHelper.GetOrSetCache(new GlobalUniqueTokenCacheKey(AccountId), () => TimeToken.GetTokenAsync());
 			return View(appResult);
 		}
 
