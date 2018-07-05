@@ -6,8 +6,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Dto;
+using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
 using NewLibCore.Validate;
+using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.Web.Controllers
 {
@@ -43,8 +45,8 @@ namespace NewCrmCore.Web.Controllers
 			{
 				ViewData["Account"] = await _accountServices.GetAccountAsync(accountId);
 			}
-
 			ViewData["Roles"] = (await _securityServices.GetRolesAsync("", 1, 100)).Models;
+			await CacheHelper.GetOrSetCache(new GlobalUniqueTokenCacheKey(accountId), () => TimeToken.GetTokenAsync());
 			return View();
 		}
 

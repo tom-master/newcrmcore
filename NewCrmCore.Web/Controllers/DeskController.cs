@@ -10,6 +10,7 @@ using NewCrmCore.Web.Controllers.ControllerHelper;
 using NewCrmCore.Web.Filter;
 using NewLibCore;
 using NewLibCore.Validate;
+using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.Web.Controllers
 {
@@ -86,6 +87,7 @@ namespace NewCrmCore.Web.Controllers
 			#endregion
 
 			var result = await _deskServices.GetMemberAsync(AccountId, memberId);
+			await CacheHelper.GetOrSetCache(new GlobalUniqueTokenCacheKey(AccountId), () => TimeToken.GetTokenAsync());
 			return View(result);
 		}
 

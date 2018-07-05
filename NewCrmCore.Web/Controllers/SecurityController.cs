@@ -9,6 +9,7 @@ using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
 using NewLibCore.Validate;
+using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.Web.Controllers
 {
@@ -48,7 +49,7 @@ namespace NewCrmCore.Web.Controllers
 			{
 				ViewData["RoleResult"] = await _securityServices.GetRoleAsync(roleId);
 			}
-
+			await CacheHelper.GetOrSetCache(new GlobalUniqueTokenCacheKey(AccountId), () => TimeToken.GetTokenAsync());
 			return View();
 		}
 
@@ -57,7 +58,7 @@ namespace NewCrmCore.Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<IActionResult> AttachmentPowerAsync(Int32 roleId)
+		public async Task<IActionResult> AttachmentPower(Int32 roleId)
 		{
 			#region 参数验证
 			new Parameter().Validate(roleId);
@@ -71,6 +72,7 @@ namespace NewCrmCore.Web.Controllers
 			}
 
 			var result = await _appServices.GetSystemAppAsync(role.Powers.Select(s => s.Id).ToArray());
+			await CacheHelper.GetOrSetCache(new GlobalUniqueTokenCacheKey(AccountId), () => TimeToken.GetTokenAsync());
 			return View(result);
 		}
 

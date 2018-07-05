@@ -11,6 +11,7 @@ using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
 using NewLibCore;
 using NewLibCore.Validate;
+using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.Web.Controllers
 {
@@ -97,6 +98,7 @@ namespace NewCrmCore.Web.Controllers
 			}
 			ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();
 			ViewData["AccountId"] = AccountId;
+			await CacheHelper.GetOrSetCache(new GlobalUniqueTokenCacheKey(AccountId), () => TimeToken.GetTokenAsync());
 			return View(result);
 		}
 

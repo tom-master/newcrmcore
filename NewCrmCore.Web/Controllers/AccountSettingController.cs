@@ -6,6 +6,7 @@ using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
 using NewLibCore.Validate;
+using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.Web.Controllers
 {
@@ -27,6 +28,7 @@ namespace NewCrmCore.Web.Controllers
 		public async Task<IActionResult> Index()
 		{
 			var account = await _accountServices.GetAccountAsync(AccountId);
+			await CacheHelper.GetOrSetCache(new GlobalUniqueTokenCacheKey(AccountId), () => TimeToken.GetTokenAsync());
 			return View(account);
 		}
 
