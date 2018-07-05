@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using NewCrmCore.Application.Services.Interface;
@@ -14,26 +14,25 @@ namespace NewCrmCore.Web.Filter
 
 		public async Task OnAuthorizationAsync(AuthorizationFilterContext filterContext)
 		{
-			if (!ValidateToken(filterContext))
-			{
-				ReturnMessage(filterContext, "token验证失败！");
-				return;
-			}
-
 			if (filterContext.ActionDescriptor.FilterDescriptors.Any(a => a.Filter is DoNotCheckPermissionAttribute))
-			{
-				return;
-			}
-
-			//文件夹
-			if (filterContext.HttpContext.Request.Query["type"] == "folder")
 			{
 				return;
 			}
 
 			if (filterContext.HttpContext.Request.Cookies["memberID"] == null)
 			{
-				ReturnMessage(filterContext, "会话过期，请刷新页面后重新登陆");
+				ReturnMessage(filterContext, "会话过期,请刷新页面后重新登陆");
+				return;
+			}
+
+			if (!ValidateToken(filterContext))
+			{
+				ReturnMessage(filterContext, "不要重复提交表单!");
+				return;
+			}
+
+			if (filterContext.HttpContext.Request.Query["type"] == "folder")
+			{
 				return;
 			}
 
@@ -44,7 +43,7 @@ namespace NewCrmCore.Web.Filter
 
 			if (!isPermission)
 			{
-				ReturnMessage(filterContext, "对不起，您没有访问的权限！");
+				ReturnMessage(filterContext, "对不起,您没有访问的权限!");
 			}
 		}
 
@@ -81,6 +80,16 @@ namespace NewCrmCore.Web.Filter
 
 		private Boolean ValidateToken(AuthorizationFilterContext filterContext)
 		{
+			if (filterContext.HttpContext.Request.Method.ToLower() == "post")
+			{
+				var a1 = filterContext.HttpContext.Request.Cookies["token"];
+				var b2 = filterContext.HttpContext.Request.Form["hidden_code"];
+				if (a1 != b2)
+				{
+					return false;
+				}
+				filterContext.HttpContext.Response.Cookies.Append("token", a1, new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
+			}
 			return true;
 		}
 	}
