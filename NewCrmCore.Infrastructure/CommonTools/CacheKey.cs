@@ -111,16 +111,16 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
 		public class GlobalUniqueTokenCacheKey : CacheKeyBase
 		{
-			public Int32 _identity;
+			public String _identity;
 
-			public GlobalUniqueTokenCacheKey(Int32 identity)
+			public GlobalUniqueTokenCacheKey(String identity)
 			{
 				_identity = identity;
 			}
 
 			protected override string FormatKey()
 			{
-				return String.Format("GlobalUniqueToken:AccountId:{0}", _identity);
+				return String.Format("GlobalUniqueToken:{0}", _identity);
 			}
 		}
 	}

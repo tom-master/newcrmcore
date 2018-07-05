@@ -1,4 +1,5 @@
 ﻿@using NewCrmCore.Dto
+@using NewCrmCore.Infrastructure.CommonTools
 @model IList<AppDto>
 @{
 	Layout = "~/Views/Shared/_LayoutApps.cshtml";
@@ -11,6 +12,7 @@
 
 <form action="/Security/AddAppToRole" method="post" name="form" id="form">
 	<input type="hidden" name="val_roleId" value="@Context.Request.Query["roleId"]">
+	<input type="hidden" name="token" value="@TimeToken.GetTokenAsync()" />
 	<div class="creatbox">
 		<div class="middle">
 			<p class="detile-title">
@@ -22,7 +24,7 @@
 					@{
 						if (rolePowerResult.Name == null)
 						{
-							<text> <input disabled="disabled" type="checkbox" name="val_name" value="" datatype="s2-10" nullmsg="请输入角色名称" errormsg="角色名称长度为2-10个字符" ></text>
+							<text> <input disabled="disabled" type="checkbox" name="val_name" value="" datatype="s2-10" nullmsg="请输入角色名称" errormsg="角色名称长度为2-10个字符"></text>
 						}
 						else
 						{

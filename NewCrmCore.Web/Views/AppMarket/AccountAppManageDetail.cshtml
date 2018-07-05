@@ -1,7 +1,8 @@
 ﻿@using NewCrmCore.Dto
-
+@using NewCrmCore.Infrastructure.CommonTools
 @model AppDto
 <form action="" method="post" name="form" id="form">
+	<input type="hidden" name="token" value="@TimeToken.GetTokenAsync()" />
 	<div class="creatbox">
 		<div class="middle">
 			<p class="detile-title">

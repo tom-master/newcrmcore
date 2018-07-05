@@ -1,4 +1,5 @@
 ﻿@model NewCrmCore.Dto.AppTypeDto
+@using NewCrmCore.Infrastructure.CommonTools
 @{
 	Layout = "~/Views/Shared/_LayoutApps.cshtml";
 	var appTypeId = Context.Request.Query["appTypeId"];
@@ -6,6 +7,7 @@
 
 <form action="/AppTypes/Create?appTypeId=@appTypeId" method="post" name="form" id="form">
 	<input type="hidden" name="ac" value="edit">
+	<input type="hidden" name="token" value="@TimeToken.GetTokenAsync()" />
 	<div class="creatbox">
 		<div class="middle">
 			<p class="detile-title">
