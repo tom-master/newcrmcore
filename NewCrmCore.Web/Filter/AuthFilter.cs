@@ -28,10 +28,13 @@ namespace NewCrmCore.Web.Filter
 				return;
 			}
 
-			if (!await ValidateToken(filterContext))
+			if (filterContext.HttpContext.Request.Method.ToLower() == "post")
 			{
-				ReturnMessage(filterContext, "不要重复提交表单!");
-				return;
+				if (!await ValidateToken(filterContext))
+				{
+					ReturnMessage(filterContext, "不要重复提交表单!");
+					return;
+				}
 			}
 
 			if (filterContext.HttpContext.Request.Query["type"] == "folder")
@@ -81,18 +84,15 @@ namespace NewCrmCore.Web.Filter
 		}
 
 		private async Task<Boolean> ValidateToken(AuthorizationFilterContext filterContext)
-		{
-			if (filterContext.HttpContext.Request.Method.ToLower() == "post")
+		{ 
+			var accountId = Int32.Parse(JsonConvert.DeserializeObject<dynamic>(filterContext.HttpContext.Request.Cookies["Account"]).Id.ToString());
+			var token1 = await CacheHelper.GetOrSetCache<String>(new GlobalUniqueTokenCacheKey(accountId));
+			var token2 = filterContext.HttpContext.Request.Form["hidden_code"];
+			if (token1 != token2)
 			{
-				var accountId = Int32.Parse(JsonConvert.DeserializeObject<dynamic>(filterContext.HttpContext.Request.Cookies["Account"]).Id.ToString());
-				var a1 = await CacheHelper.GetOrSetCache<String>(new GlobalUniqueTokenCacheKey(accountId));
-				var b2 = filterContext.HttpContext.Request.Form["hidden_code"];
-				if (a1 != b2)
-				{
-					return false;
-				}
-				await CacheHelper.RemoveKeyWhenModify(new GlobalUniqueTokenCacheKey(accountId));
+				return false;
 			}
+			await CacheHelper.RemoveKeyWhenModify(new GlobalUniqueTokenCacheKey(accountId));
 			return true;
 		}
 	}

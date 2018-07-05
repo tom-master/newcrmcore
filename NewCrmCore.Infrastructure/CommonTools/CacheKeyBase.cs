@@ -13,14 +13,6 @@ namespace NewCrmCore.Infrastructure.CommonTools
 			_cancellationTokenSource = new CancellationTokenSource(new TimeSpan(0, 0, 3));
 		}
 
-		protected virtual String CachePrefix
-		{
-			get
-			{
-				return "NewCrm";
-			}
-		}
-
 		/// <summary>
 		/// 获取取消标识
 		/// </summary>
@@ -47,7 +39,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
 		public String GetKey()
 		{
-			return String.Format("{0}:{1}", CachePrefix, FormatKey());
+			return String.Format("NewCrm:{0}", FormatKey());
 		}
 	}
 }
