@@ -46,7 +46,7 @@ namespace NewCrmCore.Application.Services
 		{
 			new Parameter().Validate(accountId).Validate(newSkin);
 			await _skinContext.ModifySkinAsync(accountId, newSkin);
-			CacheHelper.RemoveOldKeyWhenModify(new ConfigCacheKey(accountId));
+			CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
 		}
 
 		#region private method

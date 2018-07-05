@@ -4,7 +4,6 @@ namespace NewCrmCore.Infrastructure.CommonTools
 {
 	public static class CacheKey
 	{
-
 		public class ConfigCacheKey : CacheKeyBase
 		{
 			private Int32 _identity;
@@ -16,7 +15,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
 			protected override string FormatKey()
 			{
-				return String.Format("{0}:Config:AccountId:{1}", CachePrefix, _identity);
+				return String.Format("Config:AccountId:{0}", _identity);
 			}
 		}
 
@@ -31,7 +30,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
 			protected override string FormatKey()
 			{
-				return String.Format("{0}:Wallpaper:WallpaperId:{1}", CachePrefix, _identity);
+				return String.Format("Wallpaper:WallpaperId:{0}", _identity);
 			}
 		}
 
@@ -46,7 +45,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
 			protected override string FormatKey()
 			{
-				return String.Format("{0}:Account:AccountId:{1}", CachePrefix, _identity);
+				return String.Format("Account:AccountId:{0}", _identity);
 			}
 		}
 
@@ -61,7 +60,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
 			protected override string FormatKey()
 			{
-				return String.Format("{0}:Roles:AccountId:{1}", CachePrefix, _identity);
+				return String.Format("Roles:AccountId:{0}", _identity);
 			}
 		}
 
@@ -76,7 +75,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
 			protected override string FormatKey()
 			{
-				return String.Format("{0}:Powers", CachePrefix, _identity);
+				return String.Format("Powers");
 			}
 		}
 
@@ -91,7 +90,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
 			protected override string FormatKey()
 			{
-				return String.Format("{0}:Desktop:AccountId:{1}", CachePrefix, _identity);
+				return String.Format("Desktop:AccountId:{0}", _identity);
 			}
 		}
 
@@ -99,14 +98,29 @@ namespace NewCrmCore.Infrastructure.CommonTools
 		{
 			private Int32 _identity;
 
-			public AppTypeCacheKey(Int32 identity = default(Int32))
+			public AppTypeCacheKey(Int32 identity = 0)
 			{
 				_identity = identity;
 			}
 
 			protected override string FormatKey()
 			{
-				return String.Format("{0}:AppTypes", CachePrefix, _identity);
+				return String.Format("AppTypes");
+			}
+		}
+
+		public class GlobalUniqueTokenCacheKey : CacheKeyBase
+		{
+			public Int32 _identity;
+
+			public GlobalUniqueTokenCacheKey(Int32 identity)
+			{
+				_identity = identity;
+			}
+
+			protected override string FormatKey()
+			{
+				return String.Format("GlobalUniqueToken:AccountId:{0}", _identity);
 			}
 		}
 	}

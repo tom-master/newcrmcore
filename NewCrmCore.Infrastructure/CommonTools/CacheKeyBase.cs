@@ -4,7 +4,7 @@ using System.Threading;
 namespace NewCrmCore.Infrastructure.CommonTools
 {
 	public abstract class CacheKeyBase
-	{ 
+	{
 		private CancellationTokenSource _cancellationTokenSource;
 		private Int32 randomSeed = new Random(DateTime.Now.Millisecond).Next(1, 20);
 
@@ -44,10 +44,10 @@ namespace NewCrmCore.Infrastructure.CommonTools
 		}
 
 		protected abstract String FormatKey();
-		 
+
 		public String GetKey()
 		{
-			return FormatKey();
+			return String.Format("{0}:{1}", CachePrefix, FormatKey());
 		}
 	}
 }

@@ -5,7 +5,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using NewCrmCore.Application.Services.Interface;
+using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
+using Newtonsoft.Json;
+using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.Web.Filter
 {
@@ -25,7 +28,7 @@ namespace NewCrmCore.Web.Filter
 				return;
 			}
 
-			if (!ValidateToken(filterContext))
+			if (!await ValidateToken(filterContext))
 			{
 				ReturnMessage(filterContext, "不要重复提交表单!");
 				return;
@@ -36,7 +39,8 @@ namespace NewCrmCore.Web.Filter
 				return;
 			}
 
-			var account = await ((IAccountServices)filterContext.HttpContext.RequestServices.GetService(typeof(IAccountServices))).GetAccountAsync(Int32.Parse(filterContext.HttpContext.Request.Cookies["memberID"]));
+			var account = await ((IAccountServices)filterContext.HttpContext.RequestServices.GetService(typeof(IAccountServices)))
+				.GetAccountAsync(Int32.Parse(filterContext.HttpContext.Request.Cookies["memberID"]));
 
 			var appId = Int32.Parse(filterContext.HttpContext.Request.Query["id"]);
 			var isPermission = await ((ISecurityServices)filterContext.HttpContext.RequestServices.GetService(typeof(ISecurityServices))).CheckPermissionsAsync(appId, account.Roles.Select(role => role.Id).ToArray());
@@ -63,8 +67,7 @@ namespace NewCrmCore.Web.Filter
 			{
 				filterContext.Result = new JsonResult(response)
 				{
-					ContentType = "utf8",
-					StatusCode = 401
+					ContentType = "utf8"
 				};
 			}
 			else
@@ -72,23 +75,23 @@ namespace NewCrmCore.Web.Filter
 				filterContext.Result = new ContentResult()
 				{
 					ContentType = "utf8",
-					StatusCode = 401,
 					Content = @"<script>(function(){top.NewCrm.msgbox.fail('" + response.Message + "');})()</script>"
 				};
 			}
 		}
 
-		private Boolean ValidateToken(AuthorizationFilterContext filterContext)
+		private async Task<Boolean> ValidateToken(AuthorizationFilterContext filterContext)
 		{
 			if (filterContext.HttpContext.Request.Method.ToLower() == "post")
 			{
-				var a1 = filterContext.HttpContext.Request.Cookies["token"];
+				var accountId = Int32.Parse(JsonConvert.DeserializeObject<dynamic>(filterContext.HttpContext.Request.Cookies["Account"]).Id.ToString());
+				var a1 = await CacheHelper.GetOrSetCache<String>(new GlobalUniqueTokenCacheKey(accountId));
 				var b2 = filterContext.HttpContext.Request.Form["hidden_code"];
 				if (a1 != b2)
 				{
 					return false;
 				}
-				filterContext.HttpContext.Response.Cookies.Append("token", a1, new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
+				await CacheHelper.RemoveKeyWhenModify(new GlobalUniqueTokenCacheKey(accountId));
 			}
 			return true;
 		}

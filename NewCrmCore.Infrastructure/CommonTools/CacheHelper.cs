@@ -18,7 +18,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 			_cacheQuery = new DefaultRedisQueryProvider(0, Appsetting.Redis);
 		}
 
-		public static async Task<TModel> GetCache<TModel>(CacheKeyBase cache, Func<Task<TModel>> func) where TModel : class
+		public static async Task<TModel> GetOrSetCache<TModel>(CacheKeyBase cache, Func<Task<TModel>> func = null) where TModel : class
 		{
 
 			TModel cacheResult = null;
@@ -36,15 +36,19 @@ namespace NewCrmCore.Infrastructure.CommonTools
 				return cacheResult;
 			}
 
-			var dbResult = await func();
-			_cacheQuery.StringSet(cache.GetKey(), dbResult, cache.KeyTimeout);
-			return dbResult;
+			if (func != null)
+			{
+				var dbResult = await func();
+				_cacheQuery.StringSet(cache.GetKey(), dbResult, cache.KeyTimeout);
+				return dbResult;
+			}
+			return default(TModel);
 		}
 
 		/// <summary>
 		/// 更新时移除旧的缓存键
 		/// </summary>
-		public static async Task RemoveOldKeyWhenModify(params CacheKeyBase[] caches)
+		public static async Task RemoveKeyWhenModify(params CacheKeyBase[] caches)
 		{
 			if (!caches.Any())
 			{
