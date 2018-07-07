@@ -57,7 +57,7 @@ namespace NewCrmCore.Web.Controllers
 				return View(account);
 			}
 
-			return RedirectToAction("Login", "Desktop");
+			return RedirectToAction("Login", "Desk");
 		}
 
 		/// <summary>
@@ -70,7 +70,7 @@ namespace NewCrmCore.Web.Controllers
 			var accountId = Request.Cookies["Account"];
 			if (accountId != null)
 			{
-				return RedirectToAction("Index", "Desktop");
+				return RedirectToAction("Index", "Desk");
 			}
 
 			return View();
