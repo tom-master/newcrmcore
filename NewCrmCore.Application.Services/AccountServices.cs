@@ -200,7 +200,7 @@ namespace NewCrmCore.Application.Services
 			new Parameter().Validate(accountId).Validate(newFace);
 
 			await _accountContext.ModifyAccountFaceAsync(accountId, newFace);
-			CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId), new AccountCacheKey(accountId));
+			await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId), new AccountCacheKey(accountId));
 		}
 
 		public async Task ModifyPasswordAsync(Int32 accountId, String newPassword, Boolean isTogetherSetLockPassword)
@@ -217,7 +217,7 @@ namespace NewCrmCore.Application.Services
 
 			var newPassword = PasswordUtil.CreateDbPassword(newScreenPassword);
 			await _accountContext.ModifyLockScreenPasswordAsync(accountId, newPassword);
-			CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
+			await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
 		}
 
 		public async Task RemoveAccountAsync(Int32 accountId)

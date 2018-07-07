@@ -9,9 +9,6 @@ namespace NewCrmCore.Domain.Entitys
 	{
 
 		#region private fields
-		private Int32 _id;
-		private Boolean _isDelete;
-		private DateTime _addTime, _lastModifyTime;
 		#endregion
 
 		#region ctor
@@ -25,57 +22,16 @@ namespace NewCrmCore.Domain.Entitys
 
 		#region public property
 
-		public Int32 Id
-		{
-			get
-			{
-				return _id;
-			}
-			protected set
-			{
-				_id = value;
-			}
-		}
+		public Int32 Id { get; protected set; }
 
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsDeleted
-		{
-			get
-			{
-				return _isDelete;
-			}
-			protected set
-			{
-				_isDelete = value;
-			}
-		}
+		public Boolean IsDeleted { get; protected set; }
 
 		[DateTimeDefaultValue]
-		public DateTime AddTime
-		{
-			get
-			{
-				return _addTime;
-			}
-
-			protected set
-			{
-				_addTime = value;
-			}
-		}
+		public DateTime AddTime { get; protected set; }
 
 		[DateTimeDefaultValue]
-		public DateTime LastModifyTime
-		{
-			get
-			{
-				return _lastModifyTime;
-			}
-			protected set
-			{
-				_lastModifyTime = value;
-			}
-		}
+		public DateTime LastModifyTime { get; protected set; }
 
 		public void Remove()
 		{
