@@ -7,7 +7,7 @@ namespace NewCrmCore.Domain.Entitys.System
 {
 
 	[Serializable, Description("应用")]
-	public partial class App : DomainModelBase
+	public partial class App: DomainModelBase
 	{
 		#region public property
 
@@ -221,11 +221,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyDefaultValue(typeof(Double), 0.0)]
 		public Double StarCount
 		{
-			get { return _starCount; }
-			private set
-			{
-				_starCount = value;
-			}
+			get; private set;
 		}
 
 		public String AccountName

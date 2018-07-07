@@ -1,20 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NewCrmCore.Application.Services.Interface;
+using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
 using NewCrmCore.Web.Filter;
-using NewLibCore;
 using NewLibCore.Validate;
-using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
+using Newtonsoft.Json;
 
 namespace NewCrmCore.Web.Controllers
 {
-	public class DeskController : BaseController
+	public class DeskController: BaseController
 	{
 		private readonly IWallpaperServices _wallpaperServices;
 		private readonly ISkinServices _skinServices;
