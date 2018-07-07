@@ -5227,7 +5227,7 @@ HROS.base = (function () {
 
 			//绑定ajax全局验证
 			$(document).ajaxStart(function () {
-				
+
 			});
 
 			//监听表单提交
@@ -9049,7 +9049,7 @@ HROS.request = (function () {
 					url: url,
 					data: Object.keys(parameter).length ? parameter : null,
 					beforeSend: function () {
-						NewCrm.msgbox.loading(NewCrm.CONFIG.loadingPrompt)
+						NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
 					},
 					success: function (responseText) {
 						NewCrm.msgbox.close()
@@ -9059,7 +9059,7 @@ HROS.request = (function () {
 					}
 				});
 			} else {
-				NewCrm.msgbox.fail(NewCrm.CONFIG.timeOutPrompt);
+				NewCrm.msgbox.fail(HROS.CONFIG.timeOutPrompt);
 			}
 		}
 	}
