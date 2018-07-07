@@ -5230,7 +5230,7 @@ HROS.base = (function () {
 				
 			});
 
-			//监听非ajax请求
+			//监听表单提交
 			$(document).on('submit', function () {
 				if (!$.cookie('memberID')) {
 					NewCrm.msgbox.fail('会话过期,请重新登陆！');
