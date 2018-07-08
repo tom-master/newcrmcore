@@ -1,7 +1,6 @@
 ﻿using System;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NewCrmCore.Application.Services.Interface;
+using NewCrmCore.Dto;
 using Newtonsoft.Json;
 
 namespace NewCrmCore.Web.Controllers.ControllerHelper
@@ -13,9 +12,9 @@ namespace NewCrmCore.Web.Controllers.ControllerHelper
 			get
 			{
 				var account = Request.Cookies["Account"];
-				var accountId = JsonConvert.DeserializeObject<dynamic>(account).Id;
-				if (accountId != null)
+				if (account != null)
 				{
+					var accountId = JsonConvert.DeserializeObject<AccountDto>(account).Id;
 					return Int32.Parse(accountId.ToString());
 				}
 				return 0;

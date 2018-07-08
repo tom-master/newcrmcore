@@ -28,7 +28,7 @@ namespace NewCrmCore.Application.Services
 
 		public async Task<List<AppTypeDto>> GetAppTypesAsync()
 		{
-			var result = await CacheHelper.GetOrSetCache(new AppTypeCacheKey(), () => _appContext.GetAppTypesAsync());
+			var result = await CacheHelper.GetOrSetCacheAsync(new AppTypeCacheKey(), () => _appContext.GetAppTypesAsync());
 			return result.Select(s => new AppTypeDto
 			{
 				Id = s.Id,
@@ -116,7 +116,7 @@ namespace NewCrmCore.Application.Services
 			new Parameter().Validate(appId);
 
 			var result = await _appContext.GetAppAsync(appId);
-			var appTypes = await CacheHelper.GetOrSetCache(new AppTypeCacheKey(), () => GetAppTypesAsync());
+			var appTypes = await CacheHelper.GetOrSetCacheAsync(new AppTypeCacheKey(), () => GetAppTypesAsync());
 
 			return new AppDto
 			{

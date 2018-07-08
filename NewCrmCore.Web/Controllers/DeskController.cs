@@ -162,7 +162,7 @@ namespace NewCrmCore.Web.Controllers
 				response.Message = "登陆成功";
 				response.IsSuccess = true;
 
-				HttpContext.Response.Cookies.Append("Account", JsonConvert.SerializeObject(new { Id = account.Id.ToString(), AccountFace = Appsetting.FileUrl + account.AccountFace, account.Name }), new CookieOptions { Expires = cookieTimeout });
+				HttpContext.Response.Cookies.Append("Account", JsonConvert.SerializeObject(new AccountDto { Id = account.Id, AccountFace = Appsetting.FileUrl + account.AccountFace, Name = account.Name }), new CookieOptions { Expires = cookieTimeout });
 
 			}
 			return Json(response);
@@ -500,7 +500,7 @@ namespace NewCrmCore.Web.Controllers
 			#endregion
 
 			var result = await _deskServices.CheckMemberNameAsync(param);
-			return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "成员名称已存在" });
+			return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "应用名称已存在" });
 		}
 
 		#endregion

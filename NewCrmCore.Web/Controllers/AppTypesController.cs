@@ -128,7 +128,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 获取所有应用类型
 		/// </summary>
 		[HttpGet]
-		public async Task<IActionResult> GetAppTypes(Int32 pageIndex, Int32 pageSize, String searchText)
+		public async Task<IActionResult> GetTypes(Int32 pageIndex, Int32 pageSize, String searchText)
 		{
 			var response = new ResponseModels<IList<AppTypeDto>>();
 			var result = (await _appServices.GetAppTypesAsync()).Where(appType => String.IsNullOrEmpty(searchText) || appType.Name.Contains(searchText)).OrderByDescending(d => d.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();

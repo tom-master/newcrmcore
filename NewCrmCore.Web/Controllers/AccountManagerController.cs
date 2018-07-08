@@ -143,7 +143,7 @@ namespace NewCrmCore.Web.Controllers
 				await _accountServices.ModifyAccountAsync(dto);
 				if (!String.IsNullOrEmpty(dto.Password))
 				{
-					Response.Cookies.Append("memberID", AccountId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
+					Response.Cookies.Append("Account", AccountId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
 				}
 				response.Message = "修改账户成功";
 				response.IsSuccess = true;

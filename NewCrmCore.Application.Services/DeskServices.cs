@@ -65,7 +65,7 @@ namespace NewCrmCore.Application.Services
 		{
 			new Parameter().Validate(accountId);
 
-			var result = await CacheHelper.GetOrSetCache(new DesktopCacheKey(accountId), () => _memberContext.GetMembersAsync(accountId));
+			var result = await CacheHelper.GetOrSetCacheAsync(new DesktopCacheKey(accountId), () => _memberContext.GetMembersAsync(accountId));
 			var deskGroup = result.GroupBy(a => a.DeskIndex);
 			var deskDictionary = new Dictionary<String, IList<dynamic>>();
 			foreach (var desk in deskGroup)

@@ -10,7 +10,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
 		protected CacheKeyBase()
 		{
-			_cancellationTokenSource = new CancellationTokenSource(new TimeSpan(0, 0, 3));
+			_cancellationTokenSource = new CancellationTokenSource(new TimeSpan(0, 0, 10));
 		}
 
 		/// <summary>

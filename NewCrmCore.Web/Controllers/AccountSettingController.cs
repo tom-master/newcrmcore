@@ -10,7 +10,7 @@ using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.Web.Controllers
 {
-	public class AccountSettingController : BaseController
+	public class AccountSettingController: BaseController
 	{
 		private IAccountServices _accountServices;
 
@@ -93,7 +93,7 @@ namespace NewCrmCore.Web.Controllers
 			var response = new ResponseModel();
 
 			await _accountServices.ModifyPasswordAsync(AccountId, forms["password"], Int32.Parse(forms["lockPwdIsEqLoginPwd"]) == 1);
-			Response.Cookies.Append("memberID", AccountId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
+			Response.Cookies.Append("Account", AccountId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
 
 			response.Message = "账户密码修改成功";
 			response.IsSuccess = true;

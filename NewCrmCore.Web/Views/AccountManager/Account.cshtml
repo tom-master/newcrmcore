@@ -14,7 +14,7 @@
 }
 
 <form action="/AccountManager/CreateAccount" method="post" name="form" id="form">
-	<input type="hidden" name="token" value="@TimeToken.GetTokenAsync()" /> 
+	<input type="hidden" name="token" value="@( await TimeToken.GetTokenAsync())" />
 	<input type="hidden" name="id" value="@(accountId.FirstOrDefault()??"0")">
 	<div class="creatbox">
 		<div class="middle">
