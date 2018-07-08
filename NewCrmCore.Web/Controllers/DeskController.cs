@@ -624,11 +624,11 @@ namespace NewCrmCore.Web.Controllers
 			var response = new ResponseModel<dynamic>();
 
 			var skinPath = Appsetting.Skin;
-			var result = _skinServices.GetAllSkinAsync(skinPath);
+
+			var result = await _skinServices.GetAllSkinAsync(skinPath);
 			response.IsSuccess = true;
 			response.Message = "获取皮肤列表成功";
 			response.Model = new { result, currentSkin = (await _accountServices.GetConfigAsync(AccountId)).Skin };
-
 			return Json(response);
 
 		}
