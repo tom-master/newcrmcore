@@ -286,7 +286,6 @@
     <None Include="wwwroot\js\bootstrap\css\bootstrap.min.css" />
     <None Include="wwwroot\js\bootstrap\img\glyphicons-halflings-white.png" />
     <None Include="wwwroot\js\bootstrap\img\glyphicons-halflings.png" />
-    <None Include="wwwroot\js\bootstrap\js\bootstrap.min.js" />
     <None Include="wwwroot\js\dynamicBackground.js" />
     <None Include="wwwroot\js\fullAvatarEditor-2.3\crossdomain.xml" />
     <None Include="wwwroot\js\fullAvatarEditor-2.3\expressInstall.swf" />
