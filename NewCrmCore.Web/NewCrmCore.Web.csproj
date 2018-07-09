@@ -40,9 +40,6 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Views\Log\Index.cshtml" />
     <None Include="wwwroot\css\hoorayui\globle.css" />
     <None Include="wwwroot\css\hoorayui\index.css" />
@@ -296,7 +293,6 @@
     <None Include="wwwroot\js\fullAvatarEditor-2.3\fullAvatarEditor.swf" />
     <None Include="wwwroot\js\fullAvatarEditor-2.3\scripts\fullAvatarEditor.js" />
     <None Include="wwwroot\js\fullAvatarEditor-2.3\scripts\swfobject.js" />
-    <None Include="wwwroot\js\handlebars-v4.0.5.js" />
     <None Include="wwwroot\js\hooray\hros.min.js" />
     <None Include="wwwroot\js\hooray\jquery-browser.js" />
     <None Include="wwwroot\js\hooray\zoom.swf" />

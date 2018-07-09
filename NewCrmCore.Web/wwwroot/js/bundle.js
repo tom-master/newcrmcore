@@ -5256,7 +5256,6 @@ HROS.base = (function () {
 		getSkin: function (objSkin, callback) {
 			if (objSkin === undefined) {
 				HROS.request.get('/Desk/GetSkin', {}, function (responseText) {
-
 					if (responseText.IsSuccess) {
 						if (typeof (callback) === 'function') {
 							callback && callback(responseText.Model);
@@ -7953,13 +7952,12 @@ HROS.widget = (function () {
 					$(widgetId).data('info', TEMP.widgetTemp);
 					HROS.CONFIG.widgetIndexid += 1;
 				}
-				//NewCrm.msgbox.loading('小挂件正在加载中，请耐心等待...');
+
 				//待修改
 				$.ajax({
 					data: 'ac=getMyAppById&id=' + appid + '&type=' + type,
 					dataType: 'json'
 				}).done(function (widget) {
-					//NewCrm.msgbox.close()
 					if (widget != null) {
 						if (widget['error'] == 'ERROR_NOT_FOUND') {
 							NewCrm.msgbox.fail('小挂件不存在，建议删除');
@@ -8247,15 +8245,12 @@ HROS.window = (function () {
 						'isflash': options.isflash
 					};
 
-					//NewCrm.msgbox.loading('正在加载中，请稍后...');
-
 					$('#desk').append(windowTemp(TEMP.windowTemp));
 					$(windowId).data('info', TEMP.windowTemp);
 					HROS.CONFIG.windowIndexid += 1;
 					HROS.window.setPos(false);
 					//iframe加载完毕后，隐藏loading遮罩层
 					$(windowId + ' iframe').on('load', function () {
-						//NewCrm.msgbox.close()
 						$(windowId + ' .window-frame').children('div').eq(1).fadeOut();
 					});
 					HROS.window.show2top(options.appid);
@@ -8350,7 +8345,6 @@ HROS.window = (function () {
 							HROS.window.setPos(false);
 							//iframe加载完毕后，隐藏loading遮罩层
 							$(windowId + ' iframe').on('load', function () {
-								//NewCrm.msgbox.hide();
 								$(windowId + ' .window-frame').children('div').fadeOut();
 							});
 
