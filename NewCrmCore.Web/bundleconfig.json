@@ -20,8 +20,11 @@
 			"wwwroot/js/sugar/sugar-1.4.1.min.js",
 			"wwwroot/js/hooray/hros.min.js",
 			"wwwroot/js/validate/Validform_v5.3.2/Validform_v5.3.2_min.js",
-			"wwwroot/js/webuploader-0.1.5/webuploader.js"
+			"wwwroot/js/webuploader-0.1.5/webuploader.js",
+			"wwwroot/js/artDialog4.1.7/jquery.artDialog.js",
+			"wwwroot/js/artDialog4.1.7/plugins/iframeTools.js"
 		],
+
 		// Optionally specify minification options
 		"minify": {
 			"enabled": true
