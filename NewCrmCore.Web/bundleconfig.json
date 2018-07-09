@@ -1,35 +1,34 @@
 ﻿// Configure bundling and minification for the project.
 // More info at https://go.microsoft.com/fwlink/?LinkId=808241
 [
-	{
-		"outputFileName": "wwwroot/css/newcrm.site.css",
-		"inputFiles": [
-			"wwwroot/css/hoorayui/globle.css",
-			"wwwroot/css/hoorayui/index.css",
-			"wwwroot/css/hoorayui/login.css",
-			"wwwroot/css/hoorayui/sys.css"
-		]
-	},
-	{
-		"outputFileName": "wwwroot/js/newcrm.site.js",
-		"inputFiles": [
-			"wwwroot/js/jquery-3.2.1.min.js",
-			"wwwroot/js/hooray/jquery-browser.js",
-			"wwwroot/js/hooray/lib/hooraylibs.js",
-			"wwwroot/js/bootstrap/js/bootstrap.min.js",
-			"wwwroot/js/sugar/sugar-1.4.1.min.js",
-			"wwwroot/js/hooray/hros.min.js",
-			"wwwroot/js/validate/Validform_v5.3.2/Validform_v5.3.2_min.js",
-			"wwwroot/js/webuploader-0.1.5/webuploader.js",
-			"wwwroot/js/artDialog4.1.7/jquery.artDialog.js",
-			"wwwroot/js/artDialog4.1.7/plugins/iframeTools.js"
-		],
+  {
+    "outputFileName": "wwwroot/css/newcrm.site.min.css",
+    "inputFiles": [
+      "wwwroot/css/hoorayui/globle.css",
+      "wwwroot/css/hoorayui/index.css",
+      "wwwroot/css/hoorayui/login.css",
+      "wwwroot/css/hoorayui/sys.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/newcrm.site.min.js",
+    "inputFiles": [
+      "wwwroot/js/jquery-3.2.1.min.js",
+      "wwwroot/js/hooray/jquery-browser.js",
+      "wwwroot/js/hooray/lib/hooraylibs.js",
+      "wwwroot/js/bootstrap/js/bootstrap.min.js",
+      "wwwroot/js/sugar/sugar-1.4.1.min.js",
+      "wwwroot/js/hooray/hros.min.js",
+      "wwwroot/js/validate/Validform_v5.3.2/Validform_v5.3.2_min.js",
+      "wwwroot/js/webuploader-0.1.5/webuploader.js",
+      "wwwroot/js/artDialog4.1.7/jquery.artDialog.js",
+      "wwwroot/js/artDialog4.1.7/plugins/iframeTools.js"
+    ],
 
-		// Optionally specify minification options
-		"minify": {
-			"enabled": true
-		},
-		// Optionally generate .map file
-		"sourceMap": false
-	}
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  }
 ]

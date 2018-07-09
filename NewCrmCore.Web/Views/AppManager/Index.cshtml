@@ -101,7 +101,7 @@
 </div>
 @section ChildrenScript
 {
-    <script src="~/js/handlebars.runtime-v4.0.11.js"></script>
+    <script src="/js/handlebars.runtime-v4.0.11.js"></script>
 
     <script id="table-template" type="text/x-handlebars-template">
         {{#each Model}}
@@ -150,7 +150,7 @@
             //加载列表
             getPageList(0);
             //删除，推荐
-            $('.list-con').on('click', '.do-del', function () {
+			$('.list-con').on('click', '.do-del', function () {
                 var appid = $(this).attr('appid');
                 var appname = $(this).parents('tr').children('td:nth-child(2)').text();
                 $.dialog({
@@ -213,7 +213,7 @@
                 pageIndex: current_page === 0 ? 1 : current_page + 1,
                 pageSize: 7
             }, function (responseText) {
-                if (responseText.IsSuccess) {
+				if (responseText.IsSuccess) {
                     var tableTemplate = Handlebars.compile($("#table-template").html());
                     $('.list-con').html(tableTemplate(responseText));
                     $('.list-count').text(responseText.TotalCount);
