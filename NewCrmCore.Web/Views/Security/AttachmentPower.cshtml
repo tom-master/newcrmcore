@@ -86,6 +86,9 @@
 					}
 				},
 				ajaxPost: true,
+				beforeSubmit: function (curform) {
+					NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+				},
 				callback: function (responseText) {
 					if (responseText.IsSuccess) {
 						if ($('input[name="val_roleId"]').val()) {

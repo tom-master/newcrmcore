@@ -139,6 +139,9 @@
 					}
 				},
 				ajaxPost: true,
+				beforeSubmit: function (curform) {
+					NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+				},
 				callback: function (responseText) {
 					var response = responseText;
 					if (response.IsSuccess) {
