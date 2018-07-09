@@ -7,7 +7,7 @@
 
 <form action="/AppTypes/Create?appTypeId=@appTypeId" method="post" name="form" id="form">
 	<input type="hidden" name="ac" value="edit">
-	<input type="hidden" name="token" value="@TimeToken.GetTokenAsync()" />
+	<input type="hidden" name="token" value="@( await TimeToken.GetTokenAsync())" />
 	<div class="creatbox">
 		<div class="middle">
 			<p class="detile-title">

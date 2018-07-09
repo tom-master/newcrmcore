@@ -15,12 +15,8 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public String IpAddress
         {
-            get { return _ipAddress; }
-            private set
-            {
-                _ipAddress = value;
-            }
-        }
+			get; private set;
+		}
 
 		/// <summary>
 		/// 用户Id
@@ -28,11 +24,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		[PropertyRequired]
 		public Int32 AccountId
         {
-            get { return _accountId; }
-            private set
-            {
-                _accountId = value;
-            }
+			get;private set;
         }
         #endregion
 

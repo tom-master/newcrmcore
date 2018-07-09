@@ -21,7 +21,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 				return Convert.ToBase64String(Encoding.UTF8.GetBytes(hashCode.ToString()));
 			});
 
-			await CacheHelper.GetOrSetCache(new GlobalUniqueTokenCacheKey(await result), () => result);
+			await CacheHelper.GetOrSetCacheAsync(new GlobalUniqueTokenCacheKey(await result), () => result);
 			return await result;
 		}
 	}

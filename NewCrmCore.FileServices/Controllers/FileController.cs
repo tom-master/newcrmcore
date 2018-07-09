@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NewCrmCore.Infrastructure;
 using System;
 using System.Collections.Generic;
 
 namespace NewCrmCore.FileServices.Controllers
 {
 	[Route("api/filestorage")]
-	public class FileController : Controller
+	public class FileController: Controller
 	{
 		[Route("upload"), HttpPost, HttpOptions]
 		public IActionResult Upload()

@@ -13,17 +13,18 @@
 {
     <script>
         $(function () {
-            loadAllSkin(function () {
+			loadAllSkin(function () {
                 changeSkin();
             });
         });
 
-        function loadAllSkin(callback) {
+		function loadAllSkin(callback) {
+			
 			HROS.request.get('/Desk/GetSkins', {}, function (responseText) {
                 if (responseText.IsSuccess) {
                     var html = '';
-                    $.each(responseText.Model.result.Result, function (k, v) {
-                        html += '<li skin="' + k + '"><img src="' + v.imgPath + '"  data-css="' + v.skinPath + '"><div></div></li>';
+                    $.each(responseText.Model.result, function (k, v) {
+                        html += '<li skin="' + k + '"><img src="' + v.imgPath + '"  data-css="' + v.cssPath + '"><div></div></li>';
                     });
                     $('#skinList').append(html);
                     $('li[skin="' + responseText.Model.currentSkin + '"]').addClass('selected');

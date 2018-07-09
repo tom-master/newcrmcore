@@ -49,7 +49,8 @@
 			$.ajax({
 				type: 'POST',
 				url: '/Desk/landing',
-				data: { loginParameter },
+				contentType: "application/json;charset=utf-8",
+				data: JSON.stringify(loginParameter),
 				success: function (responseText) {
 					if (responseText.IsSuccess) {
 						$('.loading').hide();

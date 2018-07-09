@@ -31,7 +31,7 @@
             <option value="2">管理员</option>
         </select>
         <a class="btn" menu="search" href="javascript:;" style="margin-left:10px"><i class="icon-search"></i> 搜索</a>
-        <a class="btn btn-primary fr" href="javascript:openDetailIframe('/AccountManager/CreateNewAccount');"><i class="icon-white icon-plus"></i> 添加新账户</a>
+        <a class="btn btn-primary fr" href="javascript:openDetailIframe('/AccountManager/Account');"><i class="icon-white icon-plus"></i> 添加新账户</a>
     </div>
 </div>
 <table class="list-table">
@@ -76,7 +76,7 @@
             </td>
             <td style="text-align:left;padding-left:15px;width:33%">{{convertAccountType AccountType}}</td>
             <td style="width:33%">
-                <a href="javascript:openDetailIframe('/AccountManager/CreateNewAccount?accountId={{Id}}');" class="btn btn-link">编辑</a>
+                <a href="javascript:openDetailIframe('/AccountManager/Account?accountId={{Id}}');" class="btn btn-link">编辑</a>
                 <a href="javascript:void(0);" class="btn btn-link do-del" memberid="{{Id}}">删除</a>
                 {{#if IsDisable}}
                 <a href="javascript:void(0);" class="btn btn-link do-disable" isDisable="false" memberid="{{Id}}">启用</a>

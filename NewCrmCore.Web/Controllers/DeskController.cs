@@ -1,20 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NewCrmCore.Application.Services.Interface;
+using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
 using NewCrmCore.Web.Filter;
-using NewLibCore;
 using NewLibCore.Validate;
-using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
+using Newtonsoft.Json;
 
 namespace NewCrmCore.Web.Controllers
 {
-	public class DeskController : BaseController
+	public class DeskController: BaseController
 	{
 		private readonly IWallpaperServices _wallpaperServices;
 		private readonly ISkinServices _skinServices;
@@ -56,7 +57,7 @@ namespace NewCrmCore.Web.Controllers
 				return View(account);
 			}
 
-			return RedirectToAction("Login", "Desktop");
+			return RedirectToAction("Login", "Desk");
 		}
 
 		/// <summary>
@@ -69,7 +70,7 @@ namespace NewCrmCore.Web.Controllers
 			var accountId = Request.Cookies["Account"];
 			if (accountId != null)
 			{
-				return RedirectToAction("Index", "Desktop");
+				return RedirectToAction("Index", "Desk");
 			}
 
 			return View();
@@ -161,7 +162,7 @@ namespace NewCrmCore.Web.Controllers
 				response.Message = "登陆成功";
 				response.IsSuccess = true;
 
-				HttpContext.Response.Cookies.Append("Account", JsonConvert.SerializeObject(new { Id = account.Id.ToString(), AccountFace = Appsetting.FileUrl + account.AccountFace, account.Name }), new CookieOptions { Expires = cookieTimeout });
+				HttpContext.Response.Cookies.Append("Account", JsonConvert.SerializeObject(new AccountDto { Id = account.Id, AccountFace = Appsetting.FileUrl + account.AccountFace, Name = account.Name }), new CookieOptions { Expires = cookieTimeout });
 
 			}
 			return Json(response);
@@ -499,7 +500,7 @@ namespace NewCrmCore.Web.Controllers
 			#endregion
 
 			var result = await _deskServices.CheckMemberNameAsync(param);
-			return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "成员名称已存在" });
+			return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "应用名称已存在" });
 		}
 
 		#endregion
@@ -622,12 +623,12 @@ namespace NewCrmCore.Web.Controllers
 		{
 			var response = new ResponseModel<dynamic>();
 
-			var skinPath = "";
-			var result = _skinServices.GetAllSkinAsync(skinPath);
+			var skinPath = Appsetting.Skin;
+
+			var result = await _skinServices.GetAllSkinAsync(skinPath);
 			response.IsSuccess = true;
 			response.Message = "获取皮肤列表成功";
 			response.Model = new { result, currentSkin = (await _accountServices.GetConfigAsync(AccountId)).Skin };
-
 			return Json(response);
 
 		}

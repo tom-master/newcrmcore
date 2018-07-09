@@ -120,14 +120,14 @@ namespace NewCrmCore.Application.Services
 		{
 			new Parameter().Validate(accountId).Validate(newMode);
 			await _wallpaperContext.ModifyWallpaperModeAsync(accountId, newMode);
-			CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
+			await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
 		}
 
 		public async Task ModifyWallpaperAsync(Int32 accountId, Int32 newWallpaperId)
 		{
 			new Parameter().Validate(accountId).Validate(newWallpaperId);
 			await _wallpaperContext.ModifyWallpaperAsync(accountId, newWallpaperId);
-			CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
+			await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
 		}
 
 		public async Task RemoveWallpaperAsync(Int32 accountId, Int32 wallpaperId)

@@ -30,14 +30,15 @@ namespace NewCrmCore.Application.Services
 				IDictionary<String, dynamic> dataDictionary = new Dictionary<String, dynamic>();
 				Directory.GetFiles(skinPath, "*.css").ToList().ForEach(path =>
 				{
-					var fileName = Get(path, x => x.LastIndexOf(@"\", StringComparison.OrdinalIgnoreCase) + 1).Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries)[0];
+					var fileName = Path.GetFileName(path);
+					fileName = fileName.Substring(0, fileName.LastIndexOf("."));
+					var cssPath = path.Substring(path.LastIndexOf("images") - 1).Replace(@"\", "/");
 					dataDictionary.Add(fileName, new
 					{
-						cssPath = path.Substring(path.LastIndexOf("Content", StringComparison.OrdinalIgnoreCase) - 1).Replace(@"\", "/"),
-						imgPath = GetLocalImagePath(fileName, skinPath)
+						cssPath,
+						imgPath = $@"{cssPath.Substring(0, cssPath.LastIndexOf("."))}/preview.png"
 					});
 				});
-
 				return dataDictionary;
 			});
 		}
@@ -46,29 +47,7 @@ namespace NewCrmCore.Application.Services
 		{
 			new Parameter().Validate(accountId).Validate(newSkin);
 			await _skinContext.ModifySkinAsync(accountId, newSkin);
-			CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
+			await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
 		}
-
-		#region private method
-
-		private String GetLocalImagePath(String fileName, String fullPath)
-		{
-			new Parameter().Validate(fileName).Validate(fullPath);
-
-			var dic = Directory.GetFiles(fullPath, "preview.png", SearchOption.AllDirectories).ToList();
-			foreach (var dicItem in from dicItem in dic let regex = new Regex(fileName) where regex.IsMatch(dicItem) select dicItem)
-			{
-				return dicItem.Substring(dicItem.LastIndexOf("Content", StringComparison.OrdinalIgnoreCase) - 1).Replace(@"\", "/");
-			}
-
-			return "";
-		}
-
-		private String Get(String path, Func<String, Int32> filterFunc)
-		{
-			return path.Substring(filterFunc(path));
-		}
-
-		#endregion
 	}
 }

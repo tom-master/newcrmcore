@@ -3,8 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using NewCrmCore.Application.Services.Interface;
+using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
 using Newtonsoft.Json;
@@ -12,17 +14,17 @@ using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.Web.Filter
 {
-	public class AuthFilter : IAsyncAuthorizationFilter
+	public class AuthFilter: IAsyncAuthorizationFilter
 	{
 
 		public async Task OnAuthorizationAsync(AuthorizationFilterContext filterContext)
 		{
-			if (filterContext.ActionDescriptor.FilterDescriptors.Any(a => a.Filter is DoNotCheckPermissionAttribute))
+			if (((ControllerActionDescriptor)filterContext.ActionDescriptor).MethodInfo.CustomAttributes.Any(a => a.AttributeType == typeof(DoNotCheckPermissionAttribute)))
 			{
 				return;
 			}
 
-			if (filterContext.HttpContext.Request.Cookies["memberID"] == null)
+			if (filterContext.HttpContext.Request.Cookies["Account"] == null)
 			{
 				ReturnMessage(filterContext, "会话过期,请刷新页面后重新登陆");
 				return;
@@ -42,15 +44,23 @@ namespace NewCrmCore.Web.Filter
 				return;
 			}
 
-			var account = await ((IAccountServices)filterContext.HttpContext.RequestServices.GetService(typeof(IAccountServices)))
-				.GetAccountAsync(Int32.Parse(filterContext.HttpContext.Request.Cookies["memberID"]));
-
-			var appId = Int32.Parse(filterContext.HttpContext.Request.Query["id"]);
-			var isPermission = await ((ISecurityServices)filterContext.HttpContext.RequestServices.GetService(typeof(ISecurityServices))).CheckPermissionsAsync(appId, account.Roles.Select(role => role.Id).ToArray());
-
-			if (!isPermission)
+			if (!String.IsNullOrEmpty(filterContext.HttpContext.Request.Query["id"]))
 			{
-				ReturnMessage(filterContext, "对不起,您没有访问的权限!");
+				var accountId = JsonConvert.DeserializeObject<AccountDto>(filterContext.HttpContext.Request.Cookies["Account"]).Id;
+
+				var account = await ((IAccountServices)filterContext
+					.HttpContext
+					.RequestServices
+					.GetService(typeof(IAccountServices)))
+					.GetAccountAsync(accountId);
+
+				var appId = Int32.Parse(filterContext.HttpContext.Request.Query["id"]);
+				var isPermission = await ((ISecurityServices)filterContext.HttpContext.RequestServices.GetService(typeof(ISecurityServices))).CheckPermissionsAsync(appId, account.Roles.Select(role => role.Id).ToArray());
+
+				if (!isPermission)
+				{
+					ReturnMessage(filterContext, "对不起,您没有访问的权限!");
+				}
 			}
 		}
 
@@ -86,7 +96,7 @@ namespace NewCrmCore.Web.Filter
 		private async Task<Boolean> ValidateToken(AuthorizationFilterContext filterContext)
 		{
 			var token2 = filterContext.HttpContext.Request.Form["token"];
-			var token1 = await CacheHelper.GetOrSetCache<String>(new GlobalUniqueTokenCacheKey(token2));
+			var token1 = await CacheHelper.GetOrSetCacheAsync(new GlobalUniqueTokenCacheKey(token2));
 
 			if (token1 != token2)
 			{

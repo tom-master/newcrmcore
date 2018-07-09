@@ -2,7 +2,7 @@
 @using NewCrmCore.Infrastructure.CommonTools
 @model AppDto
 <form action="/AppMarket/ModifyInfo" method="post" name="form" id="form">
-	<input type="hidden" name="token" value="@TimeToken.GetTokenAsync()" />
+	<input type="hidden" name="token" value="@( await TimeToken.GetTokenAsync())" />
 	<input type="hidden" name="val_Id" value="@Model.Id">
 	<input type="hidden" id="isIconByUpload" name="isIconByUpload" value="@(Model.IsIconByUpload?1:0)" />
 	<div class="creatbox">
@@ -126,9 +126,8 @@
 						<div class="input-label">
 							<label class="label-text">是否提交审核：</label>
 							<div class="label-box form-inline control-group">
-								<label class="radio" style="margin-right:10px"><input type="radio" name="val_verifytype" value="1" @
-																	  { if (Model.AppAuditState= =1) { <text> checked="checked" </text>  } }>暂时不提交</label>
-								<label class="radio"><input type="radio" name="val_verifytype" value="4" @ { if (Model.AppAuditState == 4) { <text> checked="checked" </text>  } }>提交审核</label>
+								<label class="radio" style="margin-right:10px"><input type="radio" name="val_verifytype" value="1" @{ if (Model.AppAuditState==1) { <text> checked="checked" </text>  } }>暂时不提交</label>
+								<label class="radio"><input type="radio" name="val_verifytype" value="4" @{ if (Model.AppAuditState == 4) { <text> checked="checked" </text>  } }>提交审核</label>
 							</div>
 						</div>
 						</text>
