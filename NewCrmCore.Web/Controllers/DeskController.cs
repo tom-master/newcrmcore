@@ -349,7 +349,7 @@ namespace NewCrmCore.Web.Controllers
 		/// <summary>
 		/// 账户登出
 		/// </summary>
-		[HttpPost]
+		[HttpGet]
 		public async Task<IActionResult> Logout()
 		{
 			await _accountServices.LogoutAsync(AccountId);

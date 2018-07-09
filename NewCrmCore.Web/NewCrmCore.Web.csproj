@@ -3,7 +3,14 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
     <StartupObject></StartupObject>
+    <UserSecretsId>51dc46db-85d5-464f-8067-ff4aaab8e42c</UserSecretsId>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="wwwroot\lib\**" />
+    <Content Remove="wwwroot\lib\**" />
+    <EmbeddedResource Remove="wwwroot\lib\**" />
+    <None Remove="wwwroot\lib\**" />
+  </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\js\hooray\hros.app.js" />
     <Content Remove="wwwroot\js\hooray\hros.appmanage.js" />
@@ -28,6 +35,7 @@
     <Content Remove="wwwroot\js\hooray\hros.zoom.js" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="bootstrap" Version="4.1.1" />
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.1.1" />
@@ -173,119 +181,9 @@
     <None Include="wwwroot\images\wallpaper\wallpaper7.jpg" />
     <None Include="wwwroot\images\wallpaper\wallpaper8.jpg" />
     <None Include="wwwroot\images\wallpaper\wallpaper9.jpg" />
-    <None Include="wwwroot\js\artDialog4.1.7\artDialog.js" />
-    <None Include="wwwroot\js\artDialog4.1.7\artDialog.source.js" />
-    <None Include="wwwroot\js\artDialog4.1.7\index.html" />
-    <None Include="wwwroot\js\artDialog4.1.7\jquery.artDialog.js" />
-    <None Include="wwwroot\js\artDialog4.1.7\jquery.artDialog.source.js" />
-    <None Include="wwwroot\js\artDialog4.1.7\license.txt" />
     <None Include="wwwroot\js\artDialog4.1.7\plugins\iframeTools.js" />
     <None Include="wwwroot\js\artDialog4.1.7\plugins\iframeTools.source.js" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\aero.css" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\aero\aero_s.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\aero\aero_s2.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\aero\ie6\aui_close.hover.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\aero\ie6\aui_close.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\aero\ie6\aui_e.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\aero\ie6\aui_n.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\aero\ie6\aui_ne.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\aero\ie6\aui_nw.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\aero\ie6\aui_s.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\aero\ie6\aui_se.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\aero\ie6\aui_sw.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\aero\ie6\aui_title_icon.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\aero\ie6\aui_w.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\black.css" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\black\bg.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\black\bg2.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\black\bg_css3.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\black\bg_css3_2.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\black\ie6\close.hover.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\black\ie6\close.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\black\ie6\e.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\black\ie6\n.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\black\ie6\ne.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\black\ie6\nw.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\black\ie6\s.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\black\ie6\se.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\black\ie6\sw.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\black\ie6\w.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\blue.css" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\blue\bg.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\blue\bg2.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\blue\bg_css3.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\blue\bg_css3_2.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\blue\ie6\close.hover.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\blue\ie6\close.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\blue\ie6\e.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\blue\ie6\n.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\blue\ie6\ne.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\blue\ie6\nw.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\blue\ie6\s.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\blue\ie6\se.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\blue\ie6\sw.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\blue\ie6\w.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\chrome.css" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\chrome\border.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\chrome\chrome_s.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\default.css" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\green.css" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\green\bg.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\green\bg2.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\green\bg_css3.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\green\bg_css3_2.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\green\color_bg.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\green\ie6\close.hover.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\green\ie6\close.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\green\ie6\e.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\green\ie6\n.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\green\ie6\ne.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\green\ie6\nw.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\green\ie6\s.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\green\ie6\se.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\green\ie6\sw.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\green\ie6\w.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\icons\error.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\icons\face-sad.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\icons\face-smile.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\icons\loading.gif" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\icons\question.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\icons\succeed.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\icons\warning.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\idialog.css" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\idialog\idialog_s.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\idialog\idialog_s2.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\idialog\ie6\aui_close.hover.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\idialog\ie6\aui_close.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\idialog\ie6\aui_e.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\idialog\ie6\aui_n.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\idialog\ie6\aui_ne.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\idialog\ie6\aui_nw.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\idialog\ie6\aui_s.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\idialog\ie6\aui_se.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\idialog\ie6\aui_sw.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\idialog\ie6\aui_w.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\opera.css" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\opera\ie6\aui_close.hover.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\opera\ie6\aui_close.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\opera\ie6\aui_e.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\opera\ie6\aui_n.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\opera\ie6\aui_ne.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\opera\ie6\aui_nw.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\opera\ie6\aui_s.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\opera\ie6\aui_se.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\opera\ie6\aui_sw.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\opera\ie6\aui_w.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\opera\s1.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\opera\s2.png" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\simple.css" />
-    <None Include="wwwroot\js\artDialog4.1.7\skins\twitter.css" />
-    <None Include="wwwroot\js\bootstrap\css\bootstrap-responsive.css" />
-    <None Include="wwwroot\js\bootstrap\css\bootstrap-responsive.min.css" />
-    <None Include="wwwroot\js\bootstrap\css\bootstrap.css" />
-    <None Include="wwwroot\js\bootstrap\css\bootstrap.min.css" />
-    <None Include="wwwroot\js\bootstrap\img\glyphicons-halflings-white.png" />
-    <None Include="wwwroot\js\bootstrap\img\glyphicons-halflings.png" />
+    <None Include="wwwroot\js\bootstrap\js\bootstrap.min.js" />
     <None Include="wwwroot\js\dynamicBackground.js" />
     <None Include="wwwroot\js\fullAvatarEditor-2.3\crossdomain.xml" />
     <None Include="wwwroot\js\fullAvatarEditor-2.3\expressInstall.swf" />
@@ -328,8 +226,5 @@
     <ProjectReference Include="..\NewCrmCore.Application.Services\NewCrmCore.Application.Services.csproj" />
     <ProjectReference Include="..\NewCrmCore.Dto\NewCrmCore.Dto.csproj" />
     <ProjectReference Include="..\NewCrmCore.Infrastructure\NewCrmCore.Infrastructure.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 </Project>
