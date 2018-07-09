@@ -70,10 +70,10 @@
 
 			$('#form').Validform({
 				btnSubmit: '#btn-submit',
-				postonce: false,
+				postonce: true,
 				showAllError: true,
 				tiptype: function (msg, o) {
-					if (!o.obj.is('form')) { //验证表单元素时o.obj为该表单元素，全部验证通过提交表单时o.obj为该表单对象;
+					if (!o.obj.is('form')) {
 						var B = o.obj.parents('.control-group');
 						var T = B.children('.help-inline');
 						if (o.type === 2) {
