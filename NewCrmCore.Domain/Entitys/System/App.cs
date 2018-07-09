@@ -212,7 +212,6 @@ namespace NewCrmCore.Domain.Entitys.System
 		/// <summary>
 		/// 是否安装
 		/// </summary>
-		[PropertyDefaultValue(typeof(Boolean), false)]
 		public Boolean IsInstall
 		{
 			get; private set;
