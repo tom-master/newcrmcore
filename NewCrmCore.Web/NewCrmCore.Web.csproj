@@ -330,4 +330,7 @@
     <ProjectReference Include="..\NewCrmCore.Dto\NewCrmCore.Dto.csproj" />
     <ProjectReference Include="..\NewCrmCore.Infrastructure\NewCrmCore.Infrastructure.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\" />
+  </ItemGroup>
 </Project>
