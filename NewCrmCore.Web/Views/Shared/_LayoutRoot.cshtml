@@ -9,10 +9,26 @@
 	@RenderBody()
 </body>
 </html>
-<script src="~/js/bundle.js"></script>
 
-<script src="/js/artDialog4.1.7/jquery.artDialog.js?skin=default"></script>
-<script src="/js/artDialog4.1.7/plugins/iframeTools.js"></script>
+<environment names="Development" asp-append-version="true">
+	<script src="/js/jquery-3.2.1.min.js"></script>
+	<script src="/js/hooray/jquery-browser.js"></script>
+	<script src="/js/hooray/lib/hooraylibs.js"></script>
+	<script src="/js/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/js/sugar/sugar-1.4.1.min.js"></script>
+	<script src="/js/hooray/hros.min.js"></script>
+	<script src="/js/validate/Validform_v5.3.2/Validform_v5.3.2_min.js"></script>
+	<script src="/js/hooray/hros.min.js"></script>
+
+	<script src="/js/artDialog4.1.7/jquery.artDialog.js?skin=default"></script>
+	<script src="/js/webuploader-0.1.5/webuploader.js"></script>
+</environment>
+<environment names="Production" asp-append-version="true">
+	<script src="/js/newcrm.site.min.js"></script>
+	<script src="/js/artDialog4.1.7/jquery.artDialog.js?skin=default"></script>
+	<script src="/js/artDialog4.1.7/plugins/iframeTools.js"></script>
+</environment>
+
 
 <script>
 	//配置artDialog全局默认参数
