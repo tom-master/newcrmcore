@@ -7,7 +7,7 @@
 }
 
 @section ChildrenCss{
-	<link href="~/js/webuploader-0.1.5/webuploader.css" rel="stylesheet" />
+<link href="~/js/webuploader-0.1.5/webuploader.css" rel="stylesheet" />
 }
 
 <form action="/Desk/ModifyMemberInfo" method="post" name="form" id="form">
@@ -44,7 +44,7 @@
 			<div class="input-label">
 				<label class="label-text">应用名称：</label>
 				<div class="label-box form-inline control-group">
-					<input type="text" class="text" name="val_name" value="@Model.Name" datatype="s2-10" nullmsg="请输入应用名称" errormsg="应用名称长度为2-10个字符" ajaxurl="@Url.Action("CheckName","Desk")" />
+					<input type="text" class="text" name="val_name" value="@Model.Name" datatype="s2-10" nullmsg="请输入应用名称" errormsg="应用名称长度为2-10个字符" ajaxurl="@Url.Action(" CheckName","Desk")" />
 					<span class="help-inline"></span>
 				</div>
 			</div>
@@ -102,7 +102,7 @@
 
 @section ChildrenScript
 	{
-	<script>
+<script>
         $(function() {
             var uploader = WebUploader.create({
                 // 选完文件后，是否自动上传。
@@ -164,12 +164,12 @@
                     NewCrm.msgbox.fail("图标上传失败");
                 }
             });
-            $('#form').Validform({
+        var f= $('#form').Validform({
                 btnSubmit: '#btn-submit',
 				postonce: true,
-                showAllError: true, 
+                showAllError: true,
                 tiptype: function(msg, o) {
-                    if (!o.obj.is('form')) { 
+                    if (!o.obj.is('form')) {
                         var B = o.obj.parents('.control-group');
                         var T = B.children('.help-inline');
                         if (o.type === 2) {
@@ -183,7 +183,11 @@
                 },
 				ajaxPost: true,
 				beforeSubmit: function (curform) {
-					NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+					if (f.getStatus() === 'posted') {
+						NewCrm.msgbox.loading(HROS.CONFIG.postOnce)
+					} else {
+						NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+					}
 				},
                 callback: function (responseText) {
                     if (responseText.IsSuccess) {
@@ -213,5 +217,5 @@
             });
 
         });
-	</script>
+</script>
 }

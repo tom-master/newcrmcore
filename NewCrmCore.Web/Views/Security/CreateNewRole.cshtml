@@ -73,12 +73,12 @@
 	{
 	<script>
         $(function () {
-            $('#form').Validform({
+          var f = $('#form').Validform({
                 btnSubmit: '#btn-submit',
 				postonce: true,
                 showAllError: true,
                 tiptype: function (msg, o) {
-                    if (!o.obj.is('form')) { 
+                    if (!o.obj.is('form')) {
                         var B = o.obj.parents('.control-group');
                         var T = B.children('.help-inline');
                         if (o.type === 2) {
@@ -92,14 +92,18 @@
                 },
 				ajaxPost: true,
 				beforeSubmit: function (curform) {
-					NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+				  if (f.getStatus() === 'posted') {
+					  NewCrm.msgbox.loading(HROS.CONFIG.postOnce)
+				  } else {
+					  NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+				  }
 				},
                 callback: function (responseText) {
                     if (responseText.IsSuccess) {
                         if ('@roleId') {
                             $.dialog({
                                 id: 'ajaxedit',
-                                content: '修改成功，是否继续修改？',
+                                content: '修改成功，是否继续修改?',
                                 okVal: '是',
                                 ok: function () {
                                     $.dialog.list['ajaxedit'].close();
@@ -113,7 +117,7 @@
                         } else {
                             $.dialog({
                                 id: 'ajaxedit',
-                                content: '添加成功，是否继续添加？',
+                                content: '添加成功，是否继续添加?',
                                 okVal: '是',
                                 ok: function () {
                                     location.reload();
