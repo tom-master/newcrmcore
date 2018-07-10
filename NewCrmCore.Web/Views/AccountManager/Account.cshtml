@@ -121,7 +121,7 @@
 	{
 	<script>
 		$(function () {
-			$('#form').Validform({
+			var f = $('#form').Validform({
 				btnSubmit: '#btn-submit',
 				postonce: true,
 				showAllError: true,
@@ -140,7 +140,11 @@
 				},
 				ajaxPost: true,
 				beforeSubmit: function (curform) {
-					NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+					if (f.getStatus() === 'posted') {
+						NewCrm.msgbox.loading(HROS.CONFIG.postOnce)
+					} else {
+						NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+					}
 				},
 				callback: function (responseText) {
 					var response = responseText;

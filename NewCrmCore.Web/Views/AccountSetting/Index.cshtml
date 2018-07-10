@@ -33,27 +33,27 @@
 		switch (requestTarget)
 		{
 			case "baseinfo":
-			{
-				Html.RenderPartial("~/Views/AccountSetting/BaseInfo.cshtml", Model);
-				break;
-			}
+				{
+					Html.RenderPartial("~/Views/AccountSetting/BaseInfo.cshtml", Model);
+					break;
+				}
 			case "modifyface":
-			{
-				Html.RenderPartial("~/Views/AccountSetting/ModifyFace.cshtml", Model);
-				break;
-			}
+				{
+					Html.RenderPartial("~/Views/AccountSetting/ModifyFace.cshtml", Model);
+					break;
+				}
 			case "accountsafe":
-			{
-				Html.RenderPartial("~/Views/AccountSetting/AccountSafe.cshtml");
-				break;
-			}
+				{
+					Html.RenderPartial("~/Views/AccountSetting/AccountSafe.cshtml");
+					break;
+				}
 			default:
-			{
-				<text>
-					@Html.Partial("~/Views/AccountSetting/BaseInfo.cshtml", Model);
-				</text>
-				break;
-			}
+				{
+					<text>
+						@Html.Partial("~/Views/AccountSetting/BaseInfo.cshtml", Model);
+					</text>
+					break;
+				}
 		}
 	}
 }
@@ -87,7 +87,7 @@
         });
 
 
-        $('#form').Validform({
+     var f1=$('#form').Validform({
             btnSubmit: '#form-submit',
 			postonce: true,
             showAllError: true,
@@ -106,7 +106,11 @@
             },
 			ajaxPost: false,
 			beforeSubmit: function (curform) {
-				NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+				if (f1.getStatus() === 'posted') {
+					NewCrm.msgbox.loading(HROS.CONFIG.postOnce)
+				} else {
+					NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+				}
 			},
             callback: function (form) {
                 $.dialog({
@@ -151,7 +155,7 @@
 			})
 		 })
 
-        $('#form2').Validform({
+      var f2=  $('#form2').Validform({
             btnSubmit: '#form-submit2',
             postonce: true,
             showAllError: true,
@@ -170,7 +174,11 @@
             },
 			ajaxPost: false,
 			beforeSubmit: function (curform) {
-				NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+				if (f2.getStatus() === 'posted') {
+					NewCrm.msgbox.loading(HROS.CONFIG.postOnce)
+				} else {
+					NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+				}
 			},
             callback: function (responseText) {
                 $.dialog({
