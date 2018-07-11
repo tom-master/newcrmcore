@@ -94,6 +94,7 @@
 				beforeSubmit: function (curform) {
 				  if (f.getStatus() === 'posted') {
 					  NewCrm.msgbox.loading(HROS.CONFIG.postOnce)
+					  return false
 				  } else {
 					  NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
 				  }
