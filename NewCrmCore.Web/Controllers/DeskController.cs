@@ -158,7 +158,7 @@ namespace NewCrmCore.Web.Controllers
 			var account = await _accountServices.LoginAsync(loginParameter.Name, loginParameter.Password, Request.HttpContext.Connection.RemoteIpAddress.ToString());
 			if (account != null)
 			{
-				var cookieTimeout = loginParameter.IsRememberPasswrod ? DateTime.Now.AddDays(7) : DateTime.Now.AddMinutes(10);
+				var cookieTimeout = loginParameter.IsRememberPasswrod ? DateTime.Now.AddDays(7) : DateTime.Now.AddMinutes(60);
 				response.Message = "登陆成功";
 				response.IsSuccess = true;
 

@@ -343,7 +343,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						{
 							var account = new Account();
 							account.Offline();
-							var rowCount = dataStore.ExecuteModify(account, acc => acc.Id == accountId && acc.IsDeleted!=false && acc.IsDisable != false);
+							var rowCount = dataStore.ExecuteModify(account, acc => acc.Id == accountId && !acc.IsDeleted && !acc.IsDisable);
 							if (rowCount == 0)
 							{
 								throw new BusinessException("设置用户下线状态失败");

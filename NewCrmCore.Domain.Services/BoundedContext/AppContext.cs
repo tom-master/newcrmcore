@@ -157,7 +157,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                            a.AddTime,
 	                            a.UseCount,
 	                            (
-		                            SELECT AVG(stars.StartNum) FROM AppStar AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId
+		                            SELECT TRUNCATE(AVG(stars.StartNum),1) FROM AppStar AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId
 	                            ) AS StarCount,
 	                            a.Name,
 	                            a.IconUrl,
@@ -166,8 +166,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                            a.Id,
 	                            (
 		                            CASE 
-			                            WHEN a1.Id IS NOT NULL THEN FALSE
-			                            ELSE TRUE
+			                            WHEN a1.Id IS NOT NULL THEN TRUE
+			                            ELSE FALSE
 		                            END
 	                            ) AS IsInstall,
                                 a.IsIconByUpload
