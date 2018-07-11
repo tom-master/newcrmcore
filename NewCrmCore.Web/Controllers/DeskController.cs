@@ -498,7 +498,7 @@ namespace NewCrmCore.Web.Controllers
 			#region 参数验证
 			new Parameter().Validate(param);
 			#endregion
-
+		
 			var result = await _deskServices.CheckMemberNameAsync(param);
 			return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "应用名称已存在" });
 		}
@@ -569,7 +569,6 @@ namespace NewCrmCore.Web.Controllers
 			#region 参数验证
 			new Parameter().Validate(forms);
 			#endregion
-
 			var memberDto = new MemberDto
 			{
 				Id = Int32.Parse(forms["id"]),
