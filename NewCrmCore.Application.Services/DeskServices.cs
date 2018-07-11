@@ -235,6 +235,7 @@ namespace NewCrmCore.Application.Services
 		{
 			new Parameter().Validate(folderName).Validate(folderImg).Validate(deskId).Validate(accountId);
 			await _deskContext.CreateNewFolderAsync(deskId, folderName, folderImg, accountId);
+			await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(accountId));
 		}
 
 		public async Task DockToOtherDeskAsync(Int32 accountId, Int32 memberId, Int32 deskId)

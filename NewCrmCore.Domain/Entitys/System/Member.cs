@@ -9,8 +9,8 @@ namespace NewCrmCore.Domain.Entitys.System
 	/// 成员
 	/// </summary>
 	[Serializable, Description("成员")]
-	public partial class Member : DomainModelBase
-	{ 
+	public partial class Member: DomainModelBase
+	{
 		#region public property
 
 		/// <summary>
@@ -70,7 +70,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		/// <summary>
 		/// app地址
 		/// </summary>
-		[PropertyRequired, InputRange(150)]
+		[PropertyDefaultValue(typeof(String), ""), InputRange(150)]
 		public String AppUrl
 		{
 			get; private set;
