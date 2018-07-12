@@ -3,25 +3,13 @@ using NewLibCore.Data.Mapper.MapperExtension;
 
 namespace NewCrmCore.Domain.Entitys.Security
 {
-	public class RolePower: DomainModelBase
-	{ 
-		#region public property
+	public class RolePower : DomainModelBase
+	{
+		[PropertyRequired]
+		public Int32 RoleId { get; private set; }
 
 		[PropertyRequired]
-		public Int32 RoleId
-		{
-			get; private set;
-		}
-
-		[PropertyRequired]
-		public Int32 AppId
-		{
-			get; private set;
-		}
-
-		#endregion
-
-		#region ctor
+		public Int32 AppId { get; private set; }
 
 		public RolePower(Int32 roleId, Int32 appId)
 		{
@@ -33,7 +21,5 @@ namespace NewCrmCore.Domain.Entitys.Security
 		{
 
 		}
-
-		#endregion
 	}
 }

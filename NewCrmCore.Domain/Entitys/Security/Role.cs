@@ -9,53 +9,35 @@ namespace NewCrmCore.Domain.Entitys.Security
 	[Description("角色"), Serializable]
 	public partial class Role : DomainModelBase
 	{
-
-
-		#region public property
-
 		/// <summary>
 		/// 名称
 		/// </summary>
-		[PropertyRequired, InputRange(2,10)]
-		public String Name
-		{
-			get; private set;
-		}
+		[PropertyRequired, InputRange(2, 10)]
+		public String Name { get; private set; }
+
 		/// <summary>
 		/// 角色标识
 		/// </summary>
-		[PropertyRequired, InputRange(2,20)]
-		public String RoleIdentity
-		{
-			get; private set;
-		}
+		[PropertyRequired, InputRange(2, 20)]
+		public String RoleIdentity { get; private set; }
 
 		/// <summary>
 		/// 备注
 		/// </summary>
 		[InputRange(50), PropertyDefaultValue(typeof(String), "")]
-		public String Remark
-		{
-			get; private set;
-		}
+		public String Remark { get; private set; }
 
 		/// <summary>
 		/// 是否允许禁用
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsAllowDisable
-		{
-			get; private set;
-		}
+		public Boolean IsAllowDisable { get; private set; }
 
-		public IEnumerable<RolePower> Powers
-		{
-			get; private set;
-		}
+		/// <summary>
+		/// 权限
+		/// </summary>
+		public IEnumerable<RolePower> Powers { get; private set; }
 
-		#endregion
-
-		#region ctor
 		/// <summary>
 		/// 实例化一个角色对象
 		/// </summary>
@@ -74,8 +56,6 @@ namespace NewCrmCore.Domain.Entitys.Security
 		public Role()
 		{
 		}
-
-		#endregion
 	}
 
 	/// <summary>

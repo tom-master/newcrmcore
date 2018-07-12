@@ -8,129 +8,82 @@ namespace NewCrmCore.Domain.Entitys.System
 	[Description("用户配置"), Serializable]
 	public partial class Config : DomainModelBase
 	{
-
-
-		#region public property
-
 		/// <summary>
 		/// 皮肤
 		/// </summary>
 		[PropertyRequired, InputRange(10)]
-		public String Skin
-		{
-			get; private set;
-		}
+		public String Skin { get; private set; }
 
 		/// <summary>
 		/// 用户头像
 		/// </summary>
 		[PropertyRequired, InputRange(150)]
-		public String AccountFace
-		{
-			get; private set;
-		}
+		public String AccountFace { get; private set; }
 
 		/// <summary>
 		/// app尺寸
 		/// </summary>
 		[PropertyRequired]
-		public Int32 AppSize
-		{
-			get; private set;
-		}
+		public Int32 AppSize { get; private set; }
 
 		/// <summary>
 		/// app垂直间距
 		/// </summary>
 		[PropertyRequired]
-		public Int32 AppVerticalSpacing
-		{
-			get; private set;
-		}
+		public Int32 AppVerticalSpacing { get; private set; }
 
 		/// <summary>
 		/// app水平间距
 		/// </summary>
 		[PropertyRequired]
-		public Int32 AppHorizontalSpacing
-		{
-			get; private set;
-		}
+		public Int32 AppHorizontalSpacing { get; private set; }
 		/// <summary>
 		/// 默认桌面编号
 		/// </summary>
 		[PropertyDefaultValue(typeof(Int32), 1)]
-		public Int32 DefaultDeskNumber
-		{
-			get; private set;
-		}
+		public Int32 DefaultDeskNumber { get; private set; }
 
 		/// <summary>
 		/// 默认桌面数量
 		/// </summary>
 		[PropertyDefaultValue(typeof(Int32), 5)]
-		public Int32 DefaultDeskCount
-		{
-			get; private set;
-		}
+		public Int32 DefaultDeskCount { get; private set; }
 
 		/// <summary>
 		/// 壁纸的展示模式
 		/// </summary>
 		[PropertyRequired]
-		public WallpaperMode WallpaperMode
-		{
-			get; private set;
-		}
+		public WallpaperMode WallpaperMode { get; private set; }
 
 		/// <summary>
 		/// 壁纸来源
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsBing
-		{
-			get; private set;
-		}
+		public Boolean IsBing { get; private set; }
 
 		/// <summary>
 		/// app排列方向
 		/// </summary>
 		[PropertyRequired]
-		public AppAlignMode AppXy
-		{
-			get; private set;
-		}
+		public AppAlignMode AppXy { get; private set; }
 
 		/// <summary>
 		/// 码头位置
 		/// </summary>
 		[PropertyDefaultValue(typeof(DockPostion), DockPostion.Top)]
-		public DockPostion DockPosition
-		{
-			get; private set;
-		}
+		public DockPostion DockPosition { get; private set; }
 
 		/// <summary>
 		/// 账户Id
 		/// </summary>
 		[PropertyRequired]
-		public Int32 AccountId
-		{
-			get; private set;
-		}
+		public Int32 AccountId { get; private set; }
 
 		/// <summary>
 		/// 壁纸Id
 		/// </summary>
 		[PropertyRequired]
-		public Int32 WallpaperId
-		{
-			get; private set;
-		}
-
-		#endregion
-
-		#region ctor
+		public Int32 WallpaperId { get; private set; }
 
 		public Config(Int32 accountId, Int32 wallpaperId)
 		{
@@ -150,15 +103,10 @@ namespace NewCrmCore.Domain.Entitys.System
 
 		public Config() { }
 
-		#endregion
 	}
 
-	/// <summary>
-	/// ConfigExtension
-	/// </summary>
 	public partial class Config
-	{
-
+	{ 
 		public Config ModifyAccountId(Int32 accountId)
 		{
 			AccountId = accountId;
@@ -283,18 +231,21 @@ namespace NewCrmCore.Domain.Entitys.System
 			OnPropertyChanged(new PropertyArgs(nameof(WallpaperMode), WallpaperMode));
 			return this;
 		}
+
 		public Config DisplayToTile()
 		{
 			WallpaperMode = WallpaperMode.Tile;
 			OnPropertyChanged(new PropertyArgs(nameof(WallpaperMode), WallpaperMode));
 			return this;
 		}
+
 		public Config DisplayToDraw()
 		{
 			WallpaperMode = WallpaperMode.Draw;
 			OnPropertyChanged(new PropertyArgs(nameof(WallpaperMode), WallpaperMode));
 			return this;
 		}
+
 		public Config DisplayToCenter()
 		{
 			WallpaperMode = WallpaperMode.Center;

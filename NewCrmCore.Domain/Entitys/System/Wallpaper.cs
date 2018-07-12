@@ -8,92 +8,59 @@ namespace NewCrmCore.Domain.Entitys.System
 	[Serializable, Description("壁纸")]
 	public partial class Wallpaper : DomainModelBase
 	{
-		#region public property
-
 		/// <summary>
 		/// 标题
 		/// </summary>
 		[PropertyRequired, InputRange(15)]
-		public String Title
-		{
-			get; private set;
-		}
+		public String Title { get; private set; }
 
 		/// <summary>
 		/// 图片地址
 		/// </summary>
 		[PropertyRequired, InputRange(150)]
-		public String Url
-		{
-			get; private set;
-		}
+		public String Url { get; private set; }
 
 		/// <summary>
 		/// 短地址
 		/// </summary> 
 		[PropertyDefaultValue(typeof(String), "")]
-		public String ShortUrl
-		{
-			get; private set;
-		}
+		public String ShortUrl { get; private set; }
 
 		/// <summary>
 		/// 来源
 		/// </summary>
 		[PropertyRequired]
-		public WallpaperSource Source
-		{
-			get; private set;
-		}
+		public WallpaperSource Source { get; private set; }
 
 		/// <summary>
 		/// 描述
 		/// </summary>
 		[PropertyDefaultValue(typeof(String), ""), InputRange(50)]
-		public String Description
-		{
-			get; private set;
-		}
+		public String Description { get; private set; }
 
 		/// <summary>
 		/// 图片的宽
 		/// </summary>
 		[PropertyRequired]
-		public Int32 Width
-		{
-			get; private set;
-		}
+		public Int32 Width { get; private set; }
 
 		/// <summary>
 		/// 图片的高
 		/// </summary>
 		[PropertyRequired]
-		public Int32 Height
-		{
-			get; private set;
-		}
+		public Int32 Height { get; private set; }
 
 		/// <summary>
 		/// 上传者（用户）
 		/// </summary>
 		[PropertyRequired]
-		public Int32 AccountId
-		{
-			get; private set;
-		}
+		public Int32 AccountId { get; private set; }
 
 		/// <summary>
 		/// md5
 		/// </summary>
 		[PropertyRequired]
-		public String Md5
-		{
-			get; private set;
-		}
-
-		#endregion
-
-		#region ctor
+		public String Md5 { get; private set; }
 
 		/// <summary>
 		/// 实例化一个壁纸对象
@@ -115,6 +82,5 @@ namespace NewCrmCore.Domain.Entitys.System
 
 		}
 
-		#endregion
 	}
 }

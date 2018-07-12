@@ -7,31 +7,18 @@ namespace NewCrmCore.Domain.Entitys.System
 	[Description("应用类型"), Serializable]
 	public partial class AppType : DomainModelBase
 	{
-
-
-		#region public proptery
-
 		/// <summary>
 		/// 名称
 		/// </summary>
 		[PropertyRequired, InputRange(2, 10)]
-		public String Name
-		{
-			get; private set;
-		}
+		public String Name { get; private set; }
 
 		/// <summary>
 		/// 备注
 		/// </summary>
 		[PropertyDefaultValue(typeof(String), ""), InputRange(50)]
-		public String Remark
-		{
-			get; private set;
-		}
+		public String Remark { get; private set; }
 
-		#endregion
-
-		#region ctor
 		/// <summary>
 		/// 实例化一个app类型对象
 		/// </summary>
@@ -44,13 +31,8 @@ namespace NewCrmCore.Domain.Entitys.System
 		public AppType()
 		{
 		}
-
-		#endregion
 	}
 
-	/// <summary>
-	/// AppTypeExtension
-	/// </summary>
 	public partial class AppType
 	{
 		public AppType ModifyName(String appTypeName)

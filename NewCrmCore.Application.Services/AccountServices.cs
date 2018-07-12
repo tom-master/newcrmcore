@@ -225,6 +225,5 @@ namespace NewCrmCore.Application.Services
 			new Parameter().Validate(accountId);
 			await _accountContext.RemoveAccountAsync(accountId);
 		}
-
 	}
 }
