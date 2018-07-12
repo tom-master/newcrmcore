@@ -111,7 +111,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a.WallpaperId,
 								a.IsBing,
 								a.AccountId
-								FROM  Config AS a WHERE a.AccountId=@accountId AND a.IsDeleted=0";
+								FROM Config AS a WHERE a.AccountId=@accountId AND a.IsDeleted=0";
 					 var parameters = new List<ParameterMapper> { new ParameterMapper("@accountId", accountId) };
 					 var result = dataStore.Find<Config>(sql, parameters).FirstOrDefault();
 					 return result;
