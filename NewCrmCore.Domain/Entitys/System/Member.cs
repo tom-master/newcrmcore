@@ -9,193 +9,128 @@ namespace NewCrmCore.Domain.Entitys.System
 	/// 成员
 	/// </summary>
 	[Serializable, Description("成员")]
-	public partial class Member: DomainModelBase
+	public partial class Member : DomainModelBase
 	{
-		#region public property
-
 		/// <summary>
 		/// 应用Id
 		/// </summary>
 		[PropertyRequired]
-		public Int32 AppId
-		{
-			get; private set;
-		}
+		public Int32 AppId { get; private set; }
 
 		/// <summary>
 		/// 成员的宽
 		/// </summary>
 		[PropertyRequired]
-		public Int32 Width
-		{
-			get; private set;
-		}
+		public Int32 Width { get; private set; }
 
 		/// <summary>
 		/// 成员的高
 		/// </summary>
 		[PropertyRequired]
-		public Int32 Height
-		{
-			get; private set;
-		}
+		public Int32 Height { get; private set; }
 
 		/// <summary>
 		/// 文件夹Id
 		/// </summary>
 		[PropertyDefaultValue(typeof(Int32), 0)]
-		public Int32 FolderId
-		{
-			get; private set;
-		}
+		public Int32 FolderId { get; private set; }
 
 		/// <summary>
 		/// 名称
 		/// </summary>
 		[PropertyRequired, InputRange(10)]
-		public String Name
-		{
-			get; private set;
-		}
+		public String Name { get; private set; }
 
 		/// <summary>
 		/// 图标地址
 		/// </summary>
 		[PropertyRequired, InputRange(150)]
-		public String IconUrl
-		{
-			get; private set;
-		}
+		public String IconUrl { get; private set; }
 
 		/// <summary>
 		/// app地址
 		/// </summary>
-		[PropertyDefaultValue(typeof(String), ""), InputRange(150)]
-		public String AppUrl
-		{
-			get; private set;
-		}
+		[PropertyRequired, InputRange(150)]
+		public String AppUrl { get; private set; }
 
 		/// <summary>
 		/// 成员是否在应用码头上
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsOnDock
-		{
-			get; private set;
-		}
+		public Boolean IsOnDock { get; private set; }
 
 		/// <summary>
 		/// 是否能最大化
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsMax
-		{
-			get; private set;
-		}
+		public Boolean IsMax { get; private set; }
 
 		/// <summary>
 		/// 是否打开后铺满全屏
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsFull
-		{
-			get; private set;
-		}
+		public Boolean IsFull { get; private set; }
 
 		/// <summary>
 		/// 是否显示app底部的按钮
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsSetbar
-		{
-			get; private set;
-		}
+		public Boolean IsSetbar { get; private set; }
 
 		/// <summary>
 		/// 是否打开最大化
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsOpenMax
-		{
-			get; private set;
-		}
+		public Boolean IsOpenMax { get; private set; }
 
 		/// <summary>
 		/// 是否锁定
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsLock
-		{
-			get; private set;
-		}
+		public Boolean IsLock { get; private set; }
 
 		/// <summary>
 		/// 是否为福莱希
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsFlash
-		{
-			get; private set;
-		}
+		public Boolean IsFlash { get; private set; }
 
 		/// <summary>
 		/// 是否可以拖动
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsDraw
-		{
-			get; private set;
-		}
+		public Boolean IsDraw { get; private set; }
 
 		/// <summary>
 		/// 是否可以拉伸
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsResize
-		{
-			get; private set;
-		}
+		public Boolean IsResize { get; private set; }
 
 		/// <summary>
 		/// 成员类型
 		/// </summary>
 		[PropertyRequired]
-		public MemberType MemberType
-		{
-			get; private set;
-		}
+		public MemberType MemberType { get; private set; }
 
 		/// <summary>
 		/// 桌面索引
 		/// </summary>
 		[PropertyDefaultValue(typeof(Int32), 1)]
-		public Int32 DeskIndex
-		{
-			get; private set;
-		}
+		public Int32 DeskIndex { get; private set; }
 
 		/// <summary>
 		/// 账户Id
 		/// </summary>
 		[PropertyRequired]
-		public Int32 AccountId
-		{
-			get; private set;
-		}
+		public Int32 AccountId { get; private set; }
 
 		/// <summary>
 		/// 图标是否来自上传
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsIconByUpload
-		{
-			get; private set;
-		}
+		public Boolean IsIconByUpload { get; private set; }
 
-		#endregion
-
-		#region public ctor
 
 		/// <summary>
 		/// 实例化一个成员对象
@@ -266,12 +201,8 @@ namespace NewCrmCore.Domain.Entitys.System
 		{
 		}
 
-		#endregion
 	}
 
-	/// <summary>
-	/// MemberExtension
-	/// </summary>
 	public partial class Member
 	{
 

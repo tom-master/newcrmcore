@@ -29,11 +29,7 @@ namespace NewCrmCore.Application.Services
 		public async Task<List<AppTypeDto>> GetAppTypesAsync()
 		{
 			var result = await CacheHelper.GetOrSetCacheAsync(new AppTypeCacheKey(), () => _appContext.GetAppTypesAsync());
-			return result.Select(s => new AppTypeDto
-			{
-				Id = s.Id,
-				Name = s.Name
-			}).ToList();
+			return result.Select(s => new AppTypeDto { Id = s.Id, Name = s.Name }).ToList();
 		}
 
 		public async Task<TodayRecommendAppDto> GetTodayRecommendAsync(Int32 accountId)
@@ -267,10 +263,8 @@ namespace NewCrmCore.Application.Services
 		public async Task CreateNewAppAsync(AppDto appDto)
 		{
 			new Parameter().Validate(appDto);
-
 			var app = appDto.ConvertToModel<AppDto, App>();
-			var internalApp = new App(app.Name, app.IconUrl, app.AppUrl, app.Width, app.Height, app.AppTypeId, app.AppAuditState, AppReleaseState.UnRelease, app.AppStyle, app.AccountId,
-				app.Remark, appDto.IsIconByUpload);
+			var internalApp = new App(app.Name, app.IconUrl, app.AppUrl, app.Width, app.Height, app.AppTypeId, app.AppAuditState, AppReleaseState.UnRelease, app.AppStyle, app.AccountId, app.Remark, appDto.IsIconByUpload);
 
 			await _appContext.CreateNewAppAsync(internalApp);
 		}

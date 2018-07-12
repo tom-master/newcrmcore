@@ -5,22 +5,12 @@ using NewLibCore.Data.Mapper.PropertyExtension;
 namespace NewCrmCore.Domain.Entitys
 {
 	[Serializable]
-	public abstract class DomainModelBase: PropertyMonitor
+	public abstract class DomainModelBase : PropertyMonitor
 	{
-
-		#region private fields
-		#endregion
-
-		#region ctor
-
 		protected DomainModelBase()
 		{
 			IsDeleted = false;
 		}
-
-		#endregion
-
-		#region public property
 
 		public Int32 Id { get; protected set; }
 
@@ -38,7 +28,5 @@ namespace NewCrmCore.Domain.Entitys
 			IsDeleted = true;
 			OnPropertyChanged(new PropertyArgs(nameof(IsDeleted), IsDeleted));
 		}
-
-		#endregion
 	}
 }

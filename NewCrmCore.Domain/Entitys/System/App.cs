@@ -8,239 +8,158 @@ namespace NewCrmCore.Domain.Entitys.System
 
 	[Serializable, Description("应用")]
 	public partial class App: DomainModelBase
-	{
-		#region public property
-
+	{ 
 		/// <summary>
 		/// 名称
 		/// </summary>
 		[PropertyRequired, InputRange(2, 10)]
-		public String Name
-		{
-			get; private set;
-		}
+		public String Name { get; private set; }
 
 		/// <summary>
 		/// 图标地址
 		/// </summary>
 		[PropertyRequired, InputRange(150)]
-		public String IconUrl
-		{
-			get; private set;
-		}
+		public String IconUrl { get; private set; }
 
 		/// <summary>
 		/// app地址
 		/// </summary>
 		[PropertyRequired, InputRange(150)]
-		public String AppUrl
-		{
-			get; private set;
-		}
+		public String AppUrl { get; private set; }
 
 		/// <summary>
 		/// 备注
 		/// </summary>
 		[InputRange(50), PropertyDefaultValue(typeof(String), "")]
-		public String Remark
-		{
-			get; private set;
-		}
+		public String Remark { get; private set; }
 
 		/// <summary>
 		/// 宽度
 		/// </summary>
 		[PropertyRequired]
-		public Int32 Width
-		{
-			get; private set;
-		}
+		public Int32 Width { get; private set; }
 
 		/// <summary>
 		/// 高度
 		/// </summary>
 		[PropertyRequired]
-		public Int32 Height
-		{
-			get; private set;
-		}
+		public Int32 Height { get; private set; }
 
 		/// <summary>
 		/// 使用数
 		/// </summary>
 		[PropertyDefaultValue(typeof(Int32), 0)]
-		public Int32 UseCount
-		{
-			get; private set;
-		}
+		public Int32 UseCount { get; private set; }
 
 		/// <summary>
 		/// 是否能最大化
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsMax
-		{
-			get; private set;
-		}
+		public Boolean IsMax { get; private set; }
 
 		/// <summary>
 		/// 是否打开后铺满全屏
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsFull
-		{
-			get; private set;
-		}
+		public Boolean IsFull { get; private set; }
 
 		/// <summary>
 		/// 是否显示app底部的按钮
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsSetbar
-		{
-			get; private set;
-		}
+		public Boolean IsSetbar { get; private set; }
 
 		/// <summary>
 		/// 是否打开最大化
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsOpenMax
-		{
-			get; private set;
-		}
+		public Boolean IsOpenMax { get; private set; }
 
 		/// <summary>
 		/// 是否锁定
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsLock
-		{
-			get; private set;
-		}
+		public Boolean IsLock { get; private set; }
 
 		/// <summary>
 		/// 是否为系统应用
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsSystem
-		{
-			get; private set;
-		}
+		public Boolean IsSystem { get; private set; }
 
 		/// <summary>
 		/// 是否为福莱希
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsFlash
-		{
-			get; private set;
-		}
+		public Boolean IsFlash { get; private set; }
 
 		/// <summary>
 		/// 是否可以拖动
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsDraw
-		{
-			get; private set;
-		}
+		public Boolean IsDraw { get; private set; }
 
 		/// <summary>
 		/// 是否可以拉伸
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsResize
-		{
-			get; private set;
-		}
+		public Boolean IsResize { get; private set; }
 
 		/// <summary>
 		/// 开发者(用户)Id
 		/// </summary>
 		[PropertyRequired]
-		public Int32 AccountId
-		{
-			get; private set;
-		}
+		public Int32 AccountId { get; private set; }
 
 		/// <summary>
 		/// App类型Id
 		/// </summary>
 		[PropertyRequired]
-		public Int32 AppTypeId
-		{
-			get; private set;
-		}
+		public Int32 AppTypeId { get; private set; }
 
 		/// <summary>
 		/// 是否推荐
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsRecommand
-		{
-			get; private set;
-		}
+		public Boolean IsRecommand { get; private set; }
 
 		/// <summary>
 		/// 审核状态
 		/// </summary>
 		[PropertyDefaultValue(typeof(AppAuditState), AppAuditState.UnAuditState)]
-		public AppAuditState AppAuditState
-		{
-			get; private set;
-		}
+		public AppAuditState AppAuditState { get; private set; }
 
 		/// <summary>
 		/// 发布状态
 		/// </summary>
 		[PropertyDefaultValue(typeof(AppReleaseState), AppReleaseState.UnRelease)]
-		public AppReleaseState AppReleaseState
-		{
-			get; private set;
-		}
+		public AppReleaseState AppReleaseState { get; private set; }
 
 		/// <summary>
 		/// app样式
 		/// </summary>
 		[PropertyRequired]
-		public AppStyle AppStyle
-		{
-			get; private set;
-		}
+		public AppStyle AppStyle { get; private set; }
 
 		/// <summary>
 		/// 是否安装
 		/// </summary>
-		public Boolean IsInstall
-		{
-			get; private set;
-		}
+		public Boolean IsInstall { get; private set; }
 
 		[PropertyDefaultValue(typeof(Double), 0.0)]
-		public Double StarCount
-		{
-			get; private set;
-		}
+		public Double StarCount { get; private set; }
 
-		public String AccountName
-		{
-			get; private set;
-		}
+		/// <summary>
+		/// 账户名称
+		/// </summary>
+		public String AccountName { get; private set; }
 
 		/// <summary>
 		/// 图标是否来自上传
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsIconByUpload
-		{
-			get; private set;
-		}
-
-		#endregion
-
-		#region ctor
-
+		public Boolean IsIconByUpload { get; private set; }
+		  
 		/// <summary>
 		/// 实例化一个app对象
 		/// </summary>
@@ -283,8 +202,7 @@ namespace NewCrmCore.Domain.Entitys.System
 			IsIconByUpload = isIconByUpload;
 		}
 
-		public App() { }
-		#endregion
+		public App() { } 
 	}
 
 	/// <summary>

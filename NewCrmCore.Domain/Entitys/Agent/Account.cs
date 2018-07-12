@@ -13,89 +13,59 @@ namespace NewCrmCore.Domain.Entitys.Agent
 		/// <summary>
 		/// 用户名
 		/// </summary>
-		[PropertyRequired, InputRange(4,10)]
-		public String Name
-		{
-			get; private set;
-		}
+		[PropertyRequired, InputRange(4, 10)]
+		public String Name { get; private set; }
 
 		/// <summary>
 		/// 登陆密码
 		/// </summary>
 		[PropertyRequired, InputRange(6, 12)]
-		public String LoginPassword
-		{
-			get; private set;
-		}
+		public String LoginPassword { get; private set; }
 
 		/// <summary>
 		/// 锁屏密码
 		/// </summary>
 		[PropertyRequired, InputRange(6, 12)]
-		public String LockScreenPassword
-		{
-			get; private set;
-		}
+		public String LockScreenPassword { get; private set; }
 
 		/// <summary>
 		/// 是否禁用
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsDisable
-		{
-			get; private set;
-		}
+		public Boolean IsDisable { get; private set; }
 
 		/// <summary>
 		/// 最后一次登录的时间
 		/// </summary>
 		[DateTimeDefaultValue]
-		public DateTime LastLoginTime
-		{
-			get; private set;
-		}
+		public DateTime LastLoginTime { get; private set; }
 
 		/// <summary>
 		/// 是否在线
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsOnline
-		{
-			get; private set;
-		}
+		public Boolean IsOnline { get; private set; }
 
 		/// <summary>
 		/// 是否为管理员
 		/// </summary>
 		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsAdmin
-		{
-			get; private set;
-		}
+		public Boolean IsAdmin { get; private set; }
 
 		/// <summary>
 		/// 配置Id
 		/// </summary>
 		[PropertyRequired]
-		public Int32 ConfigId
-		{
-			get; private set;
-		}
+		public Int32 ConfigId { get; private set; }
 
-		public String AccountFace
-		{
-			get; private set;
-		}
+
+		public String AccountFace { get; private set; }
+
 
 		/// <summary>
 		/// 用户角色
 		/// </summary>
-		public IEnumerable<AccountRole> Roles
-		{
-			get; private set;
-		}
-
-		#region ctor
+		public IEnumerable<AccountRole> Roles { get; private set; }
 
 		/// <summary>
 		/// 实例化一个用户对象
@@ -113,13 +83,8 @@ namespace NewCrmCore.Domain.Entitys.Agent
 		}
 
 		public Account() { }
-
-		#endregion
 	}
 
-	/// <summary>
-	/// AccountExtension
-	/// </summary>
 	public partial class Account
 	{
 		public Account ModifyLoginPassword(String password)

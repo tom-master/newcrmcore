@@ -11,7 +11,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Application.Services
 {
-	public class SecurityServices: ISecurityServices
+	public class SecurityServices : ISecurityServices
 	{
 		private readonly ISecurityContext _securityContext;
 
@@ -47,12 +47,7 @@ namespace NewCrmCore.Application.Services
 				return new PageList<RoleDto>
 				{
 					TotalCount = totalCount,
-					Models = result.Select(s => new RoleDto
-					{
-						Name = s.Name,
-						Id = s.Id,
-						RoleIdentity = s.RoleIdentity
-					}).ToList()
+					Models = result.Select(s => new RoleDto { Name = s.Name, Id = s.Id, RoleIdentity = s.RoleIdentity }).ToList()
 				};
 			});
 		}
