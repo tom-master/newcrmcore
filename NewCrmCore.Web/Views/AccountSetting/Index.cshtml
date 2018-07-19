@@ -144,7 +144,7 @@
 				if (response) {
 					var responseText = JSON.parse($(this).contents().find("body").text());
 					if (responseText.IsSuccess) {
-						NewCrm.msgbox.success('您修改了登陆密码，请重新登陆');
+						NewCrm.msgbox.success('您修改了登陆密码，2秒后跳转到登陆界面');
 						setTimeout(function () {
 							top.location.reload()
 						}, 2000)
@@ -184,7 +184,7 @@
                 $.dialog({
                     title: '温馨提示',
                     icon: 'warning',
-                    content: '确认修改锁屏密码？',
+                    content: '确认修改锁屏密码?',
                     button: [
                         {
                             name: '是',

@@ -85,17 +85,13 @@
             });
         });
 
-        function initPagination(current_page) {
-            $('#pagination').pagination(parseInt($('#pagination_setting').attr('count')), {
-                current_page: current_page,
-                items_per_page: 5,
-                num_display_entries: 3,
-                num_edge_entries: 1,
-                callback: getPageList,
-                prev_text: '上一页',
-                next_text: '下一页'
-            });
-        }
+		initPagination({
+			current_page: current_page,
+			items_per_page: 5,
+			num_display_entries: 3,
+			num_edge_entries: 1,
+			getPageList: getPageList
+		})
 
         function getPageList(current_page) {
             HROS.request.get('/AppTypes/GetTypes', {

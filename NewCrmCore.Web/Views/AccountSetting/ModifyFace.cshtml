@@ -29,7 +29,7 @@
                     if (msg.type == 0) {
                         HROS.request.post('/AccountSetting/ModifyFace', { accountFace: msg.content.avatarUrls }, function (responseText) {
                             if (responseText.IsSuccess) {
-                                NewCrm.msgbox.success('账户头像上传成功，刷新查看');
+                                NewCrm.msgbox.success('账户头像上传成功');
                                 window.parent.HROS.startmenu.getAvatar();
                             } else {
                                 NewCrm.msgbox.fail('账户头像保存失败');
