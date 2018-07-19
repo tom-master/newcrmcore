@@ -127,9 +127,7 @@
                         } else{
                             url = '/AccountManager/Enable';
                         }
-
-
-
+						 
                         HROS.request.post(url, { accountId: parseInt(memberid) }, function (responseText) {
                             if (responseText.IsSuccess) {
                                 $('#pagination').trigger('currentPage');
