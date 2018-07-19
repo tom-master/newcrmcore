@@ -26,7 +26,7 @@ namespace NewCrmCore.Application.Services.Interface
 		/// 获取用户开发的app和未发布的app
 		/// </summary>
 		/// <returns></returns>
-		Task<Tuple<Int32, Int32>> GetAccountDevelopAppCountAndNotReleaseAppCountAsync(Int32 accountId);
+		Task<Tuple<Int32, Int32>> GetDevelopAndNotReleaseCountAsync(Int32 accountId);
 
 		/// <summary>
 		/// 获取所有的app

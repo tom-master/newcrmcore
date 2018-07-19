@@ -47,7 +47,7 @@ namespace NewCrmCore.Web.Controllers
 
 			ViewData["TodayRecommendApp"] = await _appServices.GetTodayRecommendAsync(AccountId);
 			ViewData["AccountName"] = account.Name;
-			ViewData["AccountApp"] = await _appServices.GetAccountDevelopAppCountAndNotReleaseAppCountAsync(AccountId);
+			ViewData["AccountApp"] = await _appServices.GetDevelopAndNotReleaseCountAsync(AccountId);
 			return View();
 		}
 

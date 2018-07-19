@@ -38,7 +38,7 @@ namespace NewCrmCore.Domain.Services.Interface
 		/// <summary>
 		/// 获取当前账户下已开发和未发布的app
 		/// </summary>
-		Task<Tuple<Int32, Int32>> GetAccountDevelopAppCountAndNotReleaseAppCountAsync(Int32 accountId);
+		Task<Tuple<Int32, Int32>> GetDevelopAndNotReleaseCountAsync(Int32 accountId);
 
 		/// <summary>
 		/// 获取所有App类型

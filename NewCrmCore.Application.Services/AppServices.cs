@@ -46,10 +46,10 @@ namespace NewCrmCore.Application.Services
 			return result;
 		}
 
-		public async Task<Tuple<Int32, Int32>> GetAccountDevelopAppCountAndNotReleaseAppCountAsync(Int32 accountId)
+		public async Task<Tuple<Int32, Int32>> GetDevelopAndNotReleaseCountAsync(Int32 accountId)
 		{
 			new Parameter().Validate(accountId);
-			return await _appContext.GetAccountDevelopAppCountAndNotReleaseAppCountAsync(accountId);
+			return await _appContext.GetDevelopAndNotReleaseCountAsync(accountId);
 		}
 
 		public async Task<PageList<AppDto>> GetAppsAsync(Int32 accountId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize)

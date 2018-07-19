@@ -18,7 +18,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 {
 	public class AppContext: IAppContext
 	{
-		public async Task<Tuple<Int32, Int32>> GetAccountDevelopAppCountAndNotReleaseAppCountAsync(Int32 accountId)
+		public async Task<Tuple<Int32, Int32>> GetDevelopAndNotReleaseCountAsync(Int32 accountId)
 		{
 			new Parameter().Validate(accountId);
 			return await Task.Run(() =>
