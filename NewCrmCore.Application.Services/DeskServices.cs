@@ -15,7 +15,7 @@ using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.Application.Services
 {
-	public class DeskServices: IDeskServices
+	public class DeskServices : IDeskServices
 	{
 		private readonly IMemberContext _memberContext;
 		private readonly IDeskContext _deskContext;
@@ -72,61 +72,53 @@ namespace NewCrmCore.Application.Services
 			{
 				var members = desk.ToList();
 				var deskMembers = new List<dynamic>();
-				foreach (var member in members)
-				{
-					var internalType = member.MemberType.ToString().ToLower();
-
-					if (member.MemberType == MemberType.Folder)
+				foreach (var member in members.Where(w => w.MemberType == MemberType.Folder))
+				{ 
+					deskMembers.Add(new
 					{
-						deskMembers.Add(new
+						type = member.MemberType.ToString().ToLower(),
+						memberId = member.Id,
+						appId = member.AppId,
+						name = member.Name,
+						icon = member.IsIconByUpload ? Appsetting.FileUrl + member.IconUrl : member.IconUrl,
+						width = member.Width,
+						height = member.Height,
+						isOnDock = member.IsOnDock,
+						isDraw = member.IsDraw,
+						isOpenMax = member.IsOpenMax,
+						isSetbar = member.IsSetbar,
+						apps = members.Where(m => m.FolderId == member.Id).Select(app => new
 						{
-							type = internalType,
-							memberId = member.Id,
-							appId = member.AppId,
-							name = member.Name,
+							type = app.MemberType.ToString().ToLower(),
+							memberId = app.Id,
+							appId = app.AppId,
+							name = app.Name,
 							icon = member.IsIconByUpload ? Appsetting.FileUrl + member.IconUrl : member.IconUrl,
-							width = member.Width,
-							height = member.Height,
-							isOnDock = member.IsOnDock,
-							isDraw = member.IsDraw,
-							isOpenMax = member.IsOpenMax,
-							isSetbar = member.IsSetbar,
-							apps = members.Where(m => m.FolderId == member.Id).Select(app => new
-							{
-								type = app.MemberType.ToString().ToLower(),
-								memberId = app.Id,
-								appId = app.AppId,
-								name = app.Name,
-								icon = member.IsIconByUpload ? Appsetting.FileUrl + member.IconUrl : member.IconUrl,
-								width = app.Width,
-								height = app.Height,
-								isOnDock = app.IsOnDock,
-								isDraw = app.IsDraw,
-								isOpenMax = app.IsOpenMax,
-								isSetbar = app.IsSetbar,
-							})
-						});
-					}
-					else
+							width = app.Width,
+							height = app.Height,
+							isOnDock = app.IsOnDock,
+							isDraw = app.IsDraw,
+							isOpenMax = app.IsOpenMax,
+							isSetbar = app.IsSetbar,
+						})
+					});
+				}
+				foreach (var member in members.Where(w => w.MemberType == MemberType.App && w.FolderId == 0))
+				{
+					deskMembers.Add(new
 					{
-						if (member.FolderId == 0)
-						{
-							deskMembers.Add(new
-							{
-								type = internalType,
-								memberId = member.Id,
-								appId = member.AppId,
-								name = member.Name,
-								icon = member.IsIconByUpload ? Appsetting.FileUrl + member.IconUrl : member.IconUrl,
-								width = member.Width,
-								height = member.Height,
-								isOnDock = member.IsOnDock,
-								isDraw = member.IsDraw,
-								isOpenMax = member.IsOpenMax,
-								isSetbar = member.IsSetbar
-							});
-						}
-					}
+						type = member.MemberType.ToString().ToLower(),
+						memberId = member.Id,
+						appId = member.AppId,
+						name = member.Name,
+						icon = member.IsIconByUpload ? Appsetting.FileUrl + member.IconUrl : member.IconUrl,
+						width = member.Width,
+						height = member.Height,
+						isOnDock = member.IsOnDock,
+						isDraw = member.IsDraw,
+						isOpenMax = member.IsOpenMax,
+						isSetbar = member.IsSetbar
+					});
 				}
 				deskDictionary.Add(desk.Key.ToString(), deskMembers);
 			}
