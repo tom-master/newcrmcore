@@ -146,7 +146,6 @@
                 }, 48, 48);
             });
             uploader.on('uploadSuccess', function (file, cb) {
-
                 if (cb[0].IsSuccess) {
                     var urlPart = cb[0].Url
                     HROS.request.post('/Desk/ModifyIcon',{ memberId: '@Model.Id', newIcon: urlPart },function () {
@@ -164,7 +163,7 @@
                     NewCrm.msgbox.fail("图标上传失败");
                 }
             });
-        var f= $('#form').Validform({
+        var f = $('#form').Validform({
                 btnSubmit: '#btn-submit',
 				postonce: true,
                 showAllError: true,
