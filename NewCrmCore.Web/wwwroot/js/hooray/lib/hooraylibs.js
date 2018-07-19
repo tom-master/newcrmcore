@@ -2268,7 +2268,7 @@ jQuery.extend(jQuery.easing, {
 			num_display_entries: 11,
 			current_page: 0,
 			num_edge_entries: 0,
-			link_to: "javascript:;",
+			link_to: "###",
 			prev_text: "Prev",
 			next_text: "Next",
 			ellipse_text: "...",

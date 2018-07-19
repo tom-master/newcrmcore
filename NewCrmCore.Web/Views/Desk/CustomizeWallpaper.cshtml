@@ -28,7 +28,7 @@
 </div>
 <div class="wapppapercustom">
     <div class="tip">
-        <a href="javascript:;" id="upload" class="btn btn-mini fr" style="position:relative">上传壁纸</a>
+        <a href="###" id="upload" class="btn btn-mini fr" style="position:relative">上传壁纸</a>
         <strong>自定义壁纸：</strong>最多上传6张，每张上传的壁纸大小不超过1M
     </div>
     <div class="view">
@@ -86,7 +86,7 @@
 
 					HROS.request.post('/Desk/UploadWallPaper', { wallpaper: model }, function () {
                         if (responseText.IsSuccess) {
-                            $('.wapppapercustom .view ul').append('<li id="' + responseText.Model.Id + '" style="background-image:url(' + responseText.Model.Url + ')"><a href="javascript:;">删 除</a></li>');
+							$('.wapppapercustom .view ul').append('<li id="' + responseText.Model.Id + '" style="background-image:url(' + responseText.Model.Url + ')"><a href="###">删 除</a></li>');
                             window.parent.HROS.wallpaper.update($('#wallpapertype').val(), responseText.Model.Id);
                             upload.removeFile(file);
                         } else {
@@ -131,7 +131,7 @@
                 if (responseText.IsSuccess) {
                     var liElement = '';
                     $.each(responseText.Model, function (k, v) {
-                        liElement += '<li id="' + v.Id + '" style="background:url(' + v.Url + ')"><a href="javascript:;">删 除</a></li>';
+						liElement += '<li id="' + v.Id + '" style="background:url(' + v.Url + ')"><a href="###">删 除</a></li>';
                     });
                     $('.view').children('ul').append(liElement);
                 } else {

@@ -26,7 +26,7 @@
 		<div class="control-group">
 			<label>名称：</label>
 			<input type="text" name="search_1" id="appName" class="span5">
-			<a class="btn" menu="search" href="javascript:;" style="margin-left:10px"><i class="icon-search"></i> 搜索</a>
+			<a class="btn" menu="search" href="###" style="margin-left:10px"><i class="icon-search"></i> 搜索</a>
 			<a class="btn btn-primary fr" href="javascript:openDetailIframe('/AppMarket/AccountAppManageInfo?appId=0');"><i class="icon-white icon-plus"></i> 添加新应用</a>
 		</div>
 		<div class="control-group">
@@ -117,16 +117,16 @@
 			{{#compare AppAuditState 1}}
 			<td>
 				<a href="javascript:openDetailIframe('/AppMarket/AccountAppManageInfo?appId={{Id}}');" class="btn btn-link">查看详情</a>
-				<a href="javascript:;" class="btn btn-link do-del" appid="{{Id}}">删除</a>
+				<a href="###" class="btn btn-link do-del" appid="{{Id}}">删除</a>
 			</td>
 			{{else}}
 			<td>
 
 				{{#isAudit AppAuditState}}
 				{{#if IsRecommand }}
-				<a href="javascript:;" class="btn btn-link" appid="{{Id}}">今日推荐</a>
+				<a href="###" class="btn btn-link" appid="{{Id}}">今日推荐</a>
 				{{else}}
-				<a href="javascript:;" class="btn btn-link do-recommend" appid="{{Id}}">设为今日推荐</a>
+				<a href="###" class="btn btn-link do-recommend" appid="{{Id}}">设为今日推荐</a>
 				{{/if}}
 				{{else}}
 				{{/isAudit}}
@@ -134,7 +134,7 @@
 				{{#if IsCreater}}
 				{{#remove IsRecommand}}
 				{{else}}
-				<a href="javascript:;" class="btn btn-link do-del" appid="{{Id}}">删除</a>
+				<a href="###" class="btn btn-link do-del" appid="{{Id}}">删除</a>
 				{{/remove}}
 				{{/if}}
 

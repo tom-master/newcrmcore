@@ -10,15 +10,15 @@
 
 <div class="sub-nav tabbable tabs-left">
 	<ul class="nav nav-tabs">
-		<li class="all active" value="0"><a href="javascript:;" title="全部">全部</a></li>
+		<li class="all active" value="0"><a href="###" title="全部">全部</a></li>
 		@{
 			foreach (var appType in appTypes)
 			{
-				<li value="@appType.Id"><a href="javascript:;" title="@appType.Name">@appType.Name</a></li>
+				<li value="@appType.Id"><a href="###" title="@appType.Name">@appType.Name</a></li>
 			}
 		}
 
-		<li class="myapps" value="-1"><a href="javascript:;" title="我的应用">我的<br>应用</a></li>
+		<li class="myapps" value="-1"><a href="###" title="我的应用">我的<br>应用</a></li>
 
 	</ul>
 	<input type="hidden" name="appType" id="appType" value="">
@@ -50,13 +50,13 @@
 					if (todayRecommendApp.IsInstall)
 					{
 						<text>
-							<a href="javascript:;" real_app_id="@todayRecommendApp.Id" app_type="@todayRecommendApp.Style.ToString().ToLower()" class="btn-run">打开应用</a>
+							<a href="###" real_app_id="@todayRecommendApp.Id" app_type="@todayRecommendApp.Style.ToString().ToLower()" class="btn-run">打开应用</a>
 						</text>
 					}
 					else
 					{
 						<text>
-							<a href="javascript:;" real_app_id="@todayRecommendApp.Id" class="btn-add">添加应用</a>
+							<a href="###" real_app_id="@todayRecommendApp.Id" class="btn-add">添加应用</a>
 						</text>
 					}
 				}
@@ -83,9 +83,9 @@
 		<div class="mbox app-list-box">
 			<div class="title">
 				<ul>
-					<li class="focus" value="1"><a href="javascript:;">最新应用</a></li>
-					<li value="2"><a href="javascript:;">最热门</a></li>
-					<li value="3"><a href="javascript:;">最高评价</a></li>
+					<li class="focus" value="1"><a href="###">最新应用</a></li>
+					<li value="2"><a href="###">最热门</a></li>
+					<li value="3"><a href="ja###">最高评价</a></li>
 					<input type="hidden" name="order" id="order" value="1" />
 				</ul>
 			</div>
@@ -119,9 +119,9 @@
 			<span class="app-stat">{{UseCount}} 人正在使用</span>
 
 			{{#if IsInstall }}
-			<a href="javascript:;" app_id="{{Id}}" real_app_id="{{Id}}" app_type="app" class="btn-run-s" title="打开应用">打开应用</a>
+			<a href="###" app_id="{{Id}}" real_app_id="{{Id}}" app_type="app" class="btn-run-s" title="打开应用">打开应用</a>
 			{{else}}
-			<a href="javascript:;" real_app_id="{{Id}}" class="btn-add-s" title="安装应用">安装应用</a>
+			<a href="###" real_app_id="{{Id}}" class="btn-add-s" title="安装应用">安装应用</a>
 			{{/if}}
 		</li>
 		{{/each}}
