@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
-
+using NewLibCore.Data.Mapper.MapperExtension;
 namespace NewCrmCore.Domain.Entitys.System
 {
 
 	[Serializable, Description("消息")]
 	public class Notify : DomainModelBase
 	{
-		[PropertyRequire, InputRange(4, 10)]
+		[PropertyRequired, InputRange(4, 10)]
 		public String Title { get; private set; }
 
 		[PropertyRequired, InputRange(1, 255)]
