@@ -8,8 +8,6 @@
 
   <ItemGroup>
     <PackageReference Include="MySql.Data" Version="8.0.11" />
-    <PackageReference Include="NewLibCore" Version="1.0.5" />
-    <PackageReference Include="NewLibCore.Data" Version="1.2.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,11 +15,15 @@
     <ProjectReference Include="..\NewCrmCore.Dto\NewCrmCore.Dto.csproj" />
     <ProjectReference Include="..\NewCrmCore.Infrastructure\NewCrmCore.Infrastructure.csproj" />
   </ItemGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\haozi\source\NewLib\NewLibCore\NewLibCore.csproj" />
+    <ProjectReference Include="C:\Users\haozi\source\NewLib\NewLibCore.Data\NewLibCore.Data.csproj" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Data.SqlClient">
       <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\system.data.sqlclient\4.4.3\ref\netstandard2.0\System.Data.SqlClient.dll</HintPath>
     </Reference>
+    
   </ItemGroup>
 
 </Project>

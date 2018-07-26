@@ -7,15 +7,16 @@
 
   <ItemGroup>
     <PackageReference Include="MySql.Data" Version="8.0.11" />
-    <PackageReference Include="NewLibCore" Version="1.0.5" />
-    <PackageReference Include="NewLibCore.Data" Version="1.2.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\haozi\source\NewLib\NewLibCore\NewLibCore.csproj" />
+    <ProjectReference Include="C:\Users\haozi\source\NewLib\NewLibCore.Data\NewLibCore.Data.csproj" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="NewCrmCore.Dto">
       <HintPath>..\NewCrmCore.Dto\bin\Debug\netcoreapp2.0\NewCrmCore.Dto.dll</HintPath>
     </Reference>
+     
   </ItemGroup>
-
 </Project>
