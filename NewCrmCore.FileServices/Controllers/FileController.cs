@@ -81,7 +81,7 @@ namespace NewCrmCore.FileServices.Controllers
 						continue;
 					}
 
-					var requestFile = requestUpload.BuilderRequestFile(accountId, fileExtension);
+					var requestFile = requestUpload.InitParameters(accountId, fileExtension);
 					if (!requestFile.CreateFile(file))
 					{
 						responses.Add(new

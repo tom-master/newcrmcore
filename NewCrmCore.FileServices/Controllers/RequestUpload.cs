@@ -11,91 +11,121 @@ using System.Threading.Tasks;
 
 namespace NewCrmCore.FileServices.Controllers
 {
-	public abstract class ReqeustUpload
-	{
-		public String FullPath { get; set; }
+    public abstract class ReqeustUpload
+    {
+        /// <summary>
+        /// 完整本地路径
+        /// </summary>
+        public String FullPath { get; set; }
 
-		protected virtual String[] ExtensionBlackList
-		{
-			get { return new[] { ".exe", ".bat", ".bat" }; }
-		}
+        /// <summary>
+        /// 当前文件类型
+        /// </summary>
+        public FileType FileType { get; set; }
 
-		protected String Path { get; set; }
+        /// <summary>
+        /// 上传类型黑名单
+        /// </summary>
+        protected String[] ExtensionBlackList { get { return new[] { ".exe", ".bat", ".bat" }; } }
 
-		protected String Name { get; set; }
+        /// <summary>
+        /// 完整路径（不加文件名）
+        /// </summary>
+        /// <value></value>
+        protected String Path { get; set; }
 
-		protected String Url { get; set; }
+        /// <summary>
+        /// 文件名称
+        /// </summary>
+        /// <value></value>
+        protected String Name { get; set; }
 
-		public FileType FileType { get; set; }
+        /// <summary>
+        /// url访问链接
+        /// </summary>
+        /// <value></value>
+        protected String Url { get; set; }
 
-		public abstract dynamic GetResult();
+        /// <summary>
+        /// 将本地路径转换成相对路径
+        /// </summary>
+        protected void ParseToRelativePath()
+        {
+            if (String.IsNullOrEmpty(FullPath))
+            {
+                return;
+            }
 
-		protected abstract Boolean InternalCreateFile(IFormFile file);
+            Url = FullPath.Replace(Appsetting.FileStorage, "");
+        }
 
-		protected void ParseToRelativePath()
-		{
-			if (String.IsNullOrEmpty(FullPath))
-			{
-				return;
-			}
+        /// <summary>
+        /// 初始化必要参数
+        /// </summary>
+        public ReqeustUpload InitParameters(String accountId, String fileExtension)
+        {
+            var path = $@"{Appsetting.FileStorage}/{accountId}/{FileType}/";
+            var fileName = $@"{Guid.NewGuid().ToString().Replace("-", "")}.{fileExtension}";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
 
-			Url = FullPath.Replace(Appsetting.FileStorage, "");
-		}
-		
-		public ReqeustUpload BuilderRequestFile(String accountId, String fileExtension)
-		{
-			var path = $@"{Appsetting.FileStorage}/{accountId}/{FileType}/";
-			var fileName = $@"{Guid.NewGuid().ToString().Replace("-", "")}.{fileExtension}";
-			if (!Directory.Exists(path))
-			{
-				Directory.CreateDirectory(path);
-			}
+            Path = path;
+            Name = fileName;
+            FullPath = System.IO.Path.Combine(path, fileName);
+            ParseToRelativePath();
+            return this;
+        }
 
-			Path = path;
-			Name = fileName;
-			FullPath = System.IO.Path.Combine(path, fileName);
-			ParseToRelativePath();
-			return this;
-		}
+        /// <summary>
+        ///  检查文件扩展名
+        /// </summary>
+        public string CheckFileExtension(IFormFile file)
+        {
+            string fileExtension;
+            if (file.FileName.StartsWith("__avatar"))
+            {
+                fileExtension = file.ContentType.Substring(file.ContentType.LastIndexOf("/", StringComparison.Ordinal) + 1);
+                if (fileExtension == "jpeg")
+                {
+                    fileExtension = "jpg";
+                }
+            }
+            else
+            {
+                fileExtension = file.FileName.Substring(file.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1);
+            }
 
-		public string CheckFileExtension(IFormFile file)
-		{
-			string fileExtension;
-			if (file.FileName.StartsWith("__avatar"))
-			{
-				fileExtension = file.ContentType.Substring(file.ContentType.LastIndexOf("/", StringComparison.Ordinal) + 1);
-				if (fileExtension == "jpeg")
-				{
-					fileExtension = "jpg";
-				}
-			}
-			else
-			{
-				fileExtension = file.FileName.Substring(file.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1);
-			}
+            return !ExtensionBlackList.Any(d => d.ToLower() == fileExtension) ? fileExtension.ToLower() : "";
+        }
 
-			return !ExtensionBlackList.Any(d => d.ToLower() == fileExtension) ? fileExtension.ToLower() : "";
-		}
+        /// <summary>
+        /// 创建文件
+        /// </summary>
+        public Boolean CreateFile(IFormFile file)
+        {
+            return InternalCreateFile(file);
+        }
 
-		public Boolean CreateFile(IFormFile file)
-		{
-			return InternalCreateFile(file);
-		}
-	}
+        public abstract UploadResponseModel BuildUploadResponse();
+
+        protected abstract Boolean InternalCreateFile(IFormFile file);
+    }
 
 
-	public enum FileType
-	{
-		[Description("壁纸")]
-		Wallpaper = 1,
+    public enum FileType
+    {
+        [Description("壁纸")]
+        Wallpaper = 1,
 
-		[Description("头像")]
-		Face = 2,
+        [Description("头像")]
+        Face = 2,
 
-		[Description("图标")]
-		Icon = 3,
+        [Description("图标")]
+        Icon = 3,
 
-		[Description("文件")]
-		File = 4
-	}
+        [Description("文件")]
+        File = 4
+    }
 }
