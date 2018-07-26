@@ -7,9 +7,10 @@ namespace NewCrmCore.FileServices.Controllers
 {
 	public class CreateFactory
 	{
-		public static ReqeustUpload CreateRequestUpload(String uploadType)
+		public static ReqeustUpload BuildRequestEntity(String uploadType)
 		{
 			uploadType = uploadType.ToLower();
+			
 			if (uploadType == FileType.Wallpaper.ToString().ToLower())
 			{
 				return new RequestImage() { FileType = FileType.Wallpaper };

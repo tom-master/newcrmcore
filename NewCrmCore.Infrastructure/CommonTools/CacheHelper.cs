@@ -17,6 +17,9 @@ namespace NewCrmCore.Infrastructure.CommonTools
 			_cacheQuery = new DefaultRedisQueryProvider(0, Appsetting.Redis);
 		}
 
+		/// <summary>
+		/// 获取或设置缓存
+		/// </summary>
 		public static async Task<String> GetOrSetCacheAsync(CacheKeyBase cache, Func<Task<String>> func = null)
 		{
 			String cacheResult = null;
@@ -43,6 +46,9 @@ namespace NewCrmCore.Infrastructure.CommonTools
 			return default(String);
 		}
 
+		/// <summary>
+		/// 获取或设置缓存
+		/// </summary>
 		public static async Task<TModel> GetOrSetCacheAsync<TModel>(CacheKeyBase cache, Func<Task<TModel>> func = null) where TModel : class
 		{
 
