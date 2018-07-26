@@ -225,6 +225,6 @@
     <ProjectReference Include="..\NewCrmCore.Application.Services\NewCrmCore.Application.Services.csproj" />
     <ProjectReference Include="..\NewCrmCore.Dto\NewCrmCore.Dto.csproj" />
     <ProjectReference Include="..\NewCrmCore.Infrastructure\NewCrmCore.Infrastructure.csproj" />
-    <ProjectReference Include="C:\Users\haozi\source\NewLib\NewLibCore\NewLibCore.csproj" />
+    <ProjectReference Include="/home/master/code/newlib/NewLibCore/NewLibCore.csproj" />
   </ItemGroup>
 </Project>
