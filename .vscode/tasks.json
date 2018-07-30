@@ -7,17 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/NewCrmCore.FileServices/NewCrmCore.FileServices.csproj"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "build",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "build",
-                "${workspaceFolder}/NewCrmCore.FileServices/NewCrmCore.FileServices.csproj"
+                "${workspaceFolder}/NewCrmCore.Web/NewCrmCore.Web.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
