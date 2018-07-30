@@ -40,7 +40,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 					 #region 插入壁纸
 					 {
-						 newWallpaperId = dataStore.ExecuteAdd(wallpaper);
+						 newWallpaperId = dataStore.Add(wallpaper);
 					 }
 					 #endregion
 
@@ -153,7 +153,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					{
 						var config = new Config();
 						config.ModeTo(wallpaperMode);
-						dataStore.ExecuteModify(config, conf => conf.AccountId == accountId);
+						dataStore.Modify(config, conf => conf.AccountId == accountId);
 					}
 				}
 				else
@@ -172,7 +172,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var config = new Config();
 					config.NotFromBing().ModifyWallpaperId(newWallpaperId);
-					dataStore.ExecuteModify(config, conf => conf.AccountId == accountId);
+					dataStore.Modify(config, conf => conf.AccountId == accountId);
 				}
 			});
 		}
@@ -205,7 +205,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					{
 						var wallpaper = new Wallpaper();
 						wallpaper.Remove();
-						dataStore.ExecuteModify(wallpaper, wa => wa.Id == wallpaperId && wa.AccountId == accountId);
+						dataStore.Modify(wallpaper, wa => wa.Id == wallpaperId && wa.AccountId == accountId);
 					}
 					#endregion
 				}

@@ -126,7 +126,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						var member = new Member();
 						member.ModifyName(memberName);
 						member.ModifyIconUrl(memberIcon);
-						dataStore.ExecuteModify(member, mem => mem.AccountId == accountId && mem.Id == memberId);
+						dataStore.Modify(member, mem => mem.AccountId == accountId && mem.Id == memberId);
 					}
 					#endregion
 				}
@@ -142,7 +142,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var member = new Member();
 					member.ModifyIconUrl(newIcon);
-					dataStore.ExecuteModify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
+					dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
 				}
 			});
 		}
@@ -196,7 +196,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					}
 
 
-					dataStore.ExecuteModify(member, mem => mem.Id == member.Id && mem.AccountId == accountId);
+					dataStore.Modify(member, mem => mem.Id == member.Id && mem.AccountId == accountId);
 				}
 			});
 		}
@@ -231,7 +231,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 							{
 								var member = new Member();
 								member.ModifyFolderId(0);
-								dataStore.ExecuteModify(member, mem => mem.AccountId == accountId && mem.FolderId == memberId);
+								dataStore.Modify(member, mem => mem.AccountId == accountId && mem.FolderId == memberId);
 							}
 							#endregion
 						}
@@ -268,7 +268,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 							#region app使用量-1
 							{
 								app.DecreaseUseCount();
-								dataStore.ExecuteModify(app, a => a.Id == appId && a.AccountId == accountId);
+								dataStore.Modify(app, a => a.Id == appId && a.AccountId == accountId);
 							}
 							#endregion
 						}
@@ -277,7 +277,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						{
 							var member = new Member();
 							member.Remove();
-							dataStore.ExecuteModify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
+							dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
 						}
 						#endregion
 

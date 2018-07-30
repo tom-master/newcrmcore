@@ -19,7 +19,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
-					dataStore.ExecuteAdd(log);
+					dataStore.Add(log);
 				}
 			});
 		}

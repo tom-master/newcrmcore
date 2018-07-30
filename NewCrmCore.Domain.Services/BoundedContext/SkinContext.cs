@@ -22,7 +22,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var config = new Config();
 					config.ModifySkin(newSkin);
-					dataStore.ExecuteModify(config, conf => conf.AccountId == accountId);
+					dataStore.Modify(config, conf => conf.AccountId == accountId);
 				}
 			});
 		}

@@ -149,7 +149,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					#region 修改角色
 					{
 						role.ModifyRoleName(role.Name);
-						dataStore.ExecuteModify(role, r => r.Id == role.Id);
+						dataStore.Modify(role, r => r.Id == role.Id);
 					}
 					#endregion
 				}
@@ -185,7 +185,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						{
 							var role = new Role();
 							role.Remove();
-							dataStore.ExecuteModify(role, r => r.Id == roleId);
+							dataStore.Modify(role, r => r.Id == roleId);
 						}
 						#endregion
 
@@ -193,7 +193,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						{
 							var rolePower = new RolePower();
 							rolePower.Remove();
-							dataStore.ExecuteModify(rolePower, rp => rp.RoleId == roleId);
+							dataStore.Modify(rolePower, rp => rp.RoleId == roleId);
 						}
 						#endregion
 
@@ -217,7 +217,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					#region 添加角色
 					{
-						dataStore.ExecuteAdd(role);
+						dataStore.Modify(role);
 					}
 					#endregion
 				}
@@ -243,7 +243,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						{
 							var rolePower = new RolePower();
 							rolePower.Remove();
-							dataStore.ExecuteModify(rolePower, rp => rp.RoleId == roleId);
+							dataStore.Modify(rolePower, rp => rp.RoleId == roleId);
 						}
 						#endregion
 
@@ -253,7 +253,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 							foreach (var item in powerIds)
 							{
 								var rolePower = new RolePower(roleId, item);
-								dataStore.ExecuteAdd(rolePower);
+								dataStore.Add(rolePower);
 							}
 						}
 						#endregion

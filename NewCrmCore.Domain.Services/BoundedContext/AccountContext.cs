@@ -56,7 +56,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						 {
 
 							 result.Online();
-							 var rowCount = dataStore.ExecuteModify(result, acc => acc.Id == result.Id);
+							 var rowCount = dataStore.Modify(result, acc => acc.Id == result.Id);
 
 							 if (rowCount == 0)
 							 {
@@ -68,7 +68,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						 #region 添加在线用户列表
 						 {
 							 var online = new Online(requestIp, result.Id);
-							 var rowCount = dataStore.ExecuteAdd(online);
+							 var rowCount = dataStore.Add(online);
 
 							 if (rowCount == 0)
 							 {
@@ -343,7 +343,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						{
 							var account = new Account();
 							account.Offline();
-							var rowCount = dataStore.ExecuteModify(account, acc => acc.Id == accountId && !acc.IsDeleted && !acc.IsDisable);
+							var rowCount = dataStore.Modify(account, acc => acc.Id == accountId && !acc.IsDeleted && !acc.IsDisable);
 							if (rowCount == 0)
 							{
 								throw new BusinessException("设置用户下线状态失败");
@@ -355,7 +355,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						{
 							var online = new Online();
 							online.Remove();
-							var rowCount = dataStore.ExecuteModify(online, on => on.AccountId == accountId && !on.IsDeleted);
+							var rowCount = dataStore.Modify(online, on => on.AccountId == accountId && !on.IsDeleted);
 							if (rowCount == 0)
 							{
 								throw new BusinessException("将用户移出在线列表时失败");
@@ -391,7 +391,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						#region 初始化配置
 						{
 							var config = new Config();
-							configId = dataStore.ExecuteAdd(config);
+							configId = dataStore.Add(config);
 						}
 						#endregion
 
@@ -402,7 +402,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 						#region 新增用户
 						{
-							accountId = dataStore.ExecuteAdd(account);
+							accountId = dataStore.Add(account);
 						}
 						#endregion
 
@@ -415,7 +415,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						{
 							var config = new Config();
 							config.ModifyAccountId(accountId);
-							var rowCount = dataStore.ExecuteModify(config, conf => conf.Id == configId);
+							var rowCount = dataStore.Modify(config, conf => conf.Id == configId);
 							if (rowCount == 0)
 							{
 								throw new BusinessException("更新用户配置失败");
@@ -428,7 +428,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 							var sqlBuilder = new StringBuilder();
 							foreach (var item in account.Roles)
 							{
-								dataStore.ExecuteAdd(new AccountRole(accountId, item.RoleId));
+								dataStore.Add(new AccountRole(accountId, item.RoleId));
 							}
 						}
 						#endregion
@@ -462,7 +462,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								var newPassword = PasswordUtil.CreateDbPassword(account.LoginPassword);
 								account.ModifyLoginPassword(newPassword);
 
-								var rowCount = dataStore.ExecuteModify(account, acc => acc.Id == account.Id);
+								var rowCount = dataStore.Modify(account, acc => acc.Id == account.Id);
 								if (rowCount == 0)
 								{
 									throw new BusinessException("修改登陆密码失败");
@@ -477,11 +477,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 							{
 								var accountRole = new AccountRole();
 								accountRole.Remove();
-								dataStore.ExecuteModify(accountRole, acc => acc.AccountId == account.Id);
+								dataStore.Modify(accountRole, acc => acc.AccountId == account.Id);
 
 								foreach (var item in account.Roles)
 								{
-									dataStore.ExecuteAdd(new AccountRole(account.Id, item.RoleId));
+									dataStore.Modify(new AccountRole(account.Id, item.RoleId));
 								}
 							}
 						}
@@ -506,7 +506,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var account = new Account().Enable();
-					dataStore.ExecuteModify(account, acc => acc.Id == accountId);
+					dataStore.Modify(account, acc => acc.Id == accountId);
 				}
 			});
 		}
@@ -534,7 +534,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					#endregion
 					{
 						var account = new Account().Disable();
-						dataStore.ExecuteModify(account, acc => acc.Id == accountId);
+						dataStore.Modify(account, acc => acc.Id == accountId);
 					}
 				}
 			});
@@ -548,7 +548,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var config = new Config().ModifyAccountFace(newFace);
-					dataStore.ExecuteModify(config, conf => conf.AccountId == accountId);
+					dataStore.Modify(config, conf => conf.AccountId == accountId);
 				}
 			});
 		}
@@ -566,7 +566,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						account.ModifyLockScreenPassword(newPassword);
 					}
 					account.ModifyLoginPassword(newPassword);
-					dataStore.ExecuteModify(account, acc => acc.Id == accountId && acc.IsDisable == false);
+					dataStore.Modify(account, acc => acc.Id == accountId && acc.IsDisable == false);
 				}
 			});
 		}
@@ -579,7 +579,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var account = new Account().ModifyLockScreenPassword(newScreenPassword);
-					dataStore.ExecuteModify(account, acc => acc.Id == accountId && !acc.IsDisable);
+					dataStore.Modify(account, acc => acc.Id == accountId && !acc.IsDisable);
 				}
 			});
 		}
@@ -615,7 +615,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						{
 							var account = new Account();
 							account.Remove();
-							dataStore.ExecuteModify(account, acc => acc.Id == accountId && !acc.IsDisable);
+							dataStore.Modify(account, acc => acc.Id == accountId && !acc.IsDisable);
 						}
 						#endregion
 
@@ -623,7 +623,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						{
 							var config = new Config();
 							config.Remove();
-							dataStore.ExecuteModify(config, conf => conf.AccountId == accountId);
+							dataStore.Modify(config, conf => conf.AccountId == accountId);
 						}
 						#endregion
 
@@ -631,7 +631,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						{
 							var accountRole = new AccountRole();
 							accountRole.Remove();
-							dataStore.ExecuteModify(accountRole, accRole => accRole.AccountId == accountId);
+							dataStore.Modify(accountRole, accRole => accRole.AccountId == accountId);
 						}
 						#endregion
 
@@ -639,7 +639,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						{
 							var member = new Member();
 							member.Remove();
-							dataStore.ExecuteModify(member, mem => mem.AccountId == accountId);
+							dataStore.Modify(member, mem => mem.AccountId == accountId);
 						}
 						#endregion
 

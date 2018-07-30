@@ -16,8 +16,8 @@
     <ProjectReference Include="..\NewCrmCore.Infrastructure\NewCrmCore.Infrastructure.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="/home/master/code/newlib/NewLibCore/NewLibCore.csproj" />
-    <ProjectReference Include="/home/master/code/newlib/NewLibCore.Data/NewLibCore.Data.csproj" />
+    <ProjectReference Include="$(CODEROOT)/newlibcore/NewLibCore/NewLibCore.csproj" />
+    <ProjectReference Include="$(CODEROOT)/newlibcore/NewLibCore.Data/NewLibCore.Data.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Data.SqlClient">

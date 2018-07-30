@@ -393,7 +393,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					#region sql
 					{
 						var appStar = new AppStar(accountId, appId, starCount);
-						dataStore.ExecuteAdd(appStar);
+						dataStore.Add(appStar);
 					}
 					#endregion
 				}
@@ -408,7 +408,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					#region app
 					{
-						dataStore.ExecuteAdd(app);
+						dataStore.Add(app);
 					}
 					#endregion
 				}
@@ -423,7 +423,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var app = new App().Pass();
-					dataStore.ExecuteModify(app, a => a.Id == appId);
+					dataStore.Modify(app, a => a.Id == appId);
 				}
 			});
 		}
@@ -436,7 +436,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var app = new App().Deny();
-					dataStore.ExecuteModify(app, a => a.Id == appId);
+					dataStore.Modify(app, a => a.Id == appId);
 				}
 			});
 		}
@@ -454,14 +454,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						#region 取消之前的推荐app
 						{
 							var app = new App().CancelRecommand();
-							dataStore.ExecuteModify(app, a => a.IsRecommand == true);
+							dataStore.Modify(app, a => a.IsRecommand == true);
 						}
 						#endregion
 
 						#region 设置新的推荐app
 						{
 							var app = new App().Recommand();
-							dataStore.ExecuteModify(app, a => a.Id == appId);
+							dataStore.Modify(app, a => a.Id == appId);
 						}
 						#endregion
 
@@ -490,7 +490,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						{
 							var appStar = new AppStar();
 							appStar.Remove();
-							dataStore.ExecuteModify(appStar, star => star.AppId == appId);
+							dataStore.Modify(appStar, star => star.AppId == appId);
 						}
 						#endregion
 
@@ -498,7 +498,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						{
 							var app = new App();
 							app.Remove();
-							dataStore.ExecuteModify(app, a => a.Id == appId);
+							dataStore.Modify(app, a => a.Id == appId);
 						}
 						#endregion
 
@@ -523,7 +523,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					#region 发布app
 					{
 						var app = new App().AppRelease().Pass();
-						dataStore.ExecuteModify(app, a => a.Id == appId);
+						dataStore.Modify(app, a => a.Id == appId);
 					}
 					#endregion
 				}
@@ -598,7 +598,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					{
 						app.UnAuditState();
 					}
-					dataStore.ExecuteModify(app, a => a.AccountId == accountId && a.Id == app.Id);
+					dataStore.Modify(app, a => a.AccountId == accountId && a.Id == app.Id);
 				}
 			});
 		}
@@ -628,7 +628,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					{
 						var appType = new AppType();
 						appType.Remove();
-						dataStore.ExecuteModify(appType, type => type.Id == appTypeId);
+						dataStore.Modify(appType, type => type.Id == appTypeId);
 					}
 					#endregion
 				}
@@ -655,7 +655,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 					#region 添加app分类
 					{
-						dataStore.ExecuteAdd(appType);
+						dataStore.Modify(appType);
 					}
 					#endregion
 				}
@@ -684,7 +684,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					{
 						var appType = new AppType();
 						appType.ModifyName(appTypeName);
-						dataStore.ExecuteModify(appType, type => type.Id == appTypeId);
+						dataStore.Modify(appType, type => type.Id == appTypeId);
 					}
 					#endregion
 				}
@@ -700,7 +700,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var app = new App();
 					app.ModifyIconUrl(newIcon);
-					dataStore.ExecuteModify(app, a => a.Id == appId && a.AccountId == accountId);
+					dataStore.Modify(app, a => a.Id == appId && a.AccountId == accountId);
 				}
 			});
 		}
@@ -752,14 +752,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						#region 添加桌面成员
 						{
 							var newMember = new Member(app.Name, app.IconUrl, app.AppUrl, app.Id, app.Width, app.Height, accountId, deskNum, app.IsIconByUpload, app.IsLock, app.IsMax, app.IsFull, app.IsSetbar, app.IsOpenMax, app.IsFlash, app.IsDraw, app.IsResize);
-							dataStore.ExecuteAdd(newMember);
+							dataStore.Add(newMember);
 						}
 						#endregion
 
 						#region 更改app使用数量
 						{
 							app.IncreaseUseCount();
-							dataStore.ExecuteModify(app, a => a.Id == appId);
+							dataStore.Modify(app, a => a.Id == appId);
 						}
 						#endregion
 
