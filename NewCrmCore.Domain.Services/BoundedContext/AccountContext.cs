@@ -64,7 +64,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 							 }
 						 }
 						 #endregion
-
+  
 						 #region 添加在线用户列表
 						 {
 							 var online = new Online(requestIp, result.Id);
