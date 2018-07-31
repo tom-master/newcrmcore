@@ -22,7 +22,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var config = new Config();
 					config.ModifyDefaultDeskNumber(newDefaultDeskNumber);
-					dataStore.ExecuteModify(config, conf => conf.AccountId == accountId);
+					dataStore.Modify(config, conf => conf.AccountId == accountId);
 				}
 			});
 		}
@@ -37,7 +37,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					var config = new Config();
 					var newPosition = EnumExtensions.ToEnum<DockPostion>(position);
 					config.PositionTo(newPosition);
-					dataStore.ExecuteModify(config, conf => conf.AccountId == accountId && conf.DefaultDeskNumber == defaultDeskNumber);
+					dataStore.Modify(config, conf => conf.AccountId == accountId && conf.DefaultDeskNumber == defaultDeskNumber);
 				}
 			});
 		}
@@ -51,7 +51,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var config = new Config();
 					config.DirectionToX();
-					dataStore.ExecuteModify(config, conf => conf.AccountId == accountId);
+					dataStore.Modify(config, conf => conf.AccountId == accountId);
 				}
 			});
 		}
@@ -65,7 +65,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var config = new Config();
 					config.DirectionToY();
-					dataStore.ExecuteModify(config, conf => conf.AccountId == accountId);
+					dataStore.Modify(config, conf => conf.AccountId == accountId);
 				}
 			});
 		}
@@ -79,7 +79,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var config = new Config();
 					config.ModifyAppSize(newSize);
-					dataStore.ExecuteModify(config, conf => conf.AccountId == accountId);
+					dataStore.Modify(config, conf => conf.AccountId == accountId);
 				}
 			});
 		}
@@ -93,7 +93,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var config = new Config();
 					config.ModifyAppVerticalSpacing(newSize);
-					dataStore.ExecuteModify(config, conf => conf.AccountId == accountId);
+					dataStore.Modify(config, conf => conf.AccountId == accountId);
 				}
 			});
 
@@ -108,7 +108,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var config = new Config();
 					config.ModifyAppHorizontalSpacing(newSize);
-					dataStore.ExecuteModify(config, conf => conf.AccountId == accountId);
+					dataStore.Modify(config, conf => conf.AccountId == accountId);
 				}
 			});
 		}
@@ -122,7 +122,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var member = new Member();
 					member.OnDock();
-					dataStore.ExecuteModify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
+					dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
 				}
 			});
 		}
@@ -136,7 +136,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var member = new Member();
 					member.OutDock();
-					dataStore.ExecuteModify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
+					dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
 				}
 			});
 		}
@@ -150,7 +150,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var member = new Member();
 					member.OutDock().ModifyFolderId(folderId);
-					dataStore.ExecuteModify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
+					dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
 				}
 			});
 		}
@@ -164,7 +164,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var member = new Member();
 					member.OnDock().ModifyFolderId(0);
-					dataStore.ExecuteModify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
+					dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
 				}
 			});
 		}
@@ -178,7 +178,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var member = new Member();
 					member.ModifyFolderId(folderId);
-					dataStore.ExecuteModify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
+					dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
 				}
 			});
 		}
@@ -192,7 +192,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var member = new Member();
 					member.ModifyFolderId(0).ModifyDeskIndex(deskId);
-					dataStore.ExecuteModify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
+					dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
 				}
 			});
 		}
@@ -206,7 +206,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var member = new Member();
 					member.ModifyFolderId(folderId);
-					dataStore.ExecuteModify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
+					dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
 				}
 			});
 		}
@@ -237,7 +237,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 						#region 成员移动到其他桌面
 						{
-							dataStore.ExecuteModify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
+							dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
 						}
 						#endregion
 
@@ -261,7 +261,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var member = new Member();
 					member.OutDock().ModifyDeskIndex(deskId);
-					dataStore.ExecuteModify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
+					dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
 				}
 			});
 		}
@@ -274,7 +274,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				var folder = new Member(folderName, folderImg, 0, accountId, deskId, false);
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
-					dataStore.ExecuteAdd(folder);
+					dataStore.Add(folder);
 				}
 			});
 		}
@@ -295,7 +295,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					{
 						config.NotFromBing();
 					}
-					dataStore.ExecuteModify(config, conf => conf.AccountId == accountId);
+					dataStore.Modify(config, conf => conf.AccountId == accountId);
 				}
 			});
 		}

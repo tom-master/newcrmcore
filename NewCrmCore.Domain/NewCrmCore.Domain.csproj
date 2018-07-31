@@ -9,7 +9,7 @@
     <PackageReference Include="MySql.Data" Version="8.0.11" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Users\haozi\source\NewLib\NewLibCore\NewLibCore.csproj" />
-    <ProjectReference Include="C:\Users\haozi\source\NewLib\NewLibCore.Data\NewLibCore.Data.csproj" />
+    <ProjectReference Include="$(CODEROOT)/newlibcore/NewLibCore/NewLibCore.csproj" />
+    <ProjectReference Include="$(CODEROOT)/newlibcore/NewLibCore.Data/NewLibCore.Data.csproj" />
   </ItemGroup>
 </Project>
