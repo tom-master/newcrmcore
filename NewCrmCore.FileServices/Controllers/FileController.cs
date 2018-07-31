@@ -93,7 +93,7 @@ namespace NewCrmCore.FileServices.Controllers
 						continue;
 					}
 
-					responses.Add(requestFile.GetResult());
+					responses.Add(requestFile.BuildUploadResponse());
 				}
 			}
 			catch (Exception ex)
