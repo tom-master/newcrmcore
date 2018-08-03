@@ -602,7 +602,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             };
 
                             var sql = $@"SELECT a.IsAdmin FROM Account AS a WHERE a.Id=@accountId AND a.IsDeleted=0 AND a.IsDisable=0";
-                            var isAdmin = Boolean.Parse(dataStore.FindSingleValue<String>(sql, parameters));
+                            var isAdmin =dataStore.FindSingleValue<Boolean>(sql, parameters);
                             if (isAdmin)
                             {
                                 throw new BusinessException("不能删除管理员");

@@ -98,7 +98,6 @@ namespace NewCrmCore.Domain.Entitys.System
             DefaultDeskNumber = 1;
             DefaultDeskCount = 5;
             AccountId = accountId;
-            //WallpaperId = wallpaperId;
             IsBing = true;
         }
 
