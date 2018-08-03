@@ -214,7 +214,9 @@
                     window.parent.HROS.base.login();
                 }
             }).on('click', '.btn-run-s', function () {
+                
                 if ($(this).attr('app_type') === 'app') {
+                     
                     window.parent.HROS.window.create($(this).attr('real_app_id'), $(this).attr('app_type'));
                 } else {
                     window.parent.HROS.widget.create($(this).attr('real_app_id'), $(this).attr('app_type'));
@@ -246,13 +248,7 @@
             });
         });
 
-		initPagination({
-			current_page: current_page,
-			items_per_page: 5,
-			num_display_entries: 3,
-			num_edge_entries: 1,
-			getPageList: getPageList
-		})
+		
 
         function getPageList(current_page) {
             var appTypeId = $('#appType').val() === '' ? 0 : parseInt($('#appType').val());
@@ -270,7 +266,13 @@
                     var liTemplate = Handlebars.compile($("#li-template").html());
                     $('.app-list').html(liTemplate(responseText));
                     $('#pagination_setting').attr('count', parseInt(responseText.TotalCount));
-                    initPagination(current_page);
+                    initPagination({
+                        current_page: current_page,
+                        items_per_page: 5,
+                        num_display_entries: 3,
+                        num_edge_entries: 1,
+                        getPageList: getPageList
+                    })
                 } else {
                     NewCrm.msgbox.fail(responseText.Message);
                 }

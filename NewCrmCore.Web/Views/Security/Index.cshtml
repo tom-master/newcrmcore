@@ -98,13 +98,7 @@
 			});
 		});
 
-		initPagination({
-			current_page: current_page,
-			items_per_page: 5,
-			num_display_entries: 3,
-			num_edge_entries: 1,
-			getPageList: getPageList
-		})
+		
 
 		function getPageList(current_page) {
 			HROS.request.get('/Security/GetRoles', {
@@ -117,7 +111,13 @@
 					$('.list-con').html(tableTemplate(responseText));
 					$('#pagination_setting').attr('count', responseText.TotalCount);
 					$('.list-count').text(responseText.totalCount);
-					initPagination(current_page);
+					initPagination({
+						current_page: current_page,
+						items_per_page: 5,
+						num_display_entries: 3,
+						num_edge_entries: 1,
+						getPageList: getPageList
+					})
 				} else {
 					NewCrm.msgbox.fail(responseText.Message);
 				}

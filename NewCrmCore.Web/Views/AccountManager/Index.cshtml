@@ -144,14 +144,7 @@
 				getPageList(0);
 			});
 		});
-		initPagination({
-			current_page: current_page,
-			items_per_page: 5,
-			num_display_entries: 3,
-			num_edge_entries: 1,
-			getPageList: getPageList
-		})
-
+		
 
 		function getPageList(current_page) {
 			HROS.request.get('/AccountManager/Accounts', {
@@ -165,8 +158,14 @@
 					$('.list-con').html(tableTemplate(responseText));
 					$('#pagination_setting').attr('count', responseText.TotalCount);
 					$('.list-count').text(responseText.TotalCount);
+					initPagination({
+						current_page: current_page,
+						items_per_page: 5,
+						num_display_entries: 3,
+						num_edge_entries: 1,
+						getPageList: getPageList
+					})
 
-					initPagination(current_page);
 				} else {
 					NewCrm.msgbox.fail(responseText.Message);
 				}

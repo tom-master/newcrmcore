@@ -71,7 +71,7 @@ namespace NewCrmCore.Application.Services
 						Name = app.Name,
 						IconUrl = app.IsIconByUpload ? Appsetting.FileUrl + app.IconUrl : app.IconUrl,
 						Remark = app.Remark,
-						AppStyle = (Int32)app.AppStyle,
+						AppStyle = app.AppStyle,
 						Id = app.Id,
 						IsInstall = app.IsInstall
 					}).ToList()
@@ -93,7 +93,7 @@ namespace NewCrmCore.Application.Services
 					Models = result.Select(app => new AppDto
 					{
 						Name = app.Name,
-						AppStyle = (Int32)app.AppStyle,
+						AppStyle = app.AppStyle,
 						AppTypeName = appTypes.FirstOrDefault(appType => appType.Id == app.AppTypeId).Name,
 						UseCount = app.UseCount,
 						Id = app.Id,
@@ -128,7 +128,7 @@ namespace NewCrmCore.Application.Services
 				IsResize = result.IsResize,
 				IsOpenMax = result.IsOpenMax,
 				IsFlash = result.IsFlash,
-				AppStyle = (Int32)result.AppStyle,
+				AppStyle = result.AppStyle,
 				AppUrl = result.AppUrl,
 				Width = result.Width,
 				Height = result.Height,

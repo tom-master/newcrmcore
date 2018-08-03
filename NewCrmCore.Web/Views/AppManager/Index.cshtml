@@ -183,13 +183,7 @@
                 getPageList(0);
             });
         });
-		initPagination({
-			current_page: current_page,
-			items_per_page: 7,
-			num_display_entries: 9,
-			num_edge_entries: 2,
-			getPageList: getPageList
-		})
+		
        
 
         function getPageList(current_page) {
@@ -213,7 +207,13 @@
                     $('.list-con').html(tableTemplate(responseText));
                     $('.list-count').text(responseText.TotalCount);
                     $('#pagination_setting').attr('count', parseInt(responseText.totalCount));
-                    initPagination(current_page);
+                    initPagination({
+						current_page: current_page,
+						items_per_page: 7,
+						num_display_entries: 9,
+						num_edge_entries: 2,
+						getPageList: getPageList
+					})
                 } else {
                     NewCrm.msgbox.fail(responseText.Message);
                 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-
+using NewCrmCore.Domain.ValueObject;
 namespace NewCrmCore.Dto
 {
     public sealed class AppDto : BaseDto
@@ -60,7 +60,7 @@ namespace NewCrmCore.Dto
         /// <summary>
         /// app样式
         /// </summary>
-        public Int32 AppStyle { get; set; }
+        public AppStyle AppStyle { get; set; }
 
         /// <summary>
         /// app分类

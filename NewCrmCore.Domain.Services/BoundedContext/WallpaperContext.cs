@@ -6,9 +6,9 @@ using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
-using NewCrmCore.Infrastructure.CommonTools.CustomExtension;
 using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;
+using NewLibCore;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
 {

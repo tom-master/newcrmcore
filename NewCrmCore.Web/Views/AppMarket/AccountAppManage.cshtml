@@ -171,15 +171,7 @@
                 getPageList(0);
             });
 		});
-
-		initPagination({
-			current_page: current_page,
-			items_per_page: 4,
-			num_display_entries: 9,
-			num_edge_entries: 2,
-			getPageList: getPageList
-		}) 
-
+ 
         function getPageList(current_page) {
             var $appStates = $('#appState').find("option:selected");
             var appStateResult = '';
@@ -200,7 +192,13 @@
                 $('.list-con').html(tableTemplate(responseText));
                 $('.list-count').text(responseText.totalCount);
                 $('#pagination_setting').attr('count', parseInt(responseText.TotalCount));
-                initPagination(current_page);
+                initPagination({
+					current_page: current_page,
+					items_per_page: 4,
+					num_display_entries: 9,
+					num_edge_entries: 2,
+					getPageList: getPageList
+				}) 
             });
 
             Handlebars.registerHelper('convertstyle', function (appStyle) {
