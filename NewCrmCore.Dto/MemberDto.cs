@@ -107,7 +107,7 @@ namespace NewCrmCore.Dto
         public Int32 AccountId { get; set; }
 
 		/// <summary>
-		/// 图标是否来自上除按
+		/// 图标是否来自上传
 		/// </summary>
         public Boolean IsIconByUpload { get; set; }
 

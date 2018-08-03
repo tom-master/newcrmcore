@@ -14,7 +14,7 @@
 }
 
 <form action="/AccountManager/CreateAccount" method="post" name="form" id="form">
-	<input type="hidden" name="token" value="@( await TimeToken.GetTokenAsync())" />
+	<input type="hidden" name="token" value="@(await TimeToken.GetTokenAsync())" />
 	<input type="hidden" name="id" value="@(accountId.FirstOrDefault()??"0")">
 	<div class="creatbox">
 		<div class="middle">
@@ -76,11 +76,11 @@
 			<div class="input-label input-label-permission @{
                 if (!accountResult.IsAdmin)
                 {
-                                                                   <text> hide </text>
+                     <text> hide </text>
                 }
                 else
                 {
-                                                                   <text> show </text>
+                     <text> show </text>
                 }
                                                            }">
 				<label class="label-text">用户角色：</label>
