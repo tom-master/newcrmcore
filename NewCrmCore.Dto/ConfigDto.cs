@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-
+using NewCrmCore.Domain.ValueObject;
 namespace NewCrmCore.Dto
 {
     public sealed class ConfigDto : BaseDto
@@ -38,12 +38,12 @@ namespace NewCrmCore.Dto
         /// <summary>
         /// app排列方向
         /// </summary>
-        public String AppXy { get; set; }
+        public AppAlignMode AppXy { get; set; }
 
         /// <summary>
         /// 码头位置
         /// </summary>
-        public String DockPosition { get; set; }
+        public DockPosition DockPosition { get; set; }
 
         /// <summary>
         /// 壁纸
@@ -63,12 +63,12 @@ namespace NewCrmCore.Dto
         /// <summary>
         /// 壁纸来源
         /// </summary>
-        public String WallpaperSource { get; set; }
+        public WallpaperSource WallpaperSource { get; set; }
 
         /// <summary>
         /// 壁纸的展示模式
         /// </summary>
-        public String WallpaperMode { get; set; }
+        public WallpaperMode WallpaperMode { get; set; }
 
         /// <summary>
         /// 默认桌面数量

@@ -1,5 +1,6 @@
 ﻿@using NewCrmCore.Dto
 @using NewLibCore
+@using NewCrmCore.Domain.ValueObject
 @{
 	Layout = "~/Views/Shared/_LayoutApps.cshtml";
 }
@@ -114,7 +115,7 @@
 			<td>{{convertstyle AppStyle}}</td>
 			<td>{{AppTypeName}}</td>
 			<td>{{UseCount}}</td>
-			{{#compare AppAuditState 1}}
+			{{#compare AppAuditState Wait}}
 			<td>
 				<a href="javascript:openDetailIframe('/AppMarket/AccountAppManageInfo?appId={{Id}}');" class="btn btn-link">查看详情</a>
 				<a href="###" class="btn btn-link do-del" appid="{{Id}}">删除</a>
@@ -243,7 +244,7 @@
             })
 
             Handlebars.registerHelper("compare", function (v1, v2, options) {
-                if (v1 === v2 || v1 === 4) {
+                if (v1 === v2 || v1 === @(AppAuditState.UnAuditState)) {
                     return options.fn(this);
                 } else {
                     return options.inverse(this);

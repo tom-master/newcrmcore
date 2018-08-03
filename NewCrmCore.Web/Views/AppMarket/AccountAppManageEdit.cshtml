@@ -120,14 +120,14 @@
 				</div>
 			</div>
 			@{
-				if (Model.AppAuditState != 2)
+				if (Model.AppAuditState != AppAuditState.Pass)
 				{
 					<text>
 						<div class="input-label">
 							<label class="label-text">是否提交审核：</label>
 							<div class="label-box form-inline control-group">
-								<label class="radio" style="margin-right:10px"><input type="radio" name="val_verifytype" value="1" @{ if (Model.AppAuditState==1) { <text> checked="checked" </text>  } }>暂时不提交</label>
-								<label class="radio"><input type="radio" name="val_verifytype" value="4" @{ if (Model.AppAuditState == 4) { <text> checked="checked" </text>  } }>提交审核</label>
+								<label class="radio" style="margin-right:10px"><input type="radio" name="val_verifytype" value="1" @{ if (Model.AppAuditState==AppAuditState.Wait) { <text> checked="checked" </text>  } }>暂时不提交</label>
+								<label class="radio"><input type="radio" name="val_verifytype" value="4" @{ if (Model.AppAuditState == AppAuditState.UnAuditState) { <text> checked="checked" </text>  } }>提交审核</label>
 							</div>
 						</div>
 						</text>
@@ -138,7 +138,7 @@
 	<div class="bottom-bar">
 		<div class="con">
 			@{
-				if (Model.AppAuditState != 2)
+				if (Model.AppAuditState != AppAuditState.Pass)
 				{<text>
 						<a class="btn" id="btn-preview" href="###"><i class="icon-eye-open"></i> 预览应用</a>
 						<a class="btn btn-primary fr" id="btn-submit" href="###"><i class="icon-white icon-ok"></i> 确定</a>

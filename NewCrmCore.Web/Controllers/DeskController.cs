@@ -391,7 +391,7 @@ namespace NewCrmCore.Web.Controllers
 
 			if (result.IsBing)
 			{
-				result.WallpaperSource = WallpaperSource.Bing.ToString().ToLower();
+				result.WallpaperSource = WallpaperSource.Bing;
 				result.WallpaperUrl = await BingHelper.GetEverydayBackgroundImageAsync();
 			}
 
@@ -749,7 +749,7 @@ namespace NewCrmCore.Web.Controllers
 		[HttpGet]
 		public async Task<IActionResult> GetDockPos()
 		{
-			var response = new ResponseModel<String>();
+			var response = new ResponseModel<DockPosition>();
 			var result = (await _accountServices.GetConfigAsync(AccountId)).DockPosition;
 			response.IsSuccess = true;
 			response.Message = "初始化应用码头成功";

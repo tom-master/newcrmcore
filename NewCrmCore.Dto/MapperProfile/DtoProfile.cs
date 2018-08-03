@@ -95,10 +95,10 @@ namespace NewCrmCore.Dto.MapperProfile
 				.ForMember(app => app.AccountId, dto => dto.MapFrom(w => w.AccountId))
 				.ForMember(
 					app => app.AppAuditState,
-					dto => dto.MapFrom(w => EnumOp.ConvertEnum(typeof(AppAuditState), w.AppAuditState)))
+					dto => dto.MapFrom(w => w.AppAuditState))
 				.ForMember(
 					app => app.AppReleaseState,
-					dto => dto.MapFrom(w => EnumOp.ConvertEnum(typeof(AppReleaseState), w.AppReleaseState)))
+					dto => dto.MapFrom(w => w.AppReleaseState))
 				.ForMember(app => app.AppTypeId, dto => dto.MapFrom(w => w.AppTypeId))
 				.ForMember(app => app.AppStyle, dto => dto.MapFrom(w => w.AppStyle))
 				.ForMember(app => app.IsIconByUpload, dto => dto.MapFrom(w => w.IsIconByUpload));

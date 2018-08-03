@@ -338,8 +338,8 @@ namespace NewCrmCore.Web.Controllers
                 IsOpenMax = Int32.Parse(forms["val_isopenmax"]) == 1,
                 IsFlash = Int32.Parse(forms["val_isflash"]) == 1,
                 Remark = forms["val_remark"],
-                AppAuditState = Int32.Parse(forms["val_verifytype"]),
-                AppReleaseState = 2, //未发布
+                AppAuditState = EnumExtensions.ToEnum<AppAuditState>(Int32.Parse(forms["val_verifytype"])),
+                AppReleaseState = AppReleaseState.UnRelease, //未发布
                 IsIconByUpload = Int32.Parse(forms["isIconByUpload"]) == 1
             };
 

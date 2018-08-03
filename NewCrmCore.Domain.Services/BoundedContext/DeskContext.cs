@@ -35,7 +35,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
 					var config = new Config();
-					var newPosition = EnumExtensions.ToEnum<DockPostion>(position);
+					var newPosition = EnumExtensions.ToEnum<DockPosition>(position);
 					config.PositionTo(newPosition);
 					dataStore.Modify(config, conf => conf.AccountId == accountId && conf.DefaultDeskNumber == defaultDeskNumber);
 				}

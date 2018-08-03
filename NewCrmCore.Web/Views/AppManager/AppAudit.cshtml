@@ -122,7 +122,7 @@
 				</div>
 			</div>
 			@{
-				if (Model.AppAuditState == 3)
+				if (Model.AppAuditState == AppAuditState.Deny)
 				{<text>
 						<div class="input-label">
 							<label class="label-text">是否提交审核：</label>
@@ -139,7 +139,7 @@
 	<div class="bottom-bar">
 		<div class="con">
 			@{
-				if (Model.AppAuditState == 4)//未审核
+				if (Model.AppAuditState == AppAuditState.UnAuditState)//未审核
 				{<text>
 						<a class="btn btn-success fl" id="btn-pass" href="###" appid="@Model.Id"><i class="icon-white icon-ok"></i> 审核通过</a>
 						<a class="btn fl" id="btn-unpass" href="###" appid="@Model.Id" style="margin-left:10px"><i class="icon-remove"></i> 审核不通过</a>

@@ -54,13 +54,13 @@ namespace NewCrmCore.Application.Services
 				AppHorizontalSpacing = config.AppHorizontalSpacing,
 				DefaultDeskNumber = config.DefaultDeskNumber,
 				DefaultDeskCount = config.DefaultDeskCount,
-				AppXy = config.AppXy.ToString().ToLower(),
-				DockPosition = config.DockPosition.ToString().ToLower(),
+				AppXy = config.AppXy,
+				DockPosition = config.DockPosition,
 				WallpaperUrl = wallpaper.Url,
 				WallpaperWidth = wallpaper.Width,
 				WallpaperHeigth = wallpaper.Height,
-				WallpaperSource = wallpaper.Source.ToString().ToLower(),
-				WallpaperMode = config.WallpaperMode.ToString().ToLower(),
+				WallpaperSource = wallpaper.Source,
+				WallpaperMode = config.WallpaperMode,
 				IsBing = config.IsBing,
 				AccountId = config.AccountId
 			};

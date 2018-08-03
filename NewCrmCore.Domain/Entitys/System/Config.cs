@@ -70,8 +70,8 @@ namespace NewCrmCore.Domain.Entitys.System
 		/// <summary>
 		/// 码头位置
 		/// </summary>
-		[PropertyDefaultValue(typeof(DockPostion), DockPostion.Top)]
-		public DockPostion DockPosition { get; private set; }
+		[PropertyDefaultValue(typeof(DockPosition), DockPosition.Top)]
+		public DockPosition DockPosition { get; private set; }
 
 		/// <summary>
 		/// 账户Id
@@ -88,7 +88,7 @@ namespace NewCrmCore.Domain.Entitys.System
 		public Config(Int32 accountId, Int32 wallpaperId)
 		{
 			AppXy = AppAlignMode.X;
-			DockPosition = DockPostion.Top;
+			DockPosition = DockPosition.Top;
 			AccountFace = @"\Scripts\HoorayUI\img\ui\avatar_48.jpg";
 			Skin = "default";
 			WallpaperMode = WallpaperMode.Fill;
@@ -281,7 +281,7 @@ namespace NewCrmCore.Domain.Entitys.System
 			return this;
 		}
 
-		public Config PositionTo(DockPostion postion)
+		public Config PositionTo(DockPosition postion)
 		{
 			DockPosition = postion;
 			OnPropertyChanged(new PropertyArgs(nameof(DockPosition), DockPosition));

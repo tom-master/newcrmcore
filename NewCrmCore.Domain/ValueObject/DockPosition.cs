@@ -5,7 +5,7 @@ namespace NewCrmCore.Domain.ValueObject
     /// <summary>
     /// 码头位置
     /// </summary>
-    public enum DockPostion
+    public enum DockPosition
     {
 		/// <summary>
 		/// 上
