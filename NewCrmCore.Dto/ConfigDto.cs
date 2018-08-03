@@ -75,8 +75,14 @@ namespace NewCrmCore.Dto
         /// </summary>
         public Int32 DefaultDeskCount { get; set; }
 
+        /// <summary>
+        /// 账户Id
+        /// </summary>
         public Int32 AccountId { get; set; }
 
+        /// <summary>
+        /// 图片是否来自bing
+        /// </summary>
         public Boolean IsBing { get; set; }
 
     }

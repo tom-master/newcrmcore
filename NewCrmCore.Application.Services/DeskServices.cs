@@ -53,7 +53,7 @@ namespace NewCrmCore.Application.Services
 				IsOpenMax = result.IsOpenMax,
 				IsResize = result.IsResize,
 				IsSetbar = result.IsSetbar,
-				MemberType = result.MemberType.ToString(),
+				MemberType = result.MemberType,
 				Name = result.Name,
 				Width = result.Width,
 				AccountId = result.AccountId,

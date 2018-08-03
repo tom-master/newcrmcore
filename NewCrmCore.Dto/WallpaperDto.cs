@@ -1,5 +1,5 @@
 ﻿using System;
-
+using NewCrmCore.Domain.ValueObject;
 namespace NewCrmCore.Dto
 {
 	public sealed class WallpaperDto: BaseDto
@@ -27,7 +27,7 @@ namespace NewCrmCore.Dto
 		/// <summary>
 		/// 来源
 		/// </summary>
-		public Int32 Source { get; set; }
+		public WallpaperSource Source { get; set; }
 
 		/// <summary>
 		/// 图片的宽
