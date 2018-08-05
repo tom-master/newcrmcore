@@ -74,7 +74,7 @@
 			<th>应用名称</th>
 			<th style="width:100px">类型</th>
 			<th style="width:100px">分类</th>
-			<th style="width:100px">使用人数</th>
+			<th style="width:50px">使用人数</th>
 			<th style="width:240px">操作</th>
 		</tr>
 		<tr class="sep-row"><td colspan="100"></td></tr>
@@ -115,28 +115,27 @@
 			<td>{{convertstyle AppStyle}}</td>
 			<td>{{AppTypeName}}</td>
 			<td>{{UseCount}}</td>
-			{{#compare AppAuditState Wait}}
-			<td>
-				<a href="javascript:openDetailIframe('/AppMarket/AccountAppManageInfo?appId={{Id}}');" class="btn btn-link">查看详情</a>
-				<a href="###" class="btn btn-link do-del" appid="{{Id}}">删除</a>
-			</td>
+			{{#compare AppAuditState 'Wait'}}
+				<td>
+					<a href="javascript:openDetailIframe('/AppMarket/AccountAppManageInfo?appId={{Id}}');" class="btn btn-link">查看详情</a>
+					<a href="###" class="btn btn-link do-del" appid="{{Id}}">删除</a>
+				</td>
 			{{else}}
 			<td>
-
 				{{#isAudit AppAuditState}}
-				{{#if IsRecommand }}
-				<a href="###" class="btn btn-link" appid="{{Id}}">今日推荐</a>
-				{{else}}
-				<a href="###" class="btn btn-link do-recommend" appid="{{Id}}">设为今日推荐</a>
-				{{/if}}
+					{{#if IsRecommand }}
+						<a href="###" class="btn btn-link" appid="{{Id}}">今日推荐</a>
+					{{else}}
+						<a href="###" class="btn btn-link do-recommend" appid="{{Id}}">设为推荐</a>
+					{{/if}}
 				{{else}}
 				{{/isAudit}}
 				<a href="javascript:openDetailIframe('/AppMarket/AccountAppManageInfo?appId={{Id}}');" class="btn btn-link">查看详情</a>
 				{{#if IsCreater}}
-				{{#remove IsRecommand}}
-				{{else}}
-				<a href="###" class="btn btn-link do-del" appid="{{Id}}">删除</a>
-				{{/remove}}
+					{{#remove IsRecommand}}
+					{{else}}
+						<a href="###" class="btn btn-link do-del" appid="{{Id}}">删除</a>
+					{{/remove}}
 				{{/if}}
 
 			</td>
@@ -221,7 +220,7 @@
             });
 
             Handlebars.registerHelper("isAudit", function (v1, options) {
-                if (parseInt(v1) === 2) {
+                if (v1 === '@(AppAuditState.Pass)') {
                     return options.fn(this);
                 } else {
                     return options.inverse(this);
@@ -244,7 +243,8 @@
             })
 
             Handlebars.registerHelper("compare", function (v1, v2, options) {
-                if (v1 === v2 || v1 === @(AppAuditState.UnAuditState)) {
+				
+                if (v1 === v2 || v1 === '@(AppAuditState.Wait)') {
                     return options.fn(this);
                 } else {
                     return options.inverse(this);
