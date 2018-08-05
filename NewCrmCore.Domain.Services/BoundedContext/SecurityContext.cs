@@ -33,7 +33,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var dataStore = new DataStore(Appsetting.Database))
 				{
-					var sql = $@"SELECT a.Name, a.RoleIdentity, a.Remark FROM Role AS a WHERE a.Id=@Id AND a.IsDeleted=0";
+					var sql = $@"SELECT a.Id, a.Name, a.RoleIdentity, a.Remark FROM Role AS a WHERE a.Id=@Id AND a.IsDeleted=0";
 					var parameters = new List<ParameterMapper> { new ParameterMapper("@Id", roleId) };
 					return dataStore.FindOne<Role>(sql, parameters);
 				}
@@ -217,7 +217,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					#region 添加角色
 					{
-						dataStore.Modify(role);
+						dataStore.Add(role);
 					}
 					#endregion
 				}

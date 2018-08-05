@@ -44,17 +44,18 @@
 			<div class="input-label">
 				<label class="label-text">用户密码：</label>
 				<div class="label-box form-inline control-group">
-					<input type="password" name="val_password" datatype="s6-12" id="pwd" nullmsg="请输入用户密码" errormsg="用户密码长度为6-12个字符" />
 					@{
 						if (accountResult.Password == null)
 						{
 							<text>
+								<input type="password" name="val_password" datatype="s6-12" id="pwd" nullmsg="请输入用户密码" errormsg="用户密码长度为6-12个字符" />
 								<span class="help-inline"></span>
 							</text>
 						}
 						else
 						{
 							<text>
+								<input type="password" name="val_password"  id="pwd"  />
 								<span class="help-inline">[如果无需修改则不填]</span>
 							</text>
 						}
@@ -65,7 +66,7 @@
 				<label class="label-text">用户类型：</label>
 				<div class="label-box form-inline">
 					<label class="radio" style="margin-right: 10px">
-						<input type="radio" name="val_type" value="1" @{ if (accountResult.IsAdmin) { <text> checked="checked" </text>  } }>用户
+						<input type="radio" name="val_type" value="1" @{ if (!accountResult.IsAdmin) { <text> checked="checked" </text>  } }>用户
 					</label>
 
 					<label class="radio" style="margin-right: 10px">
@@ -151,25 +152,18 @@
 					var response = responseText;
 					if (response.IsSuccess) {
 						if ($('input[name="id"]').val()) {
-							if ($('#pwd').val() !== '') {
+							if ($('#pwd').val()) {
 								NewCrm.msgbox.success('您修改了登陆密码，请重新登陆');
 								setTimeout(function () {
 									top.location.reload()
 								}, 1000)
 							} else {
-								$.dialog({
-									id: 'ajaxedit',
-									content: '修改成功，是否继续修改?',
-									okVal: '是',
-									ok: function () {
-										$.dialog.list['ajaxedit'].close();
-									},
-									cancel: function () {
-										window.parent.closeDetailIframe(function () {
-											window.parent.$('#pagination').trigger('currentPage');
-										});
-									}
-								});
+								NewCrm.msgbox.success('修改成功!');
+								setTimeout(function(){
+									window.parent.closeDetailIframe(function () {
+										window.parent.$('#pagination').trigger('currentPage');
+									});
+								},1000)
 							}
 						} else {
 							$.dialog({
@@ -197,6 +191,7 @@
 				if (parseInt($(this).val()) === 2) {
 					$('.input-label-permission').slideDown();
 				} else {
+					$('#roleIds').val('')
 					$('.input-label-permission').slideUp();
 				}
 			});

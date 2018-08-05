@@ -338,13 +338,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
                     var where = new StringBuilder();
-                    where.Append(" WHERE 1=1 AND a.IsSystem=1 AND a.IsDeleted=0");
                     if (appIds != default(IEnumerable<Int32>) && appIds.Any())
                     {
                         where.Append($@" AND a.Id IN({String.Join(",", appIds)})");
                     }
 
-                    var sql = $@"SELECT a.Id,a.Name,a.IconUrl FROM App AS a {where}";
+                    var sql = $@"SELECT a.Id,a.Name,a.IconUrl FROM App AS a WHERE 1=1 AND a.IsSystem=1 AND a.IsDeleted=0 {where}";
                     return dataStore.Find<App>(sql);
                 }
             });

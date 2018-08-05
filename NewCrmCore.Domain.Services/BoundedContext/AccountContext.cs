@@ -472,17 +472,24 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                         #region 修改账户角色
                         {
-                            if (account.Roles.Any())
-                            {
-                                var accountRole = new AccountRole();
-                                accountRole.Remove();
-                                dataStore.Modify(accountRole, acc => acc.AccountId == account.Id);
+                            var accountRole = new AccountRole();
+                            accountRole.Remove();
+                            dataStore.Modify(accountRole, acc => acc.AccountId == account.Id);
 
+                            if (account.Roles == null || !account.Roles.Any())
+                            {
+                                account.DetachAdminRole();
+                            }
+                            else
+                            {
+                                account.AttachAdminRole();
                                 foreach (var item in account.Roles)
                                 {
-                                    dataStore.Modify(new AccountRole(account.Id, item.RoleId));
+                                    dataStore.Add(new AccountRole(account.Id, item.RoleId));
                                 }
                             }
+                            dataStore.Modify(account, ac => ac.Id == account.Id);
+
                         }
                         #endregion
 
@@ -602,7 +609,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             };
 
                             var sql = $@"SELECT a.IsAdmin FROM Account AS a WHERE a.Id=@accountId AND a.IsDeleted=0 AND a.IsDisable=0";
-                            var isAdmin =dataStore.FindSingleValue<Boolean>(sql, parameters);
+                            var isAdmin = dataStore.FindSingleValue<Boolean>(sql, parameters);
                             if (isAdmin)
                             {
                                 throw new BusinessException("不能删除管理员");

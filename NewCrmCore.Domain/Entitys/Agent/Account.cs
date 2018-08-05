@@ -159,5 +159,19 @@ namespace NewCrmCore.Domain.Entitys.Agent
             OnPropertyChanged(new PropertyArgs(nameof(Roles), Roles));
             return this;
         }
+
+        public Account DetachAdminRole()
+        {
+            IsAdmin = false;
+            OnPropertyChanged(new PropertyArgs(nameof(IsAdmin), IsAdmin));
+            return this;
+        }
+
+        public Account AttachAdminRole()
+        {
+            IsAdmin = true;
+            OnPropertyChanged(new PropertyArgs(nameof(IsAdmin), IsAdmin));
+            return this;
+        }
     }
 }

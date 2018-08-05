@@ -143,7 +143,7 @@
 					height: 300,
 					ok: function () {
 						$('#val_apps_id').val($.dialog.data('appsid')).focusout();
-						HROS.request.post('/Security/GetSystemApp', { appIds: $.dialog.data('appsid') }, function () {
+						HROS.request.get('/Security/GetSystemApp', { appIds: $.dialog.data('appsid') }, function (responseText) {
 							if (responseText.IsSuccess) {
 								var model = responseText.Model;
 								var msg = "";
