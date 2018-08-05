@@ -93,7 +93,7 @@ namespace NewCrmCore.Application.Services
 							memberId = app.Id,
 							appId = app.AppId,
 							name = app.Name,
-							icon = member.IsIconByUpload ? Appsetting.FileUrl + member.IconUrl : member.IconUrl,
+							icon = app.IsIconByUpload ? Appsetting.FileUrl + app.IconUrl : app.IconUrl,
 							width = app.Width,
 							height = app.Height,
 							isOnDock = app.IsOnDock,

@@ -1221,7 +1221,7 @@ html .window-frame {
 	.widget .move {
 		width: 100%;
 		height: 29px;
-		background: url(../../images/img/ui/widget_title_bg.png) repeat-x;
+		background: url(/images/ui/widget_title_bg.png) repeat-x;
 		cursor: move;
 		border-radius: 5px;
 		display: none
@@ -1232,7 +1232,7 @@ html .window-frame {
 		top: 4px;
 		width: 21px;
 		height: 21px;
-		background: url(../../images/img/ui/desk_sprite.png) no-repeat
+		background: url(/images/ui/desk_sprite.png) no-repeat
 	}
 
 		.widget a.ha-close {

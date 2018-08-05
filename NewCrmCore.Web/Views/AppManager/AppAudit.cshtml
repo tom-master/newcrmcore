@@ -86,28 +86,28 @@
 				<label class="label-text">应用类型：</label>
 				<div class="label-box form-inline control-group">
 					<label class="radio" style="margin-right:10px">
-						<input type="radio" name="val_type" value="1" @{ if (Model.AppStyle == 1) { <text> checked="checked" </text>  } }>应用
+						<input type="radio" name="val_type" value="1" @{ if (Model.AppStyle ==  AppStyle.App) { <text> checked="checked" </text>  } }>应用
 					</label>
 					<label class="radio">
-						<input type="radio" name="val_type" value="2" @{ if (Model.AppStyle == 2) { <text> checked="checked" </text>  } }>挂件
+						<input type="radio" name="val_type" value="2" @{ if (Model.AppStyle == AppStyle.Widget) { <text> checked="checked" </text>  } }>挂件
 					</label>
 				</div>
 			</div>
-			<div class="input-label input-label-isresize" @{ if (Model.AppStyle == 2) { <text> style="display:none" </text>  } }>
+			<div class="input-label input-label-isresize" @{ if (Model.AppStyle ==  AppStyle.Widget) { <text> style="display:none" </text>  } }>
 				<label class="label-text">窗口是否拉伸：</label>
 				<div class="label-box form-inline control-group">
 					<label class="radio" style="margin-right:10px"><input type="radio" name="val_isresize" value="1" @{ if (Model.IsResize) { <text> checked="checked" </text>  } }>是</label>
 					<label class="radio"><input type="radio" name="val_isresize" value="0" @{ if (!Model.IsResize) { <text> checked="checked" </text>  } }>否</label>
 				</div>
 			</div>
-			<div class="input-label input-label-isopenmax" @{ if (Model.AppStyle == 2 || Model.IsResize == false) { <text> style="display:none" </text>  } }>
+			<div class="input-label input-label-isopenmax" @{ if (Model.AppStyle ==  AppStyle.Widget|| Model.IsResize == false) { <text> style="display:none" </text>  } }>
 				<label class="label-text">打开默认最大化：</label>
 				<div class="label-box form-inline control-group">
 					<label class="radio" style="margin-right:10px"><input type="radio" name="val_isopenmax" value="1" @{ if (Model.IsOpenMax) { <text> checked="checked" </text>  } }>是</label>
 					<label class="radio"><input type="radio" name="val_isopenmax" value="0" @{ if (!Model.IsOpenMax) { <text> checked="checked" </text>  } }>否</label>
 				</div>
 			</div>
-			<div class="input-label input-label-isflash" @{ if (Model.AppStyle == 2) { <text> style="display:none" </text>  } }>
+			<div class="input-label input-label-isflash" @{ if (Model.AppStyle ==  AppStyle.Widget) { <text> style="display:none" </text>  } }>
 				<label class="label-text">是否为Flash：</label>
 				<div class="label-box form-inline control-group">
 					<label class="radio" style="margin-right:10px"><input type="radio" name="val_isflash" value="1" @{ if (Model.IsFlash) { <text> checked="checked" </text>  } }>是</label>

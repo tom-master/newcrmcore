@@ -1,6 +1,6 @@
 ﻿@using NewLibCore
 @using NewCrmCore.Dto
-
+@using NewCrmCore.Domain.ValueObject;
 @model AppDto
 @{
 	Layout = "~/Views/Shared/_LayoutApps.cshtml";
@@ -10,7 +10,7 @@
 @{
 	if (Model != null)
 	{
-		if ((Int32)ViewData["AppState"] == 2)//已通过
+		if ((AppAuditState)ViewData["AppState"] == AppAuditState.Pass)//已通过
 		{
 			<text>
 				@Html.Partial("~/Views/AppMarket/AccountAppManageDetail.cshtml", Model)
@@ -18,7 +18,7 @@
 		}
 		else
 		{
-			if ((Int32)ViewData["AppState"] == 4 || (Int32)ViewData["AppState"] == 3)//未审核或未通过
+			if ((AppAuditState)ViewData["AppState"] == AppAuditState.UnAuditState  || (AppAuditState)ViewData["AppState"] == AppAuditState.Deny )//未审核或未通过
 			{
 				<text>
 					@Html.Partial("~/Views/AppManager/AppAudit.cshtml", Model)
@@ -215,7 +215,7 @@
                 });
 
                 $('#btn-preview').on('click', function () {
-                    if (form.check()) {
+                    if (f.check()) {
                         if ($('input[name="val_type"]:checked').val() === 'app') {
                             window.parent.parent.parent.HROS.window.createTemp({
                                 title: $('input[name="val_name"]').val(),
