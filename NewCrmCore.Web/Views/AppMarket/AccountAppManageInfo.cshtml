@@ -96,7 +96,7 @@
                             $('#isIconByUpload').val('1');
                             $('#val_icon').val(urlPart)
                         } else {
-							HROS.request.post('/AppMarket/ModifyIcon', { appId: appId, newIcon: urlPart },function (responseText) {
+							HROS.request.post('/AppMarket/ModifyIcon', { AppId: appId, NewIcon: urlPart },function (responseText) {
                                 if (responseText.IsSuccess) {
                                     $('#isIconByUpload').val('1');
                                     $('.shortcutview img').attr('src', responseText.Model);

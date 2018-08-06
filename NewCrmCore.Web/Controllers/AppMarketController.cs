@@ -111,14 +111,14 @@ namespace NewCrmCore.Web.Controllers
         /// 应用打分
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> ModifyStar(Int32 appId, Int32 starCount)
+        public async Task<IActionResult> ModifyStar([FromBody]ModifyStar model)
         {
             #region 参数验证
-            new Parameter().Validate(appId).Validate(starCount);
+            new Parameter().Validate(model.AppId).Validate(model.StarCount);
             #endregion
 
             var response = new ResponseModel();
-            await _appServices.ModifyAppStarAsync(AccountId, appId, starCount);
+            await _appServices.ModifyAppStarAsync(AccountId, model.AppId, model.StarCount);
             response.IsSuccess = true;
             response.Message = "打分成功";
 
@@ -133,14 +133,14 @@ namespace NewCrmCore.Web.Controllers
         /// 安装应用
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Install(Int32 appId, Int32 deskNum)
+        public async Task<IActionResult> Install([FromBody]Install model)
         {
             #region 参数验证
-            new Parameter().Validate(appId).Validate(deskNum);
+            new Parameter().Validate(model.AppId).Validate(model.DeskNum);
             #endregion
 
             var response = new ResponseModel();
-            await _appServices.InstallAppAsync(AccountId, appId, deskNum);
+            await _appServices.InstallAppAsync(AccountId, model.AppId, model.DeskNum);
             response.IsSuccess = true;
             response.Message = "安装成功";
 
@@ -155,18 +155,18 @@ namespace NewCrmCore.Web.Controllers
         /// 更新图标
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> ModifyIcon(Int32 appId, String newIcon)
+        public async Task<IActionResult> ModifyIcon([FromBody]ModifyIconForApp model)
         {
             #region 参数验证
-            new Parameter().Validate(appId).Validate(newIcon);
+            new Parameter().Validate(model.AppId).Validate(model.NewIcon);
             #endregion
 
             var response = new ResponseModel<String>();
-            await _appServices.ModifyAppIconAsync(AccountId, appId, newIcon);
+            await _appServices.ModifyAppIconAsync(AccountId, model.AppId, model.NewIcon);
 
             response.IsSuccess = true;
             response.Message = "更新图标成功";
-            response.Model = Appsetting.FileUrl + newIcon;
+            response.Model = Appsetting.FileUrl + model.NewIcon;
 
             return Json(response);
         }

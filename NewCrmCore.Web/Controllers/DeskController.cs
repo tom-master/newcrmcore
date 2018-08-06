@@ -303,18 +303,18 @@ namespace NewCrmCore.Web.Controllers
         /// 更新图标
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> ModifyIcon(Int32 memberId, String newIcon)
+        public async Task<IActionResult> ModifyIcon([FromBody]ModifyIconForMember model)
         {
             #region 参数验证
-            new Parameter().Validate(memberId).Validate(newIcon);
+            new Parameter().Validate(model.MemberId).Validate(model.NewIcon);
             #endregion
 
             var response = new ResponseModel<String>();
-            await _deskServices.ModifyMemberIconAsync(AccountId, memberId, newIcon);
+            await _deskServices.ModifyMemberIconAsync(AccountId, model.MemberId, model.NewIcon);
 
             response.IsSuccess = true;
             response.Message = "更新图标成功";
-            response.Model = Appsetting.FileUrl + newIcon;
+            response.Model = Appsetting.FileUrl + model.NewIcon;
 
             return Json(response);
         }
@@ -451,14 +451,14 @@ namespace NewCrmCore.Web.Controllers
         /// 新建文件夹
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> CreateFolder(String folderName, String folderImg, Int32 deskId)
+        public async Task<IActionResult> CreateFolder([FromBody]CreateFolder model)
         {
             #region 参数验证
-            new Parameter().Validate(folderName).Validate(folderImg).Validate(deskId);
+            new Parameter().Validate(model.FolderName).Validate(model.FolderImg).Validate(model.DeskId);
             #endregion
 
             var response = new ResponseModel();
-            await _deskServices.CreateNewFolderAsync(folderName, folderImg, deskId, AccountId);
+            await _deskServices.CreateNewFolderAsync(model.FolderName, model.FolderImg, model.DeskId, AccountId);
             response.IsSuccess = true;
             response.Message = "新建文件夹成功";
 
@@ -513,40 +513,40 @@ namespace NewCrmCore.Web.Controllers
         /// 桌面成员移动
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> MemberMove(String moveType, Int32 memberId, Int32 from, Int32 to)
+        public async Task<IActionResult> MemberMove([FromBody]MemberMove model)
         {
             #region 参数验证
-            new Parameter().Validate(moveType).Validate(memberId);
+            new Parameter().Validate(model.MoveType).Validate(model.MemberId);
             #endregion
 
-            switch (moveType)
+            switch (model.MoveType.ToLower())
             {
                 case "desk-dock": //成员从桌面移动到码头
-                    await _deskServices.MemberInDockAsync(AccountId, memberId);
+                    await _deskServices.MemberInDockAsync(AccountId, model.MemberId);
                     break;
                 case "dock-desk": //成员从码头移动到桌面
-                    await _deskServices.MemberOutDockAsync(AccountId, memberId, to);
+                    await _deskServices.MemberOutDockAsync(AccountId, model.MemberId, model.To);
                     break;
                 case "dock-folder": //成员从码头移动到桌面文件夹中
-                    await _deskServices.DockToFolderAsync(AccountId, memberId, to);
+                    await _deskServices.DockToFolderAsync(AccountId, model.MemberId, model.To);
                     break;
                 case "folder-dock": //成员从文件夹移动到码头
-                    await _deskServices.FolderToDockAsync(AccountId, memberId);
+                    await _deskServices.FolderToDockAsync(AccountId, model.MemberId);
                     break;
                 case "desk-folder": //成员从桌面移动到文件夹
-                    await _deskServices.DeskToFolderAsync(AccountId, memberId, to);
+                    await _deskServices.DeskToFolderAsync(AccountId, model.MemberId, model.To);
                     break;
                 case "folder-desk": //成员从文件夹移动到桌面
-                    await _deskServices.FolderToDeskAsync(AccountId, memberId, to);
+                    await _deskServices.FolderToDeskAsync(AccountId, model.MemberId, model.To);
                     break;
                 case "folder-folder": //成员从文件夹移动到另一个文件夹中
-                    await _deskServices.FolderToOtherFolderAsync(AccountId, memberId, to);
+                    await _deskServices.FolderToOtherFolderAsync(AccountId, model.MemberId, model.To);
                     break;
                 case "desk-desk": //桌面移动到另一个桌面
-                    await _deskServices.DeskToOtherDeskAsync(AccountId, memberId, to);
+                    await _deskServices.DeskToOtherDeskAsync(AccountId, model.MemberId, model.To);
                     break;
                 case "dock-otherdesk"://应用码头移动到另一个桌面
-                    await _deskServices.DockToOtherDeskAsync(AccountId, memberId, to);
+                    await _deskServices.DockToOtherDeskAsync(AccountId, model.MemberId, model.To);
                     break;
             }
             var response = new ResponseModel
@@ -642,14 +642,14 @@ namespace NewCrmCore.Web.Controllers
         /// 更改码头位置
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> ModifyDockPosition(String pos, Int32 deskNum)
+        public async Task<IActionResult> ModifyDockPosition([FromBody] ModifyDockPosition model)
         {
             #region 参数验证
-            new Parameter().Validate(pos).Validate(deskNum);
+            new Parameter().Validate(model.Pos).Validate(model.DeskNum);
             #endregion
 
             var response = new ResponseModel();
-            await _deskServices.ModifyDockPositionAsync(AccountId, deskNum, pos);
+            await _deskServices.ModifyDockPositionAsync(AccountId, model.DeskNum, model.Pos);
             response.IsSuccess = true;
             response.Message = "更改码头的位置成功";
 
@@ -727,14 +727,14 @@ namespace NewCrmCore.Web.Controllers
         /// 修改文件夹信息
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> ModifyFolderInfo(String name, String icon, Int32 memberId)
+        public async Task<IActionResult> ModifyFolderInfo([FromBody]ModifyFolderInfo model)
         {
             #region 参数验证
-            new Parameter().Validate(name).Validate(icon).Validate(memberId);
+            new Parameter().Validate(model.Name).Validate(model.Icon).Validate(model.MemberId);
             #endregion
 
             var response = new ResponseModel();
-            await _deskServices.ModifyFolderInfoAsync(AccountId, name, icon, memberId);
+            await _deskServices.ModifyFolderInfoAsync(AccountId, model.Name, model.Icon, model.MemberId);
             response.IsSuccess = true;
             response.Message = "修改成功";
 
