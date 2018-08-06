@@ -205,7 +205,7 @@ namespace NewCrmCore.Web.Controllers
         /// 发布应用
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Release(Int32 appId)
+        public async Task<IActionResult> Release([FromBody]Int32 appId)
         {
             #region 参数验证
             new Parameter().Validate(appId);
@@ -302,7 +302,7 @@ namespace NewCrmCore.Web.Controllers
         /// 移除账户中应用
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Remove(Int32 appId)
+        public async Task<IActionResult> Remove([FromBody]Int32 appId)
         {
             #region 参数验证
             new Parameter().Validate(appId);

@@ -57,7 +57,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 移除账户
 		/// </summary>
 		[HttpPost]
-		public async Task<IActionResult> RemoveAccount(Int32 accountId)
+		public async Task<IActionResult> RemoveAccount([FromBody]Int32 accountId)
 		{
 			#region 参数验证
 			new Parameter().Validate(accountId);
@@ -79,7 +79,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 账户启用
 		/// </summary>
 		[HttpPost]
-		public async Task<IActionResult> Enable(Int32 accountId)
+		public async Task<IActionResult> Enable([FromBody]Int32 accountId)
 		{
 			#region 参数验证
 			new Parameter().Validate(accountId);
@@ -101,7 +101,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 账户禁用
 		/// </summary>
 		[HttpPost]
-		public async Task<IActionResult> Disable(Int32 accountId)
+		public async Task<IActionResult> Disable([FromBody]Int32 accountId)
 		{
 			#region 参数验证
 			new Parameter().Validate(accountId);
@@ -185,7 +185,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 检查账户名是否已经存在
 		/// </summary>
 		[HttpPost]
-		public async Task<IActionResult> CheckName(String param)
+		public async Task<IActionResult> CheckName([FromBody]String param)
 		{
 			#region 参数验证
 			new Parameter().Validate(param);

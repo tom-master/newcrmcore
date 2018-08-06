@@ -183,7 +183,6 @@
     <None Include="wwwroot\js\artDialog4.1.7\plugins\iframeTools.js" />
     <None Include="wwwroot\js\artDialog4.1.7\plugins\iframeTools.source.js" />
     <None Include="wwwroot\js\bootstrap\js\bootstrap.min.js" />
-    <None Include="wwwroot\js\dynamicBackground.js" />
     <None Include="wwwroot\js\fullAvatarEditor-2.3\crossdomain.xml" />
     <None Include="wwwroot\js\fullAvatarEditor-2.3\expressInstall.swf" />
     <None Include="wwwroot\js\fullAvatarEditor-2.3\fullAvatarEditor.swf" />

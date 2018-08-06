@@ -63,7 +63,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 审核通过
 		/// </summary>
 		[HttpPost]
-		public async Task<IActionResult> Pass(Int32 appId)
+		public async Task<IActionResult> Pass([FromBody]Int32 appId)
 		{
 			#region 参数验证	
 			new Parameter().Validate(appId);
@@ -85,7 +85,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 删除app
 		/// </summary>
 		[HttpPost]
-		public async Task<IActionResult> Remove(Int32 appId)
+		public async Task<IActionResult> Remove([FromBody]Int32 appId)
 		{
 			#region 参数验证	
 			new Parameter().Validate(appId);
@@ -107,7 +107,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 审核不通过
 		/// </summary>
 		[HttpPost]
-		public async Task<IActionResult> Deny(Int32 appId)
+		public async Task<IActionResult> Deny([FromBody]Int32 appId)
 		{
 			#region 参数验证	
 			new Parameter().Validate(appId);
@@ -154,7 +154,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 检查应用名称
 		/// </summary>
 		[HttpPost]
-		public async Task<IActionResult> CheckName(String param)
+		public async Task<IActionResult> CheckName([FromBody]String param)
 		{
 			#region 参数验证
 			new Parameter().Validate(param);
@@ -172,7 +172,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 检查应用Url
 		/// </summary>
 		[HttpPost]
-		public async Task<IActionResult> CheckUrl(String param)
+		public async Task<IActionResult> CheckUrl([FromBody]String param)
 		{
 			#region 参数验证
 			new Parameter().Validate(param);
@@ -190,7 +190,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 设置应用为今日推荐
 		/// </summary>
 		[HttpPost]
-		public async Task<IActionResult> Recommend(Int32 appId)
+		public async Task<IActionResult> Recommend([FromBody]Int32 appId)
 		{
 			#region 参数验证	
 			new Parameter().Validate(appId);

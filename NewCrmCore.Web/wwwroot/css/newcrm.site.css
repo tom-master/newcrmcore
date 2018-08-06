@@ -1050,9 +1050,9 @@ input {
 }
 
 html .window-frame {
-	height: expression((function(el){
+	/* height: expression((function(el){
 		el.style.height=el.parentNode.clientHeight-60+"px";
-	})(this))
+	})(this)) */
 }
 
 .window-frame iframe {
