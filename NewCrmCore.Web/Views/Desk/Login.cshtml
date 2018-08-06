@@ -1,57 +1,59 @@
 ﻿@{
-	Layout = null;
+	Layout = "~/Views/Shared/_LayoutApps.cshtml";
 }
-<html>
-<head>
-	<title>登陆</title>
-	<link href="~/css/hoorayui/login.css" rel="stylesheet" />
-</head>
-<body>
-	<div class="loading" style="display: none"></div>
-	<div id="parentDiv">
-		<canvas id="Mycanvas"></canvas>
-		<div class="wrapper">
-			<div class="container">
-				<h1 class="logo">
-					v8.7
-				</h1>
-				<form id="loginForm">
-					<div>
+@section ChildrenCss{
+	<style>
+		.m{
+			position: absolute;
+			left: 40%;
+			top: 30%;
+		}
+            
+    </style>
+}
+<div class="loading" style="display: none"></div>
+<div id="parentDiv" style="height: 100%">
+	<div  class="m">
+		<div  class="well">
+			<form id="loginForm" class="form-horizontal">
+				<div class="control-group">
+					<label class="control-label" for="inputEmail">账户</label>
+					<div class="controls">
 						<input type="text" name="accountname" id="accountname" value="admin" class="accountname" placeholder="用户名" autocomplete="off" />
 					</div>
-					<div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="inputPassword">密码</label>
+					<div class="controls">
 						<input type="password" name="password" id="password" value="@("xiaofan@.1")" class="password" placeholder="密码" oncontextmenu="return false" onpaste="return false" />
 					</div>
-					<button id="login">登 陆</button>
-				</form>
-			</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						<label class="checkbox">
+							<input type="checkbox" id="remerber">七天内记住我
+						</label>
+						<button class="btn" id="login">登 陆</button>
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
-</body>
-</html>
-<script src="~/js/jquery-3.2.1.min.js"></script>
-<script src="~/js/dynamicBackground.js"></script>
-<script>
-	$(function () {
-		$("#login").click(function (event) {
-			if (!$('#accountname').val() || !$('#password').val()) {
-				alert("请输入用户名和密码")
-				return false;
-			}
+</div>
+ @section ChildrenScript{
+	<script>
+		$(function () {
+			$("#login").click(function (event) {
+				if (!$('#accountname').val() || !$('#password').val()) {
+					alert("请输入用户名和密码")
+					return false;
+				}
 
-			event.preventDefault();
-			beginLogin();
-			var loginParameter = {
-				Name: $('.accountname').val(),
-				Password: $('.password').val(),
-				IsRememberPasswrod: false
-			}
-			$.ajax({
-				type: 'POST',
-				url: '/Desk/landing',
-				contentType: "application/json;charset=utf-8",
-				data: JSON.stringify(loginParameter),
-				success: function (responseText) {
+				event.preventDefault();
+				beginLogin();
+				
+				var parameter = {Name: $('.accountname').val(),Password: $('.password').val(),IsRememberPasswrod: $('#remerber').prop('checked')};
+				HROS.request.post('/desk/landing',parameter,function(responseText){
 					if (responseText.IsSuccess) {
 						$('.loading').hide();
 						location.href = '/Desk/Index';
@@ -59,22 +61,22 @@
 						endLogin();
 						alert('账号或密码错误')
 					}
-				}
+				})
 			});
 		});
-	});
 
-	function beginLogin() {
-		$('form').fadeOut(500);
-		$('.wrapper').addClass('form-success');
-		$('.loading').show();
-		$('#parentDiv').hide();
-	}
+		function beginLogin() {
+			$('form').fadeOut(500);
+			$('.wrapper').addClass('form-success');
+			$('.loading').show();
+			$('#parentDiv').hide();
+		}
 
-	function endLogin() {
-		$('form').fadeIn(500);
-		$('.wrapper').removeClass('form-success');
-		$('.loading').hide();
-		$('#parentDiv').show();
-	}
-</script>
+		function endLogin() {
+			$('form').fadeIn(500);
+			$('.wrapper').removeClass('form-success');
+			$('.loading').hide();
+			$('#parentDiv').show();
+		}
+	</script>
+ }

@@ -3,9 +3,9 @@
     "outputFileName": "wwwroot/css/newcrm.site.min.css",
     "inputFiles": [
       "wwwroot/css/hoorayui/globle.css",
-      "wwwroot/css/hoorayui/index.css",
-      "wwwroot/css/hoorayui/login.css",
-      "wwwroot/css/hoorayui/sys.css"
+      "wwwroot/js/hooray/lib/hooraylibs.css",
+      "wwwroot/js/bootstrap/css/bootstrap.min.css",
+      "wwwroot/css/hoorayui/sys.css" 
     ]
   },
   {
@@ -20,9 +20,8 @@
       "wwwroot/js/validate/Validform_v5.3.2/Validform_v5.3.2_min.js",
       "wwwroot/js/webuploader-0.1.5/webuploader.js",
       "wwwroot/js/artdialog4.1.7/jquery.artdialog.js",
-      "wwwroot/js/artdialog4.1.7/plugins/iframetools.js"
+      "wwwroot/js/artdialog4.1.7/plugins/iframetools.js" 
     ],
-
     "minify": {
       "enabled": true,
       "renameLocals": true

@@ -156,11 +156,14 @@
                     content: '确定要删除 “' + appname + '” 该应用么？',
                     ok: function () {
                         HROS.request.post('/AppMarket/Remove', { appId: appId }, function (responseText) {
-                            if (typeof responseText.js !== 'undefined') {
-                                $('body').append(responseText.js);
-                            } else {
-                                $('#pagination').trigger('currentPage');
-                            }
+							if (responseText.IsSuccess) {
+								NewCrm.msgbox.success('删除成功!');
+								setTimeout(function(){
+									$('#pagination').trigger('currentPage');
+								},1000)
+							} else {
+								NewCrm.msgbox.fail(responseText.Message);
+							}
                         });
                     },
                     cancel: true
