@@ -3,28 +3,54 @@
 }
 @section ChildrenCss{
 	<style>
-		.m{
-			position: absolute;
-			left: 40%;
-			top: 30%;
+		.bg{
+			background-image: url(/images/ui/sign_bg.png);
+			background-repeat: no-repeat;
+			background-color: #b8e5f8;
+			background-size: cover;
+			width: 100%;
+			height: 100vh;
+			overflow: auto;
+			padding-right: 15px;
 		}
-            
-    </style>
+
+		.SignFlowHomepage-content{
+			-webkit-box-flex: 1;
+			-ms-flex: 1;
+			flex: 1;
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+			-webkit-box-orient: vertical;
+			-webkit-box-direction: normal;
+			-ms-flex-direction: column;
+			flex-direction: column;
+			-webkit-box-align: center;
+			-ms-flex-align: center;
+			align-items: center;
+			-webkit-box-pack: center;
+			-ms-flex-pack: center;
+			justify-content: center;
+			border-radius: 2px;
+			min-height: 688px;
+			height: calc(100% - 42px);
+			box-sizing: border-box;
+		}
+		
+	</style>
 }
 <div>
 	<div class="loading" style="display: none"></div>
-	<div id="parentDiv" style="height: 100%">
-		<div  class="m">
-			<div  class="well">
+	<div class="bg">
+		<div class="SignFlowHomepage-content" >
+			<div class="well">
 				<form name="form" id="form" method="POST" action="/desk/landing" class="form-horizontal">
 					<div class="control-group">
-						<label class="control-label" for="inputEmail">账户</label>
 						<div class="controls">
 							<input type="text" name="accountname" value="admin" placeholder="用户名" datatype="s2-10" nullmsg="请输入用户名" errormsg="用户名长度为2-10个字符" />
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="inputPassword">密码</label>
 						<div class="controls">
 							<input type="password" name="password" value="@("xiaofan@.1")" placeholder="密码" datatype="*6-12" nullmsg="请输入用户密码" errormsg="用户密码长度为6-12个字符"  />
 						</div>
@@ -32,7 +58,7 @@
 					<div class="control-group">
 						<div class="controls">
 							<label class="checkbox">
-								<input type="checkbox" onchange="$('#remerber').val($(this).prop('checked'))" >七天内记住我
+								<input type="checkbox" onchange="$('#remerber').val($(this).prop('checked'))" >七天内登录
 								<input type="hidden" name="remerber" id="remerber">
 							</label>
 							<a class="btn" id="btn-submit" href="###" >登 陆</a>
@@ -46,7 +72,7 @@
  @section ChildrenScript{
 	<script>
 		$(function(){
-			$('body').prop('style','background:url(/images/ui/sign_bg.png) no-repeat 0 0;width:100%;height:100%;background-color:cadetblue')
+			//$('body').prop('class','bg')
 			var f = $('#form').Validform({
 				btnSubmit: '#btn-submit',
 				postonce: true,
