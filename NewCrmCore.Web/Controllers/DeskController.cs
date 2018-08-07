@@ -178,7 +178,7 @@ namespace NewCrmCore.Web.Controllers
         /// 设置壁纸
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> ModifyWallpaper([FromBody]Int32 wallpaperId)
+        public async Task<IActionResult> ModifyWallpaper(Int32 wallpaperId)
         {
             #region 参数验证
             new Parameter().Validate(wallpaperId);
@@ -200,7 +200,7 @@ namespace NewCrmCore.Web.Controllers
         /// 删除壁纸
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> RemoveWallpaper([FromBody]Int32 wallPaperId)
+        public async Task<IActionResult> RemoveWallpaper(Int32 wallPaperId)
         {
             #region 参数验证
             new Parameter().Validate(wallPaperId);
@@ -222,7 +222,7 @@ namespace NewCrmCore.Web.Controllers
         /// 上传壁纸     
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> UploadWallPaper([FromBody]WallpaperDto wallpaper)
+        public async Task<IActionResult> UploadWallPaper(WallpaperDto wallpaper)
         {
             #region 参数验证
             new Parameter().Validate(wallpaper);
@@ -256,7 +256,7 @@ namespace NewCrmCore.Web.Controllers
         /// 网络壁纸
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> WebWallpaper([FromBody]String webUrl)
+        public async Task<IActionResult> WebWallpaper(String webUrl)
         {
             #region 参数验证
             new Parameter().Validate(webUrl);
@@ -280,7 +280,7 @@ namespace NewCrmCore.Web.Controllers
         /// 更换皮肤
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> ModifySkin([FromBody]String skin)
+        public async Task<IActionResult> ModifySkin(String skin)
         {
             #region 参数验证
             new Parameter().Validate(skin);
@@ -303,7 +303,7 @@ namespace NewCrmCore.Web.Controllers
         /// 更新图标
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> ModifyIcon([FromBody]ModifyIconForMember model)
+        public async Task<IActionResult> ModifyIcon(ModifyIconForMember model)
         {
             #region 参数验证
             new Parameter().Validate(model.MemberId).Validate(model.NewIcon);
@@ -328,7 +328,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> UnlockScreen([FromBody]String unlockPassword)
+        public async Task<IActionResult> UnlockScreen(String unlockPassword)
         {
             #region 参数验证
             new Parameter().Validate(unlockPassword);
@@ -451,7 +451,7 @@ namespace NewCrmCore.Web.Controllers
         /// 新建文件夹
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> CreateFolder([FromBody]CreateFolder model)
+        public async Task<IActionResult> CreateFolder(CreateFolder model)
         {
             #region 参数验证
             new Parameter().Validate(model.FolderName).Validate(model.FolderImg).Validate(model.DeskId);
@@ -473,7 +473,7 @@ namespace NewCrmCore.Web.Controllers
         /// 卸载桌面成员
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Uninstall([FromBody]Int32 memberId)
+        public async Task<IActionResult> Uninstall(Int32 memberId)
         {
             #region 参数验证
             new Parameter().Validate(memberId);
@@ -495,7 +495,7 @@ namespace NewCrmCore.Web.Controllers
         /// 检查成员名称
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> CheckName([FromBody]String param)
+        public async Task<IActionResult> CheckName(String param)
         {
             #region 参数验证
             new Parameter().Validate(param);
@@ -513,7 +513,7 @@ namespace NewCrmCore.Web.Controllers
         /// 桌面成员移动
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> MemberMove([FromBody]MemberMove model)
+        public async Task<IActionResult> MemberMove(MemberMove model)
         {
             #region 参数验证
             new Parameter().Validate(model.MoveType).Validate(model.MemberId);
@@ -642,7 +642,7 @@ namespace NewCrmCore.Web.Controllers
         /// 更改码头位置
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> ModifyDockPosition([FromBody] ModifyDockPosition model)
+        public async Task<IActionResult> ModifyDockPosition( ModifyDockPosition model)
         {
             #region 参数验证
             new Parameter().Validate(model.Pos).Validate(model.DeskNum);
@@ -664,7 +664,7 @@ namespace NewCrmCore.Web.Controllers
         /// 修改壁纸来源
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> ModifyWallpaperSource([FromBody]String source)
+        public async Task<IActionResult> ModifyWallpaperSource(String source)
         {
             #region 参数验证
             new Parameter().Validate(source);
@@ -686,7 +686,7 @@ namespace NewCrmCore.Web.Controllers
         /// 更改图标大小
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> ModifySize([FromBody]Int32 appSize)
+        public async Task<IActionResult> ModifySize(Int32 appSize)
         {
             #region 参数验证
             new Parameter().Validate(appSize);
@@ -727,7 +727,7 @@ namespace NewCrmCore.Web.Controllers
         /// 修改文件夹信息
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> ModifyFolderInfo([FromBody]ModifyFolderInfo model)
+        public async Task<IActionResult> ModifyFolderInfo(ModifyFolderInfo model)
         {
             #region 参数验证
             new Parameter().Validate(model.Name).Validate(model.Icon).Validate(model.MemberId);
@@ -768,7 +768,7 @@ namespace NewCrmCore.Web.Controllers
         /// 更换默认显示桌面
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> ModifyDefaultDesk([FromBody]Int32 deskNum)
+        public async Task<IActionResult> ModifyDefaultDesk(Int32 deskNum)
         {
             #region 参数验证
             new Parameter().Validate(deskNum);
@@ -790,7 +790,7 @@ namespace NewCrmCore.Web.Controllers
         /// 更换图标排列方向
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> ModifyXy([FromBody]String appXy)
+        public async Task<IActionResult> ModifyXy(String appXy)
         {
             #region 参数验证
             new Parameter().Validate(appXy);
@@ -813,7 +813,7 @@ namespace NewCrmCore.Web.Controllers
         /// 设置壁纸显示模式
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> ModifyDisplayModel([FromBody]String wallPaperShowType)
+        public async Task<IActionResult> ModifyDisplayModel(String wallPaperShowType)
         {
             #region 参数验证
             new Parameter().Validate(wallPaperShowType);
@@ -854,7 +854,7 @@ namespace NewCrmCore.Web.Controllers
         /// 更改图标的水平间距
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> ModifyHorizontalSpace([FromBody]Int32 appHorizontal)
+        public async Task<IActionResult> ModifyHorizontalSpace(Int32 appHorizontal)
         {
             #region 参数验证
             new Parameter().Validate(appHorizontal);
@@ -876,7 +876,7 @@ namespace NewCrmCore.Web.Controllers
         /// 更改应用图标垂直间距
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> ModifyVerticalSpace([FromBody]Int32 appVertical)
+        public async Task<IActionResult> ModifyVerticalSpace(Int32 appVertical)
         {
             #region 参数验证
             new Parameter().Validate(appVertical);

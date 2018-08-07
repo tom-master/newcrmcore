@@ -111,7 +111,7 @@ namespace NewCrmCore.Web.Controllers
         /// 应用打分
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> ModifyStar([FromBody]ModifyStar model)
+        public async Task<IActionResult> ModifyStar(ModifyStar model)
         {
             #region 参数验证
             new Parameter().Validate(model.AppId).Validate(model.StarCount);
@@ -133,7 +133,7 @@ namespace NewCrmCore.Web.Controllers
         /// 安装应用
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Install([FromBody]Install model)
+        public async Task<IActionResult> Install(Install model)
         {
             #region 参数验证
             new Parameter().Validate(model.AppId).Validate(model.DeskNum);
@@ -155,7 +155,7 @@ namespace NewCrmCore.Web.Controllers
         /// 更新图标
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> ModifyIcon([FromBody]ModifyIconForApp model)
+        public async Task<IActionResult> ModifyIcon(ModifyIconForApp model)
         {
             #region 参数验证
             new Parameter().Validate(model.AppId).Validate(model.NewIcon);
@@ -205,7 +205,7 @@ namespace NewCrmCore.Web.Controllers
         /// 发布应用
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Release([FromBody]Int32 appId)
+        public async Task<IActionResult> Release(Int32 appId)
         {
             #region 参数验证
             new Parameter().Validate(appId);
@@ -302,7 +302,7 @@ namespace NewCrmCore.Web.Controllers
         /// 移除账户中应用
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Remove([FromBody]Int32 appId)
+        public async Task<IActionResult> Remove(Int32 appId)
         {
             #region 参数验证
             new Parameter().Validate(appId);

@@ -57,7 +57,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 移除应用类型
 		/// </summary>
 		[HttpPost]
-		public async Task<IActionResult> Remove([FromBody]Int32 appTypeId)
+		public async Task<IActionResult> Remove(Int32 appTypeId)
 		{
 			#region 参数验证
 			new Parameter().Validate(appTypeId);
@@ -110,7 +110,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 检查类型名称
 		/// </summary>
 		[HttpPost]
-		public async Task<IActionResult> CheckName([FromBody]String param)
+		public async Task<IActionResult> CheckName(String param)
 		{
 			#region 参数验证
 			new Parameter().Validate(param);

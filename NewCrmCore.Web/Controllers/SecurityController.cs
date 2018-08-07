@@ -102,7 +102,7 @@ namespace NewCrmCore.Web.Controllers
         /// 移除角色
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> RemoveRole([FromBody]Int32 roleId)
+        public async Task<IActionResult> RemoveRole(Int32 roleId)
         {
             #region 参数验证
             new Parameter().Validate(roleId);
@@ -195,7 +195,7 @@ namespace NewCrmCore.Web.Controllers
         /// 检查角色名称
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> CheckName([FromBody]String param)
+        public async Task<IActionResult> CheckName(String param)
         {
             new Parameter().Validate(param);
             var result = await _securityServices.CheckRoleNameAsync(param);
@@ -210,7 +210,7 @@ namespace NewCrmCore.Web.Controllers
         /// 检查角色标识
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> CheckRoleIdentity([FromBody]String param)
+        public async Task<IActionResult> CheckRoleIdentity(String param)
         {
             new Parameter().Validate(param);
             var result = await _securityServices.CheckRoleIdentityAsync(param);

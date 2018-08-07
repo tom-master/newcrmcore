@@ -14,96 +14,99 @@ using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.Web.Filter
 {
-	public class AuthFilter: IAsyncAuthorizationFilter
-	{
+    public class AuthFilter : IAsyncAuthorizationFilter
+    {
 
-		public async Task OnAuthorizationAsync(AuthorizationFilterContext filterContext)
-		{
-			if (((ControllerActionDescriptor)filterContext.ActionDescriptor).MethodInfo.CustomAttributes.Any(a => a.AttributeType == typeof(DoNotCheckPermissionAttribute)))
-			{
-				return;
-			}
+        public async Task OnAuthorizationAsync(AuthorizationFilterContext filterContext)
+        {
+            if (((ControllerActionDescriptor)filterContext.ActionDescriptor).MethodInfo.CustomAttributes.Any(a => a.AttributeType == typeof(DoNotCheckPermissionAttribute)))
+            {
+                return;
+            }
 
-			if (filterContext.HttpContext.Request.Cookies["Account"] == null)
-			{
-				ReturnMessage(filterContext, "会话过期,请刷新页面后重新登陆");
-				return;
-			}
+            if (filterContext.HttpContext.Request.Cookies["Account"] == null)
+            {
+                ReturnMessage(filterContext, "会话过期,请刷新页面后重新登陆");
+                return;
+            }
 
-			if (filterContext.HttpContext.Request.Method.ToLower() == "post")
-			{
-				if (!await ValidateToken(filterContext))
-				{
-					ReturnMessage(filterContext, "不要重复提交表单!");
-					return;
-				}
-			}
+            if (filterContext.HttpContext.Request.Method.ToLower() == "post")
+            {
+                if (!filterContext.HttpContext.Request.IsAjaxRequest())
+                {
+                    if (!await ValidateToken(filterContext))
+                    {
+                        ReturnMessage(filterContext, "不要重复提交表单!");
+                        return;
+                    }
+                }
+            }
 
-			if (filterContext.HttpContext.Request.Query["type"] == "folder")
-			{
-				return;
-			}
+            if (filterContext.HttpContext.Request.Query["type"] == "folder")
+            {
+                return;
+            }
 
-			if (!String.IsNullOrEmpty(filterContext.HttpContext.Request.Query["id"]))
-			{
-				var accountId = JsonConvert.DeserializeObject<AccountDto>(filterContext.HttpContext.Request.Cookies["Account"]).Id;
+            if (!String.IsNullOrEmpty(filterContext.HttpContext.Request.Query["id"]))
+            {
+                var accountId = JsonConvert.DeserializeObject<AccountDto>(filterContext.HttpContext.Request.Cookies["Account"]).Id;
 
-				var account = await ((IAccountServices)filterContext
-					.HttpContext
-					.RequestServices
-					.GetService(typeof(IAccountServices)))
-					.GetAccountAsync(accountId);
+                var account = await ((IAccountServices)filterContext
+                    .HttpContext
+                    .RequestServices
+                    .GetService(typeof(IAccountServices)))
+                    .GetAccountAsync(accountId);
 
-				var appId = Int32.Parse(filterContext.HttpContext.Request.Query["id"]);
-				var isPermission = await ((ISecurityServices)filterContext.HttpContext.RequestServices.GetService(typeof(ISecurityServices))).CheckPermissionsAsync(appId, account.Roles.Select(role => role.Id).ToArray());
+                var appId = Int32.Parse(filterContext.HttpContext.Request.Query["id"]);
+                var isPermission = await ((ISecurityServices)filterContext.HttpContext.RequestServices.GetService(typeof(ISecurityServices))).CheckPermissionsAsync(appId, account.Roles.Select(role => role.Id).ToArray());
 
-				if (!isPermission)
-				{
-					ReturnMessage(filterContext, "对不起,您没有访问的权限!");
-				}
-			}
-		}
+                if (!isPermission)
+                {
+                    ReturnMessage(filterContext, "对不起,您没有访问的权限!");
+                }
+            }
+        }
 
 
 
-		private void ReturnMessage(AuthorizationFilterContext filterContext, String message)
-		{
-			var isAjaxRequest = filterContext.HttpContext.Request.IsAjaxRequest();
+        private void ReturnMessage(AuthorizationFilterContext filterContext, String message)
+        {
+            var isAjaxRequest = filterContext.HttpContext.Request.IsAjaxRequest();
 
-			var response = new ResponseModel
-			{
-				IsSuccess = false,
-				Message = message
-			};
+            var response = new ResponseModel
+            {
+                IsSuccess = false,
+                Message = message
+            };
 
-			if (isAjaxRequest)
-			{
-				filterContext.Result = new JsonResult(response)
-				{
-					ContentType = "utf8"
-				};
-			}
-			else
-			{
-				filterContext.Result = new ContentResult()
-				{
-					ContentType = "utf8",
-					Content = @"<script>(function(){top.NewCrm.msgbox.fail('" + response.Message + "');})()</script>"
-				};
-			}
-		}
+            if (isAjaxRequest)
+            {
+                filterContext.Result = new JsonResult(response)
+                {
+                    ContentType = "utf8"
+                };
+            }
+            else
+            {
+                filterContext.Result = new ContentResult()
+                {
+                    ContentType = "utf8",
+                    Content = @"<script>(function(){top.NewCrm.msgbox.fail('" + response.Message + "');})()</script>"
+                };
+            }
+        }
 
-		private async Task<Boolean> ValidateToken(AuthorizationFilterContext filterContext)
-		{
-			var token2 = filterContext.HttpContext.Request.Form["token"];
-			var token1 = await CacheHelper.GetOrSetCacheAsync(new GlobalUniqueTokenCacheKey(token2));
+        private async Task<Boolean> ValidateToken(AuthorizationFilterContext filterContext)
+        {
+            var token2 = filterContext.HttpContext.Request.Form["token"];
+            var token1 = await CacheHelper.GetOrSetCacheAsync(new GlobalUniqueTokenCacheKey(token2));
 
-			if (token1 != token2)
-			{
-				return false;
-			}
-			await CacheHelper.RemoveKeyWhenModify(new GlobalUniqueTokenCacheKey(token2));
-			return true;
-		}
-	}
+            if (token1 != token2)
+            {
+                return false;
+            }
+            await CacheHelper.RemoveKeyWhenModify(new GlobalUniqueTokenCacheKey(token2));
+            return true;
+        }
+    }
 }

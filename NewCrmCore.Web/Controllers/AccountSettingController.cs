@@ -62,7 +62,7 @@ namespace NewCrmCore.Web.Controllers
 		///上传账户头像
 		/// </summary>
 		[HttpPost]
-		public async Task<IActionResult> ModifyFace([FromBody]String accountFace)
+		public async Task<IActionResult> ModifyFace(String accountFace)
 		{
 			#region 参数验证
 			new Parameter().Validate(accountFace);
@@ -109,7 +109,7 @@ namespace NewCrmCore.Web.Controllers
 		/// 检查旧密码和输入的密码是否一致
 		/// </summary>
 		[HttpPost]
-		public async Task<IActionResult> CheckPassword([FromBody]String param)
+		public async Task<IActionResult> CheckPassword(String param)
 		{
 			#region 参数验证
 			new Parameter().Validate(param);
