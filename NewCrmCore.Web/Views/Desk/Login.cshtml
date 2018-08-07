@@ -39,7 +39,7 @@
 		
 	</style>
 }
-<div>
+<div style="overflow:hidden">
 	<div class="loading" style="display: none"></div>
 	<div class="bg">
 		<div class="SignFlowHomepage-content" >
@@ -72,7 +72,6 @@
  @section ChildrenScript{
 	<script>
 		$(function(){
-			//$('body').prop('class','bg')
 			var f = $('#form').Validform({
 				btnSubmit: '#btn-submit',
 				postonce: true,

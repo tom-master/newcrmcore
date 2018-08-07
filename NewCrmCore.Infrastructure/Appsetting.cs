@@ -1,4 +1,5 @@
 ﻿using System;
+using NewLibCore;
 
 namespace NewCrmCore.Infrastructure
 {
@@ -8,7 +9,7 @@ namespace NewCrmCore.Infrastructure
 		{
 			get
 			{
-				var str = GetVar("NewCrmDatabase");
+				var str =Host.GetHostVar("NewCrmDatabase");
 				return str ?? "";
 			}
 		}
@@ -17,7 +18,7 @@ namespace NewCrmCore.Infrastructure
 		{
 			get
 			{
-				var str = GetVar("NewCrmRedis");
+				var str = Host.GetHostVar("NewCrmRedis");
 				return str ?? "";
 			}
 		}
@@ -26,7 +27,7 @@ namespace NewCrmCore.Infrastructure
 		{
 			get
 			{
-				var str = GetVar("NewCrmMongodb");
+				var str = Host.GetHostVar("NewCrmMongodb");
 				return str ?? "";
 			}
 		}
@@ -35,7 +36,7 @@ namespace NewCrmCore.Infrastructure
 		{
 			get
 			{
-				var str = GetVar("NewCrmFileUploadUrl");
+				var str = Host.GetHostVar("NewCrmFileUploadUrl");
 				return str ?? "";
 			}
 		}
@@ -44,7 +45,7 @@ namespace NewCrmCore.Infrastructure
 		{
 			get
 			{
-				var str = GetVar("NewCrmFileUrl");
+				var str = Host.GetHostVar("NewCrmFileUrl");
 				return str ?? "";
 			}
 		}
@@ -53,7 +54,7 @@ namespace NewCrmCore.Infrastructure
 		{
 			get
 			{
-				var str = GetVar("NewCrmCoreFileStorage");
+				var str = Host.GetHostVar("NewCrmCoreFileStorage");
 				return str ?? "";
 			}
 		}
@@ -62,40 +63,9 @@ namespace NewCrmCore.Infrastructure
 		{
 			get
 			{
-				var str = GetVar("NewCrmSkin");
+				var str = Host.GetHostVar("NewCrmSkin");
 				return str ?? "";
 			}
-		}
-
-
-		private static String GetVar(String varKey)
-		{
-			var v1 = Environment.GetEnvironmentVariable(varKey);
-
-			if (v1 != null)
-			{
-				return v1;
-			}
-
-			var v2 = Environment.GetEnvironmentVariable(varKey, EnvironmentVariableTarget.Machine);
-			if (v2 != null)
-			{
-				return v2;
-			}
-
-			var v3 = Environment.GetEnvironmentVariable(varKey, EnvironmentVariableTarget.Process);
-			if (v3 != null)
-			{
-				return v3;
-			}
-
-			var v4 = Environment.GetEnvironmentVariable(varKey, EnvironmentVariableTarget.User);
-			if (v4 != null)
-			{
-				return v4;
-			}
-
-			return "";
 		}
 	}
 }
