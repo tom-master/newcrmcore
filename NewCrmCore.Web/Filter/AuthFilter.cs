@@ -67,19 +67,15 @@ namespace NewCrmCore.Web.Filter
             }
         }
 
-
-
         private void ReturnMessage(AuthorizationFilterContext filterContext, String message)
         {
-            var isAjaxRequest = filterContext.HttpContext.Request.IsAjaxRequest();
-
             var response = new ResponseModel
             {
                 IsSuccess = false,
                 Message = message
             };
 
-            if (isAjaxRequest)
+            if (filterContext.HttpContext.Request.IsAjaxRequest())
             {
                 filterContext.Result = new JsonResult(response)
                 {
@@ -101,10 +97,15 @@ namespace NewCrmCore.Web.Filter
             var token2 = filterContext.HttpContext.Request.Form["token"];
             var token1 = await CacheHelper.GetOrSetCacheAsync(new GlobalUniqueTokenCacheKey(token2));
 
+            if (String.IsNullOrEmpty(token1))
+            {
+                return false;
+            }
             if (token1 != token2)
             {
                 return false;
             }
+
             await CacheHelper.RemoveKeyWhenModify(new GlobalUniqueTokenCacheKey(token2));
             return true;
         }
