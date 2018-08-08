@@ -92,12 +92,9 @@ namespace NewCrmCore.Web.Filter
             var requestToken = "";
             if (filterContext.HttpContext.Request.IsAjaxRequest())
             {
-                requestToken = System.Web.HttpUtility.UrlDecode(filterContext.HttpContext.Request.Query["token"]);
+                return true;
             }
-            else
-            {
-                requestToken = filterContext.HttpContext.Request.Form["token"];
-            }
+            requestToken = filterContext.HttpContext.Request.Form["token"];
 
             var cacheToken = await CacheHelper.GetOrSetCacheAsync(new GlobalUniqueTokenCacheKey(requestToken));
 
