@@ -131,14 +131,12 @@
                         }
                     },
 					ajaxPost: true,
-					beforeSubmit: function (curform) {
-						if (f.getStatus() === 'posted') {
-							NewCrm.msgbox.loading(HROS.CONFIG.postOnce)
-							return false
-						} else {
-							NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
-						}
-					},
+					postonceTip:function(){
+                        NewCrm.msgbox.fail(HROS.CONFIG.postOnce)
+                    },
+                    beforeSubmit: function (curform) { 
+                        NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+                    },
                     callback: function (responseText) {
                         if (responseText.IsSuccess) {
                             if ($('input[name="id"]').val() !== '') {

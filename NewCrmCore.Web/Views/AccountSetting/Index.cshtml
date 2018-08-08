@@ -105,13 +105,12 @@
                 }
             },
 			ajaxPost: false,
-			beforeSubmit: function (curform) {
-				if (f1.getStatus() === 'posted') {
-					NewCrm.msgbox.loading(HROS.CONFIG.postOnce)
-				} else {
-					NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
-				}
-			},
+			postonceTip:function(){
+                NewCrm.msgbox.fail(HROS.CONFIG.postOnce)
+            },
+            beforeSubmit: function (curform) { 
+                NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+            },
             callback: function (form) {
                 $.dialog({
                     title: '温馨提示',
@@ -173,13 +172,12 @@
                 }
             },
 			ajaxPost: false,
-			beforeSubmit: function (curform) {
-				if (f2.getStatus() === 'posted') {
-					NewCrm.msgbox.loading(HROS.CONFIG.postOnce)
-				} else {
-					NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
-				}
-			},
+			postonceTip:function(){
+                NewCrm.msgbox.fail(HROS.CONFIG.postOnce)
+            },
+            beforeSubmit: function (curform) { 
+                NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+            },
             callback: function (responseText) {
                 $.dialog({
                     title: '温馨提示',

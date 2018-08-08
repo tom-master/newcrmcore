@@ -887,7 +887,6 @@
 		},
 
 		submitForm: function (settings, flg, url, ajaxPost, sync) {
-			debugger
 			/*
 				flg===true时跳过验证直接提交;
 				ajaxPost==="ajaxPost"指示当前表单以ajax方式提交;
@@ -899,6 +898,7 @@
 
 			//要求只能提交一次时;
 			if (settings.postonce && curform[0].validform_status === "posted") {
+				settings.postonceTip();
 				return false;
 			}
 

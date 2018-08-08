@@ -150,7 +150,6 @@ namespace NewCrmCore.Web.Controllers
         [HttpPost, DoNotCheckPermission]
         public async Task<IActionResult> Landing(IFormCollection loginParameter)
         {
-
             #region 参数验证
             new Parameter().Validate(loginParameter);
             #endregion
