@@ -124,7 +124,7 @@
 			@if (Model.AppAuditState == AppAuditState.Pass && Model.AppReleaseState == AppReleaseState.UnRelease)
 			{	
 				<text>
-						<a class="btn btn-success fl" id="btn-release" href="###" appid="@Model.Id"><i class="icon-white icon-ok"></i> 发布应用</a>
+						<a class="btn btn-success fl" id="btn-release" token="@(await TimeToken.GetTokenAsync())" href="###" appid="@Model.Id"><i class="icon-white icon-ok"></i> 发布应用</a>
 						&nbsp;
 						&nbsp;
 				</text>

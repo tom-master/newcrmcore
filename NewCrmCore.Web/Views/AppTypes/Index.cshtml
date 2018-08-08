@@ -48,7 +48,7 @@
 			</td>
 			<td>
 				<a href="javascript:openDetailIframe('/AppTypes/CreateNewAppType?appTypeId={{Id}}');" class="btn btn-link">编辑</a>
-				<a href="###" class="btn btn-link do-del" categoryid="{{Id}}">删除</a>
+				<a href="###" class="btn btn-link do-del" categoryid="{{Id}}" token="@(await TimeToken.GetTokenAsync())">删除</a>
 			</td>
 		</tr>
 		{{/each}}
@@ -67,7 +67,8 @@
 					id: 'ajaxedit',
 					content: '删除后将不可恢复!是否继续?',
 					ok: function () {
-						HROS.request.post('/AppTypes/Remove', { appTypeId: categoryid }, function (responseText) {
+						var token = $(this).attr('token')
+						HROS.request.post('/AppTypes/Remove?token='+token, { appTypeId: categoryid }, function (responseText) {
 							if (responseText.IsSuccess) {
 								$('#pagination').trigger('currentPage');
 							} else {

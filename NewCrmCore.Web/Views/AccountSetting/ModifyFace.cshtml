@@ -1,6 +1,7 @@
 ﻿
 <div style="width:630px;margin:0 auto;text-align:center;margin-top:20px">
 	<p id="swfContainer">本组件需要安装Flash Player后才可使用，请从<a href="http://www.adobe.com/go/getflashplayer">这里</a>下载安装。</p>
+    <input type="hidden" id="token" value="@(await TimeToken.GetTokenAsync())">
 </div>
 <script src="~/js/fullAvatarEditor-2.3/scripts/swfobject.js"></script>
 <script src="~/js/fullAvatarEditor-2.3/scripts/fullAvatarEditor.js"></script>
@@ -27,7 +28,8 @@
                     break;
                 case 5:
                     if (msg.type == 0) {
-                        HROS.request.post('/AccountSetting/ModifyFace', { accountFace: msg.content.avatarUrls }, function (responseText) {
+                        var token = $('#token').val()
+                        HROS.request.post('/AccountSetting/ModifyFace?token='+token, { accountFace: msg.content.avatarUrls }, function (responseText) {
                             if (responseText.IsSuccess) {
                                 NewCrm.msgbox.success('账户头像上传成功');
                                 window.parent.HROS.startmenu.getAvatar();

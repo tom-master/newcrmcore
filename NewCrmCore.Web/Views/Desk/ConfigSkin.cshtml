@@ -24,7 +24,7 @@
                 if (responseText.IsSuccess) {
                     var html = '';
                     $.each(responseText.Model.result, function (k, v) {
-                        html += '<li skin="' + k + '"><img src="' + v.imgPath + '"  data-css="' + v.cssPath + '"><div></div></li>';
+                        html += '<li token="@(await TimeToken.GetTokenAsync())" skin="' + k + '"><img src="' + v.imgPath + '"  data-css="' + v.cssPath + '"><div></div></li>';
                     });
                     $('#skinList').append(html);
                     $('li[skin="' + responseText.Model.currentSkin + '"]').addClass('selected');
@@ -42,6 +42,7 @@
                 var skin = $(this).attr('skin');
                 $('.skin li').removeClass('selected');
                 $(this).addClass('selected');
+                var token = $(this).attr('token')
 				HROS.request.post('/Desk/ModifySkin', { skin: skin }, function (responseText) {
                     if (responseText.IsSuccess) {
                         window.parent.NewCrm.msgbox.success("皮肤设置成功，如果没有更新请刷新页面");

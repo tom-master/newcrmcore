@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +18,6 @@ namespace NewCrmCore.Web.Filter
 {
     public class AuthFilter : IAsyncAuthorizationFilter
     {
-
         public async Task OnAuthorizationAsync(AuthorizationFilterContext filterContext)
         {
             if (((ControllerActionDescriptor)filterContext.ActionDescriptor).MethodInfo.CustomAttributes.Any(a => a.AttributeType == typeof(DoNotCheckPermissionAttribute)))
@@ -32,17 +33,13 @@ namespace NewCrmCore.Web.Filter
 
             if (filterContext.HttpContext.Request.Method.ToLower() == "post")
             {
-                if (!filterContext.HttpContext.Request.IsAjaxRequest())
+                if (!await ValidateToken(filterContext))
                 {
-                    if (!await ValidateToken(filterContext))
-                    {
-                        ReturnMessage(filterContext, "不要重复提交表单!");
-                        return;
-                    }
+                    ReturnMessage(filterContext, "不要重复提交表单!");
+                    return;
                 }
             }
 
-          
             if (filterContext.HttpContext.Request.Query["type"] == "folder")
             {
                 return;
@@ -78,10 +75,7 @@ namespace NewCrmCore.Web.Filter
 
             if (filterContext.HttpContext.Request.IsAjaxRequest())
             {
-                filterContext.Result = new JsonResult(response)
-                {
-                    ContentType = "utf8"
-                };
+                filterContext.Result = new JsonResult(response);
             }
             else
             {
@@ -95,19 +89,28 @@ namespace NewCrmCore.Web.Filter
 
         private async Task<Boolean> ValidateToken(AuthorizationFilterContext filterContext)
         {
-            var token2 = filterContext.HttpContext.Request.Form["token"];
-            var token1 = await CacheHelper.GetOrSetCacheAsync(new GlobalUniqueTokenCacheKey(token2));
+            var requestToken = "";
+            if (filterContext.HttpContext.Request.IsAjaxRequest())
+            {
+                requestToken = System.Web.HttpUtility.UrlDecode(filterContext.HttpContext.Request.Query["token"]);
+            }
+            else
+            {
+                requestToken = filterContext.HttpContext.Request.Form["token"];
+            }
 
-            if (String.IsNullOrEmpty(token1))
+            var cacheToken = await CacheHelper.GetOrSetCacheAsync(new GlobalUniqueTokenCacheKey(requestToken));
+
+            if (String.IsNullOrEmpty(cacheToken))
             {
                 return false;
             }
-            if (token1 != token2)
+            if (cacheToken != requestToken)
             {
                 return false;
             }
 
-            await CacheHelper.RemoveKeyWhenModify(new GlobalUniqueTokenCacheKey(token2));
+            await CacheHelper.RemoveKeyWhenModify(new GlobalUniqueTokenCacheKey(requestToken));
             return true;
         }
     }
