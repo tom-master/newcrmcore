@@ -43,7 +43,7 @@
                 $('.skin li').removeClass('selected');
                 $(this).addClass('selected');
                 var token = $(this).attr('token')
-				HROS.request.post('/Desk/ModifySkin', { skin: skin }, function (responseText) {
+				HROS.request.post('/Desk/ModifySkin?token='+token, { skin: skin }, function (responseText) {
                     if (responseText.IsSuccess) {
                         window.parent.NewCrm.msgbox.success("皮肤设置成功，如果没有更新请刷新页面");
                         setTimeout(function () {
