@@ -4,16 +4,10 @@
 
 @section ParentCss
 	{
-	<environment names="Development" asp-append-version="true">
 		<link rel="stylesheet" href="/css/hoorayui/globle.css" />
 		<link rel="stylesheet" href="/js/hooray/lib/hooraylibs.css" />
 		<link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="/css/hoorayui/sys.css" />
-	</environment>
-	<environment names="Production" asp-append-version="true">
-		<link rel="stylesheet" href="/css/newcrm.site.min.css" />
-	</environment>
-
 	@RenderSection("ChildrenCss", false)
 }
 
