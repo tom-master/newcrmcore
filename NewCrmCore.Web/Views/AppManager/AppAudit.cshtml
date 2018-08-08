@@ -141,8 +141,8 @@
 			@{
 				if (Model.AppAuditState == AppAuditState.UnAuditState)//未审核
 				{<text>
-						<a class="btn btn-success fl" id="btn-pass" token="@(await TimeToken.GetTokenAsync())" href="###" appid="@Model.Id"><i class="icon-white icon-ok"></i> 审核通过</a>
-						<a class="btn fl" id="btn-unpass" href="###" token="@(await TimeToken.GetTokenAsync())" appid="@Model.Id" style="margin-left:10px"><i class="icon-remove"></i> 审核不通过</a>
+						<a class="btn btn-success fl" id="btn-pass"  href="###" appid="@Model.Id"><i class="icon-white icon-ok"></i> 审核通过</a>
+						<a class="btn fl" id="btn-unpass" href="###"  appid="@Model.Id" style="margin-left:10px"><i class="icon-remove"></i> 审核不通过</a>
 						<a class="btn" id="btn-preview" href="###" style="margin-left:10px"><i class="icon-eye-open"></i> 预览应用</a>
 				</text>
 			}

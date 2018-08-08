@@ -59,7 +59,7 @@
 			<td style="text-align:left;padding-left:15px">{{Name}}</td>
 			<td>
 				<a href="javascript:openDetailIframe('/Security/CreateNewRole?roleId={{Id}}');" class="btn btn-link">编辑</a>
-				<a href="###" class="btn btn-link do-del" token='@(await TimeToken.GetTokenAsync())' data-roleid="{{Id}}">删除</a>
+				<a href="###" class="btn btn-link do-del" data-roleid="{{Id}}">删除</a>
 				<a class="btn btn-link" href="javascript:openDetailIframe('/Security/AttachmentPower?roleId={{Id}}');">附加权限</a>
 			</td>
 		</tr>
@@ -78,8 +78,8 @@
 					id: 'ajaxedit',
 					content: '确定要删除 “' + name + '” 该角色？',
 					ok: function () {
-						var token = $(this).attr('token')
-						HROS.request.post('/Security/RemoveRole?token='+token, { roleId: roleId }, function (responseText) {
+					
+						HROS.request.post('/Security/RemoveRole', { roleId: roleId }, function (responseText) {
 							if (responseText.IsSuccess) {
 								setTimeout(function () {
 									$('#pagination').trigger('currentPage');

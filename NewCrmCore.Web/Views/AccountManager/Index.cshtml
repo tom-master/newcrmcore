@@ -78,11 +78,11 @@
 			<td style="text-align:left;padding-left:15px;width:33%">{{convertAccountType IsAdmin}}</td>
 			<td style="width:33%">
 				<a href="javascript:openDetailIframe('/AccountManager/Account?accountId={{Id}}');" class="btn btn-link">编辑</a>
-				<a href="javascript:void(0);" class="btn btn-link do-del" memberid="{{Id}}" token="@(await TimeToken.GetTokenAsync())">删除</a>
+				<a href="javascript:void(0);" class="btn btn-link do-del" memberid="{{Id}}" >删除</a>
 				{{#if IsDisable}}
-					<a href="javascript:void(0);" class="btn btn-link do-disable" isDisable="false" memberid="{{Id}}" token="@(await TimeToken.GetTokenAsync())">启用</a>
+					<a href="javascript:void(0);" class="btn btn-link do-disable" isDisable="false" memberid="{{Id}}">启用</a>
 				{{else}}
-					<a href="javascript:void(0);" class="btn btn-link do-disable" isDisable="true" memberid="{{Id}}" token="@(await TimeToken.GetTokenAsync())">禁用</a>
+					<a href="javascript:void(0);" class="btn btn-link do-disable" isDisable="true" memberid="{{Id}}">禁用</a>
 				{{/if}}
 			</td>
 		</tr>
@@ -96,13 +96,12 @@
 			//删除
 			$('.list-con').on('click', '.do-del', function () {
 				var memberid = $(this).attr('memberid');
-				var token = $(this).attr('token')
 				var name = $(this).parent().prev().text();
 				art.dialog({
 					id: 'edit',
 					content: '确定要删除 “' + name + '” 该账户么？',
 					ok: function () {
-						HROS.request.post('/AccountManager/RemoveAccount?token='+token, { accountId: memberid}, function (responseText) {
+						HROS.request.post('/AccountManager/RemoveAccount', { accountId: memberid}, function (responseText) {
 							if (responseText.IsSuccess) {
 								$('#pagination').trigger('currentPage');
 							} else {
@@ -116,7 +115,6 @@
 
 			$('.list-con').on('click', '.do-disable', function () {
 				var memberid = $(this).attr('memberid');
-				var token = $(this).attr('token')
 				var name = $(this).parent().prev().text();
 				var isDisable = $(this).attr('isDisable');
 				art.dialog({
@@ -129,7 +127,7 @@
 						} else {
 							url = '/AccountManager/Enable';
 						}
-						HROS.request.post(url+'?token='+token, { accountId: parseInt(memberid) }, function (responseText) {
+						HROS.request.post(url, { accountId: parseInt(memberid) }, function (responseText) {
 							if (responseText.IsSuccess) {
 								$('#pagination').trigger('currentPage');
 							} else {

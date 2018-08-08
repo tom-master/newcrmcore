@@ -118,7 +118,7 @@
 			{{#compare AppAuditState 'Wait'}}
 				<td>
 					<a href="javascript:openDetailIframe('/AppMarket/AccountAppManageInfo?appId={{Id}}');" class="btn btn-link">查看详情</a>
-					<a href="###" class="btn btn-link do-del" appid="{{Id}}" token="@(await TimeToken.GetTokenAsync())" >删除</a>
+					<a href="###" class="btn btn-link do-del" appid="{{Id}}" >删除</a>
 				</td>
 			{{else}}
 			<td>
@@ -126,7 +126,7 @@
 					{{#if IsRecommand }}
 						<a href="###" class="btn btn-link" appid="{{Id}}">今日推荐</a>
 					{{else}}
-						<a href="###" class="btn btn-link do-recommend" appid="{{Id}}" token="@(await TimeToken.GetTokenAsync())">设为推荐</a>
+						<a href="###" class="btn btn-link do-recommend" appid="{{Id}}" >设为推荐</a>
 					{{/if}}
 				{{else}}
 				{{/isAudit}}
@@ -134,7 +134,7 @@
 				{{#if IsCreater}}
 					{{#remove IsRecommand}}
 					{{else}}
-						<a href="###" class="btn btn-link do-del" appid="{{Id}}" token="@(await TimeToken.GetTokenAsync())" >删除</a>
+						<a href="###" class="btn btn-link do-del" appid="{{Id}}" >删除</a>
 					{{/remove}}
 				{{/if}}
 
@@ -152,13 +152,12 @@
             //删除，推荐
 			$('.list-con').on('click', '.do-del', function () {
                 var appid = $(this).attr('appid');
-				var token = $(this).attr('token');
                 var appname = $(this).parents('tr').children('td:nth-child(2)').text();
                 $.dialog({
                     id: 'del',
                     content: '确定要删除 “' + appname + '” 该应用么？',
                     ok: function () {
-                        HROS.request.post('/AppManager/Remove?token='+token, { appId: appid }, function (responseText) {
+                        HROS.request.post('/AppManager/Remove', { appId: appid }, function (responseText) {
                             if (responseText.IsSuccess) {
                                 $('#pagination').trigger('currentPage');
                             } else {
@@ -170,8 +169,8 @@
                 });
             }).on('click', '.do-recommend', function () {
                 var appid = $(this).attr('appid');
-				var token = %(this).attr('token')
-                HROS.request.post('/AppManager/Recommend?token='+token, { appId: appid }, function (responseText) {
+				
+                HROS.request.post('/AppManager/Recommend', { appId: appid }, function (responseText) {
                     if (responseText.IsSuccess) {
                         $('#pagination').trigger('currentPage');
                     } else {

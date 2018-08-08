@@ -135,7 +135,7 @@
 			<td>{{UseCount}}</td>
 			<td>
 				<a href="javascript:openDetailIframe('/AppMarket/AccountAppManageInfo?appId={{Id}}');" class="btn btn-mini btn-link">详情</a>
-				<a href="###" class="btn btn-link do-del" appId="{{Id}}" token="@(await TimeToken.GetTokenAsync())">删除</a>
+				<a href="###" class="btn btn-link do-del" appId="{{Id}}">删除</a>
 			</td>
 
 		</tr>
@@ -150,13 +150,12 @@
             //删除
             $('.list-con').on('click', '.do-del', function () {
                 var appId = $(this).attr('appId');
-				var token = $(this).attr('token')
                 var appname = $(this).parents('tr').children('td:first-child').text();
                 $.dialog({
                     id: 'del',
                     content: '确定要删除 “' + appname + '” 该应用么？',
                     ok: function () {
-                        HROS.request.post('/AppMarket/Remove?token='+token, { appId: appId }, function (responseText) {
+                        HROS.request.post('/AppMarket/Remove', { appId: appId }, function (responseText) {
 							if (responseText.IsSuccess) {
 								NewCrm.msgbox.success('删除成功!');
 								setTimeout(function(){

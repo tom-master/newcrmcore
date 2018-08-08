@@ -15,7 +15,6 @@
 	<input type="hidden" name="membertype" value="@Model.MemberType" />
 	<input type="hidden" id="isIconByUpload" name="isIconByUpload" value="@(Model.IsIconByUpload?1:0)" />
 	<input type="hidden" name="token" value="@(await TimeToken.GetTokenAsync())" />
-    <input type="hidden" id="token" value="@(await TimeToken.GetTokenAsync())">
 	<div class="creatbox">
 		<div class="middle">
 			<div class="input-label">
@@ -149,8 +148,7 @@
             uploader.on('uploadSuccess', function (file, cb) {
                 if (cb[0].IsSuccess) {
                     var urlPart = cb[0].Url
-                    var token = $('#token').val()
-                    HROS.request.post('/Desk/ModifyIcon?token='+token,{ MemberId: '@Model.Id', NewIcon: urlPart },function () {
+                    HROS.request.post('/Desk/ModifyIcon',{ MemberId: '@Model.Id', NewIcon: urlPart },function () {
                         if (responseText.IsSuccess) {
                             $('#isIconByUpload').val('1');
                             $('.shortcutview img').attr('src', responseText.Model);

@@ -35,11 +35,11 @@
 					<div class="star-box">
 						<i style="width:@{var c = Model.StartCount*20; <text>@c%</text>}"></i>
 						<ul>
-							<li class="grade-1" num="1" token="@(await TimeToken.GetTokenAsync())"><a href="###"><em>很不好用</em></a></li>
-							<li class="grade-2" num="2" token="@(await TimeToken.GetTokenAsync())"><a href="###"><em>体验一般般</em></a></li>
-							<li class="grade-3" num="3" token="@(await TimeToken.GetTokenAsync())"><a href="###"><em>比较好用</em></a></li>
-							<li class="grade-4" num="4" token="@(await TimeToken.GetTokenAsync())"><a href="###"><em>很好用</em></a></li>
-							<li class="grade-5" num="5" token="@(await TimeToken.GetTokenAsync())"><a href="###"><em>棒极了，推荐</em></a></li>
+							<li class="grade-1" num="1"><a href="###"><em>很不好用</em></a></li>
+							<li class="grade-2" num="2"><a href="###"><em>体验一般般</em></a></li>
+							<li class="grade-3" num="3"><a href="###"><em>比较好用</em></a></li>
+							<li class="grade-4" num="4"><a href="###"><em>很好用</em></a></li>
+							<li class="grade-5" num="5"><a href="###"><em>棒极了，推荐</em></a></li>
 						</ul>
 					</div>
 				</div>
@@ -100,8 +100,7 @@
                 var num = $(this).attr('num');
                 if (!isNaN(num) && /^[1-5]$/.test(num)) {
                     if (window.parent.parent.HROS.base.checkLogin()) {
-						var token = $(this).attr('token')
-                        HROS.request.post('/AppMarket/ModifyStar?token='+token, { AppId: '@Model.Id', StarCount: num }, function (responseText) {
+                        HROS.request.post('/AppMarket/ModifyStar', { AppId: '@Model.Id', StarCount: num }, function (responseText) {
                             if (responseText.IsSuccess) {
                                 NewCrm.msgbox.success("打分成功！");
                                 setTimeout(function () {
