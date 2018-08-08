@@ -42,6 +42,7 @@ namespace NewCrmCore.Web.Filter
                 }
             }
 
+          
             if (filterContext.HttpContext.Request.Query["type"] == "folder")
             {
                 return;

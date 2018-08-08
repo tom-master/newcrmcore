@@ -894,7 +894,10 @@
 			var curform = this;
 
 			//表单正在提交时点击提交按钮不做反应;
-			if (curform[0].validform_status === "posting") { return false; }
+			if (curform[0].validform_status === "posting") {
+				settings.postonceTip();
+				return false;
+			}
 
 			//要求只能提交一次时;
 			if (settings.postonce && curform[0].validform_status === "posted") {

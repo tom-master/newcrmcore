@@ -101,8 +101,7 @@
 				callback: function (responseText) {
 					var response = responseText;
 					if (response.IsSuccess) {
-						NewCrm.msgbox.close();
-						//location.href = '/desk/index'
+						location.href = '/desk/index'
 					} else {
 						NewCrm.msgbox.fail(response.Message);
 					}

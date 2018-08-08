@@ -641,7 +641,7 @@ namespace NewCrmCore.Web.Controllers
         /// 更改码头位置
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> ModifyDockPosition( ModifyDockPosition model)
+        public async Task<IActionResult> ModifyDockPosition(ModifyDockPosition model)
         {
             #region 参数验证
             new Parameter().Validate(model.Pos).Validate(model.DeskNum);
