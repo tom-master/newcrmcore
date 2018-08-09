@@ -3,7 +3,18 @@
 <head>
 	<title>@ViewBag.Title</title>
 	<link rel="shortcut icon" href="~/favicon.ico" />
-	@RenderSection("ParentCss", false)
+	<environment names="Development" asp-append-version="true">
+		<link rel="stylesheet" href="/css/hoorayui/globle.css" />
+		<link rel="stylesheet" href="/js/hooray/lib/hooraylibs.css" />
+		<link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/css/hoorayui/sys.css" />
+		<link rel="stylesheet" href="/js/hooray/lib/hooraylibs.css" />
+		<link rel="stylesheet" href="/css/hoorayui/index.css" />
+	</environment>
+	<environment names="Production" asp-append-version="true">
+		<link rel="stylesheet" href="/css/newcrm.site.min.css" />
+	</environment>
+	@RenderSection("ChildrenCss", false)
 </head>
 <body>
 	@RenderBody()
@@ -75,4 +86,4 @@
 	}
 </script>
 
-@RenderSection("ParentScript", false)
+@RenderSection("ChildrenScript", false)
