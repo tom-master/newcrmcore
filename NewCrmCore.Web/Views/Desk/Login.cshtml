@@ -3,6 +3,7 @@
 	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
 }
 @section ChildrenCss{
+	<link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" />
 	<style>
 		.bg{
 			background-image: url(/images/ui/sign_bg.png);
@@ -39,6 +40,10 @@
 		}
 		
 	</style>
+}
+@section SysCss
+{
+	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
 }
 <div style="overflow:hidden">
 	<div class="loading" style="display: none"></div>

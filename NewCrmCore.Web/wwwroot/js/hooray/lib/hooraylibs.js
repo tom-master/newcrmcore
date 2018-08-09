@@ -2557,9 +2557,11 @@ NewCrm.msgbox.fail = function (msg, timeout) {
 	NewCrm.msgbox.show(msg || '出现未知错误，请重试', 5, timeout || 2000);
 };
 NewCrm.msgbox.loading = function (msg) {
+	HROS.maskBox.desk().show()
 	NewCrm.msgbox.show(msg, 6, 10000);
 };
 NewCrm.msgbox.close = function () {
+	HROS.maskBox.desk().hide()
 	NewCrm.msgbox._hide()
 };
 

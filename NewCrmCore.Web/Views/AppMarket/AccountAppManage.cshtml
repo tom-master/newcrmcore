@@ -3,10 +3,10 @@
 @{
 	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
 }
+
 @section ChildrenCss
 { 
 	<link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" />
- 
 	<style>
 		body {
 			margin: 10px 10px 0;
@@ -21,9 +21,11 @@
 			margin-left: 10px;
 		}
 	</style>
-
 }
-
+@section SysCss
+{
+	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
+}
 <div class="well well-small" style="margin-bottom:10px;padding-bottom:0">
 	<div class="form-inline">
 		<div class="control-group">
@@ -41,7 +43,8 @@
 					foreach (var appType in (List<AppTypeDto>)ViewData["AppTypes"])
 					{
 						<text>
-							<option value="@appType.Id">@appType.Name</option></text>
+							<option value="@appType.Id">@appType.Name</option>
+						</text>
 					}
 				}
 			</select>
@@ -52,7 +55,8 @@
 					foreach (var appStyle in (List<AppStyleDto>)ViewData["AppStyles"])
 					{
 						<text>
-							<option value="@appStyle.Id">@appStyle.Name</option></text>
+							<option value="@appStyle.Id">@appStyle.Name</option>
+						</text>
 					}
 				}
 			</select>
@@ -63,7 +67,8 @@
 					foreach (var appState in (List<AppStateDto>)ViewData["AppStates"])
 					{
 						<text>
-							<option value="@appState.Id" data-type="@appState.Type">@appState.Name</option></text>
+							<option value="@appState.Id" data-type="@appState.Type">@appState.Name</option>
+						</text>
 					}
 				}
 			</select>
@@ -121,7 +126,7 @@
 
 
 @section ChildrenScript
-	{
+{
 
 	<script src="~/js/handlebars.runtime-v4.0.11.js"></script>
 

@@ -6,10 +6,7 @@
 	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
 	var accountId = ViewData["AccountId"].ToString() ?? "0";
 }
-@section ChildrenCss
-{
-	<link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" />
-}
+ 
 @{
 	if (Model != null)
 	{
@@ -43,11 +40,17 @@
 	}
 
 
-	@section ChildrenCss{
-		<link href="../js/webuploader-0.1.5/webuploader.css" rel="stylesheet" />
-	}
-
-	@section ChildrenScript{
+@section ChildrenCss
+{
+    <link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" />
+	<link href="../js/webuploader-0.1.5/webuploader.css" rel="stylesheet" />
+}
+@section SysCss
+{
+	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
+}
+@section ChildrenScript
+{
 		<script>
             $(function () {
                 var uploader = WebUploader.create({
@@ -210,7 +213,7 @@
 
                 //选择应用图片
                 $('.shortcut-selicon a').click(function () {
-                    $('#isIconByUpload').val('1');
+                    $('#isIconByUpload').val('0');
                     $('.shortcutview img').remove();
                     $('.shortcutview').addClass('bgnone').append($(this).html());
                     $('#val_icon').val($(this).children('img').attr('valsrc')).focusout();

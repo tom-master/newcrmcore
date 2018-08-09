@@ -8,6 +8,10 @@
 {
 	<link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" />
 }
+@section SysCss
+{
+	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
+}
 <form action="/AppTypes/Create?appTypeId=@appTypeId" method="post" name="form" id="form">
 	<input type="hidden" name="ac" value="edit">
 	<input type="hidden" name="token" value="@( await TimeToken.GetTokenAsync())" />
