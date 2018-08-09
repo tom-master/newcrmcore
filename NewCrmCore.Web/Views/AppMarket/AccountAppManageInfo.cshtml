@@ -6,7 +6,10 @@
 	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
 	var accountId = ViewData["AccountId"].ToString() ?? "0";
 }
-
+@section ChildrenCss
+{
+	<link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" />
+}
 @{
 	if (Model != null)
 	{

@@ -4,7 +4,10 @@
 	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
 	var appTypeId = Context.Request.Query["appTypeId"];
 }
-
+@section ChildrenCss
+{
+	<link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" />
+}
 <form action="/AppTypes/Create?appTypeId=@appTypeId" method="post" name="form" id="form">
 	<input type="hidden" name="ac" value="edit">
 	<input type="hidden" name="token" value="@( await TimeToken.GetTokenAsync())" />

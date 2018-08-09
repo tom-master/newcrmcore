@@ -2,6 +2,8 @@
 @using NewCrmCore.Infrastructure.CommonTools
 @using NewCrmCore.Domain.ValueObject
 @model AppDto
+ 
+<link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" />
 <form action="/AppMarket/ModifyInfo" method="post" name="form" id="form">
 	<input type="hidden" name="val_Id" value="@Model.Id">
 	<input type="hidden" id="isIconByUpload" name="isIconByUpload" value="@(Model.IsIconByUpload?1:0)" />

@@ -3,10 +3,12 @@
 @{
 	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
 	var accountConfig = ViewData["AccountConfig"] as ConfigDto;
-
 	var desks = (Int32)ViewData["Desks"];
 }
-
+@section ChildrenCss
+{
+	<link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" />
+}
 <div class="title">默认桌面(登录后默认显示)</div>
 <div class="input-label">
 	<label class="label-text">默认显示：</label>

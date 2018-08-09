@@ -2,10 +2,12 @@
 @{
     Layout = "~/Views/Shared/_LayoutRoot.cshtml";
     var wallpapers = ViewData["Wallpapers"] as IList<WallpaperDto>;
-
     var accountConfig = ViewData["AccountConfig"] as ConfigDto;
 }
-
+@section ChildrenCss
+{
+	<link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" />
+}
 <div class="title">
     <ul>
         <li class="focus">壁纸设置</li>

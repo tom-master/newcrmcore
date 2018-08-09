@@ -1,11 +1,12 @@
 ﻿@using NewCrmCore.Dto
 @{
     Layout = "~/Views/Shared/_LayoutRoot.cshtml";
-
     var apps = ViewData["SystemApp"] as IList<AppDto>;
-
 }
-
+@section ChildrenCss
+{
+	<link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" />
+}
 <div class="alert_addapps">
     @{
         foreach (var appDto in apps)

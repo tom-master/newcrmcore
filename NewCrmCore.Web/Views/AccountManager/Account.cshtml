@@ -12,7 +12,10 @@
 
 	var accountId = Context.Request.Query["accountId"];
 }
-
+@section ChildrenCss
+{
+	<link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" />
+}
 <form action="/AccountManager/CreateAccount" method="post" name="form" id="form">
 	<input type="hidden" name="token" value="@(await TimeToken.GetTokenAsync())" />
 	<input type="hidden" name="id" value="@(accountId.FirstOrDefault()??"0")">
