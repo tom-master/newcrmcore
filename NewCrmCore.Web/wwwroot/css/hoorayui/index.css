@@ -1041,11 +1041,7 @@ input {
 	border-bottom: 1px solid #000
 }
 
-html .window-frame {
-	height: expression((function(el){
-		el.style.height=el.parentNode.clientHeight-60+"px";
-	})(this))
-}
+ 
 
 .window-frame iframe {
 	border: 0;

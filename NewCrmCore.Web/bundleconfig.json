@@ -3,9 +3,10 @@
     "outputFileName": "wwwroot/css/newcrm.site.min.css",
     "inputFiles": [
       "wwwroot/css/hoorayui/globle.css",
-      "wwwroot/css/hoorayui/index.css",
-      "wwwroot/css/hoorayui/login.css",
-      "wwwroot/css/hoorayui/sys.css"
+      "wwwroot/js/hooray/lib/hooraylibs.css",
+      "wwwroot/js/bootstrap/css/bootstrap.min.css",
+      "wwwroot/css/hoorayui/sys.css",
+      "wwwroot/css/hoorayui/index.css"
     ]
   },
   {

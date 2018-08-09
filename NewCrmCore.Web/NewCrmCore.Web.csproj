@@ -50,7 +50,6 @@
     <None Include="Views\Log\Index.cshtml" />
     <None Include="wwwroot\css\hoorayui\globle.css" />
     <None Include="wwwroot\css\hoorayui\index.css" />
-    <None Include="wwwroot\css\hoorayui\login.css" />
     <None Include="wwwroot\css\hoorayui\sys.css" />
     <None Include="wwwroot\images\skins\chrome.css" />
     <None Include="wwwroot\images\skins\chrome\chrome_s.gif" />
