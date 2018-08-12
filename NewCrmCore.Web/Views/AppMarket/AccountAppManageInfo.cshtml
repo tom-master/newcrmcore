@@ -6,7 +6,16 @@
 	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
 	var accountId = ViewData["AccountId"].ToString() ?? "0";
 }
- 
+@section ChildrenCss
+{
+    <link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" />
+	<link href="../js/webuploader-0.1.5/webuploader.css" rel="stylesheet" />
+}
+@section SysCss
+{
+	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
+}
+
 @{
 	if (Model != null)
 	{
@@ -40,15 +49,7 @@
 	}
 
 
-@section ChildrenCss
-{
-    <link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" />
-	<link href="../js/webuploader-0.1.5/webuploader.css" rel="stylesheet" />
-}
-@section SysCss
-{
-	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
-}
+
 @section ChildrenScript
 {
 		<script>

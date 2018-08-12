@@ -17,17 +17,18 @@
 				<span class="app-name">@Model.Name</span>
 				<span class="app-desc"><i>@Model.UseCount</i> 人在使用</span>
 				@{
-
 					if (((Boolean)ViewData["IsInstallApp"]))
-					{<text>
+					{
+						<text>
 							<a href="###" app_id="@Model.Id" app_type="@Model.AppStyle.ToString().ToLower()" class="btn-run">打开应用</a>
-					</text>
-				}
-				else
-				{<text>
-						<a href="###" app_id="@Model.Id" app_type="@Model.AppStyle.ToString().ToLower()" class="btn-add">添加应用</a>
-				</text>
-			}
+						</text>
+					}
+					else
+					{
+						<text>
+							<a href="###" app_id="@Model.Id" app_type="@Model.AppStyle.ToString().ToLower()" class="btn-add">添加应用</a>
+						</text>
+					}
 				}
 
 				<div class="grade-box">
@@ -46,15 +47,15 @@
 			</div>
 			<h4>应用介绍</h4>
 			<h5>
-
 				@{
 					if (Model.AccountId == 0)
-					{<text><em>开发者：</em><b style="color:red">平台提供</b></text>
-				}
-				else
-				{
-					<text><em>开发者：</em><b style="color:red">@ViewData["AccountName"]</b></text>
-				}
+					{
+						<text><em>开发者：</em><b style="color:red">平台提供</b></text>
+					}
+					else
+					{
+						<text><em>开发者：</em><b style="color:red">@ViewData["AccountName"]</b></text>
+					}
 				}
 
 				<em style="margin-left:10px">所属分类：</em>@Model.AppTypeName

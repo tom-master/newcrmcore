@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -32,7 +33,7 @@ namespace NewCrmCore.Web
             services.AddTransient<ILoggerServices, LoggerServices>();
 
             services.AddTransient<IAccountContext, AccountContext>();
-            services.AddTransient<IAppContext, AppContext>();
+            services.AddTransient<IAppContext, Domain.Services.BoundedContext.AppContext>();
             services.AddTransient<IDeskContext, DeskContext>();
             services.AddTransient<ILoggerContext, LoggerContext>();
             services.AddTransient<IMemberContext, MemberContext>();
@@ -55,7 +56,6 @@ namespace NewCrmCore.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();

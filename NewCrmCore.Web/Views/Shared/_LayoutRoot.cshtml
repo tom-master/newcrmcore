@@ -3,16 +3,11 @@
 <head>
 	<title>@ViewBag.Title</title>
 	<link rel="shortcut icon" href="~/favicon.ico" />
-	<environment names="Development" asp-append-version="true">
-		<link rel="stylesheet" href="/css/hoorayui/globle.css" />
-		@RenderSection("ChildrenCss", false)
-		<link rel="stylesheet" href="/js/hooray/lib/hooraylibs.css" />  
-		@RenderSection("IndexCss",false)
-		@RenderSection("SysCss",false)
-	</environment>
-	<environment names="Production" asp-append-version="true">
-		<link rel="stylesheet" href="/css/newcrm.site.min.css" />
-	</environment>
+ 	<link rel="stylesheet" href="/css/hoorayui/globle.css" />
+	@RenderSection("ChildrenCss",required: false)
+	<link rel="stylesheet" href="/js/hooray/lib/hooraylibs.css" />  
+	@RenderSection("IndexCss", required: false)
+	@RenderSection("SysCss",required: false)
 </head>
 <body>
 	@RenderBody()
