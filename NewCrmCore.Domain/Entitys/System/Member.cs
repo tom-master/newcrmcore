@@ -60,18 +60,6 @@ namespace NewCrmCore.Domain.Entitys.System
         public Boolean IsOnDock { get; private set; }
 
         /// <summary>
-        /// 是否能最大化
-        /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
-        public Boolean IsMax { get; private set; }
-
-        /// <summary>
-        /// 是否打开后铺满全屏
-        /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
-        public Boolean IsFull { get; private set; }
-
-        /// <summary>
         /// 是否显示app底部的按钮
         /// </summary>
         [PropertyDefaultValue(typeof(Boolean), false)]
@@ -84,22 +72,10 @@ namespace NewCrmCore.Domain.Entitys.System
         public Boolean IsOpenMax { get; private set; }
 
         /// <summary>
-        /// 是否锁定
-        /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
-        public Boolean IsLock { get; private set; }
-
-        /// <summary>
         /// 是否为福莱希
         /// </summary>
         [PropertyDefaultValue(typeof(Boolean), false)]
         public Boolean IsFlash { get; private set; }
-
-        /// <summary>
-        /// 是否可以拖动
-        /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
-        public Boolean IsDraw { get; private set; }
 
         /// <summary>
         /// 是否可以拉伸
@@ -146,26 +122,18 @@ namespace NewCrmCore.Domain.Entitys.System
                     Int32 accountId,
                     Int32 deskIndex,
                     Boolean isIconByUpload = default(Boolean),
-                    Boolean isLock = default(Boolean),
-                    Boolean isMax = default(Boolean),
-                    Boolean isFull = default(Boolean),
                     Boolean isSetbar = default(Boolean),
                     Boolean isOpenMax = default(Boolean),
                     Boolean isFlash = default(Boolean),
-                    Boolean isDraw = default(Boolean),
                     Boolean isResize = default(Boolean))
         {
             AppId = appId;
             Width = width > 800 ? 800 : width;
             Height = height > 600 ? 600 : height;
-            IsDraw = isDraw;
             IsOpenMax = isOpenMax;
             IsSetbar = isSetbar;
-            IsMax = isMax;
-            IsFull = isFull;
             IsFlash = isFlash;
             IsResize = isResize;
-            IsLock = isLock;
             Name = name;
             IconUrl = iconUrl;
             AppUrl = appUrl;
@@ -188,7 +156,6 @@ namespace NewCrmCore.Domain.Entitys.System
             AppId = appId;
             Width = 800;
             Height = 600;
-            IsDraw = false;
             IsOpenMax = false;
             Name = name;
             IconUrl = iconUrl;
@@ -288,34 +255,6 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
-        public Member Max()
-        {
-            IsMax = true;
-            OnPropertyChanged(new PropertyArgs(nameof(IsMax), IsMax));
-            return this;
-        }
-
-        public Member NotMax()
-        {
-            IsMax = false;
-            OnPropertyChanged(new PropertyArgs(nameof(IsMax), IsMax));
-            return this;
-        }
-
-        public Member Full()
-        {
-            IsFull = true;
-            OnPropertyChanged(new PropertyArgs(nameof(IsFull), IsFull));
-            return this;
-        }
-
-        public Member NotFull()
-        {
-            IsFull = false;
-            OnPropertyChanged(new PropertyArgs(nameof(IsFull), IsFull));
-            return this;
-        }
-
         public Member Setbar()
         {
             IsSetbar = true;
@@ -344,20 +283,6 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
-        public Member Lock()
-        {
-            IsLock = true;
-            OnPropertyChanged(new PropertyArgs(nameof(IsLock), IsLock));
-            return this;
-        }
-
-        public Member NotLock()
-        {
-            IsLock = false;
-            OnPropertyChanged(new PropertyArgs(nameof(IsLock), IsLock));
-            return this;
-        }
-
         public Member Flash()
         {
             IsFlash = true;
@@ -369,20 +294,6 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             IsFlash = false;
             OnPropertyChanged(new PropertyArgs(nameof(IsFlash), IsFlash));
-            return this;
-        }
-
-        public Member Draw()
-        {
-            IsDraw = true;
-            OnPropertyChanged(new PropertyArgs(nameof(IsDraw), IsDraw));
-            return this;
-        }
-
-        public Member NotDraw()
-        {
-            IsDraw = false;
-            OnPropertyChanged(new PropertyArgs(nameof(IsDraw), IsDraw));
             return this;
         }
 

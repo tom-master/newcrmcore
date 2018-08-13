@@ -52,18 +52,6 @@ namespace NewCrmCore.Domain.Entitys.System
         public Int32 UseCount { get; private set; }
 
         /// <summary>
-        /// 是否能最大化
-        /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
-        public Boolean IsMax { get; private set; }
-
-        /// <summary>
-        /// 是否打开后铺满全屏
-        /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
-        public Boolean IsFull { get; private set; }
-
-        /// <summary>
         /// 是否显示app底部的按钮
         /// </summary>
         [PropertyDefaultValue(typeof(Boolean), false)]
@@ -76,12 +64,6 @@ namespace NewCrmCore.Domain.Entitys.System
         public Boolean IsOpenMax { get; private set; }
 
         /// <summary>
-        /// 是否锁定
-        /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
-        public Boolean IsLock { get; private set; }
-
-        /// <summary>
         /// 是否为系统应用
         /// </summary>
         [PropertyDefaultValue(typeof(Boolean), false)]
@@ -92,12 +74,6 @@ namespace NewCrmCore.Domain.Entitys.System
         /// </summary>
         [PropertyDefaultValue(typeof(Boolean), false)]
         public Boolean IsFlash { get; private set; }
-
-        /// <summary>
-        /// 是否可以拖动
-        /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
-        public Boolean IsDraw { get; private set; }
 
         /// <summary>
         /// 是否可以拉伸
@@ -196,7 +172,6 @@ namespace NewCrmCore.Domain.Entitys.System
                 AccountId = accountId;
             }
 
-            IsLock = false;
             Remark = remark;
             AppAuditState = appAuditState;
             AppReleaseState = appReleaseState;
@@ -298,48 +273,6 @@ namespace NewCrmCore.Domain.Entitys.System
         }
 
         /// <summary>
-        /// 最大化
-        /// </summary>
-        /// <returns></returns>
-        public App Max()
-        {
-            IsMax = true;
-            OnPropertyChanged(new PropertyArgs(nameof(IsMax), IsMax));
-            return this;
-        }
-
-        /// <summary>
-        /// 禁用最大化
-        /// </summary>
-        public App NotMax()
-        {
-            IsMax = false;
-            OnPropertyChanged(new PropertyArgs(nameof(IsMax), IsMax));
-            return this;
-        }
-
-        /// <summary>
-        /// 全屏
-        /// </summary>
-        public App Full()
-        {
-            IsFull = true;
-            OnPropertyChanged(new PropertyArgs(nameof(IsFull), IsFull));
-            return this;
-        }
-
-        /// <summary>
-        /// 取消全屏
-        /// </summary>
-        public App NotFull()
-        {
-            IsFull = false;
-            OnPropertyChanged(new PropertyArgs(nameof(IsFull), IsFull));
-
-            return this;
-        }
-
-        /// <summary>
         /// 展示到任务栏
         /// </summary>
         public App Setbar()
@@ -380,26 +313,6 @@ namespace NewCrmCore.Domain.Entitys.System
         }
 
         /// <summary>
-        /// 锁定
-        /// </summary>
-        public App Lock()
-        {
-            IsLock = true;
-            IsOpenMax = false;
-            OnPropertyChanged(new PropertyArgs(nameof(IsLock), IsLock), new PropertyArgs(nameof(IsOpenMax), IsOpenMax));
-            return this;
-        }
-        /// <summary>
-        /// 不锁定
-        /// </summary>
-        public App NotLock()
-        {
-            IsLock = false;
-            OnPropertyChanged(new PropertyArgs(nameof(IsLock), IsLock));
-            return this;
-        }
-
-        /// <summary>
         /// 是系统app
         /// </summary>
         public App System()
@@ -436,26 +349,6 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             IsFlash = false;
             OnPropertyChanged(new PropertyArgs(nameof(IsFlash), IsFlash));
-            return this;
-        }
-
-        /// <summary>
-        /// 允许拖动
-        /// </summary>
-        public App Draw()
-        {
-            IsDraw = true;
-            OnPropertyChanged(new PropertyArgs(nameof(IsDraw), IsDraw));
-            return this;
-        }
-
-        /// <summary>
-        /// 不允许拖动
-        /// </summary>
-        public App NotDraw()
-        {
-            IsDraw = false;
-            OnPropertyChanged(new PropertyArgs(nameof(IsDraw), IsDraw));
             return this;
         }
 

@@ -432,7 +432,6 @@ namespace NewCrmCore.Web.Controllers
                 width = internalMemberResult.Width,
                 height = internalMemberResult.Height,
                 isOnDock = internalMemberResult.IsOnDock,
-                isDraw = internalMemberResult.IsDraw,
                 isOpenMax = internalMemberResult.IsOpenMax,
                 isSetbar = internalMemberResult.IsSetbar,
                 url = internalMemberResult.AppUrl,

@@ -44,11 +44,7 @@ namespace NewCrmCore.Application.Services
                 Height = result.Height,
                 IconUrl = result.IconUrl,
                 Id = result.Id,
-                IsDraw = result.IsDraw,
                 IsFlash = result.IsFlash,
-                IsFull = result.IsFull,
-                IsLock = result.IsLock,
-                IsMax = result.IsMax,
                 IsOnDock = result.IsOnDock,
                 IsOpenMax = result.IsOpenMax,
                 IsResize = result.IsResize,
@@ -85,7 +81,6 @@ namespace NewCrmCore.Application.Services
                         width = member.Width,
                         height = member.Height,
                         isOnDock = member.IsOnDock,
-                        isDraw = member.IsDraw,
                         isOpenMax = member.IsOpenMax,
                         isSetbar = member.IsSetbar,
                         apps = members.Where(m => m.FolderId == member.Id).Select(app => new
@@ -98,7 +93,6 @@ namespace NewCrmCore.Application.Services
                             width = app.Width,
                             height = app.Height,
                             isOnDock = app.IsOnDock,
-                            isDraw = app.IsDraw,
                             isOpenMax = app.IsOpenMax,
                             isSetbar = app.IsSetbar,
                         })
@@ -116,7 +110,6 @@ namespace NewCrmCore.Application.Services
                         width = member.Width,
                         height = member.Height,
                         isOnDock = member.IsOnDock,
-                        isDraw = member.IsDraw,
                         isOpenMax = member.IsOpenMax,
                         isSetbar = member.IsSetbar
                     });

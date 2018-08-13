@@ -51,16 +51,6 @@ namespace NewCrmCore.Dto
         public Boolean IsOnDock { get; set; }
 
         /// <summary>
-        /// 是否能最大化
-        /// </summary>
-        public Boolean IsMax { get; set; }
-
-        /// <summary>
-        /// 是否打开后铺满全屏
-        /// </summary>
-        public Boolean IsFull { get; set; }
-
-        /// <summary>
         /// 是否显示app底部的按钮
         /// </summary>
         public Boolean IsSetbar { get; set; }
@@ -71,19 +61,9 @@ namespace NewCrmCore.Dto
         public Boolean IsOpenMax { get; set; }
 
         /// <summary>
-        /// 是否锁定
-        /// </summary>
-        public Boolean IsLock { get; set; }
-
-        /// <summary>
         /// 是否为福莱希
         /// </summary>
         public Boolean IsFlash { get; set; }
-
-        /// <summary>
-        /// 是否可以拖动
-        /// </summary>
-        public Boolean IsDraw { get; set; }
 
         /// <summary>
         /// 是否可以拉伸
