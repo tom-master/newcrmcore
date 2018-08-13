@@ -264,7 +264,7 @@ namespace NewCrmCore.Application.Services
         {
             new Parameter().Validate(appDto);
             var app = appDto.ConvertToModel<AppDto, App>();
-            var internalApp = new App(app.Name, app.IconUrl, app.AppUrl, app.Width, app.Height, app.AppTypeId, app.AppAuditState, AppReleaseState.UnRelease, app.AppStyle, app.AccountId, app.Remark, appDto.IsIconByUpload);
+            var internalApp = new App(app.Name, app.IconUrl, app.AppUrl, app.Width, app.Height, app.AppTypeId, app.IsResize, app.IsOpenMax, app.IsFlash, app.IsSetbar, app.AppAuditState, AppReleaseState.UnRelease, app.AppStyle, app.AccountId, app.Remark, appDto.IsIconByUpload);
 
             await _appContext.CreateNewAppAsync(internalApp);
         }

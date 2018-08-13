@@ -53,6 +53,8 @@ namespace NewCrmCore.Dto
 
         public Boolean IsIconByUpload { get; set; }
 
+        public Boolean IsSetbar { get; set; }
+
         #endregion
     }
 }

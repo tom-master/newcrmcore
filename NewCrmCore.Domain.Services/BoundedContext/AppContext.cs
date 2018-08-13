@@ -74,7 +74,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             FROM App AS a 
 							LEFT JOIN Member AS a2 ON a2.AccountId=@accountId AND a2.IsDeleted=0 AND a2.AppId=a.Id
                             WHERE a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState AND a.IsRecommand=1";
-             
+
                     var parameters = new List<ParameterMapper>
                     {
                         new ParameterMapper("@AppAuditState", AppAuditState.Pass.ToInt32()),

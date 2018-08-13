@@ -337,6 +337,7 @@ namespace NewCrmCore.Web.Controllers
                 IsResize = Int32.Parse(forms["val_isresize"]) == 1,
                 IsOpenMax = Int32.Parse(forms["val_isopenmax"]) == 1,
                 IsFlash = Int32.Parse(forms["val_isflash"]) == 1,
+                IsSetbar = Int32.Parse(forms["val_issetbar"]) == 1,
                 Remark = forms["val_remark"],
                 AppAuditState = EnumExtensions.ToEnum<AppAuditState>(Int32.Parse(forms["val_verifytype"])),
                 AppReleaseState = AppReleaseState.UnRelease, //未发布
