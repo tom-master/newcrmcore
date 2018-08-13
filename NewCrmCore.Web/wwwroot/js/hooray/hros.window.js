@@ -431,6 +431,7 @@ HROS.window = (function () {
 						'top': 0
 					});
 				}
+
 				//改变当前窗口遮罩层样式
 				$(windowId + ' .window-mask').hide();
 				//改变当前iframe显示
@@ -572,6 +573,7 @@ HROS.window = (function () {
 			}
 		},
 		show2under: function () {
+
 			//改变任务栏样式
 			$('#task-content-inner a.task-item').removeClass('task-item-current');
 			//改变窗口样式
