@@ -436,7 +436,8 @@ namespace NewCrmCore.Web.Controllers
                 isOpenMax = internalMemberResult.IsOpenMax,
                 isSetbar = internalMemberResult.IsSetbar,
                 url = internalMemberResult.AppUrl,
-                isResize = internalMemberResult.IsResize
+                isResize = internalMemberResult.IsResize,
+                starCount = internalMemberResult.StarCount
             };
 
             return Json(response);

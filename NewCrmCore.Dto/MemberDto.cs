@@ -106,10 +106,15 @@ namespace NewCrmCore.Dto
         /// </summary>
         public Int32 AccountId { get; set; }
 
-		/// <summary>
-		/// 图标是否来自上传
-		/// </summary>
+        /// <summary>
+        /// 图标是否来自上传
+        /// </summary>
         public Boolean IsIconByUpload { get; set; }
+
+        /// <summary>
+        /// 评价分数
+        /// </summary>
+        public Double StarCount { get; set; }
 
     }
 }

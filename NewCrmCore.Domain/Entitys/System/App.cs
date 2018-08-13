@@ -209,6 +209,9 @@ namespace NewCrmCore.Domain.Entitys.System
     /// </summary>
     public partial class App
     {
+        /// <summary>
+        /// 修改app名称
+        /// </summary>
         public App ModifyName(String appName)
         {
             if (String.IsNullOrEmpty(appName))
@@ -221,6 +224,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 修改app图标
+        /// </summary>
         public App ModifyIconUrl(String iconUrl)
         {
             if (String.IsNullOrEmpty(iconUrl))
@@ -233,6 +239,11 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 修改app宽
+        /// </summary>
+        /// <param name="width"></param>
+        /// <returns></returns>
         public App ModifyWidth(Int32 width)
         {
             if (width <= 0)
@@ -245,6 +256,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 修改app高
+        /// </summary>
         public App ModifyHeight(Int32 height)
         {
             if (height <= 0)
@@ -258,6 +272,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 使用人数+1
+        /// </summary>
         public App IncreaseUseCount()
         {
             UseCount += 1;
@@ -265,6 +282,10 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 使用人数-1
+        /// </summary>
+        /// <returns></returns>
         public App DecreaseUseCount()
         {
             UseCount -= 1;
@@ -272,6 +293,10 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 最大化
+        /// </summary>
+        /// <returns></returns>
         public App Max()
         {
             IsMax = true;
@@ -279,6 +304,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 禁用最大化
+        /// </summary>
         public App NotMax()
         {
             IsMax = false;
@@ -286,6 +314,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 全屏
+        /// </summary>
         public App Full()
         {
             IsFull = true;
@@ -293,6 +324,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 取消全屏
+        /// </summary>
         public App NotFull()
         {
             IsFull = false;
@@ -301,6 +335,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 展示到任务栏
+        /// </summary>
         public App Setbar()
         {
             IsSetbar = true;
@@ -308,6 +345,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 不在任务栏展示
+        /// </summary>
         public App NotSetbar()
         {
             IsSetbar = false;
@@ -315,6 +355,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 打开时最大化
+        /// </summary>
         public App OpenMax()
         {
             IsOpenMax = true;
@@ -322,6 +365,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 打开时不进行最大化
+        /// </summary>
         public App NotOpenMax()
         {
             IsOpenMax = false;
@@ -329,6 +375,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 锁定
+        /// </summary>
         public App Lock()
         {
             IsLock = true;
@@ -336,7 +385,9 @@ namespace NewCrmCore.Domain.Entitys.System
             OnPropertyChanged(new PropertyArgs(nameof(IsLock), IsLock), new PropertyArgs(nameof(IsOpenMax), IsOpenMax));
             return this;
         }
-
+        /// <summary>
+        /// 不锁定
+        /// </summary>
         public App NotLock()
         {
             IsLock = false;
@@ -344,7 +395,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
-
+        /// <summary>
+        /// 是系统app
+        /// </summary>
         public App System()
         {
             IsSystem = true;
@@ -352,6 +405,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 不是系统app
+        /// </summary>
         public App NotSystem()
         {
             IsSystem = false;
@@ -359,6 +415,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 是福莱希
+        /// </summary>
         public App Flash()
         {
             IsFlash = true;
@@ -366,6 +425,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 不是福莱希
+        /// </summary>
         public App NotFlash()
         {
             IsFlash = false;
@@ -373,6 +435,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 允许拖动
+        /// </summary>
         public App Draw()
         {
             IsDraw = true;
@@ -380,6 +445,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 不允许拖动
+        /// </summary>
         public App NotDraw()
         {
             IsDraw = false;
@@ -387,6 +455,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 允许改变app大小
+        /// </summary>
         public App Resize()
         {
             IsResize = true;
@@ -394,6 +465,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 允许改变app大小
+        /// </summary>
         public App NotResize()
         {
             IsResize = false;
@@ -401,6 +475,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 修改应用类型
+        /// </summary>
         public App ModifyAppTypeId(Int32 appTypeId)
         {
             AppTypeId = appTypeId;
@@ -408,6 +485,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 推荐
+        /// </summary>
         public App Recommand()
         {
             IsRecommand = true;
@@ -415,6 +495,9 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
+        /// <summary>
+        /// 取消推荐
+        /// </summary>
         public App CancelRecommand()
         {
             IsRecommand = false;

@@ -15,7 +15,7 @@ namespace NewCrmCore.Dto
 
         public Int32 UseCount { get; set; }
 
-        public Double StartCount { get; set; }
+        public Double StarCount { get; set; }
 
         public Boolean IsInstall { get; set; }
 

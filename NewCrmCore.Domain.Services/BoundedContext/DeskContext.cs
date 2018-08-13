@@ -135,9 +135,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
                     var member = new Member();
-                    member.OutDock();
-                    member.ModifyDeskIndex(deskId);
-
+                    member.OutDock().ModifyDeskIndex(deskId);
                     dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
                 }
             });

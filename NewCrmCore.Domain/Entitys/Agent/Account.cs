@@ -58,9 +58,10 @@ namespace NewCrmCore.Domain.Entitys.Agent
         [PropertyRequired]
         public Int32 ConfigId { get; private set; }
 
-
+        /// <summary>
+        /// 账户头像
+        /// </summary>
         public String AccountFace { get; private set; }
-
 
         /// <summary>
         /// 用户角色
@@ -87,6 +88,9 @@ namespace NewCrmCore.Domain.Entitys.Agent
 
     public partial class Account
     {
+        /// <summary>
+        /// 修改登陆密码
+        /// </summary>
         public Account ModifyLoginPassword(String password)
         {
             if (String.IsNullOrEmpty(password))
@@ -99,6 +103,9 @@ namespace NewCrmCore.Domain.Entitys.Agent
             return this;
         }
 
+        /// <summary>
+        /// 修改锁屏密码
+        /// </summary>
         public Account ModifyLockScreenPassword(String password)
         {
             if (String.IsNullOrEmpty(password))
@@ -111,6 +118,9 @@ namespace NewCrmCore.Domain.Entitys.Agent
             return this;
         }
 
+        /// <summary>
+        /// 修改关联配置文件Id
+        /// </summary>
         public Account ModifyConfigId(Int32 configId)
         {
             ConfigId = configId;
@@ -118,6 +128,9 @@ namespace NewCrmCore.Domain.Entitys.Agent
             return this;
         }
 
+        /// <summary>
+        /// 账户启用
+        /// </summary>
         public Account Enable()
         {
             IsDisable = false;
@@ -125,6 +138,9 @@ namespace NewCrmCore.Domain.Entitys.Agent
             return this;
         }
 
+        /// <summary>
+        /// 账户禁用
+        /// </summary>
         public Account Disable()
         {
             IsDisable = true;
@@ -132,6 +148,10 @@ namespace NewCrmCore.Domain.Entitys.Agent
             return this;
         }
 
+        /// <summary>
+        /// 上线
+        /// </summary>
+        /// <returns></returns>
         public Account Online()
         {
             IsOnline = true;
@@ -140,6 +160,10 @@ namespace NewCrmCore.Domain.Entitys.Agent
             return this;
         }
 
+        /// <summary>
+        /// 下线
+        /// </summary>
+        /// <returns></returns>
         public Account Offline()
         {
             IsOnline = false;
@@ -147,6 +171,9 @@ namespace NewCrmCore.Domain.Entitys.Agent
             return this;
         }
 
+        /// <summary>
+        /// 修改角色
+        /// </summary>
         public Account ModifyRoles(params Int32[] roleIds)
         {
             if (roleIds.Length == 0)
@@ -160,6 +187,9 @@ namespace NewCrmCore.Domain.Entitys.Agent
             return this;
         }
 
+        /// <summary>
+        /// 去除管理员角色
+        /// </summary>
         public Account DetachAdminRole()
         {
             IsAdmin = false;
@@ -167,6 +197,10 @@ namespace NewCrmCore.Domain.Entitys.Agent
             return this;
         }
 
+        /// <summary>
+        /// 附加管理员角色
+        /// </summary>
+        /// <returns></returns>
         public Account AttachAdminRole()
         {
             IsAdmin = true;
