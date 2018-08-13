@@ -2513,7 +2513,7 @@ NewCrm.msgbox.show = function (msgHtml, type, timeout, opts) {
 	}
 	opts = opts || {};
 	var _s = NewCrm.msgbox,
-		template = '<span class="zeng_msgbox_layer zeng_msgbox_layer_{layerStyle}" style="display:none;z-index:10000;" id="mode_tips_v2"><span class="gtl_ico_{type}"></span>{loadIcon}{msgHtml}<span class="gtl_end"></span></span>', loading = '<span class="gtl_ico_loading"></span>', typeClass = [0, 0, 0, 0, "succ", "fail", "clear"], mBox, tips;
+		template = '<span class="zeng_msgbox_layer zeng_msgbox_layer_{layerStyle}" style="display:none;z-index:9998;" id="mode_tips_v2"><span class="gtl_ico_{type}"></span>{loadIcon}{msgHtml}<span class="gtl_end"></span></span>', loading = '<span class="gtl_ico_loading"></span>', typeClass = [0, 0, 0, 0, "succ", "fail", "clear"], mBox, tips;
 	_s._loadCss && _s._loadCss(opts.cssPath);
 	mBox = NewCrm.dom.get("q_Msgbox") || NewCrm.dom.createElementIn("div", document.body, false, { className: "zeng_msgbox_layer_wrap" });
 	mBox.id = "q_Msgbox";
@@ -2558,7 +2558,6 @@ NewCrm.msgbox.fail = function (msg, timeout) {
 };
 NewCrm.msgbox.loading = function (msg) {
 	NewCrm.msgbox.show(msg, 6, 10000);
-
 };
 NewCrm.msgbox.close = function () {
 	NewCrm.msgbox._hide()

@@ -141,10 +141,7 @@
 		$(function () {
             document.body.onselectstart = document.body.ondrag = function () {
                 return false;
-            };
-
-            $(".loading").hide();
-            $("#desktop").show();
+            };  
 
             HROS.CONFIG.dockPos = '@accountConfig.DockPosition';
             HROS.CONFIG.appXY = '@accountConfig.AppXy';
@@ -155,6 +152,9 @@
             HROS.CONFIG.deskCount = parseInt('@desks');
             HROS.CONFIG.lockPwdAndLoginPwd = '@(account.Password==account.LockScreenPassword?1:0)'
             HROS.base.init();
+ 			
+			$(".loading").hide();
+			$("#desktop").show()
         });
 
 	</script>
