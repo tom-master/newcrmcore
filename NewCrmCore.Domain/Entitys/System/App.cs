@@ -486,11 +486,7 @@ namespace NewCrmCore.Domain.Entitys.System
 
         public App ModifyRemark(String newRemark)
         {
-            if (String.IsNullOrEmpty(newRemark))
-            {
-                throw new ArgumentException($@"{nameof(newRemark)} is null");
-            }
-            Remark = newRemark;
+            Remark = newRemark ?? "";
             OnPropertyChanged(new PropertyArgs(nameof(Remark), Remark));
             return this;
         }

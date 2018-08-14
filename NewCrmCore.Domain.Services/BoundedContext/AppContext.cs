@@ -727,7 +727,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                 a.IsSetbar,
                                 a.IsOpenMax,
                                 a.IsFlash,
-                                a.IsIconByUpload
+                                a.IsIconByUpload,
+                                a.AppStyle
                                 FROM  App AS a WHERE a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState AND a.IsDeleted=0 AND a.Id=@Id";
                             var parameters = new List<ParameterMapper>
                             {
@@ -746,7 +747,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                         #region 添加桌面成员
                         {
-                            var newMember = new Member(app.Name, app.IconUrl, app.AppUrl, app.Id, app.Width, app.Height, accountId, deskNum, app.IsIconByUpload, app.IsSetbar, app.IsOpenMax, app.IsFlash, app.IsResize);
+                            var newMember = new Member(app.Name, app.IconUrl, app.AppUrl, app.Id, app.Width, app.Height, accountId, deskNum, app.AppStyle, app.IsIconByUpload, app.IsSetbar, app.IsOpenMax, app.IsFlash, app.IsResize);
                             dataStore.Add(newMember);
                         }
                         #endregion

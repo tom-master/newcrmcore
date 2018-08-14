@@ -121,6 +121,7 @@ namespace NewCrmCore.Domain.Entitys.System
                     Int32 height,
                     Int32 accountId,
                     Int32 deskIndex,
+                    AppStyle appStyle,
                     Boolean isIconByUpload = default(Boolean),
                     Boolean isSetbar = default(Boolean),
                     Boolean isOpenMax = default(Boolean),
@@ -137,7 +138,7 @@ namespace NewCrmCore.Domain.Entitys.System
             Name = name;
             IconUrl = iconUrl;
             AppUrl = appUrl;
-            MemberType = appId == 0 ? MemberType.Folder : MemberType.App;
+            MemberType = appId == 0 ? MemberType.Folder : (appStyle == AppStyle.Widget ? MemberType.Widget : MemberType.App);
             DeskIndex = 1;
             IsIconByUpload = isIconByUpload;
             AccountId = accountId;

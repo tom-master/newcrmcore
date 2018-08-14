@@ -98,7 +98,7 @@ namespace NewCrmCore.Application.Services
                         })
                     });
                 }
-                foreach (var member in members.Where(w => w.MemberType == MemberType.App && w.FolderId == 0))
+                foreach (var member in members.Where(w => (w.MemberType == MemberType.App || w.MemberType == MemberType.Widget) && w.FolderId == 0))
                 {
                     deskMembers.Add(new
                     {

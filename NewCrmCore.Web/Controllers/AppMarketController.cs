@@ -333,16 +333,20 @@ namespace NewCrmCore.Web.Controllers
                 AppUrl = forms["val_url"],
                 Width = Int32.Parse(forms["val_width"]),
                 Height = Int32.Parse(forms["val_height"]),
-                AppStyle = EnumExtensions.ToEnum<AppStyle>(Int32.Parse(forms["val_type"])),
-                IsResize = Int32.Parse(forms["val_isresize"]) == 1,
-                IsOpenMax = Int32.Parse(forms["val_isopenmax"]) == 1,
-                IsFlash = Int32.Parse(forms["val_isflash"]) == 1,
-                IsSetbar = Int32.Parse(forms["val_issetbar"]) == 1,
+                AppStyle = EnumExtensions.ToEnum<AppStyle>(forms["val_type"]),
                 Remark = forms["val_remark"],
                 AppAuditState = EnumExtensions.ToEnum<AppAuditState>(Int32.Parse(forms["val_verifytype"])),
                 AppReleaseState = AppReleaseState.UnRelease, //未发布
                 IsIconByUpload = Int32.Parse(forms["isIconByUpload"]) == 1
             };
+
+            if (appDto.AppStyle == AppStyle.App)
+            {
+                appDto.IsResize = Int32.Parse(forms["val_isresize"]) == 1;
+                appDto.IsOpenMax = Int32.Parse(forms["val_isopenmax"]) == 1;
+                appDto.IsFlash = Int32.Parse(forms["val_isflash"]) == 1;
+                appDto.IsSetbar = Int32.Parse(forms["val_issetbar"]) == 1;
+            }
 
             if ((forms["val_Id"] + "").Length > 0)
             {

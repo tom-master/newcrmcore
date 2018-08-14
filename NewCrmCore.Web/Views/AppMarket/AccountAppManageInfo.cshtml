@@ -183,9 +183,8 @@
                     }
                 });
                 $('input[name="val_type"]').change(function () {
-                    
                     if ($(this).val() === 'app') {
-                        $('.input-label-isresize, .input-label-isopenmax, .input-label-isflash').slideDown();
+                        $('.input-label-isresize, .input-label-isopenmax, .input-label-isflash, .input-label-issetbar').slideDown();
                     } else {
                         $('input[name="val_isresize"]').each(function () {
                             if ($(this).val() === '1') {
@@ -202,7 +201,7 @@
                                 $(this).prop('checked', true);
                             }
                         });
-                        $('.input-label-isresize, .input-label-isopenmax, .input-label-isflash').slideUp();
+                        $('.input-label-isresize, .input-label-isopenmax, .input-label-isflash, .input-label-issetbar').slideUp();
                     }
                 });
                 $('input[name="val_isresize"]').change(function () {
@@ -296,7 +295,6 @@
                         id: 'del',
                         content: '确认发布该应用？',
                         ok: function () {
-                          
                             HROS.request.post('/AppMarket/Release', { appId: appid }, function (responseText) {
                                 if (responseText.IsSuccess) {
                                     window.parent.closeDetailIframe(function () {
