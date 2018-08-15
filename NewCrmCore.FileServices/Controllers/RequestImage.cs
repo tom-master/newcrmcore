@@ -88,7 +88,7 @@ namespace NewCrmCore.FileServices.Controllers
                 IsSuccess = true,
                 Width = _width,
                 Height = _height,
-                Title = "",
+                Title = Name,
                 Url = Url,
                 Md5 = FileHelper.GetMD5(File.Open(_originalFullPath, FileMode.Open))
             };

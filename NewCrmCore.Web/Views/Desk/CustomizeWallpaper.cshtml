@@ -53,14 +53,9 @@
     <script>
         $(function () {
             var upload = WebUploader.create({
-                // 选完文件后，是否自动上传。
                 auto: true,
-                // swf文件路径
                 swf: '~/js/webuploader-0.1.5/Uploader.swf',
-                // 文件接收服务端。
-                server: '@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)?accountId=@accountConfig.AccountId&uploadtype=wallpaper',
-                // 选择文件的按钮。可选。
-                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                server: '@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)',
                 pick: {
                     id: '#upload',
                     multiple: false
@@ -70,7 +65,11 @@
                     title: 'Images',
                     extensions: 'gif,jpg,jpeg,bmp,png',
                     mimeTypes: 'image/*'
-                }
+                },
+                formData: {  
+                    accountId: '@accountConfig.AccountId',
+                    uploadtype:'wallpaper'
+                }  
             });
             upload.on('beforeFileQueued', function (file) {
                 if (file.size > 1000 * 1024) {
@@ -79,6 +78,7 @@
                 }
             });
             upload.on('uploadSuccess', function (file, cb) {
+                 
                 if (cb[0].IsSuccess) {
                     var model = {
                         Title: cb[0].Title,
@@ -90,14 +90,14 @@
                         Md5: cb[0].Md5,
                         ShortUrl: ""
                     };
-              
-					HROS.request.post('/Desk/UploadWallPaper', { wallpaper: model }, function () {
+                
+					HROS.request.post('/Desk/UploadWallPaper', { wallpaper: model }, function (responseText) {
                         if (responseText.IsSuccess) {
 							$('.wapppapercustom .view ul').append('<li id="' + responseText.Model.Id + '" style="background-image:url(' + responseText.Model.Url + ')"><a href="###">删 除</a></li>');
                             window.parent.HROS.wallpaper.update($('#wallpapertype').val(), responseText.Model.Id);
                             upload.removeFile(file);
                         } else {
-                            NewCrm.msgbox.fail("壁纸上传失败");
+                            NewCrm.msgbox.fail(responseText.Message);
                         }
                     })
                 }
@@ -134,7 +134,7 @@
         });
 
         function GetAllUploadWallPaper() {
-			HROS.request.get("/Desk/GetUploadWallPapers", function (responseText) {
+			HROS.request.get("/Desk/GetUploadWallPapers",{}, function (responseText) {
                 if (responseText.IsSuccess) {
                     var liElement = '';
                     $.each(responseText.Model, function (k, v) {

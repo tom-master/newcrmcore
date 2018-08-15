@@ -19,5 +19,7 @@ namespace NewCrmCore.FileServices
         public String Url { get; set; }
 
         public String Md5 { get; set; }
+
+        public String Message { get; set; }
     }
 }
