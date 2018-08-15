@@ -19,7 +19,7 @@ namespace NewCrmCore.FileServices
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>().UseUrls("http://localhost:6000")
+                .UseStartup<Startup>().UseUrls("http://localhost:6001")
                 .Build();
     }
 }
