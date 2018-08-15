@@ -206,13 +206,13 @@
                 appStyleId: $('#appStyle').find("option:selected").attr('value'),
                 appState: appStateResult,
                 pageIndex: current_page === 0 ? 1 : current_page + 1,
-                pageSize: 7
+                pageSize:7
             }, function (responseText) {
 				if (responseText.IsSuccess) {
                     var tableTemplate = Handlebars.compile($("#table-template").html());
                     $('.list-con').html(tableTemplate(responseText));
                     $('.list-count').text(responseText.TotalCount);
-                    $('#pagination_setting').attr('count', parseInt(responseText.totalCount));
+                    $('#pagination_setting').attr('count', parseInt(responseText.TotalCount));
                     initPagination({
 						current_page: current_page,
 						items_per_page: 7,
