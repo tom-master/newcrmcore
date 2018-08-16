@@ -30,6 +30,8 @@ namespace NewCrmCore.Dto
 
         public Boolean IsRememberPasswrod { get; set; }
 
+        public Boolean IsModifyAccountFace { get; set; }
+
         public AccountDto()
         {
             Roles = new List<RoleDto>();

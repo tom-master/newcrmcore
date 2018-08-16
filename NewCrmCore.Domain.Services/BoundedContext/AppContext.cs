@@ -17,6 +17,13 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 {
     public class AppContext : IAppContext
     {
+
+        private IAccountContext _accountContext;
+        public AppContext(IAccountContext accountContext)
+        {
+            _accountContext = accountContext;
+        }
+
         public async Task<Tuple<Int32, Int32>> GetDevelopAndNotReleaseCountAsync(Int32 accountId)
         {
             new Parameter().Validate(accountId);
@@ -35,13 +42,19 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task<List<AppType>> GetAppTypesAsync()
+        public async Task<List<AppType>> GetAppTypesAsync(Int32 accountId)
         {
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    var sql = $@"SELECT a.Id,a.Name FROM AppType AS a WHERE a.IsDeleted=0";
+                    var where = new StringBuilder();
+                    var isAdmin = _accountContext.IsAdmin(accountId);
+                    if (!isAdmin)
+                    {
+                        where.Append(" AND a.Name<>'系统' ");
+                    }
+                    var sql = $@"SELECT a.Id,a.Name FROM AppType AS a WHERE a.IsDeleted=0 {where}";
                     return dataStore.Find<AppType>(sql);
                 }
             });
@@ -95,11 +108,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 var parameters = new List<ParameterMapper>
                 {
                     new ParameterMapper("@AppAuditState", AppAuditState.Pass.ToInt32()),
-                    new ParameterMapper("@AppReleaseState",  AppReleaseState.Release.ToInt32())
+                    new ParameterMapper("@AppReleaseState", AppReleaseState.Release.ToInt32())
                 };
 
                 var where = new StringBuilder();
-                where.Append($@" WHERE 1=1 AND a.IsDeleted=0 AND a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState");
+                where.Append($@" WHERE 1=1  AND a.IsDeleted=0 AND a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState");
                 if (appTypeId != 0 && appTypeId != -1)//全部app
                 {
                     parameters.Add(new ParameterMapper("@AppTypeId", appTypeId));
@@ -142,9 +155,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 var paging = new PageList<App>();
                 #region totalCount
                 {
-                    var sql = $@"SELECT COUNT(*) FROM App AS a 
-								 LEFT JOIN AppStar AS a1 ON a1.AppId=a.Id AND a1.IsDeleted=0 
-								 {where}";
+                    var sql = $@"SELECT COUNT(*) FROM App AS a LEFT JOIN AppStar AS a1 ON a1.AppId=a.Id AND a1.IsDeleted=0 {where}";
                     totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
                 }
                 #endregion

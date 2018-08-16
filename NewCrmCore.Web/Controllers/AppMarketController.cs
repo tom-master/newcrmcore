@@ -36,17 +36,10 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var account = await _accountServices.GetAccountAsync(AccountId);
-            if (account.IsAdmin)
-            {
-                ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();
-            }
-            else
-            {
-                ViewData["AppTypes"] = (await _appServices.GetAppTypesAsync()).Where(w => w.Name != "系统").ToList();
-            }
-
+            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync(AccountId);
             ViewData["TodayRecommendApp"] = await _appServices.GetTodayRecommendAsync(AccountId);
+
+            var account = await _accountServices.GetAccountAsync(AccountId);
             ViewData["AccountName"] = account.Name;
             ViewData["AccountApp"] = await _appServices.GetDevelopAndNotReleaseCountAsync(AccountId);
             return View();
@@ -64,7 +57,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             ViewData["IsInstallApp"] = await _appServices.IsInstallAppAsync(AccountId, appId);
-            var result = await _appServices.GetAppAsync(appId);
+            var result = await _appServices.GetAppAsync(appId, AccountId);
             ViewData["AccountName"] = result.AccountName;
 
             return View(result);
@@ -77,7 +70,7 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> AccountAppManage()
         {
-            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();
+            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync(AccountId);
             ViewData["AppStyles"] = _appServices.GetAppStyles().ToList();
             ViewData["AppStates"] = _appServices.GetAppStates().ToList();
 
@@ -94,10 +87,10 @@ namespace NewCrmCore.Web.Controllers
             AppDto result = null;
             if (appId != 0)// 如果appId为0则是新创建app
             {
-                result = await _appServices.GetAppAsync(appId);
+                result = await _appServices.GetAppAsync(appId, AccountId);
                 ViewData["AppState"] = result.AppAuditState;
             }
-            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();
+            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync(AccountId);
             ViewData["AccountId"] = AccountId;
             return View(result);
         }

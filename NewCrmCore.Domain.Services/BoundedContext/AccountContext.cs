@@ -110,7 +110,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a.WallpaperMode,
 								a.WallpaperId,
 								a.IsBing,
-								a.AccountId
+								a.AccountId,
+                                a.IsModifyAccountFace,
+                                a.WallpaperId
 								FROM Config AS a WHERE a.AccountId=@accountId AND a.IsDeleted=0";
                      var parameters = new List<ParameterMapper> { new ParameterMapper("@accountId", accountId) };
                      var result = dataStore.Find<Config>(sql, parameters).FirstOrDefault();
@@ -327,6 +329,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     return dataStore.FindSingleValue<Int32>(sql, parameters) > 0;
                 }
             });
+        }
+
+        public Boolean IsAdmin(int accountId)
+        {
+            using (var dataStore = new DataStore(Appsetting.Database))
+            {
+                var sql = $@"SELECT a.IsAdmin FROM Account AS a WHERE a.Id=@Id AND a.IsDisable=0 AND a.IsDeleted=0";
+                var parameters = new List<ParameterMapper>
+                    {
+                        new ParameterMapper("@Id",accountId)
+                    };
+                var isAdmin = dataStore.FindSingleValue<Boolean>(sql, parameters);
+                return isAdmin;
+            }
         }
 
         public async Task LogoutAsync(Int32 accountId)
@@ -659,5 +675,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 }
             });
         }
+
+
     }
 }

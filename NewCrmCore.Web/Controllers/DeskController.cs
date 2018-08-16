@@ -50,10 +50,16 @@ namespace NewCrmCore.Web.Controllers
             if (HttpContext.Request.Cookies["Account"] != null)
             {
                 var account = await _accountServices.GetAccountAsync(AccountId);
-                account.AccountFace = Appsetting.FileUrl + account.AccountFace;
                 ViewData["Account"] = account;
-                ViewData["AccountConfig"] = await _accountServices.GetConfigAsync(account.Id);
-                ViewData["Desks"] = (await _accountServices.GetConfigAsync(account.Id)).DefaultDeskCount;
+
+                var config = await _accountServices.GetConfigAsync(account.Id);
+                if (config.IsModifyAccountFace)
+                {
+                    account.AccountFace = Appsetting.FileUrl + account.AccountFace;
+                }
+
+                ViewData["AccountConfig"] = config;
+                ViewData["Desks"] = config.DefaultDeskCount;
 
                 return View(account);
             }
@@ -163,7 +169,7 @@ namespace NewCrmCore.Web.Controllers
                 response.Message = "登陆成功";
                 response.IsSuccess = true;
 
-                HttpContext.Response.Cookies.Append("Account", JsonConvert.SerializeObject(new AccountDto { Id = account.Id, AccountFace = Appsetting.FileUrl + account.AccountFace, Name = account.Name }), new CookieOptions { Expires = cookieTimeout });
+                HttpContext.Response.Cookies.Append($@"Account", JsonConvert.SerializeObject(new AccountDto { Id = account.Id, AccountFace = Appsetting.FileUrl + account.AccountFace, Name = account.Name }), new CookieOptions { Expires = cookieTimeout });
 
             }
             return Json(response);

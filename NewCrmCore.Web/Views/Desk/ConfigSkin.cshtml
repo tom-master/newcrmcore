@@ -26,7 +26,6 @@
         });
 
 		function loadAllSkin(callback) {
-			
 			HROS.request.get('/Desk/GetSkins', {}, function (responseText) {
                 if (responseText.IsSuccess) {
                     var html = '';

@@ -37,6 +37,7 @@ namespace NewCrmCore.Domain.Entitys.System
         /// </summary>
         [PropertyRequired]
         public Int32 AppHorizontalSpacing { get; private set; }
+
         /// <summary>
         /// 默认桌面编号
         /// </summary>
@@ -85,6 +86,12 @@ namespace NewCrmCore.Domain.Entitys.System
         [PropertyRequired]
         public Int32 WallpaperId { get; private set; }
 
+        /// <summary>
+        /// 账户头像是否被更改
+        /// </summary>
+        [PropertyRequired]
+        public Boolean IsModifyAccountFace { get; private set; }
+
         public Config(Int32 accountId)
         {
             AppXy = AppAlignMode.X;
@@ -99,10 +106,11 @@ namespace NewCrmCore.Domain.Entitys.System
             DefaultDeskCount = 5;
             AccountId = accountId;
             IsBing = true;
+            IsModifyAccountFace = false;
+            WallpaperId = 3;
         }
 
         public Config() { }
-
     }
 
     public partial class Config
@@ -134,7 +142,8 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             AccountFace = accountFace;
-            OnPropertyChanged(new PropertyArgs(nameof(AccountFace), AccountFace));
+            IsModifyAccountFace = true;
+            OnPropertyChanged(new PropertyArgs(nameof(AccountFace), AccountFace), new PropertyArgs(nameof(IsModifyAccountFace), IsModifyAccountFace));
             return this;
         }
 

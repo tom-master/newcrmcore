@@ -43,7 +43,7 @@ namespace NewCrmCore.Domain.Services.Interface
         /// 获取所有App类型
         /// </summary>
         /// <returns></returns>
-        Task<List<AppType>> GetAppTypesAsync();
+        Task<List<AppType>> GetAppTypesAsync(Int32 accountId);
 
         /// <summary>
         /// 获取今日推荐

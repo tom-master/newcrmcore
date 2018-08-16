@@ -42,9 +42,8 @@ namespace NewCrmCore.Application.Services
             new Parameter().Validate(accountId);
 
             var config = await CacheHelper.GetOrSetCacheAsync(new ConfigCacheKey(accountId), () => _accountContext.GetConfigAsync(accountId));
-            var wallpaper = await CacheHelper.GetOrSetCacheAsync(new WallpaperCacheKey(accountId), () => _accountContext.GetWallpaperAsync(config.WallpaperId));
 
-            return new ConfigDto
+            var configDto = new ConfigDto
             {
                 Id = config.Id,
                 Skin = config.Skin,
@@ -54,16 +53,24 @@ namespace NewCrmCore.Application.Services
                 AppHorizontalSpacing = config.AppHorizontalSpacing,
                 DefaultDeskNumber = config.DefaultDeskNumber,
                 DefaultDeskCount = config.DefaultDeskCount,
+                IsModifyAccountFace = config.IsModifyAccountFace,
                 AppXy = config.AppXy,
                 DockPosition = config.DockPosition,
-                WallpaperUrl = wallpaper.Url,
-                WallpaperWidth = wallpaper.Width,
-                WallpaperHeigth = wallpaper.Height,
-                WallpaperSource = wallpaper.Source,
                 WallpaperMode = config.WallpaperMode,
                 IsBing = config.IsBing,
                 AccountId = config.AccountId
             };
+
+            if (!config.IsBing)
+            {
+                var wallpaper = await CacheHelper.GetOrSetCacheAsync(new WallpaperCacheKey(accountId), () => _accountContext.GetWallpaperAsync(config.WallpaperId));
+                configDto.WallpaperUrl = wallpaper.Url;
+                configDto.WallpaperWidth = wallpaper.Width;
+                configDto.WallpaperHeigth = wallpaper.Height;
+                configDto.WallpaperSource = wallpaper.Source;
+            }
+
+            return configDto;
         }
 
         public async Task<PageList<AccountDto>> GetAccountsAsync(String accountName, String accountType, Int32 pageIndex, Int32 pageSize)
