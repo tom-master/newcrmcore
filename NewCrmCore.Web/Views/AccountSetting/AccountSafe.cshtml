@@ -32,7 +32,6 @@
 	</div>
 </form>
 <form action="/AccountSetting/ModifyLockPassword" method="post" name="form2" id="form2">
-	<input type="hidden" name="ac" value="editLockPassword">
 	<input type="hidden" name="token" value="@( await TimeToken.GetTokenAsync())" />
 	<div class="input-label">
 		<label class="label-text">锁屏密码：</label>
