@@ -390,6 +390,11 @@ namespace NewCrmCore.Web.Controllers
             var response = new ResponseModel<ConfigDto>();
             var result = await _accountServices.GetConfigAsync(AccountId);
 
+            if (result.WallpaperSource == WallpaperSource.Upload)
+            {
+                result.WallpaperUrl = Appsetting.FileUrl + result.WallpaperUrl;
+            }
+
             if (result.IsBing)
             {
                 result.WallpaperSource = WallpaperSource.Bing;

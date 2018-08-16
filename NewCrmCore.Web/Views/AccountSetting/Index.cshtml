@@ -7,28 +7,24 @@
 @section ChildrenCss
 {
 	<link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/js/webuploader-0.1.5/webuploader.css"/>
 }
 @section SysCss
 {
 	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
 }
+
 <div class="title">
 	<ul>
-		<li data-value="baseinfo" @{ if (requestTarget == "baseinfo") { <text>
-			class="focus"
-			</text>  } }>
+		<li data-value="baseinfo" @{ if (requestTarget == "baseinfo") { <text>class="focus"</text>  } }>
 			<a href="javascript:void(0);">基本信息</a>
 		</li>
 
-		<li data-value="modifyface" @{ if (requestTarget == "modifyface") { <text>
-			class="focus"
-			</text>  } }>
+		<li data-value="modifyface" @{ if (requestTarget == "modifyface") { <text> class="focus" </text>  } }>
 			<a href="javascript:void(0);">修改头像</a>
 		</li>
 
-		<li data-value="accountsafe" @{ if (requestTarget == "accountsafe") { <text>
-			class="focus"
-			</text>  } }>
+		<li data-value="accountsafe" @{ if (requestTarget == "accountsafe") { <text> class="focus" </text>  } }>
 			<a href="javascript:void(0);">账号安全</a>
 		</li>
 	</ul>
@@ -56,9 +52,7 @@
 				}
 			default:
 				{
-					<text>
-						@Html.Partial("~/Views/AccountSetting/BaseInfo.cshtml", Model);
-					</text>
+					Html.RenderPartial("~/Views/AccountSetting/BaseInfo.cshtml", Model);
 					break;
 				}
 		}
@@ -66,7 +60,7 @@
 }
 
 @section ChildrenScript
-	{
+{
 	<script>
         @{
 			if (String.IsNullOrEmpty(requestTarget))
@@ -144,23 +138,7 @@
                 return false;
             }
         });
-		$(function () {
-			$('#hidden_frame').on('load', function () {
-				var response = $(this).contents().find("body").text()
-				if (response) {
-					var responseText = JSON.parse($(this).contents().find("body").text());
-					if (responseText.IsSuccess) {
-						NewCrm.msgbox.success('您修改了登陆密码，2秒后跳转到登陆界面');
-						setTimeout(function () {
-							top.location.reload()
-						}, 2000)
-					} else {
-						NewCrm.msgbox.fail('修改失败');
-					}
-				}
-			})
-		 })
-
+		
       var f2=  $('#form2').Validform({
             btnSubmit: '#form-submit2',
             postonce: true,
@@ -208,6 +186,74 @@
                     ]
                 });
                 return false;
+            }
+        });
+
+        $(function () {
+			$('#hidden_frame').on('load', function () {
+				var response = $(this).contents().find("body").text()
+				if (response) {
+					var responseText = JSON.parse($(this).contents().find("body").text());
+					if (responseText.IsSuccess) {
+						NewCrm.msgbox.success('您修改了登陆密码，2秒后跳转到登陆界面');
+						setTimeout(function () {
+							top.location.reload()
+						}, 2000)
+					} else {
+						NewCrm.msgbox.fail('修改失败');
+					}
+				}
+			})
+		 })
+
+        var upload = WebUploader.create({
+            auto: true,
+            swf: '~/js/webuploader-0.1.5/Uploader.swf',
+            server: '@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)',
+            pick: {
+                id: '#upload',
+                multiple: false
+            },
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            },
+            formData: {  
+                accountId: '@Model.Id',
+                uploadtype:'face'
+            }  
+        });
+
+        upload.on('beforeFileQueued', function (file) {
+            if (file.size > 1000 * 1024) {
+                NewCrm.msgbox.info('文件大于1000Kb');
+                return false;
+            }
+        });
+
+        upload.on('uploadSuccess', function (file, cb) {
+            if (cb[0].IsSuccess) {
+                var model = {
+                    Title: cb[0].Title,
+                    Width: cb[0].Width,
+                    Height: cb[0].Height,
+                    Url: cb[0].Url,
+                    Source: 3,
+                    AccountId: '@Model.Id',
+                    Md5: cb[0].Md5,
+                    ShortUrl: ""
+                };
+                HROS.request.post('/AccountSetting/ModifyFace', { accountFace: model.Url }, function (responseText) {
+                    if (responseText.IsSuccess) {
+                        NewCrm.msgbox.success('账户头像上传成功');
+                        window.parent.HROS.startmenu.getAvatar();
+                    } else {
+                        NewCrm.msgbox.fail('账户头像保存失败');
+                    }
+                })
+            } else {
+                NewCrm.msgbox.fail('账户头像上传失败');
             }
         });
 	</script>
