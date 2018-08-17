@@ -8,6 +8,7 @@ using NewCrmCore.Application.Services;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Domain.Services.BoundedContext;
 using NewCrmCore.Domain.Services.Interface;
+using NewCrmCore.NotifyCenter;
 using NewCrmCore.Web.Filter;
 
 namespace NewCrmCore.Web
@@ -51,6 +52,8 @@ namespace NewCrmCore.Web
                 op.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
                 op.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
             });
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,6 +76,11 @@ namespace NewCrmCore.Web
             app.UseMvcWithDefaultRoute();
 
             app.UseStaticFiles();
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<NotifyHub>("/hubs");
+            });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

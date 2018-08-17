@@ -40,6 +40,7 @@
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.Host" Version="1.1.7" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
@@ -223,6 +224,7 @@
     <ProjectReference Include="..\NewCrmCore.Application.Services\NewCrmCore.Application.Services.csproj" />
     <ProjectReference Include="..\NewCrmCore.Dto\NewCrmCore.Dto.csproj" />
     <ProjectReference Include="..\NewCrmCore.Infrastructure\NewCrmCore.Infrastructure.csproj" />
+    <ProjectReference Include="..\NewCrmCore.NotifyCenter\NewCrmCore.NotifyCenter.csproj" />
     <ProjectReference Include="$(CODEROOT)\newlibcore\NewLibCore\NewLibCore.csproj" />
   </ItemGroup>
 </Project>
