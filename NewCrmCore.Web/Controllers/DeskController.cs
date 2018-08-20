@@ -13,6 +13,8 @@ using NewCrmCore.Web.Filter;
 using NewLibCore.Validate;
 using NewLibCore;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.SignalR;
+using NewCrmCore.NotifyCenter;
 
 namespace NewCrmCore.Web.Controllers
 {
@@ -24,17 +26,20 @@ namespace NewCrmCore.Web.Controllers
         private readonly IAppServices _appServices;
         private readonly IAccountServices _accountServices;
 
+        private readonly IHubContext<NotifyHub> _aa;
         public DeskController(IWallpaperServices wallpaperServices,
         ISkinServices skinServices,
         IDeskServices deskServices,
         IAppServices appServices,
-        IAccountServices accountServices)
+        IAccountServices accountServices,
+        IHubContext<NotifyHub> aa)
         {
             _wallpaperServices = wallpaperServices;
             _skinServices = skinServices;
             _deskServices = deskServices;
             _appServices = appServices;
             _accountServices = accountServices;
+            _aa = aa;
         }
 
         #region 页面
@@ -46,7 +51,6 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet, DoNotCheckPermission]
         public async Task<IActionResult> Index()
         {
-            await new NotifyCenter.NotifyHub().Send();
             ViewBag.Title = "桌面";
             if (HttpContext.Request.Cookies["Account"] != null)
             {
@@ -61,7 +65,7 @@ namespace NewCrmCore.Web.Controllers
 
                 ViewData["AccountConfig"] = config;
                 ViewData["Desks"] = config.DefaultDeskCount;
-
+                await _aa.Clients.Client(AccountId.ToString()).SendAsync("Message", "wasd123");
                 return View(account);
             }
 
