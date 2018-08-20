@@ -46,6 +46,7 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet, DoNotCheckPermission]
         public async Task<IActionResult> Index()
         {
+            await new NotifyCenter.NotifyHub().Send();
             ViewBag.Title = "桌面";
             if (HttpContext.Request.Cookies["Account"] != null)
             {

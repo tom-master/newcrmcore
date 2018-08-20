@@ -10,5 +10,10 @@ namespace NewCrmCore.NotifyCenter
             Clients.Client($@"{Context.ConnectionId}");
             await base.OnConnectedAsync();
         }
+
+        public async Task Send()
+        {
+            await Clients.All.SendAsync("ReceiveMessage", "wasd123");
+        }
     }
 }
