@@ -132,6 +132,12 @@ namespace NewCrmCore.Infrastructure.CommonTools
             {
                 _identity = identity;
             }
+
+            public override TimeSpan? KeyTimeout
+            {
+                get { return null; }
+            }
+
             protected override string FormatKey()
             {
                 return String.Format("SignalRConnection:{0}", _identity);

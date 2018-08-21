@@ -96,7 +96,7 @@ namespace NewCrmCore.Web.Filter
             }
             requestToken = filterContext.HttpContext.Request.Form["token"];
 
-            var cacheToken = await CacheHelper.GetOrSetCacheAsync(new GlobalUniqueTokenCacheKey(requestToken));
+            var cacheToken = await CacheHelper.GetOrSetCacheAsync<String>(new GlobalUniqueTokenCacheKey(requestToken));
 
             if (String.IsNullOrEmpty(cacheToken))
             {

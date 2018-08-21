@@ -14,7 +14,6 @@ using NewLibCore.Validate;
 using NewLibCore;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.SignalR;
-using NewCrmCore.NotifyCenter;
 
 namespace NewCrmCore.Web.Controllers
 {
@@ -25,20 +24,18 @@ namespace NewCrmCore.Web.Controllers
         private readonly IDeskServices _deskServices;
         private readonly IAppServices _appServices;
         private readonly IAccountServices _accountServices;
-        private readonly CommonNotify _notify;
 
         public DeskController(IWallpaperServices wallpaperServices,
         ISkinServices skinServices,
         IDeskServices deskServices,
         IAppServices appServices,
-        IAccountServices accountServices, CommonNotify notify)
+        IAccountServices accountServices)
         {
             _wallpaperServices = wallpaperServices;
             _skinServices = skinServices;
             _deskServices = deskServices;
             _appServices = appServices;
             _accountServices = accountServices;
-            _notify = notify;
         }
 
         #region 页面
@@ -453,7 +450,6 @@ namespace NewCrmCore.Web.Controllers
                 starCount = internalMemberResult.StarCount
             };
 
-            await _notify.Send(AccountId);
             return Json(response);
         }
 

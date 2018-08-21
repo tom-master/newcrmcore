@@ -39,7 +39,7 @@ namespace NewCrmCore.NotifyCenter
 
         public async Task Send(Int32 accountId)
         {
-            var connectionId = await CacheHelper.GetOrSetCacheAsync(new SignalRConnectionCacheKey(accountId.ToString()));
+            var connectionId = await CacheHelper.GetOrSetCacheAsync<String>(new SignalRConnectionCacheKey(accountId.ToString()));
             await _notify.Clients.Client(connectionId).SendAsync("message", "wasd123");
         }
     }
