@@ -123,5 +123,19 @@ namespace NewCrmCore.Infrastructure.CommonTools
                 return String.Format("GlobalUniqueToken:{0}", _identity);
             }
         }
+
+        public class SignalRConnectionCacheKey : CacheKeyBase
+        {
+            public String _identity;
+
+            public SignalRConnectionCacheKey(String identity)
+            {
+                _identity = identity;
+            }
+            protected override string FormatKey()
+            {
+                return String.Format("SignalRConnection:{0}", _identity);
+            }
+        }
     }
 }
