@@ -13,6 +13,7 @@
     <ProjectReference Include="..\NewCrmCore.Domain.Services\NewCrmCore.Domain.Services.csproj" />
     <ProjectReference Include="..\NewCrmCore.Dto\NewCrmCore.Dto.csproj" />
     <ProjectReference Include="..\NewCrmCore.Infrastructure\NewCrmCore.Infrastructure.csproj" />
+    <ProjectReference Include="..\NewCrmCore.NotifyCenter\NewCrmCore.NotifyCenter.csproj" />
   </ItemGroup>
 
 </Project>
