@@ -7,10 +7,26 @@ namespace NewCrmCore.NotifyCenter
 {
     public class NotifyHub : Hub
     {
-        public override async Task OnConnectedAsync()
+        public String Register()
         {
-            Clients.Client(Context.GetHttpContext().Request.Query.FirstOrDefault().Value);
-            await base.OnConnectedAsync();
+            var connectionId = Context.ConnectionId;
+            Clients.Client(connectionId);
+            return connectionId;
+        }
+    }
+
+    public class CommonNotify
+    {
+        private readonly IHubContext<NotifyHub> _notify;
+
+        public CommonNotify(IHubContext<NotifyHub> notify)
+        {
+            _notify = notify;
+        }
+
+        public async Task Send(String connectionId)
+        {
+            await _notify.Clients.Client(connectionId).SendAsync("message", "wasd123");
         }
     }
 }

@@ -331,20 +331,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public Boolean IsAdmin(int accountId)
-        {
-            using (var dataStore = new DataStore(Appsetting.Database))
-            {
-                var sql = $@"SELECT a.IsAdmin FROM Account AS a WHERE a.Id=@Id AND a.IsDisable=0 AND a.IsDeleted=0";
-                var parameters = new List<ParameterMapper>
-                    {
-                        new ParameterMapper("@Id",accountId)
-                    };
-                var isAdmin = dataStore.FindSingleValue<Boolean>(sql, parameters);
-                return isAdmin;
-            }
-        }
-
         public async Task LogoutAsync(Int32 accountId)
         {
             new Parameter().Validate(accountId);

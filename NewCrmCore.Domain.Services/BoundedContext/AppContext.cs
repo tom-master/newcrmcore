@@ -48,13 +48,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    var where = new StringBuilder();
-                    var isAdmin = _accountContext.IsAdmin(accountId);
-                    if (!isAdmin)
-                    {
-                        where.Append(" AND a.Name<>'系统' ");
-                    }
-                    var sql = $@"SELECT a.Id,a.Name FROM AppType AS a WHERE a.IsDeleted=0 {where}";
+                    var sql = $@"SELECT a.Id,a.Name FROM AppType AS a WHERE a.IsDeleted=0";
                     return dataStore.Find<AppType>(sql);
                 }
             });

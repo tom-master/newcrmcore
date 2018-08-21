@@ -71,11 +71,6 @@ namespace NewCrmCore.Domain.Services.Interface
         Task<Boolean> CheckAppUrlAsync(String url);
 
         /// <summary>
-        /// 是否为管理员
-        /// </summary>
-        Boolean IsAdmin(Int32 accountId);
-
-        /// <summary>
         /// 添加新账户
         /// </summary>
         Task AddNewAccountAsync(Account accountDto);

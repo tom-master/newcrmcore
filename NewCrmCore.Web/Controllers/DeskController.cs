@@ -26,20 +26,17 @@ namespace NewCrmCore.Web.Controllers
         private readonly IAppServices _appServices;
         private readonly IAccountServices _accountServices;
 
-        private readonly IHubContext<NotifyHub> _aa;
         public DeskController(IWallpaperServices wallpaperServices,
         ISkinServices skinServices,
         IDeskServices deskServices,
         IAppServices appServices,
-        IAccountServices accountServices,
-        IHubContext<NotifyHub> aa)
+        IAccountServices accountServices)
         {
             _wallpaperServices = wallpaperServices;
             _skinServices = skinServices;
             _deskServices = deskServices;
             _appServices = appServices;
             _accountServices = accountServices;
-            _aa = aa;
         }
 
         #region 页面
@@ -65,7 +62,6 @@ namespace NewCrmCore.Web.Controllers
 
                 ViewData["AccountConfig"] = config;
                 ViewData["Desks"] = config.DefaultDeskCount;
-                await _aa.Clients.Client(AccountId.ToString()).SendAsync("Message", "wasd123");
                 return View(account);
             }
 
@@ -454,7 +450,6 @@ namespace NewCrmCore.Web.Controllers
                 isResize = internalMemberResult.IsResize,
                 starCount = internalMemberResult.StarCount
             };
-
             return Json(response);
         }
 

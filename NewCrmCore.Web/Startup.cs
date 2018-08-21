@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SignalR.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NewCrmCore.Application.Services;
@@ -42,6 +43,7 @@ namespace NewCrmCore.Web
             services.AddTransient<ISecurityContext, SecurityContext>();
             services.AddTransient<ISkinContext, SkinContext>();
             services.AddTransient<IWallpaperContext, WallpaperContext>();
+            services.AddTransient<CommonNotify>();
 
             services.AddMvc(config =>
             {
