@@ -42,7 +42,6 @@ namespace NewCrmCore.Dto
         /// <summary>
         /// app地址
         /// </summary>
-        [Required(AllowEmptyStrings = true)]
         public String AppUrl { get; set; }
 
         /// <summary>

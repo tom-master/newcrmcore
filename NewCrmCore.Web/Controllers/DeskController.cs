@@ -907,5 +907,20 @@ namespace NewCrmCore.Web.Controllers
 
         #endregion
 
+        [HttpGet]
+        public async Task<IActionResult> CheckUnreadNotifyCount(Int32 pageIndex, Int32 pageSize)
+        {
+            #region 参数验证
+            new Parameter().Validate(pageIndex).Validate(pageSize);
+            #endregion
+
+            var response = new ResponseModel<PageList<NotifyDto>>();
+            response.IsSuccess = true;
+            response.Model = await _deskServices.CheckUnreadNotifyCount(AccountId, pageIndex, pageSize);
+            response.Message = "消息列表获取成功";
+
+            return Json(response);
+        }
+
     }
 }

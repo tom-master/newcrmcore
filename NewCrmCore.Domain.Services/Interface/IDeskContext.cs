@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using NewCrmCore.Domain.Entitys.System;
+using NewCrmCore.Infrastructure.CommonTools;
 
 namespace NewCrmCore.Domain.Services.Interface
 {
@@ -98,6 +101,6 @@ namespace NewCrmCore.Domain.Services.Interface
         /// <summary>
         /// 获取未读通知数量
         /// </summary>
-        Task<Int32> CheckUnreadNotifyCount(Int32 accountId);
+        IList<Notify> CheckUnreadNotifyCount(Int32 accountId, Int32 pageIndex, Int32 pageSize, out Int32 totalCount);
     }
 }

@@ -245,10 +245,27 @@ namespace NewCrmCore.Application.Services
             await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
         }
 
-        public async Task<Int32> CheckUnreadNotifyCount(Int32 accountId)
+        public async Task<PageList<NotifyDto>> CheckUnreadNotifyCount(Int32 accountId, Int32 pageIndex, Int32 pageSize)
         {
-            new Parameter().Validate(accountId);
-            return await _deskContext.CheckUnreadNotifyCount(accountId);
+            new Parameter().Validate(pageIndex).Validate(pageSize);
+            return await Task.Run(() =>
+            {
+                var totalCount = 0;
+                var result = _deskContext.CheckUnreadNotifyCount(accountId, pageIndex, pageSize, out totalCount);
+                return new PageList<NotifyDto>
+                {
+                    TotalCount = totalCount,
+                    Models = result.Select(s => new NotifyDto
+                    {
+                        Title = s.Title,
+                        Content = s.Content,
+                        IsNotify = s.IsNotify,
+                        IsRead = s.IsRead,
+                        AccountId = s.AccountId,
+                        ToAccountId = s.ToAccountId
+                    }).ToList()
+                };
+            });
         }
     }
 }

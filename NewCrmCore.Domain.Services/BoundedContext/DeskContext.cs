@@ -6,6 +6,7 @@ using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Infrastructure;
+using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
 using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;
@@ -301,21 +302,28 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task<Int32> CheckUnreadNotifyCount(Int32 accountId)
+        public IList<Notify> CheckUnreadNotifyCount(Int32 accountId, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
-            new Parameter().Validate(accountId);
-            return await Task.Run(() =>
+            new Parameter().Validate(accountId).Validate(pageIndex).Validate(pageSize);
+            using (var dataStore = new DataStore(Appsetting.Database))
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                var parameters = new List<ParameterMapper>
                 {
-                    var sql = $@"SELECT COUNT(*) FROM Notify AS a WHERE a.IsRead=0 AND a.ToAccountId=@Id AND a.IsDelete=0 ";
-                    var parameters = new List<ParameterMapper>
-                    {
-                        new ParameterMapper("@Id",accountId)
-                    };
-                    return dataStore.FindSingleValue<Int32>(sql);
+                    new ParameterMapper("@accountId",accountId)
+                };
+                var pageModel = new PageList<Notify>();
+                {
+                    var sql = $@"SELECT COUNT(*) FROM Notify AS a WHERE a.IsDeleted=0 AND a.ToAccountId=@accountId";
+                    totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
                 }
-            });
+
+                {
+                    var sql = $@"SELECT a.Id,a.Title,a.Content,a.IsRead,a.IsNotify,a.ToAccountId,a.AccountId 
+                                     FROM Notify AS a WHERE a.IsDeleted=0 AND a.ToAccountId=@accountId
+                                     LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
+                    return dataStore.Find<Notify>(sql, parameters);
+                }
+            }
         }
     }
 }

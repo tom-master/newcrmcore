@@ -9,6 +9,21 @@
 @section IndexCss
 {
 	<link rel="stylesheet" href="/css/hoorayui/index.css" />
+
+	<style>
+		.PushNotifications-count{
+			bottom: 50%;
+			left: 50%;
+			padding: 0 5px;
+			font-size: 11px;
+			color: #fff;
+			background-color: #f1403c;
+			border: 2px solid #fff;
+			border-radius: 20px;
+			margin-left: 5px;
+			display: none;
+		}
+	</style>
 }
 <div class="loading"></div>
 <div id="desktop">
@@ -77,8 +92,8 @@
 			</div>
 		</div>
 		<ul class="startmenu">
-			<li><a href="javascript:void(0);" class="help">新手指导</a></li>
-			<li><a href="javascript:void(0);" class="about">关于 HoorayOS</a></li>
+			<li><a href="javascript:void(0);" class="help">通知列表<span class="PushNotifications-count">3</span></a></li>
+			<li><a href="javascript:void(0);" class="about" style="display:none">关于 HoorayOS</a></li>
 		</ul>
 		<div class="startmenu-exit"><a href="javascript:void(0);" title="注销当前用户"></a></div>
 	</div>
