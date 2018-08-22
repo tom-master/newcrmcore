@@ -60,7 +60,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> Remove(Int32 appTypeId)
         {
             #region 参数验证
-            new Parameter().Validate(appTypeId);
+            Parameter.Validate(appTypeId);
             #endregion
 
             var response = new ResponseModel();
@@ -83,7 +83,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> Create(IFormCollection forms, Int32 appTypeId = 0)
         {
             #region 参数验证
-            new Parameter().Validate(forms);
+            Parameter.Validate(forms);
             #endregion
 
             var response = new ResponseModel();
@@ -113,7 +113,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> CheckName(String param)
         {
             #region 参数验证
-            new Parameter().Validate(param);
+            Parameter.Validate(param);
             #endregion
 
             var result = await _appServices.CheckAppTypeNameAsync(param);
