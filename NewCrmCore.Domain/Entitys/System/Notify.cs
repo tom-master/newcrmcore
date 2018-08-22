@@ -6,25 +6,38 @@ using NewLibCore.Data.Mapper.MapperExtension;
 namespace NewCrmCore.Domain.Entitys.System
 {
 
-	[Serializable, Description("消息")]
-	public class Notify : DomainModelBase
-	{
-		[PropertyRequired, InputRange(4, 10)]
-		public String Title { get; private set; }
+    [Serializable, Description("消息")]
+    public class Notify : DomainModelBase
+    {
+        [PropertyRequired, InputRange(4, 10)]
+        public String Title { get; private set; }
 
-		[PropertyRequired, InputRange(1, 255)]
-		public String Content { get; private set; }
+        [PropertyRequired, InputRange(1, 255)]
+        public String Content { get; private set; }
 
-		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsNotity { get; private set; }
+        [PropertyDefaultValue(typeof(Boolean), false)]
+        public Boolean IsNotity { get; private set; }
 
-		[PropertyDefaultValue(typeof(Boolean), false)]
-		public Boolean IsRead { get; private set; }
+        [PropertyDefaultValue(typeof(Boolean), false)]
+        public Boolean IsRead { get; private set; }
 
-		[PropertyRequired]
-		public Int32 AccountId { get; private set; }
+        [PropertyRequired]
+        public Int32 AccountId { get; private set; }
 
-		[PropertyRequired]
-		public Int32 ToAccountId { get; private set; }
-	}
+        [PropertyRequired]
+        public Int32 ToAccountId { get; private set; }
+
+        public Notify(String title, String content, Int32 accountId, Int32 toAccountId)
+        {
+            Title = title;
+            Content = content;
+            AccountId = accountId;
+            ToAccountId = toAccountId;
+
+            IsNotity = false;
+            IsRead = false;
+        }
+
+        public Notify() { }
+    }
 }

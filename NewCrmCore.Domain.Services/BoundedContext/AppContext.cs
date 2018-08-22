@@ -422,12 +422,28 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task PassAsync(Int32 appId)
         {
             new Parameter().Validate(appId);
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    var app = new App().Pass();
-                    dataStore.Modify(app, a => a.Id == appId);
+                    try
+                    {
+                        dataStore.OpenTransaction();
+                        {
+                            var app = await GetAppAsync(appId);
+                            app.Pass();
+                            dataStore.Modify(app, a => a.Id == appId);
+
+                            var notify = new Notify("应用审核通过通知", $@"您的应用:{app.Name},已审核通过", 0, app.AccountId);
+                            dataStore.Add(notify);
+                        }
+                        dataStore.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        dataStore.Rollback();
+                        throw;
+                    }
                 }
             });
         }
@@ -435,12 +451,27 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task DenyAsync(Int32 appId)
         {
             new Parameter().Validate(appId);
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    var app = new App().Deny();
-                    dataStore.Modify(app, a => a.Id == appId);
+                    dataStore.OpenTransaction();
+                    try
+                    {
+                        var app = await GetAppAsync(appId);
+                        app.Deny();
+                        dataStore.Modify(app, a => a.Id == appId);
+
+                        var notify = new Notify("应用审核通过通知", $@"您的应用:{app.Name},已审核通过", 0, app.AccountId);
+                        dataStore.Add(notify);
+
+                        dataStore.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        dataStore.Rollback();
+                        throw;
+                    }
                 }
             });
         }
