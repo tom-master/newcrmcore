@@ -28,7 +28,8 @@ namespace NewCrmCore.Application.Services
 
         public async Task<MemberDto> GetMemberAsync(Int32 accountId, Int32 memberId, Boolean isFolder)
         {
-            new Parameter().Validate(accountId).Validate(memberId);
+            Parameter.Validate(accountId);
+            Parameter.Validate(memberId);
             var result = await _memberContext.GetMemberAsync(accountId, memberId, isFolder);
             if (result == null)
             {
@@ -60,7 +61,7 @@ namespace NewCrmCore.Application.Services
 
         public async Task<IDictionary<String, IList<dynamic>>> GetDeskMembersAsync(Int32 accountId)
         {
-            new Parameter().Validate(accountId);
+            Parameter.Validate(accountId);
 
             var result = await CacheHelper.GetOrSetCacheAsync(new DesktopCacheKey(accountId), () => _memberContext.GetMembersAsync(accountId));
             var deskGroup = result.GroupBy(a => a.DeskIndex);
@@ -122,132 +123,165 @@ namespace NewCrmCore.Application.Services
 
         public async Task<Boolean> CheckMemberNameAsync(String name)
         {
-            new Parameter().Validate(name);
+            Parameter.Validate(name);
             return await _memberContext.CheckMemberNameAsync(name);
         }
 
         public async Task ModifyDefaultDeskNumberAsync(Int32 accountId, Int32 newDefaultDeskNumber)
         {
-            new Parameter().Validate(accountId).Validate(newDefaultDeskNumber);
+            Parameter.Validate(accountId);
+            Parameter.Validate(newDefaultDeskNumber);
             await _deskContext.ModifyDefaultDeskNumberAsync(accountId, newDefaultDeskNumber);
             await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
         }
 
         public async Task ModifyDockPositionAsync(Int32 accountId, Int32 defaultDeskNumber, String newPosition)
         {
-            new Parameter().Validate(accountId).Validate(defaultDeskNumber).Validate(newPosition);
+            Parameter.Validate(accountId);
+            Parameter.Validate(defaultDeskNumber);
+            Parameter.Validate(newPosition);
             await _deskContext.ModifyDockPositionAsync(accountId, defaultDeskNumber, newPosition);
             await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
         }
 
         public async Task MemberInDockAsync(Int32 accountId, Int32 memberId)
         {
-            new Parameter().Validate(accountId).Validate(memberId);
+            Parameter.Validate(accountId);
+            Parameter.Validate(memberId);
             await _deskContext.MemberInDockAsync(accountId, memberId);
             await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(accountId));
         }
 
         public async Task MemberOutDockAsync(Int32 accountId, Int32 memberId, Int32 deskId)
         {
-            new Parameter().Validate(accountId).Validate(memberId).Validate(deskId);
+            Parameter.Validate(accountId);
+            Parameter.Validate(memberId);
+            Parameter.Validate(deskId);
             await _deskContext.MemberOutDockAsync(accountId, memberId, deskId);
             await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(accountId));
         }
 
         public async Task DockToFolderAsync(Int32 accountId, Int32 memberId, Int32 folderId)
         {
-            new Parameter().Validate(accountId).Validate(memberId).Validate(folderId);
+            Parameter.Validate(accountId);
+            Parameter.Validate(memberId);
+            Parameter.Validate(folderId);
             await _deskContext.DockToFolderAsync(accountId, memberId, folderId);
             await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(accountId));
         }
 
         public async Task FolderToDockAsync(Int32 accountId, Int32 memberId)
         {
-            new Parameter().Validate(accountId).Validate(memberId);
+            Parameter.Validate(accountId);
+            Parameter.Validate(memberId);
+
             await _deskContext.FolderToDockAsync(accountId, memberId);
             await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(accountId));
         }
 
         public async Task DeskToFolderAsync(Int32 accountId, Int32 memberId, Int32 folderId)
         {
-            new Parameter().Validate(accountId).Validate(memberId).Validate(folderId);
+            Parameter.Validate(accountId);
+            Parameter.Validate(memberId);
+            Parameter.Validate(folderId);
             await _deskContext.DeskToFolderAsync(accountId, memberId, folderId);
             await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(accountId));
         }
 
         public async Task FolderToDeskAsync(Int32 accountId, Int32 memberId, Int32 deskId)
         {
-            new Parameter().Validate(accountId).Validate(memberId).Validate(deskId);
+            Parameter.Validate(accountId);
+            Parameter.Validate(memberId);
+            Parameter.Validate(deskId);
             await _deskContext.FolderToDeskAsync(accountId, memberId, deskId);
             await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(accountId));
         }
 
         public async Task FolderToOtherFolderAsync(Int32 accountId, Int32 memberId, Int32 folderId)
         {
-            new Parameter().Validate(accountId).Validate(memberId).Validate(folderId);
+            Parameter.Validate(accountId);
+            Parameter.Validate(memberId);
+            Parameter.Validate(folderId);
             await _deskContext.FolderToOtherFolderAsync(accountId, memberId, folderId);
             await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(accountId));
         }
 
         public async Task DeskToOtherDeskAsync(Int32 accountId, Int32 memberId, Int32 deskId)
         {
-            new Parameter().Validate(accountId).Validate(memberId).Validate(deskId);
+            Parameter.Validate(accountId);
+            Parameter.Validate(memberId);
+            Parameter.Validate(deskId);
             await _deskContext.DeskToOtherDeskAsync(accountId, memberId, deskId);
             await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(accountId));
         }
 
         public async Task ModifyFolderInfoAsync(Int32 accountId, String memberName, String memberIcon, Int32 memberId)
         {
-            new Parameter().Validate(accountId).Validate(memberName).Validate(memberIcon).Validate(memberId);
+            Parameter.Validate(accountId);
+            Parameter.Validate(memberName);
+            Parameter.Validate(memberIcon);
+            Parameter.Validate(memberId);
+
             await _memberContext.ModifyFolderInfoAsync(accountId, memberName, memberIcon, memberId);
             await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(accountId));
         }
 
         public async Task UninstallMemberAsync(Int32 accountId, Int32 memberId)
         {
-            new Parameter().Validate(accountId).Validate(memberId);
+            Parameter.Validate(accountId);
+            Parameter.Validate(memberId);
             await _memberContext.UninstallMemberAsync(accountId, memberId);
             await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(accountId));
         }
 
         public async Task ModifyMemberInfoAsync(Int32 accountId, MemberDto member)
         {
-            new Parameter().Validate(accountId).Validate(member);
+            Parameter.Validate(accountId);
+            Parameter.Validate(member);
             await _memberContext.ModifyMemberInfoAsync(accountId, member.ConvertToModel<MemberDto, Member>());
             await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(accountId));
         }
 
         public async Task CreateNewFolderAsync(String folderName, String folderImg, Int32 deskId, Int32 accountId)
         {
-            new Parameter().Validate(folderName).Validate(folderImg).Validate(deskId).Validate(accountId);
+            Parameter.Validate(folderName);
+            Parameter.Validate(folderImg);
+            Parameter.Validate(deskId);
+            Parameter.Validate(accountId);
             await _deskContext.CreateNewFolderAsync(deskId, folderName, folderImg, accountId);
             await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(accountId));
         }
 
         public async Task DockToOtherDeskAsync(Int32 accountId, Int32 memberId, Int32 deskId)
         {
-            new Parameter().Validate(accountId).Validate(memberId).Validate(deskId);
+            Parameter.Validate(accountId);
+            Parameter.Validate(memberId);
+            Parameter.Validate(deskId);
             await _deskContext.DockToOtherDeskAsync(accountId, memberId, deskId);
             await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(accountId));
         }
 
         public async Task ModifyMemberIconAsync(Int32 accountId, Int32 memberId, String newIcon)
         {
-            new Parameter().Validate(accountId).Validate(memberId).Validate(newIcon);
+            Parameter.Validate(accountId);
+            Parameter.Validate(memberId);
+            Parameter.Validate(newIcon);
             await _memberContext.ModifyMemberIconAsync(accountId, memberId, newIcon);
             await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(accountId));
         }
 
         public async Task ModifyWallpaperSourceAsync(String source, Int32 accountId)
         {
-            new Parameter().Validate(source).Validate(accountId);
+            Parameter.Validate(source);
+            Parameter.Validate(accountId);
             await _deskContext.ModifyWallpaperSourceAsync(source, accountId);
             await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
         }
 
         public async Task<PageList<NotifyDto>> CheckUnreadNotifyCount(Int32 accountId, Int32 pageIndex, Int32 pageSize)
         {
-            new Parameter().Validate(pageIndex).Validate(pageSize);
+            Parameter.Validate(pageIndex);
+            Parameter.Validate(pageSize);
             return await Task.Run(() =>
             {
                 var totalCount = 0;
