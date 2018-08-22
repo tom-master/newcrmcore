@@ -96,7 +96,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> ConfigMember(Int32 memberId)
         {
             #region 参数验证
-            new Parameter().Validate(memberId);
+            Parameter.Validate(memberId);
             #endregion
 
             var result = await _deskServices.GetMemberAsync(AccountId, memberId);
@@ -162,7 +162,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> Landing(IFormCollection loginParameter)
         {
             #region 参数验证
-            new Parameter().Validate(loginParameter);
+            Parameter.Validate(loginParameter);
             #endregion
 
             var response = new ResponseModel<AccountDto>();
@@ -191,7 +191,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> ModifyWallpaper(Int32 wallpaperId)
         {
             #region 参数验证
-            new Parameter().Validate(wallpaperId);
+            Parameter.Validate(wallpaperId);
             #endregion
 
             var response = new ResponseModel();
@@ -213,7 +213,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> RemoveWallpaper(Int32 wallPaperId)
         {
             #region 参数验证
-            new Parameter().Validate(wallPaperId);
+            Parameter.Validate(wallPaperId);
             #endregion
 
             var response = new ResponseModel<IList<WallpaperDto>>();
@@ -235,7 +235,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> UploadWallPaper(WallpaperDto wallpaper)
         {
             #region 参数验证
-            new Parameter().Validate(wallpaper);
+            Parameter.Validate(wallpaper);
             #endregion
 
             var response = new ResponseModel<dynamic>();
@@ -269,7 +269,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> WebWallpaper(String webUrl)
         {
             #region 参数验证
-            new Parameter().Validate(webUrl);
+            Parameter.Validate(webUrl);
             #endregion
 
             var response = new ResponseModel<Tuple<Int32, String>>();
@@ -293,7 +293,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> ModifySkin(String skin)
         {
             #region 参数验证
-            new Parameter().Validate(skin);
+            Parameter.Validate(skin);
             #endregion
 
             var response = new ResponseModel();
@@ -316,7 +316,8 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> ModifyIcon(ModifyIconForMember model)
         {
             #region 参数验证
-            new Parameter().Validate(model.MemberId).Validate(model.NewIcon);
+            Parameter.Validate(model.MemberId);
+            Parameter.Validate(model.NewIcon);
             #endregion
 
             var response = new ResponseModel<String>();
@@ -341,7 +342,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> UnlockScreen(String unlockPassword)
         {
             #region 参数验证
-            new Parameter().Validate(unlockPassword);
+            Parameter.Validate(unlockPassword);
             #endregion
 
             var response = new ResponseModel();
@@ -431,7 +432,8 @@ namespace NewCrmCore.Web.Controllers
         {
 
             #region 参数验证
-            new Parameter().Validate(id).Validate(type);
+            Parameter.Validate(id);
+            Parameter.Validate(type);
             #endregion
 
             var response = new ResponseModel<dynamic>();
@@ -469,7 +471,9 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> CreateFolder(CreateFolder model)
         {
             #region 参数验证
-            new Parameter().Validate(model.FolderName).Validate(model.FolderImg).Validate(model.DeskId);
+            Parameter.Validate(model.FolderName);
+            Parameter.Validate(model.FolderImg);
+            Parameter.Validate(model.DeskId);
             #endregion
 
             var response = new ResponseModel();
@@ -490,8 +494,8 @@ namespace NewCrmCore.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Uninstall(Int32 memberId)
         {
-            #region 参数验证
-            new Parameter().Validate(memberId);
+            #region 参数验证 
+            Parameter.Validate(memberId);
             #endregion
 
             var response = new ResponseModel();
@@ -513,7 +517,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> CheckName(String param)
         {
             #region 参数验证
-            new Parameter().Validate(param);
+            Parameter.Validate(param);
             #endregion
 
             var result = await _deskServices.CheckMemberNameAsync(param);
@@ -531,7 +535,8 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> MemberMove(MemberMove model)
         {
             #region 参数验证
-            new Parameter().Validate(model.MoveType).Validate(model.MemberId);
+            Parameter.Validate(model.MoveType);
+            Parameter.Validate(model.MemberId);
             #endregion
 
             switch (model.MoveType.ToLower())
@@ -584,7 +589,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> ModifyMemberInfo(IFormCollection forms)
         {
             #region 参数验证
-            new Parameter().Validate(forms);
+            Parameter.Validate(forms);
             #endregion
             var memberDto = new MemberDto
             {
@@ -660,7 +665,8 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> ModifyDockPosition(ModifyDockPosition model)
         {
             #region 参数验证
-            new Parameter().Validate(model.Pos).Validate(model.DeskNum);
+            Parameter.Validate(model.Pos);
+            Parameter.Validate(model.DeskNum);
             #endregion
 
             var response = new ResponseModel();
@@ -682,7 +688,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> ModifyWallpaperSource(String source)
         {
             #region 参数验证
-            new Parameter().Validate(source);
+            Parameter.Validate(source);
             #endregion
 
             var response = new ResponseModel();
@@ -704,7 +710,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> ModifySize(Int32 appSize)
         {
             #region 参数验证
-            new Parameter().Validate(appSize);
+            Parameter.Validate(appSize);
             #endregion
 
             var response = new ResponseModel();
@@ -745,7 +751,9 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> ModifyFolderInfo(ModifyFolderInfo model)
         {
             #region 参数验证
-            new Parameter().Validate(model.Name).Validate(model.Icon).Validate(model.MemberId);
+            Parameter.Validate(model.Name);
+            Parameter.Validate(model.Icon);
+            Parameter.Validate(model.MemberId);
             #endregion
 
             var response = new ResponseModel();
@@ -786,7 +794,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> ModifyDefaultDesk(Int32 deskNum)
         {
             #region 参数验证
-            new Parameter().Validate(deskNum);
+            Parameter.Validate(deskNum);
             #endregion
 
             var response = new ResponseModel();
@@ -808,7 +816,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> ModifyXy(String appXy)
         {
             #region 参数验证
-            new Parameter().Validate(appXy);
+            Parameter.Validate(appXy);
             #endregion
 
             var response = new ResponseModel();
@@ -831,7 +839,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> ModifyDisplayModel(String wallPaperShowType)
         {
             #region 参数验证
-            new Parameter().Validate(wallPaperShowType);
+            Parameter.Validate(wallPaperShowType);
             #endregion
 
             var response = new ResponseModel();
@@ -872,7 +880,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> ModifyHorizontalSpace(Int32 appHorizontal)
         {
             #region 参数验证
-            new Parameter().Validate(appHorizontal);
+            Parameter.Validate(appHorizontal);
             #endregion
 
             var response = new ResponseModel();
@@ -894,7 +902,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> ModifyVerticalSpace(Int32 appVertical)
         {
             #region 参数验证
-            new Parameter().Validate(appVertical);
+            Parameter.Validate(appVertical);
             #endregion
 
             var response = new ResponseModel();
@@ -911,7 +919,8 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> CheckUnreadNotifyCount(Int32 pageIndex, Int32 pageSize)
         {
             #region 参数验证
-            new Parameter().Validate(pageIndex).Validate(pageSize);
+            Parameter.Validate(pageIndex);
+            Parameter.Validate(pageSize);
             #endregion
 
             var response = new ResponseModel<PageList<NotifyDto>>();

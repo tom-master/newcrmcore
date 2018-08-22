@@ -60,7 +60,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> AttachmentPower(Int32 roleId)
         {
             #region 参数验证
-            new Parameter().Validate(roleId);
+            Parameter.Validate(roleId);
             #endregion
 
             var role = new RoleDto();
@@ -105,7 +105,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> RemoveRole(Int32 roleId)
         {
             #region 参数验证
-            new Parameter().Validate(roleId);
+            Parameter.Validate(roleId);
             #endregion
 
             var response = new ResponseModel();
@@ -127,7 +127,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> CreateRole(IFormCollection forms, Int32 roleId = 0)
         {
             #region 参数验证
-            new Parameter().Validate(forms);
+            Parameter.Validate(forms);
             #endregion
 
             if (roleId != 0)
@@ -157,6 +157,10 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSystemApp(String appIds)
         {
+            #region 参数验证
+            Parameter.Validate(appIds);
+            #endregion
+
             var response = new ResponseModel<IList<AppDto>>();
             var internalAppIds = appIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(Int32.Parse).ToArray();
             var result = await _appServices.GetSystemAppAsync(internalAppIds);
@@ -197,7 +201,8 @@ namespace NewCrmCore.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CheckName(String param)
         {
-            new Parameter().Validate(param);
+            Parameter.Validate(param);
+
             var result = await _securityServices.CheckRoleNameAsync(param);
             return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "角色名称已存在" });
         }
@@ -212,7 +217,7 @@ namespace NewCrmCore.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CheckRoleIdentity(String param)
         {
-            new Parameter().Validate(param);
+            Parameter.Validate(param);
             var result = await _securityServices.CheckRoleIdentityAsync(param);
             return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "角色标识已存在" });
         }
@@ -228,7 +233,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> AddAppToRole(IFormCollection forms)
         {
             #region 参数验证
-            new Parameter().Validate(forms);
+            Parameter.Validate(forms);
             #endregion
 
             var response = new ResponseModel();
