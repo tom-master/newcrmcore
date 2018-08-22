@@ -16,7 +16,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
     {
         public async Task<List<Member>> GetMembersAsync(Int32 accountId)
         {
-            new Parameter().Validate(accountId);
+            Parameter.Validate(accountId);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -47,7 +47,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Member> GetMemberAsync(Int32 accountId, Int32 memberId, Boolean isFolder)
         {
-            new Parameter().Validate(accountId).Validate(memberId);
+            Parameter.Validate(accountId);
+            Parameter.Validate(memberId);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -96,7 +97,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Boolean> CheckMemberNameAsync(String name)
         {
-            new Parameter().Validate(name);
+            Parameter.Validate(name);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -115,7 +116,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyFolderInfoAsync(Int32 accountId, String memberName, String memberIcon, Int32 memberId)
         {
-            new Parameter().Validate(accountId).Validate(memberName).Validate(memberIcon).Validate(memberId);
+            Parameter.Validate(accountId);
+            Parameter.Validate(memberName);
+            Parameter.Validate(memberIcon);
+            Parameter.Validate(memberId);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -134,7 +139,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyMemberIconAsync(Int32 accountId, Int32 memberId, String newIcon)
         {
-            new Parameter().Validate(accountId).Validate(memberId).Validate(newIcon);
+            Parameter.Validate(accountId);
+            Parameter.Validate(memberId);
+            Parameter.Validate(newIcon);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -148,7 +155,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyMemberInfoAsync(Int32 accountId, Member member)
         {
-            new Parameter().Validate(accountId).Validate(member);
+            Parameter.Validate(accountId);
+            Parameter.Validate(member);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -202,7 +210,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task UninstallMemberAsync(Int32 accountId, Int32 memberId)
         {
-            new Parameter().Validate(accountId).Validate(memberId);
+            Parameter.Validate(accountId);
+            Parameter.Validate(memberId);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))

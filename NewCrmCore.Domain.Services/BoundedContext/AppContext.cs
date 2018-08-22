@@ -28,7 +28,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Tuple<Int32, Int32>> GetDevelopAndNotReleaseCountAsync(Int32 accountId)
         {
-            new Parameter().Validate(accountId);
+            Parameter.Validate(accountId);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -58,7 +58,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<TodayRecommendAppDto> GetTodayRecommendAsync(Int32 accountId)
         {
-            new Parameter().Validate(accountId);
+            Parameter.Validate(accountId);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -97,7 +97,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public List<App> GetApps(Int32 accountId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
-            new Parameter().Validate(accountId, true).Validate(orderId).Validate(pageIndex, true).Validate(pageSize);
+            Parameter.Validate(accountId, true);
+            Parameter.Validate(orderId);
+            Parameter.Validate(pageIndex, true);
+            Parameter.Validate(pageSize);
 
             using (var dataStore = new DataStore(Appsetting.Database))
             {
@@ -189,7 +192,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public List<App> GetAccountApps(Int32 accountId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
-            new Parameter().Validate(accountId, true).Validate(appTypeId, true).Validate(appStyleId, true).Validate(pageIndex).Validate(pageSize);
+            Parameter.Validate(accountId, true);
+            Parameter.Validate(appTypeId, true);
+            Parameter.Validate(appStyleId, true);
+            Parameter.Validate(pageIndex);
+            Parameter.Validate(pageSize);
             using (var dataStore = new DataStore(Appsetting.Database))
             {
                 var where = new StringBuilder();
@@ -279,7 +286,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<App> GetAppAsync(Int32 appId)
         {
-            new Parameter().Validate(appId);
+            Parameter.Validate(appId);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -322,7 +329,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Boolean> IsInstallAppAsync(Int32 accountId, Int32 appId)
         {
-            new Parameter().Validate(accountId).Validate(appId);
+            Parameter.Validate(accountId);
+            Parameter.Validate(appId);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -358,7 +366,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Boolean> CheckAppTypeNameAsync(String appTypeName)
         {
-            new Parameter().Validate(appTypeName);
+            Parameter.Validate(appTypeName);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -375,7 +383,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyAppStarAsync(Int32 accountId, Int32 appId, Int32 starCount)
         {
-            new Parameter().Validate(accountId).Validate(appId).Validate(starCount);
+            Parameter.Validate(accountId);
+            Parameter.Validate(appId);
+            Parameter.Validate(starCount);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -423,7 +433,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task PassAsync(Int32 appId)
         {
-            new Parameter().Validate(appId);
+            Parameter.Validate(appId);
             await Task.Run(async () =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -452,7 +462,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task DenyAsync(Int32 appId)
         {
-            new Parameter().Validate(appId);
+            Parameter.Validate(appId);
             await Task.Run(async () =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -480,7 +490,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task SetTodayRecommandAppAsync(Int32 appId)
         {
-            new Parameter().Validate(appId);
+            Parameter.Validate(appId);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -515,7 +525,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task RemoveAppAsync(Int32 appId)
         {
-            new Parameter().Validate(appId);
+            Parameter.Validate(appId);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -552,7 +562,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ReleaseAppAsync(Int32 appId)
         {
-            new Parameter().Validate(appId);
+            Parameter.Validate(appId);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -569,7 +579,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyAccountAppInfoAsync(Int32 accountId, App app)
         {
-            new Parameter().Validate(accountId).Validate(accountId).Validate(app);
+            Parameter.Validate(accountId);
+            Parameter.Validate(accountId);
+            Parameter.Validate(app);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -642,7 +655,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task DeleteAppTypeAsync(Int32 appTypeId)
         {
-            new Parameter().Validate(appTypeId);
+            Parameter.Validate(appTypeId);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -674,7 +687,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task CreateNewAppTypeAsync(AppType appType)
         {
-            new Parameter().Validate(appType);
+            Parameter.Validate(appType);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -701,7 +714,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyAppTypeAsync(String appTypeName, Int32 appTypeId)
         {
-            new Parameter().Validate(appTypeName).Validate(appTypeId);
+            Parameter.Validate(appTypeName);
+            Parameter.Validate(appTypeId);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -730,7 +744,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyAppIconAsync(Int32 accountId, Int32 appId, String newIcon)
         {
-            new Parameter().Validate(accountId).Validate(appId).Validate(newIcon);
+            Parameter.Validate(accountId);
+            Parameter.Validate(appId);
+            Parameter.Validate(newIcon);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -744,7 +760,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task InstallAsync(Int32 accountId, Int32 appId, Int32 deskNum)
         {
-            new Parameter().Validate(accountId).Validate(appId).Validate(deskNum);
+            Parameter.Validate(accountId);
+            Parameter.Validate(appId);
+            Parameter.Validate(deskNum);
             await Task.Run(async () =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))

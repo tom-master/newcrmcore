@@ -21,7 +21,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
     {
         public async Task<Account> ValidateAsync(String accountName, String password, String requestIp)
         {
-            new Parameter().Validate(accountName).Validate(password);
+            Parameter.Validate(accountName);
+            Parameter.Validate(password);
 
             return await Task.Run(() =>
              {
@@ -91,7 +92,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Config> GetConfigAsync(Int32 accountId)
         {
-            new Parameter().Validate(accountId);
+            Parameter.Validate(accountId);
             return await Task.Run(() =>
              {
                  using (var dataStore = new DataStore(Appsetting.Database))
@@ -123,7 +124,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Wallpaper> GetWallpaperAsync(Int32 wallPaperId)
         {
-            new Parameter().Validate(wallPaperId);
+            Parameter.Validate(wallPaperId);
 
             return await Task.Run(() =>
             {
@@ -138,7 +139,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public List<Account> GetAccounts(String accountName, String accountType, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
-            new Parameter().Validate(pageIndex).Validate(pageSize);
+            Parameter.Validate(pageIndex);
+            Parameter.Validate(pageSize);
 
             var where = new StringBuilder();
             where.Append("WHERE 1=1 AND a.IsDeleted=0 ");
@@ -186,7 +188,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Account> GetAccountAsync(Int32 accountId)
         {
-            new Parameter().Validate(accountId);
+            Parameter.Validate(accountId);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -215,7 +217,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<List<Role>> GetRolesAsync(Int32 accountId)
         {
-            new Parameter().Validate(accountId);
+            Parameter.Validate(accountId);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -248,7 +250,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Boolean> CheckAccountNameExistAsync(String accountName)
         {
-            new Parameter().Validate(accountName);
+            Parameter.Validate(accountName);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -261,7 +263,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<String> GetOldPasswordAsync(Int32 accountId)
         {
-            new Parameter().Validate(accountId);
+            Parameter.Validate(accountId);
             return await Task.Run<String>(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -275,7 +277,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Boolean> UnlockScreenAsync(Int32 accountId, String unlockPassword)
         {
-            new Parameter().Validate(accountId).Validate(unlockPassword);
+            Parameter.Validate(accountId);
+            Parameter.Validate(unlockPassword);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -297,7 +300,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Boolean> CheckAppNameAsync(String name)
         {
-            new Parameter().Validate(name);
+            Parameter.Validate(name);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -315,7 +318,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Boolean> CheckAppUrlAsync(String url)
         {
-            new Parameter().Validate(url);
+            Parameter.Validate(url);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -333,7 +336,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task LogoutAsync(Int32 accountId)
         {
-            new Parameter().Validate(accountId);
+            Parameter.Validate(accountId);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -378,7 +381,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task AddNewAccountAsync(Account account)
         {
-            new Parameter().Validate(account);
+            Parameter.Validate(account);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -448,7 +451,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyAccountAsync(Account account)
         {
-            new Parameter().Validate(account);
+            Parameter.Validate(account);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -508,7 +511,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task EnableAsync(Int32 accountId)
         {
-            new Parameter().Validate(accountId);
+            Parameter.Validate(accountId);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -521,7 +524,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task DisableAsync(Int32 accountId)
         {
-            new Parameter().Validate(accountId);
+            Parameter.Validate(accountId);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -550,7 +553,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyAccountFaceAsync(Int32 accountId, String newFace)
         {
-            new Parameter().Validate(accountId).Validate(newFace);
+            Parameter.Validate(accountId);
+            Parameter.Validate(newFace);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -563,7 +567,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyPasswordAsync(Int32 accountId, String newPassword, Boolean isTogetherSetLockPassword)
         {
-            new Parameter().Validate(accountId).Validate(newPassword);
+            Parameter.Validate(accountId);
+            Parameter.Validate(newPassword);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -581,7 +586,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyLockScreenPasswordAsync(Int32 accountId, String newScreenPassword)
         {
-            new Parameter().Validate(accountId).Validate(newScreenPassword);
+            Parameter.Validate(accountId);
+            Parameter.Validate(newScreenPassword);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -594,7 +600,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task RemoveAccountAsync(Int32 accountId)
         {
-            new Parameter().Validate(accountId);
+            Parameter.Validate(accountId);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
