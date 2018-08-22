@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.System;
@@ -296,6 +297,23 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         config.NotFromBing();
                     }
                     dataStore.Modify(config, conf => conf.AccountId == accountId);
+                }
+            });
+        }
+
+        public async Task<Int32> CheckUnreadNotifyCount(Int32 accountId)
+        {
+            new Parameter().Validate(accountId);
+            return await Task.Run(() =>
+            {
+                using (var dataStore = new DataStore(Appsetting.Database))
+                {
+                    var sql = $@"SELECT COUNT(*) FROM Notify AS a WHERE a.IsRead=0 AND a.ToAccountId=@Id AND a.IsDelete=0 ";
+                    var parameters = new List<ParameterMapper>
+                    {
+                        new ParameterMapper("@Id",accountId)
+                    };
+                    return dataStore.FindSingleValue<Int32>(sql);
                 }
             });
         }

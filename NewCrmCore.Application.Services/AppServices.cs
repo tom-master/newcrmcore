@@ -9,7 +9,6 @@ using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
-using NewCrmCore.NotifyCenter;
 using NewLibCore;
 using NewLibCore.Validate;
 using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
@@ -19,14 +18,13 @@ namespace NewCrmCore.Application.Services
     public class AppServices : IAppServices
     {
         private readonly IAppContext _appContext;
-        private readonly IDeskContext _deskContext;
-        private readonly CommonNotify _notify;
 
-        public AppServices(IAppContext appContext, IDeskContext deskContext, CommonNotify notify)
+        private readonly IDeskContext _deskContext;
+
+        public AppServices(IAppContext appContext, IDeskContext deskContext)
         {
             _appContext = appContext;
             _deskContext = deskContext;
-            _notify = notify;
         }
 
         public async Task<List<AppTypeDto>> GetAppTypesAsync(Int32 accountId)

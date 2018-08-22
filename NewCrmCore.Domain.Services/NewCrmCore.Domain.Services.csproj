@@ -14,6 +14,7 @@
     <ProjectReference Include="..\NewCrmCore.Domain\NewCrmCore.Domain.csproj" />
     <ProjectReference Include="..\NewCrmCore.Dto\NewCrmCore.Dto.csproj" />
     <ProjectReference Include="..\NewCrmCore.Infrastructure\NewCrmCore.Infrastructure.csproj" />
+    <ProjectReference Include="..\NewCrmCore.NotifyCenter\NewCrmCore.NotifyCenter.csproj" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(CODEROOT)\newlibcore\NewLibCore\NewLibCore.csproj" />

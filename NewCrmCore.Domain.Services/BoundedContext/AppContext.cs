@@ -9,6 +9,7 @@ using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
+using NewCrmCore.NotifyCenter;
 using NewLibCore;
 using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;
@@ -18,10 +19,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
     public class AppContext : IAppContext
     {
 
-        private IAccountContext _accountContext;
-        public AppContext(IAccountContext accountContext)
+        private CommonNotify _notify;
+
+        public AppContext(CommonNotify notify)
         {
-            _accountContext = accountContext;
+            _notify = notify;
         }
 
         public async Task<Tuple<Int32, Int32>> GetDevelopAndNotReleaseCountAsync(Int32 accountId)
@@ -743,7 +745,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task InstallAsync(Int32 accountId, Int32 appId, Int32 deskNum)
         {
             new Parameter().Validate(accountId).Validate(appId).Validate(deskNum);
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
@@ -794,6 +796,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             dataStore.Modify(app, a => a.Id == appId);
                         }
                         #endregion
+
+                        var notify = new Notify("应用安装通知", $@"你已成功安装{app.Name}", 0, accountId);
+                        dataStore.Add(notify);
+
+                        await _notify.Send(accountId, notify);
 
                         dataStore.Commit();
                     }

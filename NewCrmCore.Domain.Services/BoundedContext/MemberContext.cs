@@ -112,6 +112,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
+
         public async Task ModifyFolderInfoAsync(Int32 accountId, String memberName, String memberIcon, Int32 memberId)
         {
             new Parameter().Validate(accountId).Validate(memberName).Validate(memberIcon).Validate(memberId);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,7 +27,15 @@ namespace NewCrmCore.Infrastructure.CommonTools
             TModel cacheResult = null;
             try
             {
-                cacheResult = await Task.Run(() => _cacheQuery.StringGetAsync<TModel>(cache.GetKey()), cache.CancelToken);
+                var isComplexType = TypeDescriptor.GetConverter(typeof(TModel)).CanConvertFrom(typeof(String));
+                if (!isComplexType)
+                {
+                    cacheResult = await Task.Run(() => _cacheQuery.StringGetAsync<TModel>(cache.GetKey()), cache.CancelToken);
+                }
+                else
+                {
+                    cacheResult = await Task.Run(() => _cacheQuery.StringGetAsync(cache.GetKey()), cache.CancelToken) as TModel;
+                }
             }
             catch (OperationCanceledException)
             {

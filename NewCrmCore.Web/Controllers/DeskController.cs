@@ -20,10 +20,15 @@ namespace NewCrmCore.Web.Controllers
     public class DeskController : BaseController
     {
         private readonly IWallpaperServices _wallpaperServices;
+
         private readonly ISkinServices _skinServices;
+
         private readonly IDeskServices _deskServices;
+
         private readonly IAppServices _appServices;
+
         private readonly IAccountServices _accountServices;
+
 
         public DeskController(IWallpaperServices wallpaperServices,
         ISkinServices skinServices,

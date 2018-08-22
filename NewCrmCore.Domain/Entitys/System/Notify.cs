@@ -16,7 +16,7 @@ namespace NewCrmCore.Domain.Entitys.System
         public String Content { get; private set; }
 
         [PropertyDefaultValue(typeof(Boolean), false)]
-        public Boolean IsNotity { get; private set; }
+        public Boolean IsNotify { get; private set; }
 
         [PropertyDefaultValue(typeof(Boolean), false)]
         public Boolean IsRead { get; private set; }
@@ -34,7 +34,7 @@ namespace NewCrmCore.Domain.Entitys.System
             AccountId = accountId;
             ToAccountId = toAccountId;
 
-            IsNotity = false;
+            IsNotify = true;
             IsRead = false;
         }
 

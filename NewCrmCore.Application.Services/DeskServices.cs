@@ -244,5 +244,11 @@ namespace NewCrmCore.Application.Services
             await _deskContext.ModifyWallpaperSourceAsync(source, accountId);
             await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
         }
+
+        public async Task<Int32> CheckUnreadNotifyCount(Int32 accountId)
+        {
+            new Parameter().Validate(accountId);
+            return await _deskContext.CheckUnreadNotifyCount(accountId);
+        }
     }
 }
