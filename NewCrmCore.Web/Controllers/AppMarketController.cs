@@ -53,7 +53,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> AppDetail(Int32 appId)
         {
             #region 参数验证
-            new Parameter().Validate(appId);
+            Parameter.Validate(appId);
             #endregion
 
             ViewData["IsInstallApp"] = await _appServices.IsInstallAppAsync(AccountId, appId);
@@ -107,7 +107,8 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> ModifyStar(ModifyStar model)
         {
             #region 参数验证
-            new Parameter().Validate(model.AppId).Validate(model.StarCount);
+            Parameter.Validate(model.AppId);
+            Parameter.Validate(model.StarCount);
             #endregion
 
             var response = new ResponseModel();
@@ -129,7 +130,8 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> Install(Install model)
         {
             #region 参数验证
-            new Parameter().Validate(model.AppId).Validate(model.DeskNum);
+            Parameter.Validate(model.AppId);
+            Parameter.Validate(model.DeskNum);
             #endregion
 
             var response = new ResponseModel();
@@ -151,7 +153,8 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> ModifyIcon(ModifyIconForApp model)
         {
             #region 参数验证
-            new Parameter().Validate(model.AppId).Validate(model.NewIcon);
+            Parameter.Validate(model.AppId);
+            Parameter.Validate(model.NewIcon);
             #endregion
 
             var response = new ResponseModel<String>();
@@ -175,7 +178,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> Create(IFormCollection forms)
         {
             #region 参数验证
-            new Parameter().Validate(forms);
+            Parameter.Validate(forms);
             #endregion
 
             var response = new ResponseModel();
@@ -201,7 +204,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> Release(Int32 appId)
         {
             #region 参数验证
-            new Parameter().Validate(appId);
+            Parameter.Validate(appId);
             #endregion
 
             var response = new ResponseModel();
@@ -223,7 +226,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> ModifyInfo(IFormCollection forms)
         {
             #region 参数验证
-            new Parameter().Validate(forms);
+            Parameter.Validate(forms);
             #endregion
 
             var response = new ResponseModel();
@@ -298,7 +301,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> Remove(Int32 appId)
         {
             #region 参数验证
-            new Parameter().Validate(appId);
+            Parameter.Validate(appId);
             #endregion
 
             var response = new ResponseModel();

@@ -66,7 +66,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> Pass(Int32 appId)
         {
             #region 参数验证	
-            new Parameter().Validate(appId);
+            Parameter.Validate(appId);
             #endregion
 
             var response = new ResponseModel();
@@ -88,7 +88,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> Remove(Int32 appId)
         {
             #region 参数验证	
-            new Parameter().Validate(appId);
+            Parameter.Validate(appId);
             #endregion
 
             var response = new ResponseModel();
@@ -110,7 +110,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> Deny(Int32 appId)
         {
             #region 参数验证	
-            new Parameter().Validate(appId);
+            Parameter.Validate(appId);
             #endregion
 
             var response = new ResponseModel();
@@ -157,7 +157,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> CheckName(String param)
         {
             #region 参数验证
-            new Parameter().Validate(param);
+            Parameter.Validate(param);
             #endregion
 
             var result = await _accountServices.CheckAppNameAsync(param);
@@ -175,7 +175,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> CheckUrl(String param)
         {
             #region 参数验证
-            new Parameter().Validate(param);
+            Parameter.Validate(param);
             #endregion
 
             var result = await _accountServices.CheckAppUrlAsync(param);
@@ -193,7 +193,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> Recommend(Int32 appId)
         {
             #region 参数验证	
-            new Parameter().Validate(appId);
+            Parameter.Validate(appId);
             #endregion
 
             var response = new ResponseModel();

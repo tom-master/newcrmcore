@@ -62,7 +62,7 @@ namespace NewCrmCore.Web.Controllers
             await Task.Delay(5000);
 
             #region 参数验证
-            new Parameter().Validate(accountId);
+            Parameter.Validate(accountId);
             #endregion
 
             var response = new ResponseModel<String>();
@@ -84,7 +84,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> Enable(Int32 accountId)
         {
             #region 参数验证
-            new Parameter().Validate(accountId);
+            Parameter.Validate(accountId);
             #endregion
 
             var response = new ResponseModel<String>();
@@ -106,7 +106,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> Disable(Int32 accountId)
         {
             #region 参数验证
-            new Parameter().Validate(accountId);
+            Parameter.Validate(accountId);
             #endregion
 
             var response = new ResponseModel<String>();
@@ -128,7 +128,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> CreateAccount(IFormCollection forms)
         {
             #region 参数验证
-            new Parameter().Validate(forms);
+            Parameter.Validate(forms);
             #endregion
 
             var response = new ResponseModel<AccountDto>();
@@ -190,7 +190,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> CheckName(String param)
         {
             #region 参数验证
-            new Parameter().Validate(param);
+            Parameter.Validate(param);
             #endregion
 
             var result = await _accountServices.CheckAccountNameExistAsync(param);

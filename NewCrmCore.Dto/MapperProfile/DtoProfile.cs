@@ -143,7 +143,8 @@ namespace NewCrmCore.Dto.MapperProfile
         /// <returns></returns>
         internal static Enum ConvertEnum(Type target, Int32 value)
         {
-            new Parameter().Validate(target).Validate(value);
+            Parameter.Validate(target);
+            Parameter.Validate(value);
             return (Enum)Enum.Parse(target, Enum.GetName(target, value), true);
         }
 
@@ -153,7 +154,8 @@ namespace NewCrmCore.Dto.MapperProfile
         /// <returns></returns>
         internal static Enum ConvertEnum(Type target, String value)
         {
-            new Parameter().Validate(target).Validate(value);
+            Parameter.Validate(target);
+            Parameter.Validate(value);
             return (Enum)Enum.Parse(target, value, true);
         }
     }

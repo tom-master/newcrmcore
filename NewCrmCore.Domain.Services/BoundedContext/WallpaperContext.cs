@@ -16,7 +16,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
     {
         public async Task<Tuple<Int32, String>> AddWallpaperAsync(Wallpaper wallpaper)
         {
-            new Parameter().Validate(wallpaper);
+            Parameter.Validate(wallpaper);
             return await Task.Run(() =>
              {
                  using (var dataStore = new DataStore(Appsetting.Database))
@@ -144,7 +144,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyWallpaperModeAsync(Int32 accountId, String newMode)
         {
-            new Parameter().Validate(accountId).Validate(newMode);
+            Parameter.Validate(accountId);
+            Parameter.Validate(newMode);
             await Task.Run(() =>
             {
                 if (Enum.TryParse(newMode, true, out WallpaperMode wallpaperMode))
@@ -165,7 +166,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyWallpaperAsync(Int32 accountId, Int32 newWallpaperId)
         {
-            new Parameter().Validate(accountId).Validate(newWallpaperId);
+            Parameter.Validate(accountId);
+            Parameter.Validate(newWallpaperId);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -179,7 +181,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task RemoveWallpaperAsync(Int32 accountId, Int32 wallpaperId)
         {
-            new Parameter().Validate(accountId).Validate(wallpaperId);
+            Parameter.Validate(accountId);
+            Parameter.Validate(wallpaperId);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
