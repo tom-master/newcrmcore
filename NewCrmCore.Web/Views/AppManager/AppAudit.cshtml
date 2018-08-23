@@ -126,7 +126,8 @@
 			</div>
 			@{
 				if (Model.AppAuditState == AppAuditState.Deny)
-				{<text>
+				{
+					<text>
 						<div class="input-label">
 							<label class="label-text">是否提交审核：</label>
 							<div class="label-box form-inline control-group">
@@ -134,8 +135,8 @@
 								<label class="radio"><input type="radio" name="val_verifytype" value="4" checked>重新提交审核</label>
 							</div>
 						</div>
-				</text>
-			}
+					</text>
+				}
 			}
 		</div>
 	</div>
@@ -148,13 +149,13 @@
 						<a class="btn fl" id="btn-unpass" href="###"  appid="@Model.Id" style="margin-left:10px"><i class="icon-remove"></i> 审核不通过</a>
 						<a class="btn" id="btn-preview" href="###" style="margin-left:10px"><i class="icon-eye-open"></i> 预览应用</a>
 				</text>
-			}
-			else
-			{<text>
-					<a class="btn" id="btn-preview" href="###"><i class="icon-eye-open"></i> 预览应用</a>
-			</text>
-
-		}
+				}
+				else
+				{
+					<text>
+						<a class="btn" id="btn-preview" href="###"><i class="icon-eye-open"></i> 预览应用</a>
+					</text>
+				}
 			}
 			<a class="btn btn-primary fr" id="btn-submit" href="###"><i class="icon-white icon-ok"></i> 确定</a>
 			<a class="btn fr" href="javascript:window.parent.closeDetailIframe();" style="margin-right:10px"><i class="icon-chevron-up"></i> 返回应用列表</a>

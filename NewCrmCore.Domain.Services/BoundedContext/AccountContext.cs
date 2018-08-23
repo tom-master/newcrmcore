@@ -175,7 +175,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a.IsAdmin,
 								a.Name,
 								a.IsDisable,
-								a1.AccountFace 
+								a1.AccountFace,
+                                a1.IsModifyAccountFace
 	                            FROM Account AS a 
 	                            INNER JOIN Config AS a1
 	                            ON a1.AccountId=a.Id AND a1.IsDeleted=0

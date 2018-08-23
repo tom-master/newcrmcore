@@ -68,6 +68,8 @@ namespace NewCrmCore.Domain.Entitys.Agent
         /// </summary>
         public IEnumerable<AccountRole> Roles { get; private set; }
 
+        public Boolean IsModifyAccountFace { get; private set; }
+
         /// <summary>
         /// 实例化一个用户对象
         /// </summary>
