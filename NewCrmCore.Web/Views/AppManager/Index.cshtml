@@ -43,7 +43,8 @@
 					foreach (var appType in (List<AppTypeDto>)ViewData["AppTypes"])
 					{
 						<text>
-							<option value="@appType.Id">@appType.Name</option></text>
+							<option value="@appType.Id">@appType.Name</option>
+						</text>
 					}
 				}
 			</select>
@@ -54,7 +55,8 @@
 					foreach (var appStyle in (List<AppStyleDto>)ViewData["AppStyles"])
 					{
 						<text>
-							<option value="@appStyle.Id">@appStyle.Name</option></text>
+							<option value="@appStyle.Id">@appStyle.Name</option>
+						</text>
 					}
 				}
 			</select>
@@ -65,7 +67,8 @@
 					foreach (var appState in (List<AppStateDto>)ViewData["AppStates"])
 					{
 						<text>
-							<option value="@appState.Id" data-type="@appState.Type">@appState.Name</option></text>
+							<option value="@appState.Id" data-type="@appState.Type">@appState.Name</option>
+						</text>
 					}
 				}
 			</select>
@@ -249,7 +252,6 @@
             })
 
             Handlebars.registerHelper("compare", function (v1, v2, options) {
-				
                 if (v1 === v2 || v1 === '@(AppAuditState.Wait)') {
                     return options.fn(this);
                 } else {

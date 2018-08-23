@@ -104,7 +104,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     dataStore.Modify(config, conf => conf.AccountId == accountId);
                 }
             });
-
         }
 
         public async Task ModifyMemberVerticalSpacingAsync(Int32 accountId, Int32 newSize)

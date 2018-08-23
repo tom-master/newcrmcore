@@ -36,10 +36,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                          #region 查询用户
                          {
                              var sql = @"SELECT a.Id,a.Name,a.LoginPassword,a1.AccountFace 
-                                    FROM Account AS a
-                                    INNER JOIN Config AS a1
-                                    ON a1.AccountId=a.Id 
-                                    WHERE a.Name=@name AND a.IsDeleted=0 AND a.IsDisable=0";
+                                        FROM Account AS a
+                                        INNER JOIN Config AS a1
+                                        ON a1.AccountId=a.Id 
+                                        WHERE a.Name=@name AND a.IsDeleted=0 AND a.IsDisable=0";
                              result = dataStore.Find<Account>(sql, new List<ParameterMapper> { new ParameterMapper("@name", accountName) }).FirstOrDefault();
                              if (result == null)
                              {
