@@ -12,7 +12,7 @@ namespace NewCrmCore.Domain.Entitys.System
         [PropertyRequired, InputRange(4, 10)]
         public String Title { get; private set; }
 
-        [PropertyRequired, InputRange(1, 255)]
+        [PropertyRequired, InputRange(1, 20)]
         public String Content { get; private set; }
 
         [PropertyDefaultValue(typeof(Boolean), false)]
