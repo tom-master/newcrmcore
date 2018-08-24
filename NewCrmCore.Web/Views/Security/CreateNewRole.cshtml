@@ -78,65 +78,65 @@
 @section ChildrenScript
 {
 	var f = $('#form').Validform({
-                btnSubmit: '#btn-submit',
-				postonce: true,
-                showAllError: true,
-                tiptype: function (msg, o) {
-                    if (!o.obj.is('form')) {
-                        var B = o.obj.parents('.control-group');
-                        var T = B.children('.help-inline');
-                        if (o.type === 2) {
-                            B.removeClass('error');
-                            T.text('');
-                        } else {
-                            B.addClass('error');
-                            T.text(msg);
-                        }
-                    }
-                },
-				ajaxPost: true,
-				postonceTip:function(){
-					NewCrm.msgbox.fail(HROS.CONFIG.postOnce)
-				},
-				beforeSubmit: function (curform) { 
-					NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
-				},
-                callback: function (responseText) {
-                    if (responseText.IsSuccess) {
-                        if ('@roleId') {
-                            $.dialog({
-                                id: 'ajaxedit',
-                                content: '修改成功，是否继续修改?',
-                                okVal: '是',
-                                ok: function () {
-                                    $.dialog.list['ajaxedit'].close();
-                                },
-                                cancel: function () {
-                                    window.parent.closeDetailIframe(function () {
-                                        window.parent.$('#pagination').trigger('currentPage');
-                                    });
-                                }
-                            });
-                        } else {
-                            $.dialog({
-                                id: 'ajaxedit',
-                                content: '添加成功，是否继续添加?',
-                                okVal: '是',
-                                ok: function () {
-                                    location.reload();
-                                    return false;
-                                },
-                                cancel: function () {
-                                    window.parent.closeDetailIframe(function () {
-                                        window.parent.$('#pagination').trigger('currentPage');
-                                    });
-                                }
-                            });
-                        }
-                    } else {
-                        NewCrm.msgbox.fail(responseText.Message);
-                    }
-                }
-            });
+			btnSubmit: '#btn-submit',
+			postonce: true,
+			showAllError: true,
+			tiptype: function (msg, o) {
+				if (!o.obj.is('form')) {
+					var B = o.obj.parents('.control-group');
+					var T = B.children('.help-inline');
+					if (o.type === 2) {
+						B.removeClass('error');
+						T.text('');
+					} else {
+						B.addClass('error');
+						T.text(msg);
+					}
+				}
+			},
+			ajaxPost: true,
+			postonceTip:function(){
+				NewCrm.msgbox.fail(HROS.CONFIG.postOnce)
+			},
+			beforeSubmit: function (curform) { 
+				NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+			},
+			callback: function (responseText) {
+				if (responseText.IsSuccess) {
+					if ('@roleId') {
+						$.dialog({
+							id: 'ajaxedit',
+							content: '修改成功，是否继续修改?',
+							okVal: '是',
+							ok: function () {
+								$.dialog.list['ajaxedit'].close();
+							},
+							cancel: function () {
+								window.parent.closeDetailIframe(function () {
+									window.parent.$('#pagination').trigger('currentPage');
+								});
+							}
+						});
+					} else {
+						$.dialog({
+							id: 'ajaxedit',
+							content: '添加成功，是否继续添加?',
+							okVal: '是',
+							ok: function () {
+								location.reload();
+								return false;
+							},
+							cancel: function () {
+								window.parent.closeDetailIframe(function () {
+									window.parent.$('#pagination').trigger('currentPage');
+								});
+							}
+						});
+					}
+				} else {
+					NewCrm.msgbox.fail(responseText.Message);
+				}
+			}
+		});
 }
 
