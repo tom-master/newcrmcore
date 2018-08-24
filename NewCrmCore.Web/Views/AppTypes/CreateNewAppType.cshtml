@@ -12,7 +12,7 @@
 {
 	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
 }
-<form action="/AppTypes/Create?appTypeId=@appTypeId" method="post" name="form" id="form">
+<form action="/apptypes/create?appTypeId=@appTypeId" method="post" name="form" id="form">
 	<input type="hidden" name="ac" value="edit">
 	<input type="hidden" name="token" value="@( await TimeToken.GetTokenAsync())" />
 	<div class="creatbox">
