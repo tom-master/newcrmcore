@@ -29,7 +29,6 @@ namespace NewCrmCore.Web.Controllers
 
         private readonly IAccountServices _accountServices;
 
-
         public DeskController(IWallpaperServices wallpaperServices,
         ISkinServices skinServices,
         IDeskServices deskServices,
@@ -69,7 +68,7 @@ namespace NewCrmCore.Web.Controllers
                 return View(account);
             }
 
-            return RedirectToAction("Login", "Desk");
+            return RedirectToAction("login", "desk");
         }
 
         /// <summary>
