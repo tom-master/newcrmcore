@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="/css/hoorayui/index.css" />
 
 	<style>
-		.PushNotifications-count{
+		.pushNotifications-count{
 			bottom: 50%;
 			left: 50%;
 			padding: 0 5px;
@@ -91,7 +91,7 @@
 			</div>
 		</div>
 		<ul class="startmenu">
-			<li><a href="javascript:void(0);" class="help">通知列表<span class="PushNotifications-count">3</span></a></li>
+			<li><a href="javascript:void(0);" class="help">通知列表<span class="pushNotifications-count"></span></a></li>
 			<li><a href="javascript:void(0);" class="about" style="display:none">关于 HoorayOS</a></li>
 		</ul>
 		<div class="startmenu-exit"><a href="javascript:void(0);" title="注销当前用户"></a></div>
@@ -114,7 +114,6 @@
 		<div class="resultList openAppMarket"><a href="javascript:void(0);"><div>去应用市场搜搜...</div></a></div>
 	</div>
 </div>
-<!-- 全局视图 -->
 <div id="appmanage">
 	<a class="amg_close" href="javascript:void(0);"></a>
 	<div id="amg_dock_container"></div>
@@ -151,28 +150,22 @@
 </div>
 
 @section ChildrenScript{
-	<script>
-		$(function () {
-            document.body.onselectstart = document.body.ondrag = function () {
-                return false;
-            };  
+	 document.body.onselectstart = document.body.ondrag = function () {
+		return false;
+	 };  
 
-            HROS.CONFIG.dockPos = '@accountConfig.DockPosition';
-            HROS.CONFIG.appXY = '@accountConfig.AppXy';
-            HROS.CONFIG.appSize = parseInt('@accountConfig.AppSize');
-            HROS.CONFIG.desk = parseInt(@accountConfig.DefaultDeskNumber);
-            HROS.CONFIG.appHorizontalSpacing = '@accountConfig.AppHorizontalSpacing';
-            HROS.CONFIG.appVerticalSpacing = '@accountConfig.AppVerticalSpacing';
-            HROS.CONFIG.deskCount = parseInt('@desks');
-            HROS.CONFIG.lockPwdAndLoginPwd = '@(account.Password==account.LockScreenPassword?1:0)'
-            HROS.base.init();
- 			
-			$(".loading").hide();
-			$("#desktop").show()
-        });
-
-	</script>
-
+	HROS.CONFIG.dockPos = '@accountConfig.DockPosition';
+	HROS.CONFIG.appXY = '@accountConfig.AppXy';
+	HROS.CONFIG.appSize = parseInt('@accountConfig.AppSize');
+	HROS.CONFIG.desk = parseInt(@accountConfig.DefaultDeskNumber);
+	HROS.CONFIG.appHorizontalSpacing = '@accountConfig.AppHorizontalSpacing';
+	HROS.CONFIG.appVerticalSpacing = '@accountConfig.AppVerticalSpacing';
+	HROS.CONFIG.deskCount = parseInt('@desks');
+	HROS.CONFIG.lockPwdAndLoginPwd = '@(account.Password==account.LockScreenPassword?1:0)'
+	HROS.base.init();
+	
+	$(".loading").hide();
+	$("#desktop").show()
 }
 
 

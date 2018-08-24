@@ -72,114 +72,108 @@
 </form>
 @section ChildrenScript
 {
-	<script>
-		$(function () {
-		var f =	$('#form').Validform({
-				btnSubmit: '#btn-submit',
-				postonce: true,
-				showAllError: true,
-				tiptype: function (msg, o) {
-					if (!o.obj.is('form')) {
-						var B = o.obj.parents('.control-group');
-						var T = B.children('.help-inline');
-						if (o.type === 2) {
-							B.removeClass('error');
-							T.text('');
-						} else {
-							B.addClass('error');
-							T.text(msg);
-						}
-					}
-				},
-				ajaxPost: true,
-				postonceTip:function(){
-					NewCrm.msgbox.fail(HROS.CONFIG.postOnce)
-				},
-				beforeSubmit: function (curform) { 
-					NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
-				},
-				callback: function (responseText) {
-					if (responseText.IsSuccess) {
-						if ($('input[name="val_roleId"]').val()) {
-							$.dialog({
-								id: 'ajaxedit',
-								content: '修改成功，是否继续修改？',
-								okVal: '是',
-								ok: function () {
-									$.dialog.list['ajaxedit'].close();
-								},
-								cancel: function () {
-									window.parent.closeDetailIframe(function () {
-										window.parent.$('#pagination').trigger('currentPage');
-									});
-								}
-							});
-						} else {
-							$.dialog({
-								id: 'ajaxedit',
-								content: '添加成功，是否继续添加？',
-								okVal: '是',
-								ok: function () {
-									location.reload();
-									return false;
-								},
-								cancel: function () {
-									window.parent.closeDetailIframe(function () {
-										window.parent.$('#pagination').trigger('currentPage');
-									});
-								}
-							});
-						}
+	var f =	$('#form').Validform({
+			btnSubmit: '#btn-submit',
+			postonce: true,
+			showAllError: true,
+			tiptype: function (msg, o) {
+				if (!o.obj.is('form')) {
+					var B = o.obj.parents('.control-group');
+					var T = B.children('.help-inline');
+					if (o.type === 2) {
+						B.removeClass('error');
+						T.text('');
 					} else {
-						NewCrm.msgbox.fail(responseText.Message);
+						B.addClass('error');
+						T.text(msg);
 					}
 				}
-			});
-
-			//添加应用
-			$('a[menu=addapps]').click(function () {
-				$.dialog.data('appsid', $('#val_apps_id').val());
-				$.dialog.open('/security/addsystemappgotopower', {
-					id: 'alert_addapps',
-					title: '添加应用',
-					resize: false,
-					width: 360,
-					height: 300,
-					ok: function () {
-						$('#val_apps_id').val($.dialog.data('appsid')).focusout();
-						HROS.request.get('/security/getsystemapp', { appIds: $.dialog.data('appsid') }, function (responseText) {
-							if (responseText.IsSuccess) {
-								var model = responseText.Model;
-								var msg = "";
-								for (var i = 0; i < model.length; i++) {
-									msg += '<div class="app" appid="' + model[i].Id + '">' +
-										' <img src="' + model[i].IconUrl + '" alt="' + model[i].Name + '" title="' + model[i].Name + '">' +
-										'<span class="del">删</span>' +
-										'</div>';
-								}
-								$('.permissions_apps').html(msg);
+			},
+			ajaxPost: true,
+			postonceTip:function(){
+				NewCrm.msgbox.fail(HROS.CONFIG.postOnce)
+			},
+			beforeSubmit: function (curform) { 
+				NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+			},
+			callback: function (responseText) {
+				if (responseText.IsSuccess) {
+					if ($('input[name="val_roleId"]').val()) {
+						$.dialog({
+							id: 'ajaxedit',
+							content: '修改成功，是否继续修改？',
+							okVal: '是',
+							ok: function () {
+								$.dialog.list['ajaxedit'].close();
+							},
+							cancel: function () {
+								window.parent.closeDetailIframe(function () {
+									window.parent.$('#pagination').trigger('currentPage');
+								});
 							}
-						})
-					},
-					cancel: true
-				});
-			});
-			//删除应用
-			$('.permissions_apps').on('click', '.app .del', function () {
-				var appid = $(this).parent().attr('appid');
-				var appsid = $('#val_apps_id').val().split(',');
-				var newappsid = [];
-				for (var i = 0, j = 0; i < appsid.length; i++) {
-					if (appsid[i] != appid) {
-						newappsid[j] = appsid[i];
-						j++;
+						});
+					} else {
+						$.dialog({
+							id: 'ajaxedit',
+							content: '添加成功，是否继续添加？',
+							okVal: '是',
+							ok: function () {
+								location.reload();
+								return false;
+							},
+							cancel: function () {
+								window.parent.closeDetailIframe(function () {
+									window.parent.$('#pagination').trigger('currentPage');
+								});
+							}
+						});
 					}
+				} else {
+					NewCrm.msgbox.fail(responseText.Message);
 				}
-				$('#val_apps_id').val(newappsid.join(',')).focusout();
-				$(this).parent().remove();
+			}
+		});
+		//添加应用
+		$('a[menu=addapps]').click(function () {
+			$.dialog.data('appsid', $('#val_apps_id').val());
+			$.dialog.open('/security/addsystemappgotopower', {
+				id: 'alert_addapps',
+				title: '添加应用',
+				resize: false,
+				width: 360,
+				height: 300,
+				ok: function () {
+					$('#val_apps_id').val($.dialog.data('appsid')).focusout();
+					HROS.request.get('/security/getsystemapp', { appIds: $.dialog.data('appsid') }, function (responseText) {
+						if (responseText.IsSuccess) {
+							var model = responseText.Model;
+							var msg = "";
+							for (var i = 0; i < model.length; i++) {
+								msg += '<div class="app" appid="' + model[i].Id + '">' +
+									' <img src="' + model[i].IconUrl + '" alt="' + model[i].Name + '" title="' + model[i].Name + '">' +
+									'<span class="del">删</span>' +
+									'</div>';
+							}
+							$('.permissions_apps').html(msg);
+						}
+					})
+				},
+				cancel: true
 			});
 		});
-
-	</script>
+		//删除应用
+		$('.permissions_apps').on('click', '.app .del', function () {
+			var appid = $(this).parent().attr('appid');
+			var appsid = $('#val_apps_id').val().split(',');
+			var newappsid = [];
+			for (var i = 0, j = 0; i < appsid.length; i++) {
+				if (appsid[i] != appid) {
+					newappsid[j] = appsid[i];
+					j++;
+				}
+			}
+			$('#val_apps_id').val(newappsid.join(',')).focusout();
+			$(this).parent().remove();
+		});
 }
 

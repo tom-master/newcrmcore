@@ -131,108 +131,104 @@
 	</table>
 </div>
 @section ChildrenScript
-	{
-	<script>
-		$(function () {
-			$('input[name="desk"]').change(function () {
-				var desk = $('input[name="desk"]:checked').val();
-				window.parent.HROS.deskTop.updateDefaultDesk(desk);
-			});
-			$('input[name="wallpapersource"]').change(function () {
-				var val = $('input[name="wallpapersource"]:checked').val();
-				window.parent.HROS.deskTop.modifyWallpaperSource(val);
-			});
+{
+	$('input[name="desk"]').change(function () {
+		var desk = $('input[name="desk"]:checked').val();
+		window.parent.HROS.deskTop.updateDefaultDesk(desk);
+	});
+	$('input[name="wallpapersource"]').change(function () {
+		var val = $('input[name="wallpapersource"]:checked').val();
+		window.parent.HROS.deskTop.modifyWallpaperSource(val);
+	});
 
-			$('input[name="appxy"]').change(function () {
-				var xy = $('input[name="appxy"]:checked').val();
-				window.parent.HROS.app.updateXY(xy);
-			});
+	$('input[name="appxy"]').change(function () {
+		var xy = $('input[name="appxy"]:checked').val();
+		window.parent.HROS.app.updateXY(xy);
+	});
 
-			//更新应用图标大小
-			$('.appsize-minus, .appsize-plus').click(function () {
-				var size = parseInt($('input[name="appsize"]').val());
-				if ($(this).hasClass('appsize-minus')) {
-					size = size - 1;
-				} else {
-					size = size + 1;
-				}
-				updateSize(size);
-			});
+	//更新应用图标大小
+	$('.appsize-minus, .appsize-plus').click(function () {
+		var size = parseInt($('input[name="appsize"]').val());
+		if ($(this).hasClass('appsize-minus')) {
+			size = size - 1;
+		} else {
+			size = size + 1;
+		}
+		updateSize(size);
+	});
 
-			$('input[name="appsize"]').keyup(function () {
-				var size = parseInt($('input[name="appsize"]').val());
-				updateSize(size);
-			});
+	$('input[name="appsize"]').keyup(function () {
+		var size = parseInt($('input[name="appsize"]').val());
+		updateSize(size);
+	});
 
-			var updateSize = function (size) {
-				if (size < 32) {
-					size = 32;
-				} else if (size > 64) {
-					size = 64;
-				}
-				$('input[name="appsize"]').val(size);
-				window.parent.HROS.app.updateSize(size);
-			};
+	var updateSize = function (size) {
+		if (size < 32) {
+			size = 32;
+		} else if (size > 64) {
+			size = 64;
+		}
+		$('input[name="appsize"]').val(size);
+		window.parent.HROS.app.updateSize(size);
+	};
 
-			//更新图标垂直间距
-			$('.appverticalspacing-minus, .appverticalspacing-plus').click(function () {
-				var vertical = parseInt($('input[name="appverticalspacing"]').val());
-				if ($(this).hasClass('appverticalspacing-minus')) {
-					vertical = vertical - 1;
-				} else {
-					vertical = vertical + 1;
-				}
-				updateVertical(vertical);
-			});
+	//更新图标垂直间距
+	$('.appverticalspacing-minus, .appverticalspacing-plus').click(function () {
+		var vertical = parseInt($('input[name="appverticalspacing"]').val());
+		if ($(this).hasClass('appverticalspacing-minus')) {
+			vertical = vertical - 1;
+		} else {
+			vertical = vertical + 1;
+		}
+		updateVertical(vertical);
+	});
 
-			$('input[name="appverticalspacing"]').keyup(function () {
-				var vertical = parseInt($('input[name="appverticalspacing"]').val());
-				updateVertical(vertical);
-			});
+	$('input[name="appverticalspacing"]').keyup(function () {
+		var vertical = parseInt($('input[name="appverticalspacing"]').val());
+		updateVertical(vertical);
+	});
 
-			$('.apphorizontalspacing-minus, .apphorizontalspacing-plus').click(function () {
-				var horizontal = parseInt($('input[name="apphorizontalspacing"]').val());
-				if ($(this).hasClass('apphorizontalspacing-minus')) {
-					horizontal = horizontal - 1;
-				} else {
-					horizontal = horizontal + 1;
-				}
-				updateHorizontal(horizontal);
-			});
+	$('.apphorizontalspacing-minus, .apphorizontalspacing-plus').click(function () {
+		var horizontal = parseInt($('input[name="apphorizontalspacing"]').val());
+		if ($(this).hasClass('apphorizontalspacing-minus')) {
+			horizontal = horizontal - 1;
+		} else {
+			horizontal = horizontal + 1;
+		}
+		updateHorizontal(horizontal);
+	});
 
-			$('input[name="apphorizontalspacing"]').keyup(function () {
-				var horizontal = parseInt($('input[name="apphorizontalspacing"]').val());
-				updateHorizontal(horizontal);
-			});
+	$('input[name="apphorizontalspacing"]').keyup(function () {
+		var horizontal = parseInt($('input[name="apphorizontalspacing"]').val());
+		updateHorizontal(horizontal);
+	});
 
-			//更新应用码头位置
-			$('input[name="dockpos"]').change(function () {
-				var pos = $('input[name="dockpos"]:checked').val();
-				$('.set_view').removeClass('set_view_top set_view_left set_view_right set_view_none');
-				$('.set_view').addClass('set_view_' + pos);
-				window.parent.HROS.dock.updatePos(pos);
-			});
-		});
+	//更新应用码头位置
+	$('input[name="dockpos"]').change(function () {
+		var pos = $('input[name="dockpos"]:checked').val();
+		$('.set_view').removeClass('set_view_top set_view_left set_view_right set_view_none');
+		$('.set_view').addClass('set_view_' + pos);
+		window.parent.HROS.dock.updatePos(pos);
+	});
 
-		//更新图标水平间距
-		function updateHorizontal(horizontal) {
-			if (horizontal < 0) {
-				horizontal = 0;
-			} else if (horizontal > 100) {
-				horizontal = 100;
-			}
-			$('input[name="apphorizontalspacing"]').val(horizontal);
-			window.parent.HROS.app.updateHorizontal(horizontal);
-		};
+	//更新图标水平间距
+	function updateHorizontal(horizontal) {
+		if (horizontal < 0) {
+			horizontal = 0;
+		} else if (horizontal > 100) {
+			horizontal = 100;
+		}
+		$('input[name="apphorizontalspacing"]').val(horizontal);
+		window.parent.HROS.app.updateHorizontal(horizontal);
+	};
 
-		function updateVertical(vertical) {
-			if (vertical < 0) {
-				vertical = 0;
-			} else if (vertical > 100) {
-				vertical = 100;
-			}
-			$('input[name="appverticalspacing"]').val(vertical);
-			window.parent.HROS.app.updateVertical(vertical);
-		};
-	</script>
+	function updateVertical(vertical) {
+		if (vertical < 0) {
+			vertical = 0;
+		} else if (vertical > 100) {
+			vertical = 100;
+		}
+		$('input[name="appverticalspacing"]').val(vertical);
+		window.parent.HROS.app.updateVertical(vertical);
+	};
 }

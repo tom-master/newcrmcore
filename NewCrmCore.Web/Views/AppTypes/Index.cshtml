@@ -45,9 +45,7 @@
 <div id="detailIframe" style="background:#fff;position:fixed;z-index:1;top:-100px;left:0;width:100%;height:100%;display:none">
 	<iframe frameborder="0" style="width:100%;height:100%"></iframe>
 </div>
-@section ChildrenScript{
-	<script src="~/js/handlebars.runtime-v4.0.11.js"></script>
-
+@section ChildrenTemplate{
 	<script id="li-template" type="text/x-handlebars-template">
 		{{#each Model}}
 		<tr class="list-bd">
@@ -61,63 +59,56 @@
 		</tr>
 		{{/each}}
 	</script>
-
-
-	<script>
-		$(function () {
-			//加载列表
-			getPageList(0);
-			//删除
-			$('.list-con').on('click', '.do-del', function () {
-				var categoryid = $(this).attr('categoryid');
-				var name = $(this).parent().prev().text();
-				$.dialog({
-					id: 'ajaxedit',
-					content: '删除后将不可恢复!是否继续?',
-					ok: function () {
-						HROS.request.post('/apptypes/remove', { appTypeId: categoryid }, function (responseText) {
-							if (responseText.IsSuccess) {
-								$('#pagination').trigger('currentPage');
-							} else {
-								NewCrm.msgbox.fail(responseText.Message);
-							}
-						});
-					},
-					cancel: true
+}
+@section ChildrenScript{
+	//加载列表
+	getPageList(0);
+	//删除
+	$('.list-con').on('click', '.do-del', function () {
+		var categoryid = $(this).attr('categoryid');
+		var name = $(this).parent().prev().text();
+		$.dialog({
+			id: 'ajaxedit',
+			content: '删除后将不可恢复!是否继续?',
+			ok: function () {
+				HROS.request.post('/apptypes/remove', { appTypeId: categoryid }, function (responseText) {
+					if (responseText.IsSuccess) {
+						$('#pagination').trigger('currentPage');
+					} else {
+						NewCrm.msgbox.fail(responseText.Message);
+					}
 				});
-			});
-			//搜索
-			$('a[menu=search]').click(function () {
-				getPageList(0);
-			});
+			},
+			cancel: true
 		});
+	});
+	//搜索
+	$('a[menu=search]').click(function () {
+		getPageList(0);
+	});
+	function getPageList(current_page) {
+		HROS.request.get('/apptypes/gettypes', {
+			pageIndex: current_page === 0 ? 1 : current_page + 1,
+			pageSize: 10,
+			searchText: $('#searchText').val()
+		}, function (responseText) {
+			if (responseText.IsSuccess) {
+				var template = Handlebars.compile($('#li-template').html());
+				$('#pagination_setting').attr('count', parseInt(responseText.TotalCount));
+				$('.list-count').text(parseInt(responseText.TotalCount));
+				$('.list-con').html(template(responseText));
+				initPagination({
+					current_page: current_page,
+					items_per_page: 5,
+					num_display_entries: 3,
+					num_edge_entries: 1,
+					getPageList: getPageList
+				})
 
-		
-		function getPageList(current_page) {
-			HROS.request.get('/apptypes/gettypes', {
-				pageIndex: current_page === 0 ? 1 : current_page + 1,
-				pageSize: 10,
-				searchText: $('#searchText').val()
-			}, function (responseText) {
-				if (responseText.IsSuccess) {
-					var template = Handlebars.compile($('#li-template').html());
-					$('#pagination_setting').attr('count', parseInt(responseText.TotalCount));
-					$('.list-count').text(parseInt(responseText.TotalCount));
-					$('.list-con').html(template(responseText));
-					initPagination({
-						current_page: current_page,
-						items_per_page: 5,
-						num_display_entries: 3,
-						num_edge_entries: 1,
-						getPageList: getPageList
-					})
-
-				} else {
-					NewCrm.msgbox.fail(responseText.Message);
-				}
-			});
-		}
-	</script>
-
+			} else {
+				NewCrm.msgbox.fail(responseText.Message);
+			}
+		});
+	}
 }
 

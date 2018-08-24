@@ -51,110 +51,109 @@
 </div>
 @section ChildrenScript
 {
-    <script>
-        $(function () {
-            var upload = WebUploader.create({
-                auto: true,
-                swf: '~/js/webuploader-0.1.5/Uploader.swf',
-                server: '@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)',
-                pick: {
-                    id: '#upload',
-                    multiple: false
-                },
-                // 只允许选择图片文件。
-                accept: {
-                    title: 'Images',
-                    extensions: 'gif,jpg,jpeg,bmp,png',
-                    mimeTypes: 'image/*'
-                },
-                formData: {  
-                    accountId: '@accountConfig.AccountId',
-                    uploadtype:'wallpaper'
-                }  
-            });
-            upload.on('beforeFileQueued', function (file) {
-                if (file.size > 1000 * 1024) {
-                    NewCrm.msgbox.info('文件大于1000Kb');
-                    return false;
-                }
-            });
-            upload.on('uploadSuccess', function (file, cb) {
-                if (cb[0].IsSuccess) {
-                    var model = {
-                        Title: cb[0].Title,
-                        Width: cb[0].Width,
-                        Height: cb[0].Height,
-                        Url: cb[0].Url,
-                        Source: 3,
-                        AccountId: '@accountConfig.AccountId',
-                        Md5: cb[0].Md5,
-                        ShortUrl: ""
-                    };
-                
-					HROS.request.post('/desk/uploadwallpaper', { wallpaper: model }, function (responseText) {
-                        if (responseText.IsSuccess) {
-							$('.wapppapercustom .view ul').append('<li id="' + responseText.Model.Id + '" style="background-image:url(' + responseText.Model.Url + ')"><a href="###">删 除</a></li>');
-                            window.parent.HROS.wallpaper.update($('#wallpapertype').val(), responseText.Model.Id);
-                            upload.removeFile(file);
-                        } else {
-                            NewCrm.msgbox.fail(responseText.Message);
-                        }
-                    })
-                }
-			});
 
-            $('#wallpapertype').on('change', function () {
-                window.parent.HROS.wallpaper.update($('#wallpapertype').val(), '');
-			});
-
-            $('.wapppapercustom .view').on('click', 'li', function () {
-                window.parent.HROS.wallpaper.update($('#wallpapertype').val(), $(this).attr('id'));
-			});
-
-            $('.wapppapercustom .view').on('click', 'li a', function (event) {
-                event.stopPropagation();
-                var id = $(this).parent().attr('id');
-				HROS.request.post("/Desk/RemoveWallpaper", { wallPaperId: id }, function (responseText) {
+        var upload = WebUploader.create({
+            auto: true,
+            swf: '~/js/webuploader-0.1.5/Uploader.swf',
+            server: '@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)',
+            pick: {
+                id: '#upload',
+                multiple: false
+            },
+            // 只允许选择图片文件。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            },
+            formData: {  
+                accountId: '@accountConfig.AccountId',
+                uploadtype:'wallpaper'
+            }  
+        });
+        upload.on('beforeFileQueued', function (file) {
+            if (file.size > 1000 * 1024) {
+                NewCrm.msgbox.info('文件大于1000Kb');
+                return false;
+            }
+        });
+        upload.on('uploadSuccess', function (file, cb) {
+            if (cb[0].IsSuccess) {
+                var model = {
+                    Title: cb[0].Title,
+                    Width: cb[0].Width,
+                    Height: cb[0].Height,
+                    Url: cb[0].Url,
+                    Source: 3,
+                    AccountId: '@accountConfig.AccountId',
+                    Md5: cb[0].Md5,
+                    ShortUrl: ""
+                };
+            
+                HROS.request.post('/desk/uploadwallpaper', { wallpaper: model }, function (responseText) {
                     if (responseText.IsSuccess) {
-                        NewCrm.msgbox.success('壁纸移除成功');
-                        $('#' + id).remove();
+                        $('.wapppapercustom .view ul').append('<li id="' + responseText.Model.Id + '" style="background-image:url(' + responseText.Model.Url + ')"><a href="###">删 除</a></li>');
+                        window.parent.HROS.wallpaper.update($('#wallpapertype').val(), responseText.Model.Id);
+                        upload.removeFile(file);
                     } else {
                         NewCrm.msgbox.fail(responseText.Message);
                     }
-                });
-            });
-
-			GetAllUploadWallPaper();
+                })
+            }
         });
 
-        function GetAllUploadWallPaper() {
-			HROS.request.get("/desk/getuploadwallpapers",{}, function (responseText) {
+        $('#wallpapertype').on('change', function () {
+            window.parent.HROS.wallpaper.update($('#wallpapertype').val(), '');
+        });
+
+        $('.wapppapercustom .view').on('click', 'li', function () {
+            window.parent.HROS.wallpaper.update($('#wallpapertype').val(), $(this).attr('id'));
+        });
+
+        $('.wapppapercustom .view').on('click', 'li a', function (event) {
+            event.stopPropagation();
+            var id = $(this).parent().attr('id');
+            HROS.request.post("/Desk/RemoveWallpaper", { wallPaperId: id }, function (responseText) {
                 if (responseText.IsSuccess) {
-                    var liElement = '';
-                    $.each(responseText.Model, function (k, v) {
-						liElement += '<li id="' + v.Id + '" style="background:url(' + v.Url + ')"><a href="###" >删 除</a></li>';
-                    });
-                    $('.view').children('ul').append(liElement);
+                    NewCrm.msgbox.success('壁纸移除成功');
+                    $('#' + id).remove();
                 } else {
                     NewCrm.msgbox.fail(responseText.Message);
                 }
             });
-        }
+        });
 
-        function SetWebWallPaper() {
-            var webUrl = $('#wallpaperurl').val();
-            if (!webUrl) {
-                NewCrm.msgbox.info('请输入一个合法的url地址');
-            } else {
-				HROS.request.post("/desk/webwallpaper", { webUrl: webUrl }, function (responseText) {
-                    if (parseInt(responseText.Model.Item1) === 0) {
-                        NewCrm.msgbox.fail('未能获取到所指定的网络图片');
-                    } else {
-                        window.parent.HROS.wallpaper.update($('#wallpapertype').val(), parseInt(responseText.Model.Item1));
-                    }
+        GetAllUploadWallPaper();
+    });
+
+    function GetAllUploadWallPaper() {
+        HROS.request.get("/desk/getuploadwallpapers",{}, function (responseText) {
+            if (responseText.IsSuccess) {
+                var liElement = '';
+                $.each(responseText.Model, function (k, v) {
+                    liElement += '<li id="' + v.Id + '" style="background:url(' + v.Url + ')"><a href="###" >删 除</a></li>';
                 });
+                $('.view').children('ul').append(liElement);
+            } else {
+                NewCrm.msgbox.fail(responseText.Message);
             }
+        });
+    }
+
+    function SetWebWallPaper() {
+        var webUrl = $('#wallpaperurl').val();
+        if (!webUrl) {
+            NewCrm.msgbox.info('请输入一个合法的url地址');
+        } else {
+            HROS.request.post("/desk/webwallpaper", { webUrl: webUrl }, function (responseText) {
+                if (parseInt(responseText.Model.Item1) === 0) {
+                    NewCrm.msgbox.fail('未能获取到所指定的网络图片');
+                } else {
+                    window.parent.HROS.wallpaper.update($('#wallpapertype').val(), parseInt(responseText.Model.Item1));
+                }
+            });
         }
-    </script>
+    }
+
 }
 

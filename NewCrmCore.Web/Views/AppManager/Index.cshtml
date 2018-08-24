@@ -108,11 +108,9 @@
 <div id="detailIframe" style="background:#fff;position:fixed;z-index:1;top:-100px;left:0;width:100%;height:100%;display:none">
 	<iframe frameborder="0" style="width:100%;height:100%"></iframe>
 </div>
-@section ChildrenScript
-	{
-	<script src="/js/handlebars.runtime-v4.0.11.js"></script>
 
-	<script id="table-template" type="text/x-handlebars-template">
+@section ChildrenTemplate{
+<script id="table-template" type="text/x-handlebars-template">
 		{{#each Model}}
 		<tr class="list-bd">
 			<td>{{Id}}</td>
@@ -151,49 +149,45 @@
 		</tr>
 		{{/each}}
 	</script>
+}
+@section ChildrenScript
+{ 
+		//加载列表
+		getPageList(0);
+		//删除，推荐
+		$('.list-con').on('click', '.do-del', function () {
+			var appid = $(this).attr('appid');
+			var appname = $(this).parents('tr').children('td:nth-child(2)').text();
+			$.dialog({
+				id: 'del',
+				content: '确定要删除 “' + appname + '” 该应用么？',
+				ok: function () {
+					HROS.request.post('/appmanager/remove', { appId: appid }, function (responseText) {
+						if (responseText.IsSuccess) {
+							$('#pagination').trigger('currentPage');
+						} else {
+								NewCrm.msgbox.fail(responseText.Message);
+						}
+					});
+				},
+				cancel: true
+			});
+		}).on('click', '.do-recommend', function () {
+			var appid = $(this).attr('appid');
+			
+			HROS.request.post('/appmanager/recommend', { appId: appid }, function (responseText) {
+				if (responseText.IsSuccess) {
+					$('#pagination').trigger('currentPage');
+				} else {
+					NewCrm.msgbox.fail(responseText.Message);
+				}
+			});
 
-
-	<script>
-        $(function () {
-            //加载列表
-            getPageList(0);
-            //删除，推荐
-			$('.list-con').on('click', '.do-del', function () {
-                var appid = $(this).attr('appid');
-                var appname = $(this).parents('tr').children('td:nth-child(2)').text();
-                $.dialog({
-                    id: 'del',
-                    content: '确定要删除 “' + appname + '” 该应用么？',
-                    ok: function () {
-                        HROS.request.post('/appmanager/remove', { appId: appid }, function (responseText) {
-                            if (responseText.IsSuccess) {
-                                $('#pagination').trigger('currentPage');
-                            } else {
-                                 NewCrm.msgbox.fail(responseText.Message);
-                            }
-                        });
-                    },
-                    cancel: true
-                });
-            }).on('click', '.do-recommend', function () {
-                var appid = $(this).attr('appid');
-				
-                HROS.request.post('/appmanager/recommend', { appId: appid }, function (responseText) {
-                    if (responseText.IsSuccess) {
-                        $('#pagination').trigger('currentPage');
-                    } else {
-                        NewCrm.msgbox.fail(responseText.Message);
-                    }
-                });
-
-            });
-            //搜索
-            $('a[menu=search]').click(function () {
-                getPageList(0);
-            });
-        });
-		
-       
+		});
+		//搜索
+		$('a[menu=search]').click(function () {
+			getPageList(0);
+		});
 
         function getPageList(current_page) {
             var $appStates = $('#appState').find("option:selected");
@@ -267,5 +261,4 @@
                 }
             });
         }
-	</script>
 }

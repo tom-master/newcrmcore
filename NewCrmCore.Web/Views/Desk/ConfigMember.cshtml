@@ -105,117 +105,113 @@
 </form>
 
 @section ChildrenScript
-	{
-	<script>
-        $(function() {
-            var uploader = WebUploader.create({
-                // 选完文件后，是否自动上传。
-                auto: true,
-                // swf文件路径
-                swf: '~/js/webuploader-0.1.5/Uploader.swf',
-                // 文件接收服务端。
-                server: '@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)?accountId=@Model.AccountId&uploadtype=icon',
-                // 选择文件的按钮。可选。
-                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-                pick: {
-                    id: '#upload',
-                    multiple: false
-                },
-                // 只允许选择图片文件。
-                accept: {
-                    title: 'Images',
-                    extensions: 'gif,jpg,jpeg,bmp,png',
-                    mimeTypes: 'image/*'
-                }
-            });
-            uploader.on('beforeFileQueued', function(file) {
-                if (file.size > 300 * 1024) {
-                    NewCrm.msgbox.info('文件大于300Kb，请压缩后再上传');
-                    return false;
+{
+    var uploader = WebUploader.create({
+        // 选完文件后，是否自动上传。
+        auto: true,
+        // swf文件路径
+        swf: '~/js/webuploader-0.1.5/Uploader.swf',
+        // 文件接收服务端。
+        server: '@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)?accountId=@Model.AccountId&uploadtype=icon',
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: {
+            id: '#upload',
+            multiple: false
+        },
+        // 只允许选择图片文件。
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*'
+        }
+    });
+    uploader.on('beforeFileQueued', function(file) {
+        if (file.size > 300 * 1024) {
+            NewCrm.msgbox.info('文件大于300Kb，请压缩后再上传');
+            return false;
+        } else {
+            $('.shortcutview img').remove();
+            $('#val_icon').val('');
+        }
+    });
+    uploader.on('fileQueued', function(file) {
+        var $img = $('<img>');
+        $('.shortcutview').append($img);
+        // 创建缩略图
+        uploader.makeThumb(file, function(error, src) {
+            if (error) {
+                $img.replaceWith('');
+                return;
+            }
+            $img.attr('src', src);
+        }, 48, 48);
+    });
+    uploader.on('uploadSuccess', function (file, cb) {
+        if (cb[0].IsSuccess) {
+            var urlPart = cb[0].Url
+            HROS.request.post('/desk/modifyicon',{ MemberId: '@Model.Id', NewIcon: urlPart },function () {
+                if (responseText.IsSuccess) {
+                    $('#isIconByUpload').val('1');
+                    $('.shortcutview img').attr('src', responseText.Model);
+                    $('#val_icon').val(urlPart);
+                    uploader.removeFile(file);
                 } else {
-                    $('.shortcutview img').remove();
-                    $('#val_icon').val('');
+                    NewCrm.msgbox.fail("图标保存失败");
                 }
-            });
-            uploader.on('fileQueued', function(file) {
-                var $img = $('<img>');
-                $('.shortcutview').append($img);
-                // 创建缩略图
-                uploader.makeThumb(file, function(error, src) {
-                    if (error) {
-                        $img.replaceWith('');
-                        return;
-                    }
-                    $img.attr('src', src);
-                }, 48, 48);
-            });
-            uploader.on('uploadSuccess', function (file, cb) {
-                if (cb[0].IsSuccess) {
-                    var urlPart = cb[0].Url
-                    HROS.request.post('/desk/modifyicon',{ MemberId: '@Model.Id', NewIcon: urlPart },function () {
-                        if (responseText.IsSuccess) {
-                            $('#isIconByUpload').val('1');
-                            $('.shortcutview img').attr('src', responseText.Model);
-                            $('#val_icon').val(urlPart);
-                            uploader.removeFile(file);
-                        } else {
-                            NewCrm.msgbox.fail("图标保存失败");
-                        }
-                    })
+            })
+        } else {
+            NewCrm.msgbox.fail("图标上传失败");
+        }
+    });
+var f = $('#form').Validform({
+        btnSubmit: '#btn-submit',
+        postonce: true,
+        showAllError: true,
+        tiptype: function(msg, o) {
+            if (!o.obj.is('form')) {
+                var B = o.obj.parents('.control-group');
+                var T = B.children('.help-inline');
+                if (o.type === 2) {
+                    B.removeClass('error');
+                    T.text('');
                 } else {
-                    NewCrm.msgbox.fail("图标上传失败");
+                    B.addClass('error');
+                    T.text(msg);
                 }
-            });
-        var f = $('#form').Validform({
-                btnSubmit: '#btn-submit',
-				postonce: true,
-                showAllError: true,
-                tiptype: function(msg, o) {
-                    if (!o.obj.is('form')) {
-                        var B = o.obj.parents('.control-group');
-                        var T = B.children('.help-inline');
-                        if (o.type === 2) {
-                            B.removeClass('error');
-                            T.text('');
-                        } else {
-                            B.addClass('error');
-                            T.text(msg);
-                        }
-                    }
-                },
-				ajaxPost: true,
-				postonceTip:function(){
-                    NewCrm.msgbox.fail(HROS.CONFIG.postOnce)
-                },
-                beforeSubmit: function (curform) { 
-                    NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
-                },
-                callback: function (responseText) {
-                    if (responseText.IsSuccess) {
-                        NewCrm.msgbox.success('修改成功');
-                        setTimeout(function () {
-                            window.parent.HROS.app.get();
-                            window.parent.$.dialog.list['editdialog'].close();
-                        }, 1000);
-                    } else {
-                        NewCrm.msgbox.fail(responseText.Message);
-                    }
-                }
-            });
-            $('input[name="val_isresize"]').change(function() {
-                if ($(this).val() === '1') {
-                    $('.input-label-isopenmax').slideDown();
-                } else {
-                    $('.input-label-isopenmax').slideUp();
-                }
-            });
-            //选择应用图片
-            $('.shortcut-selicon a').click(function () {
-                $('.shortcutview img').remove();
-                $('.shortcutview').append($(this).html());
-                $('#val_icon').val($(this).children('img').attr('valsrc')).focusout();
-                $('#isIconByUpload').val('0')
-            });
-        });
-	</script>
+            }
+        },
+        ajaxPost: true,
+        postonceTip:function(){
+            NewCrm.msgbox.fail(HROS.CONFIG.postOnce)
+        },
+        beforeSubmit: function (curform) { 
+            NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+        },
+        callback: function (responseText) {
+            if (responseText.IsSuccess) {
+                NewCrm.msgbox.success('修改成功');
+                setTimeout(function () {
+                    window.parent.HROS.app.get();
+                    window.parent.$.dialog.list['editdialog'].close();
+                }, 1000);
+            } else {
+                NewCrm.msgbox.fail(responseText.Message);
+            }
+        }
+    });
+    $('input[name="val_isresize"]').change(function() {
+        if ($(this).val() === '1') {
+            $('.input-label-isopenmax').slideDown();
+        } else {
+            $('.input-label-isopenmax').slideUp();
+        }
+    });
+    //选择应用图片
+    $('.shortcut-selicon a').click(function () {
+        $('.shortcutview img').remove();
+        $('.shortcutview').append($(this).html());
+        $('#val_icon').val($(this).children('img').attr('valsrc')).focusout();
+        $('#isIconByUpload').val('0')
+    });
 }

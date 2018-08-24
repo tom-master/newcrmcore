@@ -124,12 +124,7 @@
 	}
 }
 
-
-@section ChildrenScript
-{
-
-	<script src="~/js/handlebars.runtime-v4.0.11.js"></script>
-
+@section ChildrenTemplate{
 	<script id="table-template" type="text/x-handlebars-template">
 		{{#each Model}}
 		<tr class="list-bd">
@@ -148,82 +143,79 @@
 		</tr>
 		{{/each}}
 	</script>
-	<script>
-        $(function () {
-            $('html').css({ 'overflow-y': 'hidden' });
-
-            //加载列表
-            getPageList(0);
-            //删除
-            $('.list-con').on('click', '.do-del', function () {
-                var appId = $(this).attr('appId');
-                var appname = $(this).parents('tr').children('td:first-child').text();
-                $.dialog({
-                    id: 'del',
-                    content: '确定要删除 “' + appname + '” 该应用么？',
-                    ok: function () {
-                        HROS.request.post('/appmarket/remove', { appId: appId }, function (responseText) {
-							if (responseText.IsSuccess) {
-								NewCrm.msgbox.success('删除成功!');
-								setTimeout(function(){
-									$('#pagination').trigger('currentPage');
-								},1000)
-							} else {
-								NewCrm.msgbox.fail(responseText.Message);
-							}
-                        });
-                    },
-                    cancel: true
-                });
-            });
-            //搜索
-            $('a[menu=search]').click(function () {
-                getPageList(0);
-            });
+}
+@section ChildrenScript
+{
+	$('html').css({ 'overflow-y': 'hidden' });
+	//加载列表
+	getPageList(0);
+	//删除
+	$('.list-con').on('click', '.do-del', function () {
+		var appId = $(this).attr('appId');
+		var appname = $(this).parents('tr').children('td:first-child').text();
+		$.dialog({
+			id: 'del',
+			content: '确定要删除 “' + appname + '” 该应用么？',
+			ok: function () {
+				HROS.request.post('/appmarket/remove', { appId: appId }, function (responseText) {
+					if (responseText.IsSuccess) {
+						NewCrm.msgbox.success('删除成功!');
+						setTimeout(function(){
+							$('#pagination').trigger('currentPage');
+						},1000)
+					} else {
+						NewCrm.msgbox.fail(responseText.Message);
+					}
+				});
+			},
+			cancel: true
 		});
- 
-        function getPageList(current_page) {
-            var $appStates = $('#appState').find("option:selected");
-            var appStateResult = '';
-            if (parseInt($appStates.attr('value')) !== 0) {
-                appStateResult = $appStates.attr('data-type') + ',' + $appStates.attr('value');
-            }
+	});
+	//搜索
+	$('a[menu=search]').click(function () {
+		getPageList(0);
+	});
+	function getPageList(current_page) {
+		var $appStates = $('#appState').find("option:selected");
+		var appStateResult = '';
+		if (parseInt($appStates.attr('value')) !== 0) {
+			appStateResult = $appStates.attr('data-type') + ',' + $appStates.attr('value');
+		}
 
-            HROS.request.get('/appmarket/getaccountapps',
-            {
-                searchText: $('#appName').val(),
-                appTypeId: $('#appType').find("option:selected").attr('value'),
-                appStyleId: $('#appStyle').find("option:selected").attr('value'),
-                appState: appStateResult,
-                pageIndex: current_page === 0 ? 1 : current_page + 1,
-                pageSize: 4
-            }, function (responseText) {
-                var tableTemplate = Handlebars.compile($("#table-template").html());
-                $('.list-con').html(tableTemplate(responseText));
-                $('.list-count').text(responseText.totalCount);
-                $('#pagination_setting').attr('count', parseInt(responseText.TotalCount));
-                initPagination({
-					current_page: current_page,
-					items_per_page: 4,
-					num_display_entries: 9,
-					num_edge_entries: 2,
-					getPageList: getPageList
-				}) 
-            });
+		HROS.request.get('/appmarket/getaccountapps',
+		{
+			searchText: $('#appName').val(),
+			appTypeId: $('#appType').find("option:selected").attr('value'),
+			appStyleId: $('#appStyle').find("option:selected").attr('value'),
+			appState: appStateResult,
+			pageIndex: current_page === 0 ? 1 : current_page + 1,
+			pageSize: 4
+		}, function (responseText) {
+			var tableTemplate = Handlebars.compile($("#table-template").html());
+			$('.list-con').html(tableTemplate(responseText));
+			$('.list-count').text(responseText.totalCount);
+			$('#pagination_setting').attr('count', parseInt(responseText.TotalCount));
+			initPagination({
+				current_page: current_page,
+				items_per_page: 4,
+				num_display_entries: 9,
+				num_edge_entries: 2,
+				getPageList: getPageList
+			}) 
+		});
 
-            Handlebars.registerHelper('convertstyle', function (appStyle) {
-                if (appStyle === 1) {
-                    return '应用';
-                }
-                return '挂件';
-            });
+		Handlebars.registerHelper('convertstyle', function (appStyle) {
+			if (appStyle === 1) {
+				return '应用';
+			}
+			return '挂件';
+		});
 
-            Handlebars.registerHelper('appendUrl', function (v1, v2) {
-                if (v1) {
-                    return "@(NewCrmCore.Infrastructure.Appsetting.FileUrl)"+v2
-                }
-                return v2
-            })
-        }
-	</script>
+		Handlebars.registerHelper('appendUrl', function (v1, v2) {
+			if (v1) {
+				return "@(NewCrmCore.Infrastructure.Appsetting.FileUrl)"+v2
+			}
+			return v2
+		})
+	}
 }

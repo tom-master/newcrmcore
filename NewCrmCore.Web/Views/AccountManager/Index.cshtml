@@ -69,10 +69,7 @@
 <div id="detailIframe" style="background:#fff;position:fixed;z-index:1;top:-100px;left:0;width:100%;height:100%;display:none">
 	<iframe frameborder="0" style="width:100%;height:100%"></iframe>
 </div>
-@section ChildrenScript
-{
-	<script src="~/js/handlebars.runtime-v4.0.11.js"></script>
-
+@section ChildrenTemplate{
 	<script id="table-template" type="text/x-handlebars-template">
 		{{#each Model}}
 		<tr class="list-bd">
@@ -93,10 +90,10 @@
 		</tr>
 		{{/each}}
 	</script>
-
-	<script>
-		$(function () {
-			//加载列表
+}
+@section ChildrenScript
+{
+	 //加载列表
 			getPageList(0);
 			//删除
 			$('.list-con').on('click', '.do-del', function () {
@@ -148,8 +145,6 @@
 			$('a[menu=search]').click(function () {
 				getPageList(0);
 			});
-		});
-		
 
 		function getPageList(current_page) {
 			HROS.request.get('/accountmanager/accounts', {
@@ -184,6 +179,4 @@
 				return '普通账户';
 			}
 		});
-	</script>
-
 }
