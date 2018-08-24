@@ -104,7 +104,7 @@
                             $('#val_icon').val(urlPart)
                         } else {
                       
-							HROS.request.post('/AppMarket/ModifyIcon', { AppId: appId, NewIcon: urlPart },function (responseText) {
+							HROS.request.post('/appmarket/modifyicon', { AppId: appId, NewIcon: urlPart },function (responseText) {
                                 if (responseText.IsSuccess) {
                                     $('#isIconByUpload').val('1');
                                     $('.shortcutview img').attr('src', responseText.Model);
@@ -254,7 +254,7 @@
                         id: 'del',
                         content: '确认审核通过该应用？',
                         ok: function () {
-                            HROS.request.post('/AppManager/Pass', { appId: appid }, function (responseText) {
+                            HROS.request.post('/appmanager/pass', { appId: appid }, function (responseText) {
                                 if (responseText.IsSuccess) {
                                     window.parent.closeDetailIframe(function () {
                                         window.parent.$('#pagination').trigger('currentPage');
@@ -274,8 +274,7 @@
                         id: 'del',
                         content: '确认不通过该应用？',
                         ok: function () {
-                           
-                            HROS.request.post('/AppManager/Deny', { appId: appid }, function (responseText) {
+                            HROS.request.post('/appmanager/deny', { appId: appid }, function (responseText) {
                                 if (responseText.IsSuccess) {
                                     window.parent.closeDetailIframe(function () {
                                         window.parent.$('#pagination').trigger('currentPage');
@@ -295,7 +294,7 @@
                         id: 'del',
                         content: '确认发布该应用？',
                         ok: function () {
-                            HROS.request.post('/AppMarket/Release', { appId: appid }, function (responseText) {
+                            HROS.request.post('/appmarket/release', { appId: appid }, function (responseText) {
                                 if (responseText.IsSuccess) {
                                     window.parent.closeDetailIframe(function () {
                                         window.parent.$('#pagination').trigger('currentPage');

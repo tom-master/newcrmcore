@@ -43,7 +43,7 @@
 
 			<h3>今日推荐</h3>
 			<div class="commend-container">
-				<a href="javascript:openDetailIframe2('/AppMarket/AppDetail?appId=@todayRecommendApp.Id');">
+				<a href="javascript:openDetailIframe2('/appmarket/appdetail?appId=@todayRecommendApp.Id');">
 					<img src="@todayRecommendApp.AppIcon" alt="@todayRecommendApp.Name">
 				</a>
 			</div>
@@ -80,8 +80,8 @@
 				<p>我开发的应用：<font style="font-weight:bold">@accountApp.Item1</font> 个</p>
 				<p>未发布的应用：<font style="font-weight:bold">@accountApp.Item2</font> 个</p>
 				<div class="text-center">
-					<a href="javascript:openDetailIframe2('/AppMarket/AccountAppManage');" class="btn btn-primary">管理我的应用</a>
-					<a href="javascript:openDetailIframe2('/AppMarket/AccountAppManage?appId=0');" class="btn btn-danger">开发新应用</a>
+					<a href="javascript:openDetailIframe2('/appmarket/accountappmanage');" class="btn btn-primary">管理我的应用</a>
+					<a href="javascript:openDetailIframe2('/appmarket/accountappmanage?appId=0');" class="btn btn-danger">开发新应用</a>
 				</div>
 			</div>
 		</div>
@@ -114,10 +114,10 @@
 	<script id="li-template" type="text/x-handlebars-template">
 		{{#each Model}}
 		<li>
-			<a href="javascript:openDetailIframe2('/AppMarket/AppDetail?appId={{Id}}');">
+			<a href="javascript:openDetailIframe2('/appmarket/appdetail?appId={{Id}}');">
 				<img src="{{IconUrl}}">
 			</a>
-			<a href="javascript:openDetailIframe2('/AppMarket/AppDetail?appId={{Id}}');" class="app-name">{{Name}}</a>
+			<a href="javascript:openDetailIframe2('/appmarket/appdetail?appId={{Id}}');" class="app-name">{{Name}}</a>
 			<span class="app-desc">{{Remark}}</span>
 			<span class="star-box">
 				<i style="width:{{scoreWidth StarCount}}%;"></i>
@@ -220,10 +220,8 @@
                 } else {
                     window.parent.HROS.base.login();
                 }
-            }).on('click', '.btn-run-s', function () {
-                
-                if ($(this).attr('app_type') === 'app') {
-                     
+            }).on('click', '.btn-run-s', function () { 
+                if ($(this).attr('app_type') === 'app') { 
                     window.parent.HROS.window.create($(this).attr('real_app_id'), $(this).attr('app_type'));
                 } else {
                     window.parent.HROS.widget.create($(this).attr('real_app_id'), $(this).attr('app_type'));
@@ -254,15 +252,12 @@
                 }
             });
         });
-
-		
-
+ 
         function getPageList(current_page) {
             var appTypeId = $('#appType').val() === '' ? 0 : parseInt($('#appType').val());
             var orderId = $('#order').val() === '' ? 1 : parseInt($('#order').val());
             var outSideSearchText = '@Context.Request.Query["searchText"]';
-			
-            HROS.request.get('/AppMarket/GetApps', {
+            HROS.request.get('/appmarket/getapps', {
                 appTypeId: appTypeId,
                 orderId: orderId,
                 searchText: outSideSearchText === '' ? $('#searchText').val() : outSideSearchText,

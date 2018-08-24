@@ -1,8 +1,8 @@
 ﻿@using NewCrmCore.Dto
 @using NewCrmCore.Infrastructure.CommonTools
-<form action="/AppMarket/Create" method="post" name="form" id="form">
+<form action="/appmarket/create" method="post" name="form" id="form">
 	<input type="hidden" id="isIconByUpload" name="isIconByUpload" value="0" />
-	<input type="hidden" name="token" value="@( await TimeToken.GetTokenAsync())" />
+	<input type="hidden" name="token" value="@(await TimeToken.GetTokenAsync())" />
 	<div class="creatbox">
 		<div class="middle">
 			<p class="detile-title">
@@ -28,7 +28,6 @@
 						<a href="###"><img src="/images/ui/system-mail.png" valsrc="/images/ui/system-mail.png"></a>
 						<a href="###"><img src="/images/ui/system-puzzle.png" valsrc="/images/ui/system-puzzle.png"></a>
 					</div>
-
 					<input type="hidden" name="val_icon" id="val_icon" value="/images/ui/system-gear.png" datatype="*" nullmsg="请选择或上传应用图片">
 					<span class="help-inline"></span>
 				</div>

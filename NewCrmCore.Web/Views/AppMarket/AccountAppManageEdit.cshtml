@@ -2,7 +2,7 @@
 @using NewCrmCore.Infrastructure.CommonTools
 @using NewCrmCore.Domain.ValueObject
 @model AppDto
-<form action="/AppMarket/ModifyInfo" method="post" name="form" id="form">
+<form action="/appmarket/modifyinfo" method="post" name="form" id="form">
 	<input type="hidden" name="token" value="@( await TimeToken.GetTokenAsync())" />
 	<input type="hidden" name="val_Id" value="@Model.Id">
 	<input type="hidden" id="isIconByUpload" name="isIconByUpload" value="@(Model.IsIconByUpload?1:0)" />
