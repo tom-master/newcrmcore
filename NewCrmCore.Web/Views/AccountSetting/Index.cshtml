@@ -77,7 +77,7 @@
             $('.title ul > li').each(function (k, v) {
                 $(v).removeClass('focus');
             });
-            var baseUrl = '@Url.Action("Index", "AccountSetting")'
+            var baseUrl = '@Url.Action("index", "accountsetting")'
             if (value === 'baseinfo') {
                 location.href = baseUrl + '?target=baseinfo';
             } else if (value === 'modifyface') {
@@ -244,7 +244,7 @@
                     Md5: cb[0].Md5,
                     ShortUrl: ""
                 };
-                HROS.request.post('/AccountSetting/ModifyFace', { accountFace: model.Url }, function (responseText) {
+                HROS.request.post('/accountsetting/modifyface', { accountFace: model.Url }, function (responseText) {
                     if (responseText.IsSuccess) {
                         NewCrm.msgbox.success('账户头像上传成功');
                         window.parent.HROS.startmenu.getAvatar();

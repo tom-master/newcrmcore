@@ -1,6 +1,5 @@
 ﻿@model NewCrmCore.Dto.AccountDto
 
-
 <div class="input-label">
     <label class="label-text">用户名：</label>
     <div class="label-box form-inline">@Model.Name</div>
@@ -13,7 +12,7 @@
     <label class="label-text">最近一次登录时间：</label>
     <div class="label-box form-inline">
         @Model.LastLoginTime
-        <a href="/AccountSetting/Index?target=accountsafe" class="btn btn-link">如果不是你登录的，请及时修改密码</a>
+        <a href="/accountsetting/index?target=accountsafe" class="btn btn-link">如果不是你登录的，请及时修改密码</a>
     </div>
 </div>
 <div class="input-label">
