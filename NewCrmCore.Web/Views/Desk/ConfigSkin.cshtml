@@ -11,7 +11,7 @@
 }
 <div class="title">
     <ul>
-        <li><a href="/Desk/SystemWallPaper">壁纸设置</a></li>
+        <li><a href="/desk/systemwallpaper">壁纸设置</a></li>
         <li class="focus">皮肤设置</li>
     </ul>
 </div>
@@ -26,7 +26,7 @@
         });
 
 		function loadAllSkin(callback) {
-			HROS.request.get('/Desk/GetSkins', {}, function (responseText) {
+			HROS.request.get('/desk/getskins', {}, function (responseText) {
                 if (responseText.IsSuccess) {
                     var html = '';
                     $.each(responseText.Model.result, function (k, v) {
@@ -48,7 +48,7 @@
                 var skin = $(this).attr('skin');
                 $('.skin li').removeClass('selected');
                 $(this).addClass('selected');
-				HROS.request.post('/Desk/ModifySkin', { skin: skin }, function (responseText) {
+				HROS.request.post('/desk/modifyskin', { skin: skin }, function (responseText) {
                     if (responseText.IsSuccess) {
                         window.parent.NewCrm.msgbox.success("皮肤设置成功，如果没有更新请刷新页面");
                         setTimeout(function () {

@@ -19,9 +19,9 @@
 {
 	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
 }
-<form action="/Security/CreateRole?roleId=@roleId" method="post" id="form" name="form">
+<form action="/security/createrole?roleId=@roleId" method="post" id="form" name="form">
 	<div class="creatbox">
-		<input type="hidden" name="token" value="@( await TimeToken.GetTokenAsync())" />
+		<input type="hidden" name="token" value="@(await TimeToken.GetTokenAsync())" />
 		<input type="hidden" id="roleId" name="roleId" value="@roleId" />
 		<div class="middle" style="overflow: hidden; position: inherit; bottom: 0px;">
 			<div class="input-label">
@@ -48,7 +48,6 @@
 			<div class="input-label">
 				<label class="label-text">角色标识：</label>
 				<div class="label-box form-inline control-group">
-
 					@{
 						if (roleResult.RoleIdentity == null)
 						{

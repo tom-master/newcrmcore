@@ -19,12 +19,13 @@
 	<div class="label-box form-inline control-group">
 		@{
 			for (int i = 1; i <= desks; i++)
-			{<text>
+			{
+				<text>
 					<label class="radio" style="margin-right: 10px">
 						<input type="radio" name="desk" value="@i" @{ if (i == accountConfig.DefaultDeskNumber) { <text> checked="checked" </text>  } }>第@{@i}桌面
 					</label>
-					</text>
-				}
+				</text>
+			}
 		}
 	</div>
 </div>
@@ -40,7 +41,8 @@
 				</label>
 				<label class="radio">
 					<input type="radio" name="wallpapersource" value="system" />系统自带
-				</label>}
+				</label>
+			}
 			else
 			{
 				<label class="radio" style="margin-right: 10px">
@@ -48,10 +50,9 @@
 				</label>
 				<label class="radio">
 					<input type="radio" name="wallpapersource" value="system" checked="checked" />系统自带
-				</label>}
-
+				</label>
+			}
 		}
-
 	</div>
 </div>
 
@@ -169,7 +170,6 @@
 				} else if (size > 64) {
 					size = 64;
 				}
-
 				$('input[name="appsize"]').val(size);
 				window.parent.HROS.app.updateSize(size);
 			};

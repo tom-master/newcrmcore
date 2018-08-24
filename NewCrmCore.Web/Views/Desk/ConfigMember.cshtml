@@ -14,7 +14,7 @@
 {
 	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
 }
-<form action="/Desk/ModifyMemberInfo" method="post" name="form" id="form">
+<form action="/desk/modifymemberinfo" method="post" name="form" id="form">
 	<input type="hidden" name="id" value="@Model.Id">
 	<input type="hidden" name="membertype" value="@Model.MemberType" />
 	<input type="hidden" id="isIconByUpload" name="isIconByUpload" value="@(Model.IsIconByUpload?1:0)" />
@@ -152,7 +152,7 @@
             uploader.on('uploadSuccess', function (file, cb) {
                 if (cb[0].IsSuccess) {
                     var urlPart = cb[0].Url
-                    HROS.request.post('/Desk/ModifyIcon',{ MemberId: '@Model.Id', NewIcon: urlPart },function () {
+                    HROS.request.post('/desk/modifyicon',{ MemberId: '@Model.Id', NewIcon: urlPart },function () {
                         if (responseText.IsSuccess) {
                             $('#isIconByUpload').val('1');
                             $('.shortcutview img').attr('src', responseText.Model);
@@ -162,7 +162,6 @@
                             NewCrm.msgbox.fail("图标保存失败");
                         }
                     })
-
                 } else {
                     NewCrm.msgbox.fail("图标上传失败");
                 }
@@ -217,7 +216,6 @@
                 $('#val_icon').val($(this).children('img').attr('valsrc')).focusout();
                 $('#isIconByUpload').val('0')
             });
-
         });
 	</script>
 }

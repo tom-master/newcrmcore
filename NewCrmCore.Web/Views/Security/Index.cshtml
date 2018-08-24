@@ -82,8 +82,7 @@
 					id: 'ajaxedit',
 					content: '确定要删除 “' + name + '” 该角色？',
 					ok: function () {
-					
-						HROS.request.post('/Security/RemoveRole', { roleId: roleId }, function (responseText) {
+						HROS.request.post('/security/removerole', { roleId: roleId }, function (responseText) {
 							if (responseText.IsSuccess) {
 								setTimeout(function () {
 									$('#pagination').trigger('currentPage');
@@ -103,10 +102,8 @@
 			});
 		});
 
-		
-
 		function getPageList(current_page) {
-			HROS.request.get('/Security/GetRoles', {
+			HROS.request.get('/security/getroles', {
 				roleName: $('#roleName').val(),
 				pageIndex: current_page === 0 ? 1 : current_page + 1,
 				pageSize: 5
