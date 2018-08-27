@@ -133,6 +133,7 @@
 }
 @section ChildrenScript
 {
+    
     //加载列表
     getPageList(0);
 
@@ -248,49 +249,48 @@
             window.parent.HROS.widget.create($(this).attr('real_app_id'));
         }
     });
-});
+    function getPageList(current_page) {
+        var appTypeId = $('#appType').val() === '' ? 0 : parseInt($('#appType').val());
+        var orderId = $('#order').val() === '' ? 1 : parseInt($('#order').val());
+        var outSideSearchText = '@Context.Request.Query["searchText"]';
+        HROS.request.get('/appmarket/getapps', {
+            appTypeId: appTypeId,
+            orderId: orderId,
+            searchText: outSideSearchText === '' ? $('#searchText').val() : outSideSearchText,
+            pageIndex: current_page === 0 ? 1 : current_page + 1,
+            pageSize: 5
+        }, function (responseText) {
+            if (responseText.IsSuccess) {
+                var liTemplate = Handlebars.compile($("#li-template").html());
+                $('.app-list').html(liTemplate(responseText));
+                $('#pagination_setting').attr('count', parseInt(responseText.TotalCount));
+                initPagination({
+                    current_page: current_page,
+                    items_per_page: 5,
+                    num_display_entries: 3,
+                    num_edge_entries: 1,
+                    getPageList: getPageList
+                })
+            } else {
+                NewCrm.msgbox.fail(responseText.Message);
+            }
+        });
 
-function getPageList(current_page) {
-    var appTypeId = $('#appType').val() === '' ? 0 : parseInt($('#appType').val());
-    var orderId = $('#order').val() === '' ? 1 : parseInt($('#order').val());
-    var outSideSearchText = '@Context.Request.Query["searchText"]';
-    HROS.request.get('/appmarket/getapps', {
-        appTypeId: appTypeId,
-        orderId: orderId,
-        searchText: outSideSearchText === '' ? $('#searchText').val() : outSideSearchText,
-        pageIndex: current_page === 0 ? 1 : current_page + 1,
-        pageSize: 5
-    }, function (responseText) {
-        if (responseText.IsSuccess) {
-            var liTemplate = Handlebars.compile($("#li-template").html());
-            $('.app-list').html(liTemplate(responseText));
-            $('#pagination_setting').attr('count', parseInt(responseText.TotalCount));
-            initPagination({
-                current_page: current_page,
-                items_per_page: 5,
-                num_display_entries: 3,
-                num_edge_entries: 1,
-                getPageList: getPageList
-            })
-        } else {
-            NewCrm.msgbox.fail(responseText.Message);
-        }
-    });
+        Handlebars.registerHelper('scoreWidth', function (score) {
+            return score * 20;
+        });
 
-    Handlebars.registerHelper('scoreWidth', function (score) {
-        return score * 20;
-    });
+        Handlebars.registerHelper('parseScore', function (score) {
+            return parseFloat(score).toFixed(1);
+        });
 
-    Handlebars.registerHelper('parseScore', function (score) {
-        return parseFloat(score).toFixed(1);
-    });
-
-    Handlebars.registerHelper('IsInstall', function (isInstall, options) {
-        if (isInstall) {
-            return options.fn(this);
-        } else {
-            return options.inverse(this);
-        }
-    });
+        Handlebars.registerHelper('IsInstall', function (isInstall, options) {
+            if (isInstall) {
+                return options.fn(this);
+            } else {
+                return options.inverse(this);
+            }
+        });
+    }
 }
 
