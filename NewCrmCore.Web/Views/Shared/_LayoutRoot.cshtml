@@ -36,42 +36,44 @@
 
 @RenderSection("ChildrenTemplate",required: false)
 <script>
-	//toolTip
-	$('[rel="tooltip"]').tooltip();
-	//表单提示
-	$("[datatype]").focusin(function () {
-		$(this).parent().addClass('info').children('.infomsg').show().siblings('.help-inline').hide();
-	}).focusout(function () {
-		$(this).parent().removeClass('info').children('.infomsg').hide().siblings('.help-inline').show();
-	});
+	$(function () {
+		//toolTip
+		$('[rel="tooltip"]').tooltip();
+		//表单提示
+		$("[datatype]").focusin(function () {
+			$(this).parent().addClass('info').children('.infomsg').show().siblings('.help-inline').hide();
+		}).focusout(function () {
+			$(this).parent().removeClass('info').children('.infomsg').hide().siblings('.help-inline').show();
+		});
 
-	openDetailIframe = function (url) {
-		$('#detailIframe iframe').attr('src', url).on('load', function () {
-			$('body').css('overflow', 'hidden');
-			$('#detailIframe').animate({ 'top': 0, 'opacity': 'show' }, 500);
-		});
-	};
-	closeDetailIframe = function (callback) {
-		$('body').css('overflow', 'auto');
-		$('#detailIframe').animate({ 'top': '-100px', 'opacity': 'hide' }, 500, function () {
-			if (callback) {
-				callback && callback();
-			}
-		});
-	};
+		openDetailIframe = function (url) {
+			$('#detailIframe iframe').attr('src', url).on('load', function () {
+				$('body').css('overflow', 'hidden');
+				$('#detailIframe').animate({ 'top': 0, 'opacity': 'show' }, 500);
+			});
+		};
+		closeDetailIframe = function (callback) {
+			$('body').css('overflow', 'auto');
+			$('#detailIframe').animate({ 'top': '-100px', 'opacity': 'hide' }, 500, function () {
+				if (callback) {
+					callback && callback();
+				}
+			});
+		};
 
-	function initPagination(config) {
-		$('#pagination').pagination(parseInt($('#pagination_setting').attr('count')), {
-			current_page: config.current_page,
-			items_per_page: config.items_per_page,
-			num_display_entries: config.num_display_entries,
-			num_edge_entries: config.num_edge_entries,
-			callback: config.getPageList,
-			prev_text: '上一页',
-			next_text: '下一页'
-		});
-	}
-	$(function(){
+		function initPagination(config) {
+			$('#pagination').pagination(parseInt($('#pagination_setting').attr('count')), {
+				current_page: config.current_page,
+				items_per_page: config.items_per_page,
+				num_display_entries: config.num_display_entries,
+				num_edge_entries: config.num_edge_entries,
+				callback: config.getPageList,
+				prev_text: '上一页',
+				next_text: '下一页'
+			});
+		}
+
+
 		@RenderSection("ChildrenScript", false)
 	})
 </script>

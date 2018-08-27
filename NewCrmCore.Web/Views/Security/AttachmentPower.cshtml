@@ -18,7 +18,7 @@
 	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
 }
 <form action="/security/addapptorole" method="post" name="form" id="form">
-	<input type="hidden" name="val_roleId" value="@Context.Request.Query["roleId"]">
+	<input type="hidden" name="val_roleId" value="@Context.Request.Query["roleId"]" />
 	<input type="hidden" name="token" value="@(await TimeToken.GetTokenAsync())" />
 	<div class="creatbox">
 		<div class="middle">
@@ -57,7 +57,7 @@
 						}
 					</div>
 					<a class="btn" href="###" menu="addapps">添加应用</a>
-					<input type="hidden" name="val_apps_id" id="val_apps_id" value="@String.Join(",",Model.Select(s=>s.Id))" @*datatype="*" nullmsg="请选择专属应用" *@>
+					<input type="hidden" name="val_apps_id" id="val_apps_id" value="@String.Join(",", Model.Select(s => s.Id))" @*datatype="*" nullmsg="请选择专属应用" *@>
 					<span class="help-inline"></span>
 				</div>
 			</div>
@@ -72,6 +72,8 @@
 </form>
 @section ChildrenScript
 {
+	@{ 
+		<text>
 	var f =	$('#form').Validform({
 			btnSubmit: '#btn-submit',
 			postonce: true,
@@ -175,5 +177,7 @@
 			$('#val_apps_id').val(newappsid.join(',')).focusout();
 			$(this).parent().remove();
 		});
+			</text>
+	}
 }
 
