@@ -1,15 +1,5 @@
 ﻿[
   {
-    "outputFileName": "wwwroot/css/newcrm.site.min.css",
-    "inputFiles": [
-      "wwwroot/css/hoorayui/globle.css",
-      "wwwroot/js/hooray/lib/hooraylibs.css",
-      "wwwroot/js/bootstrap/css/bootstrap.min.css",
-      "wwwroot/css/hoorayui/sys.css",
-      "wwwroot/css/hoorayui/index.css"
-    ]
-  },
-  {
     "outputFileName": "wwwroot/js/newcrm.site.min.js",
     "inputFiles": [
       "wwwroot/js/signalr/signalr.js",
