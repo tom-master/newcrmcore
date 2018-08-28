@@ -90,11 +90,13 @@
 				<label class="label-text">打开默认最大化：</label>
 				<div class="label-box form-inline control-group">
 					@if (Model.IsOpenMax)
-					{<text>是</text>
-				}
-				else
-				{<text>否</text>
-			}
+					{
+						<text>是</text>
+					}
+					else
+					{
+						<text>否</text>
+					}
 				</div>
 			</div>
 			<div class="input-label input-label-isflash" @{ if (Model.AppStyle == AppStyle.Widget) { <text> style="display:none" </text>  } }>
