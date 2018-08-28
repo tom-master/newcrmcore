@@ -51,9 +51,8 @@
 <div id="detailIframe" style="background:#fff;position:fixed;z-index:1;top:-100px;left:0;width:100%;height:100%;display:none">
 	<iframe frameborder="0" style="width:100%;height:100%"></iframe>
 </div>
-
-@section ChildrenScript
-	{
+@section ChildrenTemplate
+{
 	<script id="table-template" type="text/x-handlebars-template">
 		{{#each Model}}
 		<tr class="list-bd">
@@ -67,63 +66,61 @@
 		</tr>
 		{{/each}}
 	</script>
-
-	<script>
-		$(function () {
-			//加载列表
-			getPageList(0);
-			//删除
-			$('.list-con').on('click', '.do-del', function () {
-				var roleId = $(this).attr('data-roleid');
-				var name = $(this).parent().prev().text();
-				$.dialog({
-					id: 'ajaxedit',
-					content: '确定要删除 “' + name + '” 该角色？',
-					ok: function () {
-						HROS.request.post('/security/removerole', { roleId: roleId }, function (responseText) {
-							if (responseText.IsSuccess) {
-								setTimeout(function () {
-									$('#pagination').trigger('currentPage');
-								}, 1000);
-								NewCrm.msgbox.success('删除成功');
-							} else {
-								NewCrm.msgbox.fail(responseText.Message);
-							}
-						});
-					},
-					cancel: true
+}
+@section ChildrenScript
+{
+	//加载列表
+	getPageList(0);
+	//删除
+	$('.list-con').on('click', '.do-del', function () {
+		var roleId = $(this).attr('data-roleid');
+		var name = $(this).parent().prev().text();
+		$.dialog({
+			id: 'ajaxedit',
+			content: '确定要删除 “' + name + '” 该角色？',
+			ok: function () {
+				HROS.request.post('/security/removerole', { roleId: roleId }, function (responseText) {
+					if (responseText.IsSuccess) {
+						setTimeout(function () {
+							$('#pagination').trigger('currentPage');
+						}, 1000);
+						NewCrm.msgbox.success('删除成功');
+					} else {
+						NewCrm.msgbox.fail(responseText.Message);
+					}
 				});
-			});
-			//搜索
-			$('a[menu=search]').click(function () {
-				getPageList(0);
-			});
+			},
+			cancel: true
 		});
+	});
+	//搜索
+	$('a[menu=search]').click(function () {
+		getPageList(0);
+	});
 
-		function getPageList(current_page) {
-			HROS.request.get('/security/getroles', {
-				roleName: $('#roleName').val(),
-				pageIndex: current_page === 0 ? 1 : current_page + 1,
-				pageSize: 5
-			}, function (responseText) {
-				if (responseText.IsSuccess) {
-					var tableTemplate = Handlebars.compile($("#table-template").html());
-					$('.list-con').html(tableTemplate(responseText));
-					$('#pagination_setting').attr('count', responseText.TotalCount);
-					$('.list-count').text(responseText.totalCount);
-					initPagination({
-						current_page: current_page,
-						items_per_page: 5,
-						num_display_entries: 3,
-						num_edge_entries: 1,
-						getPageList: getPageList
-					})
-				} else {
-					NewCrm.msgbox.fail(responseText.Message);
-				}
-			});
-		}
-	</script>
+	function getPageList(current_page) {
+		HROS.request.get('/security/getroles', {
+			roleName: $('#roleName').val(),
+			pageIndex: current_page === 0 ? 1 : current_page + 1,
+			pageSize: 5
+		}, function (responseText) {
+			if (responseText.IsSuccess) {
+				var tableTemplate = Handlebars.compile($("#table-template").html());
+				$('.list-con').html(tableTemplate(responseText));
+				$('#pagination_setting').attr('count', responseText.TotalCount);
+				$('.list-count').text(responseText.totalCount);
+				initPagination({
+					current_page: current_page,
+					items_per_page: 5,
+					num_display_entries: 3,
+					num_edge_entries: 1,
+					getPageList: getPageList
+				})
+			} else {
+				NewCrm.msgbox.fail(responseText.Message);
+			}
+		});
+	}
 }
 
 

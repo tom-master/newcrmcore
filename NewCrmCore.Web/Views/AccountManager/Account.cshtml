@@ -127,9 +127,7 @@
 </form>
 @section ChildrenScript
 {
-	<script>
-		$(function () {
-			var f = $('#form').Validform({
+		var f = $('#form').Validform({
 				btnSubmit: '#btn-submit',
 				postonce: true,
 				showAllError: true,
@@ -192,14 +190,13 @@
 				}
 			});
 
-			$('input[name="val_type"]').change(function () {
-				if (parseInt($(this).val()) === 2) {
-					$('.input-label-permission').slideDown();
-				} else {
-					$('#roleIds').val('')
-					$('.input-label-permission').slideUp();
-				}
-			});
+		$('input[name="val_type"]').change(function () {
+			if (parseInt($(this).val()) === 2) {
+				$('.input-label-permission').slideDown();
+			} else {
+				$('#roleIds').val('')
+				$('.input-label-permission').slideUp();
+			}
 		});
 
 		function selectRole() {
@@ -210,6 +207,6 @@
 			});
 			$('#roleIds').val(ids);
 		}
-	</script>
+
 }
 

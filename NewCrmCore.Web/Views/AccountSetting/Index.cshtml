@@ -61,7 +61,6 @@
 
 @section ChildrenScript
 {
-	<script>
         @{
 			if (String.IsNullOrEmpty(requestTarget))
 			{
@@ -189,22 +188,20 @@
             }
         });
 
-        $(function () {
-			$('#hidden_frame').on('load', function () {
-				var response = $(this).contents().find("body").text()
-				if (response) {
-					var responseText = JSON.parse($(this).contents().find("body").text());
-					if (responseText.IsSuccess) {
-						NewCrm.msgbox.success('您修改了登陆密码，2秒后跳转到登陆界面');
-						setTimeout(function () {
-							top.location.reload()
-						}, 2000)
-					} else {
-						NewCrm.msgbox.fail('修改失败');
-					}
-				}
-			})
-		 })
+       $('#hidden_frame').on('load', function () {
+            var response = $(this).contents().find("body").text()
+            if (response) {
+                var responseText = JSON.parse($(this).contents().find("body").text());
+                if (responseText.IsSuccess) {
+                    NewCrm.msgbox.success('您修改了登陆密码，2秒后跳转到登陆界面');
+                    setTimeout(function () {
+                        top.location.reload()
+                    }, 2000)
+                } else {
+                    NewCrm.msgbox.fail('修改失败');
+                }
+            }
+		})
 
         var upload = WebUploader.create({
             auto: true,
@@ -256,5 +253,4 @@
                 NewCrm.msgbox.fail('账户头像上传失败');
             }
         });
-	</script>
 }
