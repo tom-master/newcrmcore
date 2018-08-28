@@ -151,9 +151,9 @@
 
 @section ChildrenScript
 {
-	 document.body.onselectstart = document.body.ondrag = function () {
+	document.body.onselectstart = document.body.ondrag = function () {
 		return false;
-	 };  
+	};  
 
 	HROS.CONFIG.dockPos = '@accountConfig.DockPosition';
 	HROS.CONFIG.appXY = '@accountConfig.AppXy';
@@ -166,7 +166,7 @@
 	HROS.base.init();
 	
 	$(".loading").hide();
-	$("#desktop").show()
+	$("#desktop").show();
 }
 
 
