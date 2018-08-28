@@ -1,10 +1,9 @@
-@using NewCrmCore.Infrastructure.CommonTools
+﻿@using NewCrmCore.Infrastructure.CommonTools
 
 @{
 	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
 }
-@section ChildrenCss
-{
+@section ChildrenCss{
 	<link rel="stylesheet" href="/js/webuploader-0.1.5/webuploader.css"  />
     <link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" />
 }
@@ -104,8 +103,6 @@
 
 @section ChildrenScript
 {
-	@{ 
-		<text>
     var uploader = WebUploader.create({
         // 选完文件后，是否自动上传。
         auto: true,
@@ -214,6 +211,4 @@
         $('#val_icon').val($(this).children('img').attr('valsrc')).focusout();
         $('#isIconByUpload').val('0')
     });
-			</text>
-	}
 }
