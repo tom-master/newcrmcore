@@ -27,7 +27,7 @@
 		}
 		else
 		{
-			if ((AppAuditState)ViewData["AppState"] == AppAuditState.UnAuditState  || (AppAuditState)ViewData["AppState"] == AppAuditState.Deny )//未审核或未通过
+			if ((AppAuditState)ViewData["AppState"] == AppAuditState.UnAuditState || (AppAuditState)ViewData["AppState"] == AppAuditState.Deny)//未审核或未通过
 			{
 				<text>
 					@Html.Partial("~/Views/AppManager/AppAudit.cshtml", Model)
@@ -47,8 +47,7 @@
 			@Html.Partial("~/Views/AppMarket/AccountAppManageNewApp.cshtml")
 		</text>
 	}
-
-
+}
 
 @section ChildrenScript
 { 
