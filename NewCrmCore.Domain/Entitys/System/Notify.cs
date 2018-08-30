@@ -7,7 +7,7 @@ namespace NewCrmCore.Domain.Entitys.System
 {
 
     [Serializable, Description("消息")]
-    public class Notify : DomainModelBase
+    public partial class Notify : DomainModelBase
     {
         [PropertyRequired, InputRange(4, 10)]
         public String Title { get; private set; }
@@ -39,5 +39,15 @@ namespace NewCrmCore.Domain.Entitys.System
         }
 
         public Notify() { }
+    }
+
+    public partial class Notify
+    {
+        public Notify Read()
+        {
+            IsRead = true;
+            OnPropertyChanged(new PropertyArgs(nameof(IsRead), IsRead));
+            return this;
+        }
     }
 }

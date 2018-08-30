@@ -121,6 +121,11 @@ namespace NewCrmCore.Application.Services.Interface
         /// </summary>
         Task ModifyWallpaperSourceAsync(String source, Int32 accountId);
 
+        /// <summary>
+        /// 读取通知
+        /// </summary>
+        Task ReadNotify(Int32 notifyId);
+
         #endregion
     }
 }

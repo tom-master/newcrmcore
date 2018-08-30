@@ -355,5 +355,19 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 }
             }
         }
+
+        public async Task ReadNotify(Int32 notifyId)
+        {
+            Parameter.Validate(notifyId);
+            await Task.Run(() =>
+            {
+                using (var dataStore = new DataStore(Appsetting.Database))
+                {
+                    var notify = new Notify();
+                    notify.Read();
+                    dataStore.Modify(notify, n => n.Id == notifyId);
+                }
+            });
+        }
     }
 }

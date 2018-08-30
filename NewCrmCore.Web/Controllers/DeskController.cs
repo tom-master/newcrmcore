@@ -930,5 +930,19 @@ namespace NewCrmCore.Web.Controllers
             return Json(response);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ReadNotify(int notifyId)
+        {
+            #region 参数验证
+            Parameter.Validate(notifyId);
+            #endregion
+
+            var response = new ResponseModel();
+            await _deskServices.ReadNotify(notifyId);
+            response.IsSuccess = true;
+            response.Message = "消息读取成功";
+
+            return Json(response);
+        }
     }
 }

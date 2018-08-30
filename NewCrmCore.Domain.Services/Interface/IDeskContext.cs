@@ -102,5 +102,10 @@ namespace NewCrmCore.Domain.Services.Interface
         /// 获取未读通知数量
         /// </summary>
         IList<Notify> CheckUnreadNotifyCount(Int32 accountId, Int32 pageIndex, Int32 pageSize, out Int32 totalCount);
+
+        /// <summary>
+        /// 读取通知
+        /// </summary>
+        Task ReadNotify(Int32 notifyId);
     }
 }

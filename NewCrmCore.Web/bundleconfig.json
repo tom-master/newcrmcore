@@ -11,7 +11,8 @@
       "wwwroot/js/validate/Validform_v5.3.2/Validform_v5.3.2_min.js",
       "wwwroot/js/webuploader-0.1.5/webuploader.min.js",
       "wwwroot/js/artDialog4.1.7/jquery.artDialog.source.js",
-      "wwwroot/js/artDialog4.1.7/plugins/iframeTools.js"
+      "wwwroot/js/artDialog4.1.7/plugins/iframeTools.js",
+      "wwwroot/js/message/message.js"
     ],
     "minify": {
       "enabled": true,

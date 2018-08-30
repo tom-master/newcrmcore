@@ -291,6 +291,7 @@ namespace NewCrmCore.Application.Services
                     TotalCount = totalCount,
                     Models = result.Select(s => new NotifyDto
                     {
+                        Id = s.Id,
                         Title = s.Title,
                         Content = s.Content,
                         IsNotify = s.IsNotify,
@@ -300,6 +301,12 @@ namespace NewCrmCore.Application.Services
                     }).ToList()
                 };
             });
+        }
+
+        public async Task ReadNotify(int notifyId)
+        {
+            Parameter.Validate(notifyId);
+            await _deskContext.ReadNotify(notifyId);
         }
     }
 }
