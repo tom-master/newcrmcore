@@ -51,7 +51,7 @@
                     })
                 },
                 allRead: function (obj, t) {
-                    var ids = t.nodeList.filter((n) => !n.isRead);
+                    var ids = t.nodeList.filter((n) => !n.isRead).map(s => s.id);
                     top.HROS.request.post('/desk/readnotify', { notifyId: ids.join() }, function (responseText) {
                         if (responseText.IsSuccess) {
                             initMessagePlugin()
