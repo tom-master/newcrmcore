@@ -448,6 +448,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                             var notify = new Notify("应用审核通过通知", $@"您的应用:{app.Name},已审核通过", 0, app.AccountId);
                             dataStore.Add(notify);
+                            await _notify.Send(app.AccountId, notify);
                         }
                         dataStore.Commit();
                     }
@@ -476,7 +477,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                         var notify = new Notify("应用审核通过通知", $@"您的应用:{app.Name},已审核通过", 0, app.AccountId);
                         dataStore.Add(notify);
-
+                        await _notify.Send(app.AccountId, notify);
                         dataStore.Commit();
                     }
                     catch (Exception)
