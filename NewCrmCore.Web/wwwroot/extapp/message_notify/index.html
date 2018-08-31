@@ -50,8 +50,15 @@
                         }
                     })
                 },
-                allRead: function (obj) {
-                    top.NewCrm.msgbox.fail('开发中...')
+                allRead: function (obj, t) {
+                    var ids = t.nodeList.filter((n) => !n.isRead);
+                    top.HROS.request.post('/desk/readnotify', { notifyId: ids.join() }, function (responseText) {
+                        if (responseText.IsSuccess) {
+                            initMessagePlugin()
+                        } else {
+                            top.NewCrm.msgbox.fail(responseText.Message)
+                        }
+                    })
                 },
                 getNodeHtml: function (obj, node) {
                     node.isRead = obj.readStatus == 1

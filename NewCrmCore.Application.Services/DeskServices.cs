@@ -303,10 +303,10 @@ namespace NewCrmCore.Application.Services
             });
         }
 
-        public async Task ReadNotify(int notifyId)
+        public async Task ReadNotify(IList<Int32> notifyIds)
         {
-            Parameter.Validate(notifyId);
-            await _deskContext.ReadNotify(notifyId);
+            Parameter.Validate(notifyIds);
+            await _deskContext.ReadNotify(notifyIds);
         }
     }
 }

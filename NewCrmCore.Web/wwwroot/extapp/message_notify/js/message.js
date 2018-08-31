@@ -89,14 +89,13 @@
                     } else if (type == 2) {
                         (option.noticeClick && typeof option.noticeClick == "function") ? option.noticeClick(this) : "";
                     }
-
                     if ($(this).find(".badge-dot").length > 0) {
                         if (type == 1) {
                             option.msgUnReadData > 0 ? option.msgUnReadData -= 1 : "";
                         } else if (type == 2) {
                             option.noticeUnReadData > 0 ? option.noticeUnReadData -= 1 : "";
                         }
-                        $(this).find(".badge-dot").remove();
+                        $(this).find(".badge-dot").parent('div').remove();
                     }
                 }
 
@@ -337,7 +336,8 @@
         getNode: function (obj, type) {
             var node = {
                 type: type,
-                isRead: true
+                isRead: true,
+                id: obj.id
             };
             var nd = (option.getNodeHtml && typeof option.getNodeHtml == "function") ? option.getNodeHtml(obj, node) : null;
 

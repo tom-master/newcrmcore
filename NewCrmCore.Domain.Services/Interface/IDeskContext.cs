@@ -106,6 +106,6 @@ namespace NewCrmCore.Domain.Services.Interface
         /// <summary>
         /// 读取通知
         /// </summary>
-        Task ReadNotify(Int32 notifyId);
+        Task ReadNotify(IList<Int32> notifyIds);
     }
 }

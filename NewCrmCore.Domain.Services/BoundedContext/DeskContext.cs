@@ -356,16 +356,16 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             }
         }
 
-        public async Task ReadNotify(Int32 notifyId)
+        public async Task ReadNotify(IList<Int32> notifyIds)
         {
-            Parameter.Validate(notifyId);
+            Parameter.Validate(notifyIds);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
                     var notify = new Notify();
                     notify.Read();
-                    dataStore.Modify(notify, n => n.Id == notifyId);
+                    dataStore.Modify(notify, n => notifyIds.Contains(n.Id));
                 }
             });
         }

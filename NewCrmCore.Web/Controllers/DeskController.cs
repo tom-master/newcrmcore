@@ -14,6 +14,7 @@ using NewLibCore.Validate;
 using NewLibCore;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.SignalR;
+using System.Linq;
 
 namespace NewCrmCore.Web.Controllers
 {
@@ -931,14 +932,14 @@ namespace NewCrmCore.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ReadNotify(int notifyId)
+        public async Task<IActionResult> ReadNotify(String notifyId)
         {
             #region 参数验证
             Parameter.Validate(notifyId);
             #endregion
 
             var response = new ResponseModel();
-            await _deskServices.ReadNotify(notifyId);
+            await _deskServices.ReadNotify(notifyId.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(Int32.Parse).ToList());
             response.IsSuccess = true;
             response.Message = "消息读取成功";
 
