@@ -27,17 +27,17 @@ namespace NewCrmCore.Application.Services
             _deskContext = deskContext;
         }
 
-        public async Task<List<AppTypeDto>> GetAppTypesAsync(Int32 accountId)
+        public async Task<List<AppTypeDto>> GetAppTypesAsync(Int32 userId)
         {
-            var result = await CacheHelper.GetOrSetCacheAsync(new AppTypeCacheKey(accountId), () => _appContext.GetAppTypesAsync(accountId));
+            var result = await CacheHelper.GetOrSetCacheAsync(new AppTypeCacheKey(userId), () => _appContext.GetAppTypesAsync(userId));
             return result.Select(s => new AppTypeDto { Id = s.Id, Name = s.Name }).ToList();
         }
 
-        public async Task<TodayRecommendAppDto> GetTodayRecommendAsync(Int32 accountId)
+        public async Task<TodayRecommendAppDto> GetTodayRecommendAsync(Int32 userId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
 
-            var result = await _appContext.GetTodayRecommendAsync(accountId);
+            var result = await _appContext.GetTodayRecommendAsync(userId);
             result.AppIcon = result.IsIconByUpload ? Appsetting.FileUrl + result.AppIcon : result.AppIcon;
             if (result == null)
             {
@@ -47,22 +47,22 @@ namespace NewCrmCore.Application.Services
             return result;
         }
 
-        public async Task<Tuple<Int32, Int32>> GetDevelopAndNotReleaseCountAsync(Int32 accountId)
+        public async Task<Tuple<Int32, Int32>> GetDevelopAndNotReleaseCountAsync(Int32 userId)
         {
-            Parameter.Validate(accountId);
-            return await _appContext.GetDevelopAndNotReleaseCountAsync(accountId);
+            Parameter.Validate(userId);
+            return await _appContext.GetDevelopAndNotReleaseCountAsync(userId);
         }
 
-        public async Task<PageList<AppDto>> GetAppsAsync(Int32 accountId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize)
+        public async Task<PageList<AppDto>> GetAppsAsync(Int32 userId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize)
         {
-            Parameter.Validate(accountId, true);
+            Parameter.Validate(userId, true);
             Parameter.Validate(orderId);
             Parameter.Validate(pageIndex, true);
             Parameter.Validate(pageSize);
 
             return await Task.Run(() =>
             {
-                var result = _appContext.GetApps(accountId, appTypeId, orderId, searchText, pageIndex, pageSize, out var totalCount);
+                var result = _appContext.GetApps(userId, appTypeId, orderId, searchText, pageIndex, pageSize, out var totalCount);
                 return new PageList<AppDto>
                 {
                     TotalCount = totalCount,
@@ -84,9 +84,9 @@ namespace NewCrmCore.Application.Services
             });
         }
 
-        public async Task<PageList<AppDto>> GetAccountAppsAsync(Int32 accountId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
+        public async Task<PageList<AppDto>> GetAccountAppsAsync(Int32 userId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
         {
-            Parameter.Validate(accountId, true);
+            Parameter.Validate(userId, true);
             Parameter.Validate(appTypeId, true);
             Parameter.Validate(appStyleId, true);
             Parameter.Validate(pageIndex);
@@ -94,8 +94,8 @@ namespace NewCrmCore.Application.Services
 
             return await Task.Run(async () =>
             {
-                var result = _appContext.GetAccountApps(accountId, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize, out var totalCount);
-                var appTypes = await GetAppTypesAsync(accountId);
+                var result = _appContext.GetAccountApps(userId, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize, out var totalCount);
+                var appTypes = await GetAppTypesAsync(userId);
                 return new PageList<AppDto>
                 {
                     TotalCount = totalCount,
@@ -116,12 +116,12 @@ namespace NewCrmCore.Application.Services
             });
         }
 
-        public async Task<AppDto> GetAppAsync(Int32 appId, Int32 accountId)
+        public async Task<AppDto> GetAppAsync(Int32 appId, Int32 userId)
         {
             Parameter.Validate(appId);
 
             var result = await _appContext.GetAppAsync(appId);
-            var appTypes = await CacheHelper.GetOrSetCacheAsync(new AppTypeCacheKey(accountId), () => GetAppTypesAsync(accountId));
+            var appTypes = await CacheHelper.GetOrSetCacheAsync(new AppTypeCacheKey(userId), () => GetAppTypesAsync(userId));
 
             return new AppDto
             {
@@ -149,12 +149,12 @@ namespace NewCrmCore.Application.Services
             };
         }
 
-        public async Task<Boolean> IsInstallAppAsync(Int32 accountId, Int32 appId)
+        public async Task<Boolean> IsInstallAppAsync(Int32 userId, Int32 appId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(appId);
 
-            var result = await _appContext.IsInstallAppAsync(accountId, appId);
+            var result = await _appContext.IsInstallAppAsync(userId, appId);
             return result;
         }
 
@@ -206,78 +206,78 @@ namespace NewCrmCore.Application.Services
             return await _appContext.CheckAppTypeNameAsync(appTypeName);
         }
 
-        public async Task ModifyAppDirectionAsync(Int32 accountId, String direction)
+        public async Task ModifyAppDirectionAsync(Int32 userId, String direction)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(direction);
 
             if (direction.ToLower() == "x")
             {
-                await _deskContext.ModifyMemberDirectionToXAsync(accountId);
+                await _deskContext.ModifyMemberDirectionToXAsync(userId);
             }
             else if (direction.ToLower() == "y")
             {
-                await _deskContext.ModifyMemberDirectionToYAsync(accountId);
+                await _deskContext.ModifyMemberDirectionToYAsync(userId);
             }
             else
             {
                 throw new BusinessException($"未能识别的App排列方向:{direction.ToLower()}");
             }
-            await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
+            await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(userId));
         }
 
-        public async Task ModifyAppIconSizeAsync(Int32 accountId, Int32 newSize)
+        public async Task ModifyAppIconSizeAsync(Int32 userId, Int32 newSize)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(newSize);
-            await _deskContext.ModifyMemberDisplayIconSizeAsync(accountId, newSize);
-            await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
+            await _deskContext.ModifyMemberDisplayIconSizeAsync(userId, newSize);
+            await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(userId));
         }
 
-        public async Task ModifyAppVerticalSpacingAsync(Int32 accountId, Int32 newSize)
+        public async Task ModifyAppVerticalSpacingAsync(Int32 userId, Int32 newSize)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(newSize);
-            await _deskContext.ModifyMemberHorizontalSpacingAsync(accountId, newSize);
-            await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
+            await _deskContext.ModifyMemberHorizontalSpacingAsync(userId, newSize);
+            await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(userId));
         }
 
-        public async Task ModifyAppHorizontalSpacingAsync(Int32 accountId, Int32 newSize)
+        public async Task ModifyAppHorizontalSpacingAsync(Int32 userId, Int32 newSize)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(newSize);
-            await _deskContext.ModifyMemberVerticalSpacingAsync(accountId, newSize);
-            await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
+            await _deskContext.ModifyMemberVerticalSpacingAsync(userId, newSize);
+            await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(userId));
         }
 
-        public async Task ModifyAppStarAsync(Int32 accountId, Int32 appId, Int32 starCount)
+        public async Task ModifyAppStarAsync(Int32 userId, Int32 appId, Int32 starCount)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(appId);
             Parameter.Validate(starCount, true);
 
-            var isInstall = await _appContext.IsInstallAppAsync(accountId, appId);
+            var isInstall = await _appContext.IsInstallAppAsync(userId, appId);
             if (!isInstall)
             {
                 throw new BusinessException("您还没有安装这个App，因此不能打分");
             }
-            await _appContext.ModifyAppStarAsync(accountId, appId, starCount);
+            await _appContext.ModifyAppStarAsync(userId, appId, starCount);
         }
 
-        public async Task InstallAppAsync(Int32 accountId, Int32 appId, Int32 deskNum)
+        public async Task InstallAppAsync(Int32 userId, Int32 appId, Int32 deskNum)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(appId);
             Parameter.Validate(deskNum);
-            await _appContext.InstallAsync(accountId, appId, deskNum);
-            await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(accountId));
+            await _appContext.InstallAsync(userId, appId, deskNum);
+            await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(userId));
         }
 
-        public async Task ModifyAccountAppInfoAsync(Int32 accountId, AppDto appDto)
+        public async Task ModifyAccountAppInfoAsync(Int32 userId, AppDto appDto)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(appDto);
-            await _appContext.ModifyAccountAppInfoAsync(accountId, appDto.ConvertToModel<AppDto, App>());
+            await _appContext.ModifyAccountAppInfoAsync(userId, appDto.ConvertToModel<AppDto, App>());
         }
 
         public async Task CreateNewAppAsync(AppDto appDto)
@@ -342,12 +342,12 @@ namespace NewCrmCore.Application.Services
             await _appContext.ReleaseAppAsync(appId);
         }
 
-        public async Task ModifyAppIconAsync(Int32 accountId, Int32 appId, String newIcon)
+        public async Task ModifyAppIconAsync(Int32 userId, Int32 appId, String newIcon)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(appId);
             Parameter.Validate(newIcon);
-            await _appContext.ModifyAppIconAsync(accountId, appId, newIcon);
+            await _appContext.ModifyAppIconAsync(userId, appId, newIcon);
         }
 
         #region private method

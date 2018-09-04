@@ -2,7 +2,7 @@
 @using NewCrmCore.Domain.ValueObject
 @{
 	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
-	var accountConfig = ViewData["AccountConfig"] as ConfigDto;
+	var userConfig = ViewData["UserConfig"] as ConfigDto;
 	var desks = (Int32)ViewData["Desks"];
 }
 @section ChildrenCss
@@ -22,7 +22,7 @@
 			{
 				<text>
 					<label class="radio" style="margin-right: 10px">
-						<input type="radio" name="desk" value="@i" @{ if (i == accountConfig.DefaultDeskNumber) { <text> checked="checked" </text>  } }>第@{@i}桌面
+						<input type="radio" name="desk" value="@i" @{ if (i == userConfig.DefaultDeskNumber) { <text> checked="checked" </text>  } }>第@{@i}桌面
 					</label>
 				</text>
 			}
@@ -34,7 +34,7 @@
 	<label class="label-text">来自：</label>
 	<div class="label-box form-inline control-group">
 		@{
-			if (accountConfig.IsBing)
+			if (userConfig.IsBing)
 			{
 				<label class="radio" style="margin-right: 10px">
 					<input type="radio" name="wallpapersource" value="bing" checked="checked" />Bing
@@ -61,10 +61,10 @@
 	<label class="label-text">排列方式：</label>
 	<div class="label-box form-inline control-group">
 		<label class="radio" style="margin-right: 10px">
-			<input type="radio" name="appxy" value="x" @{ if (accountConfig.AppXy == AppAlignMode.X) { <text> checked="checked" </text>  } } />横向排列
+			<input type="radio" name="appxy" value="x" @{ if (userConfig.AppXy == AppAlignMode.X) { <text> checked="checked" </text>  } } />横向排列
 		</label>
 		<label class="radio">
-			<input type="radio" name="appxy" value="y" @{ if (accountConfig.AppXy == AppAlignMode.Y) { <text> checked="checked" </text>  } } />纵向排列
+			<input type="radio" name="appxy" value="y" @{ if (userConfig.AppXy == AppAlignMode.Y) { <text> checked="checked" </text>  } } />纵向排列
 		</label>
 	</div>
 </div>
@@ -73,7 +73,7 @@
 	<div class="label-box form-inline control-group">
 		<div class="input-prepend input-append">
 			<button class="btn appsize-minus" type="button"><i class="icon-minus"></i></button>
-			<input type="text" name="appsize" class="text-center span1" value="@accountConfig.AppSize">
+			<input type="text" name="appsize" class="text-center span1" value="@userConfig.AppSize">
 			<button class="btn appsize-plus" type="button"><i class="icon-plus"></i></button>
 		</div>
 	</div>
@@ -83,7 +83,7 @@
 	<div class="label-box form-inline control-group">
 		<div class="input-prepend input-append">
 			<button class="btn appverticalspacing-minus" type="button"><i class="icon-minus"></i></button>
-			<input type="text" name="appverticalspacing" class="text-center span1" value="@accountConfig.AppVerticalSpacing">
+			<input type="text" name="appverticalspacing" class="text-center span1" value="@userConfig.AppVerticalSpacing">
 			<button class="btn appverticalspacing-plus" type="button"><i class="icon-plus"></i></button>
 		</div>
 	</div>
@@ -93,7 +93,7 @@
 	<div class="label-box form-inline control-group">
 		<div class="input-prepend input-append">
 			<button class="btn apphorizontalspacing-minus" type="button"><i class="icon-minus"></i></button>
-			<input type="text" name="apphorizontalspacing" class="text-center span1" value="@accountConfig.AppHorizontalSpacing">
+			<input type="text" name="apphorizontalspacing" class="text-center span1" value="@userConfig.AppHorizontalSpacing">
 			<button class="btn apphorizontalspacing-plus" type="button"><i class="icon-plus"></i></button>
 		</div>
 	</div>
@@ -105,7 +105,7 @@
 			<td colspan="3">
 				<div class="set_top form-inline">
 					<label class="radio">
-						<input type="radio" name="dockpos" value="top" @{ if (accountConfig.DockPosition == DockPosition.Top) { <text> checked="checked" </text>  } }>顶部
+						<input type="radio" name="dockpos" value="top" @{ if (userConfig.DockPosition == DockPosition.Top) { <text> checked="checked" </text>  } }>顶部
 					</label>
 				</div>
 			</td>
@@ -114,18 +114,18 @@
 			<td width="75">
 				<div class="set_left form-inline">
 					<label class="radio">
-						<input type="radio" name="dockpos" value="left" @{ if (accountConfig.DockPosition == DockPosition.Left) { <text> checked="checked" </text>  } }>左侧
+						<input type="radio" name="dockpos" value="left" @{ if (userConfig.DockPosition == DockPosition.Left) { <text> checked="checked" </text>  } }>左侧
 					</label>
 				</div>
 			</td>
-			<td class="set_view set_view_@{var position = accountConfig.DockPosition; <text>@position</text>}"></td>
+			<td class="set_view set_view_@{var position = userConfig.DockPosition; <text>@position</text>}"></td>
 			<td width="75">
-				<div class="set_right form-inline"><label class="radio"><input type="radio" name="dockpos" value="right" @{ if (accountConfig.DockPosition == DockPosition.Right) { <text> checked="checked" </text>  } }>右侧</label></div>
+				<div class="set_right form-inline"><label class="radio"><input type="radio" name="dockpos" value="right" @{ if (userConfig.DockPosition == DockPosition.Right) { <text> checked="checked" </text>  } }>右侧</label></div>
 			</td>
 		</tr>
 		<tr>
 			<td colspan="3">
-				<div class="set_none form-inline"><label class="radio"><input type="radio" name="dockpos" value="none" @{ if (accountConfig.DockPosition == DockPosition.None) { <text> checked="checked" </text>  } }>停用并隐藏（如果应用码头存在应用，则会将应用转移到当前桌面）</label></div>
+				<div class="set_none form-inline"><label class="radio"><input type="radio" name="dockpos" value="none" @{ if (userConfig.DockPosition == DockPosition.None) { <text> checked="checked" </text>  } }>停用并隐藏（如果应用码头存在应用，则会将应用转移到当前桌面）</label></div>
 			</td>
 		</tr>
 	</table>

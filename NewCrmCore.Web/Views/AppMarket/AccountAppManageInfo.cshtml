@@ -4,7 +4,7 @@
 @model AppDto
 @{
 	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
-	var accountId = ViewData["AccountId"].ToString() ?? "0";
+	var userId = ViewData["UserId"].ToString() ?? "0";
 }
 @section ChildrenCss
 {
@@ -22,7 +22,7 @@
 		if ((AppAuditState)ViewData["AppState"] == AppAuditState.Pass)//已通过
 		{
 			<text>
-				@Html.Partial("~/Views/AppMarket/AccountAppManageDetail.cshtml", Model)
+				@Html.Partial("~/Views/AppMarket/UserAppManageDetail.cshtml", Model)
 			</text>
 		}
 		else
@@ -36,7 +36,7 @@
 			else
 			{
 				<text>
-					@Html.Partial("~/Views/AppMarket/AccountAppManageEdit.cshtml", Model)
+					@Html.Partial("~/Views/AppMarket/UserAppManageEdit.cshtml", Model)
 				</text>
 			}
 		}
@@ -44,7 +44,7 @@
 	else
 	{
 		<text>
-			@Html.Partial("~/Views/AppMarket/AccountAppManageNewApp.cshtml")
+			@Html.Partial("~/Views/AppMarket/UserAppManageNewApp.cshtml")
 		</text>
 	}
 }
@@ -57,7 +57,7 @@
         // swf文件路径
         swf: '../js/webuploader-0.1.5/Uploader.swf',
         // 文件接收服务端。
-        server: '@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)?accountId=@accountId&uploadtype=icon',
+        server: '@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)?userId=@userId&uploadtype=icon',
         // 选择文件的按钮。可选。
         // 内部根据当前运行是创建，可能是input元素，也可能是flash.
         pick: {

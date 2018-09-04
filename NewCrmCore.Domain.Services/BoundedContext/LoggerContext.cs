@@ -24,19 +24,19 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public List<Log> GetLogs(Int32 accountId, Int32 logLevel, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
+        public List<Log> GetLogs(Int32 userId, Int32 logLevel, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(logLevel);
 
             using (var dataStore = new DataStore(Appsetting.Database))
             {
                 var where = new StringBuilder();
                 var parameters = new List<ParameterMapper>();
-                if (accountId != 0)
+                if (userId != 0)
                 {
-                    parameters.Add(new ParameterMapper("AccountId", accountId));
-                    where.Append($@" AND a.AccountId=@AccountId");
+                    parameters.Add(new ParameterMapper("UserId", userId));
+                    where.Append($@" AND a.UserId=@UserId");
                 }
 
                 #region totalCount 

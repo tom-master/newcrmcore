@@ -19,14 +19,14 @@ namespace NewCrmCore.FileServices.Controllers
             try
             {
                 var request = Request.Form;
-                var accountId = request["accountId"];
+                var userId = request["userId"];
 
-                if (String.IsNullOrEmpty(accountId))
+                if (String.IsNullOrEmpty(userId))
                 {
                     responses.Add(new UploadResponseModel
                     {
                         IsSuccess = false,
-                        Message = $@"{nameof(accountId)}参数验证失败"
+                        Message = $@"{nameof(userId)}参数验证失败"
                     });
 
                     return Json(responses);
@@ -84,7 +84,7 @@ namespace NewCrmCore.FileServices.Controllers
                         continue;
                     }
 
-                    var requestFile = requestUpload.InitRequiredParameters(accountId, fileExtension);
+                    var requestFile = requestUpload.InitRequiredParameters(userId, fileExtension);
                     if (!requestFile.CreateFile(file))
                     {
                         responses.Add(new UploadResponseModel

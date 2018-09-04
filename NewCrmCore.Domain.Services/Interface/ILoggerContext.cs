@@ -18,12 +18,12 @@ namespace NewCrmCore.Domain.Services.Interface
         /// <summary>
         /// 获取日志列表
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="logLevel"></param>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <param name="totalCount"></param>
         /// <returns></returns>
-        List<Log> GetLogs(Int32 accountId, Int32 logLevel, Int32 pageIndex, Int32 pageSize, out Int32 totalCount);
+        List<Log> GetLogs(Int32 userId, Int32 logLevel, Int32 pageIndex, Int32 pageSize, out Int32 totalCount);
     }
 }

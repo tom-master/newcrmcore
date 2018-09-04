@@ -12,7 +12,7 @@ namespace NewCrmCore.Domain.Services.Interface
         /// <summary>
         /// 获取所有的应用
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="appTypeId"></param>
         /// <param name="orderId"></param>
         /// <param name="searchText"></param>
@@ -20,12 +20,12 @@ namespace NewCrmCore.Domain.Services.Interface
         /// <param name="pageSize"></param>
         /// <param name="totalCount"></param>
         /// <returns></returns>
-        List<App> GetApps(Int32 accountId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize, out Int32 totalCount);
+        List<App> GetApps(Int32 userId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize, out Int32 totalCount);
 
         /// <summary>
         /// 获取当前账户下所有的应用
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="searchText"></param>
         /// <param name="appTypeId"></param>
         /// <param name="appStyleId"></param>
@@ -34,7 +34,7 @@ namespace NewCrmCore.Domain.Services.Interface
         /// <param name="pageSize"></param>
         /// <param name="totalCount"></param>
         /// <returns></returns>
-        List<App> GetAccountApps(Int32 accountId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize, out Int32 totalCount);
+        List<App> GetUserApps(Int32 userId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize, out Int32 totalCount);
 
         /// <summary>
         /// 获取应用
@@ -46,10 +46,10 @@ namespace NewCrmCore.Domain.Services.Interface
         /// <summary>
         /// 是否已经安装应用
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="appId"></param>
         /// <returns></returns>
-        Task<Boolean> IsInstallAppAsync(Int32 accountId, Int32 appId);
+        Task<Boolean> IsInstallAppAsync(Int32 userId, Int32 appId);
 
         /// <summary>
         /// 获取系统应用
@@ -61,23 +61,23 @@ namespace NewCrmCore.Domain.Services.Interface
         /// <summary>
         /// 获取当前账户下已开发和未发布的应用数量
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        Task<Tuple<Int32, Int32>> GetDevelopAndNotReleaseCountAsync(Int32 accountId);
+        Task<Tuple<Int32, Int32>> GetDevelopAndNotReleaseCountAsync(Int32 userId);
 
         /// <summary>
         /// 获取所有应用类型
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        Task<List<AppType>> GetAppTypesAsync(Int32 accountId);
+        Task<List<AppType>> GetAppTypesAsync(Int32 userId);
 
         /// <summary>
         /// 获取今日推荐
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        Task<TodayRecommendAppDto> GetTodayRecommendAsync(Int32 accountId);
+        Task<TodayRecommendAppDto> GetTodayRecommendAsync(Int32 userId);
 
         /// <summary>
         /// 检查应用类型名称
@@ -89,11 +89,11 @@ namespace NewCrmCore.Domain.Services.Interface
         /// <summary>
         /// 更改应用评分
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="appId"></param>
         /// <param name="starCount"></param>
         /// <returns></returns>
-        Task ModifyAppStarAsync(Int32 accountId, Int32 appId, Int32 starCount);
+        Task ModifyAppStarAsync(Int32 userId, Int32 appId, Int32 starCount);
 
         /// <summary>
         /// 创建新的应用
@@ -140,10 +140,10 @@ namespace NewCrmCore.Domain.Services.Interface
         /// <summary>
         /// 修改开发者（用户）的应用信息
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="app"></param>
         /// <returns></returns>
-        Task ModifyAccountAppInfoAsync(Int32 accountId, App app);
+        Task ModifyUserAppInfoAsync(Int32 userId, App app);
 
         /// <summary>
         /// 删除应用分类
@@ -170,19 +170,19 @@ namespace NewCrmCore.Domain.Services.Interface
         /// <summary>
         /// 更改应用图标
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="appId"></param>
         /// <param name="newIcon"></param>
         /// <returns></returns>
-        Task ModifyAppIconAsync(Int32 accountId, Int32 appId, String newIcon);
+        Task ModifyAppIconAsync(Int32 userId, Int32 appId, String newIcon);
 
         /// <summary>
         /// 用户安装应用
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="appId"></param>
         /// <param name="deskNum"></param>
         /// <returns></returns>
-        Task InstallAsync(Int32 accountId, Int32 appId, Int32 deskNum);
+        Task InstallAsync(Int32 userId, Int32 appId, Int32 deskNum);
     }
 }

@@ -99,7 +99,7 @@ namespace NewCrmCore.Domain.Entitys.System
         /// 账户Id
         /// </summary>
         [PropertyRequired]
-        public Int32 AccountId { get; private set; }
+        public Int32 UserId { get; private set; }
 
         /// <summary>
         /// 图标是否来自上传
@@ -119,7 +119,7 @@ namespace NewCrmCore.Domain.Entitys.System
                     Int32 appId,
                     Int32 width,
                     Int32 height,
-                    Int32 accountId,
+                    Int32 userId,
                     Int32 deskIndex,
                     AppStyle appStyle,
                     Boolean isIconByUpload = default(Boolean),
@@ -141,7 +141,7 @@ namespace NewCrmCore.Domain.Entitys.System
             MemberType = appId == 0 ? MemberType.Folder : (appStyle == AppStyle.Widget ? MemberType.Widget : MemberType.App);
             DeskIndex = 1;
             IsIconByUpload = isIconByUpload;
-            AccountId = accountId;
+            UserId = userId;
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace NewCrmCore.Domain.Entitys.System
         public Member(String name,
             String iconUrl,
             Int32 appId,
-            Int32 accountId,
+            Int32 userId,
             Int32 deskIndex,
             Boolean isIconByUpload = default(Boolean))
         {
@@ -163,7 +163,7 @@ namespace NewCrmCore.Domain.Entitys.System
             DeskIndex = deskIndex;
             MemberType = appId == 0 ? MemberType.Folder : MemberType.App;
             IsIconByUpload = isIconByUpload;
-            AccountId = accountId;
+            UserId = userId;
         }
 
         public Member()

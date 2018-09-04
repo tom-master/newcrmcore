@@ -13,9 +13,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         /// <summary>
         /// 修改皮肤
         /// </summary>
-        public async Task ModifySkinAsync(Int32 accountId, String newSkin)
+        public async Task ModifySkinAsync(Int32 userId, String newSkin)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(newSkin);
 
             await Task.Run(() =>
@@ -24,7 +24,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var config = new Config();
                     config.ModifySkin(newSkin);
-                    dataStore.Modify(config, conf => conf.AccountId == accountId);
+                    dataStore.Modify(config, conf => conf.UserId == userId);
                 }
             });
         }

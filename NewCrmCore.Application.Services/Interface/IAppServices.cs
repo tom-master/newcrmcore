@@ -13,40 +13,40 @@ namespace NewCrmCore.Application.Services.Interface
         /// <summary>
         /// 获取所有的app类型
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        Task<List<AppTypeDto>> GetAppTypesAsync(Int32 accountId);
+        Task<List<AppTypeDto>> GetAppTypesAsync(Int32 userId);
 
         /// <summary>
         /// 获取今日推荐
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        Task<TodayRecommendAppDto> GetTodayRecommendAsync(Int32 accountId);
+        Task<TodayRecommendAppDto> GetTodayRecommendAsync(Int32 userId);
 
         /// <summary>
         /// 获取用户开发的应用和未发布的应用的数量
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        Task<Tuple<Int32, Int32>> GetDevelopAndNotReleaseCountAsync(Int32 accountId);
+        Task<Tuple<Int32, Int32>> GetDevelopAndNotReleaseCountAsync(Int32 userId);
 
         /// <summary>
         /// 获取所有的应用
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="appTypeId"></param>
         /// <param name="orderId"></param>
         /// <param name="searchText"></param>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        Task<PageList<AppDto>> GetAppsAsync(Int32 accountId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize);
+        Task<PageList<AppDto>> GetAppsAsync(Int32 userId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize);
 
         /// <summary>
         /// 获取用户的应用
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="searchText"></param>
         /// <param name="appTypeId"></param>
         /// <param name="appStyleId"></param>
@@ -54,23 +54,23 @@ namespace NewCrmCore.Application.Services.Interface
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        Task<PageList<AppDto>> GetAccountAppsAsync(Int32 accountId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize);
+        Task<PageList<AppDto>> GetUserAppsAsync(Int32 userId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize);
 
         /// <summary>
         /// 根据appId获取应用
         /// </summary>
         /// <param name="appId"></param>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        Task<AppDto> GetAppAsync(Int32 appId, Int32 accountId);
+        Task<AppDto> GetAppAsync(Int32 appId, Int32 userId);
 
         /// <summary>
         /// 当前用户是否安装了这个应用
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="appId"></param>
         /// <returns></returns>
-        Task<Boolean> IsInstallAppAsync(Int32 accountId, Int32 appId);
+        Task<Boolean> IsInstallAppAsync(Int32 userId, Int32 appId);
 
         /// <summary>
         /// 获取所有的应用样式
@@ -105,10 +105,10 @@ namespace NewCrmCore.Application.Services.Interface
         /// <summary>
         /// 修改开发者（用户）的应用信息
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="appDto"></param>
         /// <returns></returns>
-        Task ModifyAccountAppInfoAsync(Int32 accountId, AppDto appDto);
+        Task ModifyUserAppInfoAsync(Int32 userId, AppDto appDto);
 
         /// <summary>
         /// 开发者（用户）创建新的应用
@@ -177,61 +177,61 @@ namespace NewCrmCore.Application.Services.Interface
         /// <summary>
         /// 应用打分
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="appId"></param>
         /// <param name="starCount"></param>
         /// <returns></returns>
-        Task ModifyAppStarAsync(Int32 accountId, Int32 appId, Int32 starCount);
+        Task ModifyAppStarAsync(Int32 userId, Int32 appId, Int32 starCount);
 
         /// <summary>
         /// 安装应用
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="appId"></param>
         /// <param name="deskNum"></param>
         /// <returns></returns>
-        Task InstallAppAsync(Int32 accountId, Int32 appId, Int32 deskNum);
+        Task InstallAppAsync(Int32 userId, Int32 appId, Int32 deskNum);
 
         /// <summary>
         /// 修改应用排列方向
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="direction"></param>
         /// <returns></returns>
-        Task ModifyAppDirectionAsync(Int32 accountId, String direction);
+        Task ModifyAppDirectionAsync(Int32 userId, String direction);
 
         /// <summary>
         /// 修改应用图标大小
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="newSize"></param>
         /// <returns></returns>
-        Task ModifyAppIconSizeAsync(Int32 accountId, Int32 newSize);
+        Task ModifyAppIconSizeAsync(Int32 userId, Int32 newSize);
 
         /// <summary>
         /// 修改应用垂直间距
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="newSize"></param>
         /// <returns></returns>
-        Task ModifyAppVerticalSpacingAsync(Int32 accountId, Int32 newSize);
+        Task ModifyAppVerticalSpacingAsync(Int32 userId, Int32 newSize);
 
         /// <summary>
         /// 修改应用水平间距
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="newSize"></param>
         /// <returns></returns>
-        Task ModifyAppHorizontalSpacingAsync(Int32 accountId, Int32 newSize);
+        Task ModifyAppHorizontalSpacingAsync(Int32 userId, Int32 newSize);
 
         /// <summary>
         /// 修改应用图标
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="appId"></param>
         /// <param name="newIcon"></param>
         /// <returns></returns>
-        Task ModifyAppIconAsync(Int32 accountId, Int32 appId, String newIcon);
+        Task ModifyAppIconAsync(Int32 userId, Int32 appId, String newIcon);
 
         #endregion
     }

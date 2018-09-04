@@ -26,17 +26,17 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             _notify = notify;
         }
 
-        public async Task<Tuple<Int32, Int32>> GetDevelopAndNotReleaseCountAsync(Int32 accountId)
+        public async Task<Tuple<Int32, Int32>> GetDevelopAndNotReleaseCountAsync(Int32 userId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    var sql = $@"SELECT a.Id FROM App AS a WHERE a.AccountId=@accountId AND a.IsDeleted=0";
+                    var sql = $@"SELECT a.Id FROM App AS a WHERE a.UserId=@userId AND a.IsDeleted=0";
                     var parameters = new List<ParameterMapper>
                     {
-                        new ParameterMapper("@accountId",accountId)
+                        new ParameterMapper("@userId",userId)
                     };
                     var result = dataStore.Find<App>(sql, parameters);
                     return new Tuple<Int32, Int32>(result.Count, result.Count(a => a.AppReleaseState == AppReleaseState.UnRelease));
@@ -44,7 +44,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task<List<AppType>> GetAppTypesAsync(Int32 accountId)
+        public async Task<List<AppType>> GetAppTypesAsync(Int32 userId)
         {
             return await Task.Run(() =>
             {
@@ -56,9 +56,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task<TodayRecommendAppDto> GetTodayRecommendAsync(Int32 accountId)
+        public async Task<TodayRecommendAppDto> GetTodayRecommendAsync(Int32 userId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -81,23 +81,23 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             ) AS IsInstall,
                             IFNULL(a.IsIconByUpload,0) AS IsIconByUpload
                             FROM App AS a 
-							LEFT JOIN Member AS a2 ON a2.AccountId=@accountId AND a2.IsDeleted=0 AND a2.AppId=a.Id
+							LEFT JOIN Member AS a2 ON a2.UserId=@userId AND a2.IsDeleted=0 AND a2.AppId=a.Id
                             WHERE a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState AND a.IsRecommand=1";
 
                     var parameters = new List<ParameterMapper>
                     {
                         new ParameterMapper("@AppAuditState", AppAuditState.Pass.ToInt32()),
                         new ParameterMapper("@AppReleaseState", AppReleaseState.Release.ToInt32()),
-                        new ParameterMapper("@accountId",accountId)
+                        new ParameterMapper("@userId",userId)
                     };
                     return dataStore.FindOne<TodayRecommendAppDto>(sql, parameters);
                 }
             });
         }
 
-        public List<App> GetApps(Int32 accountId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
+        public List<App> GetApps(Int32 userId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
-            Parameter.Validate(accountId, true);
+            Parameter.Validate(userId, true);
             Parameter.Validate(orderId);
             Parameter.Validate(pageIndex, true);
             Parameter.Validate(pageSize);
@@ -121,8 +121,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     if (appTypeId == -1)//用户制作的app
                     {
-                        parameters.Add(new ParameterMapper("@accountId", accountId));
-                        where.Append($@" AND a.AccountId=@accountId");
+                        parameters.Add(new ParameterMapper("@userId", userId));
+                        where.Append($@" AND a.UserId=@userId");
                     }
                 }
                 if (!String.IsNullOrEmpty(searchText))//关键字搜索
@@ -163,7 +163,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var sql = $@"SELECT 
 	                            a.AppTypeId,
-	                            a.AccountId,
+	                            a.UserId,
 	                            a.AddTime,
 	                            a.UseCount,
 	                            (
@@ -182,7 +182,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                            ) AS IsInstall,
                                 a.IsIconByUpload
 	                            FROM App AS a
-	                            LEFT JOIN Member AS a1 ON a1.AccountId=a.AccountId AND a1.AppId=a.Id AND a1.IsDeleted=0
+	                            LEFT JOIN Member AS a1 ON a1.UserId=a.UserId AND a1.AppId=a.Id AND a1.IsDeleted=0
                                 {where} {orderBy} LIMIT {pageSize * (pageIndex - 1)},{pageSize }";
                     return dataStore.Find<App>(sql, parameters);
                 }
@@ -190,9 +190,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             }
         }
 
-        public List<App> GetAccountApps(Int32 accountId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
+        public List<App> GetUserApps(Int32 userId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
-            Parameter.Validate(accountId, true);
+            Parameter.Validate(userId, true);
             Parameter.Validate(appTypeId, true);
             Parameter.Validate(appStyleId, true);
             Parameter.Validate(pageIndex);
@@ -205,10 +205,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                 #region 条件筛选
 
-                if (accountId != default(Int32))
+                if (userId != default(Int32))
                 {
-                    parameters.Add(new ParameterMapper("@accountId", accountId));
-                    where.Append($@" AND a.AccountId=@accountId");
+                    parameters.Add(new ParameterMapper("@userId", userId));
+                    where.Append($@" AND a.UserId=@userId");
                 }
 
                 //应用名称
@@ -273,7 +273,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a.AppAuditState,
 								a.IsRecommand,
 								a.AppTypeId,
-								a.AccountId,
+								a.UserId,
 								a.IsIconByUpload
 								FROM App AS a {where} LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
 
@@ -300,7 +300,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 		                      SELECT AVG(stars.StartNum) FROM AppStar AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId
 	                        ) AS StarCount,
                             a.AddTime,
-                            a.AccountId,
+                            a.UserId,
                             a.Id,
                             a.IsResize,
                             a.IsOpenMax,
@@ -312,11 +312,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.AppAuditState,
                             a.AppReleaseState,
                             a.AppTypeId,
-                            a2.Name AS AccountName,
+                            a2.Name AS UserName,
                             a.IsIconByUpload
                             FROM App AS a 
-                            LEFT JOIN Account AS a2
-                            ON a2.Id=a.AccountId AND a2.IsDeleted=0 AND a2.IsDisable=0
+                            LEFT JOIN User AS a2
+                            ON a2.Id=a.UserId AND a2.IsDeleted=0 AND a2.IsDisable=0
                             WHERE a.Id=@Id AND a.IsDeleted=0";
                     var parameters = new List<ParameterMapper>
                     {
@@ -327,19 +327,19 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task<Boolean> IsInstallAppAsync(Int32 accountId, Int32 appId)
+        public async Task<Boolean> IsInstallAppAsync(Int32 userId, Int32 appId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(appId);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.AppId=@Id AND a.AccountId=@AccountId AND a.IsDeleted=0";
+                    var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.AppId=@Id AND a.UserId=@UserId AND a.IsDeleted=0";
                     var parameters = new List<ParameterMapper>
                     {
                         new ParameterMapper("@Id",appId),
-                        new ParameterMapper("@AccountId",accountId)
+                        new ParameterMapper("@UserId",userId)
                     };
                     return dataStore.FindSingleValue<Int32>(sql, parameters) > 0 ? true : false;
                 }
@@ -381,9 +381,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task ModifyAppStarAsync(Int32 accountId, Int32 appId, Int32 starCount)
+        public async Task ModifyAppStarAsync(Int32 userId, Int32 appId, Int32 starCount)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(appId);
             Parameter.Validate(starCount);
             await Task.Run(() =>
@@ -392,10 +392,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     #region 前置条件判断
                     {
-                        var sql = $@"SELECT COUNT(*) FROM AppStar AS a WHERE a.AccountId=@accountId AND a.AppId=@appId AND a.IsDeleted=0";
+                        var sql = $@"SELECT COUNT(*) FROM AppStar AS a WHERE a.UserId=@userId AND a.AppId=@appId AND a.IsDeleted=0";
                         var parameters = new List<ParameterMapper>
                         {
-                            new ParameterMapper("@accountId",accountId),
+                            new ParameterMapper("@userId",userId),
                             new ParameterMapper("@appId",appId)
                         };
                         var result = dataStore.FindSingleValue<Int32>(sql, parameters);
@@ -408,7 +408,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                     #region sql
                     {
-                        var appStar = new AppStar(accountId, appId, starCount);
+                        var appStar = new AppStar(userId, appId, starCount);
                         dataStore.Add(appStar);
                     }
                     #endregion
@@ -446,9 +446,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             app.Pass();
                             dataStore.Modify(app, a => a.Id == appId);
 
-                            var notify = new Notify("应用审核通过通知", $@"您的应用:{app.Name},已审核通过", 0, app.AccountId);
+                            var notify = new Notify("应用审核通过通知", $@"您的应用:{app.Name},已审核通过", 0, app.UserId);
                             dataStore.Add(notify);
-                            await _notify.Send(app.AccountId, notify);
+                            await _notify.Send(app.UserId, notify);
                         }
                         dataStore.Commit();
                     }
@@ -475,9 +475,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         app.Deny();
                         dataStore.Modify(app, a => a.Id == appId);
 
-                        var notify = new Notify("应用审核通过通知", $@"您的应用:{app.Name},已审核通过", 0, app.AccountId);
+                        var notify = new Notify("应用审核通过通知", $@"您的应用:{app.Name},已审核通过", 0, app.UserId);
                         dataStore.Add(notify);
-                        await _notify.Send(app.AccountId, notify);
+                        await _notify.Send(app.UserId, notify);
                         dataStore.Commit();
                     }
                     catch (Exception)
@@ -578,10 +578,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task ModifyAccountAppInfoAsync(Int32 accountId, App app)
+        public async Task ModifyUserAppInfoAsync(Int32 userId, App app)
         {
-            Parameter.Validate(accountId);
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
+            Parameter.Validate(userId);
             Parameter.Validate(app);
 
             await Task.Run(() =>
@@ -649,7 +649,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         app.UnAuditState();
                     }
-                    dataStore.Modify(app, a => a.AccountId == accountId && a.Id == app.Id);
+                    dataStore.Modify(app, a => a.UserId == userId && a.Id == app.Id);
                 }
             });
         }
@@ -743,9 +743,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task ModifyAppIconAsync(Int32 accountId, Int32 appId, String newIcon)
+        public async Task ModifyAppIconAsync(Int32 userId, Int32 appId, String newIcon)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(appId);
             Parameter.Validate(newIcon);
             await Task.Run(() =>
@@ -754,14 +754,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var app = new App();
                     app.ModifyIconUrl(newIcon);
-                    dataStore.Modify(app, a => a.Id == appId && a.AccountId == accountId);
+                    dataStore.Modify(app, a => a.Id == appId && a.UserId == userId);
                 }
             });
         }
 
-        public async Task InstallAsync(Int32 accountId, Int32 appId, Int32 deskNum)
+        public async Task InstallAsync(Int32 userId, Int32 appId, Int32 deskNum)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(appId);
             Parameter.Validate(deskNum);
             await Task.Run(async () =>
@@ -804,7 +804,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                         #region 添加桌面成员
                         {
-                            var newMember = new Member(app.Name, app.IconUrl, app.AppUrl, app.Id, app.Width, app.Height, accountId, deskNum, app.AppStyle, app.IsIconByUpload, app.IsSetbar, app.IsOpenMax, app.IsFlash, app.IsResize);
+                            var newMember = new Member(app.Name, app.IconUrl, app.AppUrl, app.Id, app.Width, app.Height, userId, deskNum, app.AppStyle, app.IsIconByUpload, app.IsSetbar, app.IsOpenMax, app.IsFlash, app.IsResize);
                             dataStore.Add(newMember);
                         }
                         #endregion
@@ -816,10 +816,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         }
                         #endregion
 
-                        var notify = new Notify("应用安装通知", $@"你已成功安装{app.Name}", 0, accountId);
+                        var notify = new Notify("应用安装通知", $@"你已成功安装{app.Name}", 0, userId);
                         dataStore.Add(notify);
 
-                        await _notify.Send(accountId, notify);
+                        await _notify.Send(userId, notify);
 
                         dataStore.Commit();
                     }

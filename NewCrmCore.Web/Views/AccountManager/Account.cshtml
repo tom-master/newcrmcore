@@ -3,14 +3,14 @@
 @{
 	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
 
-	var accountResult = ViewData["Account"] as AccountDto;
+	var userResult = ViewData["User"] as UserDto;
 	var roles = ViewData["Roles"] as List<RoleDto>;
-	if (accountResult == null)
+	if (userResult == null)
 	{
-		accountResult = new AccountDto();
+		userResult = new UserDto();
 	}
 
-	var accountId = Context.Request.Query["accountId"];
+	var userId = Context.Request.Query["userId"];
 }
 @section ChildrenCss
 {
@@ -20,9 +20,9 @@
 {
 	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
 }
-<form action="/AccountManager/CreateAccount" method="post" name="form" id="form" enctype="application/x-www-form-urlencoded" >
+<form action="/UserManager/CreateUser" method="post" name="form" id="form" enctype="application/x-www-form-urlencoded" >
 	<input type="hidden" name="token" value="@(await TimeToken.GetFormTokenAsync())" />
-	<input type="hidden" name="id" value="@(accountId.FirstOrDefault()??"0")">
+	<input type="hidden" name="id" value="@(userId.FirstOrDefault()??"0")">
 	<div class="creatbox">
 		<div class="middle">
 			<p class="detile-title">
@@ -32,16 +32,16 @@
 				<label class="label-text">用户名：</label>
 				<div class="label-box form-inline control-group">
 					@{
-						if (accountResult.Name == null)
+						if (userResult.Name == null)
 						{
 							<text>
-								<input type="text" name="val_accountname" datatype="s2-10" ajaxurl="@Url.Action("CheckName","AccountManager")" nullmsg="请输入用户名" errormsg="用户名长度为2-10个字符">
+								<input type="text" name="val_username" datatype="s2-10" ajaxurl="@Url.Action("CheckName","UserManager")" nullmsg="请输入用户名" errormsg="用户名长度为2-10个字符">
 							</text>
 						}
 						else
 						{
 							<text>
-								<input type="text" readonly="readonly" name="val_accountname" value="@accountResult.Name">
+								<input type="text" readonly="readonly" name="val_username" value="@userResult.Name">
 							</text>
 						}
 					}
@@ -52,7 +52,7 @@
 				<label class="label-text">用户密码：</label>
 				<div class="label-box form-inline control-group">
 					@{
-						if (accountResult.Password == null)
+						if (userResult.Password == null)
 						{
 							<text>
 								<input type="password" name="val_password" datatype="*6-12" id="pwd" nullmsg="请输入用户密码" errormsg="用户密码长度为6-12个字符" />
@@ -73,16 +73,16 @@
 				<label class="label-text">用户类型：</label>
 				<div class="label-box form-inline">
 					<label class="radio" style="margin-right: 10px">
-						<input type="radio" name="val_type" value="1" @{ if (!accountResult.IsAdmin) { <text> checked="checked" </text>  } }>用户
+						<input type="radio" name="val_type" value="1" @{ if (!userResult.IsAdmin) { <text> checked="checked" </text>  } }>用户
 					</label>
 
 					<label class="radio" style="margin-right: 10px">
-						<input type="radio" name="val_type" value="2" @{ if (accountResult.IsAdmin) { <text> checked="checked" </text>  } }>管理员
+						<input type="radio" name="val_type" value="2" @{ if (userResult.IsAdmin) { <text> checked="checked" </text>  } }>管理员
 					</label>
 				</div>
 			</div>
 			<div class="input-label input-label-permission @{
-                if (!accountResult.IsAdmin)
+                if (!userResult.IsAdmin)
                 {
                      <text> hide </text>
                 }
@@ -96,7 +96,7 @@
 					@{
 						foreach (var item in roles)
 						{
-							if (accountResult.Roles != null && accountResult.Roles.Any(role => role.Id == item.Id))
+							if (userResult.Roles != null && userResult.Roles.Any(role => role.Id == item.Id))
 							{
 								<label class="checkbox" style="margin-right: 10px">
 									<input type="checkbox" onclick="javascript: selectRole();" name="val_permission_id" id="@item.Id" checked="checked">
@@ -111,7 +111,7 @@
 								</label>
 							}
 						}
-						<input type="hidden" name="val_roleIds" id="roleIds" value="@String.Join(",",accountResult.Roles.Select(s=>s.Id).Intersect(roles.Select(a=>a.Id)))" />
+						<input type="hidden" name="val_roleIds" id="roleIds" value="@String.Join(",",userResult.Roles.Select(s=>s.Id).Intersect(roles.Select(a=>a.Id)))" />
 					}
 					<span class="help-inline"></span>
 				</div>

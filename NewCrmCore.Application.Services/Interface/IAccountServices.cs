@@ -6,7 +6,7 @@ using NewCrmCore.Infrastructure.CommonTools;
 
 namespace NewCrmCore.Application.Services.Interface
 {
-    public interface IAccountServices
+    public interface IUserServices
     {
         #region  have return value
 
@@ -16,7 +16,7 @@ namespace NewCrmCore.Application.Services.Interface
         /// <param name="accountName"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        Task<AccountDto> LoginAsync(String accountName, String password, String requestIp);
+        Task<UserDto> LoginAsync(String accountName, String password, String requestIp);
 
         /// <summary>
         /// 获取登陆用户的配置文件
@@ -34,29 +34,29 @@ namespace NewCrmCore.Application.Services.Interface
         /// <param name="pageSize"></param>
         /// <param name="totalCount"></param>
         /// <returns></returns>
-        Task<PageList<AccountDto>> GetAccountsAsync(String accountName, String accountType, Int32 pageIndex, Int32 pageSize);
+        Task<PageList<UserDto>> GetUsersAsync(String accountName, String accountType, Int32 pageIndex, Int32 pageSize);
 
         /// <summary>
         /// 根据用户id获取用户
         /// </summary>
         /// <param name="accountId"></param>
         /// <returns></returns>
-        Task<AccountDto> GetAccountAsync(Int32 accountId = default(Int32));
+        Task<UserDto> GetUserAsync(Int32 accountId = default(Int32));
 
         /// <summary>
         /// 验证相同的用户名是否存在
         /// </summary>
         /// <param name="accountName"></param>
         /// <returns></returns>
-        Task<Boolean> CheckAccountNameExistAsync(String accountName);
+        Task<Boolean> CheckUserNameExistAsync(String accountName);
 
         /// <summary>
         ///  检查密码
         /// </summary>
         /// <param name="accountId"></param>
-        /// <param name="oldAccountPassword"></param>
+        /// <param name="oldUserPassword"></param>
         /// <returns></returns>
-        Task<Boolean> CheckPasswordAsync(Int32 accountId, String oldAccountPassword);
+        Task<Boolean> CheckPasswordAsync(Int32 accountId, String oldUserPassword);
 
         /// <summary>
         /// 解锁屏幕
@@ -106,20 +106,20 @@ namespace NewCrmCore.Application.Services.Interface
         /// </summary>
         /// <param name="account"></param>
         /// <returns></returns>
-        Task ModifyAccountAsync(AccountDto account);
+        Task ModifyUserAsync(UserDto account);
 
         /// <summary>
         /// 修改账户头像
         /// </summary>
         /// <param name="accountId"></param>
         /// <param name="newFace"></param>
-        Task ModifyAccountFaceAsync(Int32 accountId, String newFace);
+        Task ModifyUserFaceAsync(Int32 accountId, String newFace);
 
         /// <summary>
         /// 添加新的用户
         /// </summary>
         /// <param name="account"></param>
-        Task AddNewAccountAsync(AccountDto account);
+        Task AddNewUserAsync(UserDto account);
 
         /// <summary>
         /// 用户登出
@@ -147,7 +147,7 @@ namespace NewCrmCore.Application.Services.Interface
         /// </summary>
         /// <param name="accountId"></param>
         /// <returns></returns>
-        Task RemoveAccountAsync(Int32 accountId);
+        Task RemoveUserAsync(Int32 accountId);
 
         #endregion
     }

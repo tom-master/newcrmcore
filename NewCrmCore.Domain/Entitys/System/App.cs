@@ -85,7 +85,7 @@ namespace NewCrmCore.Domain.Entitys.System
         /// 开发者(用户)Id
         /// </summary>
         [PropertyRequired]
-        public Int32 AccountId { get; private set; }
+        public Int32 UserId { get; private set; }
 
         /// <summary>
         /// App类型Id
@@ -127,7 +127,7 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 账户名称
         /// </summary>
-        public String AccountName { get; private set; }
+        public String UserName { get; private set; }
 
         /// <summary>
         /// 图标是否来自上传
@@ -151,7 +151,7 @@ namespace NewCrmCore.Domain.Entitys.System
             AppAuditState appAuditState,
             AppReleaseState appReleaseState,
             AppStyle appStyle = AppStyle.App,
-            Int32 accountId = default(Int32),
+            Int32 userId = default(Int32),
             String remark = default(String),
             Boolean isIconByUpload = default(Boolean))
         {
@@ -162,14 +162,14 @@ namespace NewCrmCore.Domain.Entitys.System
             Height = height > 600 ? 600 : height;
             AppTypeId = appTypeId;
             AppStyle = appStyle;
-            if (accountId == 0)
+            if (userId == 0)
             {
                 IsSystem = true;
             }
             else
             {
                 IsSystem = false;
-                AccountId = accountId;
+                UserId = userId;
             }
 
             Remark = remark;

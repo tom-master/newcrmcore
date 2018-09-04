@@ -22,17 +22,17 @@ namespace NewCrmCore.Domain.Entitys.System
         public Boolean IsRead { get; private set; }
 
         [PropertyRequired]
-        public Int32 AccountId { get; private set; }
+        public Int32 UserId { get; private set; }
 
         [PropertyRequired]
-        public Int32 ToAccountId { get; private set; }
+        public Int32 ToUserId { get; private set; }
 
-        public Notify(String title, String content, Int32 accountId, Int32 toAccountId)
+        public Notify(String title, String content, Int32 userId, Int32 toUserId)
         {
             Title = title;
             Content = content;
-            AccountId = accountId;
-            ToAccountId = toAccountId;
+            UserId = userId;
+            ToUserId = toUserId;
 
             IsNotify = true;
             IsRead = false;

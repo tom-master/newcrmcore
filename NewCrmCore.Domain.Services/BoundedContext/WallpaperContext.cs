@@ -23,10 +23,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                  {
                      #region 前置条件验证
                      {
-                         var sql = $@"SELECT COUNT(*) FROM Wallpaper AS a WHERE a.AccountId=@AccountId AND a.IsDeleted=0";
+                         var sql = $@"SELECT COUNT(*) FROM Wallpaper AS a WHERE a.UserId=@UserId AND a.IsDeleted=0";
                          var parameters = new List<ParameterMapper>
                          {
-                            new ParameterMapper("@AccountId",wallpaper.AccountId)
+                            new ParameterMapper("@UserId",wallpaper.UserId)
                          };
                          var result = dataStore.FindSingleValue<Int32>(sql, parameters);
                          if (result > 6)
@@ -70,7 +70,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
                     var sql = $@"SELECT
-                            a.AccountId,
+                            a.UserId,
                             a.Height,
                             a.Id,
                             a.Md5,
@@ -89,14 +89,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task<List<Wallpaper>> GetUploadWallpaperAsync(Int32 accountId)
+        public async Task<List<Wallpaper>> GetUploadWallpaperAsync(Int32 userId)
         {
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
                     var sql = $@"SELECT
-                            a.AccountId,
+                            a.UserId,
                             a.Height,
                             a.Id,
                             a.Md5,
@@ -105,10 +105,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.Title,
                             a.Url,
                             a.Width
-                            FROM Wallpaper AS a WHERE a.AccountId=@AccountId AND a.Source=@Source AND a.IsDeleted=0";
+                            FROM Wallpaper AS a WHERE a.UserId=@UserId AND a.Source=@Source AND a.IsDeleted=0";
                     var parameters = new List<ParameterMapper>
                     {
-                        new ParameterMapper("@AccountId",accountId),
+                        new ParameterMapper("@UserId",userId),
                         new ParameterMapper("@Source", WallpaperSource.Upload.ToInt32())
                     };
                     return dataStore.Find<Wallpaper>(sql, parameters);
@@ -123,7 +123,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
                     var sql = $@"SELECT
-                            a.AccountId,
+                            a.UserId,
                             a.Height,
                             a.Id,
                             a.Md5,
@@ -142,9 +142,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task ModifyWallpaperModeAsync(Int32 accountId, String newMode)
+        public async Task ModifyWallpaperModeAsync(Int32 userId, String newMode)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(newMode);
             await Task.Run(() =>
             {
@@ -154,7 +154,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         var config = new Config();
                         config.ModeTo(wallpaperMode);
-                        dataStore.Modify(config, conf => conf.AccountId == accountId);
+                        dataStore.Modify(config, conf => conf.UserId == userId);
                     }
                 }
                 else
@@ -164,9 +164,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task ModifyWallpaperAsync(Int32 accountId, Int32 newWallpaperId)
+        public async Task ModifyWallpaperAsync(Int32 userId, Int32 newWallpaperId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(newWallpaperId);
             await Task.Run(() =>
             {
@@ -174,14 +174,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var config = new Config();
                     config.NotFromBing().ModifyWallpaperId(newWallpaperId);
-                    dataStore.Modify(config, conf => conf.AccountId == accountId);
+                    dataStore.Modify(config, conf => conf.UserId == userId);
                 }
             });
         }
 
-        public async Task RemoveWallpaperAsync(Int32 accountId, Int32 wallpaperId)
+        public async Task RemoveWallpaperAsync(Int32 userId, Int32 wallpaperId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(wallpaperId);
             await Task.Run(() =>
             {
@@ -190,12 +190,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     var parameters = new List<ParameterMapper>
                     {
                         new ParameterMapper("@WallpaperId",wallpaperId),
-                        new ParameterMapper("@AccountId",accountId)
+                        new ParameterMapper("@UserId",userId)
                     };
 
                     #region 前置条件验证
                     {
-                        var sql = $@"SELECT COUNT(*) FROM Config AS a WHERE a.AccountId=@AccountId AND a.WallpaperId=@WallpaperId AND a.IsDeleted=0";
+                        var sql = $@"SELECT COUNT(*) FROM Config AS a WHERE a.UserId=@UserId AND a.WallpaperId=@WallpaperId AND a.IsDeleted=0";
                         var result = dataStore.FindSingleValue<Int32>(sql, parameters);
                         if (result > 0)
                         {
@@ -208,7 +208,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         var wallpaper = new Wallpaper();
                         wallpaper.Remove();
-                        dataStore.Modify(wallpaper, wa => wa.Id == wallpaperId && wa.AccountId == accountId);
+                        dataStore.Modify(wallpaper, wa => wa.Id == wallpaperId && wa.UserId == userId);
                     }
                     #endregion
                 }

@@ -7,7 +7,7 @@ namespace NewCrmCore.Dto
     {
         public String Skin { get; set; }
 
-        public String AccountFace { get; set; }
+        public String UserFace { get; set; }
 
         public Int32 AppSize { get; set; }
 
@@ -33,11 +33,11 @@ namespace NewCrmCore.Dto
 
         public Int32 DefaultDeskCount { get; set; }
 
-        public Int32 AccountId { get; set; }
+        public Int32 UserId { get; set; }
 
         public Boolean IsBing { get; set; }
 
-        public Boolean IsModifyAccountFace { get; set; }
+        public Boolean IsModifyUserFace { get; set; }
 
     }
 }

@@ -33,7 +33,7 @@
 			<label>名称：</label>
 			<input type="text" name="search_1" id="appName" class="span5">
 			<a class="btn" menu="search" href="###" style="margin-left:10px"><i class="icon-search"></i> 搜索</a>
-			<a class="btn btn-primary fr" href="javascript:openDetailIframe('/appmarket/accountappmanageinfo?appId=0');"><i class="icon-white icon-plus"></i> 添加新应用</a>
+			<a class="btn btn-primary fr" href="javascript:openDetailIframe('/appmarket/userappmanageinfo?appId=0');"><i class="icon-white icon-plus"></i> 添加新应用</a>
 		</div>
 		<div class="control-group">
 			<label>分类：</label>
@@ -123,7 +123,7 @@
 			<td>{{UseCount}}</td>
 			{{#compare AppAuditState 'Wait'}}
 				<td>
-					<a href="javascript:openDetailIframe('/appmarket/accountappmanageinfo?appId={{Id}}');" class="btn btn-link">查看详情</a>
+					<a href="javascript:openDetailIframe('/appmarket/userappmanageinfo?appId={{Id}}');" class="btn btn-link">查看详情</a>
 					<a href="###" class="btn btn-link do-del" appid="{{Id}}" >删除</a>
 				</td>
 			{{else}}
@@ -136,7 +136,7 @@
 					{{/if}}
 				{{else}}
 				{{/isAudit}}
-				<a href="javascript:openDetailIframe('/appmarket/accountappmanageinfo?appId={{Id}}');" class="btn btn-link">查看详情</a>
+				<a href="javascript:openDetailIframe('/appmarket/userappmanageinfo?appId={{Id}}');" class="btn btn-link">查看详情</a>
 				{{#if IsCreater}}
 					{{#remove IsRecommand}}
 					{{else}}

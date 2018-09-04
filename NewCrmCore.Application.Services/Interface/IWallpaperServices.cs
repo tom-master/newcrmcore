@@ -25,17 +25,17 @@ namespace NewCrmCore.Application.Services.Interface
         /// <summary>
         /// 根据用户id获取上传的壁纸
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        Task<List<WallpaperDto>> GetUploadWallpaperAsync(Int32 accountId);
+        Task<List<WallpaperDto>> GetUploadWallpaperAsync(Int32 userId);
 
         /// <summary>
         /// 根据用户id添加来自于网络的壁纸
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="url"></param>
         /// <returns></returns>
-        Task<Tuple<Int32, String>> AddWebWallpaperAsync(Int32 accountId, String url);
+        Task<Tuple<Int32, String>> AddWebWallpaperAsync(Int32 userId, String url);
 
         /// <summary>
         /// 根据md5获取上传的壁纸
@@ -51,26 +51,26 @@ namespace NewCrmCore.Application.Services.Interface
         /// <summary>
         /// 根据用户id删除上传的壁纸
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="wallpaperId"></param>
         /// <returns></returns>
-        Task RemoveWallpaperAsync(Int32 accountId, Int32 wallpaperId);
+        Task RemoveWallpaperAsync(Int32 userId, Int32 wallpaperId);
 
         /// <summary>
         /// 修改壁纸的显示模式
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="newMode"></param>
         /// <returns></returns>
-        Task ModifyWallpaperModeAsync(Int32 accountId, String newMode);
+        Task ModifyWallpaperModeAsync(Int32 userId, String newMode);
 
         /// <summary>
         /// 修改壁纸
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="newWallpaperId"></param>
         /// <returns></returns>
-        Task ModifyWallpaperAsync(Int32 accountId, Int32 newWallpaperId);
+        Task ModifyWallpaperAsync(Int32 userId, Int32 newWallpaperId);
 
         #endregion
     }

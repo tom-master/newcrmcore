@@ -62,9 +62,9 @@ namespace NewCrmCore.FileServices.Controllers
         /// <summary>
         /// 初始化必要参数
         /// </summary>
-        public ReqeustUpload InitRequiredParameters(String accountId, String fileExtension)
+        public ReqeustUpload InitRequiredParameters(String userId, String fileExtension)
         {
-            var path = $@"{Appsetting.FileStorage}/{accountId}/{FileType.ToString().ToLower()}/";
+            var path = $@"{Appsetting.FileStorage}/{userId}/{FileType.ToString().ToLower()}/";
             var fileName = $@"{Guid.NewGuid().ToString().Replace("-", "")}.{fileExtension}";
             if (!Directory.Exists(path))
             {

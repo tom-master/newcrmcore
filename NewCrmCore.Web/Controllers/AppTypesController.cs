@@ -45,7 +45,7 @@ namespace NewCrmCore.Web.Controllers
             AppTypeDto result = null;
             if (appTypeId != 0)
             {
-                result = (await _appServices.GetAppTypesAsync(AccountId)).FirstOrDefault(appType => appType.Id == appTypeId);
+                result = (await _appServices.GetAppTypesAsync(UserId)).FirstOrDefault(appType => appType.Id == appTypeId);
             }
             return View(result);
         }
@@ -142,7 +142,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> GetTypes(Int32 pageIndex, Int32 pageSize, String searchText)
         {
             var response = new ResponseModels<IList<AppTypeDto>>();
-            var result = (await _appServices.GetAppTypesAsync(AccountId)).Where(appType => String.IsNullOrEmpty(searchText) || appType.Name.Contains(searchText)).OrderByDescending(d => d.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            var result = (await _appServices.GetAppTypesAsync(UserId)).Where(appType => String.IsNullOrEmpty(searchText) || appType.Name.Contains(searchText)).OrderByDescending(d => d.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
             response.Message = "app类型获取成功";
             response.IsSuccess = true;
             response.Model = result;

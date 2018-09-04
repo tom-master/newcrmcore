@@ -8,17 +8,17 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Dto.MapperProfile
 {
-    internal class AccountDtoToAccountProfile : Profile
+    internal class UserDtoToUserProfile : Profile
     {
-        public AccountDtoToAccountProfile()
+        public UserDtoToUserProfile()
         {
-            CreateMap<AccountDto, Account>()
-                .ForMember(account => account.Name, dto => dto.MapFrom(d => d.Name))
-                .ForMember(account => account.Id, dto => dto.MapFrom(d => d.Id))
-                .ForMember(account => account.LoginPassword, dto => dto.MapFrom(d => d.Password))
-                .ForMember(account => account.IsAdmin, dto => dto.MapFrom(d => d.IsAdmin))
-                .ForMember(account => account.Roles, dto => dto.MapFrom(d => d.Roles))
-                .ForMember(dto => dto.IsDisable, account => account.MapFrom(u => u.IsDisable));
+            CreateMap<UserDto, User>()
+                .ForMember(user => user.Name, dto => dto.MapFrom(d => d.Name))
+                .ForMember(user => user.Id, dto => dto.MapFrom(d => d.Id))
+                .ForMember(user => user.LoginPassword, dto => dto.MapFrom(d => d.Password))
+                .ForMember(user => user.IsAdmin, dto => dto.MapFrom(d => d.IsAdmin))
+                .ForMember(user => user.Roles, dto => dto.MapFrom(d => d.Roles))
+                .ForMember(dto => dto.IsDisable, user => user.MapFrom(u => u.IsDisable));
         }
     }
 
@@ -58,7 +58,7 @@ namespace NewCrmCore.Dto.MapperProfile
              .ForMember(member => member.IsResize, dto => dto.MapFrom(w => w.IsResize))
              .ForMember(member => member.AppUrl, dto => dto.MapFrom(w => w.AppUrl))
              .ForMember(member => member.DeskIndex, dto => dto.MapFrom(w => w.DeskIndex))
-             .ForMember(member => member.AccountId, dto => dto.MapFrom(w => w.AccountId))
+             .ForMember(member => member.UserId, dto => dto.MapFrom(w => w.UserId))
              .ForMember(member => member.IsIconByUpload, dto => dto.MapFrom(w => w.IsIconByUpload));
         }
     }
@@ -88,7 +88,7 @@ namespace NewCrmCore.Dto.MapperProfile
                 .ForMember(app => app.IsOpenMax, dto => dto.MapFrom(w => w.IsOpenMax))
                 .ForMember(app => app.IsFlash, dto => dto.MapFrom(w => w.IsFlash))
                 .ForMember(app => app.IsResize, dto => dto.MapFrom(w => w.IsResize))
-                .ForMember(app => app.AccountId, dto => dto.MapFrom(w => w.AccountId))
+                .ForMember(app => app.UserId, dto => dto.MapFrom(w => w.UserId))
                 .ForMember(app => app.AppAuditState, dto => dto.MapFrom(w => w.AppAuditState))
                 .ForMember(app => app.AppReleaseState, dto => dto.MapFrom(w => w.AppReleaseState))
                 .ForMember(app => app.AppTypeId, dto => dto.MapFrom(w => w.AppTypeId))
@@ -110,12 +110,12 @@ namespace NewCrmCore.Dto.MapperProfile
         }
     }
 
-    internal class RoleDtoToAccountRoleProfile : Profile
+    internal class RoleDtoToUserRoleProfile : Profile
     {
-        public RoleDtoToAccountRoleProfile()
+        public RoleDtoToUserRoleProfile()
         {
-            CreateMap<RoleDto, AccountRole>()
-                .ForMember(accountRole => accountRole.RoleId, dto => dto.MapFrom(d => d.Id));
+            CreateMap<RoleDto, UserRole>()
+                .ForMember(userRole => userRole.RoleId, dto => dto.MapFrom(d => d.Id));
         }
     }
 
@@ -130,7 +130,7 @@ namespace NewCrmCore.Dto.MapperProfile
                 .ForMember(log => log.Action, dto => dto.MapFrom(d => d.Action))
                 .ForMember(log => log.ExceptionMessage, dto => dto.MapFrom(d => d.ExceptionMessage))
                 .ForMember(log => log.Track, dto => dto.MapFrom(d => d.Track))
-                .ForMember(log => log.AccountId, dto => dto.MapFrom(d => d.AccountId));
+                .ForMember(log => log.UserId, dto => dto.MapFrom(d => d.UserId));
         }
     }
 

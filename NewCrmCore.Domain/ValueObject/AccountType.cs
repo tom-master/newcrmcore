@@ -2,7 +2,7 @@
 
 namespace NewCrmCore.Domain.ValueObject
 {
-    public enum AccountType
+    public enum UserType
     {
         [Description("普通用户")]
         User = 1,

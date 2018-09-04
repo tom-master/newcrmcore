@@ -13,16 +13,16 @@ using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.Web.Controllers
 {
-    public class AccountManagerController : BaseController
+    public class UserManagerController : BaseController
     {
         private readonly ISecurityServices _securityServices;
 
-        private readonly IAccountServices _accountServices;
+        private readonly IUserServices _userServices;
 
-        public AccountManagerController(ISecurityServices securityServices, IAccountServices accountServices)
+        public UserManagerController(ISecurityServices securityServices, IUserServices userServices)
         {
             _securityServices = securityServices;
-            _accountServices = accountServices;
+            _userServices = userServices;
         }
 
         #region 页面
@@ -40,14 +40,14 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 创建新账户
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Account(Int32 accountId = 0)
+        public async Task<IActionResult> User(Int32 userId = 0)
         {
-            if (accountId != 0)
+            if (userId != 0)
             {
-                ViewData["Account"] = await _accountServices.GetAccountAsync(accountId);
+                ViewData["User"] = await _userServices.GetUserAsync(userId);
             }
             ViewData["Roles"] = (await _securityServices.GetRolesAsync("", 1, 100)).Models;
             return View();
@@ -60,17 +60,17 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 移除账户
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> RemoveAccount(Int32 accountId)
+        public async Task<IActionResult> RemoveUser(Int32 userId)
         {
             #region 参数验证
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             #endregion
 
             var response = new ResponseModel<String>();
-            await _accountServices.RemoveAccountAsync(accountId);
+            await _userServices.RemoveUserAsync(userId);
             response.IsSuccess = true;
             response.Message = "移除账户成功";
 
@@ -84,17 +84,17 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 账户启用
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Enable(Int32 accountId)
+        public async Task<IActionResult> Enable(Int32 userId)
         {
             #region 参数验证
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             #endregion
 
             var response = new ResponseModel<String>();
-            await _accountServices.EnableAsync(accountId);
+            await _userServices.EnableAsync(userId);
             response.IsSuccess = true;
             response.Message = "启用账户成功";
 
@@ -108,17 +108,17 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 账户禁用
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Disable(Int32 accountId)
+        public async Task<IActionResult> Disable(Int32 userId)
         {
             #region 参数验证
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             #endregion
 
             var response = new ResponseModel<String>();
-            await _accountServices.DisableAsync(accountId);
+            await _userServices.DisableAsync(userId);
             response.IsSuccess = true;
             response.Message = "禁用账户成功";
 
@@ -135,27 +135,27 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="forms"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateAccount(IFormCollection forms)
+        public async Task<IActionResult> CreateUser(IFormCollection forms)
         {
             #region 参数验证
             Parameter.Validate(forms);
             #endregion
 
-            var response = new ResponseModel<AccountDto>();
-            var dto = WapperAccountDto(forms);
+            var response = new ResponseModel<UserDto>();
+            var dto = WapperUserDto(forms);
             if (dto.Id == 0)
             {
-                await _accountServices.AddNewAccountAsync(dto);
+                await _userServices.AddNewUserAsync(dto);
 
                 response.Message = "创建新账户成功";
                 response.IsSuccess = true;
             }
             else
             {
-                await _accountServices.ModifyAccountAsync(dto);
+                await _userServices.ModifyUserAsync(dto);
                 if (!String.IsNullOrEmpty(dto.Password))
                 {
-                    Response.Cookies.Append("Account", AccountId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
+                    Response.Cookies.Append("User", UserId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
                 }
                 response.Message = "修改账户成功";
                 response.IsSuccess = true;
@@ -172,17 +172,17 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 获取所有账户
         /// </summary>
-        /// <param name="accountName"></param>
-        /// <param name="accountType"></param>
+        /// <param name="userName"></param>
+        /// <param name="userType"></param>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Accounts(String accountName, String accountType, Int32 pageIndex, Int32 pageSize)
+        public async Task<IActionResult> Users(String userName, String userType, Int32 pageIndex, Int32 pageSize)
         {
-            var response = new ResponseModels<IList<AccountDto>>();
+            var response = new ResponseModels<IList<UserDto>>();
 
-            var result = await _accountServices.GetAccountsAsync(accountName, accountType, pageIndex, pageSize);
+            var result = await _userServices.GetUsersAsync(userName, userType, pageIndex, pageSize);
             if (result != null)
             {
                 response.TotalCount = result.TotalCount;
@@ -210,7 +210,7 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(param);
             #endregion
 
-            var result = await _accountServices.CheckAccountNameExistAsync(param);
+            var result = await _userServices.CheckUserNameExistAsync(param);
             return Json(result ? new { status = "y", info = "" } : new { status = "n", info = "用户名已存在" });
         }
 
@@ -218,7 +218,7 @@ namespace NewCrmCore.Web.Controllers
 
         #region private method
 
-        private AccountDto WapperAccountDto(IFormCollection forms)
+        private UserDto WapperUserDto(IFormCollection forms)
         {
             var roleIds = new List<RoleDto>();
             if ((forms["val_roleIds"] + "").Length > 0)
@@ -229,10 +229,10 @@ namespace NewCrmCore.Web.Controllers
                 }).ToList();
             }
 
-            return new AccountDto
+            return new UserDto
             {
                 Id = String.IsNullOrEmpty(forms["id"]) ? 0 : Int32.Parse(forms["id"]),
-                Name = forms["val_accountname"],
+                Name = forms["val_username"],
                 Password = forms["val_password"],
                 IsAdmin = Int32.Parse(forms["val_type"]) == 2,
                 Roles = roleIds

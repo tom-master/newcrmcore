@@ -16,12 +16,12 @@ namespace NewCrmCore.Web.Controllers
     {
         private readonly IAppServices _appServices;
 
-        private readonly IAccountServices _accountServices;
+        private readonly IUserServices _userServices;
 
-        public AppManagerController(IAppServices appServices, IAccountServices accountServices)
+        public AppManagerController(IAppServices appServices, IUserServices userServices)
         {
             _appServices = appServices;
-            _accountServices = accountServices;
+            _userServices = userServices;
         }
 
         #region 页面
@@ -33,7 +33,7 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync(AccountId);
+            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync(UserId);
             ViewData["AppStyles"] = _appServices.GetAppStyles().ToList();
             ViewData["AppStates"] = _appServices.GetAppStates().Where(w => w.Name == "未审核" || w.Name == "已发布").ToList();
 
@@ -51,11 +51,11 @@ namespace NewCrmCore.Web.Controllers
             AppDto appResult = null;
             if (appId != 0)// 如果appId为0则是新创建app
             {
-                appResult = await _appServices.GetAppAsync(appId, AccountId);
+                appResult = await _appServices.GetAppAsync(appId, UserId);
                 ViewData["AppState"] = appResult.AppAuditState;
             }
 
-            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync(AccountId);
+            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync(UserId);
             return View(appResult);
         }
 
@@ -149,10 +149,10 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> GetApps(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
         {
             var response = new ResponseModels<IList<AppDto>>();
-            var result = await _appServices.GetAccountAppsAsync(0, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize);
+            var result = await _appServices.GetUserAppsAsync(0, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize);
             foreach (var appDto in result.Models)
             {
-                appDto.IsCreater = appDto.AccountId == AccountId;
+                appDto.IsCreater = appDto.UserId == UserId;
             }
 
             response.TotalCount = result.TotalCount;
@@ -179,7 +179,7 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(param);
             #endregion
 
-            var result = await _accountServices.CheckAppNameAsync(param);
+            var result = await _userServices.CheckAppNameAsync(param);
             return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "应用名称已存在" });
         }
 
@@ -199,7 +199,7 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(param);
             #endregion
 
-            var result = await _accountServices.CheckAppUrlAsync(param);
+            var result = await _userServices.CheckAppUrlAsync(param);
             return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "应用Url已存在" });
         }
 

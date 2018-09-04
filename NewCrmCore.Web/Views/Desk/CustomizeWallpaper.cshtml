@@ -2,7 +2,7 @@
 @using NewLibCore
 @{
     Layout = "~/Views/Shared/_LayoutRoot.cshtml";
-    var accountConfig = ViewData["AccountConfig"] as ConfigDto;
+    var userConfig = ViewData["UserConfig"] as ConfigDto;
 }
 @section ChildrenCss
 {
@@ -26,11 +26,11 @@
     <div class="fr">
         <label>显示方式：</label>
         <select name="wallpapertype" id="wallpapertype" style="width: 100px">
-            <option name="fill" value="fill" @{if(accountConfig.WallpaperMode == "Fill"){ <text> selected="selected" </text>} }>填充</option>
-            <option name="adapted" value="adapted" @{if(accountConfig.WallpaperMode == "Adapted") { <text> selected="selected" </text>       }}>适应</option>
-            <option name="tile" value="tile" @{ if(accountConfig.WallpaperMode == "Tile") { <text> selected="selected" </text>       } }>平铺</option>
-            <option name="draw" value="draw" @{ if(accountConfig.WallpaperMode == "Draw") { <text> selected="selected" </text>       } }>拉伸</option>
-            <option name="center" value="center" @{ if(accountConfig.WallpaperMode == "Center") { <text> selected="selected" </text>       } }>居中</option>
+            <option name="fill" value="fill" @{if(userConfig.WallpaperMode == "Fill"){ <text> selected="selected" </text>} }>填充</option>
+            <option name="adapted" value="adapted" @{if(userConfig.WallpaperMode == "Adapted") { <text> selected="selected" </text>       }}>适应</option>
+            <option name="tile" value="tile" @{ if(userConfig.WallpaperMode == "Tile") { <text> selected="selected" </text>       } }>平铺</option>
+            <option name="draw" value="draw" @{ if(userConfig.WallpaperMode == "Draw") { <text> selected="selected" </text>       } }>拉伸</option>
+            <option name="center" value="center" @{ if(userConfig.WallpaperMode == "Center") { <text> selected="selected" </text>       } }>居中</option>
         </select>
     </div>
 </div>
@@ -65,7 +65,7 @@
                 Height: cb[0].Height,
                 Url: cb[0].Url,
                 Source: 3,
-                AccountId: '@accountConfig.AccountId',
+                UserId: '@userConfig.UserId',
                 Md5: cb[0].Md5,
                 ShortUrl: ""
             };

@@ -27,7 +27,7 @@ namespace NewCrmCore.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IAccountServices, AccountServices>();
+            services.AddTransient<IUserServices, UserServices>();
             services.AddTransient<ISecurityServices, SecurityServices>();
             services.AddTransient<IAppServices, AppServices>();
             services.AddTransient<IDeskServices, DeskServices>();
@@ -35,7 +35,7 @@ namespace NewCrmCore.Web
             services.AddTransient<ISkinServices, SkinServices>();
             services.AddTransient<ILoggerServices, LoggerServices>();
 
-            services.AddTransient<IAccountContext, AccountContext>();
+            services.AddTransient<IUserContext, UserContext>();
             services.AddTransient<IAppContext, Domain.Services.BoundedContext.AppContext>();
             services.AddTransient<IDeskContext, DeskContext>();
             services.AddTransient<ILoggerContext, LoggerContext>();

@@ -17,33 +17,33 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
 {
-    public class AccountContext : IAccountContext
+    public class UserContext : IUserContext
     {
-        public async Task<Account> ValidateAsync(String accountName, String password, String requestIp)
+        public async Task<User> ValidateAsync(String userName, String password, String requestIp)
         {
-            Parameter.Validate(accountName);
+            Parameter.Validate(userName);
             Parameter.Validate(password);
 
             return await Task.Run(() =>
              {
                  using (var dataStore = new DataStore(Appsetting.Database))
                  {
-                     Account result = null;
+                     User result = null;
                      try
                      {
                          dataStore.OpenTransaction();
 
                          #region 查询用户
                          {
-                             var sql = @"SELECT a.Id,a.Name,a.LoginPassword,a1.AccountFace 
-                                        FROM Account AS a
+                             var sql = @"SELECT a.Id,a.Name,a.LoginPassword,a1.UserFace 
+                                        FROM User AS a
                                         INNER JOIN Config AS a1
-                                        ON a1.AccountId=a.Id 
+                                        ON a1.UserId=a.Id 
                                         WHERE a.Name=@name AND a.IsDeleted=0 AND a.IsDisable=0";
-                             result = dataStore.Find<Account>(sql, new List<ParameterMapper> { new ParameterMapper("@name", accountName) }).FirstOrDefault();
+                             result = dataStore.Find<User>(sql, new List<ParameterMapper> { new ParameterMapper("@name", userName) }).FirstOrDefault();
                              if (result == null)
                              {
-                                 throw new BusinessException($"该用户不存在或被禁用{accountName}");
+                                 throw new BusinessException($"该用户不存在或被禁用{userName}");
                              }
 
                              if (!PasswordUtil.ComparePasswords(result.LoginPassword, password))
@@ -90,9 +90,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
              });
         }
 
-        public async Task<Config> GetConfigAsync(Int32 accountId)
+        public async Task<Config> GetConfigAsync(Int32 userId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             return await Task.Run(() =>
              {
                  using (var dataStore = new DataStore(Appsetting.Database))
@@ -100,7 +100,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                      var sql = $@"SELECT 
 								a.Id,
 								a.Skin,  
-								a.AccountFace,
+								a.UserFace,
 								a.AppSize,  
 								a.AppVerticalSpacing,
 								a.AppHorizontalSpacing,
@@ -111,11 +111,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a.WallpaperMode,
 								a.WallpaperId,
 								a.IsBing,
-								a.AccountId,
-                                a.IsModifyAccountFace,
+								a.UserId,
+                                a.IsModifyUserFace,
                                 a.WallpaperId
-								FROM Config AS a WHERE a.AccountId=@accountId AND a.IsDeleted=0";
-                     var parameters = new List<ParameterMapper> { new ParameterMapper("@accountId", accountId) };
+								FROM Config AS a WHERE a.UserId=@userId AND a.IsDeleted=0";
+                     var parameters = new List<ParameterMapper> { new ParameterMapper("@userId", userId) };
                      var result = dataStore.Find<Config>(sql, parameters).FirstOrDefault();
                      return result;
                  }
@@ -137,7 +137,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public List<Account> GetAccounts(String accountName, String accountType, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
+        public List<User> GetUsers(String userName, String userType, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
             Parameter.Validate(pageIndex);
             Parameter.Validate(pageSize);
@@ -145,15 +145,15 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             var where = new StringBuilder();
             where.Append("WHERE 1=1 AND a.IsDeleted=0 ");
             var parameters = new List<ParameterMapper>();
-            if (!String.IsNullOrEmpty(accountName))
+            if (!String.IsNullOrEmpty(userName))
             {
-                parameters.Add(new ParameterMapper("@name", accountName));
+                parameters.Add(new ParameterMapper("@name", userName));
                 where.Append(" AND a.Name=@name");
             }
 
-            if (!String.IsNullOrEmpty(accountType))
+            if (!String.IsNullOrEmpty(userType))
             {
-                var isAdmin = (EnumExtensions.ToEnum<AccountType>(Int32.Parse(accountType)) == AccountType.Admin) ? 1 : 0;
+                var isAdmin = (EnumExtensions.ToEnum<UserType>(Int32.Parse(userType)) == UserType.Admin) ? 1 : 0;
                 parameters.Add(new ParameterMapper("@isAdmin", isAdmin));
                 where.Append($@" AND a.IsAdmin=@isAdmin");
             }
@@ -162,8 +162,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 #region totalCount
                 {
-                    var sql = $@"SELECT COUNT(*) FROM Account AS a 
-                                 INNER JOIN Config AS a1 ON a1.AccountId=a.Id AND a1.IsDeleted=0 {where} ";
+                    var sql = $@"SELECT COUNT(*) FROM User AS a 
+                                 INNER JOIN Config AS a1 ON a1.UserId=a.Id AND a1.IsDeleted=0 {where} ";
                     totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
                 }
                 #endregion
@@ -175,27 +175,27 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a.IsAdmin,
 								a.Name,
 								a.IsDisable,
-								a1.AccountFace,
-                                a1.IsModifyAccountFace
-	                            FROM Account AS a 
+								a1.UserFace,
+                                a1.IsModifyUserFace
+	                            FROM User AS a 
 	                            INNER JOIN Config AS a1
-	                            ON a1.AccountId=a.Id AND a1.IsDeleted=0
+	                            ON a1.UserId=a.Id AND a1.IsDeleted=0
 	                            {where} LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
-                    return dataStore.Find<Account>(sql, parameters);
+                    return dataStore.Find<User>(sql, parameters);
                 }
                 #endregion
             }
         }
 
-        public async Task<Account> GetAccountAsync(Int32 accountId)
+        public async Task<User> GetUserAsync(Int32 userId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
                     var sql = $@"SELECT 
-                            a1.AccountFace,
+                            a1.UserFace,
                             a.AddTime,
                             a.Id,
                             a.IsAdmin,
@@ -206,19 +206,19 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.Name,
                             a.LockScreenPassword,
                             a.LoginPassword
-                            FROM Account AS a 
+                            FROM User AS a 
                             INNER JOIN  Config AS a1
-                            ON a1.AccountId=a.Id
-                            WHERE a.Id=@accountId AND a.IsDeleted=0 AND a.IsDisable=0";
-                    var parameters = new List<ParameterMapper> { new ParameterMapper("@accountId", accountId) };
-                    return dataStore.FindOne<Account>(sql, parameters);
+                            ON a1.UserId=a.Id
+                            WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
+                    var parameters = new List<ParameterMapper> { new ParameterMapper("@userId", userId) };
+                    return dataStore.FindOne<User>(sql, parameters);
                 }
             });
         }
 
-        public async Task<List<Role>> GetRolesAsync(Int32 accountId)
+        public async Task<List<Role>> GetRolesAsync(Int32 userId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -227,11 +227,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a1.Id,
 								a1.Name,
 								a1.RoleIdentity
-								FROM AccountRole AS a
+								FROM UserRole AS a
 								INNER JOIN Role AS a1
 								ON a1.Id=a.RoleId AND a1.IsDeleted=0 
-								WHERE a.AccountId=@accountId AND a.IsDeleted=0 ";
-                    var parameters = new List<ParameterMapper> { new ParameterMapper("@accountId", accountId) };
+								WHERE a.UserId=@userId AND a.IsDeleted=0 ";
+                    var parameters = new List<ParameterMapper> { new ParameterMapper("@userId", userId) };
                     return dataStore.Find<Role>(sql, parameters);
                 }
             });
@@ -249,36 +249,36 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task<Boolean> CheckAccountNameExistAsync(String accountName)
+        public async Task<Boolean> CheckUserNameExistAsync(String userName)
         {
-            Parameter.Validate(accountName);
+            Parameter.Validate(userName);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    var sql = $@"SELECT COUNT(*) FROM Account AS a WHERE a.Name=@name AND a.IsDeleted=0";
-                    return dataStore.FindSingleValue<Int32>(sql, new List<ParameterMapper> { new ParameterMapper("@name", accountName) }) != 0 ? false : true;
+                    var sql = $@"SELECT COUNT(*) FROM User AS a WHERE a.Name=@name AND a.IsDeleted=0";
+                    return dataStore.FindSingleValue<Int32>(sql, new List<ParameterMapper> { new ParameterMapper("@name", userName) }) != 0 ? false : true;
                 }
             });
         }
 
-        public async Task<String> GetOldPasswordAsync(Int32 accountId)
+        public async Task<String> GetOldPasswordAsync(Int32 userId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             return await Task.Run<String>(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    var sql = $@"SELECT a.LoginPassword FROM Account AS a WHERE a.Id=@accountId AND a.IsDeleted=0 AND a.IsDisable=0";
-                    var parameters = new List<ParameterMapper> { new ParameterMapper("@accountId", accountId) };
+                    var sql = $@"SELECT a.LoginPassword FROM User AS a WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
+                    var parameters = new List<ParameterMapper> { new ParameterMapper("@userId", userId) };
                     return dataStore.FindSingleValue<String>(sql, parameters);
                 }
             });
         }
 
-        public async Task<Boolean> UnlockScreenAsync(Int32 accountId, String unlockPassword)
+        public async Task<Boolean> UnlockScreenAsync(Int32 userId, String unlockPassword)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(unlockPassword);
             return await Task.Run(() =>
             {
@@ -286,10 +286,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     #region 获取锁屏密码
                     {
-                        var sql = $@"SELECT a.LockScreenPassword FROM Account AS a WHERE a.Id=@accountId AND a.IsDeleted=0 AND a.IsDisable=0";
+                        var sql = $@"SELECT a.LockScreenPassword FROM User AS a WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
                         var parameters = new List<ParameterMapper>
                         {
-                            new ParameterMapper("@accountId",accountId)
+                            new ParameterMapper("@userId",userId)
                         };
                         var password = dataStore.FindSingleValue<String>(sql, parameters);
                         return PasswordUtil.ComparePasswords(password, unlockPassword);
@@ -335,9 +335,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task LogoutAsync(Int32 accountId)
+        public async Task LogoutAsync(Int32 userId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -347,9 +347,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         dataStore.OpenTransaction();
                         #region 设置用户下线
                         {
-                            var account = new Account();
-                            account.Offline();
-                            var rowCount = dataStore.Modify(account, acc => acc.Id == accountId && !acc.IsDeleted && !acc.IsDisable);
+                            var user = new User();
+                            user.Offline();
+                            var rowCount = dataStore.Modify(user, acc => acc.Id == userId && !acc.IsDeleted && !acc.IsDisable);
                             if (rowCount == 0)
                             {
                                 throw new BusinessException("设置用户下线状态失败");
@@ -361,7 +361,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var online = new Online();
                             online.Remove();
-                            var rowCount = dataStore.Modify(online, on => on.AccountId == accountId && !on.IsDeleted);
+                            var rowCount = dataStore.Modify(online, on => on.UserId == userId && !on.IsDeleted);
                             if (rowCount == 0)
                             {
                                 throw new BusinessException("将用户移出在线列表时失败");
@@ -380,9 +380,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task AddNewAccountAsync(Account account)
+        public async Task AddNewUserAsync(User user)
         {
-            Parameter.Validate(account);
+            Parameter.Validate(user);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -391,14 +391,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         dataStore.OpenTransaction();
 
-                        var accountId = 0;
+                        var userId = 0;
                         var configId = 0;
 
                         #region 新增用户
                         {
-                            accountId = dataStore.Add(account);
+                            userId = dataStore.Add(user);
 
-                            if (accountId == 0)
+                            if (userId == 0)
                             {
                                 throw new BusinessException("初始化用户时失败");
                             }
@@ -407,7 +407,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                         #region 初始化配置
                         {
-                            var config = new Config(accountId);
+                            var config = new Config(userId);
                             configId = dataStore.Add(config);
 
                             if (configId == 0)
@@ -419,9 +419,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                         #region 更新用户的配置
                         {
-                            account.ModifyConfigId(configId);
-                            var accountRowCount = dataStore.Modify(account, acc => acc.Id == accountId);
-                            if (accountRowCount == 0)
+                            user.ModifyConfigId(configId);
+                            var userRowCount = dataStore.Modify(user, acc => acc.Id == userId);
+                            if (userRowCount == 0)
                             {
                                 throw new BusinessException("更新用户配置失败");
                             }
@@ -431,9 +431,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         #region 用户角色
                         {
                             var sqlBuilder = new StringBuilder();
-                            foreach (var item in account.Roles)
+                            foreach (var item in user.Roles)
                             {
-                                dataStore.Add(new AccountRole(accountId, item.RoleId));
+                                dataStore.Add(new UserRole(userId, item.RoleId));
                             }
                         }
                         #endregion
@@ -450,9 +450,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task ModifyAccountAsync(Account account)
+        public async Task ModifyUserAsync(User user)
         {
-            Parameter.Validate(account);
+            Parameter.Validate(user);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -460,14 +460,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     dataStore.OpenTransaction();
                     try
                     {
-                        if (!String.IsNullOrEmpty(account.LoginPassword))
+                        if (!String.IsNullOrEmpty(user.LoginPassword))
                         {
                             #region 修改密码
                             {
-                                var newPassword = PasswordUtil.CreateDbPassword(account.LoginPassword);
-                                account.ModifyLoginPassword(newPassword);
+                                var newPassword = PasswordUtil.CreateDbPassword(user.LoginPassword);
+                                user.ModifyLoginPassword(newPassword);
 
-                                var rowCount = dataStore.Modify(account, acc => acc.Id == account.Id);
+                                var rowCount = dataStore.Modify(user, acc => acc.Id == user.Id);
                                 if (rowCount == 0)
                                 {
                                     throw new BusinessException("修改登陆密码失败");
@@ -478,23 +478,23 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                         #region 修改账户角色
                         {
-                            var accountRole = new AccountRole();
-                            accountRole.Remove();
-                            dataStore.Modify(accountRole, acc => acc.AccountId == account.Id);
+                            var userRole = new UserRole();
+                            userRole.Remove();
+                            dataStore.Modify(userRole, acc => acc.UserId == user.Id);
 
-                            if (account.Roles == null || !account.Roles.Any())
+                            if (user.Roles == null || !user.Roles.Any())
                             {
-                                account.DetachAdminRole();
+                                user.DetachAdminRole();
                             }
                             else
                             {
-                                account.AttachAdminRole();
-                                foreach (var item in account.Roles)
+                                user.AttachAdminRole();
+                                foreach (var item in user.Roles)
                                 {
-                                    dataStore.Add(new AccountRole(account.Id, item.RoleId));
+                                    dataStore.Add(new UserRole(user.Id, item.RoleId));
                                 }
                             }
-                            dataStore.Modify(account, ac => ac.Id == account.Id);
+                            dataStore.Modify(user, ac => ac.Id == user.Id);
 
                         }
                         #endregion
@@ -510,32 +510,32 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task EnableAsync(Int32 accountId)
+        public async Task EnableAsync(Int32 userId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    var account = new Account().Enable();
-                    dataStore.Modify(account, acc => acc.Id == accountId);
+                    var user = new User().Enable();
+                    dataStore.Modify(user, acc => acc.Id == userId);
                 }
             });
         }
 
-        public async Task DisableAsync(Int32 accountId)
+        public async Task DisableAsync(Int32 userId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    var parameters = new List<ParameterMapper> { new ParameterMapper("@accountId", accountId) };
+                    var parameters = new List<ParameterMapper> { new ParameterMapper("@userId", userId) };
                     #region 前置条件验证
                     {
                         var sql = $@"SELECT COUNT(*) FROM Role AS a
-									INNER JOIN AccountRole AS a1
-									ON a1.AccountId=@accountId AND a1.RoleId=a.Id AND a1.IsDeleted=0
+									INNER JOIN UserRole AS a1
+									ON a1.UserId=@userId AND a1.RoleId=a.Id AND a1.IsDeleted=0
 									WHERE a.IsDeleted=0 AND a.IsAllowDisable=0";
                         var result = dataStore.FindSingleValue<Int32>(sql, parameters);
                         if (result > 0)
@@ -545,63 +545,63 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     }
                     #endregion
                     {
-                        var account = new Account().Disable();
-                        dataStore.Modify(account, acc => acc.Id == accountId);
+                        var user = new User().Disable();
+                        dataStore.Modify(user, acc => acc.Id == userId);
                     }
                 }
             });
         }
 
-        public async Task ModifyAccountFaceAsync(Int32 accountId, String newFace)
+        public async Task ModifyUserFaceAsync(Int32 userId, String newFace)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(newFace);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    var config = new Config().ModifyAccountFace(newFace);
-                    dataStore.Modify(config, conf => conf.AccountId == accountId);
+                    var config = new Config().ModifyUserFace(newFace);
+                    dataStore.Modify(config, conf => conf.UserId == userId);
                 }
             });
         }
 
-        public async Task ModifyPasswordAsync(Int32 accountId, String newPassword, Boolean isTogetherSetLockPassword)
+        public async Task ModifyPasswordAsync(Int32 userId, String newPassword, Boolean isTogetherSetLockPassword)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(newPassword);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    var account = new Account();
+                    var user = new User();
                     if (isTogetherSetLockPassword)
                     {
-                        account.ModifyLockScreenPassword(newPassword);
+                        user.ModifyLockScreenPassword(newPassword);
                     }
-                    account.ModifyLoginPassword(newPassword);
-                    dataStore.Modify(account, acc => acc.Id == accountId && acc.IsDisable == false);
+                    user.ModifyLoginPassword(newPassword);
+                    dataStore.Modify(user, acc => acc.Id == userId && acc.IsDisable == false);
                 }
             });
         }
 
-        public async Task ModifyLockScreenPasswordAsync(Int32 accountId, String newScreenPassword)
+        public async Task ModifyLockScreenPasswordAsync(Int32 userId, String newScreenPassword)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(newScreenPassword);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    var account = new Account().ModifyLockScreenPassword(newScreenPassword);
-                    dataStore.Modify(account, acc => acc.Id == accountId && !acc.IsDisable);
+                    var user = new User().ModifyLockScreenPassword(newScreenPassword);
+                    dataStore.Modify(user, acc => acc.Id == userId && !acc.IsDisable);
                 }
             });
         }
 
-        public async Task RemoveAccountAsync(Int32 accountId)
+        public async Task RemoveUserAsync(Int32 userId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -614,10 +614,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var parameters = new List<ParameterMapper>
                             {
-                                new ParameterMapper("@accountId",accountId)
+                                new ParameterMapper("@userId",userId)
                             };
 
-                            var sql = $@"SELECT a.IsAdmin FROM Account AS a WHERE a.Id=@accountId AND a.IsDeleted=0 AND a.IsDisable=0";
+                            var sql = $@"SELECT a.IsAdmin FROM User AS a WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
                             var isAdmin = dataStore.FindSingleValue<Boolean>(sql, parameters);
                             if (isAdmin)
                             {
@@ -628,9 +628,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                         #region 移除账户
                         {
-                            var account = new Account();
-                            account.Remove();
-                            dataStore.Modify(account, acc => acc.Id == accountId && !acc.IsDisable);
+                            var user = new User();
+                            user.Remove();
+                            dataStore.Modify(user, acc => acc.Id == userId && !acc.IsDisable);
                         }
                         #endregion
 
@@ -638,15 +638,15 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var config = new Config();
                             config.Remove();
-                            dataStore.Modify(config, conf => conf.AccountId == accountId);
+                            dataStore.Modify(config, conf => conf.UserId == userId);
                         }
                         #endregion
 
                         #region 移除用户角色
                         {
-                            var accountRole = new AccountRole();
-                            accountRole.Remove();
-                            dataStore.Modify(accountRole, accRole => accRole.AccountId == accountId);
+                            var userRole = new UserRole();
+                            userRole.Remove();
+                            dataStore.Modify(userRole, accRole => accRole.UserId == userId);
                         }
                         #endregion
 
@@ -654,7 +654,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var member = new Member();
                             member.Remove();
-                            dataStore.Modify(member, mem => mem.AccountId == accountId);
+                            dataStore.Modify(member, mem => mem.UserId == userId);
                         }
                         #endregion
 

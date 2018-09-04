@@ -18,7 +18,7 @@ namespace NewCrmCore.Domain.Entitys.System
         /// 用户头像
         /// </summary>
         [PropertyRequired, InputRange(150)]
-        public String AccountFace { get; private set; }
+        public String UserFace { get; private set; }
 
         /// <summary>
         /// app尺寸
@@ -78,7 +78,7 @@ namespace NewCrmCore.Domain.Entitys.System
         /// 账户Id
         /// </summary>
         [PropertyRequired]
-        public Int32 AccountId { get; private set; }
+        public Int32 UserId { get; private set; }
 
         /// <summary>
         /// 壁纸Id
@@ -90,13 +90,13 @@ namespace NewCrmCore.Domain.Entitys.System
         /// 账户头像是否被更改
         /// </summary>
         [PropertyRequired]
-        public Boolean IsModifyAccountFace { get; private set; }
+        public Boolean IsModifyUserFace { get; private set; }
 
-        public Config(Int32 accountId)
+        public Config(Int32 userId)
         {
             AppXy = AppAlignMode.X;
             DockPosition = DockPosition.Top;
-            AccountFace = @"/images/ui/avatar_48.jpg";
+            UserFace = @"/images/ui/avatar_48.jpg";
             Skin = "default";
             WallpaperMode = WallpaperMode.Fill;
             AppSize = 48;
@@ -104,9 +104,9 @@ namespace NewCrmCore.Domain.Entitys.System
             AppHorizontalSpacing = 50;
             DefaultDeskNumber = 1;
             DefaultDeskCount = 5;
-            AccountId = accountId;
+            UserId = userId;
             IsBing = true;
-            IsModifyAccountFace = false;
+            IsModifyUserFace = false;
             WallpaperId = 3;
         }
 
@@ -115,10 +115,10 @@ namespace NewCrmCore.Domain.Entitys.System
 
     public partial class Config
     {
-        public Config ModifyAccountId(Int32 accountId)
+        public Config ModifyUserId(Int32 userId)
         {
-            AccountId = accountId;
-            OnPropertyChanged(new PropertyArgs(nameof(AccountId), AccountId));
+            UserId = userId;
+            OnPropertyChanged(new PropertyArgs(nameof(UserId), UserId));
             return this;
         }
 
@@ -134,16 +134,16 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
-        public Config ModifyAccountFace(String accountFace)
+        public Config ModifyUserFace(String userFace)
         {
-            if (String.IsNullOrEmpty(accountFace))
+            if (String.IsNullOrEmpty(userFace))
             {
-                throw new ArgumentException($@"{nameof(accountFace)} is null");
+                throw new ArgumentException($@"{nameof(userFace)} is null");
             }
 
-            AccountFace = accountFace;
-            IsModifyAccountFace = true;
-            OnPropertyChanged(new PropertyArgs(nameof(AccountFace), AccountFace), new PropertyArgs(nameof(IsModifyAccountFace), IsModifyAccountFace));
+            UserFace = userFace;
+            IsModifyUserFace = true;
+            OnPropertyChanged(new PropertyArgs(nameof(UserFace), UserFace), new PropertyArgs(nameof(IsModifyUserFace), IsModifyUserFace));
             return this;
         }
 

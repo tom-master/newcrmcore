@@ -5,20 +5,20 @@ using Newtonsoft.Json;
 
 namespace NewCrmCore.Web.Controllers.ControllerHelper
 {
-	public class BaseController: Controller
-	{
-		protected Int32 AccountId
-		{
-			get
-			{
-				var account = Request.Cookies["Account"];
-				if (account != null)
-				{
-					var accountId = JsonConvert.DeserializeObject<AccountDto>(account).Id;
-					return Int32.Parse(accountId.ToString());
-				}
-				return 0;
-			}
-		}
-	}
+    public class BaseController : Controller
+    {
+        protected Int32 UserId
+        {
+            get
+            {
+                var user = Request.Cookies["User"];
+                if (user != null)
+                {
+                    var userId = JsonConvert.DeserializeObject<UserDto>(user).Id;
+                    return Int32.Parse(userId.ToString());
+                }
+                return 0;
+            }
+        }
+    }
 }

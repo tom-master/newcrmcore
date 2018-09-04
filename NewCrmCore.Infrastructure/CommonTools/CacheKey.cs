@@ -15,7 +15,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
             protected override string FormatKey()
             {
-                return String.Format("Config:AccountId:{0}", _identity);
+                return String.Format("Config:UserId:{0}", _identity);
             }
         }
 
@@ -34,33 +34,33 @@ namespace NewCrmCore.Infrastructure.CommonTools
             }
         }
 
-        public class AccountCacheKey : CacheKeyBase
+        public class UserCacheKey : CacheKeyBase
         {
             private Int32 _identity;
 
-            public AccountCacheKey(Int32 identity)
+            public UserCacheKey(Int32 identity)
             {
                 _identity = identity;
             }
 
             protected override string FormatKey()
             {
-                return String.Format("Account:AccountId:{0}", _identity);
+                return String.Format("User:UserId:{0}", _identity);
             }
         }
 
-        public class AccountRoleCacheKey : CacheKeyBase
+        public class UserRoleCacheKey : CacheKeyBase
         {
             private Int32 _identity;
 
-            public AccountRoleCacheKey(Int32 identity)
+            public UserRoleCacheKey(Int32 identity)
             {
                 _identity = identity;
             }
 
             protected override string FormatKey()
             {
-                return String.Format("Roles:AccountId:{0}", _identity);
+                return String.Format("Roles:UserId:{0}", _identity);
             }
         }
 
@@ -90,7 +90,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
             protected override string FormatKey()
             {
-                return String.Format("Desktop:AccountId:{0}", _identity);
+                return String.Format("Desktop:UserId:{0}", _identity);
             }
         }
 

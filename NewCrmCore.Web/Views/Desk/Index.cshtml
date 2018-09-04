@@ -2,8 +2,8 @@
 @{
 	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
 
-	var account = ViewData["Account"] as AccountDto;
-	var accountConfig = ViewData["AccountConfig"] as ConfigDto;
+	var user = ViewData["User"] as UserDto;
+	var userConfig = ViewData["UserConfig"] as ConfigDto;
 	var desks = (Int32)ViewData["Desks"];
 }
 @section IndexCss
@@ -70,11 +70,11 @@
 					<a href="javascript:void(0);" class="startmenu-lock" title="锁定，快捷键：Ctrl + L"></a>
 			<a href="javascript:void(0);" class="startmenu-lock" title="锁定，快捷键：Ctrl + L"></a>
 			<div class="startmenu-avatar">
-				<img src="@account.AccountFace">
+				<img src="@user.UserFace">
 			</div>
 			<div class="startmenu-nick">
 				<a href="###" title="编辑个人资料">
-					@account.Name
+					@user.Name
 				</a>
 			</div>
 		</div>
@@ -143,14 +143,14 @@
 		return false;
 	};  
 
-	HROS.CONFIG.dockPos = '@accountConfig.DockPosition';
-	HROS.CONFIG.appXY = '@accountConfig.AppXy';
-	HROS.CONFIG.appSize = parseInt('@accountConfig.AppSize');
-	HROS.CONFIG.desk = parseInt(@accountConfig.DefaultDeskNumber);
-	HROS.CONFIG.appHorizontalSpacing = '@accountConfig.AppHorizontalSpacing';
-	HROS.CONFIG.appVerticalSpacing = '@accountConfig.AppVerticalSpacing';
+	HROS.CONFIG.dockPos = '@userConfig.DockPosition';
+	HROS.CONFIG.appXY = '@userConfig.AppXy';
+	HROS.CONFIG.appSize = parseInt('@userConfig.AppSize');
+	HROS.CONFIG.desk = parseInt(@userConfig.DefaultDeskNumber);
+	HROS.CONFIG.appHorizontalSpacing = '@userConfig.AppHorizontalSpacing';
+	HROS.CONFIG.appVerticalSpacing = '@userConfig.AppVerticalSpacing';
 	HROS.CONFIG.deskCount = parseInt('@desks');
-	HROS.CONFIG.lockPwdAndLoginPwd = '@(account.Password==account.LockScreenPassword?1:0)'
+	HROS.CONFIG.lockPwdAndLoginPwd = '@(user.Password==user.LockScreenPassword?1:0)'
 	HROS.base.init();
 	
 	$(".loading").hide();

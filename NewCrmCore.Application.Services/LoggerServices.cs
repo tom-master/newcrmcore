@@ -25,9 +25,9 @@ namespace NewCrmCore.Application.Services
             await _loggerContext.AddLoggerAsync(log.ConvertToModel<LogDto, Log>());
         }
 
-        public async Task<PageList<LogDto>> GetLogsAsync(Int32 accountId, Int32 logLevel, Int32 pageIndex, Int32 pageSize)
+        public async Task<PageList<LogDto>> GetLogsAsync(Int32 userId, Int32 logLevel, Int32 pageIndex, Int32 pageSize)
         {
-            var result = _loggerContext.GetLogs(accountId, logLevel, pageIndex, pageSize, out var totalCount);
+            var result = _loggerContext.GetLogs(userId, logLevel, pageIndex, pageSize, out var totalCount);
             return await Task.Run(() =>
             {
                 return new PageList<LogDto>
@@ -35,7 +35,7 @@ namespace NewCrmCore.Application.Services
                     TotalCount = totalCount,
                     Models = result.Select(s => new LogDto
                     {
-                        AccountId = s.AccountId,
+                        UserId = s.UserId,
                         Action = s.Action,
                         AddTime = s.AddTime.ToString("yyyy-MM-dd"),
                         Controller = s.Controller,

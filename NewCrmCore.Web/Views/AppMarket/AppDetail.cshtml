@@ -56,13 +56,13 @@
 			<h4>应用介绍</h4>
 			<h5>
 				@{
-					if (Model.AccountId == 0)
+					if (Model.UserId == 0)
 					{
 						<text><em>开发者：</em><b style="color:red">平台提供</b></text>
 					}
 					else
 					{
-						<text><em>开发者：</em><b style="color:red">@ViewData["AccountName"]</b></text>
+						<text><em>开发者：</em><b style="color:red">@ViewData["UserName"]</b></text>
 					}
 				}
 

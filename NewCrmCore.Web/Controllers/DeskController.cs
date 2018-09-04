@@ -28,19 +28,19 @@ namespace NewCrmCore.Web.Controllers
 
         private readonly IAppServices _appServices;
 
-        private readonly IAccountServices _accountServices;
+        private readonly IUserServices _userServices;
 
         public DeskController(IWallpaperServices wallpaperServices,
         ISkinServices skinServices,
         IDeskServices deskServices,
         IAppServices appServices,
-        IAccountServices accountServices)
+        IUserServices userServices)
         {
             _wallpaperServices = wallpaperServices;
             _skinServices = skinServices;
             _deskServices = deskServices;
             _appServices = appServices;
-            _accountServices = accountServices;
+            _userServices = userServices;
         }
 
         #region 页面
@@ -53,20 +53,20 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> Index()
         {
             ViewBag.Title = "桌面";
-            if (HttpContext.Request.Cookies["Account"] != null)
+            if (HttpContext.Request.Cookies["User"] != null)
             {
-                var account = await _accountServices.GetAccountAsync(AccountId);
-                ViewData["Account"] = account;
+                var user = await _userServices.GetUserAsync(UserId);
+                ViewData["User"] = user;
 
-                var config = await _accountServices.GetConfigAsync(account.Id);
-                if (config.IsModifyAccountFace)
+                var config = await _userServices.GetConfigAsync(user.Id);
+                if (config.IsModifyUserFace)
                 {
-                    account.AccountFace = Appsetting.FileUrl + account.AccountFace;
+                    user.UserFace = Appsetting.FileUrl + user.UserFace;
                 }
 
-                ViewData["AccountConfig"] = config;
+                ViewData["UserConfig"] = config;
                 ViewData["Desks"] = config.DefaultDeskCount;
-                return View(account);
+                return View(user);
             }
 
             return RedirectToAction("login", "desk");
@@ -79,8 +79,8 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet, DoNotCheckPermission]
         public IActionResult Login()
         {
-            var accountId = Request.Cookies["Account"];
-            if (accountId != null)
+            var userId = Request.Cookies["User"];
+            if (userId != null)
             {
                 return RedirectToAction("Index", "Desk");
             }
@@ -100,7 +100,7 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(memberId);
             #endregion
 
-            var result = await _deskServices.GetMemberAsync(AccountId, memberId);
+            var result = await _deskServices.GetMemberAsync(UserId, memberId);
             return View(result);
         }
 
@@ -111,7 +111,7 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> SystemWallPaper()
         {
-            ViewData["AccountConfig"] = await _accountServices.GetConfigAsync(AccountId);
+            ViewData["UserConfig"] = await _userServices.GetConfigAsync(UserId);
             ViewData["Wallpapers"] = await _wallpaperServices.GetWallpapersAsync();
 
             return View();
@@ -124,7 +124,7 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> CustomizeWallpaper()
         {
-            ViewData["AccountConfig"] = await _accountServices.GetConfigAsync(AccountId);
+            ViewData["UserConfig"] = await _userServices.GetConfigAsync(UserId);
             return View();
         }
 
@@ -145,8 +145,8 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> ConfigDesk()
         {
-            ViewData["AccountConfig"] = await _accountServices.GetConfigAsync(AccountId);
-            ViewData["Desks"] = (await _accountServices.GetConfigAsync(AccountId)).DefaultDeskCount;
+            ViewData["UserConfig"] = await _userServices.GetConfigAsync(UserId);
+            ViewData["Desks"] = (await _userServices.GetConfigAsync(UserId)).DefaultDeskCount;
 
             return View();
         }
@@ -168,16 +168,16 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(loginParameter);
             #endregion
 
-            var response = new ResponseModel<AccountDto>();
+            var response = new ResponseModel<UserDto>();
 
-            var account = await _accountServices.LoginAsync(loginParameter["accountname"], loginParameter["password"], Request.HttpContext.Connection.RemoteIpAddress.ToString());
-            if (account != null)
+            var user = await _userServices.LoginAsync(loginParameter["username"], loginParameter["password"], Request.HttpContext.Connection.RemoteIpAddress.ToString());
+            if (user != null)
             {
                 var cookieTimeout = (String.IsNullOrEmpty(loginParameter["remerber"]) ? false : Boolean.Parse(loginParameter["remerber"])) ? DateTime.Now.AddDays(7) : DateTime.Now.AddMinutes(60);
                 response.Message = "登陆成功";
                 response.IsSuccess = true;
 
-                HttpContext.Response.Cookies.Append($@"Account", JsonConvert.SerializeObject(new AccountDto { Id = account.Id, AccountFace = Appsetting.FileUrl + account.AccountFace, Name = account.Name }), new CookieOptions { Expires = cookieTimeout });
+                HttpContext.Response.Cookies.Append($@"User", JsonConvert.SerializeObject(new UserDto { Id = user.Id, UserFace = Appsetting.FileUrl + user.UserFace, Name = user.Name }), new CookieOptions { Expires = cookieTimeout });
             }
             return Json(response);
         }
@@ -199,7 +199,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var response = new ResponseModel();
-            await _wallpaperServices.ModifyWallpaperAsync(AccountId, wallpaperId);
+            await _wallpaperServices.ModifyWallpaperAsync(UserId, wallpaperId);
             response.IsSuccess = true;
             response.Message = "设置壁纸成功";
 
@@ -223,7 +223,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var response = new ResponseModel<IList<WallpaperDto>>();
-            await _wallpaperServices.RemoveWallpaperAsync(AccountId, wallPaperId);
+            await _wallpaperServices.RemoveWallpaperAsync(UserId, wallPaperId);
             response.IsSuccess = true;
             response.Message = "删除壁纸成功";
 
@@ -255,7 +255,7 @@ namespace NewCrmCore.Web.Controllers
                 Height = wallpaper.Height,
                 Url = wallpaper.Url,
                 Source = wallpaper.Source,
-                AccountId = AccountId,
+                UserId = UserId,
                 Md5 = wallpaper.Md5,
                 ShortUrl = ""
             });
@@ -284,7 +284,7 @@ namespace NewCrmCore.Web.Controllers
 
             var response = new ResponseModel<Tuple<Int32, String>>();
 
-            var result = _wallpaperServices.AddWebWallpaperAsync(AccountId, webUrl);
+            var result = _wallpaperServices.AddWebWallpaperAsync(UserId, webUrl);
             response.IsSuccess = true;
             response.Message = "网络壁纸保存成功";
             response.Model = await result;
@@ -310,7 +310,7 @@ namespace NewCrmCore.Web.Controllers
 
             var response = new ResponseModel();
 
-            await _skinServices.ModifySkinAsync(AccountId, skin);
+            await _skinServices.ModifySkinAsync(UserId, skin);
             response.IsSuccess = true;
             response.Message = "更换皮肤成功";
 
@@ -335,7 +335,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var response = new ResponseModel<String>();
-            await _deskServices.ModifyMemberIconAsync(AccountId, model.MemberId, model.NewIcon);
+            await _deskServices.ModifyMemberIconAsync(UserId, model.MemberId, model.NewIcon);
 
             response.IsSuccess = true;
             response.Message = "更新图标成功";
@@ -361,7 +361,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var response = new ResponseModel();
-            var result = await _accountServices.UnlockScreenAsync(AccountId, unlockPassword);
+            var result = await _userServices.UnlockScreenAsync(UserId, unlockPassword);
             if (result)
             {
                 response.IsSuccess = true;
@@ -381,8 +381,8 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
-            await _accountServices.LogoutAsync(AccountId);
-            Response.Cookies.Append("Account", AccountId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
+            await _userServices.LogoutAsync(UserId);
+            Response.Cookies.Append("User", UserId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
             return new EmptyResult();
         }
 
@@ -398,7 +398,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> GetSkin()
         {
             var response = new ResponseModel<String>();
-            var skinName = (await _accountServices.GetConfigAsync(AccountId)).Skin;
+            var skinName = (await _userServices.GetConfigAsync(UserId)).Skin;
             response.IsSuccess = true;
             response.Model = skinName;
             response.Message = "初始化皮肤成功";
@@ -418,7 +418,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> GetWallpaper()
         {
             var response = new ResponseModel<ConfigDto>();
-            var result = await _accountServices.GetConfigAsync(AccountId);
+            var result = await _userServices.GetConfigAsync(UserId);
 
             if (result.WallpaperSource == WallpaperSource.Upload)
             {
@@ -458,7 +458,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var response = new ResponseModel<dynamic>();
-            var internalMemberResult = type == "folder" ? await _deskServices.GetMemberAsync(AccountId, id, true) : await _deskServices.GetMemberAsync(AccountId, id);
+            var internalMemberResult = type == "folder" ? await _deskServices.GetMemberAsync(UserId, id, true) : await _deskServices.GetMemberAsync(UserId, id);
             response.IsSuccess = true;
             response.Message = "创建一个窗口成功";
             response.Model = new
@@ -500,7 +500,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var response = new ResponseModel();
-            await _deskServices.CreateNewFolderAsync(model.FolderName, model.FolderImg, model.DeskId, AccountId);
+            await _deskServices.CreateNewFolderAsync(model.FolderName, model.FolderImg, model.DeskId, UserId);
             response.IsSuccess = true;
             response.Message = "新建文件夹成功";
 
@@ -524,7 +524,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var response = new ResponseModel();
-            await _deskServices.UninstallMemberAsync(AccountId, memberId);
+            await _deskServices.UninstallMemberAsync(UserId, memberId);
             response.IsSuccess = true;
             response.Message = "卸载成功";
 
@@ -571,31 +571,31 @@ namespace NewCrmCore.Web.Controllers
             switch (model.MoveType.ToLower())
             {
                 case "desk-dock": //成员从桌面移动到码头
-                    await _deskServices.MemberInDockAsync(AccountId, model.MemberId);
+                    await _deskServices.MemberInDockAsync(UserId, model.MemberId);
                     break;
                 case "dock-desk": //成员从码头移动到桌面
-                    await _deskServices.MemberOutDockAsync(AccountId, model.MemberId, model.To);
+                    await _deskServices.MemberOutDockAsync(UserId, model.MemberId, model.To);
                     break;
                 case "dock-folder": //成员从码头移动到桌面文件夹中
-                    await _deskServices.DockToFolderAsync(AccountId, model.MemberId, model.To);
+                    await _deskServices.DockToFolderAsync(UserId, model.MemberId, model.To);
                     break;
                 case "folder-dock": //成员从文件夹移动到码头
-                    await _deskServices.FolderToDockAsync(AccountId, model.MemberId);
+                    await _deskServices.FolderToDockAsync(UserId, model.MemberId);
                     break;
                 case "desk-folder": //成员从桌面移动到文件夹
-                    await _deskServices.DeskToFolderAsync(AccountId, model.MemberId, model.To);
+                    await _deskServices.DeskToFolderAsync(UserId, model.MemberId, model.To);
                     break;
                 case "folder-desk": //成员从文件夹移动到桌面
-                    await _deskServices.FolderToDeskAsync(AccountId, model.MemberId, model.To);
+                    await _deskServices.FolderToDeskAsync(UserId, model.MemberId, model.To);
                     break;
                 case "folder-folder": //成员从文件夹移动到另一个文件夹中
-                    await _deskServices.FolderToOtherFolderAsync(AccountId, model.MemberId, model.To);
+                    await _deskServices.FolderToOtherFolderAsync(UserId, model.MemberId, model.To);
                     break;
                 case "desk-desk": //桌面移动到另一个桌面
-                    await _deskServices.DeskToOtherDeskAsync(AccountId, model.MemberId, model.To);
+                    await _deskServices.DeskToOtherDeskAsync(UserId, model.MemberId, model.To);
                     break;
                 case "dock-otherdesk"://应用码头移动到另一个桌面
-                    await _deskServices.DockToOtherDeskAsync(AccountId, model.MemberId, model.To);
+                    await _deskServices.DockToOtherDeskAsync(UserId, model.MemberId, model.To);
                     break;
             }
             var response = new ResponseModel
@@ -637,7 +637,7 @@ namespace NewCrmCore.Web.Controllers
             };
 
             var response = new ResponseModel();
-            await _deskServices.ModifyMemberInfoAsync(AccountId, memberDto);
+            await _deskServices.ModifyMemberInfoAsync(UserId, memberDto);
             response.IsSuccess = true;
             response.Message = "修改成员信息成功";
 
@@ -656,7 +656,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> GetUploadWallPapers()
         {
             var response = new ResponseModel<IList<WallpaperDto>>();
-            var result = await _wallpaperServices.GetUploadWallpaperAsync(AccountId);
+            var result = await _wallpaperServices.GetUploadWallpaperAsync(UserId);
             response.IsSuccess = true;
             response.Message = "载入之前上传的壁纸成功";
             response.Model = result;
@@ -682,7 +682,7 @@ namespace NewCrmCore.Web.Controllers
             var result = await _skinServices.GetAllSkinAsync(skinPath);
             response.IsSuccess = true;
             response.Message = "获取皮肤列表成功";
-            response.Model = new { result, currentSkin = (await _accountServices.GetConfigAsync(AccountId)).Skin };
+            response.Model = new { result, currentSkin = (await _userServices.GetConfigAsync(UserId)).Skin };
             return Json(response);
 
         }
@@ -705,7 +705,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var response = new ResponseModel();
-            await _deskServices.ModifyDockPositionAsync(AccountId, model.DeskNum, model.Pos);
+            await _deskServices.ModifyDockPositionAsync(UserId, model.DeskNum, model.Pos);
             response.IsSuccess = true;
             response.Message = "更改码头的位置成功";
 
@@ -729,7 +729,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var response = new ResponseModel();
-            await _deskServices.ModifyWallpaperSourceAsync(source, AccountId);
+            await _deskServices.ModifyWallpaperSourceAsync(source, UserId);
             response.IsSuccess = true;
             response.Message = "更改壁纸来源成功";
 
@@ -753,7 +753,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var response = new ResponseModel();
-            await _appServices.ModifyAppIconSizeAsync(AccountId, appSize);
+            await _appServices.ModifyAppIconSizeAsync(UserId, appSize);
             response.IsSuccess = true;
             response.Message = "更改图标大小成功";
 
@@ -769,10 +769,10 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAccountFace()
+        public async Task<IActionResult> GetUserFace()
         {
             var response = new ResponseModel<String>();
-            var result = (await _accountServices.GetConfigAsync(AccountId)).AccountFace;
+            var result = (await _userServices.GetConfigAsync(UserId)).UserFace;
             response.IsSuccess = true;
             response.Message = "获取用户头像成功";
             response.Model = Appsetting.FileUrl + result;
@@ -799,7 +799,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var response = new ResponseModel();
-            await _deskServices.ModifyFolderInfoAsync(AccountId, model.Name, model.Icon, model.MemberId);
+            await _deskServices.ModifyFolderInfoAsync(UserId, model.Name, model.Icon, model.MemberId);
             response.IsSuccess = true;
             response.Message = "修改成功";
 
@@ -818,7 +818,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> GetDockPos()
         {
             var response = new ResponseModel<DockPosition>();
-            var result = (await _accountServices.GetConfigAsync(AccountId)).DockPosition;
+            var result = (await _userServices.GetConfigAsync(UserId)).DockPosition;
             response.IsSuccess = true;
             response.Message = "初始化应用码头成功";
             response.Model = result;
@@ -843,7 +843,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var response = new ResponseModel();
-            await _deskServices.ModifyDefaultDeskNumberAsync(AccountId, deskNum);
+            await _deskServices.ModifyDefaultDeskNumberAsync(UserId, deskNum);
             response.IsSuccess = true;
             response.Message = "更换默认桌面成功";
 
@@ -868,7 +868,7 @@ namespace NewCrmCore.Web.Controllers
 
             var response = new ResponseModel();
 
-            await _appServices.ModifyAppDirectionAsync(AccountId, appXy);
+            await _appServices.ModifyAppDirectionAsync(UserId, appXy);
             response.IsSuccess = true;
             response.Message = "更换图标排列方向成功";
 
@@ -892,7 +892,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var response = new ResponseModel();
-            await _wallpaperServices.ModifyWallpaperModeAsync(AccountId, wallPaperShowType);
+            await _wallpaperServices.ModifyWallpaperModeAsync(UserId, wallPaperShowType);
             response.IsSuccess = true;
             response.Message = "壁纸显示模式设置成功";
 
@@ -908,10 +908,10 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAccountDeskMembers()
+        public async Task<IActionResult> GetUserDeskMembers()
         {
             var response = new ResponseModel<IDictionary<String, IList<dynamic>>>();
-            var result = await _deskServices.GetDeskMembersAsync(AccountId);
+            var result = await _deskServices.GetDeskMembersAsync(UserId);
             response.IsSuccess = true;
             response.Message = "获取我的应用成功";
             response.Model = result;
@@ -936,7 +936,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var response = new ResponseModel();
-            await _appServices.ModifyAppHorizontalSpacingAsync(AccountId, appHorizontal);
+            await _appServices.ModifyAppHorizontalSpacingAsync(UserId, appHorizontal);
             response.IsSuccess = true;
             response.Message = "更改图标水平间距成功";
 
@@ -960,7 +960,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var response = new ResponseModel();
-            await _appServices.ModifyAppVerticalSpacingAsync(AccountId, appVertical);
+            await _appServices.ModifyAppVerticalSpacingAsync(UserId, appVertical);
             response.IsSuccess = true;
             response.Message = "更改图标垂直间距成功";
 
@@ -985,7 +985,7 @@ namespace NewCrmCore.Web.Controllers
 
             var response = new ResponseModel<PageList<NotifyDto>>();
             response.IsSuccess = true;
-            response.Model = await _deskServices.CheckUnreadNotifyCount(AccountId, pageIndex, pageSize);
+            response.Model = await _deskServices.CheckUnreadNotifyCount(UserId, pageIndex, pageSize);
             response.Message = "消息列表获取成功";
 
             return Json(response);

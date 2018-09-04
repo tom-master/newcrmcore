@@ -34,7 +34,7 @@ namespace NewCrmCore.Dto
 
         public Int32 DeskIndex { get; set; }
 
-        public Int32 AccountId { get; set; }
+        public Int32 UserId { get; set; }
 
         public Boolean IsIconByUpload { get; set; }
 

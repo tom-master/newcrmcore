@@ -8,7 +8,7 @@ using NewLibCore.Data.Mapper.MapperExtension;
 namespace NewCrmCore.Domain.Entitys.Agent
 {
     [Description("用户"), Serializable]
-    public partial class Account : DomainModelBase
+    public partial class User : DomainModelBase
     {
         /// <summary>
         /// 用户名
@@ -61,19 +61,19 @@ namespace NewCrmCore.Domain.Entitys.Agent
         /// <summary>
         /// 账户头像
         /// </summary>
-        public String AccountFace { get; private set; }
+        public String UserFace { get; private set; }
 
         /// <summary>
         /// 用户角色
         /// </summary>
-        public IEnumerable<AccountRole> Roles { get; private set; }
+        public IEnumerable<UserRole> Roles { get; private set; }
 
-        public Boolean IsModifyAccountFace { get; private set; }
+        public Boolean IsModifyUserFace { get; private set; }
 
         /// <summary>
         /// 实例化一个用户对象
         /// </summary>
-        public Account(String name, String password, IEnumerable<AccountRole> roles, AccountType accountType = default(AccountType))
+        public User(String name, String password, IEnumerable<UserRole> roles, UserType userType = default(UserType))
         {
             Name = name;
             LoginPassword = password;
@@ -81,19 +81,19 @@ namespace NewCrmCore.Domain.Entitys.Agent
             LastLoginTime = DateTime.Now;
             LockScreenPassword = password;
             IsOnline = false;
-            IsAdmin = accountType == AccountType.Admin;
+            IsAdmin = userType == UserType.Admin;
             Roles = roles;
         }
 
-        public Account() { }
+        public User() { }
     }
 
-    public partial class Account
+    public partial class User
     {
         /// <summary>
         /// 修改登陆密码
         /// </summary>
-        public Account ModifyLoginPassword(String password)
+        public User ModifyLoginPassword(String password)
         {
             if (String.IsNullOrEmpty(password))
             {
@@ -108,7 +108,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         /// <summary>
         /// 修改锁屏密码
         /// </summary>
-        public Account ModifyLockScreenPassword(String password)
+        public User ModifyLockScreenPassword(String password)
         {
             if (String.IsNullOrEmpty(password))
             {
@@ -123,7 +123,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         /// <summary>
         /// 修改关联配置文件Id
         /// </summary>
-        public Account ModifyConfigId(Int32 configId)
+        public User ModifyConfigId(Int32 configId)
         {
             ConfigId = configId;
             OnPropertyChanged(new PropertyArgs(nameof(ConfigId), configId));
@@ -133,7 +133,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         /// <summary>
         /// 账户启用
         /// </summary>
-        public Account Enable()
+        public User Enable()
         {
             IsDisable = false;
             OnPropertyChanged(new PropertyArgs(nameof(IsDisable), IsDisable));
@@ -143,7 +143,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         /// <summary>
         /// 账户禁用
         /// </summary>
-        public Account Disable()
+        public User Disable()
         {
             IsDisable = true;
             OnPropertyChanged(new PropertyArgs(nameof(IsDisable), IsDisable));
@@ -154,7 +154,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         /// 上线
         /// </summary>
         /// <returns></returns>
-        public Account Online()
+        public User Online()
         {
             IsOnline = true;
             LastLoginTime = DateTime.Now;
@@ -166,7 +166,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         /// 下线
         /// </summary>
         /// <returns></returns>
-        public Account Offline()
+        public User Offline()
         {
             IsOnline = false;
             OnPropertyChanged(new PropertyArgs(nameof(IsOnline), IsOnline));
@@ -176,7 +176,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         /// <summary>
         /// 修改角色
         /// </summary>
-        public Account ModifyRoles(params Int32[] roleIds)
+        public User ModifyRoles(params Int32[] roleIds)
         {
             if (roleIds.Length == 0)
             {
@@ -184,7 +184,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
             }
 
             Roles.ToList().Clear();
-            Roles = roleIds.Select(roleId => new AccountRole(Id, roleId));
+            Roles = roleIds.Select(roleId => new UserRole(Id, roleId));
             OnPropertyChanged(new PropertyArgs(nameof(Roles), Roles));
             return this;
         }
@@ -192,7 +192,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         /// <summary>
         /// 去除管理员角色
         /// </summary>
-        public Account DetachAdminRole()
+        public User DetachAdminRole()
         {
             IsAdmin = false;
             OnPropertyChanged(new PropertyArgs(nameof(IsAdmin), IsAdmin));
@@ -203,7 +203,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         /// 附加管理员角色
         /// </summary>
         /// <returns></returns>
-        public Account AttachAdminRole()
+        public User AttachAdminRole()
         {
             IsAdmin = true;
             OnPropertyChanged(new PropertyArgs(nameof(IsAdmin), IsAdmin));

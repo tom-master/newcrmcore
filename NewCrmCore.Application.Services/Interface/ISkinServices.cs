@@ -16,8 +16,8 @@ namespace NewCrmCore.Application.Services.Interface
         /// <summary>
         /// 修改默认显示的皮肤
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="newSkin"></param>
-        Task ModifySkinAsync(Int32 accountId, String newSkin);
+        Task ModifySkinAsync(Int32 userId, String newSkin);
     }
 }

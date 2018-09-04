@@ -15,11 +15,11 @@ namespace NewCrmCore.Dto
 
             Mapper.Initialize(d =>
             {
-                d.CreateMap<AccountDto, Account>();
-                d.AddProfile<AccountDtoToAccountProfile>();
+                d.CreateMap<UserDto, User>();
+                d.AddProfile<UserDtoToUserProfile>();
 
-                d.CreateMap<RoleDto, AccountRole>();
-                d.AddProfile<RoleDtoToAccountRoleProfile>();
+                d.CreateMap<RoleDto, UserRole>();
+                d.AddProfile<RoleDtoToUserRoleProfile>();
 
                 d.CreateMap<WallpaperDto, Wallpaper>();
                 d.AddProfile<WallpaperDtoToWallpaperProfile>();

@@ -1,4 +1,4 @@
-﻿@model NewCrmCore.Dto.AccountDto
+﻿@model NewCrmCore.Dto.UserDto
 
 @{
 	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
@@ -24,7 +24,7 @@
 			<a href="javascript:void(0);">修改头像</a>
 		</li>
 
-		<li data-value="accountsafe" @{ if (requestTarget == "accountsafe") { <text> class="focus" </text>  } }>
+		<li data-value="usersafe" @{ if (requestTarget == "usersafe") { <text> class="focus" </text>  } }>
 			<a href="javascript:void(0);">账号安全</a>
 		</li>
 	</ul>
@@ -37,22 +37,22 @@
 		{
 			case "baseinfo":
 				{
-					Html.RenderPartial("~/Views/AccountSetting/BaseInfo.cshtml", Model);
+					Html.RenderPartial("~/Views/UserSetting/BaseInfo.cshtml", Model);
 					break;
 				}
 			case "modifyface":
 				{
-					Html.RenderPartial("~/Views/AccountSetting/ModifyFace.cshtml", Model);
+					Html.RenderPartial("~/Views/UserSetting/ModifyFace.cshtml", Model);
 					break;
 				}
-			case "accountsafe":
+			case "usersafe":
 				{
-					Html.RenderPartial("~/Views/AccountSetting/AccountSafe.cshtml");
+					Html.RenderPartial("~/Views/UserSetting/UserSafe.cshtml");
 					break;
 				}
 			default:
 				{
-					Html.RenderPartial("~/Views/AccountSetting/BaseInfo.cshtml", Model);
+					Html.RenderPartial("~/Views/UserSetting/BaseInfo.cshtml", Model);
 					break;
 				}
 		}
@@ -76,13 +76,13 @@
             $('.title ul > li').each(function (k, v) {
                 $(v).removeClass('focus');
             });
-            var baseUrl = '@Url.Action("index", "accountsetting")'
+            var baseUrl = '@Url.Action("index", "usersetting")'
             if (value === 'baseinfo') {
                 location.href = baseUrl + '?target=baseinfo';
             } else if (value === 'modifyface') {
                 location.href = baseUrl + '?target=modifyface';
-            } else if (value === 'accountsafe') {
-                location.href = baseUrl + '?target=accountsafe';
+            } else if (value === 'usersafe') {
+                location.href = baseUrl + '?target=usersafe';
             }
         });
 
@@ -217,7 +217,7 @@
                 mimeTypes: 'image/*'
             },
             formData: {  
-                accountId: '@Model.Id',
+                userId: '@Model.Id',
                 uploadtype:'face'
             }  
         });
@@ -237,11 +237,11 @@
                     Height: cb[0].Height,
                     Url: cb[0].Url,
                     Source: 3,
-                    AccountId: '@Model.Id',
+                    UserId: '@Model.Id',
                     Md5: cb[0].Md5,
                     ShortUrl: ""
                 };
-                HROS.request.post('/accountsetting/modifyface', { accountFace: model.Url }, function (responseText) {
+                HROS.request.post('/usersetting/modifyface', { userFace: model.Url }, function (responseText) {
                     if (responseText.IsSuccess) {
                         NewCrm.msgbox.success('账户头像上传成功');
                         window.parent.HROS.startmenu.getAvatar();

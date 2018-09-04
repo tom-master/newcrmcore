@@ -31,7 +31,7 @@ namespace NewCrmCore.Application.Services
             var result = await _wallpaperContext.GetWallpapersAsync();
             return result.Select(s => new WallpaperDto
             {
-                AccountId = s.AccountId,
+                UserId = s.UserId,
                 Height = s.Height,
                 Id = s.Id,
                 Md5 = s.Md5,
@@ -49,12 +49,12 @@ namespace NewCrmCore.Application.Services
             return await _wallpaperContext.AddWallpaperAsync(wallpaperDto.ConvertToModel<WallpaperDto, Wallpaper>());
         }
 
-        public async Task<List<WallpaperDto>> GetUploadWallpaperAsync(Int32 accountId)
+        public async Task<List<WallpaperDto>> GetUploadWallpaperAsync(Int32 userId)
         {
-            Parameter.Validate(accountId);
-            return (await _wallpaperContext.GetUploadWallpaperAsync(accountId)).Select(s => new WallpaperDto
+            Parameter.Validate(userId);
+            return (await _wallpaperContext.GetUploadWallpaperAsync(userId)).Select(s => new WallpaperDto
             {
-                AccountId = s.AccountId,
+                UserId = s.UserId,
                 Height = s.Height,
                 Id = s.Id,
                 Md5 = s.Md5,
@@ -66,9 +66,9 @@ namespace NewCrmCore.Application.Services
             }).ToList();
         }
 
-        public async Task<Tuple<Int32, String>> AddWebWallpaperAsync(Int32 accountId, String url)
+        public async Task<Tuple<Int32, String>> AddWebWallpaperAsync(Int32 userId, String url)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(url);
 
             var imageTitle = Path.GetFileNameWithoutExtension(url);
@@ -91,7 +91,7 @@ namespace NewCrmCore.Application.Services
                     Source = EnumExtensions.ToEnum<WallpaperSource>((Int32)WallpaperSource.Web),
                     Title = imageTitle,
                     Url = url,
-                    AccountId = accountId,
+                    UserId = userId,
                     Md5 = md5,
                     ShortUrl = url
                 });
@@ -105,7 +105,7 @@ namespace NewCrmCore.Application.Services
             var result = await _wallpaperContext.GetUploadWallpaperAsync(md5);
             return new WallpaperDto
             {
-                AccountId = result.AccountId,
+                UserId = result.UserId,
                 Height = result.Height,
                 Width = result.Width,
                 Id = result.Id,
@@ -117,27 +117,27 @@ namespace NewCrmCore.Application.Services
             };
         }
 
-        public async Task ModifyWallpaperModeAsync(Int32 accountId, String newMode)
+        public async Task ModifyWallpaperModeAsync(Int32 userId, String newMode)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(newMode);
-            await _wallpaperContext.ModifyWallpaperModeAsync(accountId, newMode);
-            await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
+            await _wallpaperContext.ModifyWallpaperModeAsync(userId, newMode);
+            await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(userId));
         }
 
-        public async Task ModifyWallpaperAsync(Int32 accountId, Int32 newWallpaperId)
+        public async Task ModifyWallpaperAsync(Int32 userId, Int32 newWallpaperId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(newWallpaperId);
-            await _wallpaperContext.ModifyWallpaperAsync(accountId, newWallpaperId);
-            await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
+            await _wallpaperContext.ModifyWallpaperAsync(userId, newWallpaperId);
+            await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(userId));
         }
 
-        public async Task RemoveWallpaperAsync(Int32 accountId, Int32 wallpaperId)
+        public async Task RemoveWallpaperAsync(Int32 userId, Int32 wallpaperId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(wallpaperId);
-            await _wallpaperContext.RemoveWallpaperAsync(accountId, wallpaperId);
+            await _wallpaperContext.RemoveWallpaperAsync(userId, wallpaperId);
         }
     }
 }

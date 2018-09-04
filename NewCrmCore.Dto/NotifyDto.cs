@@ -12,9 +12,9 @@ namespace NewCrmCore.Dto
 
         public Boolean IsRead { get; set; }
 
-        public Int32 AccountId { get; set; }
+        public Int32 UserId { get; set; }
 
-        public Int32 ToAccountId { get; set; }
+        public Int32 ToUserId { get; set; }
     }
 
 }

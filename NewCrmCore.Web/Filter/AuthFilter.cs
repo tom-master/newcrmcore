@@ -25,7 +25,7 @@ namespace NewCrmCore.Web.Filter
                 return;
             }
 
-            if (filterContext.HttpContext.Request.Cookies["Account"] == null)
+            if (filterContext.HttpContext.Request.Cookies["User"] == null)
             {
                 ReturnMessage(filterContext, "会话过期,请刷新页面后重新登陆");
                 return;
@@ -47,16 +47,16 @@ namespace NewCrmCore.Web.Filter
 
             if (!String.IsNullOrEmpty(filterContext.HttpContext.Request.Query["id"]))
             {
-                var accountId = JsonConvert.DeserializeObject<AccountDto>(filterContext.HttpContext.Request.Cookies["Account"]).Id;
+                var userId = JsonConvert.DeserializeObject<UserDto>(filterContext.HttpContext.Request.Cookies["User"]).Id;
 
-                var account = await ((IAccountServices)filterContext
+                var user = await ((IUserServices)filterContext
                     .HttpContext
                     .RequestServices
-                    .GetService(typeof(IAccountServices)))
-                    .GetAccountAsync(accountId);
+                    .GetService(typeof(IUserServices)))
+                    .GetUserAsync(userId);
 
                 var appId = Int32.Parse(filterContext.HttpContext.Request.Query["id"]);
-                var isPermission = await ((ISecurityServices)filterContext.HttpContext.RequestServices.GetService(typeof(ISecurityServices))).CheckPermissionsAsync(appId, account.Roles.Select(role => role.Id).ToArray());
+                var isPermission = await ((ISecurityServices)filterContext.HttpContext.RequestServices.GetService(typeof(ISecurityServices))).CheckPermissionsAsync(appId, user.Roles.Select(role => role.Id).ToArray());
 
                 if (!isPermission)
                 {

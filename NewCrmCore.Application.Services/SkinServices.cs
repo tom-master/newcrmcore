@@ -43,12 +43,12 @@ namespace NewCrmCore.Application.Services
             });
         }
 
-        public async Task ModifySkinAsync(Int32 accountId, String newSkin)
+        public async Task ModifySkinAsync(Int32 userId, String newSkin)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(newSkin);
-            await _skinContext.ModifySkinAsync(accountId, newSkin);
-            await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(accountId));
+            await _skinContext.ModifySkinAsync(userId, newSkin);
+            await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(userId));
         }
     }
 }

@@ -4,8 +4,7 @@ namespace NewCrmCore.Dto
 {
     public sealed class WallpaperDto : BaseDto
     {
-
-        public Int32 AccountId { get; set; }
+        public Int32 UserId { get; set; }
 
         public String Title { get; set; }
 

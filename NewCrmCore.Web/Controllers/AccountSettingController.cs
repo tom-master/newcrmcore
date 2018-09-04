@@ -10,13 +10,13 @@ using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.Web.Controllers
 {
-    public class AccountSettingController : BaseController
+    public class UserSettingController : BaseController
     {
-        private IAccountServices _accountServices;
+        private IUserServices _userServices;
 
-        public AccountSettingController(IAccountServices accountServices)
+        public UserSettingController(IUserServices userServices)
         {
-            _accountServices = accountServices;
+            _userServices = userServices;
         }
 
         #region 页面
@@ -28,8 +28,8 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var account = await _accountServices.GetAccountAsync(AccountId);
-            return View(account);
+            var user = await _userServices.GetUserAsync(UserId);
+            return View(user);
         }
 
         #endregion
@@ -49,7 +49,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var response = new ResponseModel();
-            await _accountServices.ModifyLockScreenPasswordAsync(AccountId, forms["lockpassword"]);
+            await _userServices.ModifyLockScreenPasswordAsync(UserId, forms["lockpassword"]);
 
             response.Message = "锁屏密码修改成功";
             response.IsSuccess = true;
@@ -64,17 +64,17 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 上传账户头像
         /// </summary>
-        /// <param name="accountFace"></param>
+        /// <param name="userFace"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ModifyFace(String accountFace)
+        public async Task<IActionResult> ModifyFace(String userFace)
         {
             #region 参数验证
-            Parameter.Validate(accountFace);
+            Parameter.Validate(userFace);
             #endregion
 
             var response = new ResponseModel();
-            await _accountServices.ModifyAccountFaceAsync(AccountId, accountFace);
+            await _userServices.ModifyUserFaceAsync(UserId, userFace);
             response.IsSuccess = true;
             response.Model = "头像上传成功";
 
@@ -99,8 +99,8 @@ namespace NewCrmCore.Web.Controllers
 
             var response = new ResponseModel();
 
-            await _accountServices.ModifyPasswordAsync(AccountId, forms["password"], Int32.Parse(forms["lockPwdIsEqLoginPwd"]) == 1);
-            Response.Cookies.Append("Account", AccountId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
+            await _userServices.ModifyPasswordAsync(UserId, forms["password"], Int32.Parse(forms["lockPwdIsEqLoginPwd"]) == 1);
+            Response.Cookies.Append("User", UserId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
 
             response.Message = "账户密码修改成功";
             response.IsSuccess = true;
@@ -124,7 +124,7 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(param);
             #endregion
 
-            var result = await _accountServices.CheckPasswordAsync(AccountId, param);
+            var result = await _userServices.CheckPasswordAsync(UserId, param);
             return Json(result ? new { status = "y", info = "" } : new { status = "n", info = "原始密码错误" });
         }
 

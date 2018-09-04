@@ -20,12 +20,12 @@ namespace NewCrmCore.Web.Controllers
     {
         private readonly IAppServices _appServices;
 
-        private readonly IAccountServices _accountServices;
+        private readonly IUserServices _userServices;
 
-        public AppMarketController(IAppServices appServices, IAccountServices accountServices)
+        public AppMarketController(IAppServices appServices, IUserServices userServices)
         {
             _appServices = appServices;
-            _accountServices = accountServices;
+            _userServices = userServices;
         }
 
         #region 页面
@@ -37,12 +37,12 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync(AccountId);
-            ViewData["TodayRecommendApp"] = await _appServices.GetTodayRecommendAsync(AccountId);
+            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync(UserId);
+            ViewData["TodayRecommendApp"] = await _appServices.GetTodayRecommendAsync(UserId);
 
-            var account = await _accountServices.GetAccountAsync(AccountId);
-            ViewData["AccountName"] = account.Name;
-            ViewData["AccountApp"] = await _appServices.GetDevelopAndNotReleaseCountAsync(AccountId);
+            var user = await _userServices.GetUserAsync(UserId);
+            ViewData["UserName"] = user.Name;
+            ViewData["UserApp"] = await _appServices.GetDevelopAndNotReleaseCountAsync(UserId);
             return View();
         }
 
@@ -58,9 +58,9 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(appId);
             #endregion
 
-            ViewData["IsInstallApp"] = await _appServices.IsInstallAppAsync(AccountId, appId);
-            var result = await _appServices.GetAppAsync(appId, AccountId);
-            ViewData["AccountName"] = result.AccountName;
+            ViewData["IsInstallApp"] = await _appServices.IsInstallAppAsync(UserId, appId);
+            var result = await _appServices.GetAppAsync(appId, UserId);
+            ViewData["UserName"] = result.UserName;
 
             return View(result);
         }
@@ -70,9 +70,9 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> AccountAppManage()
+        public async Task<IActionResult> UserAppManage()
         {
-            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync(AccountId);
+            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync(UserId);
             ViewData["AppStyles"] = _appServices.GetAppStyles().ToList();
             ViewData["AppStates"] = _appServices.GetAppStates().ToList();
 
@@ -85,16 +85,16 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="appId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> AccountAppManageInfo(Int32 appId)
+        public async Task<IActionResult> UserAppManageInfo(Int32 appId)
         {
             AppDto result = null;
             if (appId != 0)// 如果appId为0则是新创建app
             {
-                result = await _appServices.GetAppAsync(appId, AccountId);
+                result = await _appServices.GetAppAsync(appId, UserId);
                 ViewData["AppState"] = result.AppAuditState;
             }
-            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync(AccountId);
-            ViewData["AccountId"] = AccountId;
+            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync(UserId);
+            ViewData["UserId"] = UserId;
             return View(result);
         }
 
@@ -117,7 +117,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var response = new ResponseModel();
-            await _appServices.ModifyAppStarAsync(AccountId, model.AppId, model.StarCount);
+            await _appServices.ModifyAppStarAsync(UserId, model.AppId, model.StarCount);
             response.IsSuccess = true;
             response.Message = "打分成功";
 
@@ -142,7 +142,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var response = new ResponseModel();
-            await _appServices.InstallAppAsync(AccountId, model.AppId, model.DeskNum);
+            await _appServices.InstallAppAsync(UserId, model.AppId, model.DeskNum);
             response.IsSuccess = true;
             response.Message = "安装成功";
 
@@ -167,7 +167,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var response = new ResponseModel<String>();
-            await _appServices.ModifyAppIconAsync(AccountId, model.AppId, model.NewIcon);
+            await _appServices.ModifyAppIconAsync(UserId, model.AppId, model.NewIcon);
 
             response.IsSuccess = true;
             response.Message = "更新图标成功";
@@ -195,7 +195,7 @@ namespace NewCrmCore.Web.Controllers
             var response = new ResponseModel();
 
             var appDto = WrapperAppDto(forms);
-            appDto.AccountId = AccountId;
+            appDto.UserId = UserId;
             await _appServices.CreateNewAppAsync(appDto);
 
             response.IsSuccess = true;
@@ -245,7 +245,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var response = new ResponseModel();
-            await _appServices.ModifyAccountAppInfoAsync(AccountId, WrapperAppDto(forms));
+            await _appServices.ModifyUserAppInfoAsync(UserId, WrapperAppDto(forms));
             response.IsSuccess = true;
             response.Message = "修改app信息成功";
 
@@ -269,7 +269,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> GetApps(Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize)
         {
             var response = new ResponseModels<IList<AppDto>>();
-            var result = await _appServices.GetAppsAsync(AccountId, appTypeId, orderId, searchText, pageIndex, pageSize);
+            var result = await _appServices.GetAppsAsync(UserId, appTypeId, orderId, searchText, pageIndex, pageSize);
             if (result != null)
             {
                 response.TotalCount = result.TotalCount;
@@ -299,10 +299,10 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAccountApps(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
+        public async Task<IActionResult> GetUserApps(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
         {
             var response = new ResponseModels<IList<AppDto>>();
-            var result = await _appServices.GetAccountAppsAsync(AccountId, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize);
+            var result = await _appServices.GetUserAppsAsync(UserId, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize);
             if (result != null)
             {
                 response.TotalCount = result.TotalCount;

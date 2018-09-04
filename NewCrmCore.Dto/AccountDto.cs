@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NewCrmCore.Dto
 {
-    public sealed class AccountDto : BaseDto
+    public sealed class UserDto : BaseDto
     {
         public String Name { get; set; }
 
@@ -16,7 +16,7 @@ namespace NewCrmCore.Dto
 
         public Boolean IsAdmin { get; set; }
 
-        public String AccountFace { get; set; }
+        public String UserFace { get; set; }
 
         public IList<RoleDto> Roles { get; set; }
 
@@ -30,9 +30,9 @@ namespace NewCrmCore.Dto
 
         public Boolean IsRememberPasswrod { get; set; }
 
-        public Boolean IsModifyAccountFace { get; set; }
+        public Boolean IsModifyUserFace { get; set; }
 
-        public AccountDto()
+        public UserDto()
         {
             Roles = new List<RoleDto>();
         }

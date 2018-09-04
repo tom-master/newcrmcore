@@ -15,9 +15,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 {
     public class DeskContext : IDeskContext
     {
-        public async Task ModifyDefaultDeskNumberAsync(Int32 accountId, Int32 newDefaultDeskNumber)
+        public async Task ModifyDefaultDeskNumberAsync(Int32 userId, Int32 newDefaultDeskNumber)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(newDefaultDeskNumber);
             await Task.Run(() =>
             {
@@ -25,14 +25,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var config = new Config();
                     config.ModifyDefaultDeskNumber(newDefaultDeskNumber);
-                    dataStore.Modify(config, conf => conf.AccountId == accountId);
+                    dataStore.Modify(config, conf => conf.UserId == userId);
                 }
             });
         }
 
-        public async Task ModifyDockPositionAsync(Int32 accountId, Int32 defaultDeskNumber, String position)
+        public async Task ModifyDockPositionAsync(Int32 userId, Int32 defaultDeskNumber, String position)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(defaultDeskNumber);
             Parameter.Validate(position);
 
@@ -43,42 +43,42 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     var config = new Config();
                     var newPosition = EnumExtensions.ToEnum<DockPosition>(position);
                     config.PositionTo(newPosition);
-                    dataStore.Modify(config, conf => conf.AccountId == accountId && conf.DefaultDeskNumber == defaultDeskNumber);
+                    dataStore.Modify(config, conf => conf.UserId == userId && conf.DefaultDeskNumber == defaultDeskNumber);
                 }
             });
         }
 
-        public async Task ModifyMemberDirectionToXAsync(Int32 accountId)
+        public async Task ModifyMemberDirectionToXAsync(Int32 userId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
                     var config = new Config();
                     config.DirectionToX();
-                    dataStore.Modify(config, conf => conf.AccountId == accountId);
+                    dataStore.Modify(config, conf => conf.UserId == userId);
                 }
             });
         }
 
-        public async Task ModifyMemberDirectionToYAsync(Int32 accountId)
+        public async Task ModifyMemberDirectionToYAsync(Int32 userId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
                     var config = new Config();
                     config.DirectionToY();
-                    dataStore.Modify(config, conf => conf.AccountId == accountId);
+                    dataStore.Modify(config, conf => conf.UserId == userId);
                 }
             });
         }
 
-        public async Task ModifyMemberDisplayIconSizeAsync(Int32 accountId, Int32 newSize)
+        public async Task ModifyMemberDisplayIconSizeAsync(Int32 userId, Int32 newSize)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(newSize);
             await Task.Run(() =>
             {
@@ -86,14 +86,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var config = new Config();
                     config.ModifyAppSize(newSize);
-                    dataStore.Modify(config, conf => conf.AccountId == accountId);
+                    dataStore.Modify(config, conf => conf.UserId == userId);
                 }
             });
         }
 
-        public async Task ModifyMemberHorizontalSpacingAsync(Int32 accountId, Int32 newSize)
+        public async Task ModifyMemberHorizontalSpacingAsync(Int32 userId, Int32 newSize)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(newSize);
             await Task.Run(() =>
             {
@@ -101,14 +101,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var config = new Config();
                     config.ModifyAppVerticalSpacing(newSize);
-                    dataStore.Modify(config, conf => conf.AccountId == accountId);
+                    dataStore.Modify(config, conf => conf.UserId == userId);
                 }
             });
         }
 
-        public async Task ModifyMemberVerticalSpacingAsync(Int32 accountId, Int32 newSize)
+        public async Task ModifyMemberVerticalSpacingAsync(Int32 userId, Int32 newSize)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(newSize);
 
             await Task.Run(() =>
@@ -117,14 +117,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var config = new Config();
                     config.ModifyAppHorizontalSpacing(newSize);
-                    dataStore.Modify(config, conf => conf.AccountId == accountId);
+                    dataStore.Modify(config, conf => conf.UserId == userId);
                 }
             });
         }
 
-        public async Task MemberInDockAsync(Int32 accountId, Int32 memberId)
+        public async Task MemberInDockAsync(Int32 userId, Int32 memberId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(memberId);
             await Task.Run(() =>
             {
@@ -132,14 +132,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var member = new Member();
                     member.OnDock();
-                    dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
+                    dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                 }
             });
         }
 
-        public async Task MemberOutDockAsync(Int32 accountId, Int32 memberId, Int32 deskId)
+        public async Task MemberOutDockAsync(Int32 userId, Int32 memberId, Int32 deskId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(memberId);
             Parameter.Validate(deskId);
             await Task.Run(() =>
@@ -148,14 +148,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var member = new Member();
                     member.OutDock().ModifyDeskIndex(deskId);
-                    dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
+                    dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                 }
             });
         }
 
-        public async Task DockToFolderAsync(Int32 accountId, Int32 memberId, Int32 folderId)
+        public async Task DockToFolderAsync(Int32 userId, Int32 memberId, Int32 folderId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(memberId);
             Parameter.Validate(folderId);
 
@@ -165,14 +165,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var member = new Member();
                     member.OutDock().ModifyFolderId(folderId);
-                    dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
+                    dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                 }
             });
         }
 
-        public async Task FolderToDockAsync(Int32 accountId, Int32 memberId)
+        public async Task FolderToDockAsync(Int32 userId, Int32 memberId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(memberId);
             await Task.Run(() =>
             {
@@ -180,14 +180,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var member = new Member();
                     member.OnDock().ModifyFolderId(0);
-                    dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
+                    dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                 }
             });
         }
 
-        public async Task DeskToFolderAsync(Int32 accountId, Int32 memberId, Int32 folderId)
+        public async Task DeskToFolderAsync(Int32 userId, Int32 memberId, Int32 folderId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(memberId);
             Parameter.Validate(folderId);
             await Task.Run(() =>
@@ -196,14 +196,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var member = new Member();
                     member.ModifyFolderId(folderId);
-                    dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
+                    dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                 }
             });
         }
 
-        public async Task FolderToDeskAsync(Int32 accountId, Int32 memberId, Int32 deskId)
+        public async Task FolderToDeskAsync(Int32 userId, Int32 memberId, Int32 deskId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(memberId);
             Parameter.Validate(deskId);
             await Task.Run(() =>
@@ -212,14 +212,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var member = new Member();
                     member.ModifyFolderId(0).ModifyDeskIndex(deskId);
-                    dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
+                    dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                 }
             });
         }
 
-        public async Task FolderToOtherFolderAsync(Int32 accountId, Int32 memberId, Int32 folderId)
+        public async Task FolderToOtherFolderAsync(Int32 userId, Int32 memberId, Int32 folderId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(memberId);
             Parameter.Validate(folderId);
             await Task.Run(() =>
@@ -228,14 +228,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var member = new Member();
                     member.ModifyFolderId(folderId);
-                    dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
+                    dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                 }
             });
         }
 
-        public async Task DeskToOtherDeskAsync(Int32 accountId, Int32 memberId, Int32 deskId)
+        public async Task DeskToOtherDeskAsync(Int32 userId, Int32 memberId, Int32 deskId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(memberId);
             Parameter.Validate(deskId);
 
@@ -252,7 +252,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         var set = new StringBuilder();
                         #region 查询成员是否在应用码头中
                         {
-                            var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.Id=0 AND a.AccountId=0 AND a.IsDeleted=0 AND IsOnDock=1";
+                            var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.Id=0 AND a.UserId=0 AND a.IsDeleted=0 AND IsOnDock=1";
                             if (dataStore.FindSingleValue<Int32>(sql) > 0)
                             {
                                 member.OutDock();
@@ -262,7 +262,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                         #region 成员移动到其他桌面
                         {
-                            dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
+                            dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                         }
                         #endregion
 
@@ -277,9 +277,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task DockToOtherDeskAsync(Int32 accountId, Int32 memberId, Int32 deskId)
+        public async Task DockToOtherDeskAsync(Int32 userId, Int32 memberId, Int32 deskId)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(memberId);
             Parameter.Validate(deskId);
             await Task.Run(() =>
@@ -288,12 +288,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var member = new Member();
                     member.OutDock().ModifyDeskIndex(deskId);
-                    dataStore.Modify(member, mem => mem.Id == memberId && mem.AccountId == accountId);
+                    dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                 }
             });
         }
 
-        public async Task CreateNewFolderAsync(Int32 deskId, String folderName, String folderImg, Int32 accountId)
+        public async Task CreateNewFolderAsync(Int32 deskId, String folderName, String folderImg, Int32 userId)
         {
             Parameter.Validate(deskId);
             Parameter.Validate(folderImg);
@@ -301,7 +301,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                var folder = new Member(folderName, folderImg, 0, accountId, deskId, false);
+                var folder = new Member(folderName, folderImg, 0, userId, deskId, false);
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
                     dataStore.Add(folder);
@@ -309,10 +309,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task ModifyWallpaperSourceAsync(String source, Int32 accountId)
+        public async Task ModifyWallpaperSourceAsync(String source, Int32 userId)
         {
             Parameter.Validate(source);
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -326,30 +326,30 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         config.NotFromBing();
                     }
-                    dataStore.Modify(config, conf => conf.AccountId == accountId);
+                    dataStore.Modify(config, conf => conf.UserId == userId);
                 }
             });
         }
 
-        public IList<Notify> CheckUnreadNotifyCount(Int32 accountId, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
+        public IList<Notify> CheckUnreadNotifyCount(Int32 userId, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
-            Parameter.Validate(accountId);
+            Parameter.Validate(userId);
             Parameter.Validate(pageIndex);
             Parameter.Validate(pageSize);
             using (var dataStore = new DataStore(Appsetting.Database))
             {
                 var parameters = new List<ParameterMapper>
                 {
-                    new ParameterMapper("@accountId",accountId)
+                    new ParameterMapper("@userId",userId)
                 };
                 var pageModel = new PageList<Notify>();
                 {
-                    var sql = $@"SELECT COUNT(*) FROM Notify AS a WHERE a.IsDeleted=0 AND a.ToAccountId=@accountId";
+                    var sql = $@"SELECT COUNT(*) FROM Notify AS a WHERE a.IsDeleted=0 AND a.ToUserId=@userId";
                     totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
                 }
 
                 {
-                    var sql = $@"SELECT a.Id,a.Title,a.Content,a.IsRead,a.ToAccountId FROM Notify AS a WHERE a.IsDeleted=0 AND a.ToAccountId=@accountId
+                    var sql = $@"SELECT a.Id,a.Title,a.Content,a.IsRead,a.ToUserId FROM Notify AS a WHERE a.IsDeleted=0 AND a.ToUserId=@userId
                                  LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
                     return dataStore.Find<Notify>(sql, parameters);
                 }

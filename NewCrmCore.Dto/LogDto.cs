@@ -16,7 +16,7 @@ namespace NewCrmCore.Dto
 
         public String Track { get; set; }
 
-        public Int32 AccountId { get; set; }
+        public Int32 UserId { get; set; }
 
         public String AddTime { get; set; }
     }
