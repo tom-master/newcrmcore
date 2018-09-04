@@ -8,6 +8,10 @@ namespace NewCrmCore.FileServices.Controllers
     [Route("api/filestorage")]
     public class FileController : Controller
     {
+        /// <summary>
+        /// 上传
+        /// </summary>
+        /// <returns></returns>
         [Route("upload"), HttpPost, HttpOptions]
         public IActionResult Upload()
         {
