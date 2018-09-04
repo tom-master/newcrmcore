@@ -47,8 +47,7 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 首页
-        /// </summary>
-        /// <returns></returns>
+        /// </summary> 
         [HttpGet, DoNotCheckPermission]
         public async Task<IActionResult> Index()
         {
@@ -74,8 +73,7 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 首页
-        /// </summary>
-        /// <returns></returns>
+        /// </summary> 
         [HttpGet, DoNotCheckPermission]
         public IActionResult Login()
         {
@@ -90,8 +88,7 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 页面
-        /// </summary>
-        /// <returns></returns>
+        /// </summary> 
         [HttpGet]
         public async Task<IActionResult> ConfigMember(Int32 memberId)
         {
@@ -105,8 +102,7 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 首页
-        /// </summary>
-        /// <returns></returns>
+        /// </summary> 
         [HttpGet]
         public async Task<IActionResult> SystemWallPaper()
         {
@@ -118,8 +114,7 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 自定义壁纸
-        /// </summary>
-        /// <returns></returns>
+        /// </summary> 
         [HttpGet]
         public async Task<IActionResult> CustomizeWallpaper()
         {
@@ -129,8 +124,7 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 设置皮肤
-        /// </summary>
-        /// <returns></returns>
+        /// </summary> 
         [HttpGet]
         public IActionResult ConfigSkin()
         {
@@ -139,8 +133,7 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 程序设置
-        /// </summary>
-        /// <returns></returns>
+        /// </summary> 
         [HttpGet]
         public async Task<IActionResult> ConfigDesk()
         {
@@ -175,7 +168,6 @@ namespace NewCrmCore.Web.Controllers
                 response.IsSuccess = true;
 
                 HttpContext.Response.Cookies.Append($@"Account", JsonConvert.SerializeObject(new AccountDto { Id = account.Id, AccountFace = Appsetting.FileUrl + account.AccountFace, Name = account.Name }), new CookieOptions { Expires = cookieTimeout });
-
             }
             return Json(response);
         }
@@ -336,8 +328,7 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 解锁屏幕
-        /// </summary>
-        /// <returns></returns>
+        /// </summary> 
         [HttpPost]
         public async Task<IActionResult> UnlockScreen(String unlockPassword)
         {
@@ -915,6 +906,12 @@ namespace NewCrmCore.Web.Controllers
 
         #endregion
 
+        /// <summary>
+        /// 检查未读通知数量
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> CheckUnreadNotifyCount(Int32 pageIndex, Int32 pageSize)
         {
@@ -931,6 +928,11 @@ namespace NewCrmCore.Web.Controllers
             return Json(response);
         }
 
+        /// <summary>
+        /// 读取通知
+        /// </summary>
+        /// <param name="notifyId"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ReadNotify(String notifyId)
         {

@@ -19,6 +19,7 @@ namespace NewCrmCore.Web.Controllers
     public class AppMarketController : BaseController
     {
         private readonly IAppServices _appServices;
+
         private readonly IAccountServices _accountServices;
 
         public AppMarketController(IAppServices appServices, IAccountServices accountServices)
@@ -32,7 +33,6 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 首页
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -48,7 +48,6 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// app详情
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> AppDetail(Int32 appId)
         {
@@ -66,7 +65,6 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 用户app管理
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> AccountAppManage()
         {
@@ -79,8 +77,7 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 我的应用
-        /// </summary>
-        /// <returns></returns>
+        /// </summary> 
         [HttpGet]
         public async Task<IActionResult> AccountAppManageInfo(Int32 appId)
         {
@@ -318,7 +315,6 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 封装从页面传入的forms表单到AppDto类型
         /// </summary>
-        /// <returns></returns>
         private static AppDto WrapperAppDto(IFormCollection forms)
         {
             var appDto = new AppDto

@@ -30,8 +30,7 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 首页
-        /// </summary>
-        /// <returns></returns>
+        /// </summary> 
         [HttpGet]
         public IActionResult Index()
         {
@@ -40,8 +39,7 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 创建新角色
-        /// </summary>
-        /// <returns></returns>
+        /// </summary> 
         [HttpGet]
         public async Task<IActionResult> CreateNewRole(Int32 roleId = default(Int32))
         {
@@ -54,8 +52,7 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 向角色附加权限
-        /// </summary>
-        /// <returns></returns>
+        /// </summary> 
         [HttpGet]
         public async Task<IActionResult> AttachmentPower(Int32 roleId)
         {
@@ -83,8 +80,7 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 添加系统app到权限
-        /// </summary>
-        /// <returns></returns>
+        /// </summary> 
         [HttpGet]
         public async Task<IActionResult> AddSystemAppGotoPower()
         {

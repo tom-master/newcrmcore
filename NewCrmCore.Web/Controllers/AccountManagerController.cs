@@ -59,8 +59,6 @@ namespace NewCrmCore.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> RemoveAccount(Int32 accountId)
         {
-            await Task.Delay(5000);
-
             #region 参数验证
             Parameter.Validate(accountId);
             #endregion

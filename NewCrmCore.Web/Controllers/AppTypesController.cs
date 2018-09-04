@@ -26,8 +26,7 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 首页
-        /// </summary>
-        /// <returns></returns>
+        /// </summary> 
         [HttpGet]
         public IActionResult Index()
         {
@@ -36,8 +35,7 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 创建新的类目
-        /// </summary>
-        /// <returns></returns>
+        /// </summary> 
         [HttpGet]
         public async Task<IActionResult> CreateNewAppType(Int32 appTypeId = 0)
         {
@@ -77,8 +75,7 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 创建应用类型
-        /// </summary>
-        /// <returns></returns>
+        /// </summary> 
         [HttpPost]
         public async Task<IActionResult> Create(IFormCollection forms, Int32 appTypeId = 0)
         {
@@ -147,8 +144,7 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 封装从页面传入的forms表单到AppTypeDto类型
-        /// </summary>
-        /// <returns></returns>
+        /// </summary> 
         private static AppTypeDto WrapperAppTypeDto(IFormCollection forms)
         {
             var appTypeDto = new AppTypeDto
