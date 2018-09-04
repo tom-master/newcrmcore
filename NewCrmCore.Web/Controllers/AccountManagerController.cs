@@ -12,7 +12,7 @@ using NewLibCore.Validate;
 using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.Web.Controllers
-{
+{ 
     public class AccountManagerController : BaseController
     {
         private readonly ISecurityServices _securityServices;
