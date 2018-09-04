@@ -62,7 +62,7 @@ namespace NewCrmCore.FileServices.Controllers
         /// <summary>
         /// 初始化必要参数
         /// </summary>
-        public ReqeustUpload InitParameters(String accountId, String fileExtension)
+        public ReqeustUpload InitRequiredParameters(String accountId, String fileExtension)
         {
             var path = $@"{Appsetting.FileStorage}/{accountId}/{FileType.ToString().ToLower()}/";
             var fileName = $@"{Guid.NewGuid().ToString().Replace("-", "")}.{fileExtension}";
@@ -108,6 +108,10 @@ namespace NewCrmCore.FileServices.Controllers
             return InternalCreateFile(file);
         }
 
+        /// <summary>
+        /// 创建上传后响应
+        /// </summary>
+        /// <returns></returns>
         public abstract UploadResponseModel BuildUploadResponse();
 
         protected abstract Boolean InternalCreateFile(IFormFile file);

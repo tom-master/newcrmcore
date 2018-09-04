@@ -7,7 +7,12 @@ namespace NewCrmCore.FileServices.Controllers
 {
     public class CreateFactory
     {
-        public static ReqeustUpload BuildRequestEntity(String uploadType)
+        /// <summary>
+        /// 创建上传实体
+        /// </summary>
+        /// <param name="uploadType"></param>
+        /// <returns></returns>
+        public static ReqeustUpload BuildUploadEntity(String uploadType)
         {
             uploadType = uploadType.ToLower();
 
@@ -27,7 +32,6 @@ namespace NewCrmCore.FileServices.Controllers
             {
                 return new RequestFile { FileType = FileType.File };
             }
-
 
             throw new Exception($@"{uploadType}:未被识别为有效的上传类型");
         }

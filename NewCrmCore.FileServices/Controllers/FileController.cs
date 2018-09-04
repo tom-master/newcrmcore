@@ -67,7 +67,7 @@ namespace NewCrmCore.FileServices.Controllers
                 {
                     var file = files[i];
 
-                    var requestUpload = CreateFactory.BuildRequestEntity(uploadType);
+                    var requestUpload = CreateFactory.BuildUploadEntity(uploadType);
                     var fileExtension = requestUpload.CheckFileExtension(file);
                     if (String.IsNullOrEmpty(fileExtension))
                     {
@@ -80,7 +80,7 @@ namespace NewCrmCore.FileServices.Controllers
                         continue;
                     }
 
-                    var requestFile = requestUpload.InitParameters(accountId, fileExtension);
+                    var requestFile = requestUpload.InitRequiredParameters(accountId, fileExtension);
                     if (!requestFile.CreateFile(file))
                     {
                         responses.Add(new UploadResponseModel
