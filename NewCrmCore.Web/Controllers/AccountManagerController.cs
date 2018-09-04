@@ -17,7 +17,7 @@ namespace NewCrmCore.Web.Controllers
     {
         private readonly ISecurityServices _securityServices;
 
-        private readonly IAccountServices _accountServices;
+        private readonly IAccountServices _accountServices; 
 
         public AccountManagerController(ISecurityServices securityServices, IAccountServices accountServices)
         {
