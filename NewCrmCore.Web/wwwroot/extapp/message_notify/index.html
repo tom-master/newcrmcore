@@ -70,7 +70,7 @@
         })
     }
     function initSignalR(notify) {
-        var connection = new signalR.HubConnectionBuilder().withUrl("/hubs?accountId=" + top.HROS.CONFIG.memberID).configureLogging(signalR.LogLevel.Information).build();
+        var connection = new signalR.HubConnectionBuilder().withUrl("/hubs?userId=" + top.HROS.CONFIG.memberID).configureLogging(signalR.LogLevel.Information).build();
         connection.on("Message", (responseText) => {
             var message = JSON.parse(responseText)
             notify.messageNotify(message.Title, message.Content)

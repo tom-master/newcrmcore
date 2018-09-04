@@ -69,7 +69,7 @@ namespace NewCrmCore.Application.Services
                     Models = result.Select(app => new AppDto
                     {
                         AppTypeId = app.AppTypeId,
-                        AccountId = app.AccountId,
+                        UserId = app.UserId,
                         AddTime = app.AddTime.ToString("yyyy-MM-dd"),
                         UseCount = app.UseCount,
                         StarCount = app.StarCount,
@@ -84,7 +84,7 @@ namespace NewCrmCore.Application.Services
             });
         }
 
-        public async Task<PageList<AppDto>> GetAccountAppsAsync(Int32 userId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
+        public async Task<PageList<AppDto>> GetUserAppsAsync(Int32 userId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
         {
             Parameter.Validate(userId, true);
             Parameter.Validate(appTypeId, true);
@@ -94,7 +94,7 @@ namespace NewCrmCore.Application.Services
 
             return await Task.Run(async () =>
             {
-                var result = _appContext.GetAccountApps(userId, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize, out var totalCount);
+                var result = _appContext.GetUserApps(userId, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize, out var totalCount);
                 var appTypes = await GetAppTypesAsync(userId);
                 return new PageList<AppDto>
                 {
@@ -109,7 +109,7 @@ namespace NewCrmCore.Application.Services
                         IconUrl = app.IconUrl,
                         AppAuditState = app.AppAuditState,
                         IsRecommand = app.IsRecommand,
-                        AccountId = app.AccountId,
+                        UserId = app.UserId,
                         IsIconByUpload = app.IsIconByUpload
                     }).ToList()
                 };
@@ -132,7 +132,7 @@ namespace NewCrmCore.Application.Services
                 StarCount = result.StarCount,
                 AppTypeName = appTypes.FirstOrDefault(appType => appType.Id == result.AppTypeId).Name,
                 AddTime = result.AddTime.ToString("yyyy-MM-dd"),
-                AccountId = result.AccountId,
+                UserId = result.UserId,
                 Id = result.Id,
                 IsResize = result.IsResize,
                 IsOpenMax = result.IsOpenMax,
@@ -144,7 +144,7 @@ namespace NewCrmCore.Application.Services
                 AppAuditState = result.AppAuditState,
                 AppReleaseState = result.AppReleaseState,
                 AppTypeId = result.AppTypeId,
-                AccountName = result.AccountName,
+                UserName = result.UserName,
                 IsIconByUpload = result.IsIconByUpload
             };
         }
@@ -273,18 +273,18 @@ namespace NewCrmCore.Application.Services
             await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(userId));
         }
 
-        public async Task ModifyAccountAppInfoAsync(Int32 userId, AppDto appDto)
+        public async Task ModifyUserAppInfoAsync(Int32 userId, AppDto appDto)
         {
             Parameter.Validate(userId);
             Parameter.Validate(appDto);
-            await _appContext.ModifyAccountAppInfoAsync(userId, appDto.ConvertToModel<AppDto, App>());
+            await _appContext.ModifyUserAppInfoAsync(userId, appDto.ConvertToModel<AppDto, App>());
         }
 
         public async Task CreateNewAppAsync(AppDto appDto)
         {
             Parameter.Validate(appDto);
             var app = appDto.ConvertToModel<AppDto, App>();
-            var internalApp = new App(app.Name, app.IconUrl, app.AppUrl, app.Width, app.Height, app.AppTypeId, app.IsResize, app.IsOpenMax, app.IsFlash, app.IsSetbar, app.AppAuditState, AppReleaseState.UnRelease, app.AppStyle, app.AccountId, app.Remark, appDto.IsIconByUpload);
+            var internalApp = new App(app.Name, app.IconUrl, app.AppUrl, app.Width, app.Height, app.AppTypeId, app.IsResize, app.IsOpenMax, app.IsFlash, app.IsSetbar, app.AppAuditState, AppReleaseState.UnRelease, app.AppStyle, app.UserId, app.Remark, appDto.IsIconByUpload);
 
             await _appContext.CreateNewAppAsync(internalApp);
         }

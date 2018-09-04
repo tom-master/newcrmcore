@@ -14,17 +14,17 @@ namespace NewCrmCore.NotifyCenter
     {
         public async Task<String> RegisterConnection()
         {
-            var accountId = Context.GetHttpContext().Request.Query["accountId"];
+            var userId = Context.GetHttpContext().Request.Query["userId"];
             var connectionId = Context.ConnectionId;
-            await CacheHelper.GetOrSetCacheAsync(new SignalRConnectionCacheKey(accountId), () => Task.Run(() => connectionId));
+            await CacheHelper.GetOrSetCacheAsync(new SignalRConnectionCacheKey(userId), () => Task.Run(() => connectionId));
             Clients.Client(connectionId);
             return connectionId;
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            var accountId = Context.GetHttpContext().Request.Query["accountId"];
-            await CacheHelper.RemoveKeyWhenModify(new SignalRConnectionCacheKey(accountId));
+            var userId = Context.GetHttpContext().Request.Query["userId"];
+            await CacheHelper.RemoveKeyWhenModify(new SignalRConnectionCacheKey(userId));
             await base.OnDisconnectedAsync(exception);
         }
     }
@@ -38,9 +38,9 @@ namespace NewCrmCore.NotifyCenter
             _notify = notify;
         }
 
-        public async Task Send(Int32 accountId, Object obj)
+        public async Task Send(Int32 userId, Object obj)
         {
-            var connectionId = await CacheHelper.GetOrSetCacheAsync<String>(new SignalRConnectionCacheKey(accountId.ToString()));
+            var connectionId = await CacheHelper.GetOrSetCacheAsync<String>(new SignalRConnectionCacheKey(userId.ToString()));
             await _notify.Clients.Client(connectionId).SendAsync("message", JsonConvert.SerializeObject(obj));
         }
     }

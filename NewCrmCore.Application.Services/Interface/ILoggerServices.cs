@@ -17,11 +17,11 @@ namespace NewCrmCore.Application.Services.Interface
         /// <summary>
         /// 获取日志
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="userId"></param>
         /// <param name="logLevel"></param>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        Task<PageList<LogDto>> GetLogsAsync(Int32 accountId, Int32 logLevel, Int32 pageIndex, Int32 pageSize);
+        Task<PageList<LogDto>> GetLogsAsync(Int32 userId, Int32 logLevel, Int32 pageIndex, Int32 pageSize);
     }
 }

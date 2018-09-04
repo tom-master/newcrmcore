@@ -43,7 +43,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> User(Int32 userId = 0)
+        public new async Task<IActionResult> User(Int32 userId = 0)
         {
             if (userId != 0)
             {
