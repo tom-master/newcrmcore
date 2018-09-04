@@ -35,8 +35,16 @@ namespace NewCrmCore.Infrastructure.CommonTools
             }
         }
 
+        /// <summary>
+        /// 格式化缓存键
+        /// </summary>
+        /// <returns></returns>
         protected abstract String FormatKey();
 
+        /// <summary>
+        /// 获取缓存键
+        /// </summary>
+        /// <returns></returns>
         public String GetKey()
         {
             return String.Format("NewCrm:{0}", FormatKey());

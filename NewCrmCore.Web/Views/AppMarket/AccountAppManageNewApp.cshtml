@@ -2,7 +2,7 @@
 @using NewCrmCore.Infrastructure.CommonTools
 <form action="/appmarket/create" method="post" name="form" id="form">
 	<input type="hidden" id="isIconByUpload" name="isIconByUpload" value="0" />
-	<input type="hidden" name="token" value="@(await TimeToken.GetTokenAsync())" />
+	<input type="hidden" name="token" value="@(await TimeToken.GetFormTokenAsync())" />
 	<div class="creatbox">
 		<div class="middle">
 			<p class="detile-title">

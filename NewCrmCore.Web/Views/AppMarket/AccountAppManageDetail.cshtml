@@ -3,7 +3,7 @@
 @using NewCrmCore.Domain.ValueObject
 @model AppDto
 <form action="" method="post" name="form" id="form">
-	<input type="hidden" name="token" value="@(await TimeToken.GetTokenAsync())" />
+	<input type="hidden" name="token" value="@(await TimeToken.GetFormTokenAsync())" />
 	<div class="creatbox">
 		<div class="middle">
 			<p class="detile-title">
