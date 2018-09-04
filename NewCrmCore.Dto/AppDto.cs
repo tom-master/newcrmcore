@@ -5,8 +5,6 @@ namespace NewCrmCore.Dto
 {
     public sealed class AppDto : BaseDto
     {
-        #region public property
-
         public String Name { get; set; }
 
         public String IconUrl { get; set; }
@@ -55,6 +53,5 @@ namespace NewCrmCore.Dto
 
         public Boolean IsSetbar { get; set; }
 
-        #endregion
     }
 }
