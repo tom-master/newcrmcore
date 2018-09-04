@@ -24,6 +24,7 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 首页
         /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -38,6 +39,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 修改锁屏密码
         /// </summary>
+        /// <param name="forms"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ModifyLockPassword(IFormCollection forms)
         {
@@ -59,8 +62,10 @@ namespace NewCrmCore.Web.Controllers
         #region 上传账户头像
 
         /// <summary>
-        ///上传账户头像
+        /// 上传账户头像
         /// </summary>
+        /// <param name="accountFace"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ModifyFace(String accountFace)
         {
@@ -83,6 +88,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 修改账户登陆密码
         /// </summary>
+        /// <param name="forms"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ModifyPassword(IFormCollection forms)
         {
@@ -108,6 +115,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 检查旧密码和输入的密码是否一致
         /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CheckPassword(String param)
         {

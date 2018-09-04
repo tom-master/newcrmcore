@@ -16,6 +16,7 @@ namespace NewCrmCore.Web.Controllers
     public class SecurityController : BaseController
     {
         private readonly ISecurityServices _securityServices;
+
         private readonly IAppServices _appServices;
 
         public SecurityController(ISecurityServices securityServices, IAppServices appServices)
@@ -30,7 +31,8 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 首页
-        /// </summary> 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Index()
         {
@@ -39,7 +41,9 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 创建新角色
-        /// </summary> 
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> CreateNewRole(Int32 roleId = default(Int32))
         {
@@ -52,7 +56,9 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 向角色附加权限
-        /// </summary> 
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> AttachmentPower(Int32 roleId)
         {
@@ -79,8 +85,9 @@ namespace NewCrmCore.Web.Controllers
         #region 权限
 
         /// <summary>
-        /// 添加系统app到权限
-        /// </summary> 
+        /// 添加系统应用到权限
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> AddSystemAppGotoPower()
         {
@@ -97,6 +104,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 移除角色
         /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> RemoveRole(Int32 roleId)
         {
@@ -119,6 +128,9 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 添加角色
         /// </summary>
+        /// <param name="forms"></param>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CreateRole(IFormCollection forms, Int32 roleId = 0)
         {
@@ -150,6 +162,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 选择应用
         /// </summary>
+        /// <param name="appIds"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetSystemApp(String appIds)
         {
@@ -174,6 +188,10 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 获取所有角色
         /// </summary>
+        /// <param name="roleName"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetRoles(String roleName, Int32 pageIndex, Int32 pageSize)
         {
@@ -194,6 +212,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 检查角色名称
         /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CheckName(String param)
         {
@@ -210,6 +230,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 检查角色标识
         /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CheckRoleIdentity(String param)
         {
@@ -225,6 +247,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 将应用附加到角色
         /// </summary>
+        /// <param name="forms"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> AddAppToRole(IFormCollection forms)
         {

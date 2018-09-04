@@ -15,6 +15,7 @@ namespace NewCrmCore.Web.Controllers
     public class AppManagerController : BaseController
     {
         private readonly IAppServices _appServices;
+
         private readonly IAccountServices _accountServices;
 
         public AppManagerController(IAppServices appServices, IAccountServices accountServices)
@@ -28,6 +29,7 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 首页
         /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -41,6 +43,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// app审核
         /// </summary>
+        /// <param name="appId"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> AppAudit(Int32 appId)
         {
@@ -62,6 +66,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 审核通过
         /// </summary>
+        /// <param name="appId"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Pass(Int32 appId)
         {
@@ -82,8 +88,10 @@ namespace NewCrmCore.Web.Controllers
         #region 移除应用
 
         /// <summary>
-        /// 删除app
+        /// 移除应用
         /// </summary>
+        /// <param name="appId"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Remove(Int32 appId)
         {
@@ -106,6 +114,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 审核不通过
         /// </summary>
+        /// <param name="appId"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Deny(Int32 appId)
         {
@@ -128,6 +138,13 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 获取所有应用
         /// </summary>
+        /// <param name="searchText"></param>
+        /// <param name="appTypeId"></param>
+        /// <param name="appStyleId"></param>
+        /// <param name="appState"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetApps(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
         {
@@ -153,6 +170,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 检查应用名称
         /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CheckName(String param)
         {
@@ -171,6 +190,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 检查应用Url
         /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CheckUrl(String param)
         {
@@ -189,6 +210,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 设置应用为今日推荐
         /// </summary>
+        /// <param name="appId"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Recommend(Int32 appId)
         {

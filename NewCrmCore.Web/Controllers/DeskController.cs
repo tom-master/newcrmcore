@@ -46,8 +46,9 @@ namespace NewCrmCore.Web.Controllers
         #region 页面
 
         /// <summary>
-        /// 首页
-        /// </summary> 
+        /// 桌面
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, DoNotCheckPermission]
         public async Task<IActionResult> Index()
         {
@@ -72,8 +73,9 @@ namespace NewCrmCore.Web.Controllers
         }
 
         /// <summary>
-        /// 首页
-        /// </summary> 
+        /// 登陆
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, DoNotCheckPermission]
         public IActionResult Login()
         {
@@ -87,8 +89,10 @@ namespace NewCrmCore.Web.Controllers
         }
 
         /// <summary>
-        /// 页面
-        /// </summary> 
+        /// 配置用户应用
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> ConfigMember(Int32 memberId)
         {
@@ -101,8 +105,9 @@ namespace NewCrmCore.Web.Controllers
         }
 
         /// <summary>
-        /// 首页
-        /// </summary> 
+        /// 系统壁纸
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> SystemWallPaper()
         {
@@ -114,7 +119,8 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 自定义壁纸
-        /// </summary> 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> CustomizeWallpaper()
         {
@@ -124,7 +130,8 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 设置皮肤
-        /// </summary> 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult ConfigSkin()
         {
@@ -132,8 +139,9 @@ namespace NewCrmCore.Web.Controllers
         }
 
         /// <summary>
-        /// 程序设置
-        /// </summary> 
+        /// 桌面设置
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> ConfigDesk()
         {
@@ -151,6 +159,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 登陆
         /// </summary>
+        /// <param name="loginParameter"></param>
+        /// <returns></returns>
         [HttpPost, DoNotCheckPermission]
         public async Task<IActionResult> Landing(IFormCollection loginParameter)
         {
@@ -179,6 +189,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 设置壁纸
         /// </summary>
+        /// <param name="wallpaperId"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ModifyWallpaper(Int32 wallpaperId)
         {
@@ -201,6 +213,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 删除壁纸
         /// </summary>
+        /// <param name="wallPaperId"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> RemoveWallpaper(Int32 wallPaperId)
         {
@@ -221,8 +235,10 @@ namespace NewCrmCore.Web.Controllers
         #region 上传壁纸
 
         /// <summary>
-        /// 上传壁纸     
+        /// 上传壁纸
         /// </summary>
+        /// <param name="wallpaper"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> UploadWallPaper(WallpaperDto wallpaper)
         {
@@ -257,6 +273,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 网络壁纸
         /// </summary>
+        /// <param name="webUrl"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> WebWallpaper(String webUrl)
         {
@@ -281,6 +299,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 更换皮肤
         /// </summary>
+        /// <param name="skin"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ModifySkin(String skin)
         {
@@ -304,6 +324,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 更新图标
         /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ModifyIcon(ModifyIconForMember model)
         {
@@ -328,7 +350,9 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 解锁屏幕
-        /// </summary> 
+        /// </summary>
+        /// <param name="unlockPassword"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> UnlockScreen(String unlockPassword)
         {
@@ -353,6 +377,7 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 账户登出
         /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
@@ -368,6 +393,7 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 获取皮肤
         /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetSkin()
         {
@@ -387,6 +413,7 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 获取壁纸
         /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetWallpaper()
         {
@@ -418,6 +445,9 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 创建窗口
         /// </summary>
+        /// <param name="id"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> CreateWindow(Int32 id, String type)
         {
@@ -458,6 +488,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 新建文件夹
         /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CreateFolder(CreateFolder model)
         {
@@ -482,6 +514,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 卸载桌面成员
         /// </summary>
+        /// <param name="memberId"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Uninstall(Int32 memberId)
         {
@@ -504,6 +538,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 检查成员名称
         /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CheckName(String param)
         {
@@ -522,6 +558,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 桌面成员移动
         /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> MemberMove(MemberMove model)
         {
@@ -576,6 +614,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 修改成员信息
         /// </summary>
+        /// <param name="forms"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ModifyMemberInfo(IFormCollection forms)
         {
@@ -611,6 +651,7 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 载入上传壁纸
         /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetUploadWallPapers()
         {
@@ -630,6 +671,7 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 获取全部皮肤
         /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetSkins()
         {
@@ -652,6 +694,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 更改码头位置
         /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ModifyDockPosition(ModifyDockPosition model)
         {
@@ -675,6 +719,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 修改壁纸来源
         /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ModifyWallpaperSource(String source)
         {
@@ -697,6 +743,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 更改图标大小
         /// </summary>
+        /// <param name="appSize"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ModifySize(Int32 appSize)
         {
@@ -719,6 +767,7 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 获取账户头像
         /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetAccountFace()
         {
@@ -738,6 +787,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 修改文件夹信息
         /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ModifyFolderInfo(ModifyFolderInfo model)
         {
@@ -762,6 +813,7 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 初始化应用码头
         /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetDockPos()
         {
@@ -781,6 +833,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 更换默认显示桌面
         /// </summary>
+        /// <param name="deskNum"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ModifyDefaultDesk(Int32 deskNum)
         {
@@ -803,6 +857,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 更换图标排列方向
         /// </summary>
+        /// <param name="appXy"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ModifyXy(String appXy)
         {
@@ -826,6 +882,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 设置壁纸显示模式
         /// </summary>
+        /// <param name="wallPaperShowType"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ModifyDisplayModel(String wallPaperShowType)
         {
@@ -848,6 +906,7 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 获取账户安装的应用
         /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetAccountDeskMembers()
         {
@@ -867,6 +926,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 更改图标的水平间距
         /// </summary>
+        /// <param name="appHorizontal"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ModifyHorizontalSpace(Int32 appHorizontal)
         {
@@ -889,6 +950,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 更改应用图标垂直间距
         /// </summary>
+        /// <param name="appVertical"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ModifyVerticalSpace(Int32 appVertical)
         {

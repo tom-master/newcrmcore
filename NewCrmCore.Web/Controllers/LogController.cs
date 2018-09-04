@@ -35,6 +35,11 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 获取日志列表
         /// </summary>
+        /// <param name="accountId"></param>
+        /// <param name="loglevel"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetLogs(Int32 accountId, Int32 loglevel, Int32 pageIndex, Int32 pageSize)
         {

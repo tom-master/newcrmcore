@@ -26,7 +26,8 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 首页
-        /// </summary> 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Index()
         {
@@ -35,7 +36,9 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 创建新的类目
-        /// </summary> 
+        /// </summary>
+        /// <param name="appTypeId"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> CreateNewAppType(Int32 appTypeId = 0)
         {
@@ -54,6 +57,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 移除应用类型
         /// </summary>
+        /// <param name="appTypeId"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Remove(Int32 appTypeId)
         {
@@ -75,7 +80,10 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 创建应用类型
-        /// </summary> 
+        /// </summary>
+        /// <param name="forms"></param>
+        /// <param name="appTypeId"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Create(IFormCollection forms, Int32 appTypeId = 0)
         {
@@ -106,6 +114,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 检查类型名称
         /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CheckName(String param)
         {
@@ -124,6 +134,10 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 获取所有应用类型
         /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="searchText"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetTypes(Int32 pageIndex, Int32 pageSize, String searchText)
         {
@@ -144,7 +158,9 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 封装从页面传入的forms表单到AppTypeDto类型
-        /// </summary> 
+        /// </summary>
+        /// <param name="forms"></param>
+        /// <returns></returns>
         private static AppTypeDto WrapperAppTypeDto(IFormCollection forms)
         {
             var appTypeDto = new AppTypeDto

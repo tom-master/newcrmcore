@@ -33,6 +33,7 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 首页
         /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -46,8 +47,10 @@ namespace NewCrmCore.Web.Controllers
         }
 
         /// <summary>
-        /// app详情
+        /// 应用详情
         /// </summary>
+        /// <param name="appId"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> AppDetail(Int32 appId)
         {
@@ -63,8 +66,9 @@ namespace NewCrmCore.Web.Controllers
         }
 
         /// <summary>
-        /// 用户app管理
+        /// 用户应用管理
         /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> AccountAppManage()
         {
@@ -77,7 +81,9 @@ namespace NewCrmCore.Web.Controllers
 
         /// <summary>
         /// 我的应用
-        /// </summary> 
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> AccountAppManageInfo(Int32 appId)
         {
@@ -97,9 +103,11 @@ namespace NewCrmCore.Web.Controllers
 
         #region 应用打分
 
-        /// <summary> 
+        /// <summary>
         /// 应用打分
         /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ModifyStar(ModifyStar model)
         {
@@ -123,6 +131,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 安装应用
         /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Install(Install model)
         {
@@ -146,6 +156,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 更新图标
         /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ModifyIcon(ModifyIconForApp model)
         {
@@ -171,6 +183,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 创建应用
         /// </summary>
+        /// <param name="forms"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Create(IFormCollection forms)
         {
@@ -197,6 +211,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 发布应用
         /// </summary>
+        /// <param name="appId"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Release(Int32 appId)
         {
@@ -219,6 +235,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 修改应用信息
         /// </summary>
+        /// <param name="forms"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ModifyInfo(IFormCollection forms)
         {
@@ -241,6 +259,12 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 获取所有应用
         /// </summary>
+        /// <param name="appTypeId"></param>
+        /// <param name="orderId"></param>
+        /// <param name="searchText"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetApps(Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize)
         {
@@ -267,6 +291,13 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 获取账户下应用
         /// </summary>
+        /// <param name="searchText"></param>
+        /// <param name="appTypeId"></param>
+        /// <param name="appStyleId"></param>
+        /// <param name="appState"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetAccountApps(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
         {
@@ -294,6 +325,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 移除账户中应用
         /// </summary>
+        /// <param name="appId"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Remove(Int32 appId)
         {
@@ -312,9 +345,12 @@ namespace NewCrmCore.Web.Controllers
         #endregion
 
         #region private method
+
         /// <summary>
         /// 封装从页面传入的forms表单到AppDto类型
         /// </summary>
+        /// <param name="forms"></param>
+        /// <returns></returns>
         private static AppDto WrapperAppDto(IFormCollection forms)
         {
             var appDto = new AppDto

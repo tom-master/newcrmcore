@@ -16,6 +16,7 @@ namespace NewCrmCore.Web.Controllers
     public class AccountManagerController : BaseController
     {
         private readonly ISecurityServices _securityServices;
+
         private readonly IAccountServices _accountServices;
 
         public AccountManagerController(ISecurityServices securityServices, IAccountServices accountServices)
@@ -29,6 +30,7 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 首页
         /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Index()
         {
@@ -38,6 +40,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 创建新账户
         /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Account(Int32 accountId = 0)
         {
@@ -56,6 +60,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 移除账户
         /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> RemoveAccount(Int32 accountId)
         {
@@ -78,6 +84,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 账户启用
         /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Enable(Int32 accountId)
         {
@@ -100,6 +108,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 账户禁用
         /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Disable(Int32 accountId)
         {
@@ -122,6 +132,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 创建新账户
         /// </summary>
+        /// <param name="forms"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CreateAccount(IFormCollection forms)
         {
@@ -160,6 +172,11 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 获取所有账户
         /// </summary>
+        /// <param name="accountName"></param>
+        /// <param name="accountType"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Accounts(String accountName, String accountType, Int32 pageIndex, Int32 pageSize)
         {
@@ -184,6 +201,8 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 检查账户名是否已经存在
         /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CheckName(String param)
         {
