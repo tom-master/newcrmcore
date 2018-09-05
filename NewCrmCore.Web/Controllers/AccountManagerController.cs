@@ -12,12 +12,21 @@ using NewLibCore.Validate;
 using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.Web.Controllers
+<<<<<<< HEAD
 {
     public class UserManagerController : BaseController
     {
         private readonly ISecurityServices _securityServices;
 
         private readonly IUserServices _userServices;
+=======
+{ 
+    public class AccountManagerController : BaseController
+    {
+        private readonly ISecurityServices _securityServices;
+
+        private readonly IAccountServices _accountServices; 
+>>>>>>> 599b840df3f2fa1babc7454c3330e52f7079fd78
 
         public UserManagerController(ISecurityServices securityServices, IUserServices userServices)
         {
@@ -36,7 +45,7 @@ namespace NewCrmCore.Web.Controllers
         {
             return View();
         }
-
+ 
         /// <summary>
         /// 创建新账户
         /// </summary>
