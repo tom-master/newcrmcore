@@ -33,7 +33,7 @@ namespace NewCrmCore.Application.Services
             var result = await _memberContext.GetMemberAsync(userId, memberId, isFolder);
             if (result == null)
             {
-                throw new BusinessException($"未找到app");
+                throw new BusinessException($"未能查找到所请求的应用");
             }
 
             return new MemberDto
