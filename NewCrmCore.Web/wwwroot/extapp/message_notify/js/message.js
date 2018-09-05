@@ -143,15 +143,12 @@
             /**
              * 点击移除
              */
-            $(document).click(function (e) {
+            $(top.document).click(function (e) {
                 var src = e.target;
-
                 var arr = $(".message-frame *");
-
                 var flag = true;
 
-                if (src.className && src.className.match("message-bell-btn")
-                    || src.parentElement && src.parentElement.className.match("message-bell-btn")) {
+                if (src.className && src.className.match("message-bell-btn") || src.parentElement && src.parentElement.className.match("message-bell-btn")) {
                     flag = false;
                 } else {
                     if (arr && arr.length > 0) {
@@ -172,8 +169,6 @@
                     that.nodeList = [];
                     that.tp = null;
                 }
-
-
             });
         },
         /**
