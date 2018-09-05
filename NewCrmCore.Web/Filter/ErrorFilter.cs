@@ -7,6 +7,7 @@ using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
+using Newtonsoft.Json;
 
 namespace NewCrmCore.Web.Filter
 {
@@ -38,7 +39,7 @@ namespace NewCrmCore.Web.Filter
                     Content = @"<script>(function(){top.NewCrm.msgbox.fail('" + response.Message + "');})()</script>"
                 };
             }
-
+            var userId = JsonConvert.DeserializeObject<UserDto>(filterContext.HttpContext.Request.Cookies["User"]).Id;
             ((ILoggerServices)filterContext.HttpContext.RequestServices.GetService(typeof(ILoggerServices))).AddLoggerAsync(new LogDto
             {
                 Action = filterContext.RouteData.Values["action"].ToString(),
@@ -46,8 +47,8 @@ namespace NewCrmCore.Web.Filter
                 ExceptionMessage = filterContext.Exception.Message,
                 Track = filterContext.Exception.StackTrace,
                 LogLevelEnum = exception ? Domain.ValueObject.LogLevel.Warning : Domain.ValueObject.LogLevel.Error,
-                Id = new Random().Next(1, Int32.MaxValue),
-                AddTime = DateTime.Now.ToString(CultureInfo.CurrentCulture)
+                AddTime = DateTime.Now.ToString(CultureInfo.CurrentCulture),
+                UserId = userId
             });
         }
     }
