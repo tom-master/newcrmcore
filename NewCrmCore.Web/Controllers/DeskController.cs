@@ -1000,10 +1000,17 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> ReadNotify(String notifyId)
         {
             #region 参数验证
-            Parameter.Validate(notifyId);
+            Parameter.Validate(notifyId, true);
             #endregion
 
             var response = new ResponseModel();
+
+            if (String.IsNullOrEmpty(notifyId))
+            {
+                response.IsSuccess = true;
+                response.Message = "消息读取成功";
+                return Json(response);
+            }
             await _deskServices.ReadNotify(notifyId.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(Int32.Parse).ToList());
             response.IsSuccess = true;
             response.Message = "消息读取成功";

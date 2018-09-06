@@ -12,7 +12,7 @@
         noticeClick: null, //提醒点击回调事件
         msgShow: 5, //消息展示条数
         noticeShow: 5, //提醒展示条数
-        height: 350,
+        height: 200,
         getNodeHtml: null //消息提醒自定义显示html
     };
 
@@ -107,6 +107,9 @@
             $(document).on("click", ".message-btn-header", function () {
                 var type = that.tp;
                 if (option.allRead && typeof option.allRead == "function") {
+                    $.each($('.message-content-list li'), function () {
+                        $(this).find(".badge-dot").parent('div').remove();
+                    })
                     option.allRead(type, that);
                 }
             });
@@ -115,6 +118,7 @@
              * 加载更多
              */
             $(document).on("click", ".message-footer", function () {
+
                 var ct = $(".message-content-list li").length;
                 var dataType = that.tp;
                 var arr = dataType == 1 ? option.msgData : option.noticeData;
@@ -211,6 +215,7 @@
          * @param type
          */
         contentListDraw: function (type) {
+
             var fr = "";
             if ($(".message-frame").length == 0) {
                 fr += "<div class='message-frame animated fadeIn' style='width: " + (option.width ? option.width : "350") + "px' ></div>";
@@ -220,7 +225,7 @@
             this.nodeList = [];
 
             var div = "<div class='message-frame-header'><span style='height: 40px;line-height: 40px;text-align: center;width: 50px;    display: inline-block;'>" + (type == 1 ? "消息" : "提醒") + "</span><button class='message-btn message-btn-blue message-btn-header' data-type='" + type + "'>全部已读</button></div>" +
-                "<div class='message-content' style='max-height:" + (option.height ? option.height + "px" : "350px") + "'>";
+                "<div class='message-content' style='max-height:" + (option.height ? option.height + "px" : "200px") + ";overflow-y:scroll'>";
 
             if (type == 1) {
                 if (option.msgData && option.msgData.length > 0) {
