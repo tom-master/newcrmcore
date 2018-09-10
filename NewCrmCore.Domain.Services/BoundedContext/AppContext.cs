@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.System;
@@ -18,7 +19,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 {
     public class AppContext : IAppContext
     {
-
         private CommonNotify _notify;
 
         public AppContext(CommonNotify notify)
@@ -33,12 +33,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    var sql = $@"SELECT a.Id FROM App AS a WHERE a.UserId=@userId AND a.IsDeleted=0";
-                    var parameters = new List<ParameterMapper>
-                    {
-                        new ParameterMapper("@userId",userId)
-                    };
-                    var result = dataStore.Find<App>(sql, parameters);
+                    var result = dataStore.Find<App>(a => a.UserId == userId && a.IsDeleted, a => new { a.Id });
                     return new Tuple<Int32, Int32>(result.Count, result.Count(a => a.AppReleaseState == AppReleaseState.UnRelease));
                 }
             });
@@ -50,8 +45,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    var sql = $@"SELECT a.Id,a.Name FROM AppType AS a WHERE a.IsDeleted=0";
-                    return dataStore.Find<AppType>(sql);
+                    return dataStore.Find<AppType>(a => a.IsDeleted, a => new { a.Id, a.Name });
                 }
             });
         }
@@ -353,8 +347,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
                     var where = new StringBuilder();
+                    Expression<Func<App, Boolean>> where2 = a => a.IsSystem && a.IsDeleted;
                     if (appIds != default(IEnumerable<Int32>) && appIds.Any())
                     {
+                        where2 = a => appIds.Contains(a.Id);
                         where.Append($@" AND a.Id IN({String.Join(",", appIds)})");
                     }
 

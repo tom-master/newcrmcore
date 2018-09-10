@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using NewLibCore.Data.Mapper.MapperExtension;
+using NewLibCore.Data.Mapper.PropertyExtension;
+
 namespace NewCrmCore.Domain.Entitys.System
 {
 

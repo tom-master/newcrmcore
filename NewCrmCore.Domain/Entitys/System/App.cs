@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using NewCrmCore.Domain.ValueObject;
 using NewLibCore.Data.Mapper.MapperExtension;
+using NewLibCore.Data.Mapper.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {

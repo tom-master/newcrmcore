@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using NewLibCore.Data.Mapper.MapperExtension;
+using NewLibCore.Data.Mapper.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.Security
 {
