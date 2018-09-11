@@ -176,5 +176,13 @@ namespace NewCrmCore.Domain.Services.Interface
         /// <param name="notifyIds"></param>
         /// <returns></returns>
         Task ReadNotify(IList<Int32> notifyIds);
+
+        /// <summary>
+        /// 修改皮肤
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="newSkin"></param>
+        /// <returns></returns>
+        Task ModifySkinAsync(Int32 userId, String newSkin);
     }
 }

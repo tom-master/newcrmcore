@@ -43,6 +43,13 @@ namespace NewCrmCore.Application.Services.Interface
         /// <returns></returns>
         Task<PageList<NotifyDto>> CheckUnreadNotifyCount(Int32 userId, Int32 pageIndex, Int32 pageSize);
 
+        /// <summary>
+        /// 获取全部的皮肤
+        /// </summary>
+        /// <param name="skinPath"></param>
+        /// <returns></returns>
+        Task<IDictionary<String, dynamic>> GetAllSkinAsync(String skinPath);
+
         #endregion
 
         #region not have return value
@@ -197,6 +204,13 @@ namespace NewCrmCore.Application.Services.Interface
         /// <param name="notifyIds"></param>
         /// <returns></returns>
         Task ReadNotify(IList<Int32> notifyIds);
+
+        /// <summary>
+        /// 修改默认显示的皮肤
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="newSkin"></param>
+        Task ModifySkinAsync(Int32 userId, String newSkin);
 
         #endregion
     }

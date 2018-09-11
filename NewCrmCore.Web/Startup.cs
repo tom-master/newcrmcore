@@ -32,7 +32,6 @@ namespace NewCrmCore.Web
             services.AddTransient<IAppServices, AppServices>();
             services.AddTransient<IDeskServices, DeskServices>();
             services.AddTransient<IWallpaperServices, WallpaperServices>();
-            services.AddTransient<ISkinServices, SkinServices>();
             services.AddTransient<ILoggerServices, LoggerServices>();
 
             services.AddTransient<IUserContext, UserContext>();
@@ -41,7 +40,6 @@ namespace NewCrmCore.Web
             services.AddTransient<ILoggerContext, LoggerContext>();
             services.AddTransient<IMemberContext, MemberContext>();
             services.AddTransient<ISecurityContext, SecurityContext>();
-            services.AddTransient<ISkinContext, SkinContext>();
             services.AddTransient<IWallpaperContext, WallpaperContext>();
             services.AddTransient<CommonNotify>();
 

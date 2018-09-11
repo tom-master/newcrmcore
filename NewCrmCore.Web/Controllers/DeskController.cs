@@ -22,8 +22,6 @@ namespace NewCrmCore.Web.Controllers
     {
         private readonly IWallpaperServices _wallpaperServices;
 
-        private readonly ISkinServices _skinServices;
-
         private readonly IDeskServices _deskServices;
 
         private readonly IAppServices _appServices;
@@ -31,13 +29,11 @@ namespace NewCrmCore.Web.Controllers
         private readonly IUserServices _userServices;
 
         public DeskController(IWallpaperServices wallpaperServices,
-        ISkinServices skinServices,
         IDeskServices deskServices,
         IAppServices appServices,
         IUserServices userServices)
         {
             _wallpaperServices = wallpaperServices;
-            _skinServices = skinServices;
             _deskServices = deskServices;
             _appServices = appServices;
             _userServices = userServices;
@@ -310,7 +306,7 @@ namespace NewCrmCore.Web.Controllers
 
             var response = new ResponseModel();
 
-            await _skinServices.ModifySkinAsync(UserId, skin);
+            await _deskServices.ModifySkinAsync(UserId, skin);
             response.IsSuccess = true;
             response.Message = "更换皮肤成功";
 
@@ -679,7 +675,7 @@ namespace NewCrmCore.Web.Controllers
 
             var skinPath = Appsetting.Skin;
 
-            var result = await _skinServices.GetAllSkinAsync(skinPath);
+            var result = await _deskServices.GetAllSkinAsync(skinPath);
             response.IsSuccess = true;
             response.Message = "获取皮肤列表成功";
             response.Model = new { result, currentSkin = (await _userServices.GetConfigAsync(UserId)).Skin };

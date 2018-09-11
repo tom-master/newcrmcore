@@ -381,5 +381,21 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 }
             });
         }
+
+        public async Task ModifySkinAsync(Int32 userId, String newSkin)
+        {
+            Parameter.Validate(userId);
+            Parameter.Validate(newSkin);
+
+            await Task.Run(() =>
+            {
+                using (var dataStore = new DataStore(Appsetting.Database))
+                {
+                    var config = new Config();
+                    config.ModifySkin(newSkin);
+                    dataStore.Modify(config, conf => conf.UserId == userId);
+                }
+            });
+        }
     }
 }
