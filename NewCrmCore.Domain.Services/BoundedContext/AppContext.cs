@@ -354,14 +354,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
                     var where = new StringBuilder();
-                    Expression<Func<App, Boolean>> where2 = a => a.IsSystem && a.IsDeleted;
                     if (appIds != default(IEnumerable<Int32>) && appIds.Any())
                     {
-                        where2 = a => appIds.Contains(a.Id);
                         where.Append($@" AND a.Id IN({String.Join(",", appIds)})");
                     }
 
-                    var sql = $@"SELECT a.Id,a.Name,a.IconUrl FROM App AS a WHERE 1=1 AND a.IsSystem=1 AND a.IsDeleted=0 {where}";
+                    var sql = $@"SELECT a.Id,a.Name,a.IconUrl FROM App AS a WHERE a.IsSystem=1 AND a.IsDeleted=0 {where}";
                     return dataStore.Find<App>(sql);
                 }
             });
@@ -441,18 +439,18 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
+
+                    dataStore.OpenTransaction();
                     try
                     {
-                        dataStore.OpenTransaction();
-                        {
-                            var app = await GetAppAsync(appId);
-                            app.Pass();
-                            dataStore.Modify(app, a => a.Id == appId);
+                        var app = await GetAppAsync(appId);
+                        app.Pass();
+                        dataStore.Modify(app, a => a.Id == appId);
 
-                            var notify = new Notify("应用审核通过通知", $@"您的应用:{app.Name},已审核通过", 0, app.UserId);
-                            dataStore.Add(notify);
-                            await _notify.Send(app.UserId, notify);
-                        }
+                        var notify = new Notify("应用审核通过通知", $@"您的应用:{app.Name},已审核通过", 0, app.UserId);
+                        dataStore.Add(notify);
+                        await _notify.Send(app.UserId, notify);
+
                         dataStore.Commit();
                     }
                     catch (Exception)
@@ -481,6 +479,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         var notify = new Notify("应用审核通过通知", $@"您的应用:{app.Name},已审核通过", 0, app.UserId);
                         dataStore.Add(notify);
                         await _notify.Send(app.UserId, notify);
+
                         dataStore.Commit();
                     }
                     catch (Exception)
@@ -641,7 +640,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         app.NotFlash();
                     }
 
-
                     app.ModifyRemark(app.Remark);
 
                     if (app.AppAuditState == AppAuditState.Wait)
@@ -673,7 +671,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.AppTypeId=@AppTypeId AND a.IsDeleted=0";
                         if (dataStore.FindSingleValue<Int32>(sql, parameters) > 0)
                         {
-                            throw new BusinessException($@"当前分类下已有绑定app,不能删除当前分类");
+                            throw new BusinessException($@"当前分类下存在应用,不能删除当前分类");
                         }
                     }
                     #endregion

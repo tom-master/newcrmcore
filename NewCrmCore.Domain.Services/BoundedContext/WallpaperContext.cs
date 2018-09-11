@@ -65,6 +65,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Wallpaper> GetUploadWallpaperAsync(String md5)
         {
+            Parameter.Validate(md5);
+
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -91,6 +93,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<List<Wallpaper>> GetUploadWallpaperAsync(Int32 userId)
         {
+            Parameter.Validate(userId);
+
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -146,6 +150,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             Parameter.Validate(userId);
             Parameter.Validate(newMode);
+
             await Task.Run(() =>
             {
                 if (Enum.TryParse(newMode, true, out WallpaperMode wallpaperMode))
@@ -168,6 +173,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             Parameter.Validate(userId);
             Parameter.Validate(newWallpaperId);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -183,6 +189,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             Parameter.Validate(userId);
             Parameter.Validate(wallpaperId);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))

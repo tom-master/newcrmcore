@@ -17,6 +17,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task<List<Member>> GetMembersAsync(Int32 userId)
         {
             Parameter.Validate(userId);
+
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -49,6 +50,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             Parameter.Validate(userId);
             Parameter.Validate(memberId);
+
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -98,6 +100,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task<Boolean> CheckMemberNameAsync(String name)
         {
             Parameter.Validate(name);
+
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -201,7 +204,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         member.NotFlash();
                     }
-
 
                     dataStore.Modify(member, mem => mem.Id == member.Id && mem.UserId == userId);
                 }

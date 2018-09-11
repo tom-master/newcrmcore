@@ -49,12 +49,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 #region sql 
                 {
                     var sql = $@" SELECT
-											a.LogLevelEnum,
-											a.Controller,
-											a.Action,
-											a.ExceptionMessage,
-											a.Track
-											FROM Log AS a WHERE 1=1 {where} LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
+                                    a.LogLevelEnum,
+                                    a.Controller,
+                                    a.Action,
+                                    a.ExceptionMessage,
+                                    a.Track
+                                    FROM Log AS a WHERE 1=1 {where} LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
                     return dataStore.Find<Log>(sql, parameters);
                 }
                 #endregion

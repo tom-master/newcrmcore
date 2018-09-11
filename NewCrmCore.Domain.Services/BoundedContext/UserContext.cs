@@ -93,6 +93,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task<Config> GetConfigAsync(Int32 userId)
         {
             Parameter.Validate(userId);
+
             return await Task.Run(() =>
              {
                  using (var dataStore = new DataStore(Appsetting.Database))
@@ -162,8 +163,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 #region totalCount
                 {
-                    var sql = $@"SELECT COUNT(*) FROM User AS a 
-                                 INNER JOIN Config AS a1 ON a1.UserId=a.Id AND a1.IsDeleted=0 {where} ";
+                    var sql = $@"SELECT COUNT(*) FROM User AS a INNER JOIN Config AS a1 ON a1.UserId=a.Id AND a1.IsDeleted=0 {where} ";
                     totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
                 }
                 #endregion
@@ -190,6 +190,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task<User> GetUserAsync(Int32 userId)
         {
             Parameter.Validate(userId);
+
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -219,6 +220,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task<List<Role>> GetRolesAsync(Int32 userId)
         {
             Parameter.Validate(userId);
+
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -252,6 +254,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task<Boolean> CheckUserNameExistAsync(String userName)
         {
             Parameter.Validate(userName);
+
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -265,6 +268,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task<String> GetOldPasswordAsync(Int32 userId)
         {
             Parameter.Validate(userId);
+
             return await Task.Run<String>(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -280,6 +284,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             Parameter.Validate(userId);
             Parameter.Validate(unlockPassword);
+
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -302,6 +307,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task<Boolean> CheckAppNameAsync(String name)
         {
             Parameter.Validate(name);
+
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -320,6 +326,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task<Boolean> CheckAppUrlAsync(String url)
         {
             Parameter.Validate(url);
+
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -338,6 +345,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task LogoutAsync(Int32 userId)
         {
             Parameter.Validate(userId);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -383,6 +391,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task AddNewUserAsync(User user)
         {
             Parameter.Validate(user);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -446,13 +455,13 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         throw;
                     }
                 }
-
             });
         }
 
         public async Task ModifyUserAsync(User user)
         {
             Parameter.Validate(user);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -513,6 +522,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task EnableAsync(Int32 userId)
         {
             Parameter.Validate(userId);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -526,6 +536,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task DisableAsync(Int32 userId)
         {
             Parameter.Validate(userId);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -533,10 +544,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     var parameters = new List<ParameterMapper> { new ParameterMapper("@userId", userId) };
                     #region 前置条件验证
                     {
-                        var sql = $@"SELECT COUNT(*) FROM Role AS a
-									INNER JOIN UserRole AS a1
-									ON a1.UserId=@userId AND a1.RoleId=a.Id AND a1.IsDeleted=0
-									WHERE a.IsDeleted=0 AND a.IsAllowDisable=0";
+                        var sql = $@"SELECT COUNT(*) FROM Role AS a INNER JOIN UserRole AS a1 ON a1.UserId=@userId AND a1.RoleId=a.Id AND a1.IsDeleted=0
+									 WHERE a.IsDeleted=0 AND a.IsAllowDisable=0";
                         var result = dataStore.FindSingleValue<Int32>(sql, parameters);
                         if (result > 0)
                         {
@@ -556,6 +565,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             Parameter.Validate(userId);
             Parameter.Validate(newFace);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -570,6 +580,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             Parameter.Validate(userId);
             Parameter.Validate(newPassword);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -589,6 +600,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             Parameter.Validate(userId);
             Parameter.Validate(newScreenPassword);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -602,6 +614,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task RemoveUserAsync(Int32 userId)
         {
             Parameter.Validate(userId);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -612,12 +625,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         #region 前置条件验证
                         {
+                            var sql = $@"SELECT a.IsAdmin FROM User AS a WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
                             var parameters = new List<ParameterMapper>
                             {
                                 new ParameterMapper("@userId",userId)
                             };
-
-                            var sql = $@"SELECT a.IsAdmin FROM User AS a WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
                             var isAdmin = dataStore.FindSingleValue<Boolean>(sql, parameters);
                             if (isAdmin)
                             {
@@ -668,7 +680,5 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 }
             });
         }
-
-
     }
 }

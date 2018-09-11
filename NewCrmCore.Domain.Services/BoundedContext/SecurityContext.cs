@@ -29,6 +29,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task<Role> GetRoleAsync(Int32 roleId)
         {
             Parameter.Validate(roleId);
+
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -110,6 +111,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task<Boolean> CheckRoleNameAsync(String name)
         {
             Parameter.Validate(name);
+
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -127,6 +129,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task<Boolean> CheckRoleIdentityAsync(String name)
         {
             Parameter.Validate(name);
+
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -144,6 +147,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task ModifyRoleAsync(Role role)
         {
             Parameter.Validate(role);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -161,6 +165,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task RemoveRoleAsync(Int32 roleId)
         {
             Parameter.Validate(roleId);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -213,6 +218,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task AddNewRoleAsync(Role role)
         {
             Parameter.Validate(role);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -230,6 +236,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             Parameter.Validate(roleId);
             Parameter.Validate(powerIds);
+
             await Task.Run(() =>
             {
                 if (!powerIds.Any())

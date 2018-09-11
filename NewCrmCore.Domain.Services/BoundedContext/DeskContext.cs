@@ -19,6 +19,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             Parameter.Validate(userId);
             Parameter.Validate(newDefaultDeskNumber);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -51,6 +52,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task ModifyMemberDirectionToXAsync(Int32 userId)
         {
             Parameter.Validate(userId);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -65,6 +67,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task ModifyMemberDirectionToYAsync(Int32 userId)
         {
             Parameter.Validate(userId);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -80,6 +83,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             Parameter.Validate(userId);
             Parameter.Validate(newSize);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -95,6 +99,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             Parameter.Validate(userId);
             Parameter.Validate(newSize);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -126,6 +131,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             Parameter.Validate(userId);
             Parameter.Validate(memberId);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -142,6 +148,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(userId);
             Parameter.Validate(memberId);
             Parameter.Validate(deskId);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -174,6 +181,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             Parameter.Validate(userId);
             Parameter.Validate(memberId);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -190,6 +198,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(userId);
             Parameter.Validate(memberId);
             Parameter.Validate(folderId);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -206,6 +215,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(userId);
             Parameter.Validate(memberId);
             Parameter.Validate(deskId);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -222,6 +232,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(userId);
             Parameter.Validate(memberId);
             Parameter.Validate(folderId);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
@@ -282,6 +293,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(userId);
             Parameter.Validate(memberId);
             Parameter.Validate(deskId);
+
             await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
