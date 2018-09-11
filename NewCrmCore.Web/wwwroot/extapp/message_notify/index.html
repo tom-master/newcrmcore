@@ -13,7 +13,6 @@
 </html>
 <script src="js/jquery.min.js"></script>
 <script src="js/message.js"></script>
-<script src="/js/signalr/signalr.min.js"></script>
 <script>
     $(function () {
         initMessagePlugin()
@@ -66,19 +65,7 @@
                     return node;
                 }
             })
-            initSignalR(notify)
         })
     }
-    function initSignalR(notify) {
-        var connection = new signalR.HubConnectionBuilder().withUrl("/hubs?userId=" + top.HROS.CONFIG.memberID).configureLogging(signalR.LogLevel.Information).build();
-        connection.on("Message", (responseText) => {
-            var message = JSON.parse(responseText)
-            notify.messageNotify(message.Title, message.Content)
-        });
-        connection.start().then(() => {
-            connection.invoke('RegisterConnection').then((result) => {
-                connectionId = result;
-            }).catch(err => NewCrm.msgbox.fail('推送服务注册失败:' + err));
-        }).catch(err => NewCrm.msgbox.fail('推送服务连接失败'));
-    }
+
 </script>
