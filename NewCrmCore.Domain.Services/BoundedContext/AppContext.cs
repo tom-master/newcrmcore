@@ -33,7 +33,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    var result = dataStore.Find<App>(a => a.UserId == userId && a.IsDeleted, a => new { a.Id });
+                    var sql = $@"SELECT a.Id FROM App AS a WHERE a.UserId=@userId AND a.IsDeleted=0";
+                    var parameters = new List<ParameterMapper>
+                    {
+                        new ParameterMapper("@userId",userId)
+                    };
+                    var result = dataStore.Find<App>(sql, parameters);
                     return new Tuple<Int32, Int32>(result.Count, result.Count(a => a.AppReleaseState == AppReleaseState.UnRelease));
                 }
             });
@@ -41,11 +46,13 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<List<AppType>> GetAppTypesAsync(Int32 userId)
         {
+            Parameter.Validate(userId);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    return dataStore.Find<AppType>(a => a.IsDeleted, a => new { a.Id, a.Name });
+                    var sql = $@"SELECT a.Id,a.Name FROM AppType AS a WHERE a.IsDeleted=0";
+                    return dataStore.Find<AppType>(sql);
                 }
             });
         }
