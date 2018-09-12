@@ -36,6 +36,17 @@
 @RenderSection("ChildrenTemplate",required: false)
 <script>
 	$(function () {
+		debugger
+		//配置artDialog全局默认参数
+		(function (config) {
+			config['lock'] = true;
+			config['fixed'] = true;
+			config['resize'] = false;
+			config['background'] = '#000';
+			config['opacity'] = 0.5;
+			config["skin"] = 'default';
+		})($.dialog.defaults);
+
 		//toolTip
 		$('[rel="tooltip"]').tooltip();
 		//表单提示
