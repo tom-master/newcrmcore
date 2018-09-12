@@ -37,7 +37,7 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync(UserId);
+            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();
             ViewData["TodayRecommendApp"] = await _appServices.GetTodayRecommendAsync(UserId);
 
             var user = await _userServices.GetUserAsync(UserId);
@@ -72,7 +72,7 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> UserAppManage()
         {
-            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync(UserId);
+            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();
             ViewData["AppStyles"] = _appServices.GetAppStyles().ToList();
             ViewData["AppStates"] = _appServices.GetAppStates().ToList();
 
@@ -93,7 +93,7 @@ namespace NewCrmCore.Web.Controllers
                 result = await _appServices.GetAppAsync(appId, UserId);
                 ViewData["AppState"] = result.AppAuditState;
             }
-            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync(UserId);
+            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();
             ViewData["UserId"] = UserId;
             return View(result);
         }

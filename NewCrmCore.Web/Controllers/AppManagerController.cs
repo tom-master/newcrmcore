@@ -33,7 +33,7 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync(UserId);
+            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();
             ViewData["AppStyles"] = _appServices.GetAppStyles().ToList();
             ViewData["AppStates"] = _appServices.GetAppStates().Where(w => w.Name == "未审核" || w.Name == "已发布").ToList();
 
@@ -55,7 +55,7 @@ namespace NewCrmCore.Web.Controllers
                 ViewData["AppState"] = appResult.AppAuditState;
             }
 
-            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync(UserId);
+            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();
             return View(appResult);
         }
 
