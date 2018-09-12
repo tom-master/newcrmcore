@@ -31,11 +31,9 @@
          */
         init: function (ops) {
             ops !== undefined && this.config(ops);
-
             if (option.elem === undefined || typeof option.elem !== "string") {
                 throw "option.elem is undefined";
             }
-
             var clazz = $(option.elem).attr("class");
             $(option.elem).attr("class", clazz ? clazz : "" + " message-bell");
             this.bellDraw();
@@ -50,10 +48,7 @@
          */
         bellDraw: function () {
             var bellHtml = "<span data-type='1' class='message-bell-btn' " + (option.msgUnReadData > 0 ? ("title='" + option.msgUnReadData + "条新消息'") : "") + ">" +
-                "<i class='fa fa-bell-o '></i>" + (option.msgUnReadData > 0 ? "<span class='badge-dot'></span>" : "") + "</span>" +
-                "<span data-type='2' class='message-bell-btn' " + (option.noticeUnReadData > 0 ? ("title='" + option.noticeUnReadData + "条新提醒'") : "") + ">" +
-                "<i class='fa fa-at'></i>" + (option.noticeUnReadData > 0 ? ("<span class='badge'>" + option.noticeUnReadData + "</span>") : "") +
-                "</span>";
+                "<i class='fa fa-bell-o '></i>" + (option.msgUnReadData > 0 ? "<span class='badge-dot' style='top:-6'></span>" : "") + "</span>";
             $(option.elem).html(bellHtml);
         },
         /**

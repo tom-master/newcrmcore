@@ -38,9 +38,9 @@
         initData().then((msgArr) => {
             var notify = MessagePlugin.init({
                 elem: ".notifyList",
-                noticeData: msgArr,
-                noticeUnReadData: msgArr.filter((a) => a.readStatus === 0).length,
-                noticeClick: function (obj) {
+                msgData: msgArr,
+                msgUnReadData: msgArr.filter((a) => a.readStatus === 0).length,
+                msgClick: function (obj) {
                     top.HROS.request.post('/desk/readnotify', { notifyId: $(obj).prop('id') }, function (responseText) {
                         if (responseText.IsSuccess) {
                             initMessagePlugin()
