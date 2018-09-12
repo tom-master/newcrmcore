@@ -44,9 +44,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task<List<AppType>> GetAppTypesAsync(Int32 userId)
+        public async Task<List<AppType>> GetAppTypesAsync()
         {
-            Parameter.Validate(userId);
             return await Task.Run(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))

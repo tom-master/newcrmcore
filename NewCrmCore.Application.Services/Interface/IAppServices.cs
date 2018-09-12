@@ -13,9 +13,8 @@ namespace NewCrmCore.Application.Services.Interface
         /// <summary>
         /// 获取所有的app类型
         /// </summary>
-        /// <param name="userId"></param>
         /// <returns></returns>
-        Task<List<AppTypeDto>> GetAppTypesAsync(Int32 userId);
+        Task<List<AppTypeDto>> GetAppTypesAsync();
 
         /// <summary>
         /// 获取今日推荐

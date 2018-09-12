@@ -27,9 +27,9 @@ namespace NewCrmCore.Application.Services
             _deskContext = deskContext;
         }
 
-        public async Task<List<AppTypeDto>> GetAppTypesAsync(Int32 userId)
+        public async Task<List<AppTypeDto>> GetAppTypesAsync()
         {
-            var result = await CacheHelper.GetOrSetCacheAsync(new AppTypeCacheKey(userId), () => _appContext.GetAppTypesAsync(userId));
+            var result = await CacheHelper.GetOrSetCacheAsync(new AppTypeCacheKey(), () => _appContext.GetAppTypesAsync());
             return result.Select(s => new AppTypeDto { Id = s.Id, Name = s.Name }).ToList();
         }
 
@@ -95,7 +95,7 @@ namespace NewCrmCore.Application.Services
             return await Task.Run(async () =>
             {
                 var result = _appContext.GetUserApps(userId, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize, out var totalCount);
-                var appTypes = await GetAppTypesAsync(userId);
+                var appTypes = await GetAppTypesAsync();
                 return new PageList<AppDto>
                 {
                     TotalCount = totalCount,
@@ -121,7 +121,7 @@ namespace NewCrmCore.Application.Services
             Parameter.Validate(appId);
 
             var result = await _appContext.GetAppAsync(appId);
-            var appTypes = await CacheHelper.GetOrSetCacheAsync(new AppTypeCacheKey(userId), () => GetAppTypesAsync(userId));
+            var appTypes = await CacheHelper.GetOrSetCacheAsync(new AppTypeCacheKey(), () => GetAppTypesAsync());
 
             return new AppDto
             {
