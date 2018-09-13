@@ -202,15 +202,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    var parameters = new List<ParameterMapper>
-                    {
-                        new ParameterMapper("@WallpaperId",wallpaperId),
-                        new ParameterMapper("@UserId",userId)
-                    };
-
                     #region 前置条件验证
                     {
                         var sql = $@"SELECT COUNT(*) FROM Config AS a WHERE a.UserId=@UserId AND a.WallpaperId=@WallpaperId AND a.IsDeleted=0";
+                        var parameters = new List<ParameterMapper>
+                        {
+                            new ParameterMapper("@WallpaperId",wallpaperId),
+                            new ParameterMapper("@UserId",userId)
+                        };
                         var result = dataStore.FindSingleValue<Int32>(sql, parameters);
                         if (result > 0)
                         {
