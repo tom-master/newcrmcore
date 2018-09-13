@@ -7,9 +7,9 @@ using NewLibCore.Data.Mapper.PropertyExtension;
 namespace NewCrmCore.Domain.Entitys.System
 {
     /// <summary>
-    /// 成员
+    /// 桌面应用
     /// </summary>
-    [Serializable, Description("成员")]
+    [Serializable, Description("桌面应用")]
     public partial class Member : DomainModelBase
     {
         /// <summary>
@@ -19,13 +19,13 @@ namespace NewCrmCore.Domain.Entitys.System
         public Int32 AppId { get; private set; }
 
         /// <summary>
-        /// 成员的宽
+        /// 桌面应用的宽
         /// </summary>
         [PropertyRequired]
         public Int32 Width { get; private set; }
 
         /// <summary>
-        /// 成员的高
+        /// 桌面应用的高
         /// </summary>
         [PropertyRequired]
         public Int32 Height { get; private set; }
@@ -55,7 +55,7 @@ namespace NewCrmCore.Domain.Entitys.System
         public String AppUrl { get; private set; }
 
         /// <summary>
-        /// 成员是否在应用码头上
+        /// 桌面应用是否在应用码头上
         /// </summary>
         [PropertyDefaultValue(typeof(Boolean), false)]
         public Boolean IsOnDock { get; private set; }
@@ -85,7 +85,7 @@ namespace NewCrmCore.Domain.Entitys.System
         public Boolean IsResize { get; private set; }
 
         /// <summary>
-        /// 成员类型
+        /// 桌面应用类型
         /// </summary>
         [PropertyRequired]
         public MemberType MemberType { get; private set; }
@@ -111,7 +111,7 @@ namespace NewCrmCore.Domain.Entitys.System
         public Double StarCount { get; set; }
 
         /// <summary>
-        /// 实例化一个成员对象
+        /// 实例化一个桌面应用对象
         /// </summary>
         public Member(
                     String name,
@@ -146,7 +146,7 @@ namespace NewCrmCore.Domain.Entitys.System
         }
 
         /// <summary>
-        /// 实例化一个成员对象
+        /// 实例化一个桌面应用对象
         /// </summary>
         public Member(String name,
             String iconUrl,

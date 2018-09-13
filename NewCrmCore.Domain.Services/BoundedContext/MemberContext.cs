@@ -159,7 +159,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                     if (!result)
                     {
-                        throw new BusinessException("修改成员图片失败");
+                        throw new BusinessException("修改桌面应用图片失败");
                     }
                 }
             });
@@ -217,7 +217,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     var result = dataStore.Modify(member, mem => mem.Id == member.Id && mem.UserId == userId);
                     if (!result)
                     {
-                        throw new BusinessException("修改桌面成员信息失败");
+                        throw new BusinessException("修改桌面应用信息失败");
                     }
                 }
             });
@@ -250,14 +250,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                         if (isFolder)
                         {
-                            #region 将文件夹内的成员移出
+                            #region 将文件夹内的桌面应用移出
                             {
                                 var member = new Member();
                                 member.ModifyFolderId(0);
                                 var result = dataStore.Modify(member, mem => mem.UserId == userId && mem.FolderId == memberId);
                                 if (!result)
                                 {
-                                    throw new BusinessException("将文件夹内的成员移出失败");
+                                    throw new BusinessException("将文件夹内的桌面应用移出失败");
                                 }
                             }
                             #endregion
@@ -304,14 +304,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             #endregion
                         }
 
-                        #region 移除成员
+                        #region 移除桌面应用
                         {
                             var member = new Member();
                             member.Remove();
                             var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                             if (!result)
                             {
-                                throw new BusinessException("移除成员失败");
+                                throw new BusinessException("移除桌面应用失败");
                             }
                         }
                         #endregion

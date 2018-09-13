@@ -505,10 +505,10 @@ namespace NewCrmCore.Web.Controllers
 
         #endregion
 
-        #region 卸载桌面成员
+        #region 卸载桌面应用
 
         /// <summary>
-        /// 卸载桌面成员
+        /// 卸载桌面应用
         /// </summary>
         /// <param name="memberId"></param>
         /// <returns></returns>
@@ -529,10 +529,10 @@ namespace NewCrmCore.Web.Controllers
 
         #endregion
 
-        #region 检查成员名称
+        #region 检查桌面应用名称
 
         /// <summary>
-        /// 检查成员名称
+        /// 检查桌面应用名称
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
@@ -549,10 +549,10 @@ namespace NewCrmCore.Web.Controllers
 
         #endregion
 
-        #region 桌面成员移动
+        #region 桌面应用移动
 
         /// <summary>
-        /// 桌面成员移动
+        /// 桌面应用移动
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -566,25 +566,25 @@ namespace NewCrmCore.Web.Controllers
 
             switch (model.MoveType.ToLower())
             {
-                case "desk-dock": //成员从桌面移动到码头
+                case "desk-dock": //桌面应用从桌面移动到码头
                     await _deskServices.MemberInDockAsync(UserId, model.MemberId);
                     break;
-                case "dock-desk": //成员从码头移动到桌面
+                case "dock-desk": //桌面应用从码头移动到桌面
                     await _deskServices.MemberOutDockAsync(UserId, model.MemberId, model.To);
                     break;
-                case "dock-folder": //成员从码头移动到桌面文件夹中
+                case "dock-folder": //桌面应用从码头移动到桌面文件夹中
                     await _deskServices.DockToFolderAsync(UserId, model.MemberId, model.To);
                     break;
-                case "folder-dock": //成员从文件夹移动到码头
+                case "folder-dock": //桌面应用从文件夹移动到码头
                     await _deskServices.FolderToDockAsync(UserId, model.MemberId);
                     break;
-                case "desk-folder": //成员从桌面移动到文件夹
+                case "desk-folder": //桌面应用从桌面移动到文件夹
                     await _deskServices.DeskToFolderAsync(UserId, model.MemberId, model.To);
                     break;
-                case "folder-desk": //成员从文件夹移动到桌面
+                case "folder-desk": //桌面应用从文件夹移动到桌面
                     await _deskServices.FolderToDeskAsync(UserId, model.MemberId, model.To);
                     break;
-                case "folder-folder": //成员从文件夹移动到另一个文件夹中
+                case "folder-folder": //桌面应用从文件夹移动到另一个文件夹中
                     await _deskServices.FolderToOtherFolderAsync(UserId, model.MemberId, model.To);
                     break;
                 case "desk-desk": //桌面移动到另一个桌面
@@ -605,10 +605,10 @@ namespace NewCrmCore.Web.Controllers
 
         #endregion
 
-        #region 修改成员信息
+        #region 修改桌面应用信息
 
         /// <summary>
-        /// 修改成员信息
+        /// 修改桌面应用信息
         /// </summary>
         /// <param name="forms"></param>
         /// <returns></returns>
@@ -635,7 +635,7 @@ namespace NewCrmCore.Web.Controllers
             var response = new ResponseModel();
             await _deskServices.ModifyMemberInfoAsync(UserId, memberDto);
             response.IsSuccess = true;
-            response.Message = "修改成员信息成功";
+            response.Message = "修改桌面应用信息成功";
 
             return Json(response);
         }

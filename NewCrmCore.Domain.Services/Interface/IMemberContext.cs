@@ -8,14 +8,14 @@ namespace NewCrmCore.Domain.Services.Interface
     public interface IMemberContext
     {
         /// <summary>
-        /// 获取桌面成员列表
+        /// 获取桌面应用列表
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
         Task<List<Member>> GetMembersAsync(Int32 userId);
 
         /// <summary>
-        /// 获取桌面成员
+        /// 获取桌面应用
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="memberId"></param>
@@ -24,7 +24,7 @@ namespace NewCrmCore.Domain.Services.Interface
         Task<Member> GetMemberAsync(Int32 userId, Int32 memberId, Boolean isFolder);
 
         /// <summary>
-        /// 检查成员名称
+        /// 检查桌面应用名称
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
@@ -41,7 +41,7 @@ namespace NewCrmCore.Domain.Services.Interface
         Task ModifyFolderInfoAsync(Int32 userId, String memberName, String memberIcon, Int32 memberId);
 
         /// <summary>
-        /// 修改成员信息
+        /// 修改桌面应用信息
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="member"></param>
@@ -49,7 +49,7 @@ namespace NewCrmCore.Domain.Services.Interface
         Task ModifyMemberInfoAsync(Int32 userId, Member member);
 
         /// <summary>
-        /// 卸载用户的桌面app成员
+        /// 卸载用户的桌面应用
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="memberId"></param>
@@ -57,7 +57,7 @@ namespace NewCrmCore.Domain.Services.Interface
         Task UninstallMemberAsync(Int32 userId, Int32 memberId);
 
         /// <summary>
-        /// 修改桌面成员的Icon
+        /// 修改桌面应用的Icon
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="memberId"></param>

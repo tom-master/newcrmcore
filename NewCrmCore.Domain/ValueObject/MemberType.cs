@@ -3,7 +3,7 @@
 namespace NewCrmCore.Domain.ValueObject
 {
     /// <summary>
-    /// 桌面成员类型
+    /// 桌面应用类型
     /// </summary>
     public enum MemberType
     {
