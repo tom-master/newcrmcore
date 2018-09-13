@@ -106,25 +106,23 @@
 {
 	@{ 
 		<text>
-            var uploader = WebUploader.create({
-            // 选完文件后，是否自动上传。
+        var uploader = WebUploader.create({
             auto: true,
-            // swf文件路径
             swf: '~/js/webuploader-0.1.5/Uploader.swf',
-            // 文件接收服务端。
-            server: '@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)?userId=@Model.UserId&uploadtype=icon',
-            // 选择文件的按钮。可选。
-            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            server: '@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)',
             pick: {
                 id: '#upload',
                 multiple: false
             },
-            // 只允许选择图片文件。
             accept: {
                 title: 'Images',
                 extensions: 'gif,jpg,jpeg,bmp,png',
                 mimeTypes: 'image/*'
-            }
+            },
+            formData: {  
+                userId: '@Model.Id',
+                uploadtype:'icon'
+            }  
         });
         uploader.on('beforeFileQueued', function(file) {
             if (file.size > 300 * 1024) {
@@ -148,9 +146,10 @@
             }, 48, 48);
         });
         uploader.on('uploadSuccess', function (file, cb) {
+            
             if (cb[0].IsSuccess) {
                 var urlPart = cb[0].Url
-                HROS.request.post('/desk/modifyicon',{ MemberId: '@Model.Id', NewIcon: urlPart },function () {
+                HROS.request.post('/desk/modifyicon',{ MemberId: '@Model.Id', NewIcon: urlPart },function (responseText) {
                     if (responseText.IsSuccess) {
                         $('#isIconByUpload').val('1');
                         $('.shortcutview img').attr('src', responseText.Model);
@@ -192,7 +191,7 @@
                 if (responseText.IsSuccess) {
                     NewCrm.msgbox.success('修改成功');
                     setTimeout(function () {
-                        window.parent.HROS.app.get();
+                        HROS.app.get();
                         window.parent.$.dialog.list['editdialog'].close();
                     }, 1000);
                 } else {
