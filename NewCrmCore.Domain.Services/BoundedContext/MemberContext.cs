@@ -9,6 +9,7 @@ using NewCrmCore.Infrastructure;
 using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;
 using NewLibCore;
+using NewCrmCore.Infrastructure.CommonTools;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
 {
@@ -133,7 +134,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         var member = new Member();
                         member.ModifyName(memberName);
                         member.ModifyIconUrl(memberIcon);
-                        dataStore.Modify(member, mem => mem.UserId == userId && mem.Id == memberId);
+                        var result = dataStore.Modify(member, mem => mem.UserId == userId && mem.Id == memberId);
+                        if (!result)
+                        {
+                            throw new BusinessException("修改文件夹信息失败");
+                        }
                     }
                     #endregion
                 }
@@ -151,7 +156,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var member = new Member();
                     member.ModifyIconUrl(newIcon);
-                    dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("修改成员图片失败");
+                    }
                 }
             });
         }
@@ -205,7 +214,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         member.NotFlash();
                     }
 
-                    dataStore.Modify(member, mem => mem.Id == member.Id && mem.UserId == userId);
+                    var result = dataStore.Modify(member, mem => mem.Id == member.Id && mem.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("修改桌面成员信息失败");
+                    }
                 }
             });
         }
@@ -241,7 +254,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             {
                                 var member = new Member();
                                 member.ModifyFolderId(0);
-                                dataStore.Modify(member, mem => mem.UserId == userId && mem.FolderId == memberId);
+                                var result = dataStore.Modify(member, mem => mem.UserId == userId && mem.FolderId == memberId);
+                                if (!result)
+                                {
+                                    throw new BusinessException("将文件夹内的成员移出失败");
+                                }
                             }
                             #endregion
                         }
@@ -263,7 +280,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                             App app = null;
 
-                            #region 查询app
+                            #region 查询应用
                             {
                                 var sql = $@"SELECT a.UseCount FROM App AS a WHERE a.Id=@Id AND a.UserId=@UserId AND a.IsDeleted=0";
                                 var parameters = new List<ParameterMapper>
@@ -275,10 +292,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             }
                             #endregion
 
-                            #region app使用量-1
+                            #region 应用使用量-1
                             {
                                 app.DecreaseUseCount();
-                                dataStore.Modify(app, a => a.Id == appId && a.UserId == userId);
+                                var result = dataStore.Modify(app, a => a.Id == appId && a.UserId == userId);
+                                if (!result)
+                                {
+                                    throw new BusinessException("修改应用使用数量失败");
+                                }
                             }
                             #endregion
                         }
@@ -287,7 +308,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var member = new Member();
                             member.Remove();
-                            dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                            var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                            if (!result)
+                            {
+                                throw new BusinessException("移除成员失败");
+                            }
                         }
                         #endregion
 

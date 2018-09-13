@@ -159,7 +159,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         var config = new Config();
                         config.ModeTo(wallpaperMode);
-                        dataStore.Modify(config, conf => conf.UserId == userId);
+                        var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("修改壁纸显示失败");
+                        }
                     }
                 }
                 else
@@ -180,7 +184,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var config = new Config();
                     config.NotFromBing().ModifyWallpaperId(newWallpaperId);
-                    dataStore.Modify(config, conf => conf.UserId == userId);
+                    var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("修改壁纸失败");
+                    }
                 }
             });
         }
@@ -215,7 +223,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         var wallpaper = new Wallpaper();
                         wallpaper.Remove();
-                        dataStore.Modify(wallpaper, wa => wa.Id == wallpaperId && wa.UserId == userId);
+                        var result = dataStore.Modify(wallpaper, wa => wa.Id == wallpaperId && wa.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("移除壁纸失败");
+                        }
                     }
                     #endregion
                 }

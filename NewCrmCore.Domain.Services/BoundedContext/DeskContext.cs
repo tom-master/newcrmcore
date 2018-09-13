@@ -26,7 +26,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var config = new Config();
                     config.ModifyDefaultDeskNumber(newDefaultDeskNumber);
-                    dataStore.Modify(config, conf => conf.UserId == userId);
+                    var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("修改默认桌面号失败");
+                    }
                 }
             });
         }
@@ -44,7 +48,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     var config = new Config();
                     var newPosition = EnumExtensions.ToEnum<DockPosition>(position);
                     config.PositionTo(newPosition);
-                    dataStore.Modify(config, conf => conf.UserId == userId && conf.DefaultDeskNumber == defaultDeskNumber);
+                    var result = dataStore.Modify(config, conf => conf.UserId == userId && conf.DefaultDeskNumber == defaultDeskNumber);
+                    if (!result)
+                    {
+                        throw new BusinessException("修改应用码头位置失败");
+                    }
                 }
             });
         }
@@ -59,7 +67,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var config = new Config();
                     config.DirectionToX();
-                    dataStore.Modify(config, conf => conf.UserId == userId);
+                    var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("修改桌面成员为X轴失败");
+                    }
                 }
             });
         }
@@ -74,7 +86,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var config = new Config();
                     config.DirectionToY();
-                    dataStore.Modify(config, conf => conf.UserId == userId);
+                    var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("修改桌面成员为Y轴失败");
+                    }
                 }
             });
         }
@@ -90,7 +106,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var config = new Config();
                     config.ModifyAppSize(newSize);
-                    dataStore.Modify(config, conf => conf.UserId == userId);
+                    var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("修改桌面成员展示图标大小失败");
+                    }
                 }
             });
         }
@@ -106,7 +126,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var config = new Config();
                     config.ModifyAppVerticalSpacing(newSize);
-                    dataStore.Modify(config, conf => conf.UserId == userId);
+                    var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("修改桌面成员水平间距失败");
+                    }
                 }
             });
         }
@@ -122,7 +146,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var config = new Config();
                     config.ModifyAppHorizontalSpacing(newSize);
-                    dataStore.Modify(config, conf => conf.UserId == userId);
+                    var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("修改桌面成员垂直间距失败");
+                    }
                 }
             });
         }
@@ -138,7 +166,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var member = new Member();
                     member.OnDock();
-                    dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("将成员移动到应用码头失败");
+                    }
                 }
             });
         }
@@ -155,7 +187,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var member = new Member();
                     member.OutDock().ModifyDeskIndex(deskId);
-                    dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("将桌面成员移出应用码头失败");
+                    }
                 }
             });
         }
@@ -172,7 +208,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var member = new Member();
                     member.OutDock().ModifyFolderId(folderId);
-                    dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("桌面成员从应用码头移动到文件夹中失败");
+                    }
                 }
             });
         }
@@ -188,7 +228,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var member = new Member();
                     member.OnDock().ModifyFolderId(0);
-                    dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("桌面成员从文件夹移动到码头失败");
+                    }
                 }
             });
         }
@@ -205,7 +249,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var member = new Member();
                     member.ModifyFolderId(folderId);
-                    dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("桌面成员从桌面移动到文件夹中");
+                    }
                 }
             });
         }
@@ -222,7 +270,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var member = new Member();
                     member.ModifyFolderId(0).ModifyDeskIndex(deskId);
-                    dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("桌面成员从文件夹移动到桌面失败");
+                    }
+
                 }
             });
         }
@@ -239,7 +292,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var member = new Member();
                     member.ModifyFolderId(folderId);
-                    dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("桌面成员从文件夹移动到另一个文件夹中失败");
+                    }
                 }
             });
         }
@@ -273,7 +330,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                         #region 成员移动到其他桌面
                         {
-                            dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                            var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                            if (!result)
+                            {
+                                throw new BusinessException("成员移动到其他桌面失败");
+                            }
                         }
                         #endregion
 
@@ -300,7 +361,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var member = new Member();
                     member.OutDock().ModifyDeskIndex(deskId);
-                    dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("桌面成员从应用码头移动到另一桌面时失败");
+                    }
                 }
             });
         }
@@ -338,7 +403,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         config.NotFromBing();
                     }
-                    dataStore.Modify(config, conf => conf.UserId == userId);
+                    var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("修改壁纸来源失败");
+                    }
                 }
             });
         }
@@ -377,7 +446,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var notify = new Notify();
                     notify.Read();
-                    dataStore.Modify(notify, n => notifyIds.Contains(n.Id));
+                    var result = dataStore.Modify(notify, n => notifyIds.Contains(n.Id));
+                    if (!result)
+                    {
+                        throw new BusinessException("读取消息失败");
+                    }
                 }
             });
         }
@@ -393,7 +466,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var config = new Config();
                     config.ModifySkin(newSkin);
-                    dataStore.Modify(config, conf => conf.UserId == userId);
+                    var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("修改皮肤失败");
+                    }
                 }
             });
         }

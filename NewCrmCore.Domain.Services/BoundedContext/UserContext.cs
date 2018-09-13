@@ -28,7 +28,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
              {
                  using (var dataStore = new DataStore(Appsetting.Database))
                  {
-                     User result = null;
+                     User user = null;
                      try
                      {
                          dataStore.OpenTransaction();
@@ -40,13 +40,13 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                         INNER JOIN Config AS a1
                                         ON a1.UserId=a.Id 
                                         WHERE a.Name=@name AND a.IsDeleted=0 AND a.IsDisable=0";
-                             result = dataStore.Find<User>(sql, new List<ParameterMapper> { new ParameterMapper("@name", userName) }).FirstOrDefault();
-                             if (result == null)
+                             user = dataStore.Find<User>(sql, new List<ParameterMapper> { new ParameterMapper("@name", userName) }).FirstOrDefault();
+                             if (user == null)
                              {
                                  throw new BusinessException($"该用户不存在或被禁用{userName}");
                              }
 
-                             if (!PasswordUtil.ComparePasswords(result.LoginPassword, password))
+                             if (!PasswordUtil.ComparePasswords(user.LoginPassword, password))
                              {
                                  throw new BusinessException("密码错误");
                              }
@@ -55,9 +55,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                          #region 设置用户在线
                          {
-
-                             result.Online();
-                             if (dataStore.Modify(result, acc => acc.Id == result.Id))
+                             user.Online();
+                             var result = dataStore.Modify(user, acc => acc.Id == user.Id);
+                             if (!result)
                              {
                                  throw new BusinessException("设置用户在线状态失败");
                              }
@@ -66,7 +66,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                          #region 添加在线用户列表
                          {
-                             var online = new Online(requestIp, result.Id);
+                             var online = new Online(requestIp, user.Id);
                              var rowCount = dataStore.Add(online);
 
                              if (rowCount == 0)
@@ -77,7 +77,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                          #endregion
 
                          dataStore.Commit();
-                         return result;
+                         return user;
                      }
                      catch (Exception)
                      {
@@ -355,7 +355,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var user = new User();
                             user.Offline();
-                            if (dataStore.Modify(user, acc => acc.Id == userId && !acc.IsDeleted && !acc.IsDisable))
+                            var result = dataStore.Modify(user, acc => acc.Id == userId && !acc.IsDeleted && !acc.IsDisable);
+                            if (!result)
                             {
                                 throw new BusinessException("设置用户下线状态失败");
                             }
@@ -366,7 +367,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var online = new Online();
                             online.Remove();
-                            if (dataStore.Modify(online, on => on.UserId == userId && !on.IsDeleted))
+                            var result = dataStore.Modify(online, on => on.UserId == userId && !on.IsDeleted);
+                            if (!result)
                             {
                                 throw new BusinessException("将用户移出在线列表时失败");
                             }
@@ -425,7 +427,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         #region 更新用户的配置
                         {
                             user.ModifyConfigId(configId);
-                            if (dataStore.Modify(user, acc => acc.Id == userId))
+                            var result = dataStore.Modify(user, acc => acc.Id == userId);
+                            if (!result)
                             {
                                 throw new BusinessException("更新用户配置失败");
                             }
@@ -470,7 +473,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             {
                                 var newPassword = PasswordUtil.CreateDbPassword(user.LoginPassword);
                                 user.ModifyLoginPassword(newPassword);
-                                if (dataStore.Modify(user, acc => acc.Id == user.Id))
+                                var result = dataStore.Modify(user, acc => acc.Id == user.Id);
+                                if (!result)
                                 {
                                     throw new BusinessException("修改登陆密码失败");
                                 }
@@ -478,12 +482,15 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             #endregion
                         }
 
-                        #region 修改账户角色
+                        #region 修改用户角色
                         {
                             var userRole = new UserRole();
                             userRole.Remove();
-                            dataStore.Modify(userRole, acc => acc.UserId == user.Id);
-
+                            var result = dataStore.Modify(userRole, acc => acc.UserId == user.Id);
+                            if (!result)
+                            {
+                                throw new BusinessException("移除用户角色失败");
+                            }
                             if (user.Roles == null || !user.Roles.Any())
                             {
                                 user.DetachAdminRole();
@@ -496,8 +503,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                     dataStore.Add(new UserRole(user.Id, item.RoleId));
                                 }
                             }
-                            dataStore.Modify(user, ac => ac.Id == user.Id);
-
+                            var result2 = dataStore.Modify(user, ac => ac.Id == user.Id);
+                            if (!result2)
+                            {
+                                throw new BusinessException("修改用户角色失败");
+                            }
                         }
                         #endregion
 
@@ -521,7 +531,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
                     var user = new User().Enable();
-                    dataStore.Modify(user, acc => acc.Id == userId);
+                    var result = dataStore.Modify(user, acc => acc.Id == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("用户启用失败");
+                    }
                 }
             });
         }
@@ -548,7 +562,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     #endregion
                     {
                         var user = new User().Disable();
-                        dataStore.Modify(user, acc => acc.Id == userId);
+                        var result = dataStore.Modify(user, acc => acc.Id == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("用户启用失败");
+                        }
                     }
                 }
             });
@@ -564,7 +582,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
                     var config = new Config().ModifyUserFace(newFace);
-                    dataStore.Modify(config, conf => conf.UserId == userId);
+                    var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("修改用户头像失败");
+                    }
                 }
             });
         }
@@ -584,7 +606,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         user.ModifyLockScreenPassword(newPassword);
                     }
                     user.ModifyLoginPassword(newPassword);
-                    dataStore.Modify(user, acc => acc.Id == userId && acc.IsDisable == false);
+                    var result = dataStore.Modify(user, acc => acc.Id == userId && acc.IsDisable == false);
+                    if (!result)
+                    {
+                        throw new BusinessException("修改登陆密码失败");
+                    }
                 }
             });
         }
@@ -599,7 +625,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
                     var user = new User().ModifyLockScreenPassword(newScreenPassword);
-                    dataStore.Modify(user, acc => acc.Id == userId && !acc.IsDisable);
+                    var result = dataStore.Modify(user, acc => acc.Id == userId && !acc.IsDisable);
+                    if (!result)
+                    {
+                        throw new BusinessException("修改锁屏密码失败");
+                    }
                 }
             });
         }
@@ -635,7 +665,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var user = new User();
                             user.Remove();
-                            dataStore.Modify(user, acc => acc.Id == userId && !acc.IsDisable);
+                            var result = dataStore.Modify(user, acc => acc.Id == userId && !acc.IsDisable);
+                            if (!result)
+                            {
+                                throw new BusinessException("移除账户失败");
+                            }
                         }
                         #endregion
 
@@ -643,7 +677,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var config = new Config();
                             config.Remove();
-                            dataStore.Modify(config, conf => conf.UserId == userId);
+                            var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                            if (!result)
+                            {
+                                throw new BusinessException("移除账户配置失败");
+                            }
                         }
                         #endregion
 
@@ -651,7 +689,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var userRole = new UserRole();
                             userRole.Remove();
-                            dataStore.Modify(userRole, accRole => accRole.UserId == userId);
+                            var result = dataStore.Modify(userRole, accRole => accRole.UserId == userId);
+                            if (!result)
+                            {
+                                throw new BusinessException("移除账户配置失败");
+                            }
                         }
                         #endregion
 
@@ -659,7 +701,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var member = new Member();
                             member.Remove();
-                            dataStore.Modify(member, mem => mem.UserId == userId);
+                            var result = dataStore.Modify(member, mem => mem.UserId == userId);
+                            if (!result)
+                            {
+                                throw new BusinessException("移除账户配置失败");
+                            }
                         }
                         #endregion
 

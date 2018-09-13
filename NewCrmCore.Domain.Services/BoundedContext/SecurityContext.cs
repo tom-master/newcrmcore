@@ -155,7 +155,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     #region 修改角色
                     {
                         role.ModifyRoleName(role.Name);
-                        dataStore.Modify(role, r => r.Id == role.Id);
+                        var result = dataStore.Modify(role, r => r.Id == role.Id);
+                        if (!result)
+                        {
+                            throw new BusinessException("修改角色失败");
+                        }
                     }
                     #endregion
                 }
@@ -192,7 +196,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var role = new Role();
                             role.Remove();
-                            dataStore.Modify(role, r => r.Id == roleId);
+                            var result = dataStore.Modify(role, r => r.Id == roleId);
+                            if (!result)
+                            {
+                                throw new BusinessException("删除角色失败");
+                            }
                         }
                         #endregion
 
@@ -200,7 +208,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var rolePower = new RolePower();
                             rolePower.Remove();
-                            dataStore.Modify(rolePower, rp => rp.RoleId == roleId);
+                            var result = dataStore.Modify(rolePower, rp => rp.RoleId == roleId);
+                            if (!result)
+                            {
+                                throw new BusinessException("移除权限失败");
+                            }
                         }
                         #endregion
 
@@ -253,7 +265,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var rolePower = new RolePower();
                             rolePower.Remove();
-                            dataStore.Modify(rolePower, rp => rp.RoleId == roleId);
+                            var result = dataStore.Modify(rolePower, rp => rp.RoleId == roleId);
+                            if (!result)
+                            {
+                                throw new BusinessException("移除之前的角色权限失败");
+                            }
                         }
                         #endregion
 

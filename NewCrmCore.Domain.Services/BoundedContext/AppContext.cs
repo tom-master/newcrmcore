@@ -444,7 +444,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         var app = await GetAppAsync(appId);
                         app.Pass();
-                        dataStore.Modify(app, a => a.Id == appId);
+                        var result = dataStore.Modify(app, a => a.Id == appId);
+                        if (!result)
+                        {
+                            throw new BusinessException("应用审核状态更新失败");
+                        }
 
                         var notify = new Notify("应用审核通过通知", $@"您的应用:{app.Name},已审核通过", 0, app.UserId);
                         dataStore.Add(notify);
@@ -473,7 +477,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         var app = await GetAppAsync(appId);
                         app.Deny();
-                        dataStore.Modify(app, a => a.Id == appId);
+                        var result = dataStore.Modify(app, a => a.Id == appId);
+                        if (!result)
+                        {
+                            throw new BusinessException("应用审核状态更新失败");
+                        }
 
                         var notify = new Notify("应用审核通过通知", $@"您的应用:{app.Name},已审核通过", 0, app.UserId);
                         dataStore.Add(notify);
@@ -500,17 +508,25 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     dataStore.OpenTransaction();
                     try
                     {
-                        #region 取消之前的推荐app
+                        #region 取消之前的推荐应用
                         {
                             var app = new App().CancelRecommand();
-                            dataStore.Modify(app, a => a.IsRecommand == true);
+                            var result = dataStore.Modify(app, a => a.IsRecommand);
+                            if (!result)
+                            {
+                                throw new BusinessException("取消之前的推荐应用失败");
+                            }
                         }
                         #endregion
 
-                        #region 设置新的推荐app
+                        #region 设置新的推荐应用
                         {
                             var app = new App().Recommand();
-                            dataStore.Modify(app, a => a.Id == appId);
+                            var result = dataStore.Modify(app, a => a.Id == appId);
+                            if (!result)
+                            {
+                                throw new BusinessException("设置新的推荐应用失败");
+                            }
                         }
                         #endregion
 
@@ -535,19 +551,27 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     dataStore.OpenTransaction();
                     try
                     {
-                        #region 移除app的评分
+                        #region 移除应用的评分
                         {
                             var appStar = new AppStar();
                             appStar.Remove();
-                            dataStore.Modify(appStar, star => star.AppId == appId);
+                            var result = dataStore.Modify(appStar, star => star.AppId == appId);
+                            if (!result)
+                            {
+                                throw new BusinessException("移除应用的评分失败");
+                            }
                         }
                         #endregion
 
-                        #region 移除app
+                        #region 移除应用
                         {
                             var app = new App();
                             app.Remove();
-                            dataStore.Modify(app, a => a.Id == appId);
+                            var result = dataStore.Modify(app, a => a.Id == appId);
+                            if (!result)
+                            {
+                                throw new BusinessException("移除应用失败");
+                            }
                         }
                         #endregion
 
@@ -569,10 +593,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    #region 发布app
+                    #region 发布应用
                     {
                         var app = new App().AppRelease().Pass();
-                        dataStore.Modify(app, a => a.Id == appId);
+                        var result = dataStore.Modify(app, a => a.Id == appId);
+                        if (!result)
+                        {
+                            throw new BusinessException("发布应用失败");
+                        }
                     }
                     #endregion
                 }
@@ -649,7 +677,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         app.UnAuditState();
                     }
-                    dataStore.Modify(app, a => a.UserId == userId && a.Id == app.Id);
+                    var result = dataStore.Modify(app, a => a.UserId == userId && a.Id == app.Id);
+                    if (!result)
+                    {
+                        throw new BusinessException("修改应用信息失败");
+                    }
                 }
             });
         }
@@ -675,11 +707,15 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     }
                     #endregion
 
-                    #region 移除app分类
+                    #region 移除应用分类
                     {
                         var appType = new AppType();
                         appType.Remove();
-                        dataStore.Modify(appType, type => type.Id == appTypeId);
+                        var result = dataStore.Modify(appType, type => type.Id == appTypeId);
+                        if (!result)
+                        {
+                            throw new BusinessException("移除应用分类失败");
+                        }
                     }
                     #endregion
                 }
@@ -704,9 +740,13 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     }
                     #endregion
 
-                    #region 添加app分类
+                    #region 添加应用分类
                     {
-                        dataStore.Modify(appType);
+                        var result = dataStore.Modify(appType);
+                        if (!result)
+                        {
+                            throw new BusinessException("添加应用分类失败");
+                        }
                     }
                     #endregion
                 }
@@ -732,11 +772,15 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     }
                     #endregion
 
-                    #region 更新app分类
+                    #region 更新应用分类
                     {
                         var appType = new AppType();
                         appType.ModifyName(appTypeName);
-                        dataStore.Modify(appType, type => type.Id == appTypeId);
+                        var result = dataStore.Modify(appType, type => type.Id == appTypeId);
+                        if (!result)
+                        {
+                            throw new BusinessException("更新应用分类");
+                        }
                     }
                     #endregion
                 }
@@ -754,7 +798,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var app = new App();
                     app.ModifyIconUrl(newIcon);
-                    dataStore.Modify(app, a => a.Id == appId && a.UserId == userId);
+                    var result = dataStore.Modify(app, a => a.Id == appId && a.UserId == userId);
+                    if (!result)
+                    {
+                        throw new BusinessException("修改应用图标失败");
+                    }
                 }
             });
         }
@@ -809,10 +857,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         }
                         #endregion
 
-                        #region 更改app使用数量
+                        #region 更改应用使用数量
                         {
                             app.IncreaseUseCount();
-                            dataStore.Modify(app, a => a.Id == appId);
+                            var result = dataStore.Modify(app, a => a.Id == appId);
+                            if (!result)
+                            {
+                                throw new BusinessException("修改应用使用数量失败");
+                            }
                         }
                         #endregion
 
