@@ -57,9 +57,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                          {
 
                              result.Online();
-                             var rowCount = dataStore.Modify(result, acc => acc.Id == result.Id);
-
-                             if (rowCount == 0)
+                             if (dataStore.Modify(result, acc => acc.Id == result.Id))
                              {
                                  throw new BusinessException("设置用户在线状态失败");
                              }
@@ -357,8 +355,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var user = new User();
                             user.Offline();
-                            var rowCount = dataStore.Modify(user, acc => acc.Id == userId && !acc.IsDeleted && !acc.IsDisable);
-                            if (rowCount == 0)
+                            if (dataStore.Modify(user, acc => acc.Id == userId && !acc.IsDeleted && !acc.IsDisable))
                             {
                                 throw new BusinessException("设置用户下线状态失败");
                             }
@@ -369,8 +366,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var online = new Online();
                             online.Remove();
-                            var rowCount = dataStore.Modify(online, on => on.UserId == userId && !on.IsDeleted);
-                            if (rowCount == 0)
+                            if (dataStore.Modify(online, on => on.UserId == userId && !on.IsDeleted))
                             {
                                 throw new BusinessException("将用户移出在线列表时失败");
                             }
@@ -429,8 +425,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         #region 更新用户的配置
                         {
                             user.ModifyConfigId(configId);
-                            var userRowCount = dataStore.Modify(user, acc => acc.Id == userId);
-                            if (userRowCount == 0)
+                            if (dataStore.Modify(user, acc => acc.Id == userId))
                             {
                                 throw new BusinessException("更新用户配置失败");
                             }
@@ -475,9 +470,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             {
                                 var newPassword = PasswordUtil.CreateDbPassword(user.LoginPassword);
                                 user.ModifyLoginPassword(newPassword);
-
-                                var rowCount = dataStore.Modify(user, acc => acc.Id == user.Id);
-                                if (rowCount == 0)
+                                if (dataStore.Modify(user, acc => acc.Id == user.Id))
                                 {
                                     throw new BusinessException("修改登陆密码失败");
                                 }
