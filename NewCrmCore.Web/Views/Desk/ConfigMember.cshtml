@@ -146,7 +146,6 @@
             }, 48, 48);
         });
         uploader.on('uploadSuccess', function (file, cb) {
-            
             if (cb[0].IsSuccess) {
                 var urlPart = cb[0].Url
                 HROS.request.post('/desk/modifyicon',{ MemberId: '@Model.Id', NewIcon: urlPart },function (responseText) {
@@ -193,7 +192,7 @@
                     setTimeout(function () {
                         HROS.app.get();
                         window.parent.$.dialog.list['editdialog'].close();
-                    }, 1000);
+                    }, 2000);
                 } else {
                     NewCrm.msgbox.fail(responseText.Message);
                 }
