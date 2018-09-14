@@ -189,10 +189,9 @@
             callback: function (responseText) {
                 if (responseText.IsSuccess) {
                     NewCrm.msgbox.success('修改成功');
+                    HROS.app.get();
                     setTimeout(function () {
-                        debugger
-                        HROS.app.get();
-                        window.parent.$.dialog.list['editdialog'].close();
+                       window.parent.$.dialog.list['editdialog'].close();
                     }, 1000);
                 } else {
                     NewCrm.msgbox.fail(responseText.Message);
