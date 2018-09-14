@@ -151,8 +151,8 @@
 	getPageList(0);
 	//删除
 	$('.list-con').on('click', '.do-del', function () {
-		var appId = $(this).attr('appId');
-		var appname = $(this).parents('tr').children('td:first-child').text();
+		let appId = $(this).attr('appId');
+		let appname = $(this).parents('tr').children('td:first-child').text();
 		$.dialog({
 			id: 'del',
 			content: '确定要删除 “' + appname + '” 该应用么？',
@@ -176,8 +176,8 @@
 		getPageList(0);
 	});
 	function getPageList(current_page) {
-		var $appStates = $('#appState').find("option:selected");
-		var appStateResult = '';
+		let $appStates = $('#appState').find("option:selected");
+		let appStateResult = '';
 		if (parseInt($appStates.attr('value')) !== 0) {
 			appStateResult = $appStates.attr('data-type') + ',' + $appStates.attr('value');
 		}
@@ -191,7 +191,7 @@
 			pageIndex: current_page === 0 ? 1 : current_page + 1,
 			pageSize: 4
 		}, function (responseText) {
-			var tableTemplate = Handlebars.compile($("#table-template").html());
+			let tableTemplate = Handlebars.compile($("#table-template").html());
 			$('.list-con').html(tableTemplate(responseText));
 			$('.list-count').text(responseText.totalCount);
 			$('#pagination_setting').attr('count', parseInt(responseText.TotalCount));

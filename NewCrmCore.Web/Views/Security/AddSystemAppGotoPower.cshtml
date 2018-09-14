@@ -33,9 +33,9 @@
 	<text>  
 		if ($.dialog.data('appsid') !== '') {
 			$('#value_1').val($.dialog.data('appsid'));
-			var appsid = $.dialog.data('appsid').split(',');
+			let appsid = $.dialog.data('appsid').split(',');
 			$('.app').each(function () {
-			  for (var i = 0; i < appsid.length; i++) {
+			  for (let i = 0; i < appsid.length; i++) {
 					if (appsid[i] === $(this).attr('appid')) {
 						$(this).addClass('act');
 						break;
@@ -45,9 +45,9 @@
 		}
 		$('.app').click(function () {
 			if ($(this).hasClass('act')) {
-				var appsid = $('#value_1').val().split(',');
-				var newappsid = [];
-				for (var i = 0, j = 0; i < appsid.length; i++) {
+				let appsid = $('#value_1').val().split(',');
+				let newappsid = [];
+				for (let i = 0, j = 0; i < appsid.length; i++) {
 					if (appsid[i] !== $(this).attr('appid')) {
 						newappsid[j] = appsid[i];
 						j++;
@@ -57,7 +57,7 @@
 				$(this).removeClass('act');
 			} else {
 				if ($('#value_1').val() !== '') {
-					var appsid = $('#value_1').val().split(',');
+					let appsid = $('#value_1').val().split(',');
 					appsid[appsid.length] = $(this).attr('appid');
 					$('#value_1').val(appsid.join(','));
 				} else {

@@ -71,12 +71,12 @@
         }
 
         $('.title ul > li').on('click', function () {
-            var $li = $(this);
-            var value = $li.attr('data-value');
+            let $li = $(this);
+            let value = $li.attr('data-value');
             $('.title ul > li').each(function (k, v) {
                 $(v).removeClass('focus');
             });
-            var baseUrl = '@Url.Action("index", "usersetting")'
+            let baseUrl = '@Url.Action("index", "usersetting")'
             if (value === 'baseinfo') {
                 location.href = baseUrl + '?target=baseinfo';
             } else if (value === 'modifyface') {
@@ -87,14 +87,14 @@
         });
 
 
-     var f1=$('#form').Validform({
+     let f1=$('#form').Validform({
             btnSubmit: '#form-submit',
 			postonce: true,
             showAllError: true,
             tiptype: function (msg, o) {
                 if (!o.obj.is('form')) {
-                    var B = o.obj.parents('.control-group');
-                    var T = B.children('.help-inline');
+                    let B = o.obj.parents('.control-group');
+                    let T = B.children('.help-inline');
                     if (o.type === 2) {
                         B.removeClass('error');
                         T.text('');
@@ -138,14 +138,14 @@
             }
         });
 		
-      var f2=  $('#form2').Validform({
+      let f2=  $('#form2').Validform({
             btnSubmit: '#form-submit2',
             postonce: true,
             showAllError: true,
             tiptype: function (msg, o) {
                 if (!o.obj.is('form')) {
-                    var B = o.obj.parents('.control-group');
-                    var T = B.children('.help-inline');
+                    let B = o.obj.parents('.control-group');
+                    let T = B.children('.help-inline');
                     if (o.type == 2) {
                         B.removeClass('error');
                         T.text('');
@@ -189,9 +189,9 @@
         });
 
        $('#hidden_frame').on('load', function () {
-            var response = $(this).contents().find("body").text()
+            let response = $(this).contents().find("body").text()
             if (response) {
-                var responseText = JSON.parse($(this).contents().find("body").text());
+                let responseText = JSON.parse($(this).contents().find("body").text());
                 if (responseText.IsSuccess) {
                     NewCrm.msgbox.success('您修改了登陆密码，2秒后跳转到登陆界面');
                     setTimeout(function () {
@@ -203,7 +203,7 @@
             }
 		})
 
-        var upload = WebUploader.create({
+        let upload = WebUploader.create({
             auto: true,
             swf: '~/js/webuploader-0.1.5/Uploader.swf',
             server: '@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)',
@@ -231,7 +231,7 @@
 
         upload.on('uploadSuccess', function (file, cb) {
             if (cb[0].IsSuccess) {
-                var model = {
+                let model = {
                     Title: cb[0].Title,
                     Width: cb[0].Width,
                     Height: cb[0].Height,

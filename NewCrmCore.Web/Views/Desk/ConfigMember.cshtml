@@ -106,7 +106,7 @@
 {
 	@{ 
 		<text>
-        var uploader = WebUploader.create({
+        let uploader = WebUploader.create({
             auto: true,
             swf: '~/js/webuploader-0.1.5/Uploader.swf',
             server: '@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)',
@@ -134,7 +134,7 @@
             }
         });
         uploader.on('fileQueued', function(file) {
-            var $img = $('<img>');
+            let $img = $('<img>');
             $('.shortcutview').append($img);
             // 创建缩略图
             uploader.makeThumb(file, function(error, src) {
@@ -147,7 +147,7 @@
         });
         uploader.on('uploadSuccess', function (file, cb) {
             if (cb[0].IsSuccess) {
-                var urlPart = cb[0].Url
+                let urlPart = cb[0].Url
                 HROS.request.post('/desk/modifyicon',{ MemberId: '@Model.Id', NewIcon: urlPart },function (responseText) {
                     if (responseText.IsSuccess) {
                         $('#isIconByUpload').val('1');
@@ -162,14 +162,14 @@
                 NewCrm.msgbox.fail("图标上传失败");
             }
         });
-        var f = $('#form').Validform({
+        let f = $('#form').Validform({
             btnSubmit: '#btn-submit',
             postonce: true,
             showAllError: true,
             tiptype: function(msg, o) {
                 if (!o.obj.is('form')) {
-                    var B = o.obj.parents('.control-group');
-                    var T = B.children('.help-inline');
+                    let B = o.obj.parents('.control-group');
+                    let T = B.children('.help-inline');
                     if (o.type === 2) {
                         B.removeClass('error');
                         T.text('');
@@ -190,9 +190,10 @@
                 if (responseText.IsSuccess) {
                     NewCrm.msgbox.success('修改成功');
                     setTimeout(function () {
+                        debugger
                         HROS.app.get();
                         window.parent.$.dialog.list['editdialog'].close();
-                    }, 2000);
+                    }, 1000);
                 } else {
                     NewCrm.msgbox.fail(responseText.Message);
                 }

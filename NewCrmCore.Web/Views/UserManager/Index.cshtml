@@ -97,8 +97,8 @@
 	getPageList(0);
 	//删除
 	$('.list-con').on('click', '.do-del', function () {
-		var memberid = $(this).attr('memberid');
-		var name = $(this).parent().prev().text();
+		let memberid = $(this).attr('memberid');
+		let name = $(this).parent().prev().text();
 		art.dialog({
 			id: 'edit',
 			content: '确定要删除 “' + name + '” 该账户么？',
@@ -116,9 +116,9 @@
 	});
 
 	$('.list-con').on('click', '.do-disable', function () {
-		var memberid = $(this).attr('memberid');
-		var name = $(this).parent().prev().text();
-		var isDisable = $(this).attr('isDisable');
+		let memberid = $(this).attr('memberid');
+		let name = $(this).parent().prev().text();
+		let isDisable = $(this).attr('isDisable');
 		art.dialog({
 			id: 'edit',
 			content: isDisable ? '确定要启用 “' + name + '” 该账户么？' : '确定要禁用 “' + name + '” 该账户么？',
@@ -154,7 +154,7 @@
 			pageSize: 5
 		}, function (responseText) {
 			if (responseText.IsSuccess) {
-				var tableTemplate = Handlebars.compile($("#table-template").html());
+				let tableTemplate = Handlebars.compile($("#table-template").html());
 				$('.list-con').html(tableTemplate(responseText));
 				$('#pagination_setting').attr('count', responseText.TotalCount);
 				$('.list-count').text(responseText.TotalCount);

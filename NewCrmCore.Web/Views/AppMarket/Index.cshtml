@@ -207,7 +207,7 @@
     }).on('click', '.btn-remove-s', function () {
         if (window.parent.HROS.base.checkLogin()) {
             $(this).removeClass().addClass('btn-loading-s');
-            var realappid = $(this).attr('real_app_id'), type = $(this).attr('app_type');
+            let realappid = $(this).attr('real_app_id'), type = $(this).attr('app_type');
             window.parent.HROS.app.remove($(this).attr('app_id'), function () {
                 $('#pagination').trigger('currentPage');
                 window.parent.HROS.widget.removeCookie(realappid, type);
@@ -225,7 +225,7 @@
     });
     $('.commend-day').on('click', '.btn-add', function () {
         if (window.parent.HROS.base.checkLogin()) {
-            var appid = $(this).attr('real_app_id');
+            let appid = $(this).attr('real_app_id');
             window.parent.HROS.app.add(appid, function () {
                 window.parent.HROS.app.get();
                 location.reload();
@@ -248,9 +248,9 @@
         }
     });
     function getPageList(current_page) {
-        var appTypeId = $('#appType').val() === '' ? 0 : parseInt($('#appType').val());
-        var orderId = $('#order').val() === '' ? 1 : parseInt($('#order').val());
-        var outSideSearchText = '@Context.Request.Query["searchText"]';
+        let appTypeId = $('#appType').val() === '' ? 0 : parseInt($('#appType').val());
+        let orderId = $('#order').val() === '' ? 1 : parseInt($('#order').val());
+        let outSideSearchText = '@Context.Request.Query["searchText"]';
         HROS.request.get('/appmarket/getapps', {
             appTypeId: appTypeId,
             orderId: orderId,
@@ -259,7 +259,7 @@
             pageSize: 5
         }, function (responseText) {
             if (responseText.IsSuccess) {
-                var liTemplate = Handlebars.compile($("#li-template").html());
+                let liTemplate = Handlebars.compile($("#li-template").html());
                 $('.app-list').html(liTemplate(responseText));
                 $('#pagination_setting').attr('count', parseInt(responseText.TotalCount));
                 initPagination({

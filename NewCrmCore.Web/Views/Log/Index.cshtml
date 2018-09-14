@@ -108,7 +108,7 @@
 			pageSize: 5
 		}, function (responseText) {
 			if (responseText.IsSuccess) {
-				var tableTemplate = Handlebars.compile($("#table-template").html());
+				let tableTemplate = Handlebars.compile($("#table-template").html());
 				$('.list-con').html(tableTemplate(responseText));
 				$('#pagination_setting').attr('count', responseText.ToatalCount);
 				$('.list-count').text(responseText.ToatalCount);

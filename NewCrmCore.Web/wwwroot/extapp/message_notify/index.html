@@ -22,8 +22,8 @@
         return new Promise((resolve, reject) => {
             $.get('/desk/checkunreadnotifycount', { pageIndex: 1, pageSize: 100 }, function (responseText) {
                 if (responseText.IsSuccess) {
-                    var models = responseText.Model.Models
-                    var msgArr = []
+                    let models = responseText.Model.Models
+                    let msgArr = []
                     for (let index = 0; index < models.length; index++) {
                         msgArr.push({ text: models[index].Content, id: models[index].Id, readStatus: models[index].IsRead ? 1 : 0 })
                     }
@@ -35,7 +35,7 @@
     }
     function initMessagePlugin() {
         initData().then((msgArr) => {
-            var notify = MessagePlugin.init({
+            let notify = MessagePlugin.init({
                 elem: ".notifyList",
                 msgData: msgArr,
                 msgUnReadData: msgArr.filter((a) => a.readStatus === 0).length,
@@ -48,7 +48,7 @@
 
                 },
                 allRead: function (obj, t) {
-                    var ids = t.nodeList.filter((n) => !n.isRead).map(s => s.id);
+                    let ids = t.nodeList.filter((n) => !n.isRead).map(s => s.id);
                     $.post('/desk/readnotify', { notifyId: ids.join() }, function (responseText) {
                         if (responseText.IsSuccess) {
                             initMessagePlugin()

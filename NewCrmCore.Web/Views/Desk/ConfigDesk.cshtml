@@ -133,22 +133,22 @@
 @section ChildrenScript
 {
 	$('input[name="desk"]').change(function () {
-		var desk = $('input[name="desk"]:checked').val();
+		let desk = $('input[name="desk"]:checked').val();
 		window.parent.HROS.deskTop.updateDefaultDesk(desk);
 	});
 	$('input[name="wallpapersource"]').change(function () {
-		var val = $('input[name="wallpapersource"]:checked').val();
+		let val = $('input[name="wallpapersource"]:checked').val();
 		window.parent.HROS.deskTop.modifyWallpaperSource(val);
 	});
 
 	$('input[name="appxy"]').change(function () {
-		var xy = $('input[name="appxy"]:checked').val();
+		let xy = $('input[name="appxy"]:checked').val();
 		window.parent.HROS.app.updateXY(xy);
 	});
 
 	//更新应用图标大小
 	$('.appsize-minus, .appsize-plus').click(function () {
-		var size = parseInt($('input[name="appsize"]').val());
+		let size = parseInt($('input[name="appsize"]').val());
 		if ($(this).hasClass('appsize-minus')) {
 			size = size - 1;
 		} else {
@@ -158,11 +158,11 @@
 	});
 
 	$('input[name="appsize"]').keyup(function () {
-		var size = parseInt($('input[name="appsize"]').val());
+		let size = parseInt($('input[name="appsize"]').val());
 		updateSize(size);
 	});
 
-	var updateSize = function (size) {
+	let updateSize = function (size) {
 		if (size < 32) {
 			size = 32;
 		} else if (size > 64) {
@@ -174,7 +174,7 @@
 
 	//更新图标垂直间距
 	$('.appverticalspacing-minus, .appverticalspacing-plus').click(function () {
-		var vertical = parseInt($('input[name="appverticalspacing"]').val());
+		let vertical = parseInt($('input[name="appverticalspacing"]').val());
 		if ($(this).hasClass('appverticalspacing-minus')) {
 			vertical = vertical - 1;
 		} else {
@@ -184,12 +184,12 @@
 	});
 
 	$('input[name="appverticalspacing"]').keyup(function () {
-		var vertical = parseInt($('input[name="appverticalspacing"]').val());
+		let vertical = parseInt($('input[name="appverticalspacing"]').val());
 		updateVertical(vertical);
 	});
 
 	$('.apphorizontalspacing-minus, .apphorizontalspacing-plus').click(function () {
-		var horizontal = parseInt($('input[name="apphorizontalspacing"]').val());
+		let horizontal = parseInt($('input[name="apphorizontalspacing"]').val());
 		if ($(this).hasClass('apphorizontalspacing-minus')) {
 			horizontal = horizontal - 1;
 		} else {
@@ -199,13 +199,13 @@
 	});
 
 	$('input[name="apphorizontalspacing"]').keyup(function () {
-		var horizontal = parseInt($('input[name="apphorizontalspacing"]').val());
+		let horizontal = parseInt($('input[name="apphorizontalspacing"]').val());
 		updateHorizontal(horizontal);
 	});
 
 	//更新应用码头位置
 	$('input[name="dockpos"]').change(function () {
-		var pos = $('input[name="dockpos"]:checked').val();
+		let pos = $('input[name="dockpos"]:checked').val();
 		$('.set_view').removeClass('set_view_top set_view_left set_view_right set_view_none');
 		$('.set_view').addClass('set_view_' + pos);
 		window.parent.HROS.dock.updatePos(pos);

@@ -67,8 +67,8 @@
 	getPageList(0);
 	//删除
 	$('.list-con').on('click', '.do-del', function () {
-		var categoryid = $(this).attr('categoryid');
-		var name = $(this).parent().prev().text();
+		let categoryid = $(this).attr('categoryid');
+		let name = $(this).parent().prev().text();
 		$.dialog({
 			id: 'ajaxedit',
 			content: '删除后将不可恢复!是否继续?',
@@ -95,7 +95,7 @@
 			searchText: $('#searchText').val()
 		}, function (responseText) {
 			if (responseText.IsSuccess) {
-				var template = Handlebars.compile($('#li-template').html());
+				let template = Handlebars.compile($('#li-template').html());
 				$('#pagination_setting').attr('count', parseInt(responseText.TotalCount));
 				$('.list-count').text(parseInt(responseText.TotalCount));
 				$('.list-con').html(template(responseText));

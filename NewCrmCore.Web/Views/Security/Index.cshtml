@@ -73,8 +73,8 @@
 	getPageList(0);
 	//删除
 	$('.list-con').on('click', '.do-del', function () {
-		var roleId = $(this).attr('data-roleid');
-		var name = $(this).parent().prev().text();
+		let roleId = $(this).attr('data-roleid');
+		let name = $(this).parent().prev().text();
 		$.dialog({
 			id: 'ajaxedit',
 			content: '确定要删除 “' + name + '” 该角色？',
@@ -105,7 +105,7 @@
 			pageSize: 5
 		}, function (responseText) {
 			if (responseText.IsSuccess) {
-				var tableTemplate = Handlebars.compile($("#table-template").html());
+				let tableTemplate = Handlebars.compile($("#table-template").html());
 				$('.list-con').html(tableTemplate(responseText));
 				$('#pagination_setting').attr('count', responseText.TotalCount);
 				$('.list-count').text(responseText.totalCount);

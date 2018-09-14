@@ -59,7 +59,7 @@
     });
     upload.on('uploadSuccess', function (file, cb) {
         if (cb[0].IsSuccess) {
-            var model = {
+            let model = {
                 Title: cb[0].Title,
                 Width: cb[0].Width,
                 Height: cb[0].Height,
@@ -92,7 +92,7 @@
 
     $('.wapppapercustom .view').on('click', 'li a', function (event) {
         event.stopPropagation();
-        var id = $(this).parent().attr('id');
+        let id = $(this).parent().attr('id');
         HROS.request.post("/Desk/RemoveWallpaper", { wallPaperId: id }, function (responseText) {
             if (responseText.IsSuccess) {
                 NewCrm.msgbox.success('壁纸移除成功');
@@ -107,7 +107,7 @@
     function GetAllUploadWallPaper() {
         HROS.request.get("/desk/getuploadwallpapers",{}, function (responseText) {
             if (responseText.IsSuccess) {
-                var liElement = '';
+                let liElement = '';
                 $.each(responseText.Model, function (k, v) {
                     liElement += '<li id="' + v.Id + '" style="background:url(' + v.Url + ')"><a href="###" >删 除</a></li>';
                 });
@@ -119,7 +119,7 @@
     }
 
     function SetWebWallPaper() {
-        var webUrl = $('#wallpaperurl').val();
+        let webUrl = $('#wallpaperurl').val();
         if (!webUrl) {
             NewCrm.msgbox.info('请输入一个合法的url地址');
         } else {

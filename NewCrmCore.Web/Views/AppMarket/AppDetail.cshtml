@@ -78,7 +78,7 @@
 	//添加应用
 	$('.btn-add').click(function () {
 		if (window.parent.parent.HROS.base.checkLogin()) {
-			var appid = $(this).attr('app_id');
+			let appid = $(this).attr('app_id');
 			window.parent.parent.HROS.app.add(appid, function () {
 				window.parent.parent.HROS.app.get();
 				location.reload();
@@ -104,7 +104,7 @@
 	});
 	//评分
 	$('.grade-box ul li').click(function () {
-		var num = $(this).attr('num');
+		let num = $(this).attr('num');
 		if (!isNaN(num) && /^[1-5]$/.test(num)) {
 			if (window.parent.parent.HROS.base.checkLogin()) {
 				HROS.request.post('/appmarket/modifystar', { AppId: '@Model.Id', StarCount: num }, function (responseText) {

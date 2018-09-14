@@ -156,8 +156,8 @@
 	getPageList(0);
 	//删除，推荐
 	$('.list-con').on('click', '.do-del', function () {
-		var appid = $(this).attr('appid');
-		var appname = $(this).parents('tr').children('td:nth-child(2)').text();
+		let appid = $(this).attr('appid');
+		let appname = $(this).parents('tr').children('td:nth-child(2)').text();
 		$.dialog({
 			id: 'del',
 			content: '确定要删除 “' + appname + '” 该应用么？',
@@ -173,8 +173,7 @@
 			cancel: true
 		});
 	}).on('click', '.do-recommend', function () {
-		var appid = $(this).attr('appid');
-		
+		let appid = $(this).attr('appid'); 
 		HROS.request.post('/appmanager/recommend', { appId: appid }, function (responseText) {
 			if (responseText.IsSuccess) {
 				$('#pagination').trigger('currentPage');
@@ -190,8 +189,8 @@
 	});
 
 	function getPageList(current_page) {
-		var $appStates = $('#appState').find("option:selected");
-		var appStateResult = '';
+		let $appStates = $('#appState').find("option:selected");
+		let appStateResult = '';
 		if (parseInt($appStates.attr('value')) !== 0) {
 			appStateResult = $appStates.attr('data-type') + ',' + $appStates.attr('value');
 		}
@@ -206,7 +205,7 @@
 			pageSize:7
 		}, function (responseText) {
 			if (responseText.IsSuccess) {
-				var tableTemplate = Handlebars.compile($("#table-template").html());
+				let tableTemplate = Handlebars.compile($("#table-template").html());
 				$('.list-con').html(tableTemplate(responseText));
 				$('.list-count').text(responseText.TotalCount);
 				$('#pagination_setting').attr('count', parseInt(responseText.TotalCount));

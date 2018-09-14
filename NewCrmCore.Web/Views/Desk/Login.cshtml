@@ -78,14 +78,14 @@
 </div>
  @section ChildrenScript
  {
-	var f = $('#form').Validform({
+	let f = $('#form').Validform({
 		btnSubmit: '#btn-submit',
 			postonce: true,
 			showAllError: true,
 			tiptype: function (msg, o) {
 				if (!o.obj.is('form')) { 
-					var B = o.obj.parents('.control-group');
-					var T = B.children('.help-inline');
+					let B = o.obj.parents('.control-group');
+					let T = B.children('.help-inline');
 					if (o.type === 2) {
 						B.removeClass('error');
 						T.text('');
@@ -103,7 +103,7 @@
 				NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
 			},
 			callback: function (responseText) {
-				var response = responseText;
+				let response = responseText;
 				if (response.IsSuccess) {
 					location.href = '/desk/index'
 				} else {

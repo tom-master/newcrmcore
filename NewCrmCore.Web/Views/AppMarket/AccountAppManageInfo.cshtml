@@ -51,7 +51,7 @@
 
 @section ChildrenScript
 { 
-    var uploader = WebUploader.create({
+    let uploader = WebUploader.create({
         // 选完文件后，是否自动上传。
         auto: true,
         // swf文件路径
@@ -81,7 +81,7 @@
         }
     });
     uploader.on('fileQueued', function (file) {
-        var $img = $('<img>');
+        let $img = $('<img>');
         $('.shortcutview').append($img);
         // 创建缩略图
         uploader.makeThumb(file, function (error, src) {
@@ -94,8 +94,8 @@
     });
     uploader.on('uploadSuccess', function (file, cb) {
         if (cb[0].IsSuccess) {
-            var urlPart = cb[0].Url
-            var appId = '@Context.Request.Query["AppId"]'
+            let urlPart = cb[0].Url
+            let appId = '@Context.Request.Query["AppId"]'
             if (parseInt(appId) === 0) {
                 $('#isIconByUpload').val('1');
                 $('#val_icon').val(urlPart)
@@ -118,14 +118,14 @@
     });
 
 
-    var f = $('#form').Validform({
+    let f = $('#form').Validform({
         btnSubmit: '#btn-submit',
         postonce: true,
         showAllError: true,
         tiptype: function (msg, o) {
             if (!o.obj.is('form')) {
-                var B = o.obj.parents('.control-group');
-                var T = B.children('.help-inline');
+                let B = o.obj.parents('.control-group');
+                let T = B.children('.help-inline');
                 if (o.type == 2) {
                     B.removeClass('error');
                     T.text('');
@@ -246,7 +246,7 @@
 
 
     $('#btn-pass').on('click', function () {
-        var appid = $(this).attr('appid');
+        let appid = $(this).attr('appid');
         $.dialog({
             id: 'del',
             content: '确认审核通过该应用？',
@@ -266,7 +266,7 @@
         });
     });
     $('#btn-unpass').on('click', function () {
-        var appid = $(this).attr('appid');
+        let appid = $(this).attr('appid');
         $.dialog({
             id: 'del',
             content: '确认不通过该应用？',
@@ -286,7 +286,7 @@
     });
 
     $('#btn-release').on('click', function () {
-        var appid = $(this).attr('appid');
+        let appid = $(this).attr('appid');
         $.dialog({
             id: 'del',
             content: '确认发布该应用？',
