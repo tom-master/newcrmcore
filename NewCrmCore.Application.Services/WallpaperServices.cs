@@ -72,11 +72,8 @@ namespace NewCrmCore.Application.Services
             Parameter.Validate(userId);
             Parameter.Validate(url);
 
-
-            Image image;
-
             using (var stream = await new HttpClient().GetStreamAsync(new Uri(url)))
-            using (image = Image.FromStream(stream))
+            using (Image image = Image.FromStream(stream))
             {
                 var md5 = FileHelper.GetMD5(stream);
                 var webWallpaper = await GetUploadWallpaperAsync(md5);
