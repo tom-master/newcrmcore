@@ -244,7 +244,7 @@
                 HROS.request.post('/usersetting/modifyface', { userFace: model.Url }, function (responseText) {
                     if (responseText.IsSuccess) {
                         NewCrm.msgbox.success('账户头像上传成功');
-                        window.parent.HROS.startmenu.getAvatar();
+                        top.HROS.startmenu.getAvatar();
                     } else {
                         NewCrm.msgbox.fail('账户头像保存失败');
                     }

@@ -24,37 +24,40 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public List<Log> GetLogs(Int32 userId, Int32 logLevel, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
+        public List<Log> GetLogs(String userName, Int32 logLevel, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
-            Parameter.Validate(userId);
+            Parameter.Validate(userName, true);
             Parameter.Validate(logLevel);
 
             using (var dataStore = new DataStore(Appsetting.Database))
             {
                 var where = new StringBuilder();
                 var parameters = new List<ParameterMapper>();
-                if (userId != 0)
+                if (!String.IsNullOrEmpty(userName))
                 {
-                    parameters.Add(new ParameterMapper("UserId", userId));
-                    where.Append($@" AND a.UserId=@UserId");
+                    parameters.Add(new ParameterMapper("@name", userName));
+                    where.Append($@" AND a1.Name LIKE CONCAT('%',@name,'%') ");
                 }
 
                 #region totalCount 
                 {
-                    var sql = $@"SELECT COUNT(*) FROM Log AS a WHERE 1=1 {where}";
+                    var sql = $@"SELECT COUNT(*) FROM Log AS a LEFT JOIN User AS a1 ON a.UserId=a1.Id WHERE 1=1 {where}";
                     totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
                 }
                 #endregion
 
                 #region sql 
                 {
-                    var sql = $@" SELECT
-                                    a.LogLevelEnum,
-                                    a.Controller,
-                                    a.Action,
-                                    a.ExceptionMessage,
-                                    a.Track
-                                    FROM Log AS a WHERE 1=1 {where} LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
+                    var sql = $@"SELECT
+                                a.LogLevelEnum,
+                                a.Controller,
+                                a.Action,
+                                a.ExceptionMessage,
+                                IFNULL(a.UserId,0) AS UserId,
+                                a.AddTime
+                                FROM Log AS a 
+                                LEFT JOIN User AS a1 ON a.UserId=a1.Id
+                                WHERE 1=1 {where} ORDER BY a.AddTime DESC LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
                     return dataStore.Find<Log>(sql, parameters);
                 }
                 #endregion

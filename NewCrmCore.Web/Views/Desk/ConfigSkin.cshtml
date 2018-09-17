@@ -46,9 +46,9 @@
             $(this).addClass('selected');
             HROS.request.post('/desk/modifyskin', { skin: skin }, function (responseText) {
                 if (responseText.IsSuccess) {
-                    window.parent.NewCrm.msgbox.success("皮肤设置成功，如果没有更新请刷新页面");
+                    top.NewCrm.msgbox.success("皮肤设置成功，如果没有更新请刷新页面");
                     setTimeout(function () {
-                        window.parent.HROS.base.getSkin(skin);
+                        top.HROS.base.getSkin(skin);
                     }, 2000);
                 } else {
                     NewCrm.msgbox.fail(responseText.Message);

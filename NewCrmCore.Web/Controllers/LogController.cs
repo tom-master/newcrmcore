@@ -35,16 +35,16 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 获取日志列表
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="userName"></param>
         /// <param name="loglevel"></param>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetLogs(Int32 userId, Int32 loglevel, Int32 pageIndex, Int32 pageSize)
+        public async Task<IActionResult> GetLogs(String userName, Int32 loglevel, Int32 pageIndex, Int32 pageSize)
         {
             var response = new ResponseModels<IList<LogDto>>();
-            var result = await _loggerServices.GetLogsAsync(userId, loglevel, pageIndex, pageSize);
+            var result = await _loggerServices.GetLogsAsync(userName, loglevel, pageIndex, pageSize);
             response.IsSuccess = true;
             response.Message = "获取日志列表成功";
             response.Model = result.Models;

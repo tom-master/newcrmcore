@@ -1,5 +1,6 @@
-﻿@{
-	Layout = "~/Views/Shared/_LayoutApps.cshtml";
+﻿@using NewCrmCore.Domain.ValueObject
+@{
+	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
 }
 @section ChildrenCss
 { 
@@ -19,6 +20,10 @@
 			margin-left: 10px;
 		}
 	</style>
+}
+@section SysCss
+{
+	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
 }
 
 
@@ -78,7 +83,7 @@
 			<td>{{Controller}}</td>
 			<td>{{Action}}</td>
 			<td>{{ExceptionMessage}}</td>
-			<td>{{AccountId}}</td>
+			<td>{{UserId}}</td>
 			<td>{{AddTime}}</td>
 		</tr>
 		{{/each}}
@@ -93,26 +98,28 @@
 	$('a[menu=search]').click(function () {
 		getPageList(0);
 	});
-	initPagination({
-		current_page: current_page,
-		items_per_page: 7,
-		num_display_entries: 9,
-		num_edge_entries: 2,
-		getPageList: getPageList
-	})
-
+	
+	
 	function getPageList(current_page) {
 		HROS.request.get('/log/getlogs/', {
 			logLevel: $('#logLevel').find("option:selected").attr('value'),
 			pageIndex: current_page === 0 ? 1 : current_page + 1,
 			pageSize: 5
 		}, function (responseText) {
+			debugger
 			if (responseText.IsSuccess) {
 				let tableTemplate = Handlebars.compile($("#table-template").html());
 				$('.list-con').html(tableTemplate(responseText));
-				$('#pagination_setting').attr('count', responseText.ToatalCount);
-				$('.list-count').text(responseText.ToatalCount);
-				initPagination(current_page);
+				$('#pagination_setting').attr('count', responseText.TotalCount);
+				$('.list-count').text(responseText.TotalCount);
+				initPagination({
+					current_page: current_page,
+					items_per_page: 7,
+					num_display_entries: 9,
+					num_edge_entries: 2,
+					getPageList: getPageList
+				})
+
 			} else {
 				NewCrm.msgbox.fail(responseText.Message);
 			}
@@ -126,13 +133,13 @@
 	});
 
 	Handlebars.registerHelper('parseLoggerLevel', function (str) {
-		if (parseInt(str) === 1) {
+		if (str === '@LogLevel.Info.ToString()') {
 			return '信息';
-		} else if (parseInt(str) === 2) {
+		} else if (str === '@LogLevel.Warning.ToString()') {
 			return '警告';
-		} else if (parseInt(str) === 3) {
+		} else if (str === '@LogLevel.Debug.ToString()') {
 			return '调试';
-		} else if (parseInt(str) === 4) {
+		} else if (str === '@LogLevel.Error.ToString()') {
 			return '错误';
 		}
 	});

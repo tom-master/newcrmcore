@@ -45,12 +45,12 @@
 
 @section ChildrenScript
 {
-    $("#wallpapertype").val(window.parent.HROS.CONFIG.wallpaperType.toLowerCase());
+    $("#wallpapertype").val(top.HROS.CONFIG.wallpaperType.toLowerCase());
     $("#wallpapertype").on('change', function () {
-        window.parent.HROS.wallpaper.update($('#wallpapertype').val(), '');
+        top.HROS.wallpaper.update($('#wallpapertype').val(), '');
     });
 
     $('.wallpaper li').on('click', function () {
-        window.parent.HROS.wallpaper.update($('#wallpapertype').val(), $(this).attr('wpid'));
+        top.HROS.wallpaper.update($('#wallpapertype').val(), $(this).attr('wpid'));
     });
 }

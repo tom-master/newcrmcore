@@ -134,16 +134,16 @@
 {
 	$('input[name="desk"]').change(function () {
 		let desk = $('input[name="desk"]:checked').val();
-		window.parent.HROS.deskTop.updateDefaultDesk(desk);
+		top.HROS.deskTop.updateDefaultDesk(desk);
 	});
 	$('input[name="wallpapersource"]').change(function () {
 		let val = $('input[name="wallpapersource"]:checked').val();
-		window.parent.HROS.deskTop.modifyWallpaperSource(val);
+		top.HROS.deskTop.modifyWallpaperSource(val);
 	});
 
 	$('input[name="appxy"]').change(function () {
 		let xy = $('input[name="appxy"]:checked').val();
-		window.parent.HROS.app.updateXY(xy);
+		top.HROS.app.updateXY(xy);
 	});
 
 	//更新应用图标大小
@@ -169,7 +169,7 @@
 			size = 64;
 		}
 		$('input[name="appsize"]').val(size);
-		window.parent.HROS.app.updateSize(size);
+		top.HROS.app.updateSize(size);
 	};
 
 	//更新图标垂直间距
@@ -208,7 +208,7 @@
 		let pos = $('input[name="dockpos"]:checked').val();
 		$('.set_view').removeClass('set_view_top set_view_left set_view_right set_view_none');
 		$('.set_view').addClass('set_view_' + pos);
-		window.parent.HROS.dock.updatePos(pos);
+		top.HROS.dock.updatePos(pos);
 	});
 
 	//更新图标水平间距
@@ -219,7 +219,7 @@
 			horizontal = 100;
 		}
 		$('input[name="apphorizontalspacing"]').val(horizontal);
-		window.parent.HROS.app.updateHorizontal(horizontal);
+		top.HROS.app.updateHorizontal(horizontal);
 	};
 
 	function updateVertical(vertical) {
@@ -229,6 +229,6 @@
 			vertical = 100;
 		}
 		$('input[name="appverticalspacing"]').val(vertical);
-		window.parent.HROS.app.updateVertical(vertical);
+		top.HROS.app.updateVertical(vertical);
 	};
 }

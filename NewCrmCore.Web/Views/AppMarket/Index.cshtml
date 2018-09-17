@@ -188,11 +188,11 @@
     });
     //添加，删除，打开应用
     $('.app-list').on('click', '.btn-add-s', function () {
-        if (window.parent.HROS.base.checkLogin()) {
+        if (top.HROS.base.checkLogin()) {
             $(this).removeClass().addClass('btn-loading-s');
-            window.parent.HROS.app.add($(this).attr('real_app_id'), function () {
+            top.HROS.app.add($(this).attr('real_app_id'), function () {
                 $('#pagination').trigger('currentPage');
-                window.parent.HROS.app.get();
+                top.HROS.app.get();
             });
         } else {
             window.parent.$.dialog({
@@ -200,34 +200,34 @@
                 icon: 'warning',
                 content: '您尚未登录，赶快登录去添加您喜爱的应用吧！',
                 ok: function () {
-                    window.parent.HROS.base.login();
+                    top.HROS.base.login();
                 }
             });
         }
     }).on('click', '.btn-remove-s', function () {
-        if (window.parent.HROS.base.checkLogin()) {
+        if (top.HROS.base.checkLogin()) {
             $(this).removeClass().addClass('btn-loading-s');
             let realappid = $(this).attr('real_app_id'), type = $(this).attr('app_type');
-            window.parent.HROS.app.remove($(this).attr('app_id'), function () {
+            top.HROS.app.remove($(this).attr('app_id'), function () {
                 $('#pagination').trigger('currentPage');
-                window.parent.HROS.widget.removeCookie(realappid, type);
-                window.parent.HROS.app.get();
+                top.HROS.widget.removeCookie(realappid, type);
+                top.HROS.app.get();
             });
         } else {
-            window.parent.HROS.base.login();
+            top.HROS.base.login();
         }
     }).on('click', '.btn-run-s', function () { 
         if ($(this).attr('app_type') === 'app') { 
-            window.parent.HROS.window.create($(this).attr('real_app_id'), $(this).attr('app_type'));
+            top.HROS.window.create($(this).attr('real_app_id'), $(this).attr('app_type'));
         } else {
-            window.parent.HROS.widget.create($(this).attr('real_app_id'), $(this).attr('app_type'));
+            top.HROS.widget.create($(this).attr('real_app_id'), $(this).attr('app_type'));
         }
     });
     $('.commend-day').on('click', '.btn-add', function () {
-        if (window.parent.HROS.base.checkLogin()) {
+        if (top.HROS.base.checkLogin()) {
             let appid = $(this).attr('real_app_id');
-            window.parent.HROS.app.add(appid, function () {
-                window.parent.HROS.app.get();
+            top.HROS.app.add(appid, function () {
+                top.HROS.app.get();
                 location.reload();
             });
         } else {
@@ -236,15 +236,15 @@
                 icon: 'warning',
                 content: '您尚未登录，赶快登录去添加您喜爱的应用吧！',
                 ok: function () {
-                    window.parent.HROS.base.login();
+                    top.HROS.base.login();
                 }
             });
         }
     }).on('click', '.btn-run', function () {
         if ($(this).attr('app_type') === 'app') {
-            window.parent.HROS.window.create($(this).attr('real_app_id'));
+            top.HROS.window.create($(this).attr('real_app_id'));
         } else {
-            window.parent.HROS.widget.create($(this).attr('real_app_id'));
+            top.HROS.widget.create($(this).attr('real_app_id'));
         }
     });
     function getPageList(current_page) {

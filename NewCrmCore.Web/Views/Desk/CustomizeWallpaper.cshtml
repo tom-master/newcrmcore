@@ -73,7 +73,7 @@
             HROS.request.post('/desk/uploadwallpaper', { wallpaper: model }, function (responseText) {
                 if (responseText.IsSuccess) {
                     $('.wapppapercustom .view ul').append('<li id="' + responseText.Model.Id + '" style="background-image:url(' + responseText.Model.Url + ')"><a href="###">删 除</a></li>');
-                    window.parent.HROS.wallpaper.update($('#wallpapertype').val(), responseText.Model.Id);
+                    top.HROS.wallpaper.update($('#wallpapertype').val(), responseText.Model.Id);
                     upload.removeFile(file);
                 } else {
                     NewCrm.msgbox.fail(responseText.Message);
@@ -83,11 +83,11 @@
     });
 
     $('#wallpapertype').on('change', function () {
-        window.parent.HROS.wallpaper.update($('#wallpapertype').val(), '');
+        top.HROS.wallpaper.update($('#wallpapertype').val(), '');
     });
 
     $('.wapppapercustom .view').on('click', 'li', function () {
-        window.parent.HROS.wallpaper.update($('#wallpapertype').val(), $(this).attr('id'));
+        top.HROS.wallpaper.update($('#wallpapertype').val(), $(this).attr('id'));
     });
 
     $('.wapppapercustom .view').on('click', 'li a', function (event) {
@@ -127,7 +127,7 @@
                 if (parseInt(responseText.Model.Item1) === 0) {
                     NewCrm.msgbox.fail('未能获取到所指定的网络图片');
                 } else {
-                    window.parent.HROS.wallpaper.update($('#wallpapertype').val(), parseInt(responseText.Model.Item1));
+                    top.HROS.wallpaper.update($('#wallpapertype').val(), parseInt(responseText.Model.Item1));
                 }
             });
         }
