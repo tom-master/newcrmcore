@@ -39,6 +39,12 @@ namespace NewCrmCore.Web.Filter
                     Content = @"<script>(function(){top.NewCrm.msgbox.fail('" + response.Message + "');})()</script>"
                 };
             }
+            var userId = 0;
+            var userCookie = filterContext.HttpContext.Request.Cookies["User"];
+            if (userCookie != null)
+            {
+                userId = JsonConvert.DeserializeObject<UserDto>(userCookie).Id;
+            }
 
             ((ILoggerServices)filterContext.HttpContext.RequestServices.GetService(typeof(ILoggerServices))).AddLoggerAsync(new LogDto
             {
@@ -48,7 +54,7 @@ namespace NewCrmCore.Web.Filter
                 Track = filterContext.Exception.StackTrace,
                 LogLevelEnum = exception ? Domain.ValueObject.LogLevel.Warning : Domain.ValueObject.LogLevel.Error,
                 AddTime = DateTime.Now.ToString(CultureInfo.CurrentCulture),
-                UserId = JsonConvert.DeserializeObject<UserDto>(filterContext.HttpContext.Request.Cookies["User"]).Id
+                UserId = userId
             });
         }
     }
