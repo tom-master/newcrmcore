@@ -5,7 +5,6 @@
 @section ChildrenCss
 { 
 	<link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" />
- 
 	<style>
 		body {
 			margin: 10px 10px 0;
@@ -37,6 +36,8 @@
 				<option value="3">调试</option>
 				<option value="4" selected="selected">错误</option>
 			</select>
+			<label>用户名：</label>
+			<input type="text" name="search_1" id="userName" class="span5">
 			<a class="btn" menu="search" href="###" style="margin-left:10px"><i class="icon-search"></i> 搜索</a>
 		</div>
 	</div>
@@ -102,11 +103,11 @@
 	
 	function getPageList(current_page) {
 		HROS.request.get('/log/getlogs/', {
+			userName: $('#userName').val(),
 			logLevel: $('#logLevel').find("option:selected").attr('value'),
 			pageIndex: current_page === 0 ? 1 : current_page + 1,
 			pageSize: 5
-		}, function (responseText) {
-			debugger
+		}, function (responseText) { 
 			if (responseText.IsSuccess) {
 				let tableTemplate = Handlebars.compile($("#table-template").html());
 				$('.list-con').html(tableTemplate(responseText));
