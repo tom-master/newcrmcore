@@ -109,11 +109,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.Title,
                             a.Url,
                             a.Width
-                            FROM Wallpaper AS a WHERE a.UserId=@UserId AND a.Source=@Source AND a.IsDeleted=0";
+                            FROM Wallpaper AS a WHERE a.UserId=@UserId AND a.Source<>@Source AND a.IsDeleted=0";
                     var parameters = new List<ParameterMapper>
                     {
                         new ParameterMapper("@UserId",userId),
-                        new ParameterMapper("@Source", WallpaperSource.Upload.ToInt32())
+                        new ParameterMapper("@Source", WallpaperSource.System.ToInt32())
                     };
                     return dataStore.Find<Wallpaper>(sql, parameters);
                 }

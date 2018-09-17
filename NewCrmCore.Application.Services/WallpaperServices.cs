@@ -52,7 +52,8 @@ namespace NewCrmCore.Application.Services
         public async Task<List<WallpaperDto>> GetUploadWallpaperAsync(Int32 userId)
         {
             Parameter.Validate(userId);
-            return (await _wallpaperContext.GetUploadWallpaperAsync(userId)).Select(s => new WallpaperDto
+            var result = await _wallpaperContext.GetUploadWallpaperAsync(userId);
+            return result.Select(s => new WallpaperDto
             {
                 UserId = s.UserId,
                 Height = s.Height,
@@ -61,7 +62,7 @@ namespace NewCrmCore.Application.Services
                 ShortUrl = s.ShortUrl,
                 Source = EnumExtensions.ToEnum<WallpaperSource>((Int32)s.Source),
                 Title = s.Title,
-                Url = Appsetting.FileUrl + s.Url,
+                Url = EnumExtensions.ToEnum<WallpaperSource>((Int32)s.Source) == WallpaperSource.Upload ? Appsetting.FileUrl + s.Url : s.Url,
                 Width = s.Width
             }).ToList();
         }
