@@ -129,8 +129,7 @@
     GetAllUploadWallPaper();
 
     function GetAllUploadWallPaper() {
-        HROS.request.get("/desk/getuploadwallpapers",{}, function (responseText) {
-            debugger
+        HROS.request.get("/desk/getuploadwallpapers",{}, function (responseText) { 
             if (responseText.IsSuccess) {
                 let liElement = '';
                 $.each(responseText.Model, function (k, v) {
