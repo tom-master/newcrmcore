@@ -23,7 +23,7 @@ namespace NewCrmCore.Web.Filter
             var response = new ResponseModel
             {
                 IsSuccess = false,
-                Message = exception ? filterContext.Exception.Message : "出现未知错误，请重试",
+                Message = exception ? filterContext.Exception.Message : "出现未知错误，请查看日志",
             };
 
 

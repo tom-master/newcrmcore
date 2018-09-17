@@ -431,7 +431,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                 {
                     var sql = $@"SELECT a.Id,a.Title,a.Content,a.IsRead,a.ToUserId FROM Notify AS a WHERE a.IsDeleted=0 AND a.ToUserId=@userId
-                                 LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
+                                 ORDER BY a.Id DESC,a.IsRead ASC LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
                     return dataStore.Find<Notify>(sql, parameters);
                 }
             }

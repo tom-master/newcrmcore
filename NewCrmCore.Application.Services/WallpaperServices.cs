@@ -71,7 +71,7 @@ namespace NewCrmCore.Application.Services
             Parameter.Validate(userId);
             Parameter.Validate(url);
 
-            var imageTitle = Path.GetFileNameWithoutExtension(url);
+
             Image image;
 
             using (var stream = await new HttpClient().GetStreamAsync(new Uri(url)))
@@ -89,7 +89,7 @@ namespace NewCrmCore.Application.Services
                     Width = image.Width,
                     Height = image.Height,
                     Source = EnumExtensions.ToEnum<WallpaperSource>((Int32)WallpaperSource.Web),
-                    Title = imageTitle,
+                    Title = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 5),
                     Url = url,
                     UserId = userId,
                     Md5 = md5,
@@ -103,7 +103,7 @@ namespace NewCrmCore.Application.Services
         {
             Parameter.Validate(md5);
             var result = await _wallpaperContext.GetUploadWallpaperAsync(md5);
-            return new WallpaperDto
+            return result == null ? null : new WallpaperDto
             {
                 UserId = result.UserId,
                 Height = result.Height,
@@ -130,7 +130,7 @@ namespace NewCrmCore.Application.Services
             Parameter.Validate(userId);
             Parameter.Validate(newWallpaperId);
             await _wallpaperContext.ModifyWallpaperAsync(userId, newWallpaperId);
-            await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(userId));
+            await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(userId), new WallpaperCacheKey(userId));
         }
 
         public async Task RemoveWallpaperAsync(Int32 userId, Int32 wallpaperId)

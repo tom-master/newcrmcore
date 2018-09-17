@@ -46,11 +46,35 @@
 <div class="wapppaperwebsite form-inline">
     <label>网络壁纸：</label>
     <div class="input-append">
-        <input type="text" id="wallpaperurl" style="width: 350px" placeholder="请输入一个URL地址（建议以 jpg, jpeg, png, gif, html, htm 结尾）" value=""><button type="button" class="btn" onclick="javascript: SetWebWallPaper();">应用</button>
+        <input type="text" id="wallpaperurl" style="width: 350px" placeholder="请输入一个URL地址（建议以 jpg, jpeg, png, gif, html, htm 结尾）" value=""><button type="button" class="btn" id="webWallpaper">应用</button>
     </div>
 </div>
 @section ChildrenScript
 {
+    var upload = WebUploader.create({
+        // 选完文件后，是否自动上传。
+        auto: true,
+        // swf文件路径
+        swf: '~/js/webuploader-0.1.5/Uploader.swf',
+        // 文件接收服务端。
+        server: '@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)',
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: {
+            id: '#upload',
+            multiple: false
+        },
+        // 只允许选择图片文件。
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*'
+        },
+        formData: {  
+            userId: '@userConfig.UserId',
+            uploadtype:'wallpaper'
+        }  
+    });
     upload.on('beforeFileQueued', function (file) {
         if (file.size > 1000 * 1024) {
             NewCrm.msgbox.info('文件大于1000Kb');
@@ -118,7 +142,7 @@
         });
     }
 
-    function SetWebWallPaper() {
+    $('#webWallpaper').on('click',function(){
         let webUrl = $('#wallpaperurl').val();
         if (!webUrl) {
             NewCrm.msgbox.info('请输入一个合法的url地址');
@@ -131,6 +155,8 @@
                 }
             });
         }
-    }
+    })
+
+    
 }
 
