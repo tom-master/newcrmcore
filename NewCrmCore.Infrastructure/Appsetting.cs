@@ -54,7 +54,7 @@ namespace NewCrmCore.Infrastructure
 		{
 			get
 			{
-				var str = Host.GetHostVar("NewCrmCoreFileStorage");
+				var str = Host.GetHostVar("NewCrmFileStorage");
 				return str ?? "";
 			}
 		}
