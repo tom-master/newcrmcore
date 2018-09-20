@@ -268,6 +268,8 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetApps(Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize)
         {
+            Parameter.Validate(searchText, true);
+
             var response = new ResponseModels<IList<AppDto>>();
             var result = await _appServices.GetAppsAsync(UserId, appTypeId, orderId, searchText, pageIndex, pageSize);
             if (result != null)
@@ -301,6 +303,8 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUserApps(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
         {
+            Parameter.Validate(searchText,true);
+
             var response = new ResponseModels<IList<AppDto>>();
             var result = await _appServices.GetUserAppsAsync(UserId, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize);
             if (result != null)

@@ -36,7 +36,7 @@ namespace NewCrmCore.Web.Controllers
         {
             return View();
         }
- 
+
         /// <summary>
         /// 创建新账户
         /// </summary>
@@ -180,8 +180,9 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Users(String userName, String userType, Int32 pageIndex, Int32 pageSize)
         {
+            Parameter.Validate(userName, true);
+            Parameter.Validate(userType, true);
             var response = new ResponseModels<IList<UserDto>>();
-
             var result = await _userServices.GetUsersAsync(userName, userType, pageIndex, pageSize);
             if (result != null)
             {

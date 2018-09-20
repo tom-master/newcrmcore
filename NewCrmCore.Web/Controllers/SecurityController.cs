@@ -45,7 +45,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="roleId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> CreateNewRole(Int32 roleId = default(Int32))
+        public async Task<IActionResult> CreateNewRole(Int32 roleId = 0)
         {
             if (roleId != 0)
             {
@@ -195,6 +195,7 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRoles(String roleName, Int32 pageIndex, Int32 pageSize)
         {
+            Parameter.Validate(roleName, true);
             var response = new ResponseModels<IList<RoleDto>>();
             var result = await _securityServices.GetRolesAsync(roleName, pageIndex, pageSize);
             response.IsSuccess = true;
@@ -218,7 +219,6 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> CheckName(String param)
         {
             Parameter.Validate(param);
-
             var result = await _securityServices.CheckRoleNameAsync(param);
             return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "角色名称已存在" });
         }
