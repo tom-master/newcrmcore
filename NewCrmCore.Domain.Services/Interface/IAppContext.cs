@@ -106,14 +106,14 @@ namespace NewCrmCore.Domain.Services.Interface
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        Task PassAsync(Int32 appId);
+        Task<App> PassAsync(Int32 appId);
 
         /// <summary>
         /// 应用审核不通过
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        Task DenyAsync(Int32 appId);
+        Task<App> DenyAsync(Int32 appId);
 
         /// <summary>
         /// 设置今日推荐应用
@@ -182,6 +182,6 @@ namespace NewCrmCore.Domain.Services.Interface
         /// <param name="appId"></param>
         /// <param name="deskNum"></param>
         /// <returns></returns>
-        Task InstallAsync(Int32 userId, Int32 appId, Int32 deskNum);
+        Task<App> InstallAsync(Int32 userId, Int32 appId, Int32 deskNum);
     }
 }

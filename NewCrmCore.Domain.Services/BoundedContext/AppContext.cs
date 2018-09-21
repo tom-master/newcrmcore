@@ -19,13 +19,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 {
     public class AppContext : IAppContext
     {
-        private CommonNotify _notify;
-
-        public AppContext(CommonNotify notify)
-        {
-            _notify = notify;
-        }
-
         public async Task<Tuple<Int32, Int32>> GetDevelopAndNotReleaseCountAsync(Int32 userId)
         {
             Parameter.Validate(userId);
@@ -431,69 +424,40 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task PassAsync(Int32 appId)
+        public async Task<App> PassAsync(Int32 appId)
         {
             Parameter.Validate(appId);
-            await Task.Run(async () =>
-            {
-                using (var dataStore = new DataStore(Appsetting.Database))
-                {
-
-                    dataStore.OpenTransaction();
-                    try
-                    {
-                        var app = await GetAppAsync(appId);
-                        app.Pass();
-                        var result = dataStore.Modify(app, a => a.Id == appId);
-                        if (!result)
-                        {
-                            throw new BusinessException("应用审核状态更新失败");
-                        }
-
-                        var notify = new Notify("应用审核通过通知", $@"您的应用:{app.Name},已审核通过", 0, app.UserId);
-                        dataStore.Add(notify);
-                        await _notify.Send(app.UserId, notify);
-
-                        dataStore.Commit();
-                    }
-                    catch (Exception)
-                    {
-                        dataStore.Rollback();
-                        throw;
-                    }
-                }
-            });
+            return await Task.Run<App>(async () =>
+             {
+                 using (var dataStore = new DataStore(Appsetting.Database))
+                 {
+                     var app = await GetAppAsync(appId);
+                     app.Pass();
+                     var result = dataStore.Modify(app, a => a.Id == appId);
+                     if (!result)
+                     {
+                         throw new BusinessException("应用审核状态更新失败");
+                     }
+                     return app;
+                 }
+             });
         }
 
-        public async Task DenyAsync(Int32 appId)
+        public async Task<App> DenyAsync(Int32 appId)
         {
             Parameter.Validate(appId);
-            await Task.Run(async () =>
+            return await Task.Run<App>(async () =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    dataStore.OpenTransaction();
-                    try
+                    var app = await GetAppAsync(appId);
+                    app.Deny();
+                    var result = dataStore.Modify(app, a => a.Id == appId);
+                    if (!result)
                     {
-                        var app = await GetAppAsync(appId);
-                        app.Deny();
-                        var result = dataStore.Modify(app, a => a.Id == appId);
-                        if (!result)
-                        {
-                            throw new BusinessException("应用审核状态更新失败");
-                        }
-
-                        var notify = new Notify("应用审核通过通知", $@"您的应用:{app.Name},已审核通过", 0, app.UserId);
-                        dataStore.Add(notify);
-                        await _notify.Send(app.UserId, notify);
-
-                        dataStore.Commit();
+                        throw new BusinessException("应用审核状态更新失败");
                     }
-                    catch (Exception)
-                    {
-                        dataStore.Rollback();
-                        throw;
-                    }
+                    return app;
                 }
             });
         }
@@ -807,12 +771,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task InstallAsync(Int32 userId, Int32 appId, Int32 deskNum)
+        public async Task<App> InstallAsync(Int32 userId, Int32 appId, Int32 deskNum)
         {
             Parameter.Validate(userId);
             Parameter.Validate(appId);
             Parameter.Validate(deskNum);
-            await Task.Run(async () =>
+            return await Task.Run<App>(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
@@ -868,12 +832,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         }
                         #endregion
 
-                        var notify = new Notify("应用安装通知", $@"你已成功安装{app.Name}", 0, userId);
-                        dataStore.Add(notify);
-
-                        await _notify.Send(userId, notify);
-
                         dataStore.Commit();
+                        return app;
                     }
                     catch (Exception)
                     {

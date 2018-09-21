@@ -10,6 +10,7 @@ using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
+using NewCrmCore.NotifyCenter;
 using NewLibCore;
 using NewLibCore.Validate;
 using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
@@ -19,12 +20,16 @@ namespace NewCrmCore.Application.Services
     public class DeskServices : IDeskServices
     {
         private readonly IMemberContext _memberContext;
+
         private readonly IDeskContext _deskContext;
 
-        public DeskServices(IMemberContext memberContext, IDeskContext deskContext)
+        private readonly CommonNotify _commonNotify;
+
+        public DeskServices(IMemberContext memberContext, IDeskContext deskContext, CommonNotify commonNotify)
         {
             _memberContext = memberContext;
             _deskContext = deskContext;
+            _commonNotify = commonNotify;
         }
 
         public async Task<MemberDto> GetMemberAsync(Int32 userId, Int32 memberId, Boolean isFolder)
@@ -231,8 +236,9 @@ namespace NewCrmCore.Application.Services
         {
             Parameter.Validate(userId);
             Parameter.Validate(memberId);
-            await _memberContext.UninstallMemberAsync(userId, memberId);
+            var app = await _memberContext.UninstallMemberAsync(userId, memberId);
             await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(userId));
+            await _commonNotify.SendNotify(userId, new Notify("应用卸载提醒", $@"您安装的应用 {app.Name} 已卸载完成", 0, userId));
         }
 
         public async Task ModifyMemberInfoAsync(Int32 userId, MemberDto member)

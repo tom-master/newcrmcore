@@ -4,7 +4,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
+using NewCrmCore.Domain.Entitys.System;
+using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
+using NewLibCore.Data.Mapper.InternalDataStore;
 using Newtonsoft.Json;
 using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
@@ -38,10 +41,17 @@ namespace NewCrmCore.NotifyCenter
             _notify = notify;
         }
 
-        public async Task Send(Int32 userId, Object obj)
+        public async Task SendNotify(Int32 userId, Notify notify)
         {
-            var connectionId = await CacheHelper.GetOrSetCacheAsync<String>(new SignalRConnectionCacheKey(userId.ToString()));
-            await _notify.Clients.Client(connectionId).SendAsync("message", JsonConvert.SerializeObject(obj));
+            using (var dataStore = new DataStore(Appsetting.Database))
+            {
+                var result = dataStore.Add(notify);
+                if (result > 0)
+                {
+                    var connectionId = await CacheHelper.GetOrSetCacheAsync<String>(new SignalRConnectionCacheKey(userId.ToString()));
+                    await _notify.Clients.Client(connectionId).SendAsync("message", JsonConvert.SerializeObject(notify));
+                }
+            }
         }
     }
 }

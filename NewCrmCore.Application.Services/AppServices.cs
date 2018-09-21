@@ -9,6 +9,7 @@ using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
+using NewCrmCore.NotifyCenter;
 using NewLibCore;
 using NewLibCore.Validate;
 using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
@@ -17,6 +18,13 @@ namespace NewCrmCore.Application.Services
 {
     public class AppServices : IAppServices
     {
+        private readonly CommonNotify _commonNotify;
+
+        public AppServices(CommonNotify commonNotify)
+        {
+            _commonNotify = commonNotify;
+        }
+
         private readonly IAppContext _appContext;
 
         private readonly IDeskContext _deskContext;
@@ -269,8 +277,9 @@ namespace NewCrmCore.Application.Services
             Parameter.Validate(userId);
             Parameter.Validate(appId);
             Parameter.Validate(deskNum);
-            await _appContext.InstallAsync(userId, appId, deskNum);
+            var app = await _appContext.InstallAsync(userId, appId, deskNum);
             await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(userId));
+            await _commonNotify.SendNotify(userId, new Notify("应用安装提醒", $@"您选择的 {app.Name} 已安装成功", 0, userId));
         }
 
         public async Task ModifyUserAppInfoAsync(Int32 userId, AppDto appDto)
@@ -315,13 +324,15 @@ namespace NewCrmCore.Application.Services
         public async Task PassAsync(Int32 appId)
         {
             Parameter.Validate(appId);
-            await _appContext.PassAsync(appId);
+            var app = await _appContext.PassAsync(appId);
+            await _commonNotify.SendNotify(app.UserId, new Notify("应用审核提醒", $@"您提交的应用 {app.Name} 已审核通过", 0, app.UserId));
         }
 
         public async Task DenyAsync(Int32 appId)
         {
             Parameter.Validate(appId);
-            await _appContext.DenyAsync(appId);
+            var app = await _appContext.DenyAsync(appId);
+            await _commonNotify.SendNotify(app.UserId, new Notify("应用审核提醒", $@"您提交的应用 {app.Name} 未审核通过", 0, app.UserId));
         }
 
         public async Task SetTodayRecommandAppAsync(Int32 appId)

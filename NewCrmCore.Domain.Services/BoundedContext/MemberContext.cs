@@ -10,6 +10,7 @@ using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;
 using NewLibCore;
 using NewCrmCore.Infrastructure.CommonTools;
+using NewCrmCore.NotifyCenter;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
 {
@@ -223,11 +224,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task UninstallMemberAsync(Int32 userId, Int32 memberId)
+        public async Task<App> UninstallMemberAsync(Int32 userId, Int32 memberId)
         {
             Parameter.Validate(userId);
             Parameter.Validate(memberId);
-            await Task.Run(() =>
+            return await Task.Run<App>(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
@@ -235,7 +236,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     try
                     {
                         var isFolder = false;
-
+                        App app = null;
                         #region 判断是否为文件夹
                         {
                             var sql = $@"SELECT a.MemberType FROM Member AS a WHERE a.Id=@Id AND a.UserId=@UserId AND a.IsDeleted=0";
@@ -278,8 +279,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             }
                             #endregion
 
-                            App app = null;
-
                             #region 查询应用
                             {
                                 var sql = $@"SELECT a.UseCount FROM App AS a WHERE a.Id=@Id AND a.UserId=@UserId AND a.IsDeleted=0";
@@ -317,6 +316,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         #endregion
 
                         dataStore.Commit();
+                        return app;
                     }
                     catch (Exception)
                     {

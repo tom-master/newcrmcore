@@ -54,7 +54,7 @@ namespace NewCrmCore.Domain.Services.Interface
         /// <param name="userId"></param>
         /// <param name="memberId"></param>
         /// <returns></returns>
-        Task UninstallMemberAsync(Int32 userId, Int32 memberId);
+        Task<App> UninstallMemberAsync(Int32 userId, Int32 memberId);
 
         /// <summary>
         /// 修改桌面应用的Icon
