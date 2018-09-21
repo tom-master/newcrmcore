@@ -10,7 +10,6 @@ using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;
 using NewLibCore;
 using NewCrmCore.Infrastructure.CommonTools;
-using NewCrmCore.NotifyCenter;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
 {

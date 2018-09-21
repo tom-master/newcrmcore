@@ -10,7 +10,6 @@ using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
-using NewCrmCore.NotifyCenter;
 using NewLibCore;
 using NewLibCore.Data.Mapper.InternalDataStore;
 using NewLibCore.Validate;
