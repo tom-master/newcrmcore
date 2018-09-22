@@ -280,7 +280,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                             #region 查询应用
                             {
-                                var sql = $@"SELECT a.UseCount FROM App AS a WHERE a.Id=@Id AND a.UserId=@UserId AND a.IsDeleted=0";
+                                var sql = $@"SELECT a.Name,a.UseCount FROM App AS a WHERE a.Id=@Id AND a.UserId=@UserId AND a.IsDeleted=0";
                                 var parameters = new List<ParameterMapper>
                                 {
                                     new ParameterMapper("@Id",appId),

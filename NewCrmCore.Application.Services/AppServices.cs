@@ -20,19 +20,15 @@ namespace NewCrmCore.Application.Services
     {
         private readonly CommonNotify _commonNotify;
 
-        public AppServices(CommonNotify commonNotify)
-        {
-            _commonNotify = commonNotify;
-        }
-
         private readonly IAppContext _appContext;
 
         private readonly IDeskContext _deskContext;
 
-        public AppServices(IAppContext appContext, IDeskContext deskContext)
+        public AppServices(IAppContext appContext, IDeskContext deskContext, CommonNotify commonNotify)
         {
             _appContext = appContext;
             _deskContext = deskContext;
+            _commonNotify = commonNotify;
         }
 
         public async Task<List<AppTypeDto>> GetAppTypesAsync()

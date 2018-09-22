@@ -33,6 +33,7 @@ namespace NewCrmCore.Web
             services.AddTransient<IDeskServices, DeskServices>();
             services.AddTransient<IWallpaperServices, WallpaperServices>();
             services.AddTransient<ILoggerServices, LoggerServices>();
+            services.AddTransient<CommonNotify>();
 
             services.AddTransient<IUserContext, UserContext>();
             services.AddTransient<IAppContext, Domain.Services.BoundedContext.AppContext>();
@@ -41,7 +42,7 @@ namespace NewCrmCore.Web
             services.AddTransient<IMemberContext, MemberContext>();
             services.AddTransient<ISecurityContext, SecurityContext>();
             services.AddTransient<IWallpaperContext, WallpaperContext>();
-            services.AddTransient<CommonNotify>();
+
 
             services.AddMvc(config =>
             {
