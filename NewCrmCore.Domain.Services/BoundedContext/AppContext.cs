@@ -705,8 +705,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                     #region 添加应用分类
                     {
-                        var result = dataStore.Modify(appType);
-                        if (!result)
+                        var result = dataStore.Add(appType);
+                        if (result <= 0)
                         {
                             throw new BusinessException("添加应用分类失败");
                         }

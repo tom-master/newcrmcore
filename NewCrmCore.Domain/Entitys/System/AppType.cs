@@ -21,13 +21,22 @@ namespace NewCrmCore.Domain.Entitys.System
         public String Remark { get; private set; }
 
         /// <summary>
+        /// 是否为系统分类
+        /// </summary>
+         [PropertyRequired]
+        public Boolean IsSystem{get;private set;}
+
+        /// <summary>
         /// 实例化一个app类型对象
         /// </summary>
-        public AppType(String name, String remark = default(String))
+        public AppType(String name,Boolean isSystem, String remark ="")
         {
             Name = name;
+            IsSystem = isSystem;
             Remark = remark;
         }
+
+        
 
         public AppType()
         {
