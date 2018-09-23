@@ -15,13 +15,16 @@ namespace NewCrmCore.NotifyCenter
 {
     public class NotifyHub : Hub
     {
-        public async Task<String> RegisterConnection()
+        public override async Task OnConnectedAsync()
         {
             var userId = Context.GetHttpContext().Request.Query["userId"];
+            //移除上次意外退出时没有来得及删除的ConnectionId
+            await CacheHelper.RemoveKeyWhenModify(new SignalRConnectionCacheKey(userId));
+
             var connectionId = Context.ConnectionId;
             await CacheHelper.GetOrSetCacheAsync(new SignalRConnectionCacheKey(userId), () => Task.Run(() => connectionId));
             Clients.Client(connectionId);
-            return connectionId;
+            await base.OnConnectedAsync();
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
