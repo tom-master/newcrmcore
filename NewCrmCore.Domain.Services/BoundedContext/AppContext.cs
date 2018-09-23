@@ -549,10 +549,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task ReleaseAppAsync(Int32 appId)
+        public async Task<App> ReleaseAppAsync(Int32 appId)
         {
             Parameter.Validate(appId);
-            await Task.Run(() =>
+            return await Task.Run<App>(() =>
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
@@ -564,6 +564,17 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             throw new BusinessException("发布应用失败");
                         }
+                    }
+                    #endregion
+
+                    #region 获取应用名称
+                    {
+                        var sql = "SELECT a.Name,a.UserId FROM App AS a WHERE a.IsDeleted=0 AND a.Id=@Id";
+                        var parameters = new List<ParameterMapper>
+                         {
+                            new ParameterMapper("@Id",appId)
+                         };
+                        return dataStore.FindOne<App>(sql);
                     }
                     #endregion
                 }

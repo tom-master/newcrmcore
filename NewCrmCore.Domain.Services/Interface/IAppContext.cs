@@ -134,7 +134,7 @@ namespace NewCrmCore.Domain.Services.Interface
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        Task ReleaseAppAsync(Int32 appId);
+        Task<App> ReleaseAppAsync(Int32 appId);
 
         /// <summary>
         /// 修改开发者（用户）的应用信息

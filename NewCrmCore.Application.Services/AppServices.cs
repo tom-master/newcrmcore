@@ -344,7 +344,8 @@ namespace NewCrmCore.Application.Services
         public async Task ReleaseAppAsync(Int32 appId)
         {
             Parameter.Validate(appId);
-            await _appContext.ReleaseAppAsync(appId);
+            var result = await _appContext.ReleaseAppAsync(appId);
+            await _commonNotify.SendNotify(result.UserId, new Notify("应用发布提醒", $@"您的应用 {result.Name} 已发布到应用市场中 ", 0, result.UserId));
         }
 
         public async Task ModifyAppIconAsync(Int32 userId, Int32 appId, String newIcon)
