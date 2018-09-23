@@ -72,13 +72,31 @@
 			<div class="input-label">
 				<label class="label-text">用户类型：</label>
 				<div class="label-box form-inline">
-					<label class="radio" style="margin-right: 10px">
-						<input type="radio" name="val_type" value="1" @{ if (!userResult.IsAdmin) { <text> checked="checked" </text>  } }>用户
-					</label>
+					@{
+						if(userResult.IsAdmin)
+						{
+							<text>
+								<label class="radio" style="margin-right: 10px">
+									<input type="radio" name="val_type" value="1">用户
+								</label>
 
-					<label class="radio" style="margin-right: 10px">
-						<input type="radio" name="val_type" value="2" @{ if (userResult.IsAdmin) { <text> checked="checked" </text>  } }>管理员
-					</label>
+								<label class="radio" style="margin-right: 10px">
+									<input type="radio" name="val_type" value="2" checked="checked">管理员
+								</label>
+							</text>
+						} else 
+						{
+							<text>
+								<label class="radio" style="margin-right: 10px">
+									<input type="radio" name="val_type" value="1" checked="checked">用户
+								</label>
+
+								<label class="radio" style="margin-right: 10px">
+									<input type="radio" name="val_type" value="2" >管理员
+								</label>
+							</text>
+						}
+					}
 				</div>
 			</div>
 			<div class="input-label input-label-permission @{
@@ -90,7 +108,7 @@
                 {
                      <text> show </text>
                 }
-                                                           }">
+                 }">
 				<label class="label-text">用户角色：</label>
 				<div class="label-box form-inline">
 					@{
@@ -99,14 +117,14 @@
 							if (userResult.Roles != null && userResult.Roles.Any(role => role.Id == item.Id))
 							{
 								<label class="checkbox" style="margin-right: 10px">
-									<input type="checkbox" onclick="javascript: selectRole();" name="val_permission_id" id="@item.Id" checked="checked">
+									<input type="checkbox" name="val_permission_id" id="@item.Id" checked="checked">
 									@item.Name
 								</label>
 							}
 							else
 							{
 								<label class="checkbox" style="margin-right: 10px">
-									<input type="checkbox" onclick="javascript: selectRole();" name="val_permission_id" id="@item.Id">
+									<input type="checkbox"  name="val_permission_id" id="@item.Id">
 									@item.Name
 								</label>
 							}
@@ -199,14 +217,14 @@
 			}
 		});
 
-		function selectRole() {
+		$('input[name="val_permission_id"]').on('click',function(){
 			$('#roleIds').val('');
 			let ids = '';
 			$.each($('input[name="val_permission_id"]').filter(':checked'), function (k, v) {
 				ids += $(v).attr('id') + ',';
 			});
 			$('#roleIds').val(ids);
-		}
-
+			console.log($('#roleIds').val())
+		})
 }
 
