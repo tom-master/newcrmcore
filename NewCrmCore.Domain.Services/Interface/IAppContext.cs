@@ -162,9 +162,10 @@ namespace NewCrmCore.Domain.Services.Interface
         /// 修改应用分类
         /// </summary>
         /// <param name="appTypeName"></param>
+        /// <param name="isSystem"></param>
         /// <param name="appTypeId"></param>
         /// <returns></returns>
-        Task ModifyAppTypeAsync(String appTypeName, Int32 appTypeId);
+        Task ModifyAppTypeAsync(String appTypeName,Boolean isSystem, Int32 appTypeId);
 
         /// <summary>
         /// 更改应用图标

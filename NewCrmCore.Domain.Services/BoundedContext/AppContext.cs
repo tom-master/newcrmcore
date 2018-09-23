@@ -42,7 +42,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    var sql = $@"SELECT a.Id,a.Name FROM AppType AS a WHERE a.IsDeleted=0";
+                    var sql = $@"SELECT a.Id,a.Name,a.IsSystem FROM AppType AS a WHERE a.IsDeleted=0";
                     return dataStore.Find<AppType>(sql);
                 }
             });
@@ -716,7 +716,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task ModifyAppTypeAsync(String appTypeName, Int32 appTypeId)
+        public async Task ModifyAppTypeAsync(String appTypeName, Boolean isSystem, Int32 appTypeId)
         {
             Parameter.Validate(appTypeName);
             Parameter.Validate(appTypeId);
@@ -724,21 +724,18 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var dataStore = new DataStore(Appsetting.Database))
                 {
-                    #region 前置条件验证
-                    {
-                        var sql = $@"SELECT COUNT(*) FROM AppType AS a WHERE a.Name=@name AND a.IsDeleted=0";
-                        var result = dataStore.FindSingleValue<Int32>(sql, new List<ParameterMapper> { new ParameterMapper("@name", appTypeName) });
-                        if (result > 0)
-                        {
-                            throw new BusinessException($@"分类:{appTypeName},已存在");
-                        }
-                    }
-                    #endregion
-
                     #region 更新应用分类
                     {
                         var appType = new AppType();
                         appType.ModifyName(appTypeName);
+                        if (isSystem)
+                        {
+                            appType.System();
+                        }
+                        else
+                        {
+                            appType.NotSystem();
+                        }
                         var result = dataStore.Modify(appType, type => type.Id == appTypeId);
                         if (!result)
                         {

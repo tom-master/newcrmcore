@@ -69,7 +69,8 @@ namespace NewCrmCore.Dto.MapperProfile
         {
             CreateMap<AppTypeDto, AppType>()
                 .ForMember(appType => appType.Id, dto => dto.MapFrom(w => w.Id))
-                .ForMember(appType => appType.Name, dto => dto.MapFrom(w => w.Name));
+                .ForMember(appType => appType.Name, dto => dto.MapFrom(w => w.Name))
+                .ForMember(appType => appType.IsSystem, dto => dto.MapFrom(w => w.IsSystem));
         }
     }
 

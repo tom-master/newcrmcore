@@ -33,8 +33,8 @@ namespace NewCrmCore.Application.Services
 
         public async Task<List<AppTypeDto>> GetAppTypesAsync()
         {
-            var result = await CacheHelper.GetOrSetCacheAsync(new AppTypeCacheKey(), () => _appContext.GetAppTypesAsync());
-            return result.Select(s => new AppTypeDto { Id = s.Id, Name = s.Name }).ToList();
+            var result = await _appContext.GetAppTypesAsync();
+            return result.Select(s => new AppTypeDto { Id = s.Id, Name = s.Name, IsSystem = s.IsSystem }).ToList();
         }
 
         public async Task<TodayRecommendAppDto> GetTodayRecommendAsync(Int32 userId)
@@ -306,15 +306,13 @@ namespace NewCrmCore.Application.Services
             Parameter.Validate(appTypeDto);
             var appType = appTypeDto.ConvertToModel<AppTypeDto, AppType>();
             await _appContext.CreateNewAppTypeAsync(appType);
-            await CacheHelper.RemoveKeyWhenModify(new AppTypeCacheKey());
         }
 
         public async Task ModifyAppTypeAsync(AppTypeDto appTypeDto, Int32 appTypeId)
         {
             Parameter.Validate(appTypeDto);
             Parameter.Validate(appTypeId);
-            await _appContext.ModifyAppTypeAsync(appTypeDto.Name, appTypeId);
-            await CacheHelper.RemoveKeyWhenModify(new AppTypeCacheKey());
+            await _appContext.ModifyAppTypeAsync(appTypeDto.Name, appTypeDto.IsSystem, appTypeId);
         }
 
         public async Task PassAsync(Int32 appId)

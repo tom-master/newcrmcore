@@ -173,6 +173,8 @@ namespace NewCrmCore.Web.Controllers
                 appTypeDto.Id = Int32.Parse(forms["id"]);
             }
 
+            appTypeDto.IsSystem = Int32.Parse(forms["val_issystem"]) == 1;
+
             return appTypeDto;
 
         }

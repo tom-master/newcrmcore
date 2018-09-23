@@ -23,20 +23,20 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 是否为系统分类
         /// </summary>
-         [PropertyRequired]
-        public Boolean IsSystem{get;private set;}
+        [PropertyRequired]
+        public Boolean IsSystem { get; private set; }
 
         /// <summary>
         /// 实例化一个app类型对象
         /// </summary>
-        public AppType(String name,Boolean isSystem, String remark ="")
+        public AppType(String name, Boolean isSystem, String remark = "")
         {
             Name = name;
             IsSystem = isSystem;
             Remark = remark;
         }
 
-        
+
 
         public AppType()
         {
@@ -66,6 +66,20 @@ namespace NewCrmCore.Domain.Entitys.System
 
             Remark = remark;
             OnPropertyChanged(new PropertyArgs(nameof(Remark), Remark));
+            return this;
+        }
+
+        public AppType System()
+        {
+            IsSystem = true;
+            OnPropertyChanged(new PropertyArgs(nameof(IsSystem), IsSystem));
+            return this;
+        }
+
+         public AppType NotSystem()
+        {
+            IsSystem = false;
+            OnPropertyChanged(new PropertyArgs(nameof(IsSystem), IsSystem));
             return this;
         }
     }
