@@ -37,7 +37,13 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();
+            var appTypes = await _appServices.GetAppTypesAsync();
+            if (!IsAdmin)
+            {
+                appTypes = appTypes.Where(w => !w.IsSystem).ToList();
+            }
+
+            ViewData["AppTypes"] = appTypes;
             ViewData["TodayRecommendApp"] = await _appServices.GetTodayRecommendAsync(UserId);
 
             var user = await _userServices.GetUserAsync(UserId);
@@ -72,7 +78,13 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> UserAppManage()
         {
-            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();
+            var appTypes = await _appServices.GetAppTypesAsync();
+            if (!IsAdmin)
+            {
+                appTypes = appTypes.Where(w => !w.IsSystem).ToList();
+            }
+
+            ViewData["AppTypes"] = appTypes;
             ViewData["AppStyles"] = _appServices.GetAppStyles().ToList();
             ViewData["AppStates"] = _appServices.GetAppStates().ToList();
 
@@ -93,7 +105,13 @@ namespace NewCrmCore.Web.Controllers
                 result = await _appServices.GetAppAsync(appId, UserId);
                 ViewData["AppState"] = result.AppAuditState;
             }
-            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();
+            var appTypes = await _appServices.GetAppTypesAsync();
+            if (!IsAdmin)
+            {
+                appTypes = appTypes.Where(w => !w.IsSystem).ToList();
+            }
+
+            ViewData["AppTypes"] = appTypes;
             ViewData["UserId"] = UserId;
             return View(result);
         }
@@ -303,7 +321,7 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUserApps(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
         {
-            Parameter.Validate(searchText,true);
+            Parameter.Validate(searchText, true);
 
             var response = new ResponseModels<IList<AppDto>>();
             var result = await _appServices.GetUserAppsAsync(UserId, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize);
