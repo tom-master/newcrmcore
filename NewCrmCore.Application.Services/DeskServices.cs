@@ -238,7 +238,10 @@ namespace NewCrmCore.Application.Services
             Parameter.Validate(memberId);
             var app = await _memberContext.UninstallMemberAsync(userId, memberId);
             await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(userId));
-            await _commonNotify.SendNotify(userId, new Notify("应用卸载提醒", $@"您安装的应用 {app.Name} 已卸载完成", 0, userId));
+            if (app != null)
+            {
+                await _commonNotify.SendNotify(userId, new Notify("应用卸载提醒", $@"您安装的应用 {app.Name} 已卸载完成", 0, userId));
+            }
         }
 
         public async Task ModifyMemberInfoAsync(Int32 userId, MemberDto member)
