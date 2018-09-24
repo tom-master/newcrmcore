@@ -280,7 +280,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                             #region 查询应用
                             {
-                                var sql = $@"SELECT a.Name,a.UseCount FROM App AS a WHERE a.Id=@Id AND a.UserId=@UserId AND a.IsDeleted=0";
+                                var sql = $@"SELECT a.Name,a.UseCount,a.UserId FROM App AS a WHERE a.Id=@Id AND a.IsDeleted=0";
                                 var parameters = new List<ParameterMapper>
                                 {
                                     new ParameterMapper("@Id",appId),
@@ -293,7 +293,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             #region 应用使用量-1
                             {
                                 app.DecreaseUseCount();
-                                var result = dataStore.Modify(app, a => a.Id == appId && a.UserId == userId);
+                                var result = dataStore.Modify(app, a => a.Id == appId && a.UserId == app.UserId);
                                 if (!result)
                                 {
                                     throw new BusinessException("修改应用使用数量失败");

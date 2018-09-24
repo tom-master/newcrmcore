@@ -17,19 +17,19 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 类名
         /// </summary>
-        [PropertyRequired, InputRange(25)]
+        [PropertyRequired, PropertyInputRange(25)]
         public String Controller { get; private set; }
 
         /// <summary>
         /// 方法名
         /// </summary>
-        [PropertyRequired, InputRange(30)]
+        [PropertyRequired, PropertyInputRange(30)]
         public String Action { get; private set; }
 
         /// <summary>
         /// 异常信息
         /// </summary>
-        [PropertyRequired, InputRange(1000)]
+        [PropertyRequired, PropertyInputRange(1000)]
         public String ExceptionMessage { get; private set; }
 
         /// <summary>

@@ -11,10 +11,10 @@ namespace NewCrmCore.Domain.Entitys.System
     [Serializable, Description("消息")]
     public partial class Notify : DomainModelBase
     {
-        [PropertyRequired, InputRange(4, 10)]
+        [PropertyRequired, PropertyInputRange(4, 10)]
         public String Title { get; private set; }
 
-        [PropertyRequired, InputRange(1, 20)]
+        [PropertyRequired, PropertyInputRange(1, 20)]
         public String Content { get; private set; }
 
         [PropertyDefaultValue(typeof(Boolean), false)]

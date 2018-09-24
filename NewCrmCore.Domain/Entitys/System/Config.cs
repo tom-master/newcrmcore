@@ -12,13 +12,13 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 皮肤
         /// </summary>
-        [PropertyRequired, InputRange(10)]
+        [PropertyRequired, PropertyInputRange(10)]
         public String Skin { get; private set; }
 
         /// <summary>
         /// 用户头像
         /// </summary>
-        [PropertyRequired, InputRange(150)]
+        [PropertyRequired, PropertyInputRange(150)]
         public String UserFace { get; private set; }
 
         /// <summary>

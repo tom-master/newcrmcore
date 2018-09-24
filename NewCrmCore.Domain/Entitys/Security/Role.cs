@@ -13,19 +13,19 @@ namespace NewCrmCore.Domain.Entitys.Security
         /// <summary>
         /// 名称
         /// </summary>
-        [PropertyRequired, InputRange(2, 10)]
+        [PropertyRequired, PropertyInputRange(2, 10)]
         public String Name { get; private set; }
 
         /// <summary>
         /// 角色标识
         /// </summary>
-        [PropertyRequired, InputRange(2, 20)]
+        [PropertyRequired, PropertyInputRange(2, 20)]
         public String RoleIdentity { get; private set; }
 
         /// <summary>
         /// 备注
         /// </summary>
-        [InputRange(50), PropertyDefaultValue(typeof(String), "")]
+        [PropertyInputRange(50), PropertyDefaultValue(typeof(String), "")]
         public String Remark { get; private set; }
 
         /// <summary>

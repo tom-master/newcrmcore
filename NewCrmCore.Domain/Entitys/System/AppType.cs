@@ -11,13 +11,13 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 名称
         /// </summary>
-        [PropertyRequired, InputRange(2, 10)]
+        [PropertyRequired, PropertyInputRange(2, 10)]
         public String Name { get; private set; }
 
         /// <summary>
         /// 备注
         /// </summary>
-        [PropertyDefaultValue(typeof(String), ""), InputRange(50)]
+        [PropertyDefaultValue(typeof(String), ""), PropertyInputRange(50)]
         public String Remark { get; private set; }
 
         /// <summary>

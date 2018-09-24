@@ -14,7 +14,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         /// <summary>
         /// 用户名
         /// </summary>
-        [PropertyRequired, InputRange(4, 10)]
+        [PropertyRequired, PropertyInputRange(4, 10)]
         public String Name { get; private set; }
 
         /// <summary>

@@ -13,25 +13,25 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 名称
         /// </summary>
-        [PropertyRequired, InputRange(2, 10)]
+        [PropertyRequired, PropertyInputRange(2, 10)]
         public String Name { get; private set; }
 
         /// <summary>
         /// 图标地址
         /// </summary>
-        [PropertyRequired, InputRange(150)]
+        [PropertyRequired, PropertyInputRange(150)]
         public String IconUrl { get; private set; }
 
         /// <summary>
         /// app地址
         /// </summary>
-        [PropertyRequired, InputRange(150)]
+        [PropertyRequired, PropertyInputRange(150)]
         public String AppUrl { get; private set; }
 
         /// <summary>
         /// 备注
         /// </summary>
-        [InputRange(50), PropertyDefaultValue(typeof(String), "")]
+        [PropertyInputRange(50), PropertyDefaultValue(typeof(String), "")]
         public String Remark { get; private set; }
 
         /// <summary>

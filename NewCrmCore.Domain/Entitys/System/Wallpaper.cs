@@ -11,13 +11,13 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 标题
         /// </summary>
-        [PropertyRequired, InputRange(15)]
+        [PropertyRequired, PropertyInputRange(15)]
         public String Title { get; private set; }
 
         /// <summary>
         /// 图片地址
         /// </summary>
-        [PropertyRequired, InputRange(150)]
+        [PropertyRequired, PropertyInputRange(150)]
         public String Url { get; private set; }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 描述
         /// </summary>
-        [PropertyDefaultValue(typeof(String), ""), InputRange(50)]
+        [PropertyDefaultValue(typeof(String), ""), PropertyInputRange(50)]
         public String Description { get; private set; }
 
         /// <summary>

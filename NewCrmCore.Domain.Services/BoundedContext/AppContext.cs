@@ -174,8 +174,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                            ) AS IsInstall,
                                 a.IsIconByUpload
 	                            FROM App AS a
-	                            LEFT JOIN Member AS a1 ON a1.UserId=a.UserId AND a1.AppId=a.Id AND a1.IsDeleted=0
+	                            LEFT JOIN Member AS a1 ON a1.UserId=@userId2 AND a1.AppId=a.Id AND a1.IsDeleted=0
                                 {where} {orderBy} LIMIT {pageSize * (pageIndex - 1)},{pageSize }";
+                    parameters.Add(new ParameterMapper("@userId2", userId));
                     return dataStore.Find<App>(sql, parameters);
                 }
                 #endregion

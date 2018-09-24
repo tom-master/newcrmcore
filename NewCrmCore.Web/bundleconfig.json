@@ -13,7 +13,7 @@
       "wwwroot/js/artDialog4.1.7/plugins/iframeTools.js"
     ],
     "minify": {
-      "enabled": false,
+      "enabled": true,
       "renameLocals": false
     },
     "sourceMap": false
