@@ -35,7 +35,8 @@ namespace NewCrmCore.Application.Services
             {
                 Name = user.Name,
                 Id = user.Id,
-                UserFace = user.UserFace
+                UserFace = user.UserFace,
+                IsAdmin = user.IsAdmin
             };
         }
 

@@ -173,7 +173,7 @@ namespace NewCrmCore.Web.Controllers
                 response.Message = "登陆成功";
                 response.IsSuccess = true;
 
-                HttpContext.Response.Cookies.Append($@"User", JsonConvert.SerializeObject(new UserDto { Id = user.Id, UserFace = Appsetting.FileUrl + user.UserFace, Name = user.Name }), new CookieOptions { Expires = cookieTimeout });
+                HttpContext.Response.Cookies.Append($@"User", JsonConvert.SerializeObject(user), new CookieOptions { Expires = cookieTimeout });
             }
             return Json(response);
         }

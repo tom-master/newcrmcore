@@ -35,7 +35,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                          #region 查询用户
                          {
-                             var sql = @"SELECT a.Id,a.Name,a.LoginPassword,a1.UserFace 
+                             var sql = @"SELECT a.Id,a.Name,a.LoginPassword,a1.UserFace,a.IsAdmin
                                         FROM User AS a
                                         INNER JOIN Config AS a1
                                         ON a1.UserId=a.Id 

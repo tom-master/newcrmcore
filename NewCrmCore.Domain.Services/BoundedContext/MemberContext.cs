@@ -250,14 +250,24 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                         if (isFolder)
                         {
-                            #region 将文件夹内的桌面应用移出
+                            #region 判断文件夹内是否存在应用，如果存在则移出
                             {
-                                var member = new Member();
-                                member.ModifyFolderId(0);
-                                var result = dataStore.Modify(member, mem => mem.UserId == userId && mem.FolderId == memberId);
-                                if (!result)
+                                var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.IsDeleted=0 AND a.UserId=@userId AND a.FolderId=@folderId";
+                                var parameters = new List<ParameterMapper>
                                 {
-                                    throw new BusinessException("将文件夹内的桌面应用移出失败");
+                                    new ParameterMapper("@userId",userId),
+                                    new ParameterMapper("@folderId",memberId)
+                                };
+                                var count = dataStore.FindSingleValue<Int32>(sql, parameters);
+                                if (count > 0)
+                                {
+                                    var member = new Member();
+                                    member.ModifyFolderId(0);
+                                    var result = dataStore.Modify(member, mem => mem.UserId == userId && mem.FolderId == memberId);
+                                    if (!result)
+                                    {
+                                        throw new BusinessException("将文件夹内的桌面应用移出失败");
+                                    }
                                 }
                             }
                             #endregion
