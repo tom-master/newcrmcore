@@ -71,7 +71,7 @@ namespace NewCrmCore.Domain.Entitys.Security
         {
             if (String.IsNullOrEmpty(roleName))
             {
-                throw new ArgumentException($@"{nameof(roleName)} is null");
+                throw new ArgumentException($@"{nameof(roleName)} 不能为空");
             }
 
             Name = roleName;

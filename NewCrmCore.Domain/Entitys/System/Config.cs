@@ -127,7 +127,7 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             if (String.IsNullOrEmpty(skin))
             {
-                throw new ArgumentException($@"{nameof(skin)} is null");
+                throw new ArgumentException($@"{nameof(skin)} 不能为空");
             }
 
             Skin = skin;
@@ -139,7 +139,7 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             if (String.IsNullOrEmpty(userFace))
             {
-                throw new ArgumentException($@"{nameof(userFace)} is null");
+                throw new ArgumentException($@"{nameof(userFace)} 不能为空");
             }
 
             UserFace = userFace;
@@ -152,7 +152,7 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             if (appSize <= 0)
             {
-                throw new ArgumentException($@"{nameof(appSize)} less than or equal to zero");
+                throw new ArgumentException($@"{nameof(appSize)} 不能小于或者等于0");
             }
 
             if (appSize < 32)
@@ -173,7 +173,7 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             if (appVerticalSpacing <= 0)
             {
-                throw new ArgumentException($@"{nameof(appVerticalSpacing)} less than or equal to zero");
+                throw new ArgumentException($@"{nameof(appVerticalSpacing)} 不能小于或者等于0");
             }
 
             if (appVerticalSpacing < 0)
@@ -194,7 +194,7 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             if (appHorizontalSpacing <= 0)
             {
-                throw new ArgumentException($@"{nameof(appHorizontalSpacing)} less than or equal to zero");
+                throw new ArgumentException($@"{nameof(appHorizontalSpacing)} 不能小于或者等于0");
             }
 
             if (appHorizontalSpacing < 0)
@@ -215,7 +215,7 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             if (deskNumber <= 0)
             {
-                throw new ArgumentException($@"{nameof(deskNumber)} less than or equal to zero");
+                throw new ArgumentException($@"{nameof(deskNumber)} 不能小于或者等于0");
             }
 
             DefaultDeskNumber = deskNumber;
@@ -227,7 +227,7 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             if (deskCount <= 0)
             {
-                throw new ArgumentException($@"{nameof(deskCount)} less than or equal to zero");
+                throw new ArgumentException($@"{nameof(deskCount)} 不能小于或者等于0");
             }
 
             DefaultDeskCount = deskCount;

@@ -180,7 +180,7 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             if (width <= 0)
             {
-                throw new ArgumentException($@"{nameof(width)} less than or equal to zero");
+                throw new ArgumentException($@"{nameof(width)} 不能小于或等于0");
             }
 
             Width = width;
@@ -192,7 +192,7 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             if (height <= 0)
             {
-                throw new ArgumentException($@"{nameof(height)} less than or equal to zero");
+                throw new ArgumentException($@"{nameof(height)} 不能小于或等于0");
             }
 
             Height = height;
@@ -211,7 +211,7 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             if (String.IsNullOrEmpty(name))
             {
-                throw new ArgumentException($@"{nameof(name)} is null");
+                throw new ArgumentException($@"{nameof(name)}不能为空");
             }
 
             Name = name;
@@ -223,7 +223,7 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             if (String.IsNullOrEmpty(iconUrl))
             {
-                throw new ArgumentException($@"{nameof(iconUrl)} is null");
+                throw new ArgumentException($@"{nameof(iconUrl)}不能为空");
             }
 
             IconUrl = iconUrl;
@@ -235,7 +235,7 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             if (String.IsNullOrEmpty(appUrl))
             {
-                throw new ArgumentException($@"{nameof(appUrl)} is null");
+                throw new ArgumentException($@"{nameof(appUrl)}不能为空");
             }
 
             AppUrl = appUrl;
@@ -317,7 +317,7 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             if (deskIndex <= 0)
             {
-                throw new ArgumentException($@"{nameof(deskIndex)} less than or equal to zero");
+                throw new ArgumentException($@"{nameof(deskIndex)} 不能小于或等于0");
             }
 
             DeskIndex = deskIndex;

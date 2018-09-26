@@ -49,7 +49,7 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             if (String.IsNullOrEmpty(appTypeName))
             {
-                throw new ArgumentException($@"{nameof(appTypeName)} is null");
+                throw new ArgumentException($@"{nameof(appTypeName)} 不能为空");
             }
 
             Name = appTypeName;
@@ -61,7 +61,7 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             if (String.IsNullOrEmpty(remark))
             {
-                throw new ArgumentException($@"{nameof(remark)} is null");
+                throw new ArgumentException($@"{nameof(remark)} 不能为空");
             }
 
             Remark = remark;

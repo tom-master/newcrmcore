@@ -98,7 +98,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         {
             if (String.IsNullOrEmpty(password))
             {
-                throw new ArgumentException($@"{nameof(LoginPassword)} is null");
+                throw new ArgumentException($@"{nameof(LoginPassword)}不能为空");
             }
 
             LoginPassword = password;
@@ -113,7 +113,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         {
             if (String.IsNullOrEmpty(password))
             {
-                throw new ArgumentException($@"{nameof(LockScreenPassword)} is null");
+                throw new ArgumentException($@"{nameof(LockScreenPassword)}不能为空");
             }
 
             LockScreenPassword = password;

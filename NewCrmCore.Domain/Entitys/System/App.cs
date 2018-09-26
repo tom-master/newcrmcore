@@ -123,6 +123,10 @@ namespace NewCrmCore.Domain.Entitys.System
         /// </summary>
         public Boolean IsInstall { get; private set; }
 
+        /// <summary>
+        /// 评价
+        /// </summary>
+        /// <value></value>
         public Double StarCount { get; private set; }
 
         /// <summary>
@@ -196,7 +200,7 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             if (String.IsNullOrEmpty(appName))
             {
-                throw new ArgumentException($@"{nameof(appName)} is null");
+                throw new ArgumentException($@"{nameof(appName)} 不能为空");
             }
 
             Name = appName;
@@ -211,7 +215,7 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             if (String.IsNullOrEmpty(iconUrl))
             {
-                throw new ArgumentException($@"{nameof(iconUrl)} is null");
+                throw new ArgumentException($@"{nameof(iconUrl)} 不能为空");
             }
 
             IconUrl = iconUrl;
@@ -228,7 +232,7 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             if (width <= 0)
             {
-                throw new ArgumentException($@"{nameof(width)} less than or equal to zero");
+                throw new ArgumentException($@"{nameof(width)} 不能小于或等于0");
             }
 
             Width = width;
@@ -243,7 +247,7 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             if (height <= 0)
             {
-                throw new ArgumentException($@"{nameof(height)} less than or equal to zero");
+                throw new ArgumentException($@"{nameof(height)} 不能小于或等于0");
             }
 
             Height = height;
@@ -477,7 +481,7 @@ namespace NewCrmCore.Domain.Entitys.System
         {
             if (String.IsNullOrEmpty(newAppUrl))
             {
-                throw new ArgumentException($@"{nameof(newAppUrl)} is null");
+                throw new ArgumentException($@"{nameof(newAppUrl)} 不能为空");
             }
 
             AppUrl = newAppUrl;

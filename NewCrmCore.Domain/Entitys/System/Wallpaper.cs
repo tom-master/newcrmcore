@@ -65,7 +65,7 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 实例化一个壁纸对象
         /// </summary>
-        public Wallpaper(String title, String url, String description, Int32 width, Int32 height, String md5, Int32 userId = default(Int32), WallpaperSource wallpaperSource = default(WallpaperSource))
+        public Wallpaper(String title, String url, String description, Int32 width, Int32 height, String md5, Int32 userId = 0, WallpaperSource wallpaperSource = default(WallpaperSource))
         {
             Title = title;
             Url = url;
