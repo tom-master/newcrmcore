@@ -31,7 +31,7 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 备注
         /// </summary>
-        [PropertyInputRange(50), PropertyDefaultValue(typeof(String), "")]
+        [PropertyInputRange(50), PropertyDefaultValue(typeof(String))]
         public String Remark { get; private set; }
 
         /// <summary>
@@ -49,37 +49,37 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 使用数
         /// </summary>
-        [PropertyDefaultValue(typeof(Int32), 0)]
+        [PropertyDefaultValue(typeof(Int32))]
         public Int32 UseCount { get; private set; }
 
         /// <summary>
         /// 是否显示app底部的按钮
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
+        [PropertyDefaultValue(typeof(Boolean))]
         public Boolean IsSetbar { get; private set; }
 
         /// <summary>
         /// 是否打开最大化
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
+        [PropertyDefaultValue(typeof(Boolean))]
         public Boolean IsOpenMax { get; private set; }
 
         /// <summary>
         /// 是否为系统应用
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
+        [PropertyDefaultValue(typeof(Boolean))]
         public Boolean IsSystem { get; private set; }
 
         /// <summary>
         /// 是否为福莱希
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
+        [PropertyDefaultValue(typeof(Boolean))]
         public Boolean IsFlash { get; private set; }
 
         /// <summary>
         /// 是否可以拉伸
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
+        [PropertyDefaultValue(typeof(Boolean))]
         public Boolean IsResize { get; private set; }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 是否推荐
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
+        [PropertyDefaultValue(typeof(Boolean))]
         public Boolean IsRecommand { get; private set; }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 图标是否来自上传
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
+        [PropertyDefaultValue(typeof(Boolean))]
         public Boolean IsIconByUpload { get; private set; }
 
         /// <summary>

@@ -32,7 +32,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         /// <summary>
         /// 是否禁用
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
+        [PropertyDefaultValue(typeof(Boolean))]
         public Boolean IsDisable { get; private set; }
 
         /// <summary>
@@ -44,13 +44,13 @@ namespace NewCrmCore.Domain.Entitys.Agent
         /// <summary>
         /// 是否在线
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
+        [PropertyDefaultValue(typeof(Boolean))]
         public Boolean IsOnline { get; private set; }
 
         /// <summary>
         /// 是否为管理员
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
+        [PropertyDefaultValue(typeof(Boolean))]
         public Boolean IsAdmin { get; private set; }
 
         /// <summary>

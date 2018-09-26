@@ -23,7 +23,7 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 短地址
         /// </summary> 
-        [PropertyDefaultValue(typeof(String), "")]
+        [PropertyDefaultValue(typeof(String))]
         public String ShortUrl { get; private set; }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 描述
         /// </summary>
-        [PropertyDefaultValue(typeof(String), ""), PropertyInputRange(50)]
+        [PropertyDefaultValue(typeof(String)), PropertyInputRange(50)]
         public String Description { get; private set; }
 
         /// <summary>

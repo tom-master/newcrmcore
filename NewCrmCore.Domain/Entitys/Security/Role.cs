@@ -25,13 +25,13 @@ namespace NewCrmCore.Domain.Entitys.Security
         /// <summary>
         /// 备注
         /// </summary>
-        [PropertyInputRange(50), PropertyDefaultValue(typeof(String), "")]
+        [PropertyInputRange(50), PropertyDefaultValue(typeof(String))]
         public String Remark { get; private set; }
 
         /// <summary>
         /// 是否允许禁用
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
+        [PropertyDefaultValue(typeof(Boolean))]
         public Boolean IsAllowDisable { get; private set; }
 
         /// <summary>

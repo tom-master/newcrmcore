@@ -14,7 +14,7 @@ namespace NewCrmCore.Domain.Entitys
 
 		public Int32 Id { get; protected set; }
 
-		[PropertyDefaultValue(typeof(Boolean), false)]
+		[PropertyDefaultValue(typeof(Boolean))]
 		public Boolean IsDeleted { get; protected set; }
 
 		[DateTimeDefaultValue]

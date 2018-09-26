@@ -33,7 +33,7 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 文件夹Id
         /// </summary>
-        [PropertyDefaultValue(typeof(Int32), 0)]
+        [PropertyDefaultValue(typeof(Int32))]
         public Int32 FolderId { get; private set; }
 
         /// <summary>
@@ -51,37 +51,37 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// app地址
         /// </summary>
-        [PropertyInputRange(150), PropertyDefaultValue(typeof(String), "")]
+        [PropertyInputRange(150), PropertyDefaultValue(typeof(String))]
         public String AppUrl { get; private set; }
 
         /// <summary>
         /// 桌面应用是否在应用码头上
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
+        [PropertyDefaultValue(typeof(Boolean))]
         public Boolean IsOnDock { get; private set; }
 
         /// <summary>
         /// 是否显示app底部的按钮
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
+        [PropertyDefaultValue(typeof(Boolean))]
         public Boolean IsSetbar { get; private set; }
 
         /// <summary>
         /// 是否打开最大化
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
+        [PropertyDefaultValue(typeof(Boolean))]
         public Boolean IsOpenMax { get; private set; }
 
         /// <summary>
         /// 是否为福莱希
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
+        [PropertyDefaultValue(typeof(Boolean))]
         public Boolean IsFlash { get; private set; }
 
         /// <summary>
         /// 是否可以拉伸
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
+        [PropertyDefaultValue(typeof(Boolean))]
         public Boolean IsResize { get; private set; }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 图标是否来自上传
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
+        [PropertyDefaultValue(typeof(Boolean))]
         public Boolean IsIconByUpload { get; private set; }
 
         public Double StarCount { get; set; }

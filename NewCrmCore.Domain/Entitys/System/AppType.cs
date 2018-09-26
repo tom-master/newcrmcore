@@ -17,7 +17,7 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 备注
         /// </summary>
-        [PropertyDefaultValue(typeof(String), ""), PropertyInputRange(50)]
+        [PropertyDefaultValue(typeof(String)), PropertyInputRange(50)]
         public String Remark { get; private set; }
 
         /// <summary>

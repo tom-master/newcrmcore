@@ -17,10 +17,10 @@ namespace NewCrmCore.Domain.Entitys.System
         [PropertyRequired, PropertyInputRange(1, 20)]
         public String Content { get; private set; }
 
-        [PropertyDefaultValue(typeof(Boolean), false)]
+        [PropertyDefaultValue(typeof(Boolean))]
         public Boolean IsNotify { get; private set; }
 
-        [PropertyDefaultValue(typeof(Boolean), false)]
+        [PropertyDefaultValue(typeof(Boolean))]
         public Boolean IsRead { get; private set; }
 
         [PropertyRequired]

@@ -60,7 +60,7 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 壁纸来源
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean), false)]
+        [PropertyDefaultValue(typeof(Boolean))]
         public Boolean IsBing { get; private set; }
 
         /// <summary>
