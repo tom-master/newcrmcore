@@ -173,7 +173,13 @@ namespace NewCrmCore.Web.Controllers
                 response.Message = "登陆成功";
                 response.IsSuccess = true;
 
-                HttpContext.Response.Cookies.Append($@"User", JsonConvert.SerializeObject(user), new CookieOptions { Expires = cookieTimeout });
+                HttpContext.Response.Cookies.Append($@"User", JsonConvert.SerializeObject(new
+                {
+                    Name = user.Name,
+                    Id = user.Id,
+                    UserFace = user.UserFace,
+                    IsAdmin = user.IsAdmin
+                }), new CookieOptions { Expires = cookieTimeout });
             }
             return Json(response);
         }
@@ -413,7 +419,7 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetWallpaper()
         {
-            var response = new ResponseModel<ConfigDto>();
+            var response = new ResponseModel<dynamic>();
             var result = await _userServices.GetConfigAsync(UserId);
 
             if (result.WallpaperSource == WallpaperSource.Upload)
@@ -429,7 +435,7 @@ namespace NewCrmCore.Web.Controllers
 
             response.IsSuccess = true;
             response.Message = "初始化壁纸成功";
-            response.Model = result;
+            response.Model = new { result.WallpaperUrl, result.WallpaperSource };
 
             return Json(response);
         }

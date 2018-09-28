@@ -2,10 +2,7 @@
   {
     "outputFileName": "wwwroot/js/newcrm.site.min.js",
     "inputFiles": [
-      "wwwroot/js/hooray/jquery-browser.js",
       "wwwroot/js/hooray/lib/hooraylibs.js",
-      "wwwroot/js/bootstrap/js/bootstrap.min.js",
-      "wwwroot/js/sugar/sugar-1.4.1.min.js",
       "wwwroot/js/hooray/hros.min.js",
       "wwwroot/js/validate/Validform_v5.3.2/Validform_v5.3.2_min.js",
       "wwwroot/js/webuploader-0.1.5/webuploader.min.js",
@@ -14,7 +11,7 @@
     ],
     "minify": {
       "enabled": true,
-      "renameLocals": false
+      "renameLocals": true
     },
     "sourceMap": false
   }
