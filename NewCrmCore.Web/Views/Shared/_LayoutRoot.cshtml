@@ -8,6 +8,11 @@
 	<link rel="stylesheet" href="/js/hooray/lib/hooraylibs.css" />  
 	@RenderSection("IndexCss", required: false)
 	@RenderSection("SysCss",required: false)
+	<style>
+		body a {
+			font-size: 12px!important;
+		}
+	</style>
 </head>
 <body>
 	@RenderBody()
@@ -29,6 +34,9 @@
 </environment>
 <environment names="Production" asp-append-version="true">
 	<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/jquery-browser/0.1.0/jquery.browser.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+	<script src="https://cdn.bootcss.com/sugar/2.0.4/sugar.min.js"></script>
 	<script src="/js/newcrm.site.min.js"></script>
 	<script src="https://cdn.bootcss.com/handlebars.js/4.0.11/handlebars.min.js"></script>
 	<script src="/js/signalr/signalr.min.js"></script>
