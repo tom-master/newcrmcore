@@ -191,17 +191,21 @@
 			pageIndex: current_page === 0 ? 1 : current_page + 1,
 			pageSize: 4
 		}, function (responseText) {
-			let tableTemplate = Handlebars.compile($("#table-template").html());
-			$('.list-con').html(tableTemplate(responseText));
-			$('.list-count').text(responseText.totalCount);
-			$('#pagination_setting').attr('count', parseInt(responseText.TotalCount));
-			initPagination({
-				current_page: current_page,
-				items_per_page: 4,
-				num_display_entries: 9,
-				num_edge_entries: 2,
-				getPageList: getPageList
-			}) 
+			if(responseText.IsSuccess){
+				let tableTemplate = Handlebars.compile($("#table-template").html());
+				$('.list-con').html(tableTemplate(responseText));
+				$('.list-count').text(responseText.totalCount);
+				$('#pagination_setting').attr('count', parseInt(responseText.TotalCount));
+				initPagination({
+					current_page: current_page,
+					items_per_page: 4,
+					num_display_entries: 5,
+					num_edge_entries: 2,
+					getPageList: getPageList
+				}) 
+			} else {
+				NewCrm.msgbox.fail(responseText.Message);
+			}
 		});
 
 		Handlebars.registerHelper('convertstyle', function (appStyle) {
