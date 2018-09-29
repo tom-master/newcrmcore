@@ -1,5 +1,6 @@
 ﻿@using NewCrmCore.Dto
 @using NewLibCore
+@using NewCrmCore.Domain.ValueObject
 @{
 	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
 }
@@ -209,7 +210,7 @@
 		});
 
 		Handlebars.registerHelper('convertstyle', function (appStyle) {
-			if (appStyle === 1) {
+			if (appStyle === '@(AppStyle.App)') {
 				return '应用';
 			}
 			return '挂件';
