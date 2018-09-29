@@ -13,7 +13,9 @@ namespace NewCrmCore.Domain.ValueObject
         Warning = 2,
         [Description("调试")]
         Debug = 3,
-        [Description("错误")]
-        Error = 4
+        [Description("业务错误")]
+        Error = 4,
+        [Description("代码异常")]
+        Exception = 5
     }
 }

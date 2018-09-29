@@ -18,12 +18,12 @@ namespace NewCrmCore.Web.Filter
             filterContext.ExceptionHandled = true;
 
             var isAjaxRequest = filterContext.HttpContext.Request.IsAjaxRequest();
-            var exception = filterContext.Exception is BusinessException;
+            var businessException = filterContext.Exception is BusinessException;
 
             var response = new ResponseModel
             {
                 IsSuccess = false,
-                Message = exception ? filterContext.Exception.Message : "出现未知错误，请查看日志",
+                Message = businessException ? filterContext.Exception.Message : "出现未知错误，请查看日志",
             };
 
 
@@ -45,14 +45,13 @@ namespace NewCrmCore.Web.Filter
             {
                 userId = JsonConvert.DeserializeObject<UserDto>(userCookie).Id;
             }
-
             ((ILoggerServices)filterContext.HttpContext.RequestServices.GetService(typeof(ILoggerServices))).AddLoggerAsync(new LogDto
             {
                 Action = filterContext.RouteData.Values["action"].ToString(),
                 Controller = filterContext.RouteData.Values["controller"].ToString(),
                 ExceptionMessage = filterContext.Exception.Message,
                 Track = filterContext.Exception.StackTrace,
-                LogLevelEnum = exception ? Domain.ValueObject.LogLevel.Warning : Domain.ValueObject.LogLevel.Error,
+                LogLevelEnum = businessException ? Domain.ValueObject.LogLevel.Error : Domain.ValueObject.LogLevel.Exception,
                 AddTime = DateTime.Now.ToString(CultureInfo.CurrentCulture),
                 UserId = userId
             });
