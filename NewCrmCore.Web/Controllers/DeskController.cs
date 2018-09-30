@@ -435,7 +435,7 @@ namespace NewCrmCore.Web.Controllers
 
             response.IsSuccess = true;
             response.Message = "初始化壁纸成功";
-            response.Model = new { result.WallpaperUrl, result.WallpaperSource };
+            response.Model = new { result.WallpaperUrl, result.WallpaperSource,result.WallpaperHeigth,result.WallpaperMode,result.WallpaperWidth };
 
             return Json(response);
         }

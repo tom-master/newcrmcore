@@ -103,6 +103,8 @@
                     NewCrm.msgbox.fail(responseText.Message);
                 }
             })
+        }else {
+             NewCrm.msgbox.fail(cb[0].Message);
         }
     });
 
