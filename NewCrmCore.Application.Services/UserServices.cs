@@ -35,7 +35,7 @@ namespace NewCrmCore.Application.Services
             {
                 Name = user.Name,
                 Id = user.Id,
-                UserFace = user.UserFace,
+                UserFace = user.IsModifyUserFace ? Appsetting.FileUrl + user.UserFace : user.UserFace,
                 IsAdmin = user.IsAdmin
             };
         }
@@ -111,6 +111,7 @@ namespace NewCrmCore.Application.Services
 
             return new UserDto
             {
+                IsModifyUserFace = user.IsModifyUserFace,
                 UserFace = user.IsModifyUserFace ? Appsetting.FileUrl + user.UserFace : user.UserFace,
                 AddTime = user.AddTime.ToString("yyyy-MM-dd"),
                 Id = user.Id,
