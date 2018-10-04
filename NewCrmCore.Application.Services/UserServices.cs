@@ -111,7 +111,7 @@ namespace NewCrmCore.Application.Services
 
             return new UserDto
             {
-                UserFace = user.UserFace,
+                UserFace = user.IsModifyUserFace ? Appsetting.FileUrl + user.UserFace : user.UserFace,
                 AddTime = user.AddTime.ToString("yyyy-MM-dd"),
                 Id = user.Id,
                 IsAdmin = user.IsAdmin,

@@ -20,10 +20,6 @@
 			<a href="javascript:void(0);">基本信息</a>
 		</li>
 
-		<li data-value="modifyface" @{ if (requestTarget == "modifyface") { <text> class="focus" </text>  } }>
-			<a href="javascript:void(0);">修改头像</a>
-		</li>
-
 		<li data-value="usersafe" @{ if (requestTarget == "usersafe") { <text> class="focus" </text>  } }>
 			<a href="javascript:void(0);">账号安全</a>
 		</li>
@@ -38,11 +34,6 @@
 			case "baseinfo":
 				{
 					Html.RenderPartial("~/Views/UserSetting/BaseInfo.cshtml", Model);
-					break;
-				}
-			case "modifyface":
-				{
-					Html.RenderPartial("~/Views/UserSetting/ModifyFace.cshtml", Model);
 					break;
 				}
 			case "usersafe":
@@ -79,8 +70,6 @@
             let baseUrl = '@Url.Action("index", "usersetting")'
             if (value === 'baseinfo') {
                 location.href = baseUrl + '?target=baseinfo';
-            } else if (value === 'modifyface') {
-                location.href = baseUrl + '?target=modifyface';
             } else if (value === 'usersafe') {
                 location.href = baseUrl + '?target=usersafe';
             }
@@ -229,6 +218,10 @@
             }
         });
 
+        upload.on('startUpload',function(){
+             NewCrm.msgbox.loading('账户头像上传中...');
+        })
+
         upload.on('uploadSuccess', function (file, cb) {
             if (cb[0].IsSuccess) {
                 let model = {
@@ -243,14 +236,14 @@
                 };
                 HROS.request.post('/usersetting/modifyface', { userFace: model.Url }, function (responseText) {
                     if (responseText.IsSuccess) {
-                        NewCrm.msgbox.success('账户头像上传成功');
+                        NewCrm.msgbox.success('账户头像保存成功');
                         top.HROS.startmenu.getAvatar();
                     } else {
                         NewCrm.msgbox.fail('账户头像保存失败');
                     }
                 })
             } else {
-                NewCrm.msgbox.fail('账户头像上传失败');
+                NewCrm.msgbox.fail('账户头像保存失败');
             }
         });
 }

@@ -19,3 +19,12 @@
     <label class="label-text">最近一次登录IP：</label>
     <div class="label-box form-inline">@(Context.Request.HttpContext.Connection.RemoteIpAddress.ToString()== "::1" ? "127.0.0.1" : Context.Request.HttpContext.Connection.RemoteIpAddress.ToString())</div>
 </div>
+<div class="input-label">
+    <label class="label-text">用户头像</label>
+    <div class="label-box form-inline">
+        <div class="startmenu-avatar" title="点击修改头像">
+            <img src="@Model.UserFace" style="cursor:pointer" />
+            <a href="###" id="upload" class="btn btn-mini btn-back" >点击修改头像</a>
+        </div>
+    </div>
+</div>

@@ -204,7 +204,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.LastModifyTime,
                             a.Name,
                             a.LockScreenPassword,
-                            a.LoginPassword
+                            a.LoginPassword,
+                            a1.IsModifyUserFace
                             FROM User AS a 
                             INNER JOIN  Config AS a1
                             ON a1.UserId=a.Id

@@ -55,11 +55,6 @@ namespace NewCrmCore.Web.Controllers
                 ViewData["User"] = user;
 
                 var config = await _userServices.GetConfigAsync(user.Id);
-                if (config.IsModifyUserFace)
-                {
-                    user.UserFace = Appsetting.FileUrl + user.UserFace;
-                }
-
                 ViewData["UserConfig"] = config;
                 ViewData["Desks"] = config.DefaultDeskCount;
                 return View(user);
