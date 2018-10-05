@@ -111,15 +111,13 @@ namespace NewCrmCore.Application.Services
 
             return new UserDto
             {
-                IsModifyUserFace = user.IsModifyUserFace,
                 UserFace = user.IsModifyUserFace ? Appsetting.FileUrl + user.UserFace : user.UserFace,
                 AddTime = user.AddTime.ToString("yyyy-MM-dd"),
                 Id = user.Id,
                 IsAdmin = user.IsAdmin,
                 IsDisable = user.IsDisable,
                 IsOnline = user.IsOnline,
-                LastLoginTime = user.LastLoginTime.ToString("yyyy-MM-dd"),
-                LastModifyTime = user.LastModifyTime.ToString("yyyy-MM-dd"),
+                LastLoginTime = user.LastLoginTime.ToString("yyyy-MM-dd HH:mm"),
                 LockScreenPassword = user.LockScreenPassword,
                 Password = user.LoginPassword,
                 Name = user.Name,

@@ -195,16 +195,15 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     var sql = $@"SELECT 
                             a1.UserFace,
-                            a.AddTime,
                             a.Id,
                             a.IsAdmin,
                             a.IsDisable,
                             a.IsOnline,
-                            a.LastLoginTime,
-                            a.LastModifyTime,
                             a.Name,
                             a.LockScreenPassword,
                             a.LoginPassword,
+                            a.LastLoginTime,
+                            a.AddTime,
                             a1.IsModifyUserFace
                             FROM User AS a 
                             INNER JOIN  Config AS a1
