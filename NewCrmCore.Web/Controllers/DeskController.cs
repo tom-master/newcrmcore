@@ -70,6 +70,7 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet, DoNotCheckPermission]
         public IActionResult Login()
         {
+            ViewBag.Title="登陆";
             var userId = Request.Cookies["User"];
             if (userId != null)
             {
