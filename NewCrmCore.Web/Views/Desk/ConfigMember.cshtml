@@ -7,6 +7,11 @@
 {
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/webuploader/0.1.1/webuploader.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        *, ::after, ::before{
+            box-sizing: unset
+        }
+    </style>
 }
 @section SysCss
 {
@@ -21,11 +26,12 @@
 		<div class="middle">
 			<div class="input-label">
 				<label class="label-text">应用图片：</label>
-				<div class="label-box form-inline control-group">
+				<div class=" form-inline">
 					<div class="shortcutview">
 						<img src="@(Model.IsIconByUpload?NewCrmCore.Infrastructure.Appsetting.FileUrl+Model.IconUrl:Model.IconUrl)">
 					</div>
-					<a href="###" id="upload" class="btn fl" style="position: relative;">选择图片</a>
+                    <label for="upload" class="ml-2 btn btn-outline-primary btn-sm">选择图片</label>
+                    <input type="file" class="" style="display:none" id="upload">
 					<div class="shortcut-selicon">
 						<div class="title">系统推荐的图标：</div>
 						<a href="###"><img src="/images/ui/system-gear.png" valsrc="/images/ui/system-gear.png"></a>
@@ -45,26 +51,40 @@
 			</div>
 			<div class="input-label">
 				<label class="label-text">应用名称：</label>
-				<div class="label-box form-inline control-group">
-					<input type="text" class="text" name="val_name" value="@Model.Name" />
+				<div class=" form-inline ">
+					<input type="text" class="text form-control" name="val_name" value="@Model.Name" />
 					<span class="help-inline"></span>
 				</div>
 			</div>
 			<div class="input-label">
 				<label class="label-text">窗口大小：</label>
-				<div class="label-box form-inline control-group">
-					<div class="input-prepend input-append">
-						<span class="add-on">宽</span><input type="text" name="val_width" value="@Model.Width" style="width: 40px" datatype="n" nullmsg="请输入应用宽高" errormsg="宽高数值不规范"><span class="add-on">px</span>
-					</div>
-					<div class="input-prepend input-append" style="margin-left: 10px">
-						<span class="add-on">高</span><input type="text" name="val_height" value="@Model.Height" style="width: 40px" datatype="n" nullmsg="请输入应用宽高" errormsg="宽高数值不规范"><span class="add-on">px</span>
-					</div>
+				<div class=" form-inline  ">
+                    <div class="input-group mb3">
+                        <div class="input-group-prepend ">
+                            <span class="input-group-text">宽</span>
+                        </div>
+                            <input type="text" name="val_width" value="@Model.Width" class="form-control" style="width: 40px" datatype="n" nullmsg="请输入应用宽高" errormsg="宽高数值不规范">
+                        <div class="input-group-prepend ">
+                            <span class="input-group-text">px</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb3">
+                        <div class="input-group-prepend " style="margin-left: 10px">
+                            <span class="input-group-text">高</span>
+                        </div>
+                            <input type="text" name="val_height" value="@Model.Height" class="form-control" style="width: 40px" datatype="n" nullmsg="请输入应用宽高" errormsg="宽高数值不规范">
+                        <div class="input-group-prepend " >
+                            <span class="input-group-text">px</span>
+                        </div>
+                    </div>
+                        
 					<span class="help-inline"></span>
 				</div>
 			</div>
 			<div class="input-label input-label-isresize">
 				<label class="label-text">窗口是否拉伸：</label>
-				<div class="label-box form-inline control-group">
+				<div class=" form-inline  ">
 					<label class="radio" style="margin-right: 10px">
 						<input type="radio" name="val_isresize" value="1" @{if (Model.IsResize) { <text> checked="checked" </text>  }}>是
 					</label>
@@ -75,14 +95,14 @@
 			</div>
 			<div class="input-label input-label-isopenmax" @{ if (!Model.IsResize) { <text> style="display: none" </text>  } }>
 				<label class="label-text">打开默认最大化：</label>
-				<div class="label-box form-inline control-group">
+				<div class=" form-inline ">
 					<label class="radio" style="margin-right:10px"><input type="radio" name="val_isopenmax" value="1" @{if (Model.IsOpenMax) { <text> checked="checked" </text>  }}>是</label>
 					<label class="radio"><input type="radio" name="val_isopenmax" value="0" @{if (!Model.IsOpenMax) { <text> checked="checked" </text>  }}>否</label>
 				</div>
 			</div>
 			<div class="input-label input-label-isflash" @{ if (!Model.IsFlash) { <text> style="display: none" </text>  } }>
 				<label class="label-text">是否为Flash：</label>
-				<div class="label-box form-inline control-group">
+				<div class=" form-inline ">
 					<label class="radio" style="margin-right: 10px">
 						<input type="radio" name="val_isflash" value="1" @{if (Model.IsFlash) { <text> checked="checked" </text>  }}>是
 					</label>
@@ -96,8 +116,8 @@
 	</div>
 	<div class="bottom-bar">
 		<div class="con">
-			<a class="btn fr" href="javascript:window.parent.$.dialog.list['editdialog'].close();"><i class="icon-remove"></i> 关闭</a>
-			<a class="btn btn-primary fr" id="btn-submit" href="###" style="margin-right: 10px"><i class="icon-white icon-ok"></i> 确定</a>
+			<a class="btn btn-secondary btn-sm fr" href="javascript:window.parent.$.dialog.list['editdialog'].close();"><i class="icon-remove"></i> 关闭</a>
+			<a class="btn btn-primary btn-sm fr" id="btn-submit" href="###" style="margin-right: 10px"><i class="icon-white icon-ok"></i> 确定</a>
 		</div>
 	</div>
 </form>
