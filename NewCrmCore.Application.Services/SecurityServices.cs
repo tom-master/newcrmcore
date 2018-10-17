@@ -94,5 +94,10 @@ namespace NewCrmCore.Application.Services
             Parameter.Validate(roleId);
             await _securityContext.AddPowerToCurrentRoleAsync(roleId, powerIds);
         }
+
+        public async Task AddVisitorRecord(VisitorRecordDto visitorRecordDto)
+        {
+            Parameter.Validate(visitorRecordDto);
+        }
     }
 }

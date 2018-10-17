@@ -36,5 +36,7 @@ namespace NewCrmCore.Domain.Entitys.System
             VisitorUrl = visitorUrl;
             UrlParameter = urlParameter;
         }
+
+        public VisitorRecord() { }
     }
 }

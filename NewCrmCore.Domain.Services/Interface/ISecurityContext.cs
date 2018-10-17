@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.Security;
+using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Infrastructure.CommonTools;
 
 namespace NewCrmCore.Domain.Services.Interface
@@ -81,5 +82,12 @@ namespace NewCrmCore.Domain.Services.Interface
         /// <param name="powerIds"></param>
         /// <returns></returns>
         Task AddPowerToCurrentRoleAsync(Int32 roleId, IEnumerable<Int32> powerIds);
+
+        /// <summary>
+        /// 添加访客记录
+        /// </summary>
+        /// <param name="visitorRecord"></param>
+        /// <returns></returns>
+        Task AddVisitorRecord(VisitorRecord visitorRecord);
     }
 }

@@ -135,29 +135,19 @@ namespace NewCrmCore.Dto.MapperProfile
         }
     }
 
-    internal static class EnumOp
+    internal class VisitorRecordDtoToVisitorRecord : Profile
     {
-
-        /// <summary>
-        /// 转换枚举
-        /// </summary>
-        /// <returns></returns>
-        internal static Enum ConvertEnum(Type target, Int32 value)
+        public VisitorRecordDtoToVisitorRecord()
         {
-            Parameter.Validate(target);
-            Parameter.Validate(value);
-            return (Enum)Enum.Parse(target, Enum.GetName(target, value), true);
-        }
-
-        /// <summary>
-        /// 转换枚举
-        /// </summary>
-        /// <returns></returns>
-        internal static Enum ConvertEnum(Type target, String value)
-        {
-            Parameter.Validate(target);
-            Parameter.Validate(value);
-            return (Enum)Enum.Parse(target, value, true);
+            CreateMap<VisitorRecordDto, VisitorRecord>()
+                .ForMember(log => log.Id, dto => dto.MapFrom(d => d.Id))
+                .ForMember(log => log.UserId, dto => dto.MapFrom(d => d.UserId))
+                .ForMember(log => log.UserName, dto => dto.MapFrom(d => d.UserName))
+                .ForMember(log => log.Controller, dto => dto.MapFrom(d => d.Controller))
+                .ForMember(log => log.Action, dto => dto.MapFrom(d => d.Action))
+                .ForMember(log => log.Ip, dto => dto.MapFrom(d => d.Ip))
+                .ForMember(log => log.VisitorUrl, dto => dto.MapFrom(d => d.VisitorUrl))
+                .ForMember(log => log.UrlParameter, dto => dto.MapFrom(d => d.UrlParameter));
         }
     }
 }

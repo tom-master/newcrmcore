@@ -81,6 +81,13 @@ namespace NewCrmCore.Application.Services.Interface
         /// <returns></returns>
         Task RemoveRoleAsync(Int32 roleId);
 
+        /// <summary>
+        /// 添加访客记录
+        /// </summary>
+        /// <param name="visitorRecord"></param>
+        /// <returns></returns>
+        Task AddVisitorRecord(VisitorRecordDto visitorRecord);
+
         #endregion
     }
 }

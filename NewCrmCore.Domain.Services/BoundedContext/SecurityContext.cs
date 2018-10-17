@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.Security;
+using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
@@ -291,6 +292,23 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         dataStore.Rollback();
                         throw;
                     }
+                }
+            });
+        }
+
+        public async Task AddVisitorRecord(VisitorRecord visitorRecord)
+        {
+            Parameter.Validate(visitorRecord);
+
+            await Task.Run(() =>
+            {
+                using (var dataStore = new DataStore(Appsetting.Database))
+                {
+                    #region 添加角色
+                    {
+                        dataStore.Add(visitorRecord);
+                    }
+                    #endregion
                 }
             });
         }

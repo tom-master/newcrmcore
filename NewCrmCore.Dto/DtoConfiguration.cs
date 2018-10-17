@@ -39,6 +39,9 @@ namespace NewCrmCore.Dto
                 d.CreateMap<LogDto, Log>();
                 d.AddProfile<LogDtoToLogProfile>();
 
+                d.CreateMap<VisitorRecordDto, VisitorRecord>();
+                d.AddProfile<VisitorRecordDtoToVisitorRecord>();
+
             });
 
             #region Member
