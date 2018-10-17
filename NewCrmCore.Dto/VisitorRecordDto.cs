@@ -4,18 +4,18 @@ namespace NewCrmCore.Dto
 {
     public class VisitorRecordDto : BaseDto
     {
-        public Int32 UserId { get; private set; }
+        public Int32 UserId { get; set; }
 
-        public String UserName { get; private set; }
+        public String UserName { get; set; }
 
-        public String Controller { get; private set; }
+        public String Controller { get; set; }
 
-        public String Action { get; private set; }
+        public String Action { get; set; }
 
-        public String Ip { get; private set; }
+        public String Ip { get; set; }
 
-        public String VisitorUrl { get; private set; }
+        public String VisitorUrl { get; set; }
 
-        public String UrlParameter { get; private set; }
+        public String UrlParameter { get; set; }
     }
 }

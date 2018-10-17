@@ -48,6 +48,7 @@ namespace NewCrmCore.Web
             {
                 config.Filters.Add(new ErrorFilter());
                 config.Filters.Add(new AuthFilter());
+                config.Filters.Add(new VisitorRecordFilter());
                 config.Filters.Add(new DoNotCheckPermissionAttribute());
             }).AddJsonOptions(op =>
             {

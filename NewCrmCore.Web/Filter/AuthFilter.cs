@@ -45,7 +45,7 @@ namespace NewCrmCore.Web.Filter
                 return;
             }
 
-            if (!String.IsNullOrEmpty(filterContext.HttpContext.Request.Query["id"]))
+            if (!String.IsNullOrEmpty(filterContext.HttpContext.Request.Query["id"]))//appId
             {
                 var userId = JsonConvert.DeserializeObject<UserDto>(filterContext.HttpContext.Request.Cookies["User"]).Id;
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Domain.Entitys.Security;
+using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure.CommonTools;
@@ -98,6 +99,7 @@ namespace NewCrmCore.Application.Services
         public async Task AddVisitorRecord(VisitorRecordDto visitorRecordDto)
         {
             Parameter.Validate(visitorRecordDto);
+            await _securityContext.AddVisitorRecord(visitorRecordDto.ConvertToModel<VisitorRecordDto, VisitorRecord>());
         }
     }
 }
