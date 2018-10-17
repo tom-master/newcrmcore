@@ -193,6 +193,7 @@ namespace NewCrmCore.Application.Services
         {
             Parameter.Validate(userId);
             await _userContext.LogoutAsync(userId);
+            await CacheHelper.RemoveKeyWhenModify(new UserCacheKey(userId));
         }
 
         public async Task EnableAsync(Int32 userId)
