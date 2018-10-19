@@ -16,7 +16,7 @@ namespace NewCrmCore.Web.Filter
             if (!String.IsNullOrEmpty(userCookie))
             {
                 var user = JsonConvert.DeserializeObject<UserDto>(userCookie);
-                await ((ISecurityServices)context.HttpContext.RequestServices.GetService(typeof(ISecurityServices))).AddVisitorRecord(new VisitorRecordDto
+                ((ISecurityServices)context.HttpContext.RequestServices.GetService(typeof(ISecurityServices))).AddVisitorRecord(new VisitorRecordDto
                 {
                     UserId = user.Id,
                     UserName = user.Name,

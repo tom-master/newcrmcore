@@ -1111,12 +1111,12 @@ var swfobject = function () {
 				appendopts || {});
 			if (page_id == current_page) {
 				if (isNaN(appendopts.text)) {
-					lnk = $("<li class='disabled'><a>" + appendopts.text + "</a></li>");
+					lnk = $("<li class='disabled page-item'><a class='page-link'>" + appendopts.text + "</a></li>");
 				} else {
-					lnk = $("<li class='active'><a>" + appendopts.text + "</a></li>");
+					lnk = $("<li class='active page-item'><a class='page-link'>" + appendopts.text + "</a></li>");
 				}
 			} else {
-				lnk = $("<li><a href='" + this.opts.link_to.replace(/__id__/, page_id) + "'>" + appendopts.text + "</a></li>");
+				lnk = $("<li><a class='page-link' href='" + this.opts.link_to.replace(/__id__/, page_id) + "'>" + appendopts.text + "</a></li>");
 			}
 			if (appendopts.classes) {
 				lnk.addClass(appendopts.classes);
@@ -1134,7 +1134,7 @@ var swfobject = function () {
 			current_page = parseInt(current_page);
 			var begin, end, interval = this.pc.getInterval(current_page),
 				np = this.pc.numPages(),
-				fragment = $("<ul></ul>");
+				fragment = $("<ul class='pagination justify-content-center'></ul>");
 			if (this.opts.prev_text && (current_page > 0 || this.opts.prev_show_always)) {
 				fragment.append(this.createLink(current_page - 1, current_page, {
 					text: this.opts.prev_text,
@@ -1147,13 +1147,13 @@ var swfobject = function () {
 					classes: "sp"
 				});
 				if (this.opts.num_edge_entries < interval.start && this.opts.ellipse_text) {
-					$("<li class='disabled'><a>" + this.opts.ellipse_text + "</a></li>").appendTo(fragment);
+					$("<li class='disabled page-item'><a class='page-link'>" + this.opts.ellipse_text + "</a></li>").appendTo(fragment);
 				}
 			}
 			this.appendRange(fragment, current_page, interval.start, interval.end);
 			if (interval.end < np && this.opts.num_edge_entries > 0) {
 				if (np - this.opts.num_edge_entries > interval.end && this.opts.ellipse_text) {
-					$("<li class='disabled'><a>" + this.opts.ellipse_text + "</a></li>").appendTo(fragment);
+					$("<li class='disabled page-item'><a class='page-link'>" + this.opts.ellipse_text + "</a></li>").appendTo(fragment);
 				}
 				begin = Math.max(np - this.opts.num_edge_entries, interval.end);
 				this.appendRange(fragment, current_page, begin, np, {
