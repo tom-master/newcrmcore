@@ -20,32 +20,32 @@
 			</p>
 			<div class="input-label">
 				<label class="label-text">应用图片：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					<img src="@(Model.IsIconByUpload?NewCrmCore.Infrastructure.Appsetting.FileUrl+Model.IconUrl:Model.IconUrl)">
 				</div>
 			</div>
 			<div class="input-label">
 				<label class="label-text">应用名称：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					@Model.Name
 				</div>
 			</div>
 			<div class="input-label">
 				<label class="label-text">应用分类：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					@Model.AppTypeName
 				</div>
 			</div>
 			<div class="input-label">
 				<label class="label-text">应用地址：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					@Model.AppUrl
 				</div>
 				<input type="hidden" name="val_url" value="@Model.AppUrl" />
 			</div>
 			<div class="input-label">
 				<label class="label-text">窗口大小：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					宽：@{
 						var w = Model.Width;
 						<text>@w px</text>
@@ -60,7 +60,7 @@
 			</div>
 			<div class="input-label">
 				<label class="label-text">应用类型：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 
 					@if (Model.AppStyle == AppStyle.App)
 					{
@@ -75,7 +75,7 @@
 			</div>
 			<div class="input-label input-label-isresize" @{ if (Model.AppStyle == AppStyle.Widget) { <text> style="display:none" </text>  } }>
 				<label class="label-text">窗口是否拉伸：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					@if (Model.IsResize)
 					{
 						<text>是</text>
@@ -88,7 +88,7 @@
 			</div>
 			<div class="input-label input-label-isopenmax" @{ if (Model.AppStyle == AppStyle.Widget || Model.IsResize == false) { <text> style="display:none" </text>  } }>
 				<label class="label-text">打开默认最大化：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					@if (Model.IsOpenMax)
 					{
 						<text>是</text>
@@ -101,7 +101,7 @@
 			</div>
 			<div class="input-label input-label-isflash" @{ if (Model.AppStyle == AppStyle.Widget) { <text> style="display:none" </text>  } }>
 				<label class="label-text">是否为Flash：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					@if (Model.IsFlash)
 					{
 						<text>是</text>
@@ -114,7 +114,7 @@
 			</div>
 			<div class="input-label">
 				<label class="label-text">应用介绍：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					@Model.Remark
 				</div>
 			</div>
@@ -132,8 +132,8 @@
 				</text>
 			}
 
-			<a class="btn" id="btn-preview" href="###"><i class="icon-eye-open"></i> 预览应用</a>
-			<a class="btn fr" href="javascript:window.parent.closeDetailIframe();" style="margin-right: 10px"><i class="icon-chevron-up"></i> 返回应用列表</a>
+			<a class="btn btn-primary" id="btn-preview" href="###"><i class="oi oi-eye"></i> 预览应用</a>
+			<a class="btn btn-primary fr" href="javascript:window.parent.closeDetailIframe();" style="margin-right: 10px"><i class="oi oi-chevron-top"></i> 返回应用列表</a>
 		</div>
 	</div>
 </form>

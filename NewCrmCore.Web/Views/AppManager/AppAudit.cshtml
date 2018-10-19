@@ -2,7 +2,6 @@
 @using NewCrmCore.Infrastructure.CommonTools
 @using NewCrmCore.Domain.ValueObject
 @model AppDto
- 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
 <form action="/appmarket/modifyinfo" method="post" name="form" id="form">
 	<input type="hidden" name="val_Id" value="@Model.Id">
@@ -15,7 +14,7 @@
 			</p>
 			<div class="input-label">
 				<label class="label-text">应用图片：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					@{
 						<text>
 							<div class="shortcutview">
@@ -45,14 +44,14 @@
 			</div>
 			<div class="input-label">
 				<label class="label-text">应用名称：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					<input type="text" class="text" name="val_name" value="@Model.Name" datatype="s2-10" nullmsg="请输入应用名称" errormsg="应用名称长度为2-10个字符">
 					<span class="help-inline"></span>
 				</div>
 			</div>
 			<div class="input-label">
 				<label class="label-text">应用分类：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					<select name="val_app_category_id" datatype="*" nullmsg="请选择应用分类">
 						@{
 							foreach (var appTypeDto in (List<AppTypeDto>)ViewData["AppTypes"])
@@ -68,14 +67,14 @@
 			</div>
 			<div class="input-label">
 				<label class="label-text">应用地址：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					<input type="text" name="val_url" value="@Model.AppUrl" style="width:300px" datatype="*" nullmsg="请输入应用地址">
 					<span class="help-inline"></span>
 				</div>
 			</div>
 			<div class="input-label">
 				<label class="label-text">窗口大小：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					<div class="input-prepend input-append">
 						<span class="add-on">宽</span><input type="text" name="val_width" value="@Model.Width" style="width:40px" datatype="n" nullmsg="请输入应用宽高" errormsg="宽高数值不规范"><span class="add-on">px</span>
 					</div>
@@ -87,7 +86,7 @@
 			</div>
 			<div class="input-label">
 				<label class="label-text">应用类型：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					<label class="radio" style="margin-right:10px">
 						<input type="radio" name="val_type" value="1" @{ if (Model.AppStyle ==  AppStyle.App) { <text> checked="checked" </text>  } }>应用
 					</label>
@@ -98,21 +97,21 @@
 			</div>
 			<div class="input-label input-label-isresize" @{ if (Model.AppStyle ==  AppStyle.Widget) { <text> style="display:none" </text>  } }>
 				<label class="label-text">窗口是否拉伸：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					<label class="radio" style="margin-right:10px"><input type="radio" name="val_isresize" value="1" @{ if (Model.IsResize) { <text> checked="checked" </text>  } }>是</label>
 					<label class="radio"><input type="radio" name="val_isresize" value="0" @{ if (!Model.IsResize) { <text> checked="checked" </text>  } }>否</label>
 				</div>
 			</div>
 			<div class="input-label input-label-isopenmax" @{ if (Model.AppStyle ==  AppStyle.Widget|| Model.IsResize == false) { <text> style="display:none" </text>  } }>
 				<label class="label-text">打开默认最大化：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					<label class="radio" style="margin-right:10px"><input type="radio" name="val_isopenmax" value="1" @{ if (Model.IsOpenMax) { <text> checked="checked" </text>  } }>是</label>
 					<label class="radio"><input type="radio" name="val_isopenmax" value="0" @{ if (!Model.IsOpenMax) { <text> checked="checked" </text>  } }>否</label>
 				</div>
 			</div>
 			<div class="input-label input-label-isflash" @{ if (Model.AppStyle ==  AppStyle.Widget) { <text> style="display:none" </text>  } }>
 				<label class="label-text">是否为Flash：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					<label class="radio" style="margin-right:10px"><input type="radio" name="val_isflash" value="1" @{ if (Model.IsFlash) { <text> checked="checked" </text>  } }>是</label>
 					<label class="radio" style="margin-right:10px"><input type="radio" name="val_isflash" value="0" @{ if (!Model.IsFlash) { <text> checked="checked" </text>  } }>否</label>
 					<span class="txt">[<a href="###" rel="tooltip" title="如何设置为Flash应用，当窗口非当前窗口时，会显示遮罩层">?</a>]</span>
@@ -120,7 +119,7 @@
 			</div>
 			<div class="input-label">
 				<label class="label-text">应用介绍：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					<textarea class="textarea" name="val_remark" id="val_remark" style="width:300px;height:100px;margin-bottom:10px">@Model.Remark</textarea>
 				</div>
 			</div>
@@ -130,7 +129,7 @@
 					<text>
 						<div class="input-label">
 							<label class="label-text">是否提交审核：</label>
-							<div class="label-box form-inline control-group">
+							<div class="form-inline">
 								<label class="radio" style="margin-right:10px"><input type="radio" name="val_verifytype" value="1">暂时不提交</label>
 								<label class="radio"><input type="radio" name="val_verifytype" value="4" checked>重新提交审核</label>
 							</div>
