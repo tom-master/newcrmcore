@@ -14,6 +14,11 @@
 @section ChildrenCss
 {
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+	 *{
+		box-sizing:unset;
+	  }
+	</style>
 }
 @section SysCss
 {
@@ -26,18 +31,18 @@
 		<div class="middle" style="overflow: hidden; position: inherit; bottom: 0px;">
 			<div class="input-label">
 				<label class="label-text">角色名称：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					@{
 						if (roleResult.Name == null)
 						{
 							<text>
-								<input type="text" class="text" name="val_roleName" id="val_roleName" ajaxurl="@Url.Action("CheckName","Security")" value="" datatype="s2-10" nullmsg="请输入角色名称" errormsg="角色名称长度为2-10个字符" />
+								<input type="text" class="text form-control" name="val_roleName" id="val_roleName" ajaxurl="@Url.Action("CheckName","Security")" value="" datatype="s2-10" nullmsg="请输入角色名称" errormsg="角色名称长度为2-10个字符" />
 							</text>
 						}
 						else
 						{
 							<text>
-								<input type="text" class="text" name="val_roleName" id="val_roleName" ajaxurl="@Url.Action("CheckName","Security")" value="@roleResult.Name" datatype="s2-10" nullmsg="请输入角色名称" errormsg="角色名称长度为2-10个字符" />
+								<input type="text" class="text form-control" name="val_roleName" id="val_roleName" ajaxurl="@Url.Action("CheckName","Security")" value="@roleResult.Name" datatype="s2-10" nullmsg="请输入角色名称" errormsg="角色名称长度为2-10个字符" />
 							</text>
 						}
 					}
@@ -47,18 +52,18 @@
 			</div>
 			<div class="input-label">
 				<label class="label-text">角色标识：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					@{
 						if (roleResult.RoleIdentity == null)
 						{
 							<text>
-								<input type="text" class="text" name="val_roleIdentity" id="val_roleIdentity" ajaxurl="@Url.Action("CheckRoleIdentity","Security")" value="" datatype="s2-20" nullmsg="请输入角色标识" errormsg="角色标识长度为2-20个字符" />
+								<input type="text" class="text  form-control" name="val_roleIdentity" id="val_roleIdentity" ajaxurl="@Url.Action("CheckRoleIdentity","Security")" value="" datatype="s2-20" nullmsg="请输入角色标识" errormsg="角色标识长度为2-20个字符" />
 							</text>
 						}
 						else
 						{
 							<text>
-								<input type="text" disabled="disabled" class="text" name="val_roleIdentity" id="val_roleIdentity" value="@roleResult.RoleIdentity" datatype="s2-20" nullmsg="请输入角色标识" errormsg="角色标识长度为2-20个字符" />
+								<input type="text" disabled="disabled" class="text  form-control" name="val_roleIdentity" id="val_roleIdentity" value="@roleResult.RoleIdentity" datatype="s2-20" nullmsg="请输入角色标识" errormsg="角色标识长度为2-20个字符" />
 							</text>
 						}
 					}
@@ -70,8 +75,8 @@
 	</div>
 	<div class="bottom-bar">
 		<div class="con">
-			<a class="btn btn-primary fr" id="btn-submit" href="###"><i class="icon-white icon-ok"></i> 确定</a>
-			<a class="btn fr" href="javascript:window.parent.closeDetailIframe();" style="margin-right: 10px"><i class="icon-chevron-up"></i> 返回角色列表</a>
+			<a class="btn btn-primary fr" id="btn-submit" href="###"><i class="oi oi-check"></i> 确定</a>
+			<a class="btn fr" href="javascript:window.parent.closeDetailIframe();" style="margin-right: 10px"><i class="oi oi-chevron-top"></i> 返回角色列表</a>
 		</div>
 	</div>
 </form>

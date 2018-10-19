@@ -12,6 +12,11 @@
 @section ChildrenCss
 {
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+	 *{
+		box-sizing:unset;
+	  }
+	</style>
 }
 @section SysCss
 {
@@ -27,15 +32,15 @@
 			</p>
 			<div class="input-label">
 				<label class="label-text">角色名称：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					@{
 						if (rolePowerResult.Name == null)
 						{
-							<text> <input disabled="disabled" type="checkbox" name="val_name" value="" datatype="s2-10" nullmsg="请输入角色名称" errormsg="角色名称长度为2-10个字符"></text>
+							<text> <input class="form-control" disabled="disabled" type="checkbox" name="val_name" value="" datatype="s2-10" nullmsg="请输入角色名称" errormsg="角色名称长度为2-10个字符"></text>
 						}
 						else
 						{
-							<text> <input disabled="disabled" type="text" name="val_name" value="@rolePowerResult.Name" datatype="s2-10" nullmsg="请输入角色名称" errormsg="角色名称长度为2-10个字符"></text>
+							<text> <input class="form-control" disabled="disabled" type="text" name="val_name" value="@rolePowerResult.Name" datatype="s2-10" nullmsg="请输入角色名称" errormsg="角色名称长度为2-10个字符"></text>
 						}
 					}
 
@@ -44,7 +49,7 @@
 			</div>
 			<div class="input-label">
 				<label class="label-text">专属应用：</label>
-				<div class="label-box form-inline control-group">
+				<div class="form-inline">
 					<div class="permissions_apps">
 						@{
 							foreach (var appDto in Model)
@@ -56,7 +61,7 @@
 							}
 						}
 					</div>
-					<a class="btn" href="###" menu="addapps">添加应用</a>
+					<a class="btn btn-primary" href="###" menu="addapps">添加应用</a>
 					<input type="hidden" name="val_apps_id" id="val_apps_id" value="@String.Join(",", Model.Select(s => s.Id))" @*datatype="*" nullmsg="请选择专属应用" *@>
 					<span class="help-inline"></span>
 				</div>
@@ -65,8 +70,8 @@
 	</div>
 	<div class="bottom-bar">
 		<div class="con">
-			<a class="btn btn-primary fr" id="btn-submit" href="###"><i class="icon-white icon-ok"></i> 确定</a>
-			<a class="btn fr" href="javascript:window.parent.closeDetailIframe();" style="margin-right: 10px"><i class="icon-chevron-up"></i> 返回角色列表</a>
+			<a class="btn btn-primary fr" id="btn-submit" href="###"><i class="oi oi-check"></i> 确定</a>
+			<a class="btn fr" href="javascript:window.parent.closeDetailIframe();" style="margin-right: 10px"><i class="oi oi-chevron-top"></i> 返回角色列表</a>
 		</div>
 	</div>
 </form>
