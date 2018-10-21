@@ -10,33 +10,38 @@
 @section ChildrenCss
 {
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+     <style>
+	 *{
+		box-sizing:unset;
+	  }
+	</style>
 }
 @section SysCss
 {
 	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
 }
 <div class="sub-nav tabbable tabs-left">
-	<ul class="nav nav-tabs">
-		<li class="all active" value="0"><a href="###" title="全部">全部</a></li>
+	<ul class="nav nav-tabs flex-column nav-pills" style="width:57px;">
+		<li class="all nav-item active mb-1" value="0" ><a href="###" class="nav-link" title="全部">全部</a></li>
 		@{
 			foreach (var appType in appTypes)
 			{
-				<li value="@appType.Id"><a href="###" title="@appType.Name">@appType.Name</a></li>
+				<li class="nav-item mb-1" value="@appType.Id"><a href="###" class="nav-link" title="@appType.Name">@appType.Name</a></li>
 			}
 		}
 
-		<li class="myapps" value="-1"><a href="###" title="我的应用">我的<br>应用</a></li>
+		<li class="myapps nav-item mb-1" value="-1"><a href="###" class="nav-link" title="我的应用">我的<br>应用</a></li>
 
 	</ul>
 	<input type="hidden" name="appType" id="appType" value="">
 </div>
 <div class="wrap">
 	<div class="col-sub">
-		<div class="search-box">
-			<div class="input-append">
-				<input type="text" name="searchText" id="searchText" placeholder="请输入搜索关键字" style="width:150px" value="">
-				<button id="searchTextRemove" class="btn" style="padding:4px 5px"><i class="icon-remove"></i></button>
-				<button id="searchTextDo" class="btn" style="padding:4px 5px"><i class="icon-search"></i></button>
+		<div class="search-box input-group">
+            <input type="text" name="searchText" class="form-control" id="searchText" placeholder="请输入搜索关键字" style="width:100px" value="">
+			<div class="input-group-append">
+				<button id="searchTextRemove" class="btn" style="padding:4px 5px"><i class="oi oi-x"></i></button>
+				<button id="searchTextDo" class="btn" style="padding:4px 5px"><i class="oi oi-magnifying-glass"></i></button>
 			</div>
 		</div>
 		<div class="mbox commend-day">
@@ -97,7 +102,7 @@
 				</ul>
 			</div>
 			<ul class="app-list"></ul>
-			<div class="pagination pagination-centered" style="margin-top:6px" id="pagination"></div>
+			<div style="margin:6px 0" id="pagination"></div>
 			<input id="pagination_setting" type="hidden" per="5" />
 		</div>
 	</div>

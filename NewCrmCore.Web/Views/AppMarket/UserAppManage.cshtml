@@ -27,18 +27,24 @@
 {
 	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
 }
-<div class="well well-small" style="margin-bottom:10px;padding-bottom:0">
+<div class="well well-small" style="padding-bottom:0 margin-bottom:10px;background-color:#f5f5f5;border:1px solid #e3e3e3;min-height:20px;padding:9px">
 	<div class="form-inline">
-		<div class="control-group">
+		<div class="form-group mb-2">
 			<label>名称：</label>
-			<input type="text" name="appName" id="appName" class="span3">
-			<a class="btn" menu="search" href="###" style="margin-left:10px"><i class="icon-search"></i> 搜索</a>
-			<a class="btn btn-primary fr" href="javascript:openDetailIframe('/appmarket/userappmanageinfo?appId=0');"><i class="icon-white icon-plus"></i> 添加新应用</a>
-			<a class="btn fr" href="javascript:window.parent.closeDetailIframe2();" style="margin-right:10px"><i class="icon-arrow-left"></i> 返回应用市场</a>
+			<input type="text" class="form-control" name="appName" id="appName" class="span3">
 		</div>
-		<div class="control-group">
+		<a class="btn btn-primary" menu="search" href="###" style="margin-left:10px">
+				<i class="oi oi-magnifying-glass"></i>搜索
+			</a>
+			<a class="btn ml-auto" href="javascript:window.parent.closeDetailIframe2();" style="margin-right:10px">
+				<i class="oi oi-chevron-left"></i> 返回应用市场
+			</a>
+			<a class="btn btn-primary" href="javascript:openDetailIframe('/appmarket/userappmanageinfo?appId=0');">
+				<i class="oi oi-plus"></i>添加新应用
+			</a>
+		<div class="form-group">
 			<label>分类：</label>
-			<select name="appType" id="appType" style="width:140px">
+			<select name="appType" id="appType" class="form-control" style="width:140px">
 				<option value="0">全部</option>
 				@{
 					foreach (var appType in (List<AppTypeDto>)ViewData["AppTypes"])
@@ -50,7 +56,7 @@
 				}
 			</select>
 			<label style="margin-left:10px">类型：</label>
-			<select name="appStyle" id="appStyle" style="width:140px">
+			<select name="appStyle" id="appStyle" class="form-control" style="width:140px">
 				<option value="0">全部</option>
 				@{
 					foreach (var appStyle in (List<AppStyleDto>)ViewData["AppStyles"])
@@ -62,7 +68,7 @@
 				}
 			</select>
 			<label style="margin-left:10px">状态：</label>
-			<select name="appState" id="appState" style="width: 140px">
+			<select name="appState" id="appState" class="form-control" style="width: 140px">
 				<option value="0">全部</option>
 				@{
 					foreach (var appState in (List<AppStateDto>)ViewData["AppStates"])
