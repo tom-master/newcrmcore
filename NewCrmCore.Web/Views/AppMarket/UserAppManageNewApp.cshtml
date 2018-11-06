@@ -10,13 +10,13 @@
 			</p>
 			<div class="input-label">
 				<label class="label-text">应用图片：</label>
-				<div class="label-box form-inline">
+				<div class=" form-inline">
 					<div class="shortcutview">
 						<img src="/images/ui/system-gear.png">
 					</div>
                     <label for="upload" class="ml-2 btn btn-outline-primary btn-sm">选择图片</label>
                     <input type="file" class="" style="display:none" id="upload">
-					<div class="shortcut-selicon">
+					<div class="shortcut-selicon" style="margin-right:150px" >
 						<div class="title">系统推荐的图标：</div>
 						<a href="###"><img src="/images/ui/system-gear.png" valsrc="/images/ui/system-gear.png"></a>
 						<a href="###"><img src="/images/ui/system-users.png" valsrc="/images/ui/system-users.png"></a>
@@ -43,7 +43,7 @@
 			<div class="input-label">
 				<label class="label-text">应用分类：</label>
 				<div class="form-inline">
-					<select name="val_app_category_id" class="form-control" datatype="*" nullmsg="请选择应用分类">
+					<select name="val_app_category_id" class="form-control input-group" style="height:20px" datatype="*" nullmsg="请选择应用分类">
 						@{
 							foreach (var appTypeDto in (List<AppTypeDto>)ViewData["AppTypes"])
 							{
