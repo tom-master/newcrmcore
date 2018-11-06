@@ -12,7 +12,8 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
      <style>
 	 *{
-		box-sizing:unset;
+        box-sizing:unset;
+        overflow: hidden;
 	  }
 	</style>
 }
@@ -39,7 +40,7 @@
 	<div class="col-sub">
 		<div class="search-box input-group">
             <input type="text" name="searchText" class="form-control" id="searchText" placeholder="请输入搜索关键字" style="width:100px" value="">
-			<div class="input-group-append">
+			<div class="input-group-append" style="z-index:0">
 				<button id="searchTextRemove" class="btn" style="padding:4px 5px"><i class="oi oi-x"></i></button>
 				<button id="searchTextDo" class="btn" style="padding:4px 5px"><i class="oi oi-magnifying-glass"></i></button>
 			</div>
