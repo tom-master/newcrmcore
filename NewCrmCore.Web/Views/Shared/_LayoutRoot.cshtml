@@ -12,7 +12,6 @@
 	<style>
 		* { 
 			font-size: 12px !important;
-
 		}
 	</style>
 </head>
@@ -20,15 +19,16 @@
 	@RenderBody()
 </body>
 </html>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-browser/0.1.0/jquery.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.bootcss.com/sugar/2.0.4/sugar.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<script src="https://cdn.bootcss.com/mousetrap/1.6.1/mousetrap.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
+
 <environment names="Development" asp-append-version="true">
-	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdn.bootcss.com/jquery-browser/0.1.0/jquery.browser.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-	<script src="https://cdn.bootcss.com/sugar/2.0.4/sugar.min.js"></script>
-	<script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-	<script src="https://cdn.bootcss.com/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-	<script src="https://cdn.bootcss.com/mousetrap/1.6.1/mousetrap.min.js"></script>
-	<script src="https://cdn.bootcss.com/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
 	<script src="/js/hooray/lib/hooraylibs.js"></script>
 	<script src="/js/hooray/hros.min.js"></script>
 	<script src="/js/validate/Validform_v5.3.2/Validform_v5.3.2_min.js"></script>
@@ -40,14 +40,6 @@
 	<script src="/js/lobibox/lobibox.js"></script>
 </environment>
 <environment names="Production" asp-append-version="true">
-	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdn.bootcss.com/jquery-browser/0.1.0/jquery.browser.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-	<script src="https://cdn.bootcss.com/sugar/2.0.4/sugar.min.js"></script>
-	<script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-	<script src="https://cdn.bootcss.com/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-	<script src="https://cdn.bootcss.com/mousetrap/1.6.1/mousetrap.min.js"></script>
-	<script src="https://cdn.bootcss.com/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
 	<script src="/js/hooray/lib/hooraylibs.js"></script>
 	<script src="/js/newcrm.site.min.js"></script>
 	<script src="https://cdn.bootcss.com/webuploader/0.1.1/webuploader.min.js"></script>
@@ -58,6 +50,7 @@
 @RenderSection("ChildrenTemplate",required: false)
 <script>
 	$(function () {
+		debugger
 		//配置artDialog全局默认参数
 		(function (config) {
 			config['lock'] = true;
