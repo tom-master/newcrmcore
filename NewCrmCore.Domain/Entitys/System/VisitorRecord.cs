@@ -23,7 +23,7 @@ namespace NewCrmCore.Domain.Entitys.System
         [PropertyRequired, PropertyInputRange(150)]
         public String VisitorUrl { get; private set; }
 
-        [PropertyRequired, PropertyInputRange(150)]
+        [PropertyRequired, PropertyInputRange(500)]
         public String UrlParameter { get; private set; }
 
         public VisitorRecord(Int32 userId, String userName, String controller, String action, String ip, String visitorUrl, String urlParameter)
