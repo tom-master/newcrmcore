@@ -12,29 +12,6 @@
     <None Remove="wwwroot\lib\**" />
   </ItemGroup>
   <ItemGroup>
-    <Content Remove="wwwroot\js\hooray\hros.app.js" />
-    <Content Remove="wwwroot\js\hooray\hros.appmanage.js" />
-    <Content Remove="wwwroot\js\hooray\hros.base.js" />
-    <Content Remove="wwwroot\js\hooray\hros.copyright.js" />
-    <Content Remove="wwwroot\js\hooray\hros.core.js" />
-    <Content Remove="wwwroot\js\hooray\hros.desktop.js" />
-    <Content Remove="wwwroot\js\hooray\hros.dock.js" />
-    <Content Remove="wwwroot\js\hooray\hros.folderView.js" />
-    <Content Remove="wwwroot\js\hooray\hros.grid.js" />
-    <Content Remove="wwwroot\js\hooray\hros.hotkey.js" />
-    <Content Remove="wwwroot\js\hooray\hros.lock.js" />
-    <Content Remove="wwwroot\js\hooray\hros.maskBox.js" />
-    <Content Remove="wwwroot\js\hooray\hros.popupMenu.js" />
-    <Content Remove="wwwroot\js\hooray\hros.searchbar.js" />
-    <Content Remove="wwwroot\js\hooray\hros.startmenu.js" />
-    <Content Remove="wwwroot\js\hooray\hros.taskbar.js" />
-    <Content Remove="wwwroot\js\hooray\hros.templates.js" />
-    <Content Remove="wwwroot\js\hooray\hros.wallpaper.js" />
-    <Content Remove="wwwroot\js\hooray\hros.widget.js" />
-    <Content Remove="wwwroot\js\hooray\hros.window.js" />
-    <Content Remove="wwwroot\js\hooray\hros.zoom.js" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="bootstrap" Version="4.1.1" />
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
