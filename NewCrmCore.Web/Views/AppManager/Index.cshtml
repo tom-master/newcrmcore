@@ -156,12 +156,14 @@
 	$('.list-con').on('click', '.do-del', function () {
 		let appid = $(this).attr('appid');
 		let appname = $(this).parents('tr').children('td:nth-child(2)').text();
+		
 		$.dialog({
 			id: 'del',
 			content: '确定要删除 “' + appname + '” 该应用么？',
 			ok: function () {
 				HROS.request.post('/appmanager/remove', { appId: appid }, function (responseText) {
 					if (responseText.IsSuccess) {
+						
 						$('#pagination').trigger('currentPage');
 					} else {
 							NewCrm.msgbox.fail(responseText.Message);
