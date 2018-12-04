@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using NewCrmCore.Domain.ValueObject;
-using NewLibCore.Data.Mapper.MapperExtension;
-using NewLibCore.Data.Mapper.PropertyExtension;
+using NewLibCore.Data.SQL.MapperExtension;
+using NewLibCore.Data.SQL.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.Agent
 {

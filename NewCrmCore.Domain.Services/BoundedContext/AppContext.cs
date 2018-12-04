@@ -11,7 +11,7 @@ using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
-using NewLibCore.Data.Mapper.InternalDataStore;
+using NewLibCore.Data.SQL.InternalDataStore;
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext

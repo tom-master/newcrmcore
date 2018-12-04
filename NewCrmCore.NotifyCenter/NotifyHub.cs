@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.SignalR;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
-using NewLibCore.Data.Mapper.InternalDataStore;
+using NewLibCore.Data.SQL.InternalDataStore;
 using Newtonsoft.Json;
 using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Infrastructure;
-using NewLibCore.Data.Mapper.InternalDataStore;
+using NewLibCore.Data.SQL.InternalDataStore;
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
