@@ -29,10 +29,14 @@ namespace NewCrmCore.NotifyCenter
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            var isTimeout = false;
+
             var userId = Context.GetHttpContext().Request.Query["userId"];
-            await CacheHelper.RemoveKeyWhenModify(new SignalRConnectionCacheKey(userId));
-            await base.OnDisconnectedAsync(exception);
+
+            if (!String.IsNullOrEmpty(userId))
+            {
+                await CacheHelper.RemoveKeyWhenModify(new SignalRConnectionCacheKey(userId));
+                await base.OnDisconnectedAsync(exception);
+            }
         }
     }
 
