@@ -45,6 +45,7 @@ namespace NewCrmCore.Web.Filter
             {
                 userId = JsonConvert.DeserializeObject<UserDto>(userCookie).Id;
             }
+            
             ((ILoggerServices)filterContext.HttpContext.RequestServices.GetService(typeof(ILoggerServices))).AddLoggerAsync(new LogDto
             {
                 Action = filterContext.RouteData.Values["action"].ToString(),

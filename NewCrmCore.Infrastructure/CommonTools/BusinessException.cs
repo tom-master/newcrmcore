@@ -9,6 +9,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
     [Serializable]
     public class BusinessException : Exception
     {
+
         /// <summary>
         /// 实体化一个类的新实例
         /// </summary>
