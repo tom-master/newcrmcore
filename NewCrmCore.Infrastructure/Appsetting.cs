@@ -16,7 +16,7 @@ namespace NewCrmCore.Infrastructure
                 }
                 catch (System.Exception)
                 {
-                    throw;
+                    throw new EnvVariableGetFailException($@"获取数据库连接字符串失败");
                 }
             }
         }
@@ -32,23 +32,7 @@ namespace NewCrmCore.Infrastructure
                 }
                 catch (System.Exception)
                 {
-                    throw;
-                }
-            }
-        }
-
-        public static String Mongodb
-        {
-            get
-            {
-                try
-                {
-                    var str = Host.GetHostVar("NewCrmMongodb");
-                    return str ?? "";
-                }
-                catch (System.Exception)
-                {
-                    throw;
+                    throw new EnvVariableGetFailException($@"获取redis连接字符串失败");
                 }
             }
         }
@@ -64,7 +48,7 @@ namespace NewCrmCore.Infrastructure
                 }
                 catch (System.Exception)
                 {
-                    throw;
+                    throw new EnvVariableGetFailException($@"获取上传Url字符串失败");
                 }
             }
         }
@@ -80,7 +64,7 @@ namespace NewCrmCore.Infrastructure
                 }
                 catch (System.Exception)
                 {
-                    throw;
+                    throw new EnvVariableGetFailException($@"获取文件Url字符串失败");
                 }
             }
         }
@@ -96,7 +80,7 @@ namespace NewCrmCore.Infrastructure
                 }
                 catch (System.Exception)
                 {
-                    throw;
+                    throw new EnvVariableGetFailException($@"获取文件存储路径失败");
                 }
             }
         }
@@ -112,7 +96,7 @@ namespace NewCrmCore.Infrastructure
                 }
                 catch (System.Exception)
                 {
-                    throw;
+                    throw new EnvVariableGetFailException($@"获取皮肤失败");
                 }
             }
         }

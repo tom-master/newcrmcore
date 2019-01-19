@@ -16,7 +16,7 @@
     }
 
     [Serializable]
-    public class GetEnvVariableFailException : Exception
+    public class EnvVariableGetFailException : Exception
     {
         public GetEnvVariableFailException() { }
 
