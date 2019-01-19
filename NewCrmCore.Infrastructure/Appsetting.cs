@@ -16,7 +16,6 @@ namespace NewCrmCore.Infrastructure
                 }
                 catch (System.Exception)
                 {
-
                     throw;
                 }
             }
