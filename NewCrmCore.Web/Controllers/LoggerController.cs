@@ -10,11 +10,11 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Web.Controllers
 {
-    public class LogController : BaseController
+    public class LoggerController : BaseController
     {
         private readonly ILoggerServices _loggerServices;
 
-        public LogController(ILoggerServices loggerServices)
+        public LoggerController(ILoggerServices loggerServices)
         {
             _loggerServices = loggerServices;
         }

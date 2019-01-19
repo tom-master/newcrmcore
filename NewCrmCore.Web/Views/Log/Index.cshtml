@@ -99,9 +99,8 @@
 		getPageList(0);
 	});
 	
-	
 	function getPageList(current_page) {
-		HROS.request.get('/log/getlogs/', {
+		HROS.request.get('/logger/getlogs/', {
 			userName: $('#userName').val(),
 			logLevel: $('#logLevel').find("option:selected").attr('value'),
 			pageIndex: current_page === 0 ? 1 : current_page + 1,
