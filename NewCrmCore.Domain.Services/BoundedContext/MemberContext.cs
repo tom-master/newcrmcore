@@ -21,7 +21,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT 
                             a.MemberType,
@@ -54,7 +54,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var where = new StringBuilder();
                     var parameters = new List<ParameterMapper>();
@@ -104,7 +104,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.Name=@name AND a.IsDeleted=0";
                     var parameters = new List<ParameterMapper>
@@ -127,7 +127,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     #region sql
                     {
@@ -152,7 +152,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(newIcon);
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var member = new Member();
                     member.ModifyIconUrl(newIcon);
@@ -171,7 +171,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(member);
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     if (member.IsIconByUpload)
                     {
@@ -229,7 +229,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(memberId);
             return await Task.Run<App>(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     dataStore.OpenTransaction();
                     try

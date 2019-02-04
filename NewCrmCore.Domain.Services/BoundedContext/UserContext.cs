@@ -26,7 +26,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
              {
-                 using (var dataStore = new DataStore(Appsetting.Database))
+                 using (var dataStore = new SqlContext(Appsetting.Database))
                  {
                      User user = null;
                      try
@@ -94,7 +94,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
              {
-                 using (var dataStore = new DataStore(Appsetting.Database))
+                 using (var dataStore = new SqlContext(Appsetting.Database))
                  {
                      var sql = $@"SELECT 
 								a.Id,
@@ -127,7 +127,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT a.Url,a.Width,a.Height,a.Source FROM Wallpaper AS a WHERE a.Id=@wallpaperId AND a.IsDeleted=0";
                     var parameters = new List<ParameterMapper> { new ParameterMapper("@wallpaperId", wallPaperId) };
@@ -157,7 +157,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 where.Append($@" AND a.IsAdmin=@isAdmin");
             }
 
-            using (var dataStore = new DataStore(Appsetting.Database))
+            using (var dataStore = new SqlContext(Appsetting.Database))
             {
                 #region totalCount
                 {
@@ -191,7 +191,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT 
                             a1.UserFace,
@@ -221,7 +221,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT
 								a1.Id,
@@ -241,7 +241,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT a.RoleId,a.AppId FROM RolePower AS a WHERE a.IsDeleted=0";
                     return dataStore.Find<RolePower>(sql);
@@ -255,7 +255,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT COUNT(*) FROM User AS a WHERE a.Name=@name AND a.IsDeleted=0";
                     return dataStore.FindSingleValue<Int32>(sql, new List<ParameterMapper> { new ParameterMapper("@name", userName) }) != 0 ? false : true;
@@ -269,7 +269,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run<String>(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT a.LoginPassword FROM User AS a WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
                     var parameters = new List<ParameterMapper> { new ParameterMapper("@userId", userId) };
@@ -285,7 +285,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     #region 获取锁屏密码
                     {
@@ -308,7 +308,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.Name=@name AND a.IsDeleted=0 ";
                     var parameters = new List<ParameterMapper>
@@ -327,7 +327,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.AppUrl = @url AND a.IsDeleted=0";
                     var parameters = new List<ParameterMapper>
@@ -346,7 +346,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     try
                     {
@@ -392,7 +392,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     try
                     {
@@ -462,7 +462,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     dataStore.OpenTransaction();
                     try
@@ -528,7 +528,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var user = new User().Enable();
                     var result = dataStore.Modify(user, acc => acc.Id == userId);
@@ -546,7 +546,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var parameters = new List<ParameterMapper> { new ParameterMapper("@userId", userId) };
                     #region 前置条件验证
@@ -579,7 +579,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var config = new Config().ModifyUserFace(newFace);
                     var result = dataStore.Modify(config, conf => conf.UserId == userId);
@@ -598,7 +598,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var user = new User();
                     if (isTogetherSetLockPassword)
@@ -622,7 +622,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var user = new User().ModifyLockScreenPassword(newScreenPassword);
                     var result = dataStore.Modify(user, acc => acc.Id == userId && !acc.IsDisable);
@@ -640,7 +640,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     dataStore.OpenTransaction();
 

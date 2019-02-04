@@ -19,7 +19,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT a.RoleId, a.AppId FROM RolePower AS a WHERE a.IsDeleted=0";
                     return dataStore.Find<RolePower>(sql);
@@ -33,7 +33,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT a.Id, a.Name, a.RoleIdentity, a.Remark FROM Role AS a WHERE a.Id=@Id AND a.IsDeleted=0";
                     var parameters = new List<ParameterMapper> { new ParameterMapper("@Id", roleId) };
@@ -44,7 +44,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public List<Role> GetRoles(String roleName, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
-            using (var dataStore = new DataStore(Appsetting.Database))
+            using (var dataStore = new SqlContext(Appsetting.Database))
             {
                 var where = new StringBuilder();
                 var parameters = new List<ParameterMapper>();
@@ -83,7 +83,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     #region 检查app是否为系统app
                     {
@@ -115,7 +115,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT COUNT(*) FROM Role AS a WHERE a.Name=@name AND a.IsDeleted=0";
                     var parameters = new List<ParameterMapper>
@@ -133,7 +133,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT COUNT(*) FROM Role AS a WHERE a.RoleIdentity=@RoleIdentity AND a.IsDeleted=0";
                     var parameters = new List<ParameterMapper>
@@ -151,7 +151,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     #region 修改角色
                     {
@@ -173,7 +173,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     dataStore.OpenTransaction();
                     try
@@ -234,7 +234,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     #region 添加角色
                     {
@@ -257,7 +257,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     throw new BusinessException("权限列表为空");
                 }
 
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     dataStore.OpenTransaction();
                     try
@@ -302,7 +302,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     #region 添加角色
                     {

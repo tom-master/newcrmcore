@@ -17,7 +17,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(log);
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     dataStore.Add(log);
                 }
@@ -29,7 +29,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(userName, true);
             Parameter.Validate(logLevel);
 
-            using (var dataStore = new DataStore(Appsetting.Database))
+            using (var dataStore = new SqlContext(Appsetting.Database))
             {
                 var where = new StringBuilder();
                 var parameters = new List<ParameterMapper>();

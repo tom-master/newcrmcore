@@ -23,14 +23,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(userId);
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var SqlContext = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT a.Id FROM App AS a WHERE a.UserId=@userId AND a.IsDeleted=0";
                     var parameters = new List<ParameterMapper>
                     {
                         new ParameterMapper("@userId",userId)
                     };
-                    var result = dataStore.Find<App>(sql, parameters);
+                    var result = SqlContext.Find<App>(sql, parameters);
                     return new Tuple<Int32, Int32>(result.Count, result.Count(a => a.AppReleaseState == AppReleaseState.UnRelease));
                 }
             });
@@ -40,10 +40,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var SqlContext = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT a.Id,a.Name,a.IsSystem FROM AppType AS a WHERE a.IsDeleted=0";
-                    return dataStore.Find<AppType>(sql);
+                    return SqlContext.Find<AppType>(sql);
                 }
             });
         }
@@ -53,7 +53,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(userId);
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var SqlContext = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT 
                             a.UseCount,
@@ -82,7 +82,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         new ParameterMapper("@AppReleaseState", AppReleaseState.Release.ToInt32()),
                         new ParameterMapper("@userId",userId)
                     };
-                    return dataStore.FindOne<TodayRecommendAppDto>(sql, parameters);
+                    return SqlContext.FindOne<TodayRecommendAppDto>(sql, parameters);
                 }
             });
         }
@@ -94,7 +94,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(pageIndex, true);
             Parameter.Validate(pageSize);
 
-            using (var dataStore = new DataStore(Appsetting.Database))
+            using (var SqlContext = new SqlContext(Appsetting.Database))
             {
                 var parameters = new List<ParameterMapper>
                 {
@@ -147,7 +147,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 #region totalCount
                 {
                     var sql = $@"SELECT COUNT(*) FROM App AS a LEFT JOIN AppStar AS a1 ON a1.AppId=a.Id AND a1.IsDeleted=0 {where}";
-                    totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
+                    totalCount = SqlContext.FindSingleValue<Int32>(sql, parameters);
                 }
                 #endregion
 
@@ -177,7 +177,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                            LEFT JOIN Member AS a1 ON a1.UserId=@userId2 AND a1.AppId=a.Id AND a1.IsDeleted=0
                                 {where} {orderBy} LIMIT {pageSize * (pageIndex - 1)},{pageSize }";
                     parameters.Add(new ParameterMapper("@userId2", userId));
-                    return dataStore.Find<App>(sql, parameters);
+                    return SqlContext.Find<App>(sql, parameters);
                 }
                 #endregion
             }
@@ -190,7 +190,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appStyleId, true);
             Parameter.Validate(pageIndex);
             Parameter.Validate(pageSize);
-            using (var dataStore = new DataStore(Appsetting.Database))
+            using (var SqlContext = new SqlContext(Appsetting.Database))
             {
                 var where = new StringBuilder();
                 where.Append($@" WHERE 1=1 AND a.IsDeleted=0 ");
@@ -251,7 +251,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 #region totalCount
                 {
                     var sql = $@"SELECT COUNT(*) FROM App AS a {where} ";
-                    totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
+                    totalCount = SqlContext.FindSingleValue<Int32>(sql, parameters);
                 }
                 #endregion
 
@@ -270,7 +270,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a.IsIconByUpload
 								FROM App AS a {where} LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
 
-                    return dataStore.Find<App>(sql, parameters);
+                    return SqlContext.Find<App>(sql, parameters);
                 }
                 #endregion
 
@@ -282,7 +282,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var SqlContext = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT 
                             a.Name,
@@ -315,7 +315,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         new ParameterMapper("@Id",appId)
                     };
-                    return dataStore.FindOne<App>(sql, parameters);
+                    return SqlContext.FindOne<App>(sql, parameters);
                 }
             });
         }
@@ -326,7 +326,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var SqlContext = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.AppId=@Id AND a.UserId=@UserId AND a.IsDeleted=0";
                     var parameters = new List<ParameterMapper>
@@ -334,7 +334,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         new ParameterMapper("@Id",appId),
                         new ParameterMapper("@UserId",userId)
                     };
-                    return dataStore.FindSingleValue<Int32>(sql, parameters) > 0 ? true : false;
+                    return SqlContext.FindSingleValue<Int32>(sql, parameters) > 0 ? true : false;
                 }
             });
         }
@@ -343,7 +343,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var SqlContext = new SqlContext(Appsetting.Database))
                 {
                     var where = new StringBuilder();
                     if (appIds != default(IEnumerable<Int32>) && appIds.Any())
@@ -352,7 +352,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     }
 
                     var sql = $@"SELECT a.Id,a.Name,a.IconUrl FROM App AS a WHERE a.IsSystem=1 AND a.IsDeleted=0 {where}";
-                    return dataStore.Find<App>(sql);
+                    return SqlContext.Find<App>(sql);
                 }
             });
         }
@@ -362,14 +362,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appTypeName);
             return await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var SqlContext = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT COUNT(*) FROM AppType AS a WHERE a.Name=@name AND a.IsDeleted=0";
                     var parameters = new List<ParameterMapper>
                     {
                         new ParameterMapper("@name",appTypeName)
                     };
-                    return dataStore.FindSingleValue<Int32>(sql, parameters) > 0;
+                    return SqlContext.FindSingleValue<Int32>(sql, parameters) > 0;
                 }
             });
         }
@@ -381,7 +381,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(starCount);
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var SqlContext = new SqlContext(Appsetting.Database))
                 {
                     #region 前置条件判断
                     {
@@ -391,7 +391,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             new ParameterMapper("@userId",userId),
                             new ParameterMapper("@appId",appId)
                         };
-                        var result = dataStore.FindSingleValue<Int32>(sql, parameters);
+                        var result = SqlContext.FindSingleValue<Int32>(sql, parameters);
                         if (result > 0)
                         {
                             throw new BusinessException("您已为这个应用打分");
@@ -402,7 +402,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     #region sql
                     {
                         var appStar = new AppStar(userId, appId, starCount);
-                        dataStore.Add(appStar);
+                        SqlContext.Add(appStar);
                     }
                     #endregion
                 }
@@ -413,11 +413,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var SqlContext = new SqlContext(Appsetting.Database))
                 {
                     #region app
                     {
-                        dataStore.Add(app);
+                        SqlContext.Add(app);
                     }
                     #endregion
                 }
@@ -429,11 +429,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             return await Task.Run<App>(async () =>
              {
-                 using (var dataStore = new DataStore(Appsetting.Database))
+                 using (var SqlContext = new SqlContext(Appsetting.Database))
                  {
                      var app = await GetAppAsync(appId);
                      app.Pass();
-                     var result = dataStore.Modify(app, a => a.Id == appId);
+                     var result = SqlContext.Modify(app, a => a.Id == appId);
                      if (!result)
                      {
                          throw new BusinessException("应用审核状态更新失败");
@@ -448,11 +448,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             return await Task.Run<App>(async () =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var SqlContext = new SqlContext(Appsetting.Database))
                 {
                     var app = await GetAppAsync(appId);
                     app.Deny();
-                    var result = dataStore.Modify(app, a => a.Id == appId);
+                    var result = SqlContext.Modify(app, a => a.Id == appId);
                     if (!result)
                     {
                         throw new BusinessException("应用审核状态更新失败");
@@ -467,15 +467,15 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var SqlContext = new SqlContext(Appsetting.Database))
                 {
-                    dataStore.OpenTransaction();
+                    SqlContext.OpenTransaction();
                     try
                     {
                         #region 取消之前的推荐应用
                         {
                             var app = new App().CancelRecommand();
-                            var result = dataStore.Modify(app, a => a.IsRecommand);
+                            var result = SqlContext.Modify(app, a => a.IsRecommand);
                             if (!result)
                             {
                                 throw new BusinessException("取消之前的推荐应用失败");
@@ -486,7 +486,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         #region 设置新的推荐应用
                         {
                             var app = new App().Recommand();
-                            var result = dataStore.Modify(app, a => a.Id == appId);
+                            var result = SqlContext.Modify(app, a => a.Id == appId);
                             if (!result)
                             {
                                 throw new BusinessException("设置新的推荐应用失败");
@@ -494,11 +494,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         }
                         #endregion
 
-                        dataStore.Commit();
+                        SqlContext.Commit();
                     }
                     catch (Exception)
                     {
-                        dataStore.Rollback();
+                        SqlContext.Rollback();
                         throw;
                     }
                 }
@@ -510,16 +510,16 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var SqlContext = new SqlContext(Appsetting.Database))
                 {
-                    dataStore.OpenTransaction();
+                    SqlContext.OpenTransaction();
                     try
                     {
                         #region 移除应用的评分
                         {
                             var appStar = new AppStar();
                             appStar.Remove();
-                            var result = dataStore.Modify(appStar, star => star.AppId == appId);
+                            var result = SqlContext.Modify(appStar, star => star.AppId == appId);
                             if (!result)
                             {
                                 throw new BusinessException("移除应用的评分失败");
@@ -531,7 +531,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var app = new App();
                             app.Remove();
-                            var result = dataStore.Modify(app, a => a.Id == appId);
+                            var result = SqlContext.Modify(app, a => a.Id == appId);
                             if (!result)
                             {
                                 throw new BusinessException("移除应用失败");
@@ -539,11 +539,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         }
                         #endregion
 
-                        dataStore.Commit();
+                        SqlContext.Commit();
                     }
                     catch (Exception)
                     {
-                        dataStore.Rollback();
+                        SqlContext.Rollback();
                         throw;
                     }
                 }
@@ -555,12 +555,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             return await Task.Run<App>(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var SqlContext = new SqlContext(Appsetting.Database))
                 {
                     #region 发布应用
                     {
                         var app = new App().AppRelease().Pass();
-                        var result = dataStore.Modify(app, a => a.Id == appId);
+                        var result = SqlContext.Modify(app, a => a.Id == appId);
                         if (!result)
                         {
                             throw new BusinessException("发布应用失败");
@@ -575,7 +575,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                          {
                             new ParameterMapper("@Id",appId)
                          };
-                        return dataStore.FindOne<App>(sql);
+                        return SqlContext.FindOne<App>(sql);
                     }
                     #endregion
                 }
@@ -590,7 +590,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var SqlContext = new SqlContext(Appsetting.Database))
                 {
                     if (app.IsIconByUpload)
                     {
@@ -652,7 +652,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         app.UnAuditState();
                     }
-                    var result = dataStore.Modify(app, a => a.UserId == userId && a.Id == app.Id);
+                    var result = SqlContext.Modify(app, a => a.UserId == userId && a.Id == app.Id);
                     if (!result)
                     {
                         throw new BusinessException("修改应用信息失败");
@@ -666,7 +666,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appTypeId);
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var SqlContext = new SqlContext(Appsetting.Database))
                 {
                     #region 前置条件验证
                     {
@@ -675,7 +675,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             new ParameterMapper("@AppTypeId",appTypeId)
                         };
                         var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.AppTypeId=@AppTypeId AND a.IsDeleted=0";
-                        if (dataStore.FindSingleValue<Int32>(sql, parameters) > 0)
+                        if (SqlContext.FindSingleValue<Int32>(sql, parameters) > 0)
                         {
                             throw new BusinessException($@"当前分类下存在应用,不能删除当前分类");
                         }
@@ -686,7 +686,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         var appType = new AppType();
                         appType.Remove();
-                        var result = dataStore.Modify(appType, type => type.Id == appTypeId);
+                        var result = SqlContext.Modify(appType, type => type.Id == appTypeId);
                         if (!result)
                         {
                             throw new BusinessException("移除应用分类失败");
@@ -702,12 +702,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appType);
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var SqlContext = new SqlContext(Appsetting.Database))
                 {
                     #region 前置条件验证
                     {
                         var sql = $@"SELECT COUNT(*) FROM AppType AS a WHERE a.Name=@name AND a.IsDeleted=0";
-                        var result = dataStore.FindSingleValue<Int32>(sql, new List<ParameterMapper> { new ParameterMapper("@name", appType.Name) });
+                        var result = SqlContext.FindSingleValue<Int32>(sql, new List<ParameterMapper> { new ParameterMapper("@name", appType.Name) });
                         if (result > 0)
                         {
                             throw new BusinessException($@"分类:{appType.Name},已存在");
@@ -717,7 +717,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                     #region 添加应用分类
                     {
-                        var result = dataStore.Add(appType);
+                        var result = SqlContext.Add(appType);
                         if (result <= 0)
                         {
                             throw new BusinessException("添加应用分类失败");
@@ -734,7 +734,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appTypeId);
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var SqlContext = new SqlContext(Appsetting.Database))
                 {
                     #region 更新应用分类
                     {
@@ -748,7 +748,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             appType.NotSystem();
                         }
-                        var result = dataStore.Modify(appType, type => type.Id == appTypeId);
+                        var result = SqlContext.Modify(appType, type => type.Id == appTypeId);
                         if (!result)
                         {
                             throw new BusinessException("更新应用分类");
@@ -766,11 +766,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(newIcon);
             await Task.Run(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var SqlContext = new SqlContext(Appsetting.Database))
                 {
                     var app = new App();
                     app.ModifyIconUrl(newIcon);
-                    var result = dataStore.Modify(app, a => a.Id == appId && a.UserId == userId);
+                    var result = SqlContext.Modify(app, a => a.Id == appId && a.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("修改应用图标失败");
@@ -786,9 +786,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(deskNum);
             return await Task.Run<App>(() =>
             {
-                using (var dataStore = new DataStore(Appsetting.Database))
+                using (var SqlContext = new SqlContext(Appsetting.Database))
                 {
-                    dataStore.OpenTransaction();
+                    SqlContext.OpenTransaction();
                     try
                     {
                         App app = null;
@@ -813,7 +813,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                 new ParameterMapper("@AppReleaseState",AppReleaseState.Release.ToInt32()),
                                 new ParameterMapper("@Id",appId)
                             };
-                            app = dataStore.FindOne<App>(sql, parameters);
+                            app = SqlContext.FindOne<App>(sql, parameters);
 
                             if (app == null)
                             {
@@ -825,14 +825,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         #region 添加桌面应用
                         {
                             var newMember = new Member(app.Name, app.IconUrl, app.AppUrl, app.Id, app.Width, app.Height, userId, deskNum, app.AppStyle, app.IsIconByUpload, app.IsSetbar, app.IsOpenMax, app.IsFlash, app.IsResize);
-                            dataStore.Add(newMember);
+                            SqlContext.Add(newMember);
                         }
                         #endregion
 
                         #region 更改应用使用数量
                         {
                             app.IncreaseUseCount();
-                            var result = dataStore.Modify(app, a => a.Id == appId);
+                            var result = SqlContext.Modify(app, a => a.Id == appId);
                             if (!result)
                             {
                                 throw new BusinessException("修改应用使用数量失败");
@@ -840,12 +840,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         }
                         #endregion
 
-                        dataStore.Commit();
+                        SqlContext.Commit();
                         return app;
                     }
                     catch (Exception)
                     {
-                        dataStore.Rollback();
+                        SqlContext.Rollback();
                         throw;
                     }
                 }

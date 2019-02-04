@@ -55,7 +55,7 @@ namespace NewCrmCore.NotifyCenter
 
         public async Task SendNotify(Int32 userId, Notify notify)
         {
-            using (var dataStore = new DataStore(Appsetting.Database))
+            using (var dataStore = new SqlContext(Appsetting.Database))
             {
                 var result = dataStore.Add(notify);
                 if (result > 0)
