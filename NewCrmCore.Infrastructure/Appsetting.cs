@@ -1,4 +1,5 @@
 ﻿using System;
+using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
 
 namespace NewCrmCore.Infrastructure

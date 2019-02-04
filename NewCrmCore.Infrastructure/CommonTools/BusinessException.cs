@@ -1,4 +1,7 @@
-﻿namespace NewCrmCore.Infrastructure.CommonTools
+﻿using System;
+using System.Runtime.Serialization;
+
+namespace NewCrmCore.Infrastructure.CommonTools
 {
     [Serializable]
     public class BusinessException : Exception
@@ -18,15 +21,15 @@
     [Serializable]
     public class EnvVariableGetFailException : Exception
     {
-        public GetEnvVariableFailException() { }
+        public EnvVariableGetFailException() { }
 
-        public GetEnvVariableFailException(String message)
+        public EnvVariableGetFailException(String message)
             : base(message) { }
 
-        public GetEnvVariableFailException(String message, Exception inner)
+        public EnvVariableGetFailException(String message, Exception inner)
             : base(message, inner) { }
 
-        protected GetEnvVariableFailException(SerializationInfo info, StreamingContext context)
+        protected EnvVariableGetFailException(SerializationInfo info, StreamingContext context)
             : base(info, context) { }
 
     }
