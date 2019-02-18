@@ -4,7 +4,6 @@
     id: 0
 };
 
-
 $('.title ul > li').on('click', () => {
     let $li = $(this);
     let value = $li.attr('data-value');
