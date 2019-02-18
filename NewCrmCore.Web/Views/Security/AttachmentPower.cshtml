@@ -2,187 +2,189 @@
 @using NewCrmCore.Infrastructure.CommonTools
 @model IList<AppDto>
 @{
-	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
-	var rolePowerResult = ViewData["RolePowerResult"] as RoleDto;
-	if (rolePowerResult == null)
-	{
-		rolePowerResult = new RoleDto();
-	}
+    Layout = "~/Views/Shared/_LayoutRoot.cshtml";
+    var rolePowerResult = ViewData["RolePowerResult"] as RoleDto;
+    if (rolePowerResult == null)
+    {
+        rolePowerResult = new RoleDto();
+    }
 }
 @section ChildrenCss
-{
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
-	<style>
-	 *{
-		box-sizing:unset;
-	  }
-	</style>
+    {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: unset;
+        }
+    </style>
 }
 @section SysCss
-{
-	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
+    {
+    <link rel="stylesheet" href="/css/hoorayui/sys.css" />
 }
 <form action="/security/addapptorole" method="post" name="form" id="form">
-	<input type="hidden" name="val_roleId" value="@Context.Request.Query["roleId"]" />
-	<input type="hidden" name="token" value="@(await TimeToken.GetFormTokenAsync())" />
-	<div class="creatbox">
-		<div class="middle">
-			<p class="detile-title">
-				<strong>角色添加权限</strong>
-			</p>
-			<div class="input-label">
-				<label class="label-text">角色名称：</label>
-				<div class="form-inline">
-					@{
-						if (rolePowerResult.Name == null)
-						{
-							<text> <input class="form-control" disabled="disabled" type="checkbox" name="val_name" value="" datatype="s2-10" nullmsg="请输入角色名称" errormsg="角色名称长度为2-10个字符"></text>
-						}
-						else
-						{
-							<text> <input class="form-control" disabled="disabled" type="text" name="val_name" value="@rolePowerResult.Name" datatype="s2-10" nullmsg="请输入角色名称" errormsg="角色名称长度为2-10个字符"></text>
-						}
-					}
+    <input type="hidden" name="val_roleId" value="@Context.Request.Query["roleId"]" />
+    <input type="hidden" name="token" value="@(await TimeToken.GetFormTokenAsync())" />
+    <div class="creatbox">
+        <div class="middle">
+            <p class="detile-title">
+                <strong>角色添加权限</strong>
+            </p>
+            <div class="input-label">
+                <label class="label-text">角色名称：</label>
+                <div class="form-inline">
+                    @{
+                        if (rolePowerResult.Name == null)
+                        {
+                            <text> <input class="form-control" disabled="disabled" type="checkbox" name="val_name" value="" datatype="s2-10" nullmsg="请输入角色名称" errormsg="角色名称长度为2-10个字符"></text>
+                        }
+                        else
+                        {
+                            <text> <input class="form-control" disabled="disabled" type="text" name="val_name" value="@rolePowerResult.Name" datatype="s2-10" nullmsg="请输入角色名称" errormsg="角色名称长度为2-10个字符"></text>
+                        }
+                    }
 
-					<span class="help-inline"></span>
-				</div>
-			</div>
-			<div class="input-label">
-				<label class="label-text">专属应用：</label>
-				<div class="form-inline">
-					<div class="permissions_apps">
-						@{
-							foreach (var appDto in Model)
-							{
-								<div class="app" appid="@appDto.Id">
-									<img src="@appDto.IconUrl" alt="@appDto.Name" title="@appDto.Name">
-									<span class="del">删</span>
-								</div>
-							}
-						}
-					</div>
-					<a class="btn btn-primary" href="###" menu="addapps">添加应用</a>
-					<input type="hidden" name="val_apps_id" id="val_apps_id" value="@String.Join(",", Model.Select(s => s.Id))" @*datatype="*" nullmsg="请选择专属应用" *@>
-					<span class="help-inline"></span>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="bottom-bar">
-		<div class="con">
-			<a class="btn btn-primary fr" id="btn-submit" href="###"><i class="oi oi-check"></i> 确定</a>
-			<a class="btn fr" href="javascript:window.parent.closeDetailIframe();" style="margin-right: 10px"><i class="oi oi-chevron-top"></i> 返回角色列表</a>
-		</div>
-	</div>
+                    <span class="help-inline"></span>
+                </div>
+            </div>
+            <div class="input-label">
+                <label class="label-text">专属应用：</label>
+                <div class="form-inline">
+                    <div class="permissions_apps">
+                        @{
+                            foreach (var appDto in Model)
+                            {
+                                <div class="app" appid="@appDto.Id">
+                                    <img src="@appDto.IconUrl" alt="@appDto.Name" title="@appDto.Name">
+                                    <span class="del">删</span>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <a class="btn btn-primary" href="###" menu="addapps">添加应用</a>
+                    <input type="hidden" name="val_apps_id" id="val_apps_id" value="@String.Join(",", Model.Select(s => s.Id))" @*datatype="*" nullmsg="请选择专属应用" *@>
+                    <span class="help-inline"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-bar">
+        <div class="con">
+            <a class="btn btn-primary fr" id="btn-submit" href="###"><i class="oi oi-check"></i> 确定</a>
+            <a class="btn fr" href="javascript:window.parent.closeDetailIframe();" style="margin-right: 10px"><i class="oi oi-chevron-top"></i> 返回角色列表</a>
+        </div>
+    </div>
 </form>
 @section ChildrenScript
-{
-	@{ 
-		<text>
-			let f =	$('#form').Validform({
-					btnSubmit: '#btn-submit',
-					postonce: true,
-					showAllError: true,
-					tiptype: function (msg, o) {
-						if (!o.obj.is('form')) {
-							let B = o.obj.parents('.control-group');
-							let T = B.children('.help-inline');
-							if (o.type === 2) {
-								B.removeClass('error');
-								T.text('');
-							} else {
-								B.addClass('error');
-								T.text(msg);
-							}
-						}
-					},
-					ajaxPost: true,
-					postonceTip:function(){
-						NewCrm.msgbox.fail(HROS.CONFIG.postOnce)
-					},
-					beforeSubmit: function (curform) { 
-						NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
-					},
-					callback: function (responseText) {
-						if (responseText.IsSuccess) {
-							if ($('input[name="val_roleId"]').val()) {
-								$.dialog({
-									id: 'ajaxedit',
-									content: '修改成功，是否继续修改？',
-									okVal: '是',
-									ok: function () {
-										$.dialog.list['ajaxedit'].close();
-									},
-									cancel: function () {
-										window.parent.closeDetailIframe(function () {
-											window.parent.$('#pagination').trigger('currentPage');
-										});
-									}
-								});
-							} else {
-								$.dialog({
-									id: 'ajaxedit',
-									content: '添加成功，是否继续添加？',
-									okVal: '是',
-									ok: function () {
-										location.reload();
-										return false;
-									},
-									cancel: function () {
-										window.parent.closeDetailIframe(function () {
-											window.parent.$('#pagination').trigger('currentPage');
-										});
-									}
-								});
-							}
-						} else {
-							NewCrm.msgbox.fail(responseText.Message);
-						}
-					}
-				});
-				//添加应用
-			$('a[menu=addapps]').click(function () {
-				$.dialog.data('appsid', $('#val_apps_id').val());
-				$.dialog.open('/security/addsystemappgotopower', {
-					id: 'alert_addapps',
-					title: '添加应用',
-					resize: false,
-					width: 360,
-					height: 300,
-					ok: function () {
-						$('#val_apps_id').val($.dialog.data('appsid')).focusout();
-						HROS.request.get('/security/getsystemapp', { appIds: $.dialog.data('appsid') }, function (responseText) {
-							if (responseText.IsSuccess) {
-								let model = responseText.Model;
-								let msg = "";
-								for (let i = 0; i < model.length; i++) {
-									msg += '<div class="app" appid="' + model[i].Id + '">' +
-										'<img src="' + model[i].IconUrl + '" alt="' + model[i].Name + '" title="' + model[i].Name + '">' +
-										'<span class="del">删</span>' +
-										'</div>';
-								}
-								$('.permissions_apps').html(msg);
-							}
-						})
-					},
-					cancel: true
-				});
-			});
-			//删除应用
-			$('.permissions_apps').on('click', '.app .del', function () {
-				let appid = $(this).parent().attr('appid');
-				let appsid = $('#val_apps_id').val().split(',');
-				let newappsid = [];
-				for (let i = 0, j = 0; i < appsid.length; i++) {
-					if (appsid[i] != appid) {
-						newappsid[j] = appsid[i];
-						j++;
-					}
-				}
-				$('#val_apps_id').val(newappsid.join(',')).focusout();
-				$(this).parent().remove();
-			});
-		</text>
-	}
+    {
+    @{
+        <text>
+            let f =	$('#form').Validform({
+            btnSubmit: '#btn-submit',
+            postonce: true,
+            showAllError: true,
+            tiptype:   (msg, o)=> {
+            if (!o.obj.is('form')) {
+            let B = o.obj.parents('.control-group');
+            let T = B.children('.help-inline');
+            if (o.type === 2) {
+            B.removeClass('error');
+            T.text('');
+            } else {
+            B.addClass('error');
+            T.text(msg);
+            }
+            }
+            },
+            ajaxPost: true,
+            postonceTip: ()=>{
+            NewCrm.msgbox.fail(HROS.CONFIG.postOnce)
+            },
+            beforeSubmit:   (curform) => {
+            NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+            },
+            callback:   (responseText) => {
+            if (responseText.IsSuccess) {
+            if ($('input[name="val_roleId"]').val()) {
+            $.dialog({
+            id: 'ajaxedit',
+            content: '修改成功，是否继续修改？',
+            okVal: '是',
+            ok:   () => {
+            $.dialog.list['ajaxedit'].close();
+            },
+            cancel:   ()=> {
+            window.parent.closeDetailIframe(  () => {
+            window.parent.$('#pagination').trigger('currentPage');
+            });
+            }
+            });
+            } else {
+            $.dialog({
+            id: 'ajaxedit',
+            content: '添加成功，是否继续添加？',
+            okVal: '是',
+            ok:   () => {
+            location.reload();
+            return false;
+            },
+            cancel:   () => {
+            window.parent.closeDetailIframe(  () => {
+            window.parent.$('#pagination').trigger('currentPage');
+            });
+            }
+            });
+            }
+            } else {
+            NewCrm.msgbox.fail(responseText.Message);
+            }
+            }
+            });
+            //添加应用
+            $('a[menu=addapps]').click(  () => {
+            $.dialog.data('appsid', $('#val_apps_id').val());
+            $.dialog.open('/security/addsystemappgotopower', {
+            id: 'alert_addapps',
+            title: '添加应用',
+            resize: false,
+            width: 360,
+            height: 300,
+            ok:   () => {
+            $('#val_apps_id').val($.dialog.data('appsid')).focusout();
+            HROS.request.get('/security/getsystemapp', { appIds: $.dialog.data('appsid') },   (responseText) => {
+            if (responseText.IsSuccess) {
+            let model = responseText.Model;
+            let msg = "";
+            for (let i = 0; i < model.length; i++) {
+            msg += '<div class="app" appid="' + model[i].Id + '">
+                ' +
+                '<img src="' + model[i].IconUrl + '" alt="' + model[i].Name + '" title="' + model[i].Name + '">' +
+                '<span class="del">删</span>' +
+                '
+            </div>';
+            }
+            $('.permissions_apps').html(msg);
+            }
+            })
+            },
+            cancel: true
+            });
+            });
+            //删除应用
+            $('.permissions_apps').on('click', '.app .del',   ()=> {
+            let appid = $(this).parent().attr('appid');
+            let appsid = $('#val_apps_id').val().split(',');
+            let newappsid = [];
+            for (let i = 0, j = 0; i < appsid.length; i++) {
+            if (appsid[i] != appid) {
+            newappsid[j] = appsid[i];
+            j++;
+            }
+            }
+            $('#val_apps_id').val(newappsid.join(',')).focusout();
+            $(this).parent().remove();
+            });
+        </text>
+    }
 }
 

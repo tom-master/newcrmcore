@@ -1,164 +1,165 @@
 ﻿@model NewCrmCore.Dto.AppTypeDto
 @using NewCrmCore.Infrastructure.CommonTools
 @{
-	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
-	var appTypeId = Context.Request.Query["appTypeId"];
+    Layout = "~/Views/Shared/_LayoutRoot.cshtml";
+    var appTypeId = Context.Request.Query["appTypeId"];
 }
 @section ChildrenCss
-{
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
     <style>
-	 *{
-		box-sizing:unset;
-	  }
-	</style>
+        * {
+            box-sizing: unset;
+        }
+    </style>
 }
 @section SysCss
-{
-	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
+    {
+    <link rel="stylesheet" href="/css/hoorayui/sys.css" />
 }
 <form action="/apptypes/create?appTypeId=@appTypeId" method="post" name="form" id="form">
-	<input type="hidden" name="ac" value="edit">
-	<input type="hidden" name="token" value="@( await TimeToken.GetFormTokenAsync())" />
-	<div class="creatbox">
-		<div class="middle">
-			<p class="detile-title">
-				<strong>编辑类目</strong>
-			</p>
-			<div class="input-label">
-				<label class="label-text">类目名称：</label>
-				<div class="form-inline">
-					@{
-						if (Model != null)
-						{
-							<text>
-								<input class="form-control" type="text" name="val_name" value="@Model.Name" datatype="s2-10" nullmsg="请输入应用类型名称" errormsg="应用类型名称长度为2-10个字符">
-							</text>
-						}
-						else
-						{
-							<text>
-								<input class="form-control" type="text" name="val_name" value="" datatype="s2-10" nullmsg="请输入应用类型名称" errormsg="应用类型名称长度为2-10个字符" ajaxurl="@Url.Action("CheckName","AppTypes")">
-							</text>
-						}
-					}
-
-					<span class="help-inline"></span>
-				</div>
-			</div>
+    <input type="hidden" name="ac" value="edit">
+    <input type="hidden" name="token" value="@( await TimeToken.GetFormTokenAsync())" />
+    <div class="creatbox">
+        <div class="middle">
+            <p class="detile-title">
+                <strong>编辑类目</strong>
+            </p>
             <div class="input-label">
-				<label class="label-text">是否为系统分类：</label>
-				<div class=" form-inline">
-					@{
-                        if(Model==null)
+                <label class="label-text">类目名称：</label>
+                <div class="form-inline">
+                    @{
+                        if (Model != null)
+                        {
+                            <text>
+                                <input class="form-control" type="text" name="val_name" value="@Model.Name" datatype="s2-10" nullmsg="请输入应用类型名称" errormsg="应用类型名称长度为2-10个字符">
+                            </text>
+                        }
+                        else
+                        {
+                            <text>
+                                <input class="form-control" type="text" name="val_name" value="" datatype="s2-10" nullmsg="请输入应用类型名称" errormsg="应用类型名称长度为2-10个字符" ajaxurl="@Url.Action("CheckName","AppTypes")">
+                            </text>
+                        }
+                    }
+
+                    <span class="help-inline"></span>
+                </div>
+            </div>
+            <div class="input-label">
+                <label class="label-text">是否为系统分类：</label>
+                <div class=" form-inline">
+                    @{
+                        if (Model == null)
                         {
                             <text>
                                 <label class="radio" style="margin-right: 10px">
-									<input type="radio" name="val_issystem" value="1">是
-								</label>
+                                    <input type="radio" name="val_issystem" value="1">是
+                                </label>
                                 <label class="radio" style="margin-right: 10px">
-									<input type="radio" name="val_issystem" value="0"  checked="checked">否
-								</label>
+                                    <input type="radio" name="val_issystem" value="0" checked="checked">否
+                                </label>
                             </text>
-                        } 
-                        else 
+                        }
+                        else
                         {
-                            if(Model.IsSystem)
+                            if (Model.IsSystem)
                             {
                                 <text>
                                     <label class="radio" style="margin-right: 10px">
-                                        <input type="radio" name="val_issystem" value="1"  checked="checked">是
+                                        <input type="radio" name="val_issystem" value="1" checked="checked">是
                                     </label>
                                     <label class="radio" style="margin-right: 10px">
                                         <input type="radio" name="val_issystem" value="0">否
                                     </label>
                                 </text>
-                            } else 
+                            }
+                            else
                             {
                                 <text>
                                     <label class="radio" style="margin-right: 10px">
-                                        <input type="radio" name="val_issystem" value="1" >是
+                                        <input type="radio" name="val_issystem" value="1">是
                                     </label>
                                     <label class="radio" style="margin-right: 10px">
-                                        <input type="radio" name="val_issystem" value="0"  checked="checked">否
+                                        <input type="radio" name="val_issystem" value="0" checked="checked">否
                                     </label>
                                 </text>
                             }
                         }
-					}
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="bottom-bar">
-		<div class="con">
-			<a class="btn btn-primary fr" id="btn-submit" href="###"><i class="oi oi-check"></i> 确定</a>
-			<a class="btn fr" href="javascript:window.parent.closeDetailIframe();" style="margin-right:10px"><i class="oi oi-chevron-top"></i> 返回类目列表</a>
-		</div>
-	</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-bar">
+        <div class="con">
+            <a class="btn btn-primary fr" id="btn-submit" href="###"><i class="oi oi-check"></i> 确定</a>
+            <a class="btn fr" href="javascript:window.parent.closeDetailIframe();" style="margin-right:10px"><i class="oi oi-chevron-top"></i> 返回类目列表</a>
+        </div>
+    </div>
 </form>
 @section ChildrenScript
-{
+    {
     let f = $('#form').Validform({
-        btnSubmit: '#btn-submit',
-        postonce: true,
-        showAllError: true, 
-        tiptype: function (msg, o) {
-            if (!o.obj.is('form')) { 
-                let B = o.obj.parents('.control-group');
-                let T = B.children('.help-inline');
-                if (o.type == 2) {
-                    B.removeClass('error');
-                    T.text('');
-                } else {
-                    B.addClass('error');
-                    T.text(msg);
-                }
-            }
-        },
-        ajaxPost: true,
-        postonceTip:function(){
-            NewCrm.msgbox.fail(HROS.CONFIG.postOnce)
-        },
-        beforeSubmit: function (curform) { 
-            NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
-        },
-        callback: function (responseText) {
-            if (responseText.IsSuccess) {
-                if ('@appTypeId') {
-                    $.dialog({
-                        id: 'ajaxedit',
-                        content: '修改成功，是否继续修改？',
-                        okVal: '是',
-                        ok: function () {
-                            $.dialog.list['ajaxedit'].close();
-                        },
-                        cancel: function () {
-                            window.parent.closeDetailIframe(function () {
-                                window.parent.$('#pagination').trigger('currentPage');
-                            });
-                        }
-                    });
-                } else {
-                    $.dialog({
-                        id: 'ajaxedit',
-                        content: '添加成功，是否继续添加？',
-                        okVal: '是',
-                        ok: function () {
-                            location.reload();
-                            return false;
-                        },
-                        cancel: function () {
-                            window.parent.closeDetailIframe(function () {
-                                window.parent.$('#pagination').trigger('currentPage');
-                            });
-                        }
-                    });
-                }
-            } else {
-                NewCrm.msgbox.fail(responseText.Message);
-            }
-        }
+    btnSubmit: '#btn-submit',
+    postonce: true,
+    showAllError: true,
+    tiptype:   (msg, o)=> {
+    if (!o.obj.is('form')) {
+    let B = o.obj.parents('.control-group');
+    let T = B.children('.help-inline');
+    if (o.type == 2) {
+    B.removeClass('error');
+    T.text('');
+    } else {
+    B.addClass('error');
+    T.text(msg);
+    }
+    }
+    },
+    ajaxPost: true,
+    postonceTip: ()=>{
+    NewCrm.msgbox.fail(HROS.CONFIG.postOnce)
+    },
+    beforeSubmit:   (curform) =>{
+    NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+    },
+    callback:   (responseText) => {
+    if (responseText.IsSuccess) {
+    if ('@appTypeId') {
+    $.dialog({
+    id: 'ajaxedit',
+    content: '修改成功，是否继续修改？',
+    okVal: '是',
+    ok:   ()=> {
+    $.dialog.list['ajaxedit'].close();
+    },
+    cancel:   () => {
+    window.parent.closeDetailIframe(  () => {
+    window.parent.$('#pagination').trigger('currentPage');
+    });
+    }
+    });
+    } else {
+    $.dialog({
+    id: 'ajaxedit',
+    content: '添加成功，是否继续添加？',
+    okVal: '是',
+    ok:   () => {
+    location.reload();
+    return false;
+    },
+    cancel:   () => {
+    window.parent.closeDetailIframe(  () => {
+    window.parent.$('#pagination').trigger('currentPage');
+    });
+    }
+    });
+    }
+    } else {
+    NewCrm.msgbox.fail(responseText.Message);
+    }
+    }
     });
 }
 

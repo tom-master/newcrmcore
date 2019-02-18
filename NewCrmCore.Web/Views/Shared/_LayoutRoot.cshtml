@@ -1,22 +1,22 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-	<title>@ViewBag.Title</title>
-	<link rel="shortcut icon" href="~/favicon.ico" />
- 	<link rel="stylesheet" href="/css/hoorayui/globle.css" />
-	@RenderSection("ChildrenCss",required: false)
-	<link rel="stylesheet" href="/js/hooray/lib/hooraylibs.css" />  
-	@RenderSection("IndexCss", required: false)
-	@RenderSection("SysCss",required: false)
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" rel="stylesheet">
-	<style>
-		* { 
-			font-size: 12px !important;
-		}
-	</style>
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" href="~/favicon.ico" />
+    <link rel="stylesheet" href="/css/hoorayui/globle.css" />
+    @RenderSection("ChildrenCss", required: false)
+    <link rel="stylesheet" href="/js/hooray/lib/hooraylibs.css" />
+    @RenderSection("IndexCss", required: false)
+    @RenderSection("SysCss", required: false)
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            font-size: 12px !important;
+        }
+    </style>
 </head>
 <body>
-	@RenderBody()
+    @RenderBody()
 </body>
 </html>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
@@ -29,29 +29,29 @@
 <script src="https://cdn.bootcss.com/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
 
 <environment names="Development" asp-append-version="true">
-	<script src="/js/hooray/lib/hooraylibs.js"></script>
-	<script src="/js/hooray/hros.min.js"></script>
-	<script src="/js/validate/Validform_v5.3.2/Validform_v5.3.2_min.js"></script>
-	<script src="https://cdn.bootcss.com/webuploader/0.1.1/webuploader.min.js"></script>
-	<script src="/js/artDialog4.1.7/jquery.artDialog.source.js"></script>
-	<script src="/js/artDialog4.1.7/plugins/iframeTools.js"></script>
-	<script src="https://cdn.bootcss.com/handlebars.js/4.0.11/handlebars.min.js"></script>
-	<script src="/js/signalr/signalr.min.js"></script>
-	<script src="/js/lobibox/lobibox.js"></script>
+    <script src="/js/hooray/lib/hooraylibs.js"></script>
+    <script src="/js/hooray/hros.min.js"></script>
+    <script src="/js/validate/Validform_v5.3.2/Validform_v5.3.2_min.js"></script>
+    <script src="https://cdn.bootcss.com/webuploader/0.1.1/webuploader.min.js"></script>
+    <script src="/js/artDialog4.1.7/jquery.artDialog.source.js"></script>
+    <script src="/js/artDialog4.1.7/plugins/iframeTools.js"></script>
+    <script src="https://cdn.bootcss.com/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="/js/signalr/signalr.min.js"></script>
+    <script src="/js/lobibox/lobibox.js"></script>
 </environment>
 <environment names="Production" asp-append-version="true">
-	<script src="/js/hooray/lib/hooraylibs.js"></script>
-	<script src="/js/newcrm.site.min.js"></script>
-	<script src="https://cdn.bootcss.com/webuploader/0.1.1/webuploader.min.js"></script>
-	<script src="https://cdn.bootcss.com/handlebars.js/4.0.11/handlebars.min.js"></script>
-	<script src="/js/signalr/signalr.min.js"></script>
-	<script src="/js/lobibox/lobibox.js"></script>
+    <script src="/js/hooray/lib/hooraylibs.js"></script>
+    <script src="/js/newcrm.site.min.js"></script>
+    <script src="https://cdn.bootcss.com/webuploader/0.1.1/webuploader.min.js"></script>
+    <script src="https://cdn.bootcss.com/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="/js/signalr/signalr.min.js"></script>
+    <script src="/js/lobibox/lobibox.js"></script>
 </environment>
-@RenderSection("ChildrenTemplate",required: false)
+@RenderSection("ChildrenTemplate", required: false)
 <script>
-	$(function () {
+    $(() => {
 		//配置artDialog全局默认参数
-		(function (config) {
+        ((config) => {
 			config['lock'] = true;
 			config['fixed'] = true;
 			config['resize'] = false;
@@ -63,28 +63,28 @@
 		//toolTip
 		$('[rel="tooltip"]').tooltip();
 		//表单提示
-		$("[datatype]").focusin(function () {
+        $("[datatype]").focusin(() => {
 			$(this).parent().addClass('info').children('.infomsg').show().siblings('.help-inline').hide();
-		}).focusout(function () {
+        }).focusout(() => {
 			$(this).parent().removeClass('info').children('.infomsg').hide().siblings('.help-inline').show();
 		});
 
-		openDetailIframe = function (url) {
-			$('#detailIframe iframe').attr('src', url).on('load', function () {
+        openDetailIframe = (url) => {
+            $('#detailIframe iframe').attr('src', url).on('load', () => {
 				$('body').css('overflow', 'hidden');
 				$('#detailIframe').animate({ 'top': 0, 'opacity': 'show' }, 500);
 			});
 		};
-		closeDetailIframe = function (callback) {
+        closeDetailIframe = (callback) => {
 			$('body').css('overflow', 'auto');
-			$('#detailIframe').animate({ 'top': '-100px', 'opacity': 'hide' }, 500, function () {
+            $('#detailIframe').animate({ 'top': '-100px', 'opacity': 'hide' }, 500, () => {
 				if (callback) {
 					callback && callback();
 				}
 			});
 		};
 
-		function initPagination(config) {
+		function initPagination (config) {
 			$('#pagination').pagination(parseInt($('#pagination_setting').attr('count')), {
 				current_page: config.current_page,
 				items_per_page: config.items_per_page,

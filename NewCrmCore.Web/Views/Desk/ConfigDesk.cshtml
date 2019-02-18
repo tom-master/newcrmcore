@@ -1,251 +1,252 @@
 ﻿@using NewCrmCore.Dto
 @using NewCrmCore.Domain.ValueObject
 @{
-	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
-	var userConfig = ViewData["UserConfig"] as ConfigDto;
-	var desks = (Int32)ViewData["Desks"];
+    Layout = "~/Views/Shared/_LayoutRoot.cshtml";
+    var userConfig = ViewData["UserConfig"] as ConfigDto;
+    var desks = (Int32)ViewData["Desks"];
 }
 @section ChildrenCss
-{
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
-	<style>
-	 *{
-		box-sizing:unset;
-	  }
-	</style>
+    {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: unset;
+        }
+    </style>
 }
 @section SysCss
-{
-	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
+    {
+    <link rel="stylesheet" href="/css/hoorayui/sys.css" />
 }
 <div class="title">默认桌面(登录后默认显示)</div>
 <div class="input-label">
-	<label class="label-text">默认显示：</label>
-	<div class="form-inline">
-		@{
-			for (int i = 1; i <= desks; i++)
-			{
-				<text>
-					<label class="radio" style="margin-right: 10px">
-						<input type="radio" name="desk" value="@i" @{ if (i == userConfig.DefaultDeskNumber) { <text> checked="checked" </text>  } }>第@{@i}桌面
-					</label>
-				</text>
-			}
-		}
-	</div>
+    <label class="label-text">默认显示：</label>
+    <div class="form-inline">
+        @{
+            for (int i = 1; i <= desks; i++)
+            {
+                <text>
+                    <label class="radio" style="margin-right: 10px">
+                        <input type="radio" name="desk" value="@i" @
+                               { if (i= =userConfig.DefaultDeskNumber) { <text> checked="checked" </text>  } }>第@{@i}桌面
+                        </label>
+                </text>
+            }
+        }
+    </div>
 </div>
 <div class="title">桌面壁纸来源设置</div>
 <div class="input-label">
-	<label class="label-text">来自：</label>
-	<div class="form-inline">
-		@{
-			if (userConfig.IsBing)
-			{
-				<label class="radio" style="margin-right: 10px">
-					<input type="radio" name="wallpapersource" value="bing" checked="checked" />Bing
-				</label>
-				<label class="radio">
-					<input type="radio" name="wallpapersource" value="system" />系统自带
-				</label>
-			}
-			else
-			{
-				<label class="radio" style="margin-right: 10px">
-					<input type="radio" name="wallpapersource" value="bing" />Bing
-				</label>
-				<label class="radio">
-					<input type="radio" name="wallpapersource" value="system" checked="checked" />系统自带
-				</label>
-			}
-		}
-	</div>
+    <label class="label-text">来自：</label>
+    <div class="form-inline">
+        @{
+            if (userConfig.IsBing)
+            {
+                <label class="radio" style="margin-right: 10px">
+                    <input type="radio" name="wallpapersource" value="bing" checked="checked" />Bing
+                </label>
+                <label class="radio">
+                    <input type="radio" name="wallpapersource" value="system" />系统自带
+                </label>
+            }
+            else
+            {
+                <label class="radio" style="margin-right: 10px">
+                    <input type="radio" name="wallpapersource" value="bing" />Bing
+                </label>
+                <label class="radio">
+                    <input type="radio" name="wallpapersource" value="system" checked="checked" />系统自带
+                </label>
+            }
+        }
+    </div>
 </div>
 
 <div class="title">桌面图标设置</div>
 <div class="input-label">
-	<label class="label-text">排列方式：</label>
-	<div class="form-inline">
-		<label class="radio" style="margin-right: 10px">
-			<input type="radio" name="appxy" value="x" @{ if (userConfig.AppXy == AppAlignMode.X) { <text> checked="checked" </text>  } } />横向排列
-		</label>
-		<label class="radio">
-			<input type="radio" name="appxy" value="y" @{ if (userConfig.AppXy == AppAlignMode.Y) { <text> checked="checked" </text>  } } />纵向排列
-		</label>
-	</div>
+    <label class="label-text">排列方式：</label>
+    <div class="form-inline">
+        <label class="radio" style="margin-right: 10px">
+            <input type="radio" name="appxy" value="x" @{ if (userConfig.AppXy == AppAlignMode.X) { <text> checked="checked" </text>  } } />横向排列
+        </label>
+        <label class="radio">
+            <input type="radio" name="appxy" value="y" @{ if (userConfig.AppXy == AppAlignMode.Y) { <text> checked="checked" </text>  } } />纵向排列
+        </label>
+    </div>
 </div>
 <div class="input-label">
-	<label class="label-text">显示尺寸：</label>
-	<div class="form-inline">
-		 <div class="input-group">
-			<div class="input-group-prepend ">
-				<button class="btn appsize-minus" type="button"><i class="oi oi-minus"></i></button>
-			</div>
-				<input type="text" name="appsize" style="width:50px" class="text-center form-control" value="@userConfig.AppSize">
-			<div class="input-group-append ">
-				<button class="btn appsize-plus" type="button"><i class="oi oi-plus"></i></button>
-			</div>
-		 </div>
-	</div>
+    <label class="label-text">显示尺寸：</label>
+    <div class="form-inline">
+        <div class="input-group">
+            <div class="input-group-prepend ">
+                <button class="btn appsize-minus" type="button"><i class="oi oi-minus"></i></button>
+            </div>
+            <input type="text" name="appsize" style="width:50px" class="text-center form-control" value="@userConfig.AppSize">
+            <div class="input-group-append ">
+                <button class="btn appsize-plus" type="button"><i class="oi oi-plus"></i></button>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="input-label">
-	<label class="label-text">垂直间距：</label>
-	<div class="form-inline">
-		 <div class="input-group">
-			<div class="input-group-prepend ">
-				<button class="btn appverticalspacing-minus" type="button"><i class="oi oi-minus"></i></button>
-			</div>
-				<input type="text" name="appverticalspacing" style="width:50px" class="text-center form-control" value="@userConfig.AppVerticalSpacing">
-			<div class="input-group-append ">
-				<button class="btn appverticalspacing-plus" type="button"><i class="oi oi-plus"></i></button>
-			</div>
-		</div>
-	</div>
+    <label class="label-text">垂直间距：</label>
+    <div class="form-inline">
+        <div class="input-group">
+            <div class="input-group-prepend ">
+                <button class="btn appverticalspacing-minus" type="button"><i class="oi oi-minus"></i></button>
+            </div>
+            <input type="text" name="appverticalspacing" style="width:50px" class="text-center form-control" value="@userConfig.AppVerticalSpacing">
+            <div class="input-group-append ">
+                <button class="btn appverticalspacing-plus" type="button"><i class="oi oi-plus"></i></button>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="input-label">
-	<label class="label-text">水平间距：</label>
-	<div class="form-inline">
-		<div class="input-group">
-			<div class="input-group-prepend ">
-				<button class="btn apphorizontalspacing-minus" type="button"><i class="oi oi-minus"></i></button>
-			</div>
-				<input type="text" name="apphorizontalspacing" style="width:50px" class="text-center form-control" value="@userConfig.AppHorizontalSpacing">
-			<div class="input-group-append ">
-				<button class="btn apphorizontalspacing-plus" type="button"><i class="oi oi-plus"></i></button>
-			</div>
-		</div>
-	</div>
+    <label class="label-text">水平间距：</label>
+    <div class="form-inline">
+        <div class="input-group">
+            <div class="input-group-prepend ">
+                <button class="btn apphorizontalspacing-minus" type="button"><i class="oi oi-minus"></i></button>
+            </div>
+            <input type="text" name="apphorizontalspacing" style="width:50px" class="text-center form-control" value="@userConfig.AppHorizontalSpacing">
+            <div class="input-group-append ">
+                <button class="btn apphorizontalspacing-plus" type="button"><i class="oi oi-plus"></i></button>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="title">应用码头设置</div>
 <div class="dock_setting">
-	<table>
-		<tr>
-			<td colspan="3">
-				<div class="set_top">
-					<label class="radio">
-						<input type="radio" name="dockpos" value="top" @{ if (userConfig.DockPosition == DockPosition.Top) { <text> checked="checked" </text>  } }>顶部
-					</label>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td width="75">
-				<div class="set_left form-inline">
-					<label class="radio">
-						<input type="radio" name="dockpos" value="left" @{ if (userConfig.DockPosition == DockPosition.Left) { <text> checked="checked" </text>  } }>左侧
-					</label>
-				</div>
-			</td>
-			<td class="set_view set_view_@{var position = userConfig.DockPosition; <text>@position</text>}"></td>
-			<td width="75">
-				<div class="set_right form-inline"><label class="radio"><input type="radio" name="dockpos" value="right" @{ if (userConfig.DockPosition == DockPosition.Right) { <text> checked="checked" </text>  } }>右侧</label></div>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="3">
-				<div class="set_none"><label class="radio"><input type="radio" name="dockpos" value="none" @{ if (userConfig.DockPosition == DockPosition.None) { <text> checked="checked" </text>  } }>停用并隐藏（如果应用码头存在应用，则会将应用转移到当前桌面）</label></div>
-			</td>
-		</tr>
-	</table>
+    <table>
+        <tr>
+            <td colspan="3">
+                <div class="set_top">
+                    <label class="radio">
+                        <input type="radio" name="dockpos" value="top" @{ if (userConfig.DockPosition == DockPosition.Top) { <text> checked="checked" </text>  } }>顶部
+                    </label>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width="75">
+                <div class="set_left form-inline">
+                    <label class="radio">
+                        <input type="radio" name="dockpos" value="left" @{ if (userConfig.DockPosition == DockPosition.Left) { <text> checked="checked" </text>  } }>左侧
+                    </label>
+                </div>
+            </td>
+            <td class="set_view set_view_@{var position = userConfig.DockPosition; <text>@position</text>}"></td>
+            <td width="75">
+                <div class="set_right form-inline"><label class="radio"><input type="radio" name="dockpos" value="right" @{ if (userConfig.DockPosition == DockPosition.Right) { <text> checked="checked" </text>  } }>右侧</label></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <div class="set_none"><label class="radio"><input type="radio" name="dockpos" value="none" @{ if (userConfig.DockPosition == DockPosition.None) { <text> checked="checked" </text>  } }>停用并隐藏（如果应用码头存在应用，则会将应用转移到当前桌面）</label></div>
+            </td>
+        </tr>
+    </table>
 </div>
 @section ChildrenScript
-{
-	$('input[name="desk"]').change(function () {
-		let desk = $('input[name="desk"]:checked').val();
-		top.HROS.deskTop.updateDefaultDesk(desk);
-	});
-	$('input[name="wallpapersource"]').change(function () {
-		let val = $('input[name="wallpapersource"]:checked').val();
-		top.HROS.deskTop.modifyWallpaperSource(val);
-	});
+    {
+    $('input[name="desk"]').change(  () => {
+    let desk = $('input[name="desk"]:checked').val();
+    top.HROS.deskTop.updateDefaultDesk(desk);
+    });
+    $('input[name="wallpapersource"]').change(  ()=> {
+    let val = $('input[name="wallpapersource"]:checked').val();
+    top.HROS.deskTop.modifyWallpaperSource(val);
+    });
 
-	$('input[name="appxy"]').change(function () {
-		let xy = $('input[name="appxy"]:checked').val();
-		top.HROS.app.updateXY(xy);
-	});
+    $('input[name="appxy"]').change(  ()=> {
+    let xy = $('input[name="appxy"]:checked').val();
+    top.HROS.app.updateXY(xy);
+    });
 
-	//更新应用图标大小
-	$('.appsize-minus, .appsize-plus').click(function () {
-		let size = parseInt($('input[name="appsize"]').val());
-		if ($(this).hasClass('appsize-minus')) {
-			size = size - 1;
-		} else {
-			size = size + 1;
-		}
-		updateSize(size);
-	});
+    //更新应用图标大小
+    $('.appsize-minus, .appsize-plus').click(  () => {
+    let size = parseInt($('input[name="appsize"]').val());
+    if ($(this).hasClass('appsize-minus')) {
+    size = size - 1;
+    } else {
+    size = size + 1;
+    }
+    updateSize(size);
+    });
 
-	$('input[name="appsize"]').keyup(function () {
-		let size = parseInt($('input[name="appsize"]').val());
-		updateSize(size);
-	});
+    $('input[name="appsize"]').keyup(  () => {
+    let size = parseInt($('input[name="appsize"]').val());
+    updateSize(size);
+    });
 
-	let updateSize = function (size) {
-		if (size < 32) {
-			size = 32;
-		} else if (size > 64) {
-			size = 64;
-		}
-		$('input[name="appsize"]').val(size);
-		top.HROS.app.updateSize(size);
-	};
+    let updateSize =   (size) => {
+    if (size < 32) {
+    size = 32;
+    } else if (size > 64) {
+    size = 64;
+    }
+    $('input[name="appsize"]').val(size);
+    top.HROS.app.updateSize(size);
+    };
 
-	//更新图标垂直间距
-	$('.appverticalspacing-minus, .appverticalspacing-plus').click(function () {
-		let vertical = parseInt($('input[name="appverticalspacing"]').val());
-		if ($(this).hasClass('appverticalspacing-minus')) {
-			vertical = vertical - 1;
-		} else {
-			vertical = vertical + 1;
-		}
-		updateVertical(vertical);
-	});
+    //更新图标垂直间距
+    $('.appverticalspacing-minus, .appverticalspacing-plus').click(  () => {
+    let vertical = parseInt($('input[name="appverticalspacing"]').val());
+    if ($(this).hasClass('appverticalspacing-minus')) {
+    vertical = vertical - 1;
+    } else {
+    vertical = vertical + 1;
+    }
+    updateVertical(vertical);
+    });
 
-	$('input[name="appverticalspacing"]').keyup(function () {
-		let vertical = parseInt($('input[name="appverticalspacing"]').val());
-		updateVertical(vertical);
-	});
+    $('input[name="appverticalspacing"]').keyup(  () => {
+    let vertical = parseInt($('input[name="appverticalspacing"]').val());
+    updateVertical(vertical);
+    });
 
-	$('.apphorizontalspacing-minus, .apphorizontalspacing-plus').click(function () {
-		let horizontal = parseInt($('input[name="apphorizontalspacing"]').val());
-		if ($(this).hasClass('apphorizontalspacing-minus')) {
-			horizontal = horizontal - 1;
-		} else {
-			horizontal = horizontal + 1;
-		}
-		updateHorizontal(horizontal);
-	});
+    $('.apphorizontalspacing-minus, .apphorizontalspacing-plus').click(  () => {
+    let horizontal = parseInt($('input[name="apphorizontalspacing"]').val());
+    if ($(this).hasClass('apphorizontalspacing-minus')) {
+    horizontal = horizontal - 1;
+    } else {
+    horizontal = horizontal + 1;
+    }
+    updateHorizontal(horizontal);
+    });
 
-	$('input[name="apphorizontalspacing"]').keyup(function () {
-		let horizontal = parseInt($('input[name="apphorizontalspacing"]').val());
-		updateHorizontal(horizontal);
-	});
+    $('input[name="apphorizontalspacing"]').keyup(  () => {
+    let horizontal = parseInt($('input[name="apphorizontalspacing"]').val());
+    updateHorizontal(horizontal);
+    });
 
-	//更新应用码头位置
-	$('input[name="dockpos"]').change(function () {
-		let pos = $('input[name="dockpos"]:checked').val();
-		$('.set_view').removeClass('set_view_top set_view_left set_view_right set_view_none');
-		$('.set_view').addClass('set_view_' + pos);
-		top.HROS.dock.updatePos(pos);
-	});
+    //更新应用码头位置
+    $('input[name="dockpos"]').change(  () => {
+    let pos = $('input[name="dockpos"]:checked').val();
+    $('.set_view').removeClass('set_view_top set_view_left set_view_right set_view_none');
+    $('.set_view').addClass('set_view_' + pos);
+    top.HROS.dock.updatePos(pos);
+    });
 
-	//更新图标水平间距
-	function updateHorizontal(horizontal) {
-		if (horizontal < 0) {
-			horizontal = 0;
-		} else if (horizontal > 100) {
-			horizontal = 100;
-		}
-		$('input[name="apphorizontalspacing"]').val(horizontal);
-		top.HROS.app.updateHorizontal(horizontal);
-	};
+    //更新图标水平间距
+    function updateHorizontal(horizontal) {
+    if (horizontal < 0) {
+    horizontal = 0;
+    } else if (horizontal > 100) {
+    horizontal = 100;
+    }
+    $('input[name="apphorizontalspacing"]').val(horizontal);
+    top.HROS.app.updateHorizontal(horizontal);
+    };
 
-	function updateVertical(vertical) {
-		if (vertical < 0) {
-			vertical = 0;
-		} else if (vertical > 100) {
-			vertical = 100;
-		}
-		$('input[name="appverticalspacing"]').val(vertical);
-		top.HROS.app.updateVertical(vertical);
-	};
+    function updateVertical(vertical) {
+    if (vertical < 0) {
+    vertical = 0;
+    } else if (vertical > 100) {
+    vertical = 100;
+    }
+    $('input[name="appverticalspacing"]').val(vertical);
+    top.HROS.app.updateVertical(vertical);
+    };
 }

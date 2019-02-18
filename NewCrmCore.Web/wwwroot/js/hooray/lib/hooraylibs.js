@@ -9,7 +9,7 @@
  * DD_belatedPNG.fixPng( someNode );
  * http://www.dillerdesign.com/experiment/DD_belatedPNG/
  */
-if ($.browser.msie && ($.browser.version === "6.0") && !$.support.style) {
+if ($.browser.msie && $.browser.version === "6.0" && !$.support.style) {
 	var DD_belatedPNG = {
 		ns: "DD_belatedPNG",
 		imgSize: {},
@@ -49,7 +49,7 @@ if ($.browser.msie && ($.browser.version === "6.0") && !$.support.style) {
 				DD_belatedPNG.applyVML(b);
 			}
 			if (event.propertyName === "style.display") {
-				c = (b.currentStyle.display === "none") ? "none" : "block";
+                c = b.currentStyle.display === "none" ? "none" : "block";
 				for (a in b.vml) {
 					if (b.vml.hasOwnProperty(a)) {
 						b.vml[a].shape.style.display = c;
@@ -202,7 +202,7 @@ if ($.browser.msie && ($.browser.version === "6.0") && !$.support.style) {
 				bLW: d.clientLeft,
 				bTW: d.clientTop
 			};
-			a = (n.L + n.bLW === 1) ? 1 : 0;
+            a = n.L + n.bLW === 1 ? 1 : 0;
 			e = function (b, p, q, c, s, u) {
 				b.coordsize = c + "," + s;
 				b.coordorigin = u + "," + u;
@@ -250,10 +250,10 @@ if ($.browser.msie && ($.browser.version === "6.0") && !$.support.style) {
 			};
 			if (m !== "repeat" || d.isImg) {
 				i = {
-					T: (g.Y),
-					R: (g.X + n.w),
-					B: (g.Y + n.h),
-					L: (g.X)
+                    T: g.Y,
+                    R: g.X + n.w,
+                    B: g.Y + n.h,
+                    L: g.X
 				};
 				if (m.search("repeat-") !== -1) {
 					k = m.split("repeat-")[1].toUpperCase();
@@ -271,7 +271,7 @@ if ($.browser.msie && ($.browser.version === "6.0") && !$.support.style) {
 		figurePercentage: function (d, c, f, a) {
 			var b, e;
 			e = true;
-			b = (f === "X");
+            b = f === "X";
 			switch (a) {
 				case "left":
 				case "top":
@@ -1469,7 +1469,7 @@ NewCrm.msgbox.loading = function (msg) {
 	NewCrm.msgbox.show(msg, 6, 10000);
 };
 NewCrm.msgbox.close = function () {
-	NewCrm.msgbox._hide()
+    NewCrm.msgbox._hide();
 };
 
 /**

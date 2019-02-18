@@ -3,311 +3,311 @@
 @using NewCrmCore.Domain.ValueObject;
 @model AppDto
 @{
-	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
-	var userId = ViewData["UserId"].ToString() ?? "0";
+    Layout = "~/Views/Shared/_LayoutRoot.cshtml";
+    var userId = ViewData["UserId"].ToString() ?? "0";
 }
 @section ChildrenCss
-{
+    {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/webuploader/0.1.1/webuploader.css" rel="stylesheet">
-	<style>
-		*{
-			box-sizing:unset;
-		}
-	</style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/webuploader/0.1.1/webuploader.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: unset;
+        }
+    </style>
 }
 @section SysCss
-{
-	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
+    {
+    <link rel="stylesheet" href="/css/hoorayui/sys.css" />
 }
 
 @{
-	if (Model != null)
-	{
-		if ((AppAuditState)ViewData["AppState"] == AppAuditState.Pass)//已通过
-		{
-			<text>
-				@Html.Partial("~/Views/AppMarket/UserAppManageDetail.cshtml", Model)
-			</text>
-		}
-		else
-		{
-			if ((AppAuditState)ViewData["AppState"] == AppAuditState.UnAuditState || (AppAuditState)ViewData["AppState"] == AppAuditState.Deny)//未审核或未通过
-			{
-				<text>
-					@Html.Partial("~/Views/AppManager/AppAudit.cshtml", Model)
-				</text>
-			}
-			else
-			{
-				<text>
-					@Html.Partial("~/Views/AppMarket/UserAppManageEdit.cshtml", Model)
-				</text>
-			}
-		}
-	}
-	else
-	{
-		<text>
-			@Html.Partial("~/Views/AppMarket/UserAppManageNewApp.cshtml")
-		</text>
-	}
+    if (Model != null)
+    {
+        if ((AppAuditState)ViewData["AppState"] == AppAuditState.Pass)//已通过
+        {
+            <text>
+                @Html.Partial("~/Views/AppMarket/UserAppManageDetail.cshtml", Model)
+            </text>
+        }
+        else
+        {
+            if ((AppAuditState)ViewData["AppState"] == AppAuditState.UnAuditState || (AppAuditState)ViewData["AppState"] == AppAuditState.Deny)//未审核或未通过
+            {
+                <text>
+                    @Html.Partial("~/Views/AppManager/AppAudit.cshtml", Model)
+                </text>
+            }
+            else
+            {
+                <text>
+                    @Html.Partial("~/Views/AppMarket/UserAppManageEdit.cshtml", Model)
+                </text>
+            }
+        }
+    }
+    else
+    {
+        <text>
+            @Html.Partial("~/Views/AppMarket/UserAppManageNewApp.cshtml")
+        </text>
+    }
 }
 
 @section ChildrenScript
-{ 
+    {
     let uploader = WebUploader.create({
-        // 选完文件后，是否自动上传。
-        auto: true,
-        // swf文件路径
-        swf: '../js/webuploader-0.1.5/Uploader.swf',
-        // 文件接收服务端。
-        server: '@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)?userId=@userId&uploadtype=icon',
-        // 选择文件的按钮。可选。
-        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-        pick: {
-            id: '#upload',
-            multiple: false
-        },
-        // 只允许选择图片文件。
-        accept: {
-            title: 'Images',
-            extensions: 'gif,jpg,jpeg,bmp,png',
-            mimeTypes: 'image/*'
-        }
+    // 选完文件后，是否自动上传。
+    auto: true,
+    // swf文件路径
+    swf: '../js/webuploader-0.1.5/Uploader.swf',
+    // 文件接收服务端。
+    server: '@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)?userId=@userId&uploadtype=icon',
+    // 选择文件的按钮。可选。
+    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+    pick: {
+    id: '#upload',
+    multiple: false
+    },
+    // 只允许选择图片文件。
+    accept: {
+    title: 'Images',
+    extensions: 'gif,jpg,jpeg,bmp,png',
+    mimeTypes: 'image/*'
+    }
     });
-    uploader.on('beforeFileQueued', function (file) {
-        if (file.size > 300 * 1024) {
-            alert('文件大于300Kb，请压缩后再上传');
-            return false;
-        } else {
-            $('.shortcutview img').remove();
-            $('#val_icon').val('');
-        }
+    uploader.on('beforeFileQueued',   (file)=> {
+    if (file.size > 300 * 1024) {
+    alert('文件大于300Kb，请压缩后再上传');
+    return false;
+    } else {
+    $('.shortcutview img').remove();
+    $('#val_icon').val('');
+    }
     });
-    uploader.on('fileQueued', function (file) {
-        let $img = $('<img>');
-        $('.shortcutview').append($img);
-        // 创建缩略图
-        uploader.makeThumb(file, function (error, src) {
-            if (error) {
-                $img.replaceWith('');
-                return;
-            }
-            $img.attr('src', src);
-        }, 48, 48);
+    uploader.on('fileQueued',   (file) =>{
+    let $img = $('<img>');
+    $('.shortcutview').append($img);
+    // 创建缩略图
+    uploader.makeThumb(file,   (error, src) => {
+    if (error) {
+    $img.replaceWith('');
+    return;
+    }
+    $img.attr('src', src);
+    }, 48, 48);
     });
-    uploader.on('uploadSuccess', function (file, cb) {
-        if (cb[0].IsSuccess) {
-            let urlPart = cb[0].Url
-            let appId = '@Context.Request.Query["AppId"]'
-            if (parseInt(appId) === 0) {
-                $('#isIconByUpload').val('1');
-                $('#val_icon').val(urlPart)
-            } else {
-            
-                HROS.request.post('/appmarket/modifyicon', { AppId: appId, NewIcon: urlPart },function (responseText) {
-                    if (responseText.IsSuccess) {
-                        $('#isIconByUpload').val('1');
-                        $('.shortcutview img').attr('src', responseText.Model);
-                        $('#val_icon').val(urlPart);
-                        uploader.removeFile(file);
-                    } else {
-                        NewCrm.msgbox.fail("图标保存失败");
-                    }
-                })
-            }
-        } else {
-            NewCrm.msgbox.fail("图标上传失败");
-        }
+    uploader.on('uploadSuccess',   (file, cb) => {
+    if (cb[0].IsSuccess) {
+    let urlPart = cb[0].Url
+    let appId = '@Context.Request.Query["AppId"]'
+    if (parseInt(appId) === 0) {
+    $('#isIconByUpload').val('1');
+    $('#val_icon').val(urlPart)
+    } else {
+
+    HROS.request.post('/appmarket/modifyicon', { AppId: appId, NewIcon: urlPart },  (responseText) => {
+    if (responseText.IsSuccess) {
+    $('#isIconByUpload').val('1');
+    $('.shortcutview img').attr('src', responseText.Model);
+    $('#val_icon').val(urlPart);
+    uploader.removeFile(file);
+    } else {
+    NewCrm.msgbox.fail("图标保存失败");
+    }
+    })
+    }
+    } else {
+    NewCrm.msgbox.fail("图标上传失败");
+    }
     });
 
 
     let f = $('#form').Validform({
-        btnSubmit: '#btn-submit',
-        postonce: true,
-        showAllError: true,
-        tiptype: function (msg, o) {
-            if (!o.obj.is('form')) {
-                let B = o.obj.parents('.control-group');
-                let T = B.children('.help-inline');
-                if (o.type == 2) {
-                    B.removeClass('error');
-                    T.text('');
-                } else {
-                    B.addClass('error');
-                    T.text(msg);
-                }
-            }
-        },
-        ajaxPost: true,
-        postonceTip:function(){
-            NewCrm.msgbox.fail(HROS.CONFIG.postOnce)
-        },
-        beforeSubmit: function (curform) { 
-            NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
-        },
-        callback: function (responseText) {
-            if (responseText.IsSuccess) {
-                if ($('input[name="id"]').val() !== '') {
-                    $.dialog({
-                        id: 'ajaxedit',
-                        content: '修改成功，是否继续修改？',
-                        okVal: '是',
-                        ok: function () {
-                            $.dialog.list['ajaxedit'].close();
-                        },
-                        cancel: function () {
-                            window.parent.closeDetailIframe(function () {
-                                window.parent.$('#pagination').trigger('currentPage');
-                            });
-                        }
-                    });
-                } else {
-                    $.dialog({
-                        id: 'ajaxedit',
-                        content: '添加成功，是否继续添加？',
-                        okVal: '是',
-                        ok: function () {
-                            location.reload();
-                            return false;
-                        },
-                        cancel: function () {
-                            window.parent.closeDetailIframe(function () {
-                                window.parent.$('#pagination').trigger('currentPage');
-                            });
-                        }
-                    });
-                }
-            } else {
-                NewCrm.msgbox.fail(responseText.Message)
-            }
-        }
+    btnSubmit: '#btn-submit',
+    postonce: true,
+    showAllError: true,
+    tiptype:   (msg, o) => {
+    if (!o.obj.is('form')) {
+    let B = o.obj.parents('.control-group');
+    let T = B.children('.help-inline');
+    if (o.type == 2) {
+    B.removeClass('error');
+    T.text('');
+    } else {
+    B.addClass('error');
+    T.text(msg);
+    }
+    }
+    },
+    ajaxPost: true,
+    postonceTip: ()=>{
+    NewCrm.msgbox.fail(HROS.CONFIG.postOnce)
+    },
+    beforeSubmit:   (curform) => {
+    NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+    },
+    callback:   (responseText) => {
+    if (responseText.IsSuccess) {
+    if ($('input[name="id"]').val() !== '') {
+    $.dialog({
+    id: 'ajaxedit',
+    content: '修改成功，是否继续修改？',
+    okVal: '是',
+    ok:   () => {
+    $.dialog.list['ajaxedit'].close();
+    },
+    cancel:   () => {
+    window.parent.closeDetailIframe(  () => {
+    window.parent.$('#pagination').trigger('currentPage');
     });
-    $('input[name="val_type"]').change(function () {
-        if ($(this).val() === 'app') {
-            $('.input-label-isresize, .input-label-isopenmax, .input-label-isflash, .input-label-issetbar').slideDown();
-        } else {
-            $('input[name="val_isresize"]').each(function () {
-                if ($(this).val() === '1') {
-                    $(this).prop('checked', true);
-                }
-            });
-            $('input[name="val_isopenmax"]').each(function () {
-                if ($(this).val() === '0') {
-                    $(this).prop('checked', true);
-                }
-            });
-            $('input[name="val_isflash"]').each(function () {
-                if ($(this).val() === '0') {
-                    $(this).prop('checked', true);
-                }
-            });
-            $('.input-label-isresize, .input-label-isopenmax, .input-label-isflash, .input-label-issetbar').slideUp();
-        }
+    }
     });
-    $('input[name="val_isresize"]').change(function () {
-        if ($(this).val() === '1') {
-            $('.input-label-isopenmax').slideDown();
-        } else {
-            $('.input-label-isopenmax').slideUp();
-        }
+    } else {
+    $.dialog({
+    id: 'ajaxedit',
+    content: '添加成功，是否继续添加？',
+    okVal: '是',
+    ok:   () => {
+    location.reload();
+    return false;
+    },
+    cancel:   () => {
+    window.parent.closeDetailIframe(  () => {
+    window.parent.$('#pagination').trigger('currentPage');
+    });
+    }
+    });
+    }
+    } else {
+    NewCrm.msgbox.fail(responseText.Message)
+    }
+    }
+    });
+    $('input[name="val_type"]').change(  () => {
+    if ($(this).val() === 'app') {
+    $('.input-label-isresize, .input-label-isopenmax, .input-label-isflash, .input-label-issetbar').slideDown();
+    } else {
+    $('input[name="val_isresize"]').each(  () => {
+    if ($(this).val() === '1') {
+    $(this).prop('checked', true);
+    }
+    });
+    $('input[name="val_isopenmax"]').each(  () => {
+    if ($(this).val() === '0') {
+    $(this).prop('checked', true);
+    }
+    });
+    $('input[name="val_isflash"]').each(  () => {
+    if ($(this).val() === '0') {
+    $(this).prop('checked', true);
+    }
+    });
+    $('.input-label-isresize, .input-label-isopenmax, .input-label-isflash, .input-label-issetbar').slideUp();
+    }
+    });
+    $('input[name="val_isresize"]').change(  () => {
+    if ($(this).val() === '1') {
+    $('.input-label-isopenmax').slideDown();
+    } else {
+    $('.input-label-isopenmax').slideUp();
+    }
     });
 
     //选择应用图片
-    $('.shortcut-selicon a').click(function () {
-        $('#isIconByUpload').val('0');
-        $('.shortcutview img').remove();
-        $('.shortcutview').addClass('bgnone').append($(this).html());
-        $('#val_icon').val($(this).children('img').attr('valsrc')).focusout();
+    $('.shortcut-selicon a').click(  ()=> {
+    $('#isIconByUpload').val('0');
+    $('.shortcutview img').remove();
+    $('.shortcutview').addClass('bgnone').append($(this).html());
+    $('#val_icon').val($(this).children('img').attr('valsrc')).focusout();
     });
 
-    $('#btn-preview').on('click', function () {
-        if (f.check()) {
-            if ($('input[name="val_type"]:checked').val() === 'app') {
-                top.HROS.window.createTemp({
-                    title: $('input[name="val_name"]').val(),
-                    url: $('input[name="val_url"]').val(),
-                    width: $('input[name="val_width"]').val(),
-                    height: $('input[name="val_height"]').val(),
-                    isresize: $('input[name="val_isresize"]:checked').val() === 1 ? true : false,
-                    isopenmax: $('input[name="val_isopenmax"]:checked').val() === 1 ? true : false,
-                    isflash: $('input[name="val_isflash"]:checked').val() === 1 ? true : false
-                });
-            } else {
-                top.HROS.widget.createTemp({
-                    url: $('input[name="val_url"]').val(),
-                    width: $('input[name="val_width"]').val(),
-                    height: $('input[name="val_height"]').val(),
-                });
-            }
-        } else {
-            $.dialog({
-                icon: 'error',
-                content: '应用无法预览，请讲内容填写完整后再尝试预览'
-            });
-        }
+    $('#btn-preview').on('click',   ()  =>{
+    if (f.check()) {
+    if ($('input[name="val_type"]:checked').val() === 'app') {
+    top.HROS.window.createTemp({
+    title: $('input[name="val_name"]').val(),
+    url: $('input[name="val_url"]').val(),
+    width: $('input[name="val_width"]').val(),
+    height: $('input[name="val_height"]').val(),
+    isresize: $('input[name="val_isresize"]:checked').val() === 1 ? true : false,
+    isopenmax: $('input[name="val_isopenmax"]:checked').val() === 1 ? true : false,
+    isflash: $('input[name="val_isflash"]:checked').val() === 1 ? true : false
+    });
+    } else {
+    top.HROS.widget.createTemp({
+    url: $('input[name="val_url"]').val(),
+    width: $('input[name="val_width"]').val(),
+    height: $('input[name="val_height"]').val(),
+    });
+    }
+    } else {
+    $.dialog({
+    icon: 'error',
+    content: '应用无法预览，请讲内容填写完整后再尝试预览'
+    });
+    }
     });
 
 
-    $('#btn-pass').on('click', function () {
-        let appid = $(this).attr('appid');
-        $.dialog({
-            id: 'del',
-            content: '确认审核通过该应用？',
-            ok: function () {
-                HROS.request.post('/appmanager/pass', { appId: appid }, function (responseText) {
-                    if (responseText.IsSuccess) {
-                        window.parent.closeDetailIframe(function () {
-                            window.parent.$('#pagination').trigger('currentPage');
-                        });
-                    } else {
-                        NewCrm.msgbox.fail(responseText.Message)
-                    }
-                });
-
-            },
-            cancel: true
-        });
+    $('#btn-pass').on('click',   () => {
+    let appid = $(this).attr('appid');
+    $.dialog({
+    id: 'del',
+    content: '确认审核通过该应用？',
+    ok:   () => {
+    HROS.request.post('/appmanager/pass', { appId: appid },   (responseText) => {
+    if (responseText.IsSuccess) {
+    window.parent.closeDetailIframe(  () => {
+    window.parent.$('#pagination').trigger('currentPage');
     });
-    $('#btn-unpass').on('click', function () {
-        let appid = $(this).attr('appid');
-        $.dialog({
-            id: 'del',
-            content: '确认不通过该应用？',
-            ok: function () {
-                HROS.request.post('/appmanager/deny', { appId: appid }, function (responseText) {
-                    if (responseText.IsSuccess) {
-                        window.parent.closeDetailIframe(function () {
-                            window.parent.$('#pagination').trigger('currentPage');
-                        });
-                    } else {
-                        NewCrm.msgbox.fail(responseText.Message)
-                    }
-                });
-            },
-            cancel: true
-        });
+    } else {
+    NewCrm.msgbox.fail(responseText.Message)
+    }
     });
 
-    $('#btn-release').on('click', function () {
-        let appid = $(this).attr('appid');
-        $.dialog({
-            id: 'del',
-            content: '确认发布该应用？',
-            ok: function () {
-                HROS.request.post('/appmarket/release', { appId: appid }, function (responseText) {
-                    if (responseText.IsSuccess) {
-                        window.parent.closeDetailIframe(function () {
-                            window.parent.$('#pagination').trigger('currentPage');
-                        });
-                    } else {
-                        NewCrm.msgbox.fail(responseText.Message)
-                    }
-                });
-            },
-            cancel: true
-        });
+    },
+    cancel: true
+    });
+    });
+    $('#btn-unpass').on('click',   () => {
+    let appid = $(this).attr('appid');
+    $.dialog({
+    id: 'del',
+    content: '确认不通过该应用？',
+    ok:   () => {
+    HROS.request.post('/appmanager/deny', { appId: appid },   (responseText) => {
+    if (responseText.IsSuccess) {
+    window.parent.closeDetailIframe(  () => {
+    window.parent.$('#pagination').trigger('currentPage');
+    });
+    } else {
+    NewCrm.msgbox.fail(responseText.Message)
+    }
+    });
+    },
+    cancel: true
+    });
+    });
+
+    $('#btn-release').on('click',   () =>{
+    let appid = $(this).attr('appid');
+    $.dialog({
+    id: 'del',
+    content: '确认发布该应用？',
+    ok:   ()=> {
+    HROS.request.post('/appmarket/release', { appId: appid },   (responseText)=> {
+    if (responseText.IsSuccess) {
+    window.parent.closeDetailIframe(  () => {
+    window.parent.$('#pagination').trigger('currentPage');
+    });
+    } else {
+    NewCrm.msgbox.fail(responseText.Message)
+    }
+    });
+    },
+    cancel: true
+    });
     });
 }
 

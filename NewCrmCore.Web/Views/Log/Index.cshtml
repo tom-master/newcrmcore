@@ -1,147 +1,147 @@
 ﻿@using NewCrmCore.Domain.ValueObject
 @{
-	Layout = "~/Views/Shared/_LayoutRoot.cshtml";
+    Layout = "~/Views/Shared/_LayoutRoot.cshtml";
 }
 @section ChildrenCss
-{ 
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
-	<style>
-		body {
-			margin: 10px 10px 0;
-		}
+    {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 10px 10px 0;
+        }
 
-		.appicon {
-			width: 32px;
-			height: 32px;
-		}
+        .appicon {
+            width: 32px;
+            height: 32px;
+        }
 
-		.appname {
-			margin-left: 10px;
-		}
-	</style>
+        .appname {
+            margin-left: 10px;
+        }
+    </style>
 }
 @section SysCss
-{
-	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
+    {
+    <link rel="stylesheet" href="/css/hoorayui/sys.css" />
 }
 
-<div class="well well-small" style="padding-bottom:0 margin-bottom:10px;background-color:#f5f5f5;border:1px solid #e3e3e3;min-height:20px;padding:9px">
-	<div class="form-inline">
-		<div class="form-group">
-			<label style="margin-left:10px">等级：</label>
-			<select name="logLevel" class="form-control" id="logLevel" style="width:140px">
-				<option value="1">信息</option>
-				<option value="2">警告</option>
-				<option value="3">调试</option>
-				<option value="4" selected="selected">错误</option>
-			</select>
-		</div>
-		<div class="form-group">
-			<label style="margin-left:10px;">用户名：</label>
-			<input type="text" class="form-control" name="search_1" id="userName" class="span5">
-		</div>
-		<a class="btn btn-primary" menu="search" href="###" style="margin-left:10px"><i class="oi oi-magnifying-glass"></i> 搜索</a>
-	</div>
+<div class="well well-small" style="padding-bottom:0;margin-bottom:10px;background-color:#f5f5f5;border:1px solid #e3e3e3;min-height:20px;padding:9px">
+    <div class="form-inline">
+        <div class="form-group">
+            <label style="margin-left:10px">等级：</label>
+            <select name="logLevel" class="form-control" id="logLevel" style="width:140px">
+                <option value="1">信息</option>
+                <option value="2">警告</option>
+                <option value="3">调试</option>
+                <option value="4" selected="selected">错误</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label style="margin-left:10px;">用户名：</label>
+            <input type="text" class="form-control span5" name="search_1" id="userName">
+        </div>
+        <a class="btn btn-primary" menu="search" href="###" style="margin-left:10px"><i class="oi oi-magnifying-glass"></i> 搜索</a>
+    </div>
 </div>
 <table class="list-table">
-	<thead>
-		<tr class="col-name">
-			<th style="width:100px">日志等级</th>
-			<th style="width:100px">类名</th>
-			<th style="width:100px">方法名</th>
-			<th style="width:100px">异常信息</th>
-			<th style="width:100px">用户id</th>
-			<th style="width:100px">时间</th>
-		</tr>
-		<tr class="sep-row"><td colspan="100"></td></tr>
-		<tr class="toolbar">
-			<td colspan="100">
-				<b style="margin:0 10px">符合条件的记录</b>有<font class="list-count">0</font>条
-			</td>
-		</tr>
-		<tr class="sep-row"><td colspan="100"></td></tr>
-	</thead>
-	<tbody class="list-con"></tbody>
-	<tfoot>
-		<tr>
-			<td colspan="100">
-				<div style="margin:20px 0" id="pagination"></div>
-				<input id="pagination_setting" type="hidden" per="10">
-			</td>
-		</tr>
-	</tfoot>
+    <thead>
+        <tr class="col-name">
+            <th style="width:100px">日志等级</th>
+            <th style="width:100px">类名</th>
+            <th style="width:100px">方法名</th>
+            <th style="width:100px">异常信息</th>
+            <th style="width:100px">用户id</th>
+            <th style="width:100px">时间</th>
+        </tr>
+        <tr class="sep-row"><td colspan="100"></td></tr>
+        <tr class="toolbar">
+            <td colspan="100">
+                <b style="margin:0 10px">符合条件的记录</b>有<font class="list-count">0</font>条
+            </td>
+        </tr>
+        <tr class="sep-row"><td colspan="100"></td></tr>
+    </thead>
+    <tbody class="list-con"></tbody>
+    <tfoot>
+        <tr>
+            <td colspan="100">
+                <div style="margin:20px 0" id="pagination"></div>
+                <input id="pagination_setting" type="hidden" per="10">
+            </td>
+        </tr>
+    </tfoot>
 </table>
 <div id="detailIframe" style="background:#fff;position:fixed;z-index:1;top:-100px;left:0;width:100%;height:100%;display:none">
-	<iframe frameborder="0" style="width:100%;height:100%"></iframe>
+    <iframe frameborder="0" style="width:100%;height:100%"></iframe>
 </div>
 
 @section ChildrenTemplate{
-	<script id="table-template" type="text/x-handlebars-template">
-		{{#each Model}}
-		<tr class="list-bd">
-			<td>{{parseLoggerLevel LogLevelEnum}}</td>
-			<td>{{Controller}}</td>
-			<td>{{Action}}</td>
-			<td>{{ExceptionMessage}}</td>
-			<td>{{UserId}}</td>
-			<td>{{AddTime}}</td>
-		</tr>
-		{{/each}}
-	</script>
+    <script id="table-template" type="text/x-handlebars-template">
+        {{#each Model}}
+        <tr class="list-bd">
+            <td>{{parseLoggerLevel LogLevelEnum}}</td>
+            <td>{{Controller}}</td>
+            <td>{{Action}}</td>
+            <td>{{ExceptionMessage}}</td>
+            <td>{{UserId}}</td>
+            <td>{{AddTime}}</td>
+        </tr>
+        {{/each}}
+    </script>
 }
 @section ChildrenScript
-{
-	//加载列表
-	getPageList(0);
+    {
+    //加载列表
+    getPageList(0);
 
-	//搜索
-	$('a[menu=search]').click(function () {
-		getPageList(0);
-	});
-	
-	function getPageList(current_page) {
-		HROS.request.get('/logger/getlogs/', {
-			userName: $('#userName').val(),
-			logLevel: $('#logLevel').find("option:selected").attr('value'),
-			pageIndex: current_page === 0 ? 1 : current_page + 1,
-			pageSize: 5
-		}, function (responseText) { 
-			if (responseText.IsSuccess) {
-				let tableTemplate = Handlebars.compile($("#table-template").html());
-				$('.list-con').html(tableTemplate(responseText));
-				$('#pagination_setting').attr('count', responseText.TotalCount);
-				$('.list-count').text(responseText.TotalCount);
-				initPagination({
-					current_page: current_page,
-					items_per_page: 7,
-					num_display_entries: 5,
-					num_edge_entries: 2,
-					getPageList: getPageList
-				})
+    //搜索
+    $('a[menu=search]').click( ()=> {
+    getPageList(0);
+    });
 
-			} else {
-				NewCrm.msgbox.fail(responseText.Message);
-			}
-		});
-	}
+    function getPageList(current_page) {
+    HROS.request.get('/logger/getlogs/', {
+    userName: $('#userName').val(),
+    logLevel: $('#logLevel').find("option:selected").attr('value'),
+    pageIndex: current_page === 0 ? 1 : current_page + 1,
+    pageSize: 5
+    },   (responseText) =>{
+    if (responseText.IsSuccess) {
+    let tableTemplate = Handlebars.compile($("#table-template").html());
+    $('.list-con').html(tableTemplate(responseText));
+    $('#pagination_setting').attr('count', responseText.TotalCount);
+    $('.list-count').text(responseText.TotalCount);
+    initPagination({
+    current_page: current_page,
+    items_per_page: 7,
+    num_display_entries: 5,
+    num_edge_entries: 2,
+    getPageList: getPageList
+    })
 
-	Handlebars.registerHelper('cutLongString', function (str) {
-		if (str.length >= 30) {
-			return str.substring(0, 30);
-		}
-	});
+    } else {
+    NewCrm.msgbox.fail(responseText.Message);
+    }
+    });
+    }
 
-	Handlebars.registerHelper('parseLoggerLevel', function (str) {
-		if (str === '@LogLevel.Info') {
-			return '信息';
-		} else if (str === '@LogLevel.Warning') {
-			return '警告';
-		} else if (str === '@LogLevel.Debug') {
-			return '调试';
-		} else if (str === '@LogLevel.Error') {
-			return '业务错误';
-		} else if (str === '@LogLevel.Exception'){
-			return '代码异常';
-		}
-	});
+    Handlebars.registerHelper('cutLongString',   (str)=> {
+    if (str.length >= 30) {
+    return str.substring(0, 30);
+    }
+    });
+
+    Handlebars.registerHelper('parseLoggerLevel',   (str)=> {
+    if (str === '@LogLevel.Info') {
+    return '信息';
+    } else if (str === '@LogLevel.Warning') {
+    return '警告';
+    } else if (str === '@LogLevel.Debug') {
+    return '调试';
+    } else if (str === '@LogLevel.Error') {
+    return '业务错误';
+    } else if (str === '@LogLevel.Exception'){
+    return '代码异常';
+    }
+    });
 }
