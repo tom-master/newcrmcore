@@ -5,12 +5,12 @@
     var userConfig = ViewData["UserConfig"] as ConfigDto;
 }
 @section ChildrenCss
-{
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
 }
 @section SysCss
-{
-	<link rel="stylesheet" href="/css/hoorayui/sys.css" />
+    {
+    <link rel="stylesheet" href="/css/hoorayui/sys.css" />
 }
 <div class="title">
     <ul>
@@ -44,13 +44,7 @@
 </ul>
 
 @section ChildrenScript
-{
-    $("#wallpapertype").val(top.HROS.CONFIG.wallpaperType.toLowerCase());
-    $("#wallpapertype").on('change',   ()=> {
-        top.HROS.wallpaper.update($('#wallpapertype').val(), '');
-    });
-
-    $('.wallpaper li').on('click',   ()=> {
-        top.HROS.wallpaper.update($('#wallpapertype').val(), $(this).attr('wpid'));
-    });
+    {
+    <script src="~/js/pagelogic/desk_systemwallpaper.js"></script>
+    NewCrm.Desk.SystemWallpaper.wallpaperType = top.HROS.CONFIG.wallpaperType.toLowerCase()
 }
