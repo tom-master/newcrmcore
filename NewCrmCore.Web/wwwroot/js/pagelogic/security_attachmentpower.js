@@ -87,7 +87,7 @@ $('a[menu=addapps]').click(() => {
     });
 });
 //删除应用
-$('.permissions_apps').on('click', '.app .del', () => {
+$('.permissions_apps').on('click', '.app .del', function () {
     let appid = $(this).parent().attr('appid');
     let appsid = $('#val_apps_id').val().split(',');
     let newappsid = [];
