@@ -1,7 +1,7 @@
 ﻿NewCrm.Desk.ConfigMemeber = {
     url: '',
-    id:0,
-}
+    id: 0
+};
 
 let uploader = WebUploader.create({
     auto: true,
@@ -44,7 +44,7 @@ uploader.on('fileQueued', (file) => {
 });
 uploader.on('uploadSuccess', (file, cb) => {
     if (cb[0].IsSuccess) {
-        let urlPart = cb[0].Url
+        let urlPart = cb[0].Url;
         HROS.request.post('/desk/modifyicon', { MemberId: NewCrm.Desk.ConfigMemeber.Id, NewIcon: urlPart }, (responseText) => {
             if (responseText.IsSuccess) {
                 $('#isIconByUpload').val('1');
@@ -54,7 +54,7 @@ uploader.on('uploadSuccess', (file, cb) => {
             } else {
                 NewCrm.msgbox.fail("图标保存失败");
             }
-        })
+        });
     } else {
         NewCrm.msgbox.fail("图标上传失败");
     }
@@ -78,10 +78,10 @@ let f = $('#form').Validform({
     },
     ajaxPost: true,
     postonceTip: () => {
-        NewCrm.msgbox.fail(HROS.CONFIG.postOnce)
+        NewCrm.msgbox.fail(HROS.CONFIG.postOnce);
     },
     beforeSubmit: (curform) => {
-        NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+        NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt);
     },
     callback: (responseText) => {
         if (responseText.IsSuccess) {
@@ -95,7 +95,7 @@ let f = $('#form').Validform({
         }
     }
 });
-$('input[name="val_isresize"]').change(() => {
+$('input[name="val_isresize"]').change(function () {
     if ($(this).val() === '1') {
         $('.input-label-isopenmax').slideDown();
     } else {
@@ -103,9 +103,9 @@ $('input[name="val_isresize"]').change(() => {
     }
 });
 //选择应用图片
-$('.shortcut-selicon a').click(() => {
+$('.shortcut-selicon a').click(function () {
     $('.shortcutview img').remove();
     $('.shortcutview').append($(this).html());
     $('#val_icon').val($(this).children('img').attr('valsrc')).focusout();
-    $('#isIconByUpload').val('0')
+    $('#isIconByUpload').val('0');
 });
