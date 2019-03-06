@@ -13,13 +13,13 @@ closeDetailIframe2 = (callback) => {
     $('#detailIframe').animate({
         'left': 0,
         'opacity': 'hide'
-    }, 500, () =>{
+    }, 500, () => {
         $('#detailIframe').css('left', '140px');
         callback && callback();
     });
 };
 
-$('.sub-nav ul li').click(() => {
+$('.sub-nav ul li').click(function () {
     closeDetailIframe2();
     $('.sub-nav ul li').removeClass('active');
     $(this).addClass('active');
@@ -28,7 +28,7 @@ $('.sub-nav ul li').click(() => {
     $('#order').val(1);
     getPageList(0);
 });
-$('.app-list-box .title li').click(() => {
+$('.app-list-box .title li').click(function () {
     $('.app-list-box .title li').removeClass('focus');
     $(this).addClass('focus');
     $('#order').val($(this).attr('value'));
@@ -47,12 +47,12 @@ $('#searchTextDo').click(() => {
     $('#order').val(1);
     getPageList(0);
 });
-$('#searchTextRemove').click(() =>{
+$('#searchTextRemove').click(() => {
     $('#searchText').val('');
     getPageList(0);
 });
 //添加，删除，打开应用
-$('.app-list').on('click', '.btn-add-s', () => {
+$('.app-list').on('click', '.btn-add-s', function () {
     if (top.HROS.base.checkLogin()) {
         $(this).removeClass().addClass('btn-loading-s');
         top.HROS.app.add($(this).attr('real_app_id'), () => {
@@ -69,7 +69,7 @@ $('.app-list').on('click', '.btn-add-s', () => {
             }
         });
     }
-}).on('click', '.btn-remove-s', () => {
+}).on('click', '.btn-remove-s', function () {
     if (top.HROS.base.checkLogin()) {
         $(this).removeClass().addClass('btn-loading-s');
         let realappid = $(this).attr('real_app_id'), type = $(this).attr('app_type');
@@ -81,14 +81,14 @@ $('.app-list').on('click', '.btn-add-s', () => {
     } else {
         top.HROS.base.login();
     }
-    }).on('click', '.btn-run-s', () => {
+}).on('click', '.btn-run-s', function () {
     if ($(this).attr('app_type') === 'app') {
         top.HROS.window.create($(this).attr('real_app_id'), $(this).attr('app_type'));
     } else {
         top.HROS.widget.create($(this).attr('real_app_id'), $(this).attr('app_type'));
     }
 });
-$('.commend-day').on('click', '.btn-add', () => {
+$('.commend-day').on('click', '.btn-add', function () {
     if (top.HROS.base.checkLogin()) {
         let appid = $(this).attr('real_app_id');
         top.HROS.app.add(appid, () => {
@@ -105,7 +105,7 @@ $('.commend-day').on('click', '.btn-add', () => {
             }
         });
     }
-}).on('click', '.btn-run', () => {
+}).on('click', '.btn-run', function () {
     if ($(this).attr('app_type') === 'app') {
         top.HROS.window.create($(this).attr('real_app_id'));
     } else {
@@ -139,15 +139,11 @@ function getPageList(current_page) {
         }
     });
 
-    Handlebars.registerHelper('scoreWidth', (score) => {
-        return score * 20;
-    });
+    Handlebars.registerHelper('scoreWidth', (score) => score * 20);
 
-    Handlebars.registerHelper('parseScore', (score) => {
-        return parseFloat(score).toFixed(1);
-    });
+    Handlebars.registerHelper('parseScore', (score) => parseFloat(score).toFixed(1));
 
-    Handlebars.registerHelper('IsInstall', (isInstall, options) => {
+    Handlebars.registerHelper('IsInstall', function (isInstall, options) {
         if (isInstall) {
             return options.fn(this);
         } else {

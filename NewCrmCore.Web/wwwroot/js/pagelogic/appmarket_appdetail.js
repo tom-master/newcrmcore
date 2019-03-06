@@ -33,9 +33,7 @@ $('.grade-box ul li').click(function () {
             HROS.request.post('/appmarket/modifystar', { AppId: '@Model.Id', StarCount: num }, (responseText) => {
                 if (responseText.IsSuccess) {
                     NewCrm.msgbox.success("打分成功！");
-                    setTimeout(() => {
-                        location.reload();
-                    }, 2000);
+                    setTimeout(() => { location.reload(); }, 2000);
                 } else {
                     NewCrm.msgbox.fail(responseText.Message);
                 }
