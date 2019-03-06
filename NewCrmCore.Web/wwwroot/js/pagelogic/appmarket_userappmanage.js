@@ -30,9 +30,7 @@ $('.list-con').on('click', '.do-del', function () {
     });
 });
 //搜索
-$('a[menu=search]').click(() => {
-    getPageList(0);
-});
+$('a[menu=search]').click(() => getPageList(0));
 function getPageList(current_page) {
     let $appStates = $('#appState').find("option:selected");
     let appStateResult = '';
@@ -40,31 +38,30 @@ function getPageList(current_page) {
         appStateResult = $appStates.attr('data-type') + ',' + $appStates.attr('value');
     }
 
-    HROS.request.get('/appmarket/getuserapps',
-        {
-            searchText: $('#appName').val(),
-            appTypeId: $('#appType').find("option:selected").attr('value'),
-            appStyleId: $('#appStyle').find("option:selected").attr('value'),
-            appState: appStateResult,
-            pageIndex: current_page === 0 ? 1 : current_page + 1,
-            pageSize: 4
-        }, (responseText) => {
-            if (responseText.IsSuccess) {
-                let tableTemplate = Handlebars.compile($("#table-template").html());
-                $('.list-con').html(tableTemplate(responseText));
-                $('.list-count').text(responseText.totalCount);
-                $('#pagination_setting').attr('count', parseInt(responseText.TotalCount));
-                initPagination({
-                    current_page: current_page,
-                    items_per_page: 4,
-                    num_display_entries: 5,
-                    num_edge_entries: 2,
-                    getPageList: getPageList
-                });
-            } else {
-                NewCrm.msgbox.fail(responseText.Message);
-            }
-        });
+    HROS.request.get('/appmarket/getuserapps', {
+        searchText: $('#appName').val(),
+        appTypeId: $('#appType').find("option:selected").attr('value'),
+        appStyleId: $('#appStyle').find("option:selected").attr('value'),
+        appState: appStateResult,
+        pageIndex: current_page === 0 ? 1 : current_page + 1,
+        pageSize: 4
+    }, (responseText) => {
+        if (responseText.IsSuccess) {
+            let tableTemplate = Handlebars.compile($("#table-template").html());
+            $('.list-con').html(tableTemplate(responseText));
+            $('.list-count').text(responseText.totalCount);
+            $('#pagination_setting').attr('count', parseInt(responseText.TotalCount));
+            initPagination({
+                current_page: current_page,
+                items_per_page: 4,
+                num_display_entries: 5,
+                num_edge_entries: 2,
+                getPageList: getPageList
+            });
+        } else {
+            NewCrm.msgbox.fail(responseText.Message);
+        }
+    });
 
     Handlebars.registerHelper('convertstyle', (appStyle) => {
         if (appStyle === NewCrm.AppMarket.UserAppManageDetail.app) {

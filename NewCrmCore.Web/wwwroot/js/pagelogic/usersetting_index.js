@@ -161,9 +161,7 @@ upload.on('beforeFileQueued', (file) => {
     }
 });
 
-upload.on('startUpload', () => {
-    NewCrm.msgbox.loading('账户头像上传中...');
-});
+upload.on('startUpload', () => NewCrm.msgbox.loading('账户头像上传中...'));
 
 upload.on('uploadSuccess', (file, cb) => {
     if (cb[0].IsSuccess) {

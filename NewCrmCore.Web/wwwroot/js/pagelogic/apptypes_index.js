@@ -20,9 +20,7 @@ $('.list-con').on('click', '.do-del', function () {
     });
 });
 //搜索
-$('a[menu=search]').click(() => {
-    getPageList(0);
-});
+$('a[menu=search]').click(() => getPageList(0));
 function getPageList(current_page) {
     HROS.request.get('/apptypes/gettypes', {
         pageIndex: current_page === 0 ? 1 : current_page + 1,

@@ -47,9 +47,7 @@ $('.list-con').on('click', '.do-disable', function () {
 });
 
 //搜索
-$('a[menu=search]').click(() => {
-    getPageList(0);
-});
+$('a[menu=search]').click(() => getPageList(0));
 
 function getPageList(current_page) {
     HROS.request.get('/usermanager/users', {
