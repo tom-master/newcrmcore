@@ -4,12 +4,11 @@ NewCrm.AppMarket.UserAppManageDetail = {
     url: ''
 };
 
-
 $('html').css({ 'overflow-y': 'hidden' });
 //加载列表
 getPageList(0);
 //删除
-$('.list-con').on('click', '.do-del', () => {
+$('.list-con').on('click', '.do-del', function () {
     let appId = $(this).attr('appId');
     let appname = $(this).parents('tr').children('td:first-child').text();
     $.dialog({
