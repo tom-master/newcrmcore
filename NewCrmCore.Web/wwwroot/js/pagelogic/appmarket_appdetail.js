@@ -1,5 +1,5 @@
 ﻿//添加应用
-$('.btn-add').click(() => {
+$('.btn-add').click(function () {
     if (top.HROS.base.checkLogin()) {
         let appid = $(this).attr('app_id');
         top.HROS.app.add(appid, () => {
@@ -18,7 +18,7 @@ $('.btn-add').click(() => {
     }
 });
 //打开应用
-$('.btn-run').click(() => {
+$('.btn-run').click(function () {
     if ($(this).attr('app_type') === 'app') {
         top.HROS.window.create($(this).attr('app_id'));
     } else {
@@ -26,7 +26,7 @@ $('.btn-run').click(() => {
     }
 });
 //评分
-$('.grade-box ul li').click(() => {
+$('.grade-box ul li').click(function () {
     let num = $(this).attr('num');
     if (!isNaN(num) && /^[1-5]$/.test(num)) {
         if (top.HROS.base.checkLogin()) {
