@@ -1,8 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using NewCrmCore.Domain.ValueObject;
-using NewLibCore.Data.SQL.MapperExtension;
-using NewLibCore.Data.SQL.PropertyExtension;
+﻿using NewCrmCore.Domain.ValueObject;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
@@ -203,6 +199,11 @@ namespace NewCrmCore.Domain.Entitys.System
                 throw new ArgumentException($@"{nameof(appName)} 不能为空");
             }
 
+            if (appName == Name)
+            {
+                return this;
+            }
+
             Name = appName;
             OnPropertyChanged(new PropertyArgs(nameof(Name), Name));
             return this;
@@ -216,6 +217,11 @@ namespace NewCrmCore.Domain.Entitys.System
             if (String.IsNullOrEmpty(iconUrl))
             {
                 throw new ArgumentException($@"{nameof(iconUrl)} 不能为空");
+            }
+
+            if (iconUrl == IconUrl)
+            {
+                return this;
             }
 
             IconUrl = iconUrl;
@@ -235,6 +241,11 @@ namespace NewCrmCore.Domain.Entitys.System
                 throw new ArgumentException($@"{nameof(width)} 不能小于或等于0");
             }
 
+            if (width == Width)
+            {
+                return this;
+            }
+
             Width = width;
             OnPropertyChanged(new PropertyArgs(nameof(Width), Width));
             return this;
@@ -250,8 +261,12 @@ namespace NewCrmCore.Domain.Entitys.System
                 throw new ArgumentException($@"{nameof(height)} 不能小于或等于0");
             }
 
-            Height = height;
+            if (height == Height)
+            {
+                return this;
+            }
 
+            Height = height;
             OnPropertyChanged(new PropertyArgs(nameof(Height), Height));
             return this;
         }
@@ -382,6 +397,11 @@ namespace NewCrmCore.Domain.Entitys.System
         /// </summary>
         public App ModifyAppTypeId(Int32 appTypeId)
         {
+            if (appTypeId == AppTypeId)
+            {
+                return this;
+            }
+
             AppTypeId = appTypeId;
             OnPropertyChanged(new PropertyArgs(nameof(AppTypeId), AppTypeId));
             return this;
@@ -484,6 +504,11 @@ namespace NewCrmCore.Domain.Entitys.System
                 throw new ArgumentException($@"{nameof(newAppUrl)} 不能为空");
             }
 
+            if (newAppUrl == AppUrl)
+            {
+                return this;
+            }
+
             AppUrl = newAppUrl;
             OnPropertyChanged(new PropertyArgs(nameof(AppUrl), AppUrl));
             return this;
@@ -491,6 +516,11 @@ namespace NewCrmCore.Domain.Entitys.System
 
         public App ModifyRemark(String newRemark)
         {
+            if (newRemark == Remark)
+            {
+                return this;
+            }
+
             Remark = newRemark ?? "";
             OnPropertyChanged(new PropertyArgs(nameof(Remark), Remark));
             return this;

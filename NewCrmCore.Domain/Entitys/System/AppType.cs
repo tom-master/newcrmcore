@@ -1,9 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using NewLibCore.Data.SQL.MapperExtension;
-using NewLibCore.Data.SQL.PropertyExtension;
-
-namespace NewCrmCore.Domain.Entitys.System
+﻿namespace NewCrmCore.Domain.Entitys.System
 {
     [Description("应用类型"), Serializable]
     public partial class AppType : DomainModelBase
@@ -52,6 +47,11 @@ namespace NewCrmCore.Domain.Entitys.System
                 throw new ArgumentException($@"{nameof(appTypeName)} 不能为空");
             }
 
+            if (appTypeName == Name)
+            {
+                return this;
+            }
+
             Name = appTypeName;
             OnPropertyChanged(new PropertyArgs(nameof(Name), Name));
             return this;
@@ -59,12 +59,12 @@ namespace NewCrmCore.Domain.Entitys.System
 
         public AppType ModifyRemark(String remark)
         {
-            if (String.IsNullOrEmpty(remark))
+            if (remark == Remark)
             {
-                throw new ArgumentException($@"{nameof(remark)} 不能为空");
+                return this;
             }
 
-            Remark = remark;
+            Remark = remark ?? "";
             OnPropertyChanged(new PropertyArgs(nameof(Remark), Remark));
             return this;
         }
@@ -76,7 +76,7 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
-         public AppType NotSystem()
+        public AppType NotSystem()
         {
             IsSystem = false;
             OnPropertyChanged(new PropertyArgs(nameof(IsSystem), IsSystem));

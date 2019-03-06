@@ -1,18 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using NewCrmCore.Domain.Entitys.System;
-using NewCrmCore.Domain.Services.Interface;
-using NewCrmCore.Domain.ValueObject;
-using NewCrmCore.Dto;
-using NewCrmCore.Infrastructure;
-using NewCrmCore.Infrastructure.CommonTools;
-using NewLibCore;
-using NewLibCore.Data.SQL.InternalDataStore;
-using NewLibCore.Validate;
+﻿using NewCrmCore.Domain.Services.Interface;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
 {
@@ -25,7 +11,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var SqlContext = new SqlContext(Appsetting.Database))
                 {
-                    var sql = $@"SELECT a.Id FROM App AS a WHERE a.UserId=@userId AND a.IsDeleted=0";
+                    var sql = $@"SELECT a.Id,a.AppReleaseState FROM App AS a WHERE a.UserId=@userId AND a.IsDeleted=0";
                     var parameters = new List<SqlParameterMapper>
                     {
                         new SqlParameterMapper("@userId",userId)
@@ -127,20 +113,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 switch (orderId)
                 {
                     case 1:
-                        {
-                            orderBy.Append($@" ORDER BY a.AddTime DESC");
-                            break;
-                        }
+                    {
+                        orderBy.Append($@" ORDER BY a.AddTime DESC");
+                        break;
+                    }
                     case 2:
-                        {
-                            orderBy.Append($@" ORDER BY a.UseCount DESC");
-                            break;
-                        }
+                    {
+                        orderBy.Append($@" ORDER BY a.UseCount DESC");
+                        break;
+                    }
                     case 3:
-                        {
-                            orderBy.Append($@" ORDER BY (SELECT AVG(stars.StartNum) FROM AppStar AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId) DESC");
-                            break;
-                        }
+                    {
+                        orderBy.Append($@" ORDER BY (SELECT AVG(stars.StartNum) FROM AppStar AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId) DESC");
+                        break;
+                    }
                 }
 
                 var paging = new PageList<App>();
