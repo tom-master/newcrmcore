@@ -1,12 +1,12 @@
 ﻿//加载列表
 getPageList(0);
 //删除
-$('.list-con').on('click', '.do-del', () => {
+$('.list-con').on('click', '.do-del', function () {
     let categoryid = $(this).attr('categoryid');
     let name = $(this).parent().prev().text();
     $.dialog({
         id: 'ajaxedit',
-        content: '删除后将不可恢复!是否继续?',
+        content: `删除${name}后将不可恢复!是否继续?`,
         ok: () => {
             HROS.request.post('/apptypes/remove', { appTypeId: categoryid }, (responseText) => {
                 if (responseText.IsSuccess) {
