@@ -8,7 +8,7 @@ NewCrm.AppManager.Index = {
 };
 
 //删除，推荐
-$('.list-con').on('click', '.do-del', () => {
+$('.list-con').on('click', '.do-del', function () {
     let appid = $(this).attr('appid');
     let appname = $(this).parents('tr').children('td:nth-child(2)').text();
 
@@ -27,7 +27,7 @@ $('.list-con').on('click', '.do-del', () => {
         },
         cancel: true
     });
-}).on('click', '.do-recommend', () => {
+}).on('click', '.do-recommend', function () {
     let appid = $(this).attr('appid');
     HROS.request.post('/appmanager/recommend', { appId: appid }, (responseText) => {
         if (responseText.IsSuccess) {
@@ -76,7 +76,7 @@ function getPageList(current_page) {
             }
         });
 
-    Handlebars.registerHelper("isAudit", (v1, options) => {
+    Handlebars.registerHelper("isAudit", function (v1, options) {
         if (v1 === NewCrm.AppManager.pass) {
             return options.fn(this);
         } else {
@@ -99,7 +99,7 @@ function getPageList(current_page) {
         return v2;
     });
 
-    Handlebars.registerHelper("compare", (v1, v2, options) => {
+    Handlebars.registerHelper("compare", function (v1, v2, options) {
         if (v1 === v2 || v1 === NewCrm.AppManager.wait) {
             return options.fn(this);
         } else {
@@ -107,7 +107,7 @@ function getPageList(current_page) {
         }
     });
 
-    Handlebars.registerHelper("remove", (v1, options) => {
+    Handlebars.registerHelper("remove", function (v1, options) {
         if (v1) {
             return options.fn(this);
         } else {
