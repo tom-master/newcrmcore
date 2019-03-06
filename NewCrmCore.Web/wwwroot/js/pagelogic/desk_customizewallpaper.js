@@ -3,6 +3,20 @@
     userId: ''
 };
 
+(() => {
+    HROS.request.get("/desk/getuploadwallpapers", {}, (responseText) => {
+        if (responseText.IsSuccess) {
+            let liElement = '';
+            $.each(responseText.Model, (k, v) => {
+                liElement += '<li id="' + v.Id + '" style="background:url(' + v.Url + ')"><a href="###">删 除</a></li>';
+            });
+            $('.view').children('ul').append(liElement);
+        } else {
+            NewCrm.msgbox.fail(responseText.Message);
+        }
+    });
+})();
+
 var upload = WebUploader.create({
     // 选完文件后，是否自动上传。
     auto: true,
@@ -64,11 +78,11 @@ $('#wallpapertype').on('change', () => {
     top.HROS.wallpaper.update($('#wallpapertype').val(), '');
 });
 
-$('.wapppapercustom .view').on('click', 'li', () => {
+$('.wapppapercustom .view').on('click', 'li', function () {
     top.HROS.wallpaper.update($('#wallpapertype').val(), $(this).attr('id'));
 });
 
-$('.wapppapercustom .view').on('click', 'li a', (event) => {
+$('.wapppapercustom .view').on('click', 'li a', function (event) {
     event.stopPropagation();
     let id = $(this).parent().attr('id');
     HROS.request.post("/Desk/RemoveWallpaper", { wallPaperId: id }, (responseText) => {
@@ -80,21 +94,6 @@ $('.wapppapercustom .view').on('click', 'li a', (event) => {
         }
     });
 });
-GetAllUploadWallPaper();
-
-function GetAllUploadWallPaper() {
-    HROS.request.get("/desk/getuploadwallpapers", {}, (responseText) => {
-        if (responseText.IsSuccess) {
-            let liElement = '';
-            $.each(responseText.Model, (k, v) => {
-                liElement += '<li id="' + v.Id + '" style="background:url(' + v.Url + ')"><a href="###">删 除</a></li>';
-            });
-            $('.view').children('ul').append(liElement);
-        } else {
-            NewCrm.msgbox.fail(responseText.Message);
-        }
-    });
-}
 
 $('#webWallpaper').on('click', () => {
     let webUrl = $('#wallpaperurl').val();
