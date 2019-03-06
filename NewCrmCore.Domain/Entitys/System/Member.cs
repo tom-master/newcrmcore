@@ -1,8 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using NewCrmCore.Domain.ValueObject;
-using NewLibCore.Data.SQL.MapperExtension;
-using NewLibCore.Data.SQL.PropertyExtension;
+﻿using NewCrmCore.Domain.ValueObject;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
@@ -183,6 +179,11 @@ namespace NewCrmCore.Domain.Entitys.System
                 throw new ArgumentException($@"{nameof(width)} 不能小于或等于0");
             }
 
+            if (width == Width)
+            {
+                return this;
+            }
+
             Width = width;
             OnPropertyChanged(new PropertyArgs(nameof(Width), Width));
             return this;
@@ -195,6 +196,11 @@ namespace NewCrmCore.Domain.Entitys.System
                 throw new ArgumentException($@"{nameof(height)} 不能小于或等于0");
             }
 
+            if (height == Height)
+            {
+                return this;
+            }
+
             Height = height;
             OnPropertyChanged(new PropertyArgs(nameof(Height), Height));
             return this;
@@ -202,6 +208,11 @@ namespace NewCrmCore.Domain.Entitys.System
 
         public Member ModifyFolderId(Int32 folderId)
         {
+            if (folderId == FolderId)
+            {
+                return this;
+            }
+
             FolderId = folderId;
             OnPropertyChanged(new PropertyArgs(nameof(FolderId), FolderId));
             return this;
@@ -212,6 +223,11 @@ namespace NewCrmCore.Domain.Entitys.System
             if (String.IsNullOrEmpty(name))
             {
                 throw new ArgumentException($@"{nameof(name)}不能为空");
+            }
+
+            if (name == Name)
+            {
+                return this;
             }
 
             Name = name;
@@ -226,6 +242,11 @@ namespace NewCrmCore.Domain.Entitys.System
                 throw new ArgumentException($@"{nameof(iconUrl)}不能为空");
             }
 
+            if (iconUrl == IconUrl)
+            {
+                return this;
+            }
+
             IconUrl = iconUrl;
             OnPropertyChanged(new PropertyArgs(nameof(IconUrl), IconUrl));
             return this;
@@ -236,6 +257,11 @@ namespace NewCrmCore.Domain.Entitys.System
             if (String.IsNullOrEmpty(appUrl))
             {
                 throw new ArgumentException($@"{nameof(appUrl)}不能为空");
+            }
+
+            if (appUrl == AppUrl)
+            {
+                return this;
             }
 
             AppUrl = appUrl;
@@ -318,6 +344,11 @@ namespace NewCrmCore.Domain.Entitys.System
             if (deskIndex <= 0)
             {
                 throw new ArgumentException($@"{nameof(deskIndex)} 不能小于或等于0");
+            }
+
+            if (deskIndex == DeskIndex)
+            {
+                return this;
             }
 
             DeskIndex = deskIndex;
