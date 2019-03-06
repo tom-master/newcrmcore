@@ -4,7 +4,7 @@
     id: 0
 };
 
-$('.title ul > li').on('click', () => {
+$('.title ul > li').on('click', function () {
     let $li = $(this);
     let value = $li.attr('data-value');
     $('.title ul > li').each((k, v) => {
@@ -154,18 +154,18 @@ let upload = WebUploader.create({
     }
 });
 
-upload.on('beforeFileQueued', function (file) {
+upload.on('beforeFileQueued', (file) => {
     if (file.size > 1000 * 1024) {
         NewCrm.msgbox.info('文件大于1000Kb');
         return false;
     }
 });
 
-upload.on('startUpload', function () {
+upload.on('startUpload', () => {
     NewCrm.msgbox.loading('账户头像上传中...');
 });
 
-upload.on('uploadSuccess', function (file, cb) {
+upload.on('uploadSuccess', (file, cb) => {
     if (cb[0].IsSuccess) {
         let model = {
             Title: cb[0].Title,
@@ -177,7 +177,7 @@ upload.on('uploadSuccess', function (file, cb) {
             Md5: cb[0].Md5,
             ShortUrl: ""
         };
-        HROS.request.post('/usersetting/modifyface', { userFace: model.Url }, function (responseText) {
+        HROS.request.post('/usersetting/modifyface', { userFace: model.Url }, (responseText) => {
             if (responseText.IsSuccess) {
                 NewCrm.msgbox.success('账户头像保存成功');
                 top.HROS.startmenu.getAvatar();
