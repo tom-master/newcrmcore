@@ -119,7 +119,7 @@ namespace NewCrmCore.Domain.Entitys.System
         public Config ModifyUserId(Int32 userId)
         {
             UserId = userId;
-            OnPropertyChanged(new PropertyArgs(nameof(UserId), UserId));
+            OnPropertyChanged(nameof(UserId));
             return this;
         }
 
@@ -131,7 +131,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             Skin = skin;
-            OnPropertyChanged(new PropertyArgs(nameof(Skin), Skin));
+            OnPropertyChanged(nameof(Skin));
             return this;
         }
 
@@ -143,8 +143,11 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             UserFace = userFace;
+            OnPropertyChanged(nameof(UserFace));
+
             IsModifyUserFace = true;
-            OnPropertyChanged(new PropertyArgs(nameof(UserFace), UserFace), new PropertyArgs(nameof(IsModifyUserFace), IsModifyUserFace));
+            OnPropertyChanged(nameof(IsModifyUserFace));
+
             return this;
         }
 
@@ -165,7 +168,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             AppSize = appSize;
-            OnPropertyChanged(new PropertyArgs(nameof(AppSize), AppSize));
+            OnPropertyChanged(nameof(AppSize));
             return this;
         }
 
@@ -186,7 +189,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             AppVerticalSpacing = appVerticalSpacing;
-            OnPropertyChanged(new PropertyArgs(nameof(AppVerticalSpacing), AppVerticalSpacing));
+            OnPropertyChanged(nameof(AppVerticalSpacing));
             return this;
         }
 
@@ -207,7 +210,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             AppHorizontalSpacing = appHorizontalSpacing;
-            OnPropertyChanged(new PropertyArgs(nameof(AppHorizontalSpacing), AppHorizontalSpacing));
+            OnPropertyChanged(nameof(AppHorizontalSpacing));
             return this;
         }
 
@@ -219,7 +222,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             DefaultDeskNumber = deskNumber;
-            OnPropertyChanged(new PropertyArgs(nameof(DefaultDeskNumber), DefaultDeskNumber));
+            OnPropertyChanged(nameof(DefaultDeskNumber));
             return this;
         }
 
@@ -231,77 +234,77 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             DefaultDeskCount = deskCount;
-            OnPropertyChanged(new PropertyArgs(nameof(DefaultDeskCount), DefaultDeskCount));
+            OnPropertyChanged(nameof(DefaultDeskCount));
             return this;
         }
 
         public Config ModeTo(WallpaperMode mode)
         {
             WallpaperMode = mode;
-            OnPropertyChanged(new PropertyArgs(nameof(WallpaperMode), WallpaperMode));
+            OnPropertyChanged(nameof(WallpaperMode));
             return this;
         }
 
         public Config DisplayToTile()
         {
             WallpaperMode = WallpaperMode.Tile;
-            OnPropertyChanged(new PropertyArgs(nameof(WallpaperMode), WallpaperMode));
+            OnPropertyChanged(nameof(WallpaperMode));
             return this;
         }
 
         public Config DisplayToDraw()
         {
             WallpaperMode = WallpaperMode.Draw;
-            OnPropertyChanged(new PropertyArgs(nameof(WallpaperMode), WallpaperMode));
+            OnPropertyChanged(nameof(WallpaperMode));
             return this;
         }
 
         public Config DisplayToCenter()
         {
             WallpaperMode = WallpaperMode.Center;
-            OnPropertyChanged(new PropertyArgs(nameof(WallpaperMode), WallpaperMode));
+            OnPropertyChanged(nameof(WallpaperMode));
             return this;
         }
 
         public Config FromBing()
         {
             IsBing = true;
-            OnPropertyChanged(new PropertyArgs(nameof(IsBing), IsBing));
+            OnPropertyChanged(nameof(IsBing));
             return this;
         }
 
         public Config NotFromBing()
         {
             IsBing = false;
-            OnPropertyChanged(new PropertyArgs(nameof(IsBing), IsBing));
+            OnPropertyChanged(nameof(IsBing));
             return this;
         }
 
         public Config DirectionToX()
         {
             AppXy = AppAlignMode.X;
-            OnPropertyChanged(new PropertyArgs(nameof(AppXy), AppXy));
+            OnPropertyChanged(nameof(AppXy));
             return this;
         }
 
         public Config DirectionToY()
         {
             AppXy = AppAlignMode.Y;
-            OnPropertyChanged(new PropertyArgs(nameof(AppXy), AppXy));
+            OnPropertyChanged(nameof(AppXy));
             return this;
         }
 
         public Config PositionTo(DockPosition postion)
         {
             DockPosition = postion;
-            OnPropertyChanged(new PropertyArgs(nameof(DockPosition), DockPosition));
+            OnPropertyChanged(nameof(DockPosition));
             return this;
         }
 
         public Config ModifyWallpaperId(Int32 wallpaperId)
         {
             WallpaperId = wallpaperId;
-            OnPropertyChanged(new PropertyArgs(nameof(WallpaperId), WallpaperId));
+            OnPropertyChanged(nameof(WallpaperId));
             return this;
         }
     }
