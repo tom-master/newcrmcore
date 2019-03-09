@@ -1,5 +1,6 @@
 ﻿using System;
 using NewLibCore.Data.SQL.MapperExtension;
+using NewLibCore.Data.SQL.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.Agent
 {
