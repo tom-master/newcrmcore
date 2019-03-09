@@ -1,4 +1,11 @@
-﻿namespace NewCrmCore.Domain.Entitys.Security
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using NewLibCore.Data.SQL.MapperExtension;
+using NewLibCore.Data.SQL.PropertyExtension;
+
+namespace NewCrmCore.Domain.Entitys.Security
 {
     [Description("角色"), Serializable]
     public partial class Role : DomainModelBase
