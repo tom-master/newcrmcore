@@ -102,7 +102,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
             }
 
             LoginPassword = password;
-            OnPropertyChanged(new PropertyArgs(nameof(LoginPassword), password));
+            OnPropertyChanged(nameof(LoginPassword));
             return this;
         }
 
@@ -117,7 +117,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
             }
 
             LockScreenPassword = password;
-            OnPropertyChanged(new PropertyArgs(nameof(LockScreenPassword), password));
+            OnPropertyChanged(nameof(LockScreenPassword));
             return this;
         }
 
@@ -127,7 +127,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         public User ModifyConfigId(Int32 configId)
         {
             ConfigId = configId;
-            OnPropertyChanged(new PropertyArgs(nameof(ConfigId), configId));
+            OnPropertyChanged(nameof(ConfigId));
             return this;
         }
 
@@ -137,7 +137,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         public User Enable()
         {
             IsDisable = false;
-            OnPropertyChanged(new PropertyArgs(nameof(IsDisable), IsDisable));
+            OnPropertyChanged(nameof(IsDisable));
             return this;
         }
 
@@ -147,7 +147,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         public User Disable()
         {
             IsDisable = true;
-            OnPropertyChanged(new PropertyArgs(nameof(IsDisable), IsDisable));
+            OnPropertyChanged(nameof(IsDisable));
             return this;
         }
 
@@ -158,8 +158,9 @@ namespace NewCrmCore.Domain.Entitys.Agent
         public User Online()
         {
             IsOnline = true;
+            OnPropertyChanged(nameof(IsOnline));
             LastLoginTime = DateTime.Now;
-            OnPropertyChanged(new PropertyArgs(nameof(IsOnline), IsOnline), new PropertyArgs(nameof(LastLoginTime), LastLoginTime));
+            OnPropertyChanged(nameof(LastLoginTime));
             return this;
         }
 
@@ -170,7 +171,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         public User Offline()
         {
             IsOnline = false;
-            OnPropertyChanged(new PropertyArgs(nameof(IsOnline), IsOnline));
+            OnPropertyChanged(nameof(IsOnline));
             return this;
         }
 
@@ -186,7 +187,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
 
             Roles.ToList().Clear();
             Roles = roleIds.Select(roleId => new UserRole(Id, roleId));
-            OnPropertyChanged(new PropertyArgs(nameof(Roles), Roles));
+            OnPropertyChanged(nameof(Roles));
             return this;
         }
 
@@ -196,7 +197,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         public User DetachAdminRole()
         {
             IsAdmin = false;
-            OnPropertyChanged(new PropertyArgs(nameof(IsAdmin), IsAdmin));
+            OnPropertyChanged(nameof(IsAdmin));
             return this;
         }
 
@@ -207,7 +208,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         public User AttachAdminRole()
         {
             IsAdmin = true;
-            OnPropertyChanged(new PropertyArgs(nameof(IsAdmin), IsAdmin));
+            OnPropertyChanged(nameof(IsAdmin));
             return this;
         }
     }
