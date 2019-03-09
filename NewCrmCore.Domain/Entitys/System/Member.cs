@@ -1,4 +1,8 @@
-﻿using NewCrmCore.Domain.ValueObject;
+﻿using System;
+using System.ComponentModel;
+using NewCrmCore.Domain.ValueObject;
+using NewLibCore.Data.SQL.MapperExtension;
+using NewLibCore.Data.SQL.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
@@ -185,7 +189,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             Width = width;
-            OnPropertyChanged(new PropertyArgs(nameof(Width), Width));
+            OnPropertyChanged(nameof(Width));
             return this;
         }
 
@@ -202,7 +206,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             Height = height;
-            OnPropertyChanged(new PropertyArgs(nameof(Height), Height));
+            OnPropertyChanged(nameof(Height));
             return this;
         }
 
@@ -214,7 +218,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             FolderId = folderId;
-            OnPropertyChanged(new PropertyArgs(nameof(FolderId), FolderId));
+            OnPropertyChanged(nameof(FolderId));
             return this;
         }
 
@@ -231,7 +235,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             Name = name;
-            OnPropertyChanged(new PropertyArgs(nameof(Name), Name));
+            OnPropertyChanged(nameof(Name));
             return this;
         }
 
@@ -248,7 +252,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             IconUrl = iconUrl;
-            OnPropertyChanged(new PropertyArgs(nameof(IconUrl), IconUrl));
+            OnPropertyChanged(nameof(IconUrl));
             return this;
         }
 
@@ -265,77 +269,77 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             AppUrl = appUrl;
-            OnPropertyChanged(new PropertyArgs(nameof(AppUrl), AppUrl));
+            OnPropertyChanged(nameof(AppUrl));
             return this;
         }
 
         public Member OnDock()
         {
             IsOnDock = true;
-            OnPropertyChanged(new PropertyArgs(nameof(IsOnDock), IsOnDock));
+            OnPropertyChanged(nameof(IsOnDock));
             return this;
         }
 
         public Member OutDock()
         {
             IsOnDock = false;
-            OnPropertyChanged(new PropertyArgs(nameof(IsOnDock), IsOnDock));
+            OnPropertyChanged(nameof(IsOnDock));
             return this;
         }
 
         public Member Setbar()
         {
             IsSetbar = true;
-            OnPropertyChanged(new PropertyArgs(nameof(IsSetbar), IsSetbar));
+            OnPropertyChanged(nameof(IsSetbar));
             return this;
         }
 
         public Member NotSetbar()
         {
             IsSetbar = false;
-            OnPropertyChanged(new PropertyArgs(nameof(IsSetbar), IsSetbar));
+            OnPropertyChanged(nameof(IsSetbar));
             return this;
         }
 
         public Member OpenMax()
         {
             IsOpenMax = true;
-            OnPropertyChanged(new PropertyArgs(nameof(IsOpenMax), IsOpenMax));
+            OnPropertyChanged(nameof(IsOpenMax));
             return this;
         }
 
         public Member NotOpenMax()
         {
             IsOpenMax = false;
-            OnPropertyChanged(new PropertyArgs(nameof(IsOpenMax), IsOpenMax));
+            OnPropertyChanged(nameof(IsOpenMax));
             return this;
         }
 
         public Member Flash()
         {
             IsFlash = true;
-            OnPropertyChanged(new PropertyArgs(nameof(IsFlash), IsFlash));
+            OnPropertyChanged(nameof(IsFlash));
             return this;
         }
 
         public Member NotFlash()
         {
             IsFlash = false;
-            OnPropertyChanged(new PropertyArgs(nameof(IsFlash), IsFlash));
+            OnPropertyChanged(nameof(IsFlash));
             return this;
         }
 
         public Member Resize()
         {
             IsResize = true;
-            OnPropertyChanged(new PropertyArgs(nameof(IsResize), IsResize));
+            OnPropertyChanged(nameof(IsResize));
             return this;
         }
 
         public Member NotResize()
         {
             IsResize = false;
-            OnPropertyChanged(new PropertyArgs(nameof(IsResize), IsResize));
+            OnPropertyChanged(nameof(IsResize));
             return this;
         }
 
@@ -352,21 +356,21 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             DeskIndex = deskIndex;
-            OnPropertyChanged(new PropertyArgs(nameof(DeskIndex), DeskIndex));
+            OnPropertyChanged(nameof(DeskIndex));
             return this;
         }
 
         public Member IconNotFromUpload()
         {
             IsIconByUpload = false;
-            OnPropertyChanged(new PropertyArgs(nameof(IsIconByUpload), IsIconByUpload));
+            OnPropertyChanged(nameof(IsIconByUpload));
             return this;
         }
 
         public Member IconFromUpload()
         {
             IsIconByUpload = true;
-            OnPropertyChanged(new PropertyArgs(nameof(IsIconByUpload), IsIconByUpload));
+            OnPropertyChanged(nameof(IsIconByUpload));
             return this;
         }
     }
