@@ -28,15 +28,11 @@
             if ($('input[name="id"]').val()) {
                 if ($('#pwd').val()) {
                     NewCrm.msgbox.success('您修改了登陆密码，请重新登陆');
-                    setTimeout(() => {
-                        top.location.reload();
-                    }, 1000);
+                    setTimeout(() => top.location.reload(), 1000);
                 } else {
                     NewCrm.msgbox.success('修改成功!');
                     setTimeout(() => {
-                        window.parent.closeDetailIframe(() => {
-                            window.parent.$('#pagination').trigger('currentPage');
-                        });
+                        window.parent.closeDetailIframe(() => window.parent.$('#pagination').trigger('currentPage'));
                     }, 1000);
                 }
             } else {
@@ -61,7 +57,7 @@
     }
 });
 
-$('input[name="val_type"]').change(() => {
+$('input[name="val_type"]').change(function () {
     if (parseInt($(this).val()) === 2) {
         $('.input-label-permission').slideDown();
     } else {

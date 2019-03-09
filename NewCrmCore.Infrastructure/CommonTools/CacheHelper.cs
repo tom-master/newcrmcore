@@ -1,12 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using NewLibCore;
-using NewLibCore.Data.Redis.InternalHelper;
-
-namespace NewCrmCore.Infrastructure.CommonTools
+﻿namespace NewCrmCore.Infrastructure.CommonTools
 {
 
     public class CacheHelper
@@ -59,18 +51,18 @@ namespace NewCrmCore.Infrastructure.CommonTools
         /// <summary>
         /// 更新时移除旧的缓存键
         /// </summary>
-        public static async Task RemoveKeyWhenModify(params CacheKeyBase[] caches)
+        public static async Task RemoveKeyWhenModify(params CacheKeyBase[] cacheKeys)
         {
-            if (!caches.Any())
+            if (cacheKeys == null || !cacheKeys.Any())
             {
                 return;
             }
 
             await Task.Run(() =>
             {
-                foreach (var cache in caches)
+                foreach (var key in cacheKeys)
                 {
-                    _cacheQuery.KeyDelete(cache.GetKey());
+                    _cacheQuery.KeyDelete(key.GetKey());
                 }
             });
         }

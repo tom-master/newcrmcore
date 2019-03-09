@@ -10,9 +10,7 @@
 getPageList(0);
 
 //搜索
-$('a[menu=search]').click(() => {
-    getPageList(0);
-});
+$('a[menu=search]').click(() => getPageList(0));
 
 function getPageList(current_page) {
     HROS.request.get('/logger/getlogs/', {

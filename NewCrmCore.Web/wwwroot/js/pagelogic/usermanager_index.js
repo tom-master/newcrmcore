@@ -1,7 +1,7 @@
 ﻿//加载列表
 getPageList(0);
 //删除
-$('.list-con').on('click', '.do-del', () => {
+$('.list-con').on('click', '.do-del', function () {
     let memberid = $(this).attr('memberid');
     let name = $(this).parent().prev().text();
     art.dialog({
@@ -20,13 +20,13 @@ $('.list-con').on('click', '.do-del', () => {
     });
 });
 
-$('.list-con').on('click', '.do-disable', () => {
+$('.list-con').on('click', '.do-disable', function () {
     let memberid = $(this).attr('memberid');
     let name = $(this).parent().prev().text();
     let isDisable = $(this).attr('isDisable');
     art.dialog({
         id: 'edit',
-        content: isDisable ? '确定要启用 “' + name + '” 该账户么？' : '确定要禁用 “' + name + '” 该账户么？',
+        content: isDisable ? `确定要启用"${name}"该账户么?` : `确定要禁用"${name}"该账户么?`,
         ok: () => {
             let url = '';
             if (isDisable) {
@@ -47,9 +47,7 @@ $('.list-con').on('click', '.do-disable', () => {
 });
 
 //搜索
-$('a[menu=search]').click(() => {
-    getPageList(0);
-});
+$('a[menu=search]').click(() => getPageList(0));
 
 function getPageList(current_page) {
     HROS.request.get('/usermanager/users', {
@@ -79,7 +77,6 @@ function getPageList(current_page) {
 Handlebars.registerHelper('convertUserType', (isAdmin) => {
     if (isAdmin) {
         return '管理员账户';
-    } else {
-        return '普通账户';
     }
+    return '普通账户';
 });

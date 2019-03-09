@@ -131,7 +131,7 @@ let f = $('#form').Validform({
         }
     }
 });
-$('input[name="val_type"]').change(() => {
+$('input[name="val_type"]').change(function () {
     if ($(this).val() === 'app') {
         $('.input-label-isresize, .input-label-isopenmax, .input-label-isflash, .input-label-issetbar').slideDown();
     } else {
@@ -153,7 +153,7 @@ $('input[name="val_type"]').change(() => {
         $('.input-label-isresize, .input-label-isopenmax, .input-label-isflash, .input-label-issetbar').slideUp();
     }
 });
-$('input[name="val_isresize"]').change(() => {
+$('input[name="val_isresize"]').change(function () {
     if ($(this).val() === '1') {
         $('.input-label-isopenmax').slideDown();
     } else {
@@ -162,7 +162,7 @@ $('input[name="val_isresize"]').change(() => {
 });
 
 //选择应用图片
-$('.shortcut-selicon a').click(() => {
+$('.shortcut-selicon a').click(function () {
     $('#isIconByUpload').val('0');
     $('.shortcutview img').remove();
     $('.shortcutview').addClass('bgnone').append($(this).html());
@@ -197,7 +197,7 @@ $('#btn-preview').on('click', () => {
 });
 
 
-$('#btn-pass').on('click', () => {
+$('#btn-pass').on('click', function () {
     let appid = $(this).attr('appid');
     $.dialog({
         id: 'del',
@@ -217,7 +217,7 @@ $('#btn-pass').on('click', () => {
         cancel: true
     });
 });
-$('#btn-unpass').on('click', () => {
+$('#btn-unpass').on('click', function () {
     let appid = $(this).attr('appid');
     $.dialog({
         id: 'del',
@@ -237,7 +237,7 @@ $('#btn-unpass').on('click', () => {
     });
 });
 
-$('#btn-release').on('click', () => {
+$('#btn-release').on('click', function () {
     let appid = $(this).attr('appid');
     $.dialog({
         id: 'del',

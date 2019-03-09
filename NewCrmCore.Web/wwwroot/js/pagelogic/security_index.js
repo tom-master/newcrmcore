@@ -1,7 +1,8 @@
 ﻿//加载列表
 getPageList(0);
+
 //删除
-$('.list-con').on('click', '.do-del', () => {
+$('.list-con').on('click', '.do-del', function () {
     let roleId = $(this).attr('data-roleid');
     let name = $(this).parent().prev().text();
     $.dialog({
@@ -22,10 +23,9 @@ $('.list-con').on('click', '.do-del', () => {
         cancel: true
     });
 });
+
 //搜索
-$('a[menu=search]').click(() => {
-    getPageList(0);
-});
+$('a[menu=search]').click(() => getPageList(0));
 
 function getPageList(current_page) {
     HROS.request.get('/security/getroles', {

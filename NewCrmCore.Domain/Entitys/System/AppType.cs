@@ -52,6 +52,11 @@ namespace NewCrmCore.Domain.Entitys.System
                 throw new ArgumentException($@"{nameof(appTypeName)} 不能为空");
             }
 
+            if (appTypeName == Name)
+            {
+                return this;
+            }
+
             Name = appTypeName;
             OnPropertyChanged(nameof(Name));
             return this;
@@ -59,12 +64,12 @@ namespace NewCrmCore.Domain.Entitys.System
 
         public AppType ModifyRemark(String remark)
         {
-            if (String.IsNullOrEmpty(remark))
+            if (remark == Remark)
             {
-                throw new ArgumentException($@"{nameof(remark)} 不能为空");
+                return this;
             }
 
-            Remark = remark;
+            Remark = remark ?? "";
             OnPropertyChanged(nameof(Remark));
             return this;
         }
@@ -76,7 +81,7 @@ namespace NewCrmCore.Domain.Entitys.System
             return this;
         }
 
-         public AppType NotSystem()
+        public AppType NotSystem()
         {
             IsSystem = false;
             OnPropertyChanged(nameof(IsSystem));

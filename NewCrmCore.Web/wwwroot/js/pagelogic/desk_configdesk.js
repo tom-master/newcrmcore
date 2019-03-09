@@ -13,7 +13,7 @@ $('input[name="appxy"]').change(() => {
 });
 
 //更新应用图标大小
-$('.appsize-minus, .appsize-plus').click(() => {
+$('.appsize-minus, .appsize-plus').click(function () {
     let size = parseInt($('input[name="appsize"]').val());
     if ($(this).hasClass('appsize-minus')) {
         size = size - 1;
@@ -39,7 +39,7 @@ let updateSize = (size) => {
 };
 
 //更新图标垂直间距
-$('.appverticalspacing-minus, .appverticalspacing-plus').click(() => {
+$('.appverticalspacing-minus, .appverticalspacing-plus').click(function () {
     let vertical = parseInt($('input[name="appverticalspacing"]').val());
     if ($(this).hasClass('appverticalspacing-minus')) {
         vertical = vertical - 1;
@@ -54,7 +54,7 @@ $('input[name="appverticalspacing"]').keyup(() => {
     updateVertical(vertical);
 });
 
-$('.apphorizontalspacing-minus, .apphorizontalspacing-plus').click(() => {
+$('.apphorizontalspacing-minus, .apphorizontalspacing-plus').click(function () {
     let horizontal = parseInt($('input[name="apphorizontalspacing"]').val());
     if ($(this).hasClass('apphorizontalspacing-minus')) {
         horizontal = horizontal - 1;

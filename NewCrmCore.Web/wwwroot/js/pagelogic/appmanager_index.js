@@ -8,7 +8,7 @@ NewCrm.AppManager.Index = {
 };
 
 //删除，推荐
-$('.list-con').on('click', '.do-del', () => {
+$('.list-con').on('click', '.do-del', function () {
     let appid = $(this).attr('appid');
     let appname = $(this).parents('tr').children('td:nth-child(2)').text();
 
@@ -27,7 +27,7 @@ $('.list-con').on('click', '.do-del', () => {
         },
         cancel: true
     });
-}).on('click', '.do-recommend', () => {
+}).on('click', '.do-recommend', function () {
     let appid = $(this).attr('appid');
     HROS.request.post('/appmanager/recommend', { appId: appid }, (responseText) => {
         if (responseText.IsSuccess) {
@@ -39,9 +39,7 @@ $('.list-con').on('click', '.do-del', () => {
 
 });
 //搜索
-$('a[menu=search]').click(() => {
-    getPageList(0);
-});
+$('a[menu=search]').click(() => getPageList(0));
 
 function getPageList(current_page) {
     let $appStates = $('#appState').find("option:selected");
@@ -50,33 +48,32 @@ function getPageList(current_page) {
         appStateResult = $appStates.attr('data-type') + ',' + $appStates.attr('value');
     }
 
-    HROS.request.get('/appmanager/getapps',
-        {
-            searchText: $('#appName').val(),
-            appTypeId: $('#appType').find("option:selected").attr('value'),
-            appStyleId: $('#appStyle').find("option:selected").attr('value'),
-            appState: appStateResult,
-            pageIndex: current_page === 0 ? 1 : current_page + 1,
-            pageSize: 7
-        }, (responseText) => {
-            if (responseText.IsSuccess) {
-                let tableTemplate = Handlebars.compile($("#table-template").html());
-                $('.list-con').html(tableTemplate(responseText));
-                $('.list-count').text(responseText.TotalCount);
-                $('#pagination_setting').attr('count', parseInt(responseText.TotalCount));
-                initPagination({
-                    current_page: current_page,
-                    items_per_page: 7,
-                    num_display_entries: 9,
-                    num_edge_entries: 2,
-                    getPageList: getPageList
-                });
-            } else {
-                NewCrm.msgbox.fail(responseText.Message);
-            }
-        });
+    HROS.request.get('/appmanager/getapps', {
+        searchText: $('#appName').val(),
+        appTypeId: $('#appType').find("option:selected").attr('value'),
+        appStyleId: $('#appStyle').find("option:selected").attr('value'),
+        appState: appStateResult,
+        pageIndex: current_page === 0 ? 1 : current_page + 1,
+        pageSize: 7
+    }, (responseText) => {
+        if (responseText.IsSuccess) {
+            let tableTemplate = Handlebars.compile($("#table-template").html());
+            $('.list-con').html(tableTemplate(responseText));
+            $('.list-count').text(responseText.TotalCount);
+            $('#pagination_setting').attr('count', parseInt(responseText.TotalCount));
+            initPagination({
+                current_page: current_page,
+                items_per_page: 7,
+                num_display_entries: 9,
+                num_edge_entries: 2,
+                getPageList: getPageList
+            });
+        } else {
+            NewCrm.msgbox.fail(responseText.Message);
+        }
+    });
 
-    Handlebars.registerHelper("isAudit", (v1, options) => {
+    Handlebars.registerHelper("isAudit", function (v1, options) {
         if (v1 === NewCrm.AppManager.pass) {
             return options.fn(this);
         } else {
@@ -99,7 +96,7 @@ function getPageList(current_page) {
         return v2;
     });
 
-    Handlebars.registerHelper("compare", (v1, v2, options) => {
+    Handlebars.registerHelper("compare", function (v1, v2, options) {
         if (v1 === v2 || v1 === NewCrm.AppManager.wait) {
             return options.fn(this);
         } else {
@@ -107,7 +104,7 @@ function getPageList(current_page) {
         }
     });
 
-    Handlebars.registerHelper("remove", (v1, options) => {
+    Handlebars.registerHelper("remove", function (v1, options) {
         if (v1) {
             return options.fn(this);
         } else {

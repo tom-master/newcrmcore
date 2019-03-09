@@ -1,8 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using NewCrmCore.Domain.ValueObject;
-using NewLibCore.Data.SQL.MapperExtension;
-using NewLibCore.Data.SQL.PropertyExtension;
+﻿using NewCrmCore.Domain.ValueObject;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
@@ -118,6 +114,11 @@ namespace NewCrmCore.Domain.Entitys.System
     {
         public Config ModifyUserId(Int32 userId)
         {
+            if (userId == UserId)
+            {
+                return this;
+            }
+
             UserId = userId;
             OnPropertyChanged(nameof(UserId));
             return this;
@@ -130,6 +131,11 @@ namespace NewCrmCore.Domain.Entitys.System
                 throw new ArgumentException($@"{nameof(skin)} 不能为空");
             }
 
+            if (skin == Skin)
+            {
+                return this;
+            }
+
             Skin = skin;
             OnPropertyChanged(nameof(Skin));
             return this;
@@ -140,6 +146,11 @@ namespace NewCrmCore.Domain.Entitys.System
             if (String.IsNullOrEmpty(userFace))
             {
                 throw new ArgumentException($@"{nameof(userFace)} 不能为空");
+            }
+
+            if (userFace == UserFace)
+            {
+                return this;
             }
 
             UserFace = userFace;
@@ -156,6 +167,11 @@ namespace NewCrmCore.Domain.Entitys.System
             if (appSize <= 0)
             {
                 throw new ArgumentException($@"{nameof(appSize)} 不能小于或者等于0");
+            }
+
+            if (appSize == AppSize)
+            {
+                return this;
             }
 
             if (appSize < 32)
@@ -179,6 +195,11 @@ namespace NewCrmCore.Domain.Entitys.System
                 throw new ArgumentException($@"{nameof(appVerticalSpacing)} 不能小于或者等于0");
             }
 
+            if (appVerticalSpacing == AppVerticalSpacing)
+            {
+                return this;
+            }
+
             if (appVerticalSpacing < 0)
             {
                 appVerticalSpacing = 0;
@@ -198,6 +219,11 @@ namespace NewCrmCore.Domain.Entitys.System
             if (appHorizontalSpacing <= 0)
             {
                 throw new ArgumentException($@"{nameof(appHorizontalSpacing)} 不能小于或者等于0");
+            }
+
+            if (appHorizontalSpacing == AppHorizontalSpacing)
+            {
+                return this;
             }
 
             if (appHorizontalSpacing < 0)
@@ -221,6 +247,11 @@ namespace NewCrmCore.Domain.Entitys.System
                 throw new ArgumentException($@"{nameof(deskNumber)} 不能小于或者等于0");
             }
 
+            if (deskNumber == DefaultDeskNumber)
+            {
+                return this;
+            }
+
             DefaultDeskNumber = deskNumber;
             OnPropertyChanged(nameof(DefaultDeskNumber));
             return this;
@@ -233,6 +264,11 @@ namespace NewCrmCore.Domain.Entitys.System
                 throw new ArgumentException($@"{nameof(deskCount)} 不能小于或者等于0");
             }
 
+            if (deskCount == DefaultDeskCount)
+            {
+                return this;
+            }
+
             DefaultDeskCount = deskCount;
             OnPropertyChanged(nameof(DefaultDeskCount));
             return this;
@@ -240,6 +276,11 @@ namespace NewCrmCore.Domain.Entitys.System
 
         public Config ModeTo(WallpaperMode mode)
         {
+            if (mode == WallpaperMode)
+            {
+                return this;
+            }
+
             WallpaperMode = mode;
             OnPropertyChanged(nameof(WallpaperMode));
             return this;
@@ -296,6 +337,11 @@ namespace NewCrmCore.Domain.Entitys.System
 
         public Config PositionTo(DockPosition postion)
         {
+            if (postion == DockPosition)
+            {
+                return this;
+            }
+
             DockPosition = postion;
             OnPropertyChanged(nameof(DockPosition));
             return this;
@@ -303,6 +349,11 @@ namespace NewCrmCore.Domain.Entitys.System
 
         public Config ModifyWallpaperId(Int32 wallpaperId)
         {
+            if (wallpaperId == WallpaperId)
+            {
+                return this;
+            }
+
             WallpaperId = wallpaperId;
             OnPropertyChanged(nameof(WallpaperId));
             return this;

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using NewCrmCore.Domain.ValueObject;
-using NewLibCore.Data.SQL.MapperExtension;
-using NewLibCore.Data.SQL.PropertyExtension;
+﻿using NewCrmCore.Domain.ValueObject;
 
 namespace NewCrmCore.Domain.Entitys.Agent
 {
@@ -101,6 +95,11 @@ namespace NewCrmCore.Domain.Entitys.Agent
                 throw new ArgumentException($@"{nameof(LoginPassword)}不能为空");
             }
 
+            if (password == LoginPassword)
+            {
+                return this;
+            }
+
             LoginPassword = password;
             OnPropertyChanged(nameof(LoginPassword));
             return this;
@@ -114,6 +113,11 @@ namespace NewCrmCore.Domain.Entitys.Agent
             if (String.IsNullOrEmpty(password))
             {
                 throw new ArgumentException($@"{nameof(LockScreenPassword)}不能为空");
+            }
+
+            if (password == LockScreenPassword)
+            {
+                return this;
             }
 
             LockScreenPassword = password;

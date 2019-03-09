@@ -17,15 +17,15 @@
     },
     ajaxPost: true,
     postonceTip: () => {
-        NewCrm.msgbox.fail(HROS.CONFIG.postOnce)
+        NewCrm.msgbox.fail(HROS.CONFIG.postOnce);
     },
     beforeSubmit: (curform) => {
-        NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt)
+        NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt);
     },
     callback: (responseText) => {
         let response = responseText;
         if (response.IsSuccess) {
-            location.href = '/desk/index'
+            location.href = '/desk/index';
         } else {
             NewCrm.msgbox.fail(response.Message);
         }
