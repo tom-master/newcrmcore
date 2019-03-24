@@ -8,7 +8,7 @@ using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
-using NewLibCore.Data.SQL.InternalDataStore;
+using NewLibCore.Data.SQL.DataMapper;
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
@@ -22,11 +22,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var config = new Config();
                     config.ModifyDefaultDeskNumber(newDefaultDeskNumber);
-                    var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                    var result = mapper.Modify(config, conf => conf.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("修改默认桌面号失败");
@@ -43,12 +43,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var config = new Config();
                     var newPosition = EnumExtensions.ToEnum<DockPosition>(position);
                     config.PositionTo(newPosition);
-                    var result = dataStore.Modify(config, conf => conf.UserId == userId && conf.DefaultDeskNumber == defaultDeskNumber);
+                    var result = mapper.Modify(config, conf => conf.UserId == userId && conf.DefaultDeskNumber == defaultDeskNumber);
                     if (!result)
                     {
                         throw new BusinessException("修改应用码头位置失败");
@@ -63,11 +63,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var config = new Config();
                     config.DirectionToX();
-                    var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                    var result = mapper.Modify(config, conf => conf.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("修改桌面应用为X轴失败");
@@ -82,11 +82,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var config = new Config();
                     config.DirectionToY();
-                    var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                    var result = mapper.Modify(config, conf => conf.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("修改桌面应用为Y轴失败");
@@ -102,11 +102,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var config = new Config();
                     config.ModifyAppSize(newSize);
-                    var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                    var result = mapper.Modify(config, conf => conf.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("修改桌面应用展示图标大小失败");
@@ -122,11 +122,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var config = new Config();
                     config.ModifyAppVerticalSpacing(newSize);
-                    var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                    var result = mapper.Modify(config, conf => conf.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("修改桌面应用水平间距失败");
@@ -142,11 +142,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var config = new Config();
                     config.ModifyAppHorizontalSpacing(newSize);
-                    var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                    var result = mapper.Modify(config, conf => conf.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("修改桌面应用垂直间距失败");
@@ -162,11 +162,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var member = new Member();
                     member.OnDock();
-                    var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("将桌面应用移动到应用码头失败");
@@ -183,11 +183,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var member = new Member();
                     member.OutDock().ModifyDeskIndex(deskId);
-                    var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("将桌面应用移出应用码头失败");
@@ -204,11 +204,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var member = new Member();
                     member.OutDock().ModifyFolderId(folderId);
-                    var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("桌面应用从应用码头移动到文件夹中失败");
@@ -224,11 +224,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var member = new Member();
                     member.OnDock().ModifyFolderId(0);
-                    var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("桌面应用从文件夹移动到码头失败");
@@ -245,11 +245,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var member = new Member();
                     member.ModifyFolderId(folderId);
-                    var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("桌面应用从桌面移动到文件夹中");
@@ -266,11 +266,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var member = new Member();
                     member.ModifyFolderId(0).ModifyDeskIndex(deskId);
-                    var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("桌面应用从文件夹移动到桌面失败");
@@ -288,11 +288,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var member = new Member();
                     member.ModifyFolderId(folderId);
-                    var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("桌面应用从文件夹移动到另一个文件夹中失败");
@@ -309,9 +309,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    dataStore.OpenTransaction();
+                    mapper.OpenTransaction();
                     try
                     {
                         var member = new Member();
@@ -320,17 +320,22 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         var set = new StringBuilder();
                         #region 查询桌面应用是否在应用码头中
                         {
-                            var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.Id=0 AND a.UserId=0 AND a.IsDeleted=0 AND IsOnDock=1";
-                            if (dataStore.FindSingleValue<Int32>(sql) > 0)
+                            var count = mapper.Count<Member>(a => a.Id == 0 && a.UserId == 0 && a.IsOnDock);
+                            if (count > 0)
                             {
                                 member.OutDock();
                             }
+                            // var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.Id=0 AND a.UserId=0 AND a.IsDeleted=0 AND IsOnDock=1";
+                            // if (mapper.FindSingleValue<Int32>(sql) > 0)
+                            // {
+                            //     member.OutDock();
+                            // }
                         }
                         #endregion
 
                         #region 桌面应用移动到其他桌面
                         {
-                            var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                            var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                             if (!result)
                             {
                                 throw new BusinessException("桌面应用移动到其他桌面失败");
@@ -338,11 +343,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         }
                         #endregion
 
-                        dataStore.Commit();
+                        mapper.Commit();
                     }
                     catch (Exception)
                     {
-                        dataStore.Rollback();
+                        mapper.Rollback();
                         throw;
                     }
                 }
@@ -357,11 +362,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var member = new Member();
                     member.OutDock().ModifyDeskIndex(deskId);
-                    var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("桌面应用从应用码头移动到另一桌面时失败");
@@ -379,9 +384,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             await Task.Run(() =>
             {
                 var folder = new Member(folderName, folderImg, 0, userId, deskId, false);
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    dataStore.Add(folder);
+                    mapper.Add(folder);
                 }
             });
         }
@@ -392,7 +397,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(userId);
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var config = new Config();
                     if (source.ToLower() == WallpaperSource.Bing.ToString().ToLower())
@@ -403,7 +408,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         config.NotFromBing();
                     }
-                    var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                    var result = mapper.Modify(config, conf => conf.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("修改壁纸来源失败");
@@ -417,22 +422,32 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(userId);
             Parameter.Validate(pageIndex);
             Parameter.Validate(pageSize);
-            using (var dataStore = new SqlContext(Appsetting.Database))
+            using (var mapper = new EntityMapper())
             {
                 var parameters = new List<EntityParameter>
                 {
                     new EntityParameter("@userId",userId)
                 };
-                var pageModel = new PageList<Notify>();
                 {
-                    var sql = $@"SELECT COUNT(*) FROM Notify AS a WHERE a.IsDeleted=0 AND a.ToUserId=@userId";
-                    totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
+                    var count = mapper.Count<Notify>(a => a.ToUserId == userId);
+                    totalCount = count;
+                    // var sql = $@"SELECT COUNT(*) FROM Notify AS a WHERE a.IsDeleted=0 AND a.ToUserId=@userId";
+                    // totalCount = mapper.FindSingleValue<Int32>(sql, parameters);
                 }
 
                 {
-                    var sql = $@"SELECT a.Id,a.Title,a.Content,a.IsRead,a.ToUserId FROM Notify AS a WHERE a.IsDeleted=0 AND a.ToUserId=@userId
-                                 ORDER BY a.Id DESC,a.IsRead ASC LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
-                    return dataStore.Find<Notify>(sql, parameters);
+                    return mapper.Find<Notify>(a => a.ToUserId == userId, a => new
+                    {
+                        a.Id,
+                        a.Title,
+                        a.Content,
+                        a.IsRead,
+                        a.ToUserId
+                    }, pageSize, pageIndex);
+
+                    // var sql = $@"SELECT a.Id,a.Title,a.Content,a.IsRead,a.ToUserId FROM Notify AS a WHERE a.IsDeleted=0 AND a.ToUserId=@userId
+                    //              ORDER BY a.Id DESC,a.IsRead ASC LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
+                    // return mapper.Find<Notify>(sql, parameters);
                 }
             }
         }
@@ -442,11 +457,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(notifyIds);
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var notify = new Notify();
                     notify.Read();
-                    var result = dataStore.Modify(notify, n => notifyIds.Contains(n.Id));
+                    var result = mapper.Modify(notify, n => notifyIds.Contains(n.Id));
                     if (!result)
                     {
                         throw new BusinessException("读取消息失败");
@@ -462,11 +477,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var config = new Config();
                     config.ModifySkin(newSkin);
-                    var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                    var result = mapper.Modify(config, conf => conf.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("修改皮肤失败");

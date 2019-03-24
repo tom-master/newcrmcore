@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Infrastructure;
-using NewLibCore.Data.SQL.InternalDataStore;
+using NewLibCore.Data.SQL.DataMapper;
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
@@ -17,9 +17,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(log);
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    dataStore.Add(log);
+                    mapper.Add(log);
                 }
             });
         }
@@ -29,7 +29,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(userName, true);
             Parameter.Validate(logLevel);
 
-            using (var dataStore = new SqlContext(Appsetting.Database))
+            using (var mapper = new EntityMapper())
             {
                 var where = new StringBuilder();
                 var parameters = new List<EntityParameter>();
@@ -42,7 +42,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 #region totalCount 
                 {
                     var sql = $@"SELECT COUNT(*) FROM Log AS a LEFT JOIN User AS a1 ON a.UserId=a1.Id WHERE 1=1 {where}";
-                    totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
+                    totalCount = mapper.FindSingleValue<Int32>(sql, parameters);
                 }
                 #endregion
 
@@ -58,7 +58,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                 FROM Log AS a 
                                 LEFT JOIN User AS a1 ON a.UserId=a1.Id
                                 WHERE 1=1 {where} ORDER BY a.AddTime DESC LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
-                    return dataStore.Find<Log>(sql, parameters);
+                    return mapper.Find<Log>(sql, parameters);
                 }
                 #endregion
             }
