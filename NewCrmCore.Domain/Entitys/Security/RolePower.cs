@@ -1,15 +1,15 @@
 ﻿using System;
 using NewLibCore.Data.SQL.MapperExtension;
-using NewLibCore.Data.SQL.PropertyExtension;
+using NewLibCore.Data.SQL.MapperExtension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.Security
 {
 	public class RolePower : DomainModelBase
 	{
-		[PropertyRequired]
+		[Required]
 		public Int32 RoleId { get; private set; }
 
-		[PropertyRequired]
+		[Required]
 		public Int32 AppId { get; private set; }
 
 		public RolePower(Int32 roleId, Int32 appId)

@@ -32,10 +32,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             using (var dataStore = new SqlContext(Appsetting.Database))
             {
                 var where = new StringBuilder();
-                var parameters = new List<SqlParameterMapper>();
+                var parameters = new List<EntityParameter>();
                 if (!String.IsNullOrEmpty(userName))
                 {
-                    parameters.Add(new SqlParameterMapper("@name", userName));
+                    parameters.Add(new EntityParameter("@name", userName));
                     where.Append($@" AND a1.Name LIKE CONCAT('%',@name,'%') ");
                 }
 

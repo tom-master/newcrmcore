@@ -24,9 +24,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                      #region 前置条件验证
                      {
                          var sql = $@"SELECT COUNT(*) FROM Wallpaper AS a WHERE a.UserId=@UserId AND a.IsDeleted=0";
-                         var parameters = new List<SqlParameterMapper>
+                         var parameters = new List<EntityParameter>
                          {
-                            new SqlParameterMapper("@UserId",wallpaper.UserId)
+                            new EntityParameter("@UserId",wallpaper.UserId)
                          };
                          var result = dataStore.FindSingleValue<Int32>(sql, parameters);
                          if (result > 6)
@@ -47,9 +47,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                      #region 获取返回值
                      {
                          var sql = $@"SELECT a.Id,a.Url FROM Wallpaper AS a WHERE a.Id=@Id AND a.IsDeleted=0";
-                         var parameters = new List<SqlParameterMapper>
+                         var parameters = new List<EntityParameter>
                          {
-                            new SqlParameterMapper("@Id",newWallpaperId)
+                            new EntityParameter("@Id",newWallpaperId)
                          };
                          var result = dataStore.FindOne<Wallpaper>(sql, parameters);
                          if (result != null)
@@ -82,9 +82,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.Url,
                             a.Width
                             FROM Wallpaper AS a WHERE a.Md5=@Md5 AND a.IsDeleted=0";
-                    var parameters = new List<SqlParameterMapper>
+                    var parameters = new List<EntityParameter>
                     {
-                        new SqlParameterMapper("@Md5",md5)
+                        new EntityParameter("@Md5",md5)
                     };
                     return dataStore.FindOne<Wallpaper>(sql, parameters);
                 }
@@ -110,10 +110,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.Url,
                             a.Width
                             FROM Wallpaper AS a WHERE a.UserId=@UserId AND a.Source<>@Source AND a.IsDeleted=0";
-                    var parameters = new List<SqlParameterMapper>
+                    var parameters = new List<EntityParameter>
                     {
-                        new SqlParameterMapper("@UserId",userId),
-                        new SqlParameterMapper("@Source", WallpaperSource.System.ToInt32())
+                        new EntityParameter("@UserId",userId),
+                        new EntityParameter("@Source", WallpaperSource.System.ToInt32())
                     };
                     return dataStore.Find<Wallpaper>(sql, parameters);
                 }
@@ -137,9 +137,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.Url,
                             a.Width
                             FROM Wallpaper AS a WHERE a.Source=@Source AND a.IsDeleted=0";
-                    var parameters = new List<SqlParameterMapper>
+                    var parameters = new List<EntityParameter>
                     {
-                        new SqlParameterMapper("@Source", WallpaperSource.System.ToInt32())
+                        new EntityParameter("@Source", WallpaperSource.System.ToInt32())
                     };
                     return dataStore.Find<Wallpaper>(sql, parameters);
                 }
@@ -205,10 +205,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     #region 前置条件验证
                     {
                         var sql = $@"SELECT COUNT(*) FROM Config AS a WHERE a.UserId=@UserId AND a.WallpaperId=@WallpaperId AND a.IsDeleted=0";
-                        var parameters = new List<SqlParameterMapper>
+                        var parameters = new List<EntityParameter>
                         {
-                            new SqlParameterMapper("@WallpaperId",wallpaperId),
-                            new SqlParameterMapper("@UserId",userId)
+                            new EntityParameter("@WallpaperId",wallpaperId),
+                            new EntityParameter("@UserId",userId)
                         };
                         var result = dataStore.FindSingleValue<Int32>(sql, parameters);
                         if (result > 0)

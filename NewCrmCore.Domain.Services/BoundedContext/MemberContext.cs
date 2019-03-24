@@ -38,9 +38,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.FolderId,
                             a.IsIconByUpload
                             FROM Member AS a WHERE a.UserId=@UserId AND a.IsDeleted=0";
-                    var parameters = new List<SqlParameterMapper>
+                    var parameters = new List<EntityParameter>
                     {
-                        new SqlParameterMapper("@UserId",userId)
+                        new EntityParameter("@UserId",userId)
                     };
                     return dataStore.Find<Member>(sql, parameters);
                 }
@@ -57,16 +57,16 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var where = new StringBuilder();
-                    var parameters = new List<SqlParameterMapper>();
+                    var parameters = new List<EntityParameter>();
                     if (isFolder)
                     {
-                        parameters.Add(new SqlParameterMapper("@Id", memberId));
-                        parameters.Add(new SqlParameterMapper("@MemberType", MemberType.Folder.ToInt32()));
+                        parameters.Add(new EntityParameter("@Id", memberId));
+                        parameters.Add(new EntityParameter("@MemberType", MemberType.Folder.ToInt32()));
                         where.Append($@" AND a.Id=@Id AND a.MemberType=@MemberType");
                     }
                     else
                     {
-                        parameters.Add(new SqlParameterMapper("@Id", memberId));
+                        parameters.Add(new EntityParameter("@Id", memberId));
                         where.Append($@" AND a.AppId=@Id");
                     }
 
@@ -92,7 +92,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 									SELECT AVG(stars.StartNum) FROM AppStar AS stars WHERE stars.AppId=a.AppId AND stars.IsDeleted=0 GROUP BY stars.AppId
 								),0) AS StarCount
 								FROM Member AS a WHERE a.UserId=@UserId {where} AND a.IsDeleted=0";
-                    parameters.Add(new SqlParameterMapper("@UserId", userId));
+                    parameters.Add(new EntityParameter("@UserId", userId));
                     return dataStore.FindOne<Member>(sql, parameters);
                 }
             });
@@ -107,9 +107,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.Name=@name AND a.IsDeleted=0";
-                    var parameters = new List<SqlParameterMapper>
+                    var parameters = new List<EntityParameter>
                     {
-                        new SqlParameterMapper("@name",name)
+                        new EntityParameter("@name",name)
                     };
 
                     return dataStore.FindSingleValue<Int32>(sql, parameters) > 0;
@@ -239,10 +239,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         #region 判断是否为文件夹
                         {
                             var sql = $@"SELECT a.MemberType FROM Member AS a WHERE a.Id=@Id AND a.UserId=@UserId AND a.IsDeleted=0";
-                            var parameters = new List<SqlParameterMapper>
+                            var parameters = new List<EntityParameter>
                             {
-                                new SqlParameterMapper("@Id", memberId),
-                                new SqlParameterMapper("@UserId", userId)
+                                new EntityParameter("@Id", memberId),
+                                new EntityParameter("@UserId", userId)
                             };
                             isFolder = (dataStore.FindSingleValue<Int32>(sql, parameters)) == MemberType.Folder.ToInt32();
                         }
@@ -253,10 +253,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             #region 判断文件夹内是否存在应用，如果存在则移出
                             {
                                 var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.IsDeleted=0 AND a.UserId=@userId AND a.FolderId=@folderId";
-                                var parameters = new List<SqlParameterMapper>
+                                var parameters = new List<EntityParameter>
                                 {
-                                    new SqlParameterMapper("@userId",userId),
-                                    new SqlParameterMapper("@folderId",memberId)
+                                    new EntityParameter("@userId",userId),
+                                    new EntityParameter("@folderId",memberId)
                                 };
                                 var count = dataStore.FindSingleValue<Int32>(sql, parameters);
                                 if (count > 0)
@@ -279,10 +279,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             #region 获取appId
                             {
                                 var sql = $@"SELECT a.AppId FROM Member AS a WHERE a.Id=@Id AND a.UserId=@UserId AND a.IsDeleted=0";
-                                var parameters = new List<SqlParameterMapper>
+                                var parameters = new List<EntityParameter>
                                 {
-                                    new SqlParameterMapper("@Id", memberId),
-                                    new SqlParameterMapper("@UserId", userId)
+                                    new EntityParameter("@Id", memberId),
+                                    new EntityParameter("@UserId", userId)
                                 };
                                 appId = dataStore.FindSingleValue<Int32>(sql, parameters);
                             }
@@ -291,10 +291,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             #region 查询应用
                             {
                                 var sql = $@"SELECT a.Name,a.UseCount,a.UserId FROM App AS a WHERE a.Id=@Id AND a.IsDeleted=0";
-                                var parameters = new List<SqlParameterMapper>
+                                var parameters = new List<EntityParameter>
                                 {
-                                    new SqlParameterMapper("@Id",appId),
-                                    new SqlParameterMapper("@UserId",userId)
+                                    new EntityParameter("@Id",appId),
+                                    new EntityParameter("@UserId",userId)
                                 };
                                 app = dataStore.FindOne<App>(sql, parameters);
                             }

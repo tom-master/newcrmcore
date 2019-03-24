@@ -1,121 +1,118 @@
 ﻿using System;
-using System.ComponentModel;
 using NewCrmCore.Domain.ValueObject;
 using NewLibCore.Data.SQL.MapperExtension;
-using NewLibCore.Data.SQL.PropertyExtension;
+using NewLibCore.Data.SQL.MapperExtension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
-
-    [Serializable, Description("应用")]
     public partial class App : DomainModelBase
     {
         /// <summary>
         /// 名称
         /// </summary>
-        [PropertyRequired, PropertyInputRange(2, 10)]
+        [Required, InputRange(2, 10)]
         public String Name { get; private set; }
 
         /// <summary>
         /// 图标地址
         /// </summary>
-        [PropertyRequired, PropertyInputRange(150)]
+        [Required, InputRange(150)]
         public String IconUrl { get; private set; }
 
         /// <summary>
         /// app地址
         /// </summary>
-        [PropertyRequired, PropertyInputRange(150)]
+        [Required, InputRange(150)]
         public String AppUrl { get; private set; }
 
         /// <summary>
         /// 备注
         /// </summary>
-        [PropertyInputRange(50), PropertyDefaultValue(typeof(String))]
+        [InputRange(50), DefaultValue(typeof(String))]
         public String Remark { get; private set; }
 
         /// <summary>
         /// 宽度
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public Int32 Width { get; private set; }
 
         /// <summary>
         /// 高度
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public Int32 Height { get; private set; }
 
         /// <summary>
         /// 使用数
         /// </summary>
-        [PropertyDefaultValue(typeof(Int32))]
+        [DefaultValue(typeof(Int32))]
         public Int32 UseCount { get; private set; }
 
         /// <summary>
         /// 是否显示app底部的按钮
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean))]
+        [DefaultValue(typeof(Boolean))]
         public Boolean IsSetbar { get; private set; }
 
         /// <summary>
         /// 是否打开最大化
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean))]
+        [DefaultValue(typeof(Boolean))]
         public Boolean IsOpenMax { get; private set; }
 
         /// <summary>
         /// 是否为系统应用
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean))]
+        [DefaultValue(typeof(Boolean))]
         public Boolean IsSystem { get; private set; }
 
         /// <summary>
         /// 是否为福莱希
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean))]
+        [DefaultValue(typeof(Boolean))]
         public Boolean IsFlash { get; private set; }
 
         /// <summary>
         /// 是否可以拉伸
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean))]
+        [DefaultValue(typeof(Boolean))]
         public Boolean IsResize { get; private set; }
 
         /// <summary>
         /// 开发者(用户)Id
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public Int32 UserId { get; private set; }
 
         /// <summary>
         /// App类型Id
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public Int32 AppTypeId { get; private set; }
 
         /// <summary>
         /// 是否推荐
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean))]
+        [DefaultValue(typeof(Boolean))]
         public Boolean IsRecommand { get; private set; }
 
         /// <summary>
         /// 审核状态
         /// </summary>
-        [PropertyDefaultValue(typeof(AppAuditState), AppAuditState.UnAuditState)]
+        [DefaultValue(typeof(AppAuditState), AppAuditState.UnAuditState)]
         public AppAuditState AppAuditState { get; private set; }
 
         /// <summary>
         /// 发布状态
         /// </summary>
-        [PropertyDefaultValue(typeof(AppReleaseState), AppReleaseState.UnRelease)]
+        [DefaultValue(typeof(AppReleaseState), AppReleaseState.UnRelease)]
         public AppReleaseState AppReleaseState { get; private set; }
 
         /// <summary>
         /// app样式
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public AppStyle AppStyle { get; private set; }
 
         /// <summary>
@@ -137,7 +134,7 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 图标是否来自上传
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean))]
+        [DefaultValue(typeof(Boolean))]
         public Boolean IsIconByUpload { get; private set; }
 
         /// <summary>

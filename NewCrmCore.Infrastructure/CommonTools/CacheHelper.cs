@@ -1,4 +1,11 @@
-﻿namespace NewCrmCore.Infrastructure.CommonTools
+﻿using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
+using NewLibCore.Data.Redis.InternalHelper;
+using NewLibCore.InternalExtension;
+
+namespace NewCrmCore.Infrastructure.CommonTools
 {
 
     public class CacheHelper
@@ -10,6 +17,8 @@
             _cacheQuery = new DefaultRedisQueryProvider(0, Appsetting.Redis);
         }
 
+        private CacheHelper(){}
+
         /// <summary>
         /// 获取或设置缓存
         /// </summary>
@@ -18,9 +27,8 @@
 
             TModel cacheResult = null;
             try
-            {
-                var isComplexType = TypeDescriptor.GetConverter(typeof(TModel)).CanConvertFrom(typeof(String));
-                if (!isComplexType)
+            {  
+                if (typeof(TModel).IsComplexType())
                 {
                     cacheResult = await Task.Run(() => _cacheQuery.StringGetAsync<TModel>(cache.GetKey()), cache.CancelToken);
                 }

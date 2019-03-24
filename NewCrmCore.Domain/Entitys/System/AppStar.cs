@@ -1,6 +1,6 @@
 ﻿using System;
 using NewLibCore.Data.SQL.MapperExtension;
-using NewLibCore.Data.SQL.PropertyExtension;
+using NewLibCore.Data.SQL.MapperExtension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
@@ -9,19 +9,19 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 账号
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public Int32 UserId { get; private set; }
 
         /// <summary>
         /// 应用Id
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public Int32 AppId { get; private set; }
 
         /// <summary>
         /// 评分
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public Double StartNum { get; private set; }
 
         public AppStar(Int32 userId, Int32 appId, Double startNum)

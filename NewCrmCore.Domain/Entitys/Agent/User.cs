@@ -1,38 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using NewCrmCore.Domain.ValueObject;
 using NewLibCore.Data.SQL.MapperExtension;
-using NewLibCore.Data.SQL.PropertyExtension;
+using NewLibCore.Data.SQL.MapperExtension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.Agent
 {
-    [Description("用户"), Serializable]
     public partial class User : DomainModelBase
     {
         /// <summary>
         /// 用户名
         /// </summary>
-        [PropertyRequired, PropertyInputRange(4, 10)]
+        [Required,InputRange(4, 10)]
         public String Name { get; private set; }
 
         /// <summary>
         /// 登陆密码
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public String LoginPassword { get; private set; }
 
         /// <summary>
         /// 锁屏密码
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public String LockScreenPassword { get; private set; }
 
         /// <summary>
         /// 是否禁用
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean))]
+        [DefaultValue(typeof(Boolean))]
         public Boolean IsDisable { get; private set; }
 
         /// <summary>
@@ -44,19 +42,19 @@ namespace NewCrmCore.Domain.Entitys.Agent
         /// <summary>
         /// 是否在线
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean))]
+        [DefaultValue(typeof(Boolean))]
         public Boolean IsOnline { get; private set; }
 
         /// <summary>
         /// 是否为管理员
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean))]
+        [DefaultValue(typeof(Boolean))]
         public Boolean IsAdmin { get; private set; }
 
         /// <summary>
         /// 配置Id
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public Int32 ConfigId { get; private set; }
 
         /// <summary>

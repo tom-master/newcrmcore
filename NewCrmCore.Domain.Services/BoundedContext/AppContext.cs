@@ -5,11 +5,14 @@ using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Infrastructure;
-using NewLibCore.Data.SQL.InternalDataStore;
 using NewLibCore.Validate;
 using NewLibCore;
 using NewCrmCore.Dto;
 using System.Linq;
+using NewLibCore.Data.SQL.DataMapper;
+using System.Text;
+using NewCrmCore.Infrastructure.CommonTools;
+using System.Linq.Expressions;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
 {
@@ -20,14 +23,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(userId);
             return await Task.Run(() =>
             {
-                using (var sqlContext = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     // var sql = $@"SELECT a.Id,a.AppReleaseState FROM App AS a WHERE a.UserId=@userId AND a.IsDeleted=0";
-                    // var parameters = new List<SqlParameterMapper>
+                    // var parameters = new List<EntityParameter>
                     // {
-                    //     new SqlParameterMapper("@userId",userId)
+                    //     new EntityParameter("@userId",userId)
                     // };
-                    var result = sqlContext.Find<App>(a => a.UserId == userId && !a.IsDeleted, a => new { a.Id, a.AppReleaseState });
+                    var result = mapper.Find<App>(a => a.UserId == userId && !a.IsDeleted, a => new { a.Id, a.AppReleaseState });
                     return new Tuple<Int32, Int32>(result.Count, result.Count(a => a.AppReleaseState == AppReleaseState.UnRelease));
                 }
             });
@@ -37,10 +40,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                using (var sqlContext = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    var sql = $@"SELECT a.Id,a.Name,a.IsSystem FROM AppType AS a WHERE a.IsDeleted=0";
-                    return sqlContext.Find<AppType>(a => !a.IsDeleted).ToList();
+                    return mapper.Find<AppType>(a => new { a.Id, a.Name, a.IsSystem }).ToList();
                 }
             });
         }
@@ -50,7 +52,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(userId);
             return await Task.Run(() =>
             {
-                using (var SqlContext = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var sql = $@"SELECT 
                             a.UseCount,
@@ -73,13 +75,13 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 							LEFT JOIN Member AS a2 ON a2.UserId=@userId AND a2.IsDeleted=0 AND a2.AppId=a.Id
                             WHERE a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState AND a.IsRecommand=1";
 
-                    var parameters = new List<SqlParameterMapper>
+                    var parameters = new List<EntityParameter>
                     {
-                        new SqlParameterMapper("@AppAuditState", AppAuditState.Pass.ToInt32()),
-                        new SqlParameterMapper("@AppReleaseState", AppReleaseState.Release.ToInt32()),
-                        new SqlParameterMapper("@userId",userId)
+                        new EntityParameter("@AppAuditState", AppAuditState.Pass.ToInt32()),
+                        new EntityParameter("@AppReleaseState", AppReleaseState.Release.ToInt32()),
+                        new EntityParameter("@userId",userId)
                     };
-                    return SqlContext.FindOne<TodayRecommendAppDto>(sql, parameters);
+                    return mapper.ComplexSqlExecute<TodayRecommendAppDto>(sql, parameters).FirstOrDefault();
                 }
             });
         }
@@ -91,32 +93,32 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(pageIndex, true);
             Parameter.Validate(pageSize);
 
-            using (var SqlContext = new SqlContext(Appsetting.Database))
+            using (var mapper = new EntityMapper())
             {
-                var parameters = new List<SqlParameterMapper>
+                var parameters = new List<EntityParameter>
                 {
-                    new SqlParameterMapper("@AppAuditState", AppAuditState.Pass.ToInt32()),
-                    new SqlParameterMapper("@AppReleaseState", AppReleaseState.Release.ToInt32())
+                    new EntityParameter("@AppAuditState", AppAuditState.Pass.ToInt32()),
+                    new EntityParameter("@AppReleaseState", AppReleaseState.Release.ToInt32())
                 };
 
                 var where = new StringBuilder();
                 where.Append($@" WHERE 1=1  AND a.IsDeleted=0 AND a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState");
                 if (appTypeId != 0 && appTypeId != -1)//全部app
                 {
-                    parameters.Add(new SqlParameterMapper("@AppTypeId", appTypeId));
+                    parameters.Add(new EntityParameter("@AppTypeId", appTypeId));
                     where.Append($@" AND a.AppTypeId=@AppTypeId");
                 }
                 else
                 {
                     if (appTypeId == -1)//用户制作的app
                     {
-                        parameters.Add(new SqlParameterMapper("@userId", userId));
+                        parameters.Add(new EntityParameter("@userId", userId));
                         where.Append($@" AND a.UserId=@userId");
                     }
                 }
                 if (!String.IsNullOrEmpty(searchText))//关键字搜索
                 {
-                    parameters.Add(new SqlParameterMapper("@Name", $@"%{searchText}%"));
+                    parameters.Add(new EntityParameter("@Name", $@"%{searchText}%"));
                     where.Append($@" AND a.Name LIKE @Name");
                 }
 
@@ -144,7 +146,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 #region totalCount
                 {
                     var sql = $@"SELECT COUNT(*) FROM App AS a LEFT JOIN AppStar AS a1 ON a1.AppId=a.Id AND a1.IsDeleted=0 {where}";
-                    totalCount = SqlContext.FindSingleValue<Int32>(sql, parameters);
+                    totalCount = mapper.ComplexSqlExecute<Int32>(sql, parameters);
                 }
                 #endregion
 
@@ -173,8 +175,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                            FROM App AS a
 	                            LEFT JOIN Member AS a1 ON a1.UserId=@userId2 AND a1.AppId=a.Id AND a1.IsDeleted=0
                                 {where} {orderBy} LIMIT {pageSize * (pageIndex - 1)},{pageSize }";
-                    parameters.Add(new SqlParameterMapper("@userId2", userId));
-                    return SqlContext.Find<App>(sql, parameters);
+                    parameters.Add(new EntityParameter("@userId2", userId));
+                    return mapper.Find<App>(sql, parameters);
                 }
                 #endregion
             }
@@ -187,31 +189,31 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appStyleId, true);
             Parameter.Validate(pageIndex);
             Parameter.Validate(pageSize);
-            using (var SqlContext = new SqlContext(Appsetting.Database))
+            using (var mapper = new EntityMapper())
             {
                 var where = new StringBuilder();
                 where.Append($@" WHERE 1=1 AND a.IsDeleted=0 ");
-                var parameters = new List<SqlParameterMapper>();
+                var parameters = new List<EntityParameter>();
 
                 #region 条件筛选
 
                 if (userId != default(Int32))
                 {
-                    parameters.Add(new SqlParameterMapper("@userId", userId));
+                    parameters.Add(new EntityParameter("@userId", userId));
                     where.Append($@" AND a.UserId=@userId");
                 }
 
                 //应用名称
                 if (!String.IsNullOrEmpty(searchText))
                 {
-                    parameters.Add(new SqlParameterMapper("@Name", $@"%{searchText}%"));
+                    parameters.Add(new EntityParameter("@Name", $@"%{searchText}%"));
                     where.Append($@" AND a.Name LIKE @Name");
                 }
 
                 //应用所属类型
                 if (appTypeId != 0)
                 {
-                    parameters.Add(new SqlParameterMapper("AppTypeId", appTypeId));
+                    parameters.Add(new EntityParameter("AppTypeId", appTypeId));
                     where.Append($@" AND a.AppTypeId=@AppTypeId");
                 }
 
@@ -219,7 +221,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 if (appStyleId != 0)
                 {
                     var appStyle = EnumExtensions.ToEnum<AppStyle>(appStyleId);
-                    parameters.Add(new SqlParameterMapper("@AppStyle", appStyle.ToInt32()));
+                    parameters.Add(new EntityParameter("@AppStyle", appStyle.ToInt32()));
                     where.Append($@" AND a.AppStyle=@AppStyle");
                 }
 
@@ -230,7 +232,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     if (stats[0] == "AppReleaseState")
                     {
                         var appReleaseState = EnumExtensions.ToEnum<AppReleaseState>(Int32.Parse(stats[1]));
-                        parameters.Add(new SqlParameterMapper("AppReleaseState", appReleaseState.ToInt32()));
+                        parameters.Add(new EntityParameter("AppReleaseState", appReleaseState.ToInt32()));
                         where.Append($@" AND a.AppReleaseState=@AppReleaseState ");
                     }
 
@@ -238,7 +240,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     if (stats[0] == "AppAuditState")
                     {
                         var appAuditState = EnumExtensions.ToEnum<AppAuditState>(Int32.Parse(stats[1]));
-                        parameters.Add(new SqlParameterMapper("@AppAuditState", appAuditState.ToInt32()));
+                        parameters.Add(new EntityParameter("@AppAuditState", appAuditState.ToInt32()));
                         where.Append($@" AND a.AppAuditState=@AppAuditState");
                     }
                 }
@@ -248,7 +250,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 #region totalCount
                 {
                     var sql = $@"SELECT COUNT(*) FROM App AS a {where} ";
-                    totalCount = SqlContext.FindSingleValue<Int32>(sql, parameters);
+                    totalCount = mapper.FindSingleValue<Int32>(sql, parameters);
                 }
                 #endregion
 
@@ -267,7 +269,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a.IsIconByUpload
 								FROM App AS a {where} LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
 
-                    return SqlContext.Find<App>(sql, parameters);
+                    return mapper.Find<App>(sql, parameters);
                 }
                 #endregion
 
@@ -279,7 +281,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             return await Task.Run(() =>
             {
-                using (var SqlContext = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var sql = $@"SELECT 
                             a.Name,
@@ -308,11 +310,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             LEFT JOIN User AS a2
                             ON a2.Id=a.UserId AND a2.IsDeleted=0 AND a2.IsDisable=0
                             WHERE a.Id=@Id AND a.IsDeleted=0";
-                    var parameters = new List<SqlParameterMapper>
+                    var parameters = new List<EntityParameter>
                     {
-                        new SqlParameterMapper("@Id",appId)
+                        new EntityParameter("@Id",appId)
                     };
-                    return SqlContext.FindOne<App>(sql, parameters);
+                    return mapper.FindOne<App>(sql, parameters);
                 }
             });
         }
@@ -323,15 +325,15 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             return await Task.Run(() =>
             {
-                using (var SqlContext = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.AppId=@Id AND a.UserId=@UserId AND a.IsDeleted=0";
-                    var parameters = new List<SqlParameterMapper>
+                    var parameters = new List<EntityParameter>
                     {
-                        new SqlParameterMapper("@Id",appId),
-                        new SqlParameterMapper("@UserId",userId)
+                        new EntityParameter("@Id",appId),
+                        new EntityParameter("@UserId",userId)
                     };
-                    return SqlContext.FindSingleValue<Int32>(sql, parameters) > 0 ? true : false;
+                    return mapper.FindSingleValue<Int32>(sql, parameters) > 0 ? true : false;
                 }
             });
         }
@@ -340,7 +342,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                using (var SqlContext = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var where = new StringBuilder();
                     if (appIds != default(IEnumerable<Int32>) && appIds.Any())
@@ -349,7 +351,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     }
 
                     var sql = $@"SELECT a.Id,a.Name,a.IconUrl FROM App AS a WHERE a.IsSystem=1 AND a.IsDeleted=0 {where}";
-                    return SqlContext.Find<App>(sql);
+                    return mapper.Find<App>(sql);
                 }
             });
         }
@@ -359,14 +361,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appTypeName);
             return await Task.Run(() =>
             {
-                using (var SqlContext = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var sql = $@"SELECT COUNT(*) FROM AppType AS a WHERE a.Name=@name AND a.IsDeleted=0";
-                    var parameters = new List<SqlParameterMapper>
+                    var parameters = new List<EntityParameter>
                     {
-                        new SqlParameterMapper("@name",appTypeName)
+                        new EntityParameter("@name",appTypeName)
                     };
-                    return SqlContext.FindSingleValue<Int32>(sql, parameters) > 0;
+                    return mapper.FindSingleValue<Int32>(sql, parameters) > 0;
                 }
             });
         }
@@ -378,17 +380,17 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(starCount);
             await Task.Run(() =>
             {
-                using (var SqlContext = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     #region 前置条件判断
                     {
                         var sql = $@"SELECT COUNT(*) FROM AppStar AS a WHERE a.UserId=@userId AND a.AppId=@appId AND a.IsDeleted=0";
-                        var parameters = new List<SqlParameterMapper>
+                        var parameters = new List<EntityParameter>
                         {
-                            new SqlParameterMapper("@userId",userId),
-                            new SqlParameterMapper("@appId",appId)
+                            new EntityParameter("@userId",userId),
+                            new EntityParameter("@appId",appId)
                         };
-                        var result = SqlContext.FindSingleValue<Int32>(sql, parameters);
+                        var result = mapper.FindSingleValue<Int32>(sql, parameters);
                         if (result > 0)
                         {
                             throw new BusinessException("您已为这个应用打分");
@@ -399,7 +401,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     #region sql
                     {
                         var appStar = new AppStar(userId, appId, starCount);
-                        SqlContext.Add(appStar);
+                        mapper.Add(appStar);
                     }
                     #endregion
                 }
@@ -410,11 +412,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             await Task.Run(() =>
             {
-                using (var SqlContext = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     #region app
                     {
-                        SqlContext.Add(app);
+                        mapper.Add(app);
                     }
                     #endregion
                 }
@@ -426,11 +428,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             return await Task.Run<App>(async () =>
              {
-                 using (var SqlContext = new SqlContext(Appsetting.Database))
+                 using (var mapper = new EntityMapper())
                  {
                      var app = await GetAppAsync(appId);
                      app.Pass();
-                     var result = SqlContext.Modify(app, a => a.Id == appId);
+                     var result = mapper.Modify(app, a => a.Id == appId);
                      if (!result)
                      {
                          throw new BusinessException("应用审核状态更新失败");
@@ -445,11 +447,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             return await Task.Run<App>(async () =>
             {
-                using (var SqlContext = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var app = await GetAppAsync(appId);
                     app.Deny();
-                    var result = SqlContext.Modify(app, a => a.Id == appId);
+                    var result = mapper.Modify(app, a => a.Id == appId);
                     if (!result)
                     {
                         throw new BusinessException("应用审核状态更新失败");
@@ -464,15 +466,15 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             await Task.Run(() =>
             {
-                using (var SqlContext = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    SqlContext.OpenTransaction();
+                    mapper.OpenTransaction();
                     try
                     {
                         #region 取消之前的推荐应用
                         {
                             var app = new App().CancelRecommand();
-                            var result = SqlContext.Modify(app, a => a.IsRecommand);
+                            var result = mapper.Modify(app, a => a.IsRecommand);
                             if (!result)
                             {
                                 throw new BusinessException("取消之前的推荐应用失败");
@@ -483,7 +485,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         #region 设置新的推荐应用
                         {
                             var app = new App().Recommand();
-                            var result = SqlContext.Modify(app, a => a.Id == appId);
+                            var result = mapper.Modify(app, a => a.Id == appId);
                             if (!result)
                             {
                                 throw new BusinessException("设置新的推荐应用失败");
@@ -491,11 +493,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         }
                         #endregion
 
-                        SqlContext.Commit();
+                        mapper.Commit();
                     }
                     catch (Exception)
                     {
-                        SqlContext.Rollback();
+                        mapper.Rollback();
                         throw;
                     }
                 }
@@ -507,16 +509,16 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             await Task.Run(() =>
             {
-                using (var SqlContext = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    SqlContext.OpenTransaction();
+                    mapper.OpenTransaction();
                     try
                     {
                         #region 移除应用的评分
                         {
                             var appStar = new AppStar();
                             appStar.Remove();
-                            var result = SqlContext.Modify(appStar, star => star.AppId == appId);
+                            var result = mapper.Modify(appStar, star => star.AppId == appId);
                             if (!result)
                             {
                                 throw new BusinessException("移除应用的评分失败");
@@ -528,7 +530,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var app = new App();
                             app.Remove();
-                            var result = SqlContext.Modify(app, a => a.Id == appId);
+                            var result = mapper.Modify(app, a => a.Id == appId);
                             if (!result)
                             {
                                 throw new BusinessException("移除应用失败");
@@ -536,11 +538,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         }
                         #endregion
 
-                        SqlContext.Commit();
+                        mapper.Commit();
                     }
                     catch (Exception)
                     {
-                        SqlContext.Rollback();
+                        mapper.Rollback();
                         throw;
                     }
                 }
@@ -552,12 +554,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             return await Task.Run<App>(() =>
             {
-                using (var SqlContext = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     #region 发布应用
                     {
                         var app = new App().AppRelease().Pass();
-                        var result = SqlContext.Modify(app, a => a.Id == appId);
+                        var result = mapper.Modify(app, a => a.Id == appId);
                         if (!result)
                         {
                             throw new BusinessException("发布应用失败");
@@ -568,11 +570,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     #region 获取应用名称
                     {
                         var sql = "SELECT a.Name,a.UserId FROM App AS a WHERE a.IsDeleted=0 AND a.Id=@Id";
-                        var parameters = new List<SqlParameterMapper>
+                        var parameters = new List<EntityParameter>
                          {
-                            new SqlParameterMapper("@Id",appId)
+                            new EntityParameter("@Id",appId)
                          };
-                        return SqlContext.FindOne<App>(sql);
+                        return mapper.FindOne<App>(sql);
                     }
                     #endregion
                 }
@@ -587,7 +589,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var SqlContext = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     if (app.IsIconByUpload)
                     {
@@ -649,7 +651,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         app.UnAuditState();
                     }
-                    var result = SqlContext.Modify(app, a => a.UserId == userId && a.Id == app.Id);
+                    var result = mapper.Modify(app, a => a.UserId == userId && a.Id == app.Id);
                     if (!result)
                     {
                         throw new BusinessException("修改应用信息失败");
@@ -663,16 +665,16 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appTypeId);
             await Task.Run(() =>
             {
-                using (var SqlContext = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     #region 前置条件验证
                     {
-                        var parameters = new List<SqlParameterMapper>
+                        var parameters = new List<EntityParameter>
                         {
-                            new SqlParameterMapper("@AppTypeId",appTypeId)
+                            new EntityParameter("@AppTypeId",appTypeId)
                         };
                         var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.AppTypeId=@AppTypeId AND a.IsDeleted=0";
-                        if (SqlContext.FindSingleValue<Int32>(sql, parameters) > 0)
+                        if (mapper.FindSingleValue<Int32>(sql, parameters) > 0)
                         {
                             throw new BusinessException($@"当前分类下存在应用,不能删除当前分类");
                         }
@@ -683,7 +685,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         var appType = new AppType();
                         appType.Remove();
-                        var result = SqlContext.Modify(appType, type => type.Id == appTypeId);
+                        var result = mapper.Modify(appType, type => type.Id == appTypeId);
                         if (!result)
                         {
                             throw new BusinessException("移除应用分类失败");
@@ -699,12 +701,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appType);
             await Task.Run(() =>
             {
-                using (var SqlContext = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     #region 前置条件验证
                     {
                         var sql = $@"SELECT COUNT(*) FROM AppType AS a WHERE a.Name=@name AND a.IsDeleted=0";
-                        var result = SqlContext.FindSingleValue<Int32>(sql, new List<SqlParameterMapper> { new SqlParameterMapper("@name", appType.Name) });
+                        var result = mapper.FindSingleValue<Int32>(sql, new List<EntityParameter> { new EntityParameter("@name", appType.Name) });
                         if (result > 0)
                         {
                             throw new BusinessException($@"分类:{appType.Name},已存在");
@@ -714,7 +716,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                     #region 添加应用分类
                     {
-                        var result = SqlContext.Add(appType);
+                        var result = mapper.Add(appType);
                         if (result <= 0)
                         {
                             throw new BusinessException("添加应用分类失败");
@@ -731,7 +733,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appTypeId);
             await Task.Run(() =>
             {
-                using (var SqlContext = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     #region 更新应用分类
                     {
@@ -745,7 +747,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             appType.NotSystem();
                         }
-                        var result = SqlContext.Modify(appType, type => type.Id == appTypeId);
+                        var result = mapper.Modify(appType, type => type.Id == appTypeId);
                         if (!result)
                         {
                             throw new BusinessException("更新应用分类");
@@ -763,11 +765,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(newIcon);
             await Task.Run(() =>
             {
-                using (var SqlContext = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var app = new App();
                     app.ModifyIconUrl(newIcon);
-                    var result = SqlContext.Modify(app, a => a.Id == appId && a.UserId == userId);
+                    var result = mapper.Modify(app, a => a.Id == appId && a.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("修改应用图标失败");
@@ -783,9 +785,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(deskNum);
             return await Task.Run<App>(() =>
             {
-                using (var SqlContext = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    SqlContext.OpenTransaction();
+                    mapper.OpenTransaction();
                     try
                     {
                         App app = null;
@@ -804,13 +806,13 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                 a.IsIconByUpload,
                                 a.AppStyle
                                 FROM  App AS a WHERE a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState AND a.IsDeleted=0 AND a.Id=@Id";
-                            var parameters = new List<SqlParameterMapper>
+                            var parameters = new List<EntityParameter>
                             {
-                                new SqlParameterMapper("@AppAuditState",AppAuditState.Pass.ToInt32()),
-                                new SqlParameterMapper("@AppReleaseState",AppReleaseState.Release.ToInt32()),
-                                new SqlParameterMapper("@Id",appId)
+                                new EntityParameter("@AppAuditState",AppAuditState.Pass.ToInt32()),
+                                new EntityParameter("@AppReleaseState",AppReleaseState.Release.ToInt32()),
+                                new EntityParameter("@Id",appId)
                             };
-                            app = SqlContext.FindOne<App>(sql, parameters);
+                            app = mapper.FindOne<App>(sql, parameters);
 
                             if (app == null)
                             {
@@ -822,14 +824,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         #region 添加桌面应用
                         {
                             var newMember = new Member(app.Name, app.IconUrl, app.AppUrl, app.Id, app.Width, app.Height, userId, deskNum, app.AppStyle, app.IsIconByUpload, app.IsSetbar, app.IsOpenMax, app.IsFlash, app.IsResize);
-                            SqlContext.Add(newMember);
+                            mapper.Add(newMember);
                         }
                         #endregion
 
                         #region 更改应用使用数量
                         {
                             app.IncreaseUseCount();
-                            var result = SqlContext.Modify(app, a => a.Id == appId);
+                            var result = mapper.Modify(app, a => a.Id == appId);
                             if (!result)
                             {
                                 throw new BusinessException("修改应用使用数量失败");
@@ -837,12 +839,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         }
                         #endregion
 
-                        SqlContext.Commit();
+                        mapper.Commit();
                         return app;
                     }
                     catch (Exception)
                     {
-                        SqlContext.Rollback();
+                        mapper.Rollback();
                         throw;
                     }
                 }

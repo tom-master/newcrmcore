@@ -1,29 +1,27 @@
 ﻿using System;
-using System.ComponentModel;
 using NewLibCore.Data.SQL.MapperExtension;
-using NewLibCore.Data.SQL.PropertyExtension;
+using NewLibCore.Data.SQL.MapperExtension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
-    [Description("应用类型"), Serializable]
     public partial class AppType : DomainModelBase
     {
         /// <summary>
         /// 名称
         /// </summary>
-        [PropertyRequired, PropertyInputRange(2, 10)]
+        [Required, InputRange(2, 10)]
         public String Name { get; private set; }
 
         /// <summary>
         /// 备注
         /// </summary>
-        [PropertyDefaultValue(typeof(String)), PropertyInputRange(50)]
+        [DefaultValue(typeof(String)), InputRange(50)]
         public String Remark { get; private set; }
 
         /// <summary>
         /// 是否为系统分类
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public Boolean IsSystem { get; private set; }
 
         /// <summary>

@@ -40,7 +40,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                         INNER JOIN Config AS a1
                                         ON a1.UserId=a.Id 
                                         WHERE a.Name=@name AND a.IsDeleted=0 AND a.IsDisable=0";
-                             user = dataStore.Find<User>(sql, new List<SqlParameterMapper> { new SqlParameterMapper("@name", userName) }).FirstOrDefault();
+                             user = dataStore.Find<User>(sql, new List<EntityParameter> { new EntityParameter("@name", userName) }).FirstOrDefault();
                              if (user == null)
                              {
                                  throw new BusinessException($"该用户不存在或被禁用{userName}");
@@ -114,7 +114,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                 a.IsModifyUserFace,
                                 a.WallpaperId
 								FROM Config AS a WHERE a.UserId=@userId AND a.IsDeleted=0";
-                     var parameters = new List<SqlParameterMapper> { new SqlParameterMapper("@userId", userId) };
+                     var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
                      var result = dataStore.Find<Config>(sql, parameters).FirstOrDefault();
                      return result;
                  }
@@ -130,7 +130,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT a.Url,a.Width,a.Height,a.Source FROM Wallpaper AS a WHERE a.Id=@wallpaperId AND a.IsDeleted=0";
-                    var parameters = new List<SqlParameterMapper> { new SqlParameterMapper("@wallpaperId", wallPaperId) };
+                    var parameters = new List<EntityParameter> { new EntityParameter("@wallpaperId", wallPaperId) };
                     return dataStore.Find<Wallpaper>(sql, parameters).FirstOrDefault();
                 }
             });
@@ -143,17 +143,17 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             var where = new StringBuilder();
             where.Append("WHERE 1=1 AND a.IsDeleted=0 ");
-            var parameters = new List<SqlParameterMapper>();
+            var parameters = new List<EntityParameter>();
             if (!String.IsNullOrEmpty(userName))
             {
-                parameters.Add(new SqlParameterMapper("@name", userName));
+                parameters.Add(new EntityParameter("@name", userName));
                 where.Append(" AND a.Name=@name");
             }
 
             if (!String.IsNullOrEmpty(userType))
             {
                 var isAdmin = (EnumExtensions.ToEnum<UserType>(Int32.Parse(userType)) == UserType.Admin) ? 1 : 0;
-                parameters.Add(new SqlParameterMapper("@isAdmin", isAdmin));
+                parameters.Add(new EntityParameter("@isAdmin", isAdmin));
                 where.Append($@" AND a.IsAdmin=@isAdmin");
             }
 
@@ -209,7 +209,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             INNER JOIN  Config AS a1
                             ON a1.UserId=a.Id
                             WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
-                    var parameters = new List<SqlParameterMapper> { new SqlParameterMapper("@userId", userId) };
+                    var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
                     return dataStore.FindOne<User>(sql, parameters);
                 }
             });
@@ -231,7 +231,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								INNER JOIN Role AS a1
 								ON a1.Id=a.RoleId AND a1.IsDeleted=0 
 								WHERE a.UserId=@userId AND a.IsDeleted=0 ";
-                    var parameters = new List<SqlParameterMapper> { new SqlParameterMapper("@userId", userId) };
+                    var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
                     return dataStore.Find<Role>(sql, parameters);
                 }
             });
@@ -258,7 +258,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT COUNT(*) FROM User AS a WHERE a.Name=@name AND a.IsDeleted=0";
-                    return dataStore.FindSingleValue<Int32>(sql, new List<SqlParameterMapper> { new SqlParameterMapper("@name", userName) }) != 0 ? false : true;
+                    return dataStore.FindSingleValue<Int32>(sql, new List<EntityParameter> { new EntityParameter("@name", userName) }) != 0 ? false : true;
                 }
             });
         }
@@ -272,7 +272,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT a.LoginPassword FROM User AS a WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
-                    var parameters = new List<SqlParameterMapper> { new SqlParameterMapper("@userId", userId) };
+                    var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
                     return dataStore.FindSingleValue<String>(sql, parameters);
                 }
             });
@@ -290,9 +290,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     #region 获取锁屏密码
                     {
                         var sql = $@"SELECT a.LockScreenPassword FROM User AS a WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
-                        var parameters = new List<SqlParameterMapper>
+                        var parameters = new List<EntityParameter>
                         {
-                            new SqlParameterMapper("@userId",userId)
+                            new EntityParameter("@userId",userId)
                         };
                         var password = dataStore.FindSingleValue<String>(sql, parameters);
                         return PasswordUtil.ComparePasswords(password, unlockPassword);
@@ -311,9 +311,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.Name=@name AND a.IsDeleted=0 ";
-                    var parameters = new List<SqlParameterMapper>
+                    var parameters = new List<EntityParameter>
                     {
-                        new SqlParameterMapper("@name",name)
+                        new EntityParameter("@name",name)
                     };
                     return dataStore.FindSingleValue<Int32>(sql, parameters) > 0;
                 }
@@ -330,9 +330,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.AppUrl = @url AND a.IsDeleted=0";
-                    var parameters = new List<SqlParameterMapper>
+                    var parameters = new List<EntityParameter>
                     {
-                        new SqlParameterMapper("@url",url)
+                        new EntityParameter("@url",url)
                     };
 
                     return dataStore.FindSingleValue<Int32>(sql, parameters) > 0;
@@ -548,7 +548,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var dataStore = new SqlContext(Appsetting.Database))
                 {
-                    var parameters = new List<SqlParameterMapper> { new SqlParameterMapper("@userId", userId) };
+                    var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
                     #region 前置条件验证
                     {
                         var sql = $@"SELECT COUNT(*) FROM Role AS a INNER JOIN UserRole AS a1 ON a1.UserId=@userId AND a1.RoleId=a.Id AND a1.IsDeleted=0
@@ -649,9 +649,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         #region 前置条件验证
                         {
                             var sql = $@"SELECT a.IsAdmin FROM User AS a WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
-                            var parameters = new List<SqlParameterMapper>
+                            var parameters = new List<EntityParameter>
                             {
-                                new SqlParameterMapper("@userId",userId)
+                                new EntityParameter("@userId",userId)
                             };
                             var isAdmin = dataStore.FindSingleValue<Boolean>(sql, parameters);
                             if (isAdmin)

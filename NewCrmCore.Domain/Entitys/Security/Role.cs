@@ -1,37 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using NewLibCore.Data.SQL.MapperExtension;
-using NewLibCore.Data.SQL.PropertyExtension;
+using NewLibCore.Data.SQL.MapperExtension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.Security
 {
-    [Description("角色"), Serializable]
     public partial class Role : DomainModelBase
     {
         /// <summary>
         /// 名称
         /// </summary>
-        [PropertyRequired, PropertyInputRange(2, 10)]
+        [Required, InputRange(2, 10)]
         public String Name { get; private set; }
 
         /// <summary>
         /// 角色标识
         /// </summary>
-        [PropertyRequired, PropertyInputRange(2, 20)]
+        [Required, InputRange(2, 20)]
         public String RoleIdentity { get; private set; }
 
         /// <summary>
         /// 备注
         /// </summary>
-        [PropertyInputRange(50), PropertyDefaultValue(typeof(String))]
+        [InputRange(50), DefaultValue(typeof(String))]
         public String Remark { get; private set; }
 
         /// <summary>
         /// 是否允许禁用
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean))]
+        [DefaultValue(typeof(Boolean))]
         public Boolean IsAllowDisable { get; private set; }
 
         /// <summary>

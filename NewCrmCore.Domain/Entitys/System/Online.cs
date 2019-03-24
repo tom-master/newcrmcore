@@ -1,23 +1,22 @@
 ﻿using System;
 using System.ComponentModel;
 using NewLibCore.Data.SQL.MapperExtension;
-using NewLibCore.Data.SQL.PropertyExtension;
+using NewLibCore.Data.SQL.MapperExtension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
-    [Description("在线人数"), Serializable]
     public partial class Online : DomainModelBase
     {
         /// <summary>
         /// Ip地址
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public String IpAddress { get; private set; }
 
         /// <summary>
         /// 用户Id
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public Int32 UserId { get; private set; }
 
         /// <summary>

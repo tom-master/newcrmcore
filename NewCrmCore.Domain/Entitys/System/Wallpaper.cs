@@ -1,66 +1,64 @@
 ﻿using System;
-using System.ComponentModel;
 using NewCrmCore.Domain.ValueObject;
 using NewLibCore.Data.SQL.MapperExtension;
-using NewLibCore.Data.SQL.PropertyExtension;
+using NewLibCore.Data.SQL.MapperExtension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
-    [Serializable, Description("壁纸")]
     public partial class Wallpaper : DomainModelBase
     {
         /// <summary>
         /// 标题
         /// </summary>
-        [PropertyRequired, PropertyInputRange(15)]
+        [Required, InputRange(15)]
         public String Title { get; private set; }
 
         /// <summary>
         /// 图片地址
         /// </summary>
-        [PropertyRequired, PropertyInputRange(150)]
+        [Required, InputRange(150)]
         public String Url { get; private set; }
 
         /// <summary>
         /// 短地址
         /// </summary> 
-        [PropertyDefaultValue(typeof(String))]
+        [DefaultValue(typeof(String))]
         public String ShortUrl { get; private set; }
 
         /// <summary>
         /// 来源
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public WallpaperSource Source { get; private set; }
 
         /// <summary>
         /// 描述
         /// </summary>
-        [PropertyDefaultValue(typeof(String)), PropertyInputRange(50)]
+        [DefaultValue(typeof(String)), InputRange(50)]
         public String Description { get; private set; }
 
         /// <summary>
         /// 图片的宽
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public Int32 Width { get; private set; }
 
         /// <summary>
         /// 图片的高
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public Int32 Height { get; private set; }
 
         /// <summary>
         /// 上传者（用户）
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public Int32 UserId { get; private set; }
 
         /// <summary>
         /// md5
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public String Md5 { get; private set; }
 
         /// <summary>

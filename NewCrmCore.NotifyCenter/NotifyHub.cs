@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.SignalR;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
-using NewLibCore.Data.SQL.InternalDataStore;
+using NewLibCore.Data.SQL.DataMapper;
 using Newtonsoft.Json;
 using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
@@ -55,10 +55,10 @@ namespace NewCrmCore.NotifyCenter
 
         public async Task SendNotify(Int32 userId, Notify notify)
         {
-            using (var dataStore = new SqlContext(Appsetting.Database))
+            using (var mapper = new EntityMapper())
             {
-                var result = dataStore.Add(notify);
-                if (result > 0)
+                var result = mapper.Add(notify);
+                if (result.Id != 0)
                 {
                     var connectionId = await CacheHelper.GetOrSetCacheAsync<String>(new SignalRConnectionCacheKey(userId.ToString()));
                     await _notify.Clients.Client(connectionId).SendAsync("message", JsonConvert.SerializeObject(notify));

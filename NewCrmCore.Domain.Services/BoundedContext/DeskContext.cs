@@ -419,9 +419,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(pageSize);
             using (var dataStore = new SqlContext(Appsetting.Database))
             {
-                var parameters = new List<SqlParameterMapper>
+                var parameters = new List<EntityParameter>
                 {
-                    new SqlParameterMapper("@userId",userId)
+                    new EntityParameter("@userId",userId)
                 };
                 var pageModel = new PageList<Notify>();
                 {

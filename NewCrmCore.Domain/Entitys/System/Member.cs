@@ -1,111 +1,109 @@
 ﻿using System;
-using System.ComponentModel;
 using NewCrmCore.Domain.ValueObject;
 using NewLibCore.Data.SQL.MapperExtension;
-using NewLibCore.Data.SQL.PropertyExtension;
+using NewLibCore.Data.SQL.MapperExtension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
     /// <summary>
     /// 桌面应用
     /// </summary>
-    [Serializable, Description("桌面应用")]
     public partial class Member : DomainModelBase
     {
         /// <summary>
         /// 应用Id
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public Int32 AppId { get; private set; }
 
         /// <summary>
         /// 桌面应用的宽
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public Int32 Width { get; private set; }
 
         /// <summary>
         /// 桌面应用的高
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public Int32 Height { get; private set; }
 
         /// <summary>
         /// 文件夹Id
         /// </summary>
-        [PropertyDefaultValue(typeof(Int32))]
+        [DefaultValue(typeof(Int32))]
         public Int32 FolderId { get; private set; }
 
         /// <summary>
         /// 名称
         /// </summary>
-        [PropertyRequired, PropertyInputRange(10)]
+        [Required, InputRange(10)]
         public String Name { get; private set; }
 
         /// <summary>
         /// 图标地址
         /// </summary>
-        [PropertyRequired, PropertyInputRange(150)]
+        [Required, InputRange(150)]
         public String IconUrl { get; private set; }
 
         /// <summary>
         /// app地址
         /// </summary>
-        [PropertyInputRange(150), PropertyDefaultValue(typeof(String))]
+        [InputRange(150), DefaultValue(typeof(String))]
         public String AppUrl { get; private set; }
 
         /// <summary>
         /// 桌面应用是否在应用码头上
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean))]
+        [DefaultValue(typeof(Boolean))]
         public Boolean IsOnDock { get; private set; }
 
         /// <summary>
         /// 是否显示app底部的按钮
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean))]
+        [DefaultValue(typeof(Boolean))]
         public Boolean IsSetbar { get; private set; }
 
         /// <summary>
         /// 是否打开最大化
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean))]
+        [DefaultValue(typeof(Boolean))]
         public Boolean IsOpenMax { get; private set; }
 
         /// <summary>
         /// 是否为福莱希
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean))]
+        [DefaultValue(typeof(Boolean))]
         public Boolean IsFlash { get; private set; }
 
         /// <summary>
         /// 是否可以拉伸
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean))]
+        [DefaultValue(typeof(Boolean))]
         public Boolean IsResize { get; private set; }
 
         /// <summary>
         /// 桌面应用类型
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public MemberType MemberType { get; private set; }
 
         /// <summary>
         /// 桌面索引
         /// </summary>
-        [PropertyDefaultValue(typeof(Int32), 1)]
+        [DefaultValue(typeof(Int32), 1)]
         public Int32 DeskIndex { get; private set; }
 
         /// <summary>
         /// 账户Id
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public Int32 UserId { get; private set; }
 
         /// <summary>
         /// 图标是否来自上传
         /// </summary>
-        [PropertyDefaultValue(typeof(Boolean))]
+        [DefaultValue(typeof(Boolean))]
         public Boolean IsIconByUpload { get; private set; }
 
         public Double StarCount { get; set; }

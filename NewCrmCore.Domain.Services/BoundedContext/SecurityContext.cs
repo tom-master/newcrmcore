@@ -36,7 +36,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT a.Id, a.Name, a.RoleIdentity, a.Remark FROM Role AS a WHERE a.Id=@Id AND a.IsDeleted=0";
-                    var parameters = new List<SqlParameterMapper> { new SqlParameterMapper("@Id", roleId) };
+                    var parameters = new List<EntityParameter> { new EntityParameter("@Id", roleId) };
                     return dataStore.FindOne<Role>(sql, parameters);
                 }
             });
@@ -47,10 +47,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             using (var dataStore = new SqlContext(Appsetting.Database))
             {
                 var where = new StringBuilder();
-                var parameters = new List<SqlParameterMapper>();
+                var parameters = new List<EntityParameter>();
                 if (!String.IsNullOrEmpty(roleName))
                 {
-                    parameters.Add(new SqlParameterMapper("@roleName", $@"%{roleName}%"));
+                    parameters.Add(new EntityParameter("@roleName", $@"%{roleName}%"));
                     where.Append($@" AND a.Name LIKE @roleName");
                 }
 
@@ -88,9 +88,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     #region 检查app是否为系统app
                     {
                         var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.Id=@Id AND a.IsDeleted=0 AND a.IsSystem=1";
-                        var parameters = new List<SqlParameterMapper>
+                        var parameters = new List<EntityParameter>
                         {
-                            new SqlParameterMapper("@Id",accessAppId)
+                            new EntityParameter("@Id",accessAppId)
                         };
                         var result = dataStore.FindSingleValue<Int32>(sql, parameters);
                         if (result <= 0)
@@ -118,9 +118,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT COUNT(*) FROM Role AS a WHERE a.Name=@name AND a.IsDeleted=0";
-                    var parameters = new List<SqlParameterMapper>
+                    var parameters = new List<EntityParameter>
                     {
-                        new SqlParameterMapper("@name",name)
+                        new EntityParameter("@name",name)
                     };
                     return dataStore.FindSingleValue<Int32>(sql, parameters) > 0;
                 }
@@ -136,9 +136,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var dataStore = new SqlContext(Appsetting.Database))
                 {
                     var sql = $@"SELECT COUNT(*) FROM Role AS a WHERE a.RoleIdentity=@RoleIdentity AND a.IsDeleted=0";
-                    var parameters = new List<SqlParameterMapper>
+                    var parameters = new List<EntityParameter>
                     {
-                        new SqlParameterMapper("@RoleIdentity",name)
+                        new EntityParameter("@RoleIdentity",name)
                     };
                     return dataStore.FindSingleValue<Int32>(sql, parameters) > 0;
                 }
@@ -178,9 +178,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     dataStore.OpenTransaction();
                     try
                     {
-                        var parameters = new List<SqlParameterMapper>
+                        var parameters = new List<EntityParameter>
                         {
-                            new SqlParameterMapper("@roleId",roleId)
+                            new EntityParameter("@roleId",roleId)
                         };
                         #region 前置条件验证
                         {

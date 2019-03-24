@@ -1,30 +1,30 @@
 using System;
 using NewLibCore.Data.SQL.MapperExtension;
-using NewLibCore.Data.SQL.PropertyExtension;
+using NewLibCore.Data.SQL.MapperExtension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
     public partial class VisitorRecord : DomainModelBase
     {
-        [PropertyRequired]
+        [Required]
         public Int32 UserId { get; private set; }
 
-        [PropertyRequired, PropertyInputRange(10)]
+        [Required, InputRange(10)]
         public String UserName { get; private set; }
 
-        [PropertyRequired, PropertyInputRange(25)]
+        [Required, InputRange(25)]
         public String Controller { get; private set; }
 
-        [PropertyRequired, PropertyInputRange(30)]
+        [Required, InputRange(30)]
         public String Action { get; private set; }
 
-        [PropertyRequired]
+        [Required]
         public String Ip { get; private set; }
 
-        [PropertyRequired, PropertyInputRange(150)]
+        [Required, InputRange(150)]
         public String VisitorUrl { get; private set; }
 
-        [PropertyRequired, PropertyInputRange(500)]
+        [Required, InputRange(500)]
         public String UrlParameter { get; private set; }
 
         public VisitorRecord(Int32 userId, String userName, String controller, String action, String ip, String visitorUrl, String urlParameter)

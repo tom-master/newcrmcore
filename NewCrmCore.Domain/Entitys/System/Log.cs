@@ -1,48 +1,46 @@
 ﻿using System;
-using System.ComponentModel;
 using NewCrmCore.Domain.ValueObject;
 using NewLibCore.Data.SQL.MapperExtension;
-using NewLibCore.Data.SQL.PropertyExtension;
+using NewLibCore.Data.SQL.MapperExtension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
-    [Description("日志"), Serializable]
     public partial class Log : DomainModelBase
     {
         /// <summary>
         /// 日志等级
         /// </summary>
-        [PropertyDefaultValue(typeof(LogLevel), LogLevel.Info)]
+        [DefaultValue(typeof(LogLevel), LogLevel.Info)]
         public LogLevel LogLevelEnum { get; private set; }
 
         /// <summary>
         /// 类名
         /// </summary>
-        [PropertyRequired, PropertyInputRange(25)]
+        [Required, InputRange(25)]
         public String Controller { get; private set; }
 
         /// <summary>
         /// 方法名
         /// </summary>
-        [PropertyRequired, PropertyInputRange(30)]
+        [Required, InputRange(30)]
         public String Action { get; private set; }
 
         /// <summary>
         /// 异常信息
         /// </summary>
-        [PropertyRequired, PropertyInputRange(1000)]
+        [Required, InputRange(1000)]
         public String ExceptionMessage { get; private set; }
 
         /// <summary>
         /// 异常堆栈
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public String Track { get; private set; }
 
         /// <summary>
         /// 用户id
         /// </summary>
-        [PropertyRequired]
+        [Required]
         public Int32 UserId { get; private set; }
 
         public Log(Int32 userId, String controller, String action, LogLevel logLevel, String track, String exceptionMessage)
