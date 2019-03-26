@@ -6,6 +6,8 @@ using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Infrastructure;
 using NewLibCore.Data.SQL.DataMapper;
+using NewLibCore.Data.SQL.ExpressionSpecification.ConcreteSpecification;
+using NewLibCore.Data.SQL.ExpressionSpecification;
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
@@ -33,6 +35,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 var where = new StringBuilder();
                 var parameters = new List<EntityParameter>();
+                var filter = DefaultSpecificationFactory.Create<Log>();
+                
                 if (!String.IsNullOrEmpty(userName))
                 {
                     parameters.Add(new EntityParameter("@name", userName));
