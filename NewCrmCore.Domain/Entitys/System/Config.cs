@@ -5,7 +5,7 @@ using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
-    public partial class Config : DomainModelBase
+    public partial class Config : EntityBase
     {
         /// <summary>
         /// 皮肤

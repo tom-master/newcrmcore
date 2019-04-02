@@ -4,7 +4,7 @@ using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.Agent
 {
-    public class UserRole : DomainModelBase
+    public class UserRole : EntityBase
     {
         [Required]
         public Int32 UserId { get; private set; }

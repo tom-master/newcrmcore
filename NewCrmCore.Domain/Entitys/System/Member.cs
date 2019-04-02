@@ -8,7 +8,7 @@ namespace NewCrmCore.Domain.Entitys.System
     /// <summary>
     /// 桌面应用
     /// </summary>
-    public partial class Member : DomainModelBase
+    public partial class Member : EntityBase
     {
         /// <summary>
         /// 应用Id

@@ -4,7 +4,7 @@ using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
-    public partial class AppStar : DomainModelBase
+    public partial class AppStar : EntityBase
     {
         /// <summary>
         /// 账号

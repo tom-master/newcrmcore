@@ -5,7 +5,7 @@ using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
-    public partial class App : DomainModelBase
+    public partial class App : EntityBase
     {
         /// <summary>
         /// 名称

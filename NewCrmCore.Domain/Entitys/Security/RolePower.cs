@@ -4,7 +4,7 @@ using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.Security
 {
-	public class RolePower : DomainModelBase
+	public class RolePower : EntityBase
 	{
 		[Required]
 		public Int32 RoleId { get; private set; }

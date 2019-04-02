@@ -4,7 +4,7 @@ using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
-    public partial class VisitorRecord : DomainModelBase
+    public partial class VisitorRecord : EntityBase
     {
         [Required]
         public Int32 UserId { get; private set; }

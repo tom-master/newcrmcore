@@ -5,7 +5,7 @@ using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
-    public partial class Log : DomainModelBase
+    public partial class Log : EntityBase
     {
         /// <summary>
         /// 日志等级

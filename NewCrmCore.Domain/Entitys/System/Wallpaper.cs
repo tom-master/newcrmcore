@@ -5,7 +5,7 @@ using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
-    public partial class Wallpaper : DomainModelBase
+    public partial class Wallpaper : EntityBase
     {
         /// <summary>
         /// 标题

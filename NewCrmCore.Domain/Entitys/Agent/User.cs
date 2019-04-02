@@ -7,7 +7,7 @@ using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.Agent
 {
-    public partial class User : DomainModelBase
+    public partial class User : EntityBase
     {
         /// <summary>
         /// 用户名

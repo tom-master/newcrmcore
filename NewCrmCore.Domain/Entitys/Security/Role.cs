@@ -6,7 +6,7 @@ using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.Security
 {
-    public partial class Role : DomainModelBase
+    public partial class Role : EntityBase
     {
         /// <summary>
         /// 名称

@@ -4,7 +4,7 @@ using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
-    public partial class Online : DomainModelBase
+    public partial class Online : EntityBase
     {
         /// <summary>
         /// Ip地址

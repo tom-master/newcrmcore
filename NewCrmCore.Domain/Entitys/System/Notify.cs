@@ -7,7 +7,7 @@ using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
 namespace NewCrmCore.Domain.Entitys.System
 {
 
-    public partial class Notify : DomainModelBase
+    public partial class Notify : EntityBase
     {
         [Required, InputRange(4, 10)]
         public String Title { get; private set; }
