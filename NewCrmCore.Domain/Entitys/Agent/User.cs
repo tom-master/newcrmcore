@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using NewCrmCore.Domain.ValueObject;
-using NewLibCore.Data.SQL.MapperExtension;
-using NewLibCore.Data.SQL.MapperExtension.PropertyExtension;
+using NewLibCore.Data.SQL.Mapper.Extension;
+using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.Agent
 {
@@ -12,7 +12,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         /// <summary>
         /// 用户名
         /// </summary>
-        [Required,InputRange(4, 10)]
+        [Required, InputRange(4, 10)]
         public String Name { get; private set; }
 
         /// <summary>
