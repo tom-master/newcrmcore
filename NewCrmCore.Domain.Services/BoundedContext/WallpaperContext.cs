@@ -8,7 +8,8 @@ using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore.Validate;
 using NewLibCore;
-using NewLibCore.Data.SQL.InternalDataStore;
+using NewLibCore.Data.SQL.Mapper;
+using System.Linq;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
 {
@@ -19,16 +20,17 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(wallpaper);
             return await Task.Run(() =>
              {
-                 using (var dataStore = new SqlContext(Appsetting.Database))
+                 using (var mapper = new EntityMapper())
                  {
                      #region 前置条件验证
                      {
-                         var sql = $@"SELECT COUNT(*) FROM Wallpaper AS a WHERE a.UserId=@UserId AND a.IsDeleted=0";
-                         var parameters = new List<EntityParameter>
-                         {
-                            new EntityParameter("@UserId",wallpaper.UserId)
-                         };
-                         var result = dataStore.FindSingleValue<Int32>(sql, parameters);
+                         //  var sql = $@"SELECT COUNT(*) FROM Wallpaper AS a WHERE a.UserId=@UserId AND a.IsDeleted=0";
+                         //  var parameters = new List<EntityParameter>
+                         //  {
+                         //     new EntityParameter("@UserId",wallpaper.UserId)
+                         //  };
+                         //  var result = dataStore.FindSingleValue<Int32>(sql, parameters);
+                         var result = mapper.Count<Wallpaper>(w => w.UserId == wallpaper.UserId);
                          if (result > 6)
                          {
                              throw new BusinessException("最多只能上传6张图片");
@@ -36,27 +38,26 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                      }
                      #endregion
 
-                     var newWallpaperId = 0;
-
                      #region 插入壁纸
                      {
-                         newWallpaperId = dataStore.Add(wallpaper);
+                         wallpaper = mapper.Add<Wallpaper>(wallpaper);
+                         return new Tuple<Int32, String>(wallpaper.Id, wallpaper.Url);
                      }
                      #endregion
 
                      #region 获取返回值
                      {
-                         var sql = $@"SELECT a.Id,a.Url FROM Wallpaper AS a WHERE a.Id=@Id AND a.IsDeleted=0";
-                         var parameters = new List<EntityParameter>
-                         {
-                            new EntityParameter("@Id",newWallpaperId)
-                         };
-                         var result = dataStore.FindOne<Wallpaper>(sql, parameters);
-                         if (result != null)
-                         {
-                             return new Tuple<Int32, String>(result.Id, result.Url);
-                         }
-                         return null;
+                         //  var sql = $@"SELECT a.Id,a.Url FROM Wallpaper AS a WHERE a.Id=@Id AND a.IsDeleted=0";
+                         //  var parameters = new List<EntityParameter>
+                         //  {
+                         //     new EntityParameter("@Id",newWallpaperId)
+                         //  };
+                         //  var result = dataStore.FindOne<Wallpaper>(sql, parameters);
+                         //  if (result != null)
+                         //  {
+                         //      return new Tuple<Int32, String>(result.Id, result.Url);
+                         //  }
+                         //  return null;
                      }
                      #endregion
                  }
@@ -69,24 +70,37 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    var sql = $@"SELECT
-                            a.UserId,
-                            a.Height,
-                            a.Id,
-                            a.Md5,
-                            a.ShortUrl,
-                            a.Source,
-                            a.Title,
-                            a.Url,
-                            a.Width
-                            FROM Wallpaper AS a WHERE a.Md5=@Md5 AND a.IsDeleted=0";
-                    var parameters = new List<EntityParameter>
+                    return mapper.Find<Wallpaper>(a => a.Md5 == md5, a => new
                     {
-                        new EntityParameter("@Md5",md5)
-                    };
-                    return dataStore.FindOne<Wallpaper>(sql, parameters);
+                        a.UserId,
+                        a.Height,
+                        a.Id,
+                        a.Md5,
+                        a.ShortUrl,
+                        a.Source,
+                        a.Title,
+                        a.Url,
+                        a.Width
+                    }).FirstOrDefault();
+
+                    // var sql = $@"SELECT
+                    //         a.UserId,
+                    //         a.Height,
+                    //         a.Id,
+                    //         a.Md5,
+                    //         a.ShortUrl,
+                    //         a.Source,
+                    //         a.Title,
+                    //         a.Url,
+                    //         a.Width
+                    //         FROM Wallpaper AS a WHERE a.Md5=@Md5 AND a.IsDeleted=0";
+                    // var parameters = new List<EntityParameter>
+                    // {
+                    //     new EntityParameter("@Md5",md5)
+                    // };
+                    // return dataStore.FindOne<Wallpaper>(sql, parameters);
                 }
             });
         }
@@ -97,25 +111,38 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    var sql = $@"SELECT
-                            a.UserId,
-                            a.Height,
-                            a.Id,
-                            a.Md5,
-                            a.ShortUrl,
-                            a.Source,
-                            a.Title,
-                            a.Url,
-                            a.Width
-                            FROM Wallpaper AS a WHERE a.UserId=@UserId AND a.Source<>@Source AND a.IsDeleted=0";
-                    var parameters = new List<EntityParameter>
+                    return mapper.Find<Wallpaper>(a => a.UserId == userId && a.Source != WallpaperSource.System, a => new
                     {
-                        new EntityParameter("@UserId",userId),
-                        new EntityParameter("@Source", WallpaperSource.System.ToInt32())
-                    };
-                    return dataStore.Find<Wallpaper>(sql, parameters);
+                        a.UserId,
+                        a.Height,
+                        a.Id,
+                        a.Md5,
+                        a.ShortUrl,
+                        a.Source,
+                        a.Title,
+                        a.Url,
+                        a.Width
+                    }).ToList();
+
+                    // var sql = $@"SELECT
+                    //         a.UserId,
+                    //         a.Height,
+                    //         a.Id,
+                    //         a.Md5,
+                    //         a.ShortUrl,
+                    //         a.Source,
+                    //         a.Title,
+                    //         a.Url,
+                    //         a.Width
+                    //         FROM Wallpaper AS a WHERE a.UserId=@UserId AND a.Source<>@Source AND a.IsDeleted=0";
+                    // var parameters = new List<EntityParameter>
+                    // {
+                    //     new EntityParameter("@UserId",userId),
+                    //     new EntityParameter("@Source", WallpaperSource.System.ToInt32())
+                    // };
+                    // return dataStore.Find<Wallpaper>(sql, parameters);
                 }
             });
         }
@@ -124,24 +151,37 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    var sql = $@"SELECT
-                            a.UserId,
-                            a.Height,
-                            a.Id,
-                            a.Md5,
-                            a.ShortUrl,
-                            a.Source,
-                            a.Title,
-                            a.Url,
-                            a.Width
-                            FROM Wallpaper AS a WHERE a.Source=@Source AND a.IsDeleted=0";
-                    var parameters = new List<EntityParameter>
+                    return mapper.Find<Wallpaper>(a => a.Source == WallpaperSource.System, a => new
                     {
-                        new EntityParameter("@Source", WallpaperSource.System.ToInt32())
-                    };
-                    return dataStore.Find<Wallpaper>(sql, parameters);
+                        a.UserId,
+                        a.Height,
+                        a.Id,
+                        a.Md5,
+                        a.ShortUrl,
+                        a.Source,
+                        a.Title,
+                        a.Url,
+                        a.Width
+                    }).ToList();
+
+                    // var sql = $@"SELECT
+                    //         a.UserId,
+                    //         a.Height,
+                    //         a.Id,
+                    //         a.Md5,
+                    //         a.ShortUrl,
+                    //         a.Source,
+                    //         a.Title,
+                    //         a.Url,
+                    //         a.Width
+                    //         FROM Wallpaper AS a WHERE a.Source=@Source AND a.IsDeleted=0";
+                    // var parameters = new List<EntityParameter>
+                    // {
+                    //     new EntityParameter("@Source", WallpaperSource.System.ToInt32())
+                    // };
+                    // return dataStore.Find<Wallpaper>(sql, parameters);
                 }
             });
         }
@@ -155,11 +195,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 if (Enum.TryParse(newMode, true, out WallpaperMode wallpaperMode))
                 {
-                    using (var dataStore = new SqlContext(Appsetting.Database))
+                    using (var mapper = new EntityMapper())
                     {
                         var config = new Config();
                         config.ModeTo(wallpaperMode);
-                        var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                        var result = mapper.Modify(config, conf => conf.UserId == userId);
                         if (!result)
                         {
                             throw new BusinessException("修改壁纸显示失败");
@@ -180,11 +220,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var config = new Config();
                     config.NotFromBing().ModifyWallpaperId(newWallpaperId);
-                    var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                    var result = mapper.Modify(config, conf => conf.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("修改壁纸失败");
@@ -200,17 +240,19 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     #region 前置条件验证
                     {
-                        var sql = $@"SELECT COUNT(*) FROM Config AS a WHERE a.UserId=@UserId AND a.WallpaperId=@WallpaperId AND a.IsDeleted=0";
-                        var parameters = new List<EntityParameter>
-                        {
-                            new EntityParameter("@WallpaperId",wallpaperId),
-                            new EntityParameter("@UserId",userId)
-                        };
-                        var result = dataStore.FindSingleValue<Int32>(sql, parameters);
+                        var result = mapper.Count<Wallpaper>(a => a.UserId == userId && a.Id == wallpaperId);
+
+                        // var sql = $@"SELECT COUNT(*) FROM Config AS a WHERE a.UserId=@UserId AND a.WallpaperId=@WallpaperId AND a.IsDeleted=0";
+                        // var parameters = new List<EntityParameter>
+                        // {
+                        //     new EntityParameter("@WallpaperId",wallpaperId),
+                        //     new EntityParameter("@UserId",userId)
+                        // };
+                        // var result = dataStore.FindSingleValue<Int32>(sql, parameters);
                         if (result > 0)
                         {
                             throw new BusinessException("当前壁纸正在使用中，不能删除");
@@ -222,7 +264,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         var wallpaper = new Wallpaper();
                         wallpaper.Remove();
-                        var result = dataStore.Modify(wallpaper, wa => wa.Id == wallpaperId && wa.UserId == userId);
+                        var result = mapper.Modify(wallpaper, wa => wa.Id == wallpaperId && wa.UserId == userId);
                         if (!result)
                         {
                             throw new BusinessException("移除壁纸失败");
