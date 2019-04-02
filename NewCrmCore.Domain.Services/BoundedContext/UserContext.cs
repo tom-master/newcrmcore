@@ -11,7 +11,7 @@ using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
-using NewLibCore.Data.SQL.InternalDataStore;
+using NewLibCore.Data.SQL.Mapper;
 using NewLibCore.Security;
 using NewLibCore.Validate;
 
@@ -26,21 +26,31 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
              {
-                 using (var dataStore = new SqlContext(Appsetting.Database))
+                 using (var mapper = new EntityMapper())
                  {
                      User user = null;
                      try
                      {
-                         dataStore.OpenTransaction();
+                         mapper.OpenTransaction();
 
                          #region 查询用户
                          {
-                             var sql = @"SELECT a.Id,a.Name,a.LoginPassword,a1.UserFace,a.IsAdmin,a1.IsModifyUserFace
-                                        FROM User AS a
-                                        INNER JOIN Config AS a1
-                                        ON a1.UserId=a.Id 
-                                        WHERE a.Name=@name AND a.IsDeleted=0 AND a.IsDisable=0";
-                             user = dataStore.Find<User>(sql, new List<EntityParameter> { new EntityParameter("@name", userName) }).FirstOrDefault();
+                             user = mapper.InnerJoin<User, Config>((u, c) => u.Id == c.UserId).Find<User>(a => a.Name == userName && !a.IsDisable, a => new
+                             {
+                                 a.Id,
+                                 a.Name,
+                                 a.LoginPassword,
+                                 a.UserFace,
+                                 a.IsAdmin,
+                                 a.IsModifyUserFace
+                             }).FirstOrDefault();
+
+                             //  var sql = @"SELECT a.Id,a.Name,a.LoginPassword,a1.UserFace,a.IsAdmin,a1.IsModifyUserFace
+                             //             FROM User AS a
+                             //             INNER JOIN Config AS a1
+                             //             ON a1.UserId=a.Id 
+                             //             WHERE a.Name=@name AND a.IsDeleted=0 AND a.IsDisable=0";
+                             //  user = dataStore.Find<User>(sql, new List<EntityParameter> { new EntityParameter("@name", userName) }).FirstOrDefault();
                              if (user == null)
                              {
                                  throw new BusinessException($"该用户不存在或被禁用{userName}");
@@ -56,7 +66,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                          #region 设置用户在线
                          {
                              user.Online();
-                             var result = dataStore.Modify(user, acc => acc.Id == user.Id);
+                             var result = mapper.Modify(user, acc => acc.Id == user.Id);
                              if (!result)
                              {
                                  throw new BusinessException("设置用户在线状态失败");
@@ -67,21 +77,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                          #region 添加在线用户列表
                          {
                              var online = new Online(requestIp, user.Id);
-                             var rowCount = dataStore.Add(online);
-
-                             if (rowCount == 0)
+                             mapper.Add(online);
+                             if (online.Id == 0)
                              {
                                  throw new BusinessException("添加在线列表失败");
                              }
                          }
                          #endregion
 
-                         dataStore.Commit();
+                         mapper.Commit();
                          return user;
                      }
                      catch (Exception)
                      {
-                         dataStore.Rollback();
+                         mapper.Rollback();
                          throw;
                      }
                  }
@@ -94,29 +103,47 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
              {
-                 using (var dataStore = new SqlContext(Appsetting.Database))
+                 using (var mapper = new EntityMapper())
                  {
-                     var sql = $@"SELECT 
-								a.Id,
-								a.Skin,  
-								a.UserFace,
-								a.AppSize,  
-								a.AppVerticalSpacing,
-								a.AppHorizontalSpacing,
-								a.DefaultDeskNumber,
-								a.DefaultDeskCount,
-								a.AppXy,
-								a.DockPosition,
-								a.WallpaperMode,
-								a.WallpaperId,
-								a.IsBing,
-								a.UserId,
-                                a.IsModifyUserFace,
-                                a.WallpaperId
-								FROM Config AS a WHERE a.UserId=@userId AND a.IsDeleted=0";
-                     var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
-                     var result = dataStore.Find<Config>(sql, parameters).FirstOrDefault();
-                     return result;
+                     return mapper.Find<Config>(w => w.UserId == userId, a => new
+                     {
+                         a.Id,
+                         a.Skin,
+                         a.UserFace,
+                         a.AppSize,
+                         a.AppVerticalSpacing,
+                         a.AppHorizontalSpacing,
+                         a.DefaultDeskNumber,
+                         a.DefaultDeskCount,
+                         a.AppXy,
+                         a.DockPosition,
+                         a.WallpaperMode,
+                         a.WallpaperId,
+                         a.IsBing,
+                         a.UserId,
+                         a.IsModifyUserFace
+                     }).FirstOrDefault();
+                     //  var sql = $@"SELECT 
+                     // 			a.Id,
+                     // 			a.Skin,  
+                     // 			a.UserFace,
+                     // 			a.AppSize,  
+                     // 			a.AppVerticalSpacing,
+                     // 			a.AppHorizontalSpacing,
+                     // 			a.DefaultDeskNumber,
+                     // 			a.DefaultDeskCount,
+                     // 			a.AppXy,
+                     // 			a.DockPosition,
+                     // 			a.WallpaperMode,
+                     // 			a.WallpaperId,
+                     // 			a.IsBing,
+                     // 			a.UserId,
+                     //             a.IsModifyUserFace,
+                     //             a.WallpaperId
+                     // 			FROM Config AS a WHERE a.UserId=@userId AND a.IsDeleted=0";
+                     //  var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
+                     //  var result = dataStore.Find<Config>(sql, parameters).FirstOrDefault();
+                     //  return result;
                  }
              });
         }
@@ -127,11 +154,19 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    var sql = $@"SELECT a.Url,a.Width,a.Height,a.Source FROM Wallpaper AS a WHERE a.Id=@wallpaperId AND a.IsDeleted=0";
-                    var parameters = new List<EntityParameter> { new EntityParameter("@wallpaperId", wallPaperId) };
-                    return dataStore.Find<Wallpaper>(sql, parameters).FirstOrDefault();
+                    return mapper.Find<Wallpaper>(w => w.Id == wallPaperId, a => new
+                    {
+                        a.Url,
+                        a.Width,
+                        a.Height,
+                        a.Source
+                    }).FirstOrDefault();
+
+                    // var sql = $@"SELECT a.Url,a.Width,a.Height,a.Source FROM Wallpaper AS a WHERE a.Id=@wallpaperId AND a.IsDeleted=0";
+                    // var parameters = new List<EntityParameter> { new EntityParameter("@wallpaperId", wallPaperId) };
+                    // return dataStore.Find<Wallpaper>(sql, parameters).FirstOrDefault();
                 }
             });
         }
