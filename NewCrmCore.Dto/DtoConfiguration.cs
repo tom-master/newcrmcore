@@ -5,6 +5,7 @@ using NewCrmCore.Domain.Entitys.Agent;
 using NewCrmCore.Domain.Entitys.Security;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Dto.MapperProfile;
+using NewLibCore.Data.SQL.Mapper.Extension;
 using NewLibCore.Data.SQL.MapperExtension;
 
 namespace NewCrmCore.Dto
@@ -60,16 +61,16 @@ namespace NewCrmCore.Dto
         /// <returns></returns>
         public static TModel ConvertToModel<TDto, TModel>(this TDto source)
             where TDto : BaseDto
-            where TModel : DomainModelBase => Mapper.Map<TModel>(source);
+            where TModel : EntityBase => Mapper.Map<TModel>(source);
 
         public static IEnumerable<TModel> ConvertToModels<TDto, TModel>(this IEnumerable<TDto> source)
             where TDto : BaseDto
-            where TModel : DomainModelBase => Mapper.Map<IEnumerable<TModel>>(source);
+            where TModel : EntityBase => Mapper.Map<IEnumerable<TModel>>(source);
 
 
         public static TModel ConvertToModel<TDto, TModel>(this TDto source, TModel tt)
              where TDto : BaseDto
-             where TModel : DomainModelBase => Mapper.Map(source, tt);
+             where TModel : EntityBase => Mapper.Map(source, tt);
 
         #endregion
     }
