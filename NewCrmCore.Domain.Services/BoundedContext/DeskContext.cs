@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
-using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
-using NewLibCore.Data.SQL.DataMapper;
+using NewLibCore.Data.SQL.Mapper;
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
