@@ -261,7 +261,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                 new EntityParameter("@Id", memberId),
                                 new EntityParameter("@UserId", userId)
                             };
-                            isFolder = (dataStore.FindSingleValue<Int32>(sql, parameters)) == MemberType.Folder.ToInt32();
+                            isFolder = (mapper.FindSingleValue<Int32>(sql, parameters)) == MemberType.Folder.ToInt32();
                         }
                         #endregion
 
@@ -275,12 +275,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                     new EntityParameter("@userId",userId),
                                     new EntityParameter("@folderId",memberId)
                                 };
-                                var count = dataStore.FindSingleValue<Int32>(sql, parameters);
+                                var count = mapper.FindSingleValue<Int32>(sql, parameters);
                                 if (count > 0)
                                 {
                                     var member = new Member();
                                     member.ModifyFolderId(0);
-                                    var result = dataStore.Modify(member, mem => mem.UserId == userId && mem.FolderId == memberId);
+                                    var result = mapper.Modify(member, mem => mem.UserId == userId && mem.FolderId == memberId);
                                     if (!result)
                                     {
                                         throw new BusinessException("将文件夹内的桌面应用移出失败");
@@ -301,7 +301,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                     new EntityParameter("@Id", memberId),
                                     new EntityParameter("@UserId", userId)
                                 };
-                                appId = dataStore.FindSingleValue<Int32>(sql, parameters);
+                                appId = mapper.FindSingleValue<Int32>(sql, parameters);
                             }
                             #endregion
 
@@ -313,14 +313,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                     new EntityParameter("@Id",appId),
                                     new EntityParameter("@UserId",userId)
                                 };
-                                app = dataStore.FindOne<App>(sql, parameters);
+                                app = mapper.FindOne<App>(sql, parameters);
                             }
                             #endregion
 
                             #region 应用使用量-1
                             {
                                 app.DecreaseUseCount();
-                                var result = dataStore.Modify(app, a => a.Id == appId && a.UserId == app.UserId);
+                                var result = mapper.Modify(app, a => a.Id == appId && a.UserId == app.UserId);
                                 if (!result)
                                 {
                                     throw new BusinessException("修改应用使用数量失败");
@@ -333,7 +333,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var member = new Member();
                             member.Remove();
-                            var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                            var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                             if (!result)
                             {
                                 throw new BusinessException("移除桌面应用失败");
@@ -341,12 +341,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         }
                         #endregion
 
-                        dataStore.Commit();
+                        mapper.Commit();
                         return app;
                     }
                     catch (Exception)
                     {
-                        dataStore.Rollback();
+                        mapper.Rollback();
                         throw;
                     }
                 }
