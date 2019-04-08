@@ -148,20 +148,16 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    #region sql
+                    var member = new Member();
+                    member.ModifyName(memberName);
+                    member.ModifyIconUrl(memberIcon);
+                    var result = mapper.Modify(member, mem => mem.UserId == userId && mem.Id == memberId);
+                    if (!result)
                     {
-                        var member = new Member();
-                        member.ModifyName(memberName);
-                        member.ModifyIconUrl(memberIcon);
-                        var result = dataStore.Modify(member, mem => mem.UserId == userId && mem.Id == memberId);
-                        if (!result)
-                        {
-                            throw new BusinessException("修改文件夹信息失败");
-                        }
+                        throw new BusinessException("修改文件夹信息失败");
                     }
-                    #endregion
                 }
             });
         }
@@ -173,11 +169,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(newIcon);
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var member = new Member();
                     member.ModifyIconUrl(newIcon);
-                    var result = dataStore.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+                    var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("修改桌面应用图片失败");
@@ -192,7 +188,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(member);
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     if (member.IsIconByUpload)
                     {
@@ -235,7 +231,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         member.NotFlash();
                     }
 
-                    var result = dataStore.Modify(member, mem => mem.Id == member.Id && mem.UserId == userId);
+                    var result = mapper.Modify(member, mem => mem.Id == member.Id && mem.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("修改桌面应用信息失败");
@@ -250,9 +246,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(memberId);
             return await Task.Run<App>(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    dataStore.OpenTransaction();
+                    mapper.OpenTransaction();
                     try
                     {
                         var isFolder = false;
