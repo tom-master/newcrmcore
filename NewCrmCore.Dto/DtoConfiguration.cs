@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
-using NewCrmCore.Domain.Entitys;
 using NewCrmCore.Domain.Entitys.Agent;
 using NewCrmCore.Domain.Entitys.Security;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Dto.MapperProfile;
 using NewLibCore.Data.SQL.Mapper.Extension;
-using NewLibCore.Data.SQL.MapperExtension;
 
 namespace NewCrmCore.Dto
 {

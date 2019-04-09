@@ -8,7 +8,7 @@ using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
-using NewLibCore.Data.SQL.InternalDataStore;
+using NewLibCore.Data.SQL.Mapper;
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
@@ -19,10 +19,16 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    var sql = $@"SELECT a.RoleId, a.AppId FROM RolePower AS a WHERE a.IsDeleted=0";
-                    return dataStore.Find<RolePower>(sql);
+                    return mapper.Find<RolePower>(a => new
+                    {
+                        a.RoleId,
+                        a.AppId
+                    }).ToList();
+
+                    //var sql = $@"SELECT a.RoleId, a.AppId FROM RolePower AS a WHERE a.IsDeleted=0";
+                    //return dataStore.Find<RolePower>(sql);
                 }
             });
         }
@@ -33,11 +39,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    var sql = $@"SELECT a.Id, a.Name, a.RoleIdentity, a.Remark FROM Role AS a WHERE a.Id=@Id AND a.IsDeleted=0";
-                    var parameters = new List<EntityParameter> { new EntityParameter("@Id", roleId) };
-                    return dataStore.FindOne<Role>(sql, parameters);
+                    return mapper.Find<Role>(a => a.Id == roleId, a => new { a.Id, a.Name, a.RoleIdentity }).FirstOrDefault();
+                    //var sql = $@"SELECT a.Id, a.Name, a.RoleIdentity, a.Remark FROM Role AS a WHERE a.Id=@Id AND a.IsDeleted=0";
+                    //var parameters = new List<EntityParameter> { new EntityParameter("@Id", roleId) };
+                    //return dataStore.FindOne<Role>(sql, parameters);
                 }
             });
         }
