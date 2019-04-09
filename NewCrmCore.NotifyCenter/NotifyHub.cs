@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using NewCrmCore.Domain.Entitys.System;
-using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
-using NewLibCore.Data.SQL.DataMapper;
+using NewLibCore.Data.SQL.Mapper;
 using Newtonsoft.Json;
 using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 

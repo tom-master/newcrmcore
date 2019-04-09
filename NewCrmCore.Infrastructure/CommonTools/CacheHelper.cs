@@ -17,7 +17,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
             _cacheQuery = new DefaultRedisQueryProvider(0, Appsetting.Redis);
         }
 
-        private CacheHelper(){}
+        private CacheHelper() { }
 
         /// <summary>
         /// 获取或设置缓存
@@ -27,7 +27,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
             TModel cacheResult = null;
             try
-            {  
+            {
                 if (typeof(TModel).IsComplexType())
                 {
                     cacheResult = await Task.Run(() => _cacheQuery.StringGetAsync<TModel>(cache.GetKey()), cache.CancelToken);
