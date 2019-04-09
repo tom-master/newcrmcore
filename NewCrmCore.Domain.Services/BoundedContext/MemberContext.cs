@@ -73,7 +73,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var where = new StringBuilder();
                     var parameters = new List<EntityParameter>();
@@ -112,7 +112,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								),0) AS StarCount
 								FROM Member AS a WHERE a.UserId=@UserId {where} AND a.IsDeleted=0";
                     parameters.Add(new EntityParameter("@UserId", userId));
-                    return dataStore.FindOne<Member>(sql, parameters);
+                    return mapper.ComplexSqlExecute<Member>(sql, parameters);
                 }
             });
         }
@@ -123,15 +123,17 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.Name=@name AND a.IsDeleted=0";
-                    var parameters = new List<EntityParameter>
-                    {
-                        new EntityParameter("@name",name)
-                    };
+                    return mapper.Count<Member>(a => a.Name == name) > 0;
 
-                    return dataStore.FindSingleValue<Int32>(sql, parameters) > 0;
+                    //var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.Name=@name AND a.IsDeleted=0";
+                    //var parameters = new List<EntityParameter>
+                    //{
+                    //    new EntityParameter("@name",name)
+                    //};
+
+                    //return dataStore.FindSingleValue<Int32>(sql, parameters) > 0;
                 }
             });
         }

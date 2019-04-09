@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
-using NewCrmCore.Infrastructure;
-using NewLibCore.Validate;
-using NewLibCore;
 using NewCrmCore.Dto;
-using System.Linq;
-using NewLibCore.Data.SQL.DataMapper;
-using System.Text;
 using NewCrmCore.Infrastructure.CommonTools;
-using System.Linq.Expressions;
+using NewLibCore;
+using NewLibCore.Data.SQL.Mapper;
+using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
 {
@@ -126,20 +124,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 switch (orderId)
                 {
                     case 1:
-                        {
-                            orderBy.Append($@" ORDER BY a.AddTime DESC");
-                            break;
-                        }
+                    {
+                        orderBy.Append($@" ORDER BY a.AddTime DESC");
+                        break;
+                    }
                     case 2:
-                        {
-                            orderBy.Append($@" ORDER BY a.UseCount DESC");
-                            break;
-                        }
+                    {
+                        orderBy.Append($@" ORDER BY a.UseCount DESC");
+                        break;
+                    }
                     case 3:
-                        {
-                            orderBy.Append($@" ORDER BY (SELECT AVG(stars.StartNum) FROM AppStar AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId) DESC");
-                            break;
-                        }
+                    {
+                        orderBy.Append($@" ORDER BY (SELECT AVG(stars.StartNum) FROM AppStar AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId) DESC");
+                        break;
+                    }
                 }
 
                 var paging = new PageList<App>();
