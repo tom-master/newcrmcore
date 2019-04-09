@@ -8,8 +8,9 @@ using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Infrastructure;
 using NewLibCore.Validate;
 using NewLibCore;
-using NewLibCore.Data.SQL.InternalDataStore;
 using NewCrmCore.Infrastructure.CommonTools;
+using NewLibCore.Data.SQL.Mapper;
+using System.Linq;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
 {
@@ -21,28 +22,46 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    var sql = $@"SELECT 
-                            a.MemberType,
-                            a.Id,
-                            a.AppId,
-                            a.Name,
-                            a.IconUrl,
-                            a.Width,
-                            a.Height,
-                            a.IsOnDock,
-                            a.IsOpenMax,
-                            a.IsSetbar,
-                            a.DeskIndex,
-                            a.FolderId,
-                            a.IsIconByUpload
-                            FROM Member AS a WHERE a.UserId=@UserId AND a.IsDeleted=0";
-                    var parameters = new List<EntityParameter>
+                    return mapper.Find<Member>(a => a.UserId == userId, a => new
                     {
-                        new EntityParameter("@UserId",userId)
-                    };
-                    return dataStore.Find<Member>(sql, parameters);
+                        a.MemberType,
+                        a.Id,
+                        a.AppId,
+                        a.Name,
+                        a.IconUrl,
+                        a.Width,
+                        a.Height,
+                        a.IsOnDock,
+                        a.IsOpenMax,
+                        a.IsSetbar,
+                        a.DeskIndex,
+                        a.FolderId,
+                        a.IsIconByUpload
+                    }).ToList();
+
+
+                    //var sql = $@"SELECT 
+                    //        a.MemberType,
+                    //        a.Id,
+                    //        a.AppId,
+                    //        a.Name,
+                    //        a.IconUrl,
+                    //        a.Width,
+                    //        a.Height,
+                    //        a.IsOnDock,
+                    //        a.IsOpenMax,
+                    //        a.IsSetbar,
+                    //        a.DeskIndex,
+                    //        a.FolderId,
+                    //        a.IsIconByUpload
+                    //        FROM Member AS a WHERE a.UserId=@UserId AND a.IsDeleted=0";
+                    //var parameters = new List<EntityParameter>
+                    //{
+                    //    new EntityParameter("@UserId",userId)
+                    //};
+                    //return dataStore.Find<Member>(sql, parameters);
                 }
             });
         }
