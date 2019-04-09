@@ -317,7 +317,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     #region 添加角色
                     {
