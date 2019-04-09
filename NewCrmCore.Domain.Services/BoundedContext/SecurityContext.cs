@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NewCrmCore.Domain.Entitys.Agent;
 using NewCrmCore.Domain.Entitys.Security;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
@@ -28,7 +29,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     }).ToList();
 
                     //var sql = $@"SELECT a.RoleId, a.AppId FROM RolePower AS a WHERE a.IsDeleted=0";
-                    //return dataStore.Find<RolePower>(sql);
+                    //return mapper.Find<RolePower>(sql);
                 }
             });
         }
@@ -44,14 +45,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     return mapper.Find<Role>(a => a.Id == roleId, a => new { a.Id, a.Name, a.RoleIdentity }).FirstOrDefault();
                     //var sql = $@"SELECT a.Id, a.Name, a.RoleIdentity, a.Remark FROM Role AS a WHERE a.Id=@Id AND a.IsDeleted=0";
                     //var parameters = new List<EntityParameter> { new EntityParameter("@Id", roleId) };
-                    //return dataStore.FindOne<Role>(sql, parameters);
+                    //return mapper.FindOne<Role>(sql, parameters);
                 }
             });
         }
 
         public List<Role> GetRoles(String roleName, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
-            using (var dataStore = new SqlContext(Appsetting.Database))
+            using (var mapper = new EntityMapper())
             {
                 var where = new StringBuilder();
                 var parameters = new List<EntityParameter>();
@@ -64,7 +65,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 #region totalCount
                 {
                     var sql = $@"SELECT  COUNT(*) FROM Role AS a WHERE 1=1 {where} AND a.IsDeleted=0";
-                    totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
+                    totalCount = mapper.ComplexSqlExecute<Int32>(sql, parameters);
                 }
                 #endregion
 
@@ -76,7 +77,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a.Remark,
 								a.Id
 								FROM Role AS a WHERE 1=1 {where} AND a.IsDeleted=0 LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
-                    return dataStore.Find<Role>(sql, parameters);
+                    return mapper.ComplexSqlExecute<List<Role>>(sql, parameters);
                 }
                 #endregion
 
@@ -90,26 +91,29 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     #region 检查app是否为系统app
                     {
-                        var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.Id=@Id AND a.IsDeleted=0 AND a.IsSystem=1";
-                        var parameters = new List<EntityParameter>
-                        {
-                            new EntityParameter("@Id",accessAppId)
-                        };
-                        var result = dataStore.FindSingleValue<Int32>(sql, parameters);
+
+                        var result = mapper.Count<App>(a => a.Id == accessAppId && a.IsSystem);
+                        //var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.Id=@Id AND a.IsDeleted=0 AND a.IsSystem=1";
+                        //var parameters = new List<EntityParameter>
+                        //{
+                        //    new EntityParameter("@Id",accessAppId)
+                        //};
+                        //var result = mapper.FindSingleValue<Int32>(sql, parameters);
                         if (result <= 0)
                         {
                             return true;
                         }
                     }
                     #endregion
-
                     {
-                        var sql = $@"SELECT a.AppId FROM RolePower AS a WHERE a.RoleId IN({String.Join(",", roleIds)}) AND a.IsDeleted=0";
-                        var result = dataStore.Find<RolePower>(sql);
+
+                        var result = mapper.Find<RolePower>(a => roleIds.Contains(a.RoleId), a => new { a.AppId });
+                        //var sql = $@"SELECT a.AppId FROM RolePower AS a WHERE a.RoleId IN({String.Join(",", roleIds)}) AND a.IsDeleted=0";
+                        //var result = mapper.Find<RolePower>(sql);
                         return result.Any(a => a.AppId == accessAppId);
                     }
                 }
@@ -122,14 +126,16 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    var sql = $@"SELECT COUNT(*) FROM Role AS a WHERE a.Name=@name AND a.IsDeleted=0";
-                    var parameters = new List<EntityParameter>
-                    {
-                        new EntityParameter("@name",name)
-                    };
-                    return dataStore.FindSingleValue<Int32>(sql, parameters) > 0;
+
+                    return mapper.Count<Role>(a => a.Name == name) > 0;
+                    //var sql = $@"SELECT COUNT(*) FROM Role AS a WHERE a.Name=@name AND a.IsDeleted=0";
+                    //var parameters = new List<EntityParameter>
+                    //{
+                    //    new EntityParameter("@name",name)
+                    //};
+                    //return mapper.FindSingleValue<Int32>(sql, parameters) > 0;
                 }
             });
         }
@@ -140,14 +146,15 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    var sql = $@"SELECT COUNT(*) FROM Role AS a WHERE a.RoleIdentity=@RoleIdentity AND a.IsDeleted=0";
-                    var parameters = new List<EntityParameter>
-                    {
-                        new EntityParameter("@RoleIdentity",name)
-                    };
-                    return dataStore.FindSingleValue<Int32>(sql, parameters) > 0;
+                    return mapper.Count<Role>(a => a.RoleIdentity == name) > 0;
+                    //var sql = $@"SELECT COUNT(*) FROM Role AS a WHERE a.RoleIdentity=@RoleIdentity AND a.IsDeleted=0";
+                    //var parameters = new List<EntityParameter>
+                    //{
+                    //    new EntityParameter("@RoleIdentity",name)
+                    //};
+                    //return mapper.FindSingleValue<Int32>(sql, parameters) > 0;
                 }
             });
         }
@@ -158,12 +165,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     #region 修改角色
                     {
                         role.ModifyRoleName(role.Name);
-                        var result = dataStore.Modify(role, r => r.Id == role.Id);
+                        var result = mapper.Modify(role, r => r.Id == role.Id);
                         if (!result)
                         {
                             throw new BusinessException("修改角色失败");
@@ -180,19 +187,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    dataStore.OpenTransaction();
+                    mapper.OpenTransaction();
                     try
                     {
-                        var parameters = new List<EntityParameter>
-                        {
-                            new EntityParameter("@roleId",roleId)
-                        };
+                        //var parameters = new List<EntityParameter>
+                        //{
+                        //    new EntityParameter("@roleId",roleId)
+                        //};
                         #region 前置条件验证
                         {
-                            var sql = $@"SELECT COUNT(*) FROM UserRole AS a WHERE a.RoleId=@roleId AND a.IsDeleted=0";
-                            var result = dataStore.FindSingleValue<Int32>(sql, parameters);
+                            var result = mapper.Count<UserRole>(a => a.RoleId == roleId);
+                            //var sql = $@"SELECT COUNT(*) FROM UserRole AS a WHERE a.RoleId=@roleId AND a.IsDeleted=0";
+                            //var result = mapper.FindSingleValue<Int32>(sql, parameters);
                             if (result > 0)
                             {
                                 throw new BusinessException("当前角色已绑定了账户，无法删除");
@@ -204,7 +212,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var role = new Role();
                             role.Remove();
-                            var result = dataStore.Modify(role, r => r.Id == roleId);
+                            var result = mapper.Modify(role, r => r.Id == roleId);
                             if (!result)
                             {
                                 throw new BusinessException("删除角色失败");
@@ -216,7 +224,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var rolePower = new RolePower();
                             rolePower.Remove();
-                            var result = dataStore.Modify(rolePower, rp => rp.RoleId == roleId);
+                            var result = mapper.Modify(rolePower, rp => rp.RoleId == roleId);
                             if (!result)
                             {
                                 throw new BusinessException("移除权限失败");
@@ -224,11 +232,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         }
                         #endregion
 
-                        dataStore.Commit();
+                        mapper.Commit();
                     }
                     catch (Exception)
                     {
-                        dataStore.Rollback();
+                        mapper.Rollback();
                         throw;
                     }
                 }
@@ -241,11 +249,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     #region 添加角色
                     {
-                        dataStore.Add(role);
+                        mapper.Add(role);
                     }
                     #endregion
                 }
@@ -264,16 +272,16 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     throw new BusinessException("权限列表为空");
                 }
 
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    dataStore.OpenTransaction();
+                    mapper.OpenTransaction();
                     try
                     {
                         #region 移除之前的角色权限
                         {
                             var rolePower = new RolePower();
                             rolePower.Remove();
-                            var result = dataStore.Modify(rolePower, rp => rp.RoleId == roleId);
+                            var result = mapper.Modify(rolePower, rp => rp.RoleId == roleId);
                             if (!result)
                             {
                                 throw new BusinessException("移除之前的角色权限失败");
@@ -287,16 +295,16 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             foreach (var item in powerIds)
                             {
                                 var rolePower = new RolePower(roleId, item);
-                                dataStore.Add(rolePower);
+                                mapper.Add(rolePower);
                             }
                         }
                         #endregion
 
-                        dataStore.Commit();
+                        mapper.Commit();
                     }
                     catch (Exception)
                     {
-                        dataStore.Rollback();
+                        mapper.Rollback();
                         throw;
                     }
                 }
@@ -309,11 +317,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper(Appsetting.Database))
                 {
                     #region 添加角色
                     {
-                        dataStore.Add(visitorRecord);
+                        mapper.Add(visitorRecord);
                     }
                     #endregion
                 }
