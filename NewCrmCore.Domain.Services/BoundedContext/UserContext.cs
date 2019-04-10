@@ -50,7 +50,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                              //             INNER JOIN Config AS a1
                              //             ON a1.UserId=a.Id 
                              //             WHERE a.Name=@name AND a.IsDeleted=0 AND a.IsDisable=0";
-                             //  user = dataStore.Find<User>(sql, new List<EntityParameter> { new EntityParameter("@name", userName) }).FirstOrDefault();
+                             //  user = mapper.Find<User>(sql, new List<EntityParameter> { new EntityParameter("@name", userName) }).FirstOrDefault();
                              if (user == null)
                              {
                                  throw new BusinessException($"该用户不存在或被禁用{userName}");
@@ -142,7 +142,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                      //             a.WallpaperId
                      // 			FROM Config AS a WHERE a.UserId=@userId AND a.IsDeleted=0";
                      //  var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
-                     //  var result = dataStore.Find<Config>(sql, parameters).FirstOrDefault();
+                     //  var result = mapper.Find<Config>(sql, parameters).FirstOrDefault();
                      //  return result;
                  }
              });
@@ -166,7 +166,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                     // var sql = $@"SELECT a.Url,a.Width,a.Height,a.Source FROM Wallpaper AS a WHERE a.Id=@wallpaperId AND a.IsDeleted=0";
                     // var parameters = new List<EntityParameter> { new EntityParameter("@wallpaperId", wallPaperId) };
-                    // return dataStore.Find<Wallpaper>(sql, parameters).FirstOrDefault();
+                    // return mapper.Find<Wallpaper>(sql, parameters).FirstOrDefault();
                 }
             });
         }
@@ -192,12 +192,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 where.Append($@" AND a.IsAdmin=@isAdmin");
             }
 
-            using (var dataStore = new SqlContext(Appsetting.Database))
+            using (var mapper = new EntityMapper())
             {
                 #region totalCount
                 {
                     var sql = $@"SELECT COUNT(*) FROM User AS a INNER JOIN Config AS a1 ON a1.UserId=a.Id AND a1.IsDeleted=0 {where} ";
-                    totalCount = dataStore.FindSingleValue<Int32>(sql, parameters);
+                    totalCount = mapper.ComplexSqlExecute<Int32>(sql, parameters);
                 }
                 #endregion
 
@@ -214,7 +214,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                            INNER JOIN Config AS a1
 	                            ON a1.UserId=a.Id AND a1.IsDeleted=0
 	                            {where} LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
-                    return dataStore.Find<User>(sql, parameters);
+                    return mapper.ComplexSqlExecute<List<User>>(sql, parameters);
                 }
                 #endregion
             }
@@ -226,26 +226,41 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    var sql = $@"SELECT 
-                            a1.UserFace,
-                            a.Id,
-                            a.IsAdmin,
-                            a.IsDisable,
-                            a.IsOnline,
-                            a.Name,
-                            a.LockScreenPassword,
-                            a.LoginPassword,
-                            a.LastLoginTime,
-                            a.AddTime,
-                            a1.IsModifyUserFace
-                            FROM User AS a 
-                            INNER JOIN  Config AS a1
-                            ON a1.UserId=a.Id
-                            WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
-                    var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
-                    return dataStore.FindOne<User>(sql, parameters);
+                    return mapper.InnerJoin<User, Config>((a, b) => a.Id == b.UserId).Find<User>(a => !a.IsDisable, a => new
+                    {
+                        a.UserFace,
+                        a.Id,
+                        a.IsAdmin,
+                        a.IsDisable,
+                        a.IsOnline,
+                        a.Name,
+                        a.LockScreenPassword,
+                        a.LoginPassword,
+                        a.LastLoginTime,
+                        a.AddTime,
+                        a.IsModifyUserFace
+                    }).FirstOrDefault();
+
+                    //var sql = $@"SELECT 
+                    //        a1.UserFace,
+                    //        a.Id,
+                    //        a.IsAdmin,
+                    //        a.IsDisable,
+                    //        a.IsOnline,
+                    //        a.Name,
+                    //        a.LockScreenPassword,
+                    //        a.LoginPassword,
+                    //        a.LastLoginTime,
+                    //        a.AddTime,
+                    //        a1.IsModifyUserFace
+                    //        FROM User AS a 
+                    //        INNER JOIN  Config AS a1
+                    //        ON a1.UserId=a.Id
+                    //        WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
+                    //var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
+                    //return mapper.ComplexSqlExecute<User>(sql, parameters);
                 }
             });
         }
@@ -256,8 +271,13 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
+                    mapper.InnerJoin<Role, UserRole>((a, b) => a.Id == b.RoleId).Find<UserRole>(w => w.UserId == userId, a => new
+                    {
+                        
+                    });
+
                     var sql = $@"SELECT
 								a1.Id,
 								a1.Name,
@@ -267,7 +287,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								ON a1.Id=a.RoleId AND a1.IsDeleted=0 
 								WHERE a.UserId=@userId AND a.IsDeleted=0 ";
                     var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
-                    return dataStore.Find<Role>(sql, parameters);
+                    return mapper.Find<Role>(sql, parameters);
                 }
             });
         }
@@ -276,10 +296,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var sql = $@"SELECT a.RoleId,a.AppId FROM RolePower AS a WHERE a.IsDeleted=0";
-                    return dataStore.Find<RolePower>(sql);
+                    return mapper.Find<RolePower>(sql);
                 }
             });
         }
@@ -290,10 +310,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var sql = $@"SELECT COUNT(*) FROM User AS a WHERE a.Name=@name AND a.IsDeleted=0";
-                    return dataStore.FindSingleValue<Int32>(sql, new List<EntityParameter> { new EntityParameter("@name", userName) }) != 0 ? false : true;
+                    return mapper.FindSingleValue<Int32>(sql, new List<EntityParameter> { new EntityParameter("@name", userName) }) != 0 ? false : true;
                 }
             });
         }
@@ -304,11 +324,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run<String>(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var sql = $@"SELECT a.LoginPassword FROM User AS a WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
                     var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
-                    return dataStore.FindSingleValue<String>(sql, parameters);
+                    return mapper.FindSingleValue<String>(sql, parameters);
                 }
             });
         }
@@ -320,7 +340,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     #region 获取锁屏密码
                     {
@@ -329,7 +349,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             new EntityParameter("@userId",userId)
                         };
-                        var password = dataStore.FindSingleValue<String>(sql, parameters);
+                        var password = mapper.FindSingleValue<String>(sql, parameters);
                         return PasswordUtil.ComparePasswords(password, unlockPassword);
                     }
                     #endregion
@@ -343,14 +363,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.Name=@name AND a.IsDeleted=0 ";
                     var parameters = new List<EntityParameter>
                     {
                         new EntityParameter("@name",name)
                     };
-                    return dataStore.FindSingleValue<Int32>(sql, parameters) > 0;
+                    return mapper.FindSingleValue<Int32>(sql, parameters) > 0;
                 }
 
             });
@@ -362,7 +382,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.AppUrl = @url AND a.IsDeleted=0";
                     var parameters = new List<EntityParameter>
@@ -370,7 +390,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         new EntityParameter("@url",url)
                     };
 
-                    return dataStore.FindSingleValue<Int32>(sql, parameters) > 0;
+                    return mapper.FindSingleValue<Int32>(sql, parameters) > 0;
                 }
             });
         }
@@ -381,16 +401,16 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     try
                     {
-                        dataStore.OpenTransaction();
+                        mapper.OpenTransaction();
                         #region 设置用户下线
                         {
                             var user = new User();
                             user.Offline();
-                            var result = dataStore.Modify(user, acc => acc.Id == userId && !acc.IsDeleted && !acc.IsDisable);
+                            var result = mapper.Modify(user, acc => acc.Id == userId && !acc.IsDeleted && !acc.IsDisable);
                             if (!result)
                             {
                                 throw new BusinessException("设置用户下线状态失败");
@@ -402,7 +422,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var online = new Online();
                             online.Remove();
-                            var result = dataStore.Modify(online, on => on.UserId == userId && !on.IsDeleted);
+                            var result = mapper.Modify(online, on => on.UserId == userId && !on.IsDeleted);
                             if (!result)
                             {
                                 throw new BusinessException("将用户移出在线列表时失败");
@@ -410,11 +430,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         }
                         #endregion
 
-                        dataStore.Commit();
+                        mapper.Commit();
                     }
                     catch (Exception)
                     {
-                        dataStore.Rollback();
+                        mapper.Rollback();
                         throw;
                     }
                 }
@@ -427,18 +447,18 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     try
                     {
-                        dataStore.OpenTransaction();
+                        mapper.OpenTransaction();
 
                         var userId = 0;
                         var configId = 0;
 
                         #region 新增用户
                         {
-                            userId = dataStore.Add(user);
+                            userId = mapper.Add(user);
 
                             if (userId == 0)
                             {
@@ -450,7 +470,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         #region 初始化配置
                         {
                             var config = new Config(userId);
-                            configId = dataStore.Add(config);
+                            configId = mapper.Add(config);
 
                             if (configId == 0)
                             {
@@ -462,7 +482,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         #region 更新用户的配置
                         {
                             user.ModifyConfigId(configId);
-                            var result = dataStore.Modify(user, acc => acc.Id == userId);
+                            var result = mapper.Modify(user, acc => acc.Id == userId);
                             if (!result)
                             {
                                 throw new BusinessException("更新用户配置失败");
@@ -475,16 +495,16 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             var sqlBuilder = new StringBuilder();
                             foreach (var item in user.Roles)
                             {
-                                dataStore.Add(new UserRole(userId, item.RoleId));
+                                mapper.Add(new UserRole(userId, item.RoleId));
                             }
                         }
                         #endregion
 
-                        dataStore.Commit();
+                        mapper.Commit();
                     }
                     catch (Exception)
                     {
-                        dataStore.Rollback();
+                        mapper.Rollback();
                         throw;
                     }
                 }
@@ -497,9 +517,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    dataStore.OpenTransaction();
+                    mapper.OpenTransaction();
                     try
                     {
                         if (!String.IsNullOrEmpty(user.LoginPassword))
@@ -508,7 +528,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             {
                                 var newPassword = PasswordUtil.CreateDbPassword(user.LoginPassword);
                                 user.ModifyLoginPassword(newPassword);
-                                var result = dataStore.Modify(user, acc => acc.Id == user.Id);
+                                var result = mapper.Modify(user, acc => acc.Id == user.Id);
                                 if (!result)
                                 {
                                     throw new BusinessException("修改登陆密码失败");
@@ -521,7 +541,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var userRole = new UserRole();
                             userRole.Remove();
-                            var result = dataStore.Modify(userRole, acc => acc.UserId == user.Id);
+                            var result = mapper.Modify(userRole, acc => acc.UserId == user.Id);
                             if (!result)
                             {
                                 throw new BusinessException("移除用户角色失败");
@@ -535,10 +555,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                 user.AttachAdminRole();
                                 foreach (var item in user.Roles)
                                 {
-                                    dataStore.Add(new UserRole(user.Id, item.RoleId));
+                                    mapper.Add(new UserRole(user.Id, item.RoleId));
                                 }
                             }
-                            var result2 = dataStore.Modify(user, ac => ac.Id == user.Id);
+                            var result2 = mapper.Modify(user, ac => ac.Id == user.Id);
                             if (!result2)
                             {
                                 throw new BusinessException("修改用户角色失败");
@@ -546,11 +566,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         }
                         #endregion
 
-                        dataStore.Commit();
+                        mapper.Commit();
                     }
                     catch (Exception)
                     {
-                        dataStore.Rollback();
+                        mapper.Rollback();
                         throw;
                     }
                 }
@@ -563,10 +583,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var user = new User().Enable();
-                    var result = dataStore.Modify(user, acc => acc.Id == userId);
+                    var result = mapper.Modify(user, acc => acc.Id == userId);
                     if (!result)
                     {
                         throw new BusinessException("用户启用失败");
@@ -581,14 +601,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
                     #region 前置条件验证
                     {
                         var sql = $@"SELECT COUNT(*) FROM Role AS a INNER JOIN UserRole AS a1 ON a1.UserId=@userId AND a1.RoleId=a.Id AND a1.IsDeleted=0
 									 WHERE a.IsDeleted=0 AND a.IsAllowDisable=0";
-                        var result = dataStore.FindSingleValue<Int32>(sql, parameters);
+                        var result = mapper.FindSingleValue<Int32>(sql, parameters);
                         if (result > 0)
                         {
                             throw new BusinessException("当前用户拥有管理员角色，因此不能禁用或删除");
@@ -597,7 +617,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     #endregion
                     {
                         var user = new User().Disable();
-                        var result = dataStore.Modify(user, acc => acc.Id == userId);
+                        var result = mapper.Modify(user, acc => acc.Id == userId);
                         if (!result)
                         {
                             throw new BusinessException("用户启用失败");
@@ -614,10 +634,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var config = new Config().ModifyUserFace(newFace);
-                    var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                    var result = mapper.Modify(config, conf => conf.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("修改用户头像失败");
@@ -633,7 +653,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var user = new User();
                     if (isTogetherSetLockPassword)
@@ -641,7 +661,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         user.ModifyLockScreenPassword(newPassword);
                     }
                     user.ModifyLoginPassword(newPassword);
-                    var result = dataStore.Modify(user, acc => acc.Id == userId && acc.IsDisable == false);
+                    var result = mapper.Modify(user, acc => acc.Id == userId && acc.IsDisable == false);
                     if (!result)
                     {
                         throw new BusinessException("修改登陆密码失败");
@@ -657,10 +677,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
                     var user = new User().ModifyLockScreenPassword(newScreenPassword);
-                    var result = dataStore.Modify(user, acc => acc.Id == userId && !acc.IsDisable);
+                    var result = mapper.Modify(user, acc => acc.Id == userId && !acc.IsDisable);
                     if (!result)
                     {
                         throw new BusinessException("修改锁屏密码失败");
@@ -675,9 +695,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var dataStore = new SqlContext(Appsetting.Database))
+                using (var mapper = new EntityMapper())
                 {
-                    dataStore.OpenTransaction();
+                    mapper.OpenTransaction();
 
                     try
                     {
@@ -688,7 +708,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             {
                                 new EntityParameter("@userId",userId)
                             };
-                            var isAdmin = dataStore.FindSingleValue<Boolean>(sql, parameters);
+                            var isAdmin = mapper.FindSingleValue<Boolean>(sql, parameters);
                             if (isAdmin)
                             {
                                 throw new BusinessException("不能删除管理员");
@@ -700,7 +720,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var user = new User();
                             user.Remove();
-                            var result = dataStore.Modify(user, acc => acc.Id == userId && !acc.IsDisable);
+                            var result = mapper.Modify(user, acc => acc.Id == userId && !acc.IsDisable);
                             if (!result)
                             {
                                 throw new BusinessException("移除账户失败");
@@ -712,7 +732,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var config = new Config();
                             config.Remove();
-                            var result = dataStore.Modify(config, conf => conf.UserId == userId);
+                            var result = mapper.Modify(config, conf => conf.UserId == userId);
                             if (!result)
                             {
                                 throw new BusinessException("移除账户配置失败");
@@ -724,7 +744,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var userRole = new UserRole();
                             userRole.Remove();
-                            var result = dataStore.Modify(userRole, accRole => accRole.UserId == userId);
+                            var result = mapper.Modify(userRole, accRole => accRole.UserId == userId);
                             if (!result)
                             {
                                 throw new BusinessException("移除账户配置失败");
@@ -736,7 +756,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var member = new Member();
                             member.Remove();
-                            var result = dataStore.Modify(member, mem => mem.UserId == userId);
+                            var result = mapper.Modify(member, mem => mem.UserId == userId);
                             if (!result)
                             {
                                 throw new BusinessException("移除账户配置失败");
@@ -744,11 +764,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         }
                         #endregion
 
-                        dataStore.Commit();
+                        mapper.Commit();
                     }
                     catch (Exception)
                     {
-                        dataStore.Rollback();
+                        mapper.Rollback();
                         throw;
                     }
                 }
