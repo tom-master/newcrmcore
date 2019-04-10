@@ -261,7 +261,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                 new EntityParameter("@Id", memberId),
                                 new EntityParameter("@UserId", userId)
                             };
-                            isFolder = (mapper.FindSingleValue<Int32>(sql, parameters)) == MemberType.Folder.ToInt32();
+                            isFolder = (mapper.ComplexSqlExecute<Int32>(sql, parameters)) == MemberType.Folder.ToInt32();
                         }
                         #endregion
 
@@ -275,7 +275,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                     new EntityParameter("@userId",userId),
                                     new EntityParameter("@folderId",memberId)
                                 };
-                                var count = mapper.FindSingleValue<Int32>(sql, parameters);
+                                var count = mapper.ComplexSqlExecute<Int32>(sql, parameters);
                                 if (count > 0)
                                 {
                                     var member = new Member();
@@ -301,7 +301,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                     new EntityParameter("@Id", memberId),
                                     new EntityParameter("@UserId", userId)
                                 };
-                                appId = mapper.FindSingleValue<Int32>(sql, parameters);
+                                appId = mapper.ComplexSqlExecute<Int32>(sql, parameters);
                             }
                             #endregion
 
@@ -313,7 +313,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                     new EntityParameter("@Id",appId),
                                     new EntityParameter("@UserId",userId)
                                 };
-                                app = mapper.FindOne<App>(sql, parameters);
+                                app = mapper.ComplexSqlExecute<App>(sql, parameters);
                             }
                             #endregion
 
