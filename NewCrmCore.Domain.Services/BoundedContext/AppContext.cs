@@ -586,7 +586,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 					#region 获取应用名称
 					{
-						return mapper.Find<App>(a => a.Id == appId, a => new { a.Name, a.UserId }).FirstOrDefault();
+						return mapper.Select<App>(a => new { a.Name, a.UserId }).Where(a => a.Id == appId).ToOne();
+						//return mapper.Find<App>(a => a.Id == appId, a => new { a.Name, a.UserId }).FirstOrDefault();
 						// var sql = "SELECT a.Name,a.UserId FROM App AS a WHERE a.IsDeleted=0 AND a.Id=@Id";
 						// var parameters = new List<EntityParameter>
 						//  {
@@ -687,7 +688,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					#region 前置条件验证
 					{
-						var result = mapper.Count<App>(a => a.AppTypeId == appTypeId);
+						var result = mapper.Select<App>().Where(a => a.AppTypeId == appTypeId).ToList().Count();
+						//var result = mapper.Count<App>(a => a.AppTypeId == appTypeId);
 						if (result > 0)
 						{
 							throw new BusinessException($@"当前分类下存在应用,不能删除当前分类");
@@ -728,8 +730,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					#region 前置条件验证
 					{
-
-						var result = mapper.Count<AppType>(a => a.Name == appType.Name);
+						var result = mapper.Select<AppType>().Where(a => a.Name == appType.Name).ToList().Count();
+						//var result = mapper.Count<AppType>(a => a.Name == appType.Name);
 						if (result > 0)
 						{
 							throw new BusinessException($@"分类:{appType.Name},已存在");
@@ -823,8 +825,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						App app = null;
 						#region 获取app
 						{
-
-
 							// var sql = $@"SELECT
 							//     a.Name,
 							//     a.IconUrl,
@@ -845,7 +845,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 							//     new EntityParameter("@Id",appId)
 							// };
 							// app = mapper.FindOne<App>(sql, parameters);
-							app = mapper.Find<App>(a => a.AppAuditState == AppAuditState.Pass && a.AppReleaseState == AppReleaseState.Release && a.Id == appId, a => new
+							app = mapper.Select<App>(a => new
 							{
 								a.Name,
 								a.IconUrl,
@@ -858,7 +858,22 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a.IsFlash,
 								a.IsIconByUpload,
 								a.AppStyle
-							}).FirstOrDefault();
+							}).Where(w => w.AppAuditState == AppAuditState.Pass && w.AppReleaseState == AppReleaseState.Release && w.Id == appId).ToOne();
+
+							//app = mapper.Find<App>(a => a.AppAuditState == AppAuditState.Pass && a.AppReleaseState == AppReleaseState.Release && a.Id == appId, a => new
+							//{
+							//	a.Name,
+							//	a.IconUrl,
+							//	a.AppUrl,
+							//	a.Id,
+							//	a.Width,
+							//	a.Height,
+							//	a.IsSetbar,
+							//	a.IsOpenMax,
+							//	a.IsFlash,
+							//	a.IsIconByUpload,
+							//	a.AppStyle
+							//}).FirstOrDefault();
 							if (app == null)
 							{
 								throw new BusinessException($"获取应用失败，请刷新重试");
