@@ -586,7 +586,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 					#region 获取应用名称
 					{
-						return mapper.Select<App>(a => new { a.Name, a.UserId }).Where(a => a.Id == appId).ToOne();
+						return mapper.Select<App>(a => new { a.Name, a.UserId }).Where(a => a.Id == appId).FirstOrDefault();
 						//return mapper.Find<App>(a => a.Id == appId, a => new { a.Name, a.UserId }).FirstOrDefault();
 						// var sql = "SELECT a.Name,a.UserId FROM App AS a WHERE a.IsDeleted=0 AND a.Id=@Id";
 						// var parameters = new List<EntityParameter>
@@ -858,7 +858,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a.IsFlash,
 								a.IsIconByUpload,
 								a.AppStyle
-							}).Where(w => w.AppAuditState == AppAuditState.Pass && w.AppReleaseState == AppReleaseState.Release && w.Id == appId).ToOne();
+							}).Where(w => w.AppAuditState == AppAuditState.Pass && w.AppReleaseState == AppReleaseState.Release && w.Id == appId).FirstOrDefault();
 
 							//app = mapper.Find<App>(a => a.AppAuditState == AppAuditState.Pass && a.AppReleaseState == AppReleaseState.Release && a.Id == appId, a => new
 							//{
