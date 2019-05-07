@@ -12,6 +12,7 @@ using NewCrmCore.Domain.Services.BoundedContext;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.NotifyCenter;
 using NewCrmCore.Web.Filter;
+using NewLibCore.Data.SQL.Mapper.Config;
 
 namespace NewCrmCore.Web
 {
@@ -27,6 +28,9 @@ namespace NewCrmCore.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            MapperFactory.Factory.SwitchToMySql().InitLogger();
+
+
             services.AddTransient<IUserServices, UserServices>();
             services.AddTransient<ISecurityServices, SecurityServices>();
             services.AddTransient<IAppServices, AppServices>();
@@ -42,7 +46,6 @@ namespace NewCrmCore.Web
             services.AddTransient<IMemberContext, MemberContext>();
             services.AddTransient<ISecurityContext, SecurityContext>();
             services.AddTransient<IWallpaperContext, WallpaperContext>();
-
 
             services.AddMvc(config =>
             {
