@@ -274,7 +274,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						#region 判断是否为文件夹
 						{
 
-							var member = mapper.Select<Member>(a => new { a.MemberType }).Where(w => w.Id == memberId && w.UserId == userId).ToOne();
+							var member = mapper.Select<Member>(a => new { a.MemberType }).Where(w => w.Id == memberId && w.UserId == userId).FirstOrDefault();
 
 							//var sql = $@"SELECT a.MemberType FROM Member AS a WHERE a.Id=@Id AND a.UserId=@UserId AND a.IsDeleted=0";
 							//var parameters = new List<EntityParameter>
@@ -317,7 +317,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 							#region 获取appId
 							{
-								var member = mapper.Select<Member>(a => new { a.AppId }).Where(w => w.Id == appId && w.UserId == userId).ToOne();
+								var member = mapper.Select<Member>(a => new { a.AppId }).Where(w => w.Id == appId && w.UserId == userId).FirstOrDefault();
 								//var sql = $@"SELECT a.AppId FROM Member AS a WHERE a.Id=@Id AND a.UserId=@UserId AND a.IsDeleted=0";
 								//var parameters = new List<EntityParameter>
 								//{
@@ -331,7 +331,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 							#region 查询应用
 							{
 
-								app = mapper.Select<App>(a => new { a.Name, a.UseCount, a.UserId }).Where(w => w.Id == appId && w.UserId == userId).ToOne();
+								app = mapper.Select<App>(a => new { a.Name, a.UseCount, a.UserId }).Where(w => w.Id == appId && w.UserId == userId).FirstOrDefault();
 								//var sql = $@"SELECT a.Name,a.UseCount,a.UserId FROM App AS a WHERE a.Id=@Id AND a.IsDeleted=0";
 								//var parameters = new List<EntityParameter>
 								//{
