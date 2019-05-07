@@ -94,7 +94,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					#region 检查app是否为系统app
 					{
-						var result = mapper.Select<App>().Where(a => a.Id == accessAppId && a.IsSystem).ToList().Count();
+						var result = mapper.Select<App>().Where(a => a.Id == accessAppId && a.IsSystem).Count();
 						//var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.Id=@Id AND a.IsDeleted=0 AND a.IsSystem=1";
 						//var parameters = new List<EntityParameter>
 						//{
@@ -125,7 +125,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var mapper = new EntityMapper())
 				{
-					return mapper.Select<Role>().Where(a => a.Name == name).ToList().Count() > 0;
+					return mapper.Select<Role>().Where(a => a.Name == name).Count() > 0;
 					//var sql = $@"SELECT COUNT(*) FROM Role AS a WHERE a.Name=@name AND a.IsDeleted=0";
 					//var parameters = new List<EntityParameter>
 					//{
@@ -144,7 +144,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var mapper = new EntityMapper())
 				{
-					return mapper.Select<Role>().Where(a => a.RoleIdentity == name).ToList().Count() > 0;
+					return mapper.Select<Role>().Where(a => a.RoleIdentity == name).Count() > 0;
 					//var sql = $@"SELECT COUNT(*) FROM Role AS a WHERE a.RoleIdentity=@RoleIdentity AND a.IsDeleted=0";
 					//var parameters = new List<EntityParameter>
 					//{
@@ -194,7 +194,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						//};
 						#region 前置条件验证
 						{
-							var result = mapper.Select<UserRole>().Where(a => a.RoleId == roleId).ToList().Count();
+							var result = mapper.Select<UserRole>().Where(a => a.RoleId == roleId).Count();
 							//var sql = $@"SELECT COUNT(*) FROM UserRole AS a WHERE a.RoleId=@roleId AND a.IsDeleted=0";
 							//var result = mapper.FindSingleValue<Int32>(sql, parameters);
 							if (result > 0)

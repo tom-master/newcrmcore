@@ -28,7 +28,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						 //     new EntityParameter("@UserId",wallpaper.UserId)
 						 //  };
 						 //  var result = dataStore.FindSingleValue<Int32>(sql, parameters);
-						 var result = mapper.Select<Wallpaper>().Where(w => w.UserId == wallpaper.UserId).ToList().Count();
+						 var result = mapper.Select<Wallpaper>().Where(w => w.UserId == wallpaper.UserId).Count();
 						 if (result > 6)
 						 {
 							 throw new BusinessException("最多只能上传6张图片");
@@ -242,7 +242,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					#region 前置条件验证
 					{
-						var result = mapper.Select<Wallpaper>().Where(a => a.UserId == userId && a.Id == wallpaperId).ToList().Count();
+						var result = mapper.Select<Wallpaper>().Where(a => a.UserId == userId && a.Id == wallpaperId).Count();
 
 						// var sql = $@"SELECT COUNT(*) FROM Config AS a WHERE a.UserId=@UserId AND a.WallpaperId=@WallpaperId AND a.IsDeleted=0";
 						// var parameters = new List<EntityParameter>

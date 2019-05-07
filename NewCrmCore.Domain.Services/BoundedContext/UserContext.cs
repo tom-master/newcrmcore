@@ -342,7 +342,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var mapper = new EntityMapper())
 				{
-					return !(mapper.Select<User>().Where(w => w.Name == userName).ToList().Count() > 0);
+					return !(mapper.Select<User>().Where(w => w.Name == userName).Count() > 0);
 
 					//var sql = $@"SELECT COUNT(*) FROM User AS a WHERE a.Name=@name AND a.IsDeleted=0";
 					//return mapper.FindSingleValue<Int32>(sql, new List<EntityParameter> { new EntityParameter("@name", userName) }) != 0 ? false : true;
@@ -399,7 +399,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var mapper = new EntityMapper())
 				{
-					return mapper.Select<App>().Where(w => w.Name == name).ToList().Count() > 0;
+					return mapper.Select<App>().Where(w => w.Name == name).Count() > 0;
 					//var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.Name=@name AND a.IsDeleted=0 ";
 					//var parameters = new List<EntityParameter>
 					//{
@@ -419,7 +419,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var mapper = new EntityMapper())
 				{
-					return mapper.Select<App>().Where(w => w.AppUrl == url).ToList().Count() > 0;
+					return mapper.Select<App>().Where(w => w.AppUrl == url).Count() > 0;
 					//var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.AppUrl = @url AND a.IsDeleted=0";
 					//var parameters = new List<EntityParameter>
 					//{
@@ -643,7 +643,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					#region 前置条件验证
 					{
 						var result = mapper
-						.Select<Role>().InnerJoin<UserRole>((a, b) => a.Id == b.RoleId).Where<UserRole>((a, b) => a.IsAllowDisable && b.UserId == userId).ToList().Count();
+						.Select<Role>().InnerJoin<UserRole>((a, b) => a.Id == b.RoleId).Where<UserRole>((a, b) => a.IsAllowDisable && b.UserId == userId).Count();
 
 						//var sql = $@"SELECT COUNT(*) FROM Role AS a INNER JOIN UserRole AS a1 ON a1.UserId=@userId AND a1.RoleId=a.Id AND a1.IsDeleted=0
 						//			 WHERE a.IsDeleted=0 AND a.IsAllowDisable=0";
