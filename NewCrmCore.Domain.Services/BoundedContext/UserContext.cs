@@ -342,7 +342,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var mapper = new EntityMapper())
 				{
-					return !(mapper.Select<User>().Where(w => w.Name == userName).Count() > 0);
+					return !(mapper.Select<User>().Where(w => w.Name == userName).Exist());
 
 					//var sql = $@"SELECT COUNT(*) FROM User AS a WHERE a.Name=@name AND a.IsDeleted=0";
 					//return mapper.FindSingleValue<Int32>(sql, new List<EntityParameter> { new EntityParameter("@name", userName) }) != 0 ? false : true;
@@ -399,7 +399,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var mapper = new EntityMapper())
 				{
-					return mapper.Select<App>().Where(w => w.Name == name).Count() > 0;
+					return mapper.Select<App>().Where(w => w.Name == name).Exist();
 					//var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.Name=@name AND a.IsDeleted=0 ";
 					//var parameters = new List<EntityParameter>
 					//{
@@ -419,7 +419,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var mapper = new EntityMapper())
 				{
-					return mapper.Select<App>().Where(w => w.AppUrl == url).Count() > 0;
+					return mapper.Select<App>().Where(w => w.AppUrl == url).Exist();
 					//var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.AppUrl = @url AND a.IsDeleted=0";
 					//var parameters = new List<EntityParameter>
 					//{

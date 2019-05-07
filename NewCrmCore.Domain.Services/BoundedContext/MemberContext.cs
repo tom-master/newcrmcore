@@ -142,7 +142,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var mapper = new EntityMapper())
 				{
-					return mapper.Select<Member>().Where(w => w.Name == name).Count() > 0;
+					return mapper.Select<Member>().Where(w => w.Name == name).Exist();
 
 					//return mapper.Count<Member>(a => a.Name == name) > 0;
 					//var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.Name=@name AND a.IsDeleted=0";

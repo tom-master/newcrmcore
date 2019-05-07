@@ -125,7 +125,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var mapper = new EntityMapper())
 				{
-					return mapper.Select<Role>().Where(a => a.Name == name).Count() > 0;
+					return mapper.Select<Role>().Where(a => a.Name == name).Exist();
 					//var sql = $@"SELECT COUNT(*) FROM Role AS a WHERE a.Name=@name AND a.IsDeleted=0";
 					//var parameters = new List<EntityParameter>
 					//{
@@ -144,7 +144,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var mapper = new EntityMapper())
 				{
-					return mapper.Select<Role>().Where(a => a.RoleIdentity == name).Count() > 0;
+					return mapper.Select<Role>().Where(a => a.RoleIdentity == name).Exist();
 					//var sql = $@"SELECT COUNT(*) FROM Role AS a WHERE a.RoleIdentity=@RoleIdentity AND a.IsDeleted=0";
 					//var parameters = new List<EntityParameter>
 					//{
