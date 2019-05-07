@@ -320,7 +320,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						var set = new StringBuilder();
 						#region 查询桌面应用是否在应用码头中
 						{
-							var count = mapper.Select<Member>().Where(w => w.Id == 0 && w.UserId == 0 && w.IsOnDock).ToList().Count();
+							var count = mapper.Select<Member>().Where(w => w.Id == 0 && w.UserId == 0 && w.IsOnDock).Count();
 							//var count = mapper.Count<Member>(a => a.Id == 0 && a.UserId == 0 && a.IsOnDock);
 							if (count > 0)
 							{
@@ -430,7 +430,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					new EntityParameter("@userId",userId)
 				};
 				{
-					var count = mapper.Select<Notify>().Where(w => w.ToUserId == userId).ToList().Count();
+					var count = mapper.Select<Notify>().Where(w => w.ToUserId == userId).Count();
 					//var count = mapper.Count<Notify>(a => a.ToUserId == userId);
 					totalCount = count;
 					// var sql = $@"SELECT COUNT(*) FROM Notify AS a WHERE a.IsDeleted=0 AND a.ToUserId=@userId";

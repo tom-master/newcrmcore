@@ -337,7 +337,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					//     new EntityParameter("@UserId",userId)
 					// };
 
-					return mapper.Select<Member>().Where(w => w.AppId == appId).ToList().Count() > 0;
+					return mapper.Select<Member>().Where(w => w.AppId == appId).Count() > 0;
 					//return mapper.Count<Member>(m => m.AppId == appId && m.UserId == userId) > 0;
 				}
 			});
@@ -373,7 +373,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				using (var mapper = new EntityMapper())
 				{
 
-					return mapper.Select<AppType>().ToList().Count() > 0;
+					return mapper.Select<AppType>().Count() > 0;
 
 					//return mapper.Count<AppType>(a => a.Name == appTypeName) > 0;
 					// var sql = $@"SELECT COUNT(*) FROM AppType AS a WHERE a.Name=@name AND a.IsDeleted=0";
@@ -405,7 +405,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						// };
 						// var result = mapper.FindSingleValue<Int32>(sql, parameters);
 
-						var result = mapper.Select<AppStar>().Where(a => a.UserId == userId && a.AppId == appId).ToList().Count();
+						var result = mapper.Select<AppStar>().Where(a => a.UserId == userId && a.AppId == appId).Count();
 						//var result = mapper.Count<AppStar>(a => a.UserId == userId && a.AppId == appId);
 
 						if (result > 0)
@@ -688,7 +688,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					#region 前置条件验证
 					{
-						var result = mapper.Select<App>().Where(a => a.AppTypeId == appTypeId).ToList().Count();
+						var result = mapper.Select<App>().Where(a => a.AppTypeId == appTypeId).Count();
 						//var result = mapper.Count<App>(a => a.AppTypeId == appTypeId);
 						if (result > 0)
 						{
@@ -730,7 +730,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					#region 前置条件验证
 					{
-						var result = mapper.Select<AppType>().Where(a => a.Name == appType.Name).ToList().Count();
+						var result = mapper.Select<AppType>().Where(a => a.Name == appType.Name).Count();
 						//var result = mapper.Count<AppType>(a => a.Name == appType.Name);
 						if (result > 0)
 						{

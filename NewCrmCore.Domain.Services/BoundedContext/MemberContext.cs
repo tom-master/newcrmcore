@@ -142,7 +142,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var mapper = new EntityMapper())
 				{
-					return mapper.Select<Member>().Where(w => w.Name == name).ToList().Count() > 0;
+					return mapper.Select<Member>().Where(w => w.Name == name).Count() > 0;
 
 					//return mapper.Count<Member>(a => a.Name == name) > 0;
 					//var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.Name=@name AND a.IsDeleted=0";
@@ -290,7 +290,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						{
 							#region 判断文件夹内是否存在应用，如果存在则移出
 							{
-								var count = mapper.Select<Member>().Where(w => w.UserId == userId && w.FolderId == memberId).ToList().Count();
+								var count = mapper.Select<Member>().Where(w => w.UserId == userId && w.FolderId == memberId).Count();
 								//var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.IsDeleted=0 AND a.UserId=@userId AND a.FolderId=@folderId";
 								//var parameters = new List<EntityParameter>
 								//{
