@@ -41,7 +41,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var mapper = new EntityMapper())
 				{
-					return mapper.Select<Role>(a => new { a.Id, a.Name, a.RoleIdentity }).Where(a => a.Id == roleId).ToOne();
+					return mapper.Select<Role>(a => new { a.Id, a.Name, a.RoleIdentity }).Where(a => a.Id == roleId).FirstOrDefault();
 					//var sql = $@"SELECT a.Id, a.Name, a.RoleIdentity, a.Remark FROM Role AS a WHERE a.Id=@Id AND a.IsDeleted=0";
 					//var parameters = new List<EntityParameter> { new EntityParameter("@Id", roleId) };
 					//return mapper.FindOne<Role>(sql, parameters);
