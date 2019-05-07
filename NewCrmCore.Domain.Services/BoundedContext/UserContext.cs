@@ -43,7 +43,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								 a.UserFace,
 								 a.IsAdmin,
 								 a.IsModifyUserFace
-							 }).InnerJoin<Config>((a, b) => a.Id == b.UserId).Where(a => a.Name == userName && !a.IsDisable).ToOne();
+							 }).InnerJoin<Config>((a, b) => a.Id == b.UserId).Where(a => a.Name == userName && !a.IsDisable).FirstOrDefault();
 							 //user = mapper.InnerJoin<User, Config>((u, c) => u.Id == c.UserId).Find<User>(a => a.Name == userName && !a.IsDisable, a => new
 							 //{
 							 // a.Id,
@@ -131,7 +131,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						 a.IsBing,
 						 a.UserId,
 						 a.IsModifyUserFace
-					 }).Where(w => w.UserId == userId).ToOne();
+					 }).Where(w => w.UserId == userId).FirstOrDefault();
 					 //  var sql = $@"SELECT 
 					 // 			a.Id,
 					 // 			a.Skin,  
@@ -171,7 +171,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						a.Width,
 						a.Height,
 						a.Source
-					}).Where(w => w.Id == wallPaperId).ToOne();
+					}).Where(w => w.Id == wallPaperId).FirstOrDefault();
 
 					// var sql = $@"SELECT a.Url,a.Width,a.Height,a.Source FROM Wallpaper AS a WHERE a.Id=@wallpaperId AND a.IsDeleted=0";
 					// var parameters = new List<EntityParameter> { new EntityParameter("@wallpaperId", wallPaperId) };
@@ -250,7 +250,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						a.LastLoginTime,
 						a.AddTime,
 						a.IsModifyUserFace
-					}).InnerJoin<Config>((a, b) => a.Id == b.UserId).Where(w => !w.IsDeleted).ToOne();
+					}).InnerJoin<Config>((a, b) => a.Id == b.UserId).Where(w => !w.IsDeleted).FirstOrDefault();
 
 
 					//return mapper.InnerJoin<User, Config>((a, b) => a.Id == b.UserId).Find<User>(a => !a.IsDisable, a => new
@@ -358,7 +358,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var mapper = new EntityMapper())
 				{
-					return mapper.Select<User>(a => new { a.LoginPassword }).Where(w => w.Id == userId && !w.IsDisable).ToOne().LoginPassword;
+					return mapper.Select<User>(a => new { a.LoginPassword }).Where(w => w.Id == userId && !w.IsDisable).FirstOrDefault().LoginPassword;
 					//var sql = $@"SELECT a.LoginPassword FROM User AS a WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
 					//var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
 					//return mapper.FindSingleValue<String>(sql, parameters);
@@ -383,7 +383,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						//	new EntityParameter("@userId",userId)
 						//};
 						//var password = mapper.FindSingleValue<String>(sql, parameters);
-						var user = mapper.Select<User>(a => new { a.LockScreenPassword }).Where(w => w.Id == userId && !w.IsDisable).ToOne();
+						var user = mapper.Select<User>(a => new { a.LockScreenPassword }).Where(w => w.Id == userId && !w.IsDisable).FirstOrDefault();
 						return PasswordUtil.ComparePasswords(user.LockScreenPassword, unlockPassword);
 					}
 					#endregion
@@ -742,7 +742,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					{
 						#region 前置条件验证
 						{
-							var isAdmin = mapper.Select<User>(a => new { a.IsAdmin }).Where(a => a.Id == userId && !a.IsDisable).ToOne().IsAdmin;
+							var isAdmin = mapper.Select<User>(a => new { a.IsAdmin }).Where(a => a.Id == userId && !a.IsDisable).FirstOrDefault().IsAdmin;
 							//var sql = $@"SELECT a.IsAdmin FROM User AS a WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
 							//var parameters = new List<EntityParameter>
 							//{

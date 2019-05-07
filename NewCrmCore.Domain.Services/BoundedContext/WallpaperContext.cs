@@ -81,7 +81,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						a.Title,
 						a.Url,
 						a.Width
-					}).Where(a => a.Md5 == md5).ToOne();
+					}).Where(a => a.Md5 == md5).FirstOrDefault();
 
 					// var sql = $@"SELECT
 					//         a.UserId,
