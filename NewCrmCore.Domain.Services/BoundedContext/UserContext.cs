@@ -35,14 +35,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 						 #region 查询用户
 						 {
-							 user = mapper.Select<User>(a => new
+							 user = mapper.Select<User,Config>((a,b) => new
 							 {
 								 a.Id,
 								 a.Name,
 								 a.LoginPassword,
-								 a.UserFace,
+								 b.UserFace,
 								 a.IsAdmin,
-								 a.IsModifyUserFace
+								 b.IsModifyUserFace
 							 }).InnerJoin<Config>((a, b) => a.Id == b.UserId).Where(a => a.Name == userName && !a.IsDisable).FirstOrDefault();
 							 //user = mapper.InnerJoin<User, Config>((u, c) => u.Id == c.UserId).Find<User>(a => a.Name == userName && !a.IsDisable, a => new
 							 //{
@@ -237,9 +237,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using (var mapper = new EntityMapper())
 				{
-					return mapper.Select<User>(a => new
+					return mapper.Select<User,Config>((a,b) => new
 					{
-						a.UserFace,
+						b.UserFace,
 						a.Id,
 						a.IsAdmin,
 						a.IsDisable,
@@ -249,7 +249,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						a.LoginPassword,
 						a.LastLoginTime,
 						a.AddTime,
-						a.IsModifyUserFace
+						b.IsModifyUserFace
 					}).InnerJoin<Config>((a, b) => a.Id == b.UserId).Where(w => !w.IsDeleted).FirstOrDefault();
 
 
