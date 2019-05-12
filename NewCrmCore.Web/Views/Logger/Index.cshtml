@@ -89,13 +89,17 @@
         {{/each}}
     </script>
 }
+@section ScriptLabel
+{
+    <script src="~/js/pagelogic/log_index.js"></script>
+}
 @section ChildrenScript
     {
-    <script src="~/js/pagelogic/log_index.js"></script>
-    NewCrm.Log.Index.Info='@LogLevel.Info';
-    NewCrm.Log.Index.Warning='@LogLevel.Warning';
-    NewCrm.Log.Index.Debug='@LogLevel.Debug';
-    NewCrm.Log.Index.Error='@LogLevel.Error';
-    NewCrm.Log.Index.Exception= '@LogLevel.Exception';
+    
+    NewCrm.Log.Info='@LogLevel.Info';
+    NewCrm.Log.Warning='@LogLevel.Warning';
+    NewCrm.Log.Debug='@LogLevel.Debug';
+    NewCrm.Log.Error='@LogLevel.Error';
+    NewCrm.Log.Exception= '@LogLevel.Exception';
 };
-}
+

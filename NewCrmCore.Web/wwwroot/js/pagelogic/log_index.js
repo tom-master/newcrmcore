@@ -1,4 +1,4 @@
-﻿NewCrm.Log.Index = {
+﻿NewCrm.Log = {
     Info: '',
     Warning: '',
     Debug: '',
@@ -44,15 +44,15 @@ Handlebars.registerHelper('cutLongString', (str) => {
 });
 
 Handlebars.registerHelper('parseLoggerLevel', (str) => {
-    if (str === NewCrm.Log.Index.Info) {
+    if (str === NewCrm.Log.Info) {
         return '信息';
-    } else if (str === NewCrm.Log.Index.Warning) {
+    } else if (str === NewCrm.Log.Warning) {
         return '警告';
-    } else if (str === NewCrm.Log.Index.Debug) {
+    } else if (str === NewCrm.Log.Debug) {
         return '调试';
-    } else if (str === NewCrm.Log.Index.Error) {
+    } else if (str === NewCrm.Log.Error) {
         return '业务错误';
-    } else if (str === NewCrm.Log.Index.Exception) {
+    } else if (str === NewCrm.Log.Exception) {
         return '代码异常';
     }
 });
