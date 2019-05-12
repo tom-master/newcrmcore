@@ -10,8 +10,8 @@ using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
 using NewLibCore.Data.SQL.Mapper;
+using NewLibCore.Data.SQL.Mapper.Extension;
 using NewLibCore.Validate;
-
 namespace NewCrmCore.Domain.Services.BoundedContext
 {
     public class AppContext : IAppContext
@@ -84,7 +84,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         new EntityParameter("@AppReleaseState", AppReleaseState.Release.ToInt32()),
                         new EntityParameter("@userId",userId)
                     };
-                    return mapper.ExecuteSql<TodayRecommendAppDto>(sql, parameters);
+                    return mapper.ExecuteToSingle<TodayRecommendAppDto>(sql, parameters);
                 }
             });
         }
@@ -149,7 +149,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 #region totalCount
                 {
                     var sql = $@"SELECT COUNT(*) FROM App AS a LEFT JOIN AppStar AS a1 ON a1.AppId=a.Id AND a1.IsDeleted=0 {where}";
-                    totalCount = mapper.ExecuteSql<Int32>(sql, parameters);
+                    totalCount = mapper.ExecuteToSingle<Int32>(sql, parameters);
                 }
                 #endregion
 
@@ -179,7 +179,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                            LEFT JOIN Member AS a1 ON a1.UserId=@userId2 AND a1.AppId=a.Id AND a1.IsDeleted=0
                                 {where} {orderBy} LIMIT {pageSize * (pageIndex - 1)},{pageSize }";
                     parameters.Add(new EntityParameter("@userId2", userId));
-                    return mapper.ExecuteSql<List<App>>(sql, parameters);
+                    return mapper.ExecuteToList<App>(sql, parameters);
                 }
                 #endregion
             }
@@ -253,7 +253,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 #region totalCount
                 {
                     var sql = $@"SELECT COUNT(*) FROM App AS a {where} ";
-                    totalCount = mapper.ExecuteSql<Int32>(sql, parameters);
+                    totalCount = mapper.ExecuteToSingle<Int32>(sql, parameters);
                 }
                 #endregion
 
@@ -272,7 +272,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a.IsIconByUpload
 								FROM App AS a {where} LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
 
-                    return mapper.ExecuteSql<List<App>>(sql, parameters);
+                    return mapper.ExecuteToList<App>(sql, parameters);
                 }
                 #endregion
 
@@ -317,7 +317,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         new EntityParameter("@Id",appId)
                     };
-                    return mapper.ExecuteSql<List<App>>(sql, parameters).FirstOrDefault();
+                    return mapper.ExecuteToSingle<App>(sql, parameters);
                 }
             });
         }

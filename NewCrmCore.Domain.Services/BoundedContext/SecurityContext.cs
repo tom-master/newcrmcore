@@ -63,8 +63,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 				#region totalCount
 				{
-					var sql = $@"SELECT  COUNT(*) FROM Role AS a WHERE 1=1 {where} AND a.IsDeleted=0";
-					totalCount = mapper.ExecuteSql<Int32>(sql, parameters);
+					var sql = $@"SELECT COUNT(*) FROM Role AS a WHERE 1=1 {where} AND a.IsDeleted=0";
+					totalCount = mapper.ExecuteToSingle<Int32>(sql, parameters);
 				}
 				#endregion
 
@@ -76,7 +76,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a.Remark,
 								a.Id
 								FROM Role AS a WHERE 1=1 {where} AND a.IsDeleted=0 LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
-					return mapper.ExecuteSql<List<Role>>(sql, parameters);
+					return mapper.ExecuteToList<Role>(sql, parameters);
 				}
 				#endregion
 

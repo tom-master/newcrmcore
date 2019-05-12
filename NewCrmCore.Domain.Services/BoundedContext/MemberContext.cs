@@ -129,7 +129,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								),0) AS StarCount
 								FROM Member AS a WHERE a.UserId=@UserId {where} AND a.IsDeleted=0";
 					parameters.Add(new EntityParameter("@UserId", userId));
-					return mapper.ExecuteSql<Member>(sql, parameters);
+					return mapper.ExecuteToSingle<Member>(sql, parameters);
 				}
 			});
 		}

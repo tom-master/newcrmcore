@@ -159,7 +159,7 @@
     HROS.CONFIG.appVerticalSpacing='@userConfig.AppVerticalSpacing',
     HROS.CONFIG.deskCount= parseInt('@desks'),
     HROS.CONFIG.lockPwdAndLoginPwd='@(user.Password == user.LockScreenPassword ? 1 : 0)'
-
+    HROS.base.init();
     $(".loading").hide();
     $("#desktop").show();
 }

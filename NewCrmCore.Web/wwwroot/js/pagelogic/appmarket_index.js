@@ -119,7 +119,7 @@ function getPageList(current_page) {
     HROS.request.get('/appmarket/getapps', {
         appTypeId: appTypeId,
         orderId: orderId,
-        searchText: outSideSearchText === '' ? $('#searchText').val() : outSideSearchText,
+        searchText: outSideSearchText ? outSideSearchText : $('#searchText').val(),
         pageIndex: current_page === 0 ? 1 : current_page + 1,
         pageSize: 5
     }, (responseText) => {
