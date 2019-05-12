@@ -146,16 +146,22 @@
 </div>
 
 @section ChildrenScript
-    {
-    <script src="~/js/pagelogic/desk_index.js"></script>
-    NewCrm.Desk.Index.dockPosition='@userConfig.DockPosition',
-    NewCrm.Desk.Index.appXy='@userConfig.AppXy',
-    NewCrm.Desk.Index.appSize= parseInt('@userConfig.AppSize'),
-    NewCrm.Desk.Index.defaultDeskNumber= parseInt('@userConfig.DefaultDeskNumber'),
-    NewCrm.Desk.Index.appHorizontalSpacing='@userConfig.AppHorizontalSpacing',
-    NewCrm.Desk.Index.appVerticalSpacing='@userConfig.AppVerticalSpacing',
-    NewCrm.Desk.Index.desks= parseInt('@desks'),
-    NewCrm.Desk.Index.lockPwdAndLoginPwd='@(user.Password == user.LockScreenPassword ? 1 : 0)'
+{
+    document.body.onselectstart = document.body.ondrag = function () {
+        return false;
+    };
+    
+    HROS.CONFIG.dockPos='@userConfig.DockPosition',
+    HROS.CONFIG.appXY='@userConfig.AppXy',
+    HROS.CONFIG.appSize= parseInt('@userConfig.AppSize'),
+    HROS.CONFIG.desk = parseInt('@userConfig.DefaultDeskNumber'),
+    HROS.CONFIG.appHorizontalSpacing='@userConfig.AppHorizontalSpacing',
+    HROS.CONFIG.appVerticalSpacing='@userConfig.AppVerticalSpacing',
+    HROS.CONFIG.deskCount= parseInt('@desks'),
+    HROS.CONFIG.lockPwdAndLoginPwd='@(user.Password == user.LockScreenPassword ? 1 : 0)'
+
+    $(".loading").hide();
+    $("#desktop").show();
 }
 
 
