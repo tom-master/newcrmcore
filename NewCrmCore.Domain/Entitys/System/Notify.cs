@@ -46,7 +46,7 @@ namespace NewCrmCore.Domain.Entitys.System
         public Notify Read()
         {
             IsRead = true;
-            OnPropertyChanged(nameof(IsRead));
+            OnPropertyChanged(nameof(IsRead), IsRead);
             return this;
         }
     }
