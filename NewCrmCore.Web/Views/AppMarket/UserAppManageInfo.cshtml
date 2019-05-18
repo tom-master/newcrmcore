@@ -53,10 +53,13 @@
         </text>
     }
 }
-
+@section ScriptLabel
+{
+    <script src="~/js/pagelogic/appmarket_userappmanageinfo.js"></script>
+}
 @section ChildrenScript
     {
-    <script src="~/js/pagelogic/appmarket_userappmanageinfo.js"></script>
+    
     NewCrm.AppMarket.UserAppManageInfo.url='@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)?userId=@userId&uploadtype=icon'
     NewCrm.AppMarket.UserAppManageInfo.appId ='@Context.Request.Query["AppId"]'
 }

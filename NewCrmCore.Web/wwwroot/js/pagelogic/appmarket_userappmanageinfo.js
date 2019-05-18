@@ -1,7 +1,9 @@
 ﻿
-NewCrm.AppMarket.UserAppManageInfo = {
-    url: '',
-    appId: 0
+NewCrm.AppMarket = {
+    UserAppManageInfo: {
+        url: '',
+        appId: 0
+    }
 };
 
 let uploader = WebUploader.create({

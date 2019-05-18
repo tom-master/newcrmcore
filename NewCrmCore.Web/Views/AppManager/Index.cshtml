@@ -148,9 +148,12 @@
         {{/each}}
     </script>
 }
-@section ChildrenScript
+@section ScriptLabel
 {
     <script src="~/js/pagelogic/appmanager_index.js"></script>
+}
+@section ChildrenScript
+{
     NewCrm.AppManager.wait = '@(AppAuditState.Wait)';
     NewCrm.AppManager.url = "@(NewCrmCore.Infrastructure.Appsetting.FileUrl)";
     NewCrm.AppManager.pass = '@(AppAuditState.Pass)'

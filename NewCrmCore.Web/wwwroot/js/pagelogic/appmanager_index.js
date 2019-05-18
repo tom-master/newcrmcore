@@ -1,7 +1,7 @@
 ﻿//加载列表
 getPageList(0);
 
-NewCrm.AppManager.Index = {
+NewCrm.AppManager = {
     wait: 0,
     pass: 0,
     url: ''
