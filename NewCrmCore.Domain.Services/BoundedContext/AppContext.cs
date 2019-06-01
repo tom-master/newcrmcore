@@ -148,7 +148,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 var paging = new PageList<App>();
                 #region totalCount
                 {
-                    var sql = $@"SELECT COUNT(*) FROM App AS a LEFT JOIN newcrm_app_star AS a1 ON a1.AppId=a.Id AND a1.IsDeleted=0 {where}";
+                    var sql = $@"SELECT COUNT(*) FROM newcrm_app AS a LEFT JOIN newcrm_app_star AS a1 ON a1.AppId=a.Id AND a1.IsDeleted=0 {where}";
                     totalCount = mapper.ExecuteToSingle<Int32>(sql, parameters);
                 }
                 #endregion
@@ -175,7 +175,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 		                            END
 	                            ) AS IsInstall,
                                 a.IsIconByUpload
-	                            FROM App AS a
+	                            FROM newcrm_app AS a
 	                            LEFT JOIN newcrm_user_member AS a1 ON a1.UserId=@userId2 AND a1.AppId=a.Id AND a1.IsDeleted=0
                                 {where} {orderBy} LIMIT {pageSize * (pageIndex - 1)},{pageSize }";
                     parameters.Add(new EntityParameter("@userId2", userId));
