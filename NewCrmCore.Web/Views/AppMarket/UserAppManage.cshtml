@@ -150,9 +150,12 @@
         {{/each}}
     </script>
 }
-@section ChildrenScript
-    {
+@section ScriptLabel
+{
     <script src="~/js/pagelogic/appmarket_userappmanage.js"></script>
+}
+@section ChildrenScript
+{
     NewCrm.AppMarket.UserAppManageDetail.app='@(AppStyle.App)';
     NewCrm.AppMarket.UserAppManageDetail.url='@(NewCrmCore.Infrastructure.Appsetting.FileUrl)';
 }

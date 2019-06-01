@@ -1,7 +1,9 @@
 ﻿
-NewCrm.AppMarket.UserAppManageDetail = {
-    app: 0,
-    url: ''
+NewCrm.AppMarket = {
+    UserAppManageDetail:{
+        app: 0,
+        url: ''
+    }
 };
 
 $('html').css({ 'overflow-y': 'hidden' });
