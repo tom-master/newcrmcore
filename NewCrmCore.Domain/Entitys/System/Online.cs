@@ -4,6 +4,7 @@ using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
+    [TableName("newcrm_user_online")]
     public partial class Online : EntityBase
     {
         /// <summary>

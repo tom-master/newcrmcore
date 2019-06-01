@@ -8,6 +8,7 @@ namespace NewCrmCore.Domain.Entitys.System
     /// <summary>
     /// 桌面应用
     /// </summary>
+    [TableName("newcrm_user_member")]
     public partial class Member : EntityBase
     {
         /// <summary>

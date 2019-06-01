@@ -7,6 +7,7 @@ using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.Agent
 {
+    [TableName("newcrm_user")]
     public partial class User : EntityBase
     {
         /// <summary>

@@ -4,6 +4,7 @@ using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
+    [TableName("newcrm_visitor_record")]
     public partial class VisitorRecord : EntityBase
     {
         [Required]

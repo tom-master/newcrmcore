@@ -6,6 +6,8 @@ using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.Security
 {
+
+    [TableName("newcrm_role")]
     public partial class Role : EntityBase
     {
         /// <summary>

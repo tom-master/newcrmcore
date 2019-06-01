@@ -5,6 +5,7 @@ using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {
+    [TableName("newcrm_log")]
     public partial class Log : EntityBase
     {
         /// <summary>

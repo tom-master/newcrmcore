@@ -7,6 +7,7 @@ using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
 namespace NewCrmCore.Domain.Entitys.System
 {
 
+    [TableName("newcrm_app_notify")]
     public partial class Notify : EntityBase
     {
         [Required, InputRange(4, 10)]

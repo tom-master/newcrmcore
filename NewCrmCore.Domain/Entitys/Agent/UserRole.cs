@@ -4,6 +4,7 @@ using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
 
 namespace NewCrmCore.Domain.Entitys.Agent
 {
+    [TableName("newcrm_user_role")]
     public class UserRole : EntityBase
     {
         [Required]
