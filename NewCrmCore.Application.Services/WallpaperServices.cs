@@ -75,7 +75,7 @@ namespace NewCrmCore.Application.Services
             using (var stream = await new HttpClient().GetStreamAsync(new Uri(url)))
             using (Image image = Image.FromStream(stream))
             {
-                var md5 = FileHelper.GetMD5(stream);
+                var md5 = MD.GetMD5(stream);
                 var webWallpaper = await GetUploadWallpaperAsync(md5);
                 if (webWallpaper != null)
                 {

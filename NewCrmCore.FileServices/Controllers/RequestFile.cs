@@ -32,7 +32,7 @@ namespace NewCrmCore.FileServices.Controllers
                 IsSuccess = true,
                 Title = _fileName,
                 Url = Url,
-                Md5 = FileHelper.GetMD5(File.Open(FullPath, FileMode.Open))
+                Md5 = MD.GetMD5(File.Open(FullPath, FileMode.Open))
             };
         }
     }
