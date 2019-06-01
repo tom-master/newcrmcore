@@ -34,7 +34,7 @@ function getPageList(current_page) {
             $('.list-con').html(template(responseText));
             initPagination({
                 current_page: current_page,
-                items_per_page: 5,
+                items_per_page: 6,
                 num_display_entries: 3,
                 num_edge_entries: 1,
                 getPageList: getPageList

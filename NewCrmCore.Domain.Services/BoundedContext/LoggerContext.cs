@@ -41,7 +41,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 				#region totalCount 
 				{
-					var sql = $@"SELECT COUNT(*) FROM Log AS a LEFT JOIN User AS a1 ON a.UserId=a1.Id WHERE 1=1 {where}";
+					var sql = $@"SELECT COUNT(*) FROM Log AS a LEFT JOIN newcrm_user AS a1 ON a.UserId=a1.Id WHERE 1=1 {where}";
 					totalCount = mapper.ExecuteToSingle<Int32>(sql, parameters);
 				}
 				#endregion
@@ -56,7 +56,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                 IFNULL(a.UserId,0) AS UserId,
                                 a.AddTime
                                 FROM Log AS a 
-                                LEFT JOIN User AS a1 ON a.UserId=a1.Id
+                                LEFT JOIN newcrm_user AS a1 ON a.UserId=a1.Id
                                 WHERE 1=1 {where} ORDER BY a.AddTime DESC LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
 					return mapper.ExecuteToList<Log>(sql, parameters);
 				}

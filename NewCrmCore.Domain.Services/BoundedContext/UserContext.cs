@@ -205,7 +205,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				#region totalCount
 				{
-					var sql = $@"SELECT COUNT(*) FROM User AS a INNER JOIN Config AS a1 ON a1.UserId=a.Id AND a1.IsDeleted=0 {where} ";
+					var sql = $@"SELECT COUNT(*) FROM newcrm_user AS a INNER JOIN Config AS a1 ON a1.UserId=a.Id AND a1.IsDeleted=0 {where} ";
 					totalCount = mapper.ExecuteToSingle<Int32>(sql, parameters);
 				}
 				#endregion
@@ -219,8 +219,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a.IsDisable,
 								a1.UserFace,
                                 a1.IsModifyUserFace
-	                            FROM User AS a 
-	                            INNER JOIN Config AS a1
+	                            FROM newcrm_user AS a 
+	                            INNER JOIN newcrm_user_config AS a1
 	                            ON a1.UserId=a.Id AND a1.IsDeleted=0
 	                            {where} LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
 					return mapper.ExecuteToList<User>(sql, parameters);

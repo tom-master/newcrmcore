@@ -65,7 +65,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.Remark,
                             a.AppStyle AS Style,
                             (
-		                        SELECT AVG(stars.StartNum) FROM AppStar AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId
+		                        SELECT AVG(stars.StartNum) FROM newcrm_app_star AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId
                             ) AS AppStars,
                             (
 	                            CASE 
@@ -74,8 +74,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								END
                             ) AS IsInstall,
                             IFNULL(a.IsIconByUpload,0) AS IsIconByUpload
-                            FROM App AS a 
-							LEFT JOIN Member AS a2 ON a2.UserId=@userId AND a2.IsDeleted=0 AND a2.AppId=a.Id
+                            FROM newcrm_app AS a 
+							LEFT JOIN newcrm_user_member AS a2 ON a2.UserId=@userId AND a2.IsDeleted=0 AND a2.AppId=a.Id
                             WHERE a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState AND a.IsRecommand=1";
 
                     var parameters = new List<EntityParameter>
@@ -140,7 +140,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         }
                     case 3:
                         {
-                            orderBy.Append($@" ORDER BY (SELECT AVG(stars.StartNum) FROM AppStar AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId) DESC");
+                            orderBy.Append($@" ORDER BY (SELECT AVG(stars.StartNum) FROM newcrm_app_star AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId) DESC");
                             break;
                         }
                 }
@@ -148,7 +148,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 var paging = new PageList<App>();
                 #region totalCount
                 {
-                    var sql = $@"SELECT COUNT(*) FROM App AS a LEFT JOIN AppStar AS a1 ON a1.AppId=a.Id AND a1.IsDeleted=0 {where}";
+                    var sql = $@"SELECT COUNT(*) FROM App AS a LEFT JOIN newcrm_app_star AS a1 ON a1.AppId=a.Id AND a1.IsDeleted=0 {where}";
                     totalCount = mapper.ExecuteToSingle<Int32>(sql, parameters);
                 }
                 #endregion
@@ -161,7 +161,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                            a.AddTime,
 	                            a.UseCount,
 	                            (
-		                            SELECT TRUNCATE(AVG(stars.StartNum),1) FROM AppStar AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId
+		                            SELECT TRUNCATE(AVG(stars.StartNum),1) FROM newcrm_app_star AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId
 	                            ) AS StarCount,
 	                            a.Name,
 	                            a.IconUrl,
@@ -176,7 +176,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                            ) AS IsInstall,
                                 a.IsIconByUpload
 	                            FROM App AS a
-	                            LEFT JOIN Member AS a1 ON a1.UserId=@userId2 AND a1.AppId=a.Id AND a1.IsDeleted=0
+	                            LEFT JOIN newcrm_user_member AS a1 ON a1.UserId=@userId2 AND a1.AppId=a.Id AND a1.IsDeleted=0
                                 {where} {orderBy} LIMIT {pageSize * (pageIndex - 1)},{pageSize }";
                     parameters.Add(new EntityParameter("@userId2", userId));
                     return mapper.ExecuteToList<App>(sql, parameters);
@@ -252,7 +252,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                 #region totalCount
                 {
-                    var sql = $@"SELECT COUNT(*) FROM App AS a {where} ";
+                    var sql = $@"SELECT COUNT(*) FROM newcrm_app AS a {where} ";
                     totalCount = mapper.ExecuteToSingle<Int32>(sql, parameters);
                 }
                 #endregion
@@ -270,7 +270,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a.AppTypeId,
 								a.UserId,
 								a.IsIconByUpload
-								FROM App AS a {where} LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
+								FROM newcrm_app AS a {where} LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
 
                     return mapper.ExecuteToList<App>(sql, parameters);
                 }
@@ -292,7 +292,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.Remark,
                             a.UseCount,
                             (
-		                      SELECT AVG(stars.StartNum) FROM AppStar AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId
+		                      SELECT AVG(stars.StartNum) FROM newcrm_app_star AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId
 	                        ) AS StarCount,
                             a.AddTime,
                             a.UserId,
@@ -309,8 +309,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             a.AppTypeId,
                             a2.Name AS UserName,
                             a.IsIconByUpload
-                            FROM App AS a 
-                            LEFT JOIN User AS a2
+                            FROM newcrm_app AS a 
+                            LEFT JOIN newcrm_user AS a2
                             ON a2.Id=a.UserId AND a2.IsDeleted=0 AND a2.IsDisable=0
                             WHERE a.Id=@Id AND a.IsDeleted=0";
                     var parameters = new List<EntityParameter>

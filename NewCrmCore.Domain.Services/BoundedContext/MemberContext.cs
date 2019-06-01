@@ -125,9 +125,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								a.UserId,
 								a.IsIconByUpload,
 								IFNULL((
-									SELECT AVG(stars.StartNum) FROM AppStar AS stars WHERE stars.AppId=a.AppId AND stars.IsDeleted=0 GROUP BY stars.AppId
+									SELECT AVG(stars.StartNum) FROM newcrm_app_star AS stars WHERE stars.AppId=a.AppId AND stars.IsDeleted=0 GROUP BY stars.AppId
 								),0) AS StarCount
-								FROM Member AS a WHERE a.UserId=@UserId {where} AND a.IsDeleted=0";
+								FROM newcrm_user_member AS a WHERE a.UserId=@UserId {where} AND a.IsDeleted=0";
 					parameters.Add(new EntityParameter("@UserId", userId));
 					return mapper.ExecuteToSingle<Member>(sql, parameters);
 				}
