@@ -113,7 +113,6 @@ $('.commend-day').on('click', '.btn-add', function () {
     }
 });
 function getPageList(current_page) {
-    debugger
     let appTypeId = $('#appType').val() === '' ? 0 : parseInt($('#appType').val());
     let orderId = $('#order').val() === '' ? 1 : parseInt($('#order').val());
     let outSideSearchText = getQueryString('searchText');
