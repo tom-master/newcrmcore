@@ -1,6 +1,8 @@
-﻿NewCrm.Desk.CustomizeWallpaper = {
-    url: '',
-    userId: ''
+﻿NewCrm.Desk = {
+    CustomizeWallpaper:{
+        url: '',
+        userId: ''
+    }
 };
 
 (() => {

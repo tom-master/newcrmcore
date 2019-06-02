@@ -1,5 +1,7 @@
-﻿NewCrm.Desk.SystemWallpaper = {
-    wallpaperType: ''
+﻿NewCrm.Desk = {
+    SystemWallpaper:{
+        wallpaperType: ''
+    }
 };
 
 $("#wallpapertype").val(NewCrm.Desk.SystemWallpaper.wallpaperType);

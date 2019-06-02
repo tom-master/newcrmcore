@@ -26,11 +26,11 @@
     <div class="fr form-inline">
         <label>显示方式：</label>
         <select name="wallpapertype" id="wallpapertype" class="form-control" style="width: 100px">
-            <option name="fill" value="fill" @{if (userConfig.WallpaperMode == "Fill") { <text> selected="selected" </text>  } }>填充</option>
-            <option name="adapted" value="adapted" @{if (userConfig.WallpaperMode == "Adapted") { <text> selected="selected" </text>  }}>适应</option>
-            <option name="tile" value="tile" @{ if (userConfig.WallpaperMode == "Tile") { <text> selected="selected" </text>  } }>平铺</option>
-            <option name="draw" value="draw" @{ if (userConfig.WallpaperMode == "Draw") { <text> selected="selected" </text>  } }>拉伸</option>
-            <option name="center" value="center" @{ if (userConfig.WallpaperMode == "Center") { <text> selected="selected" </text>  } }>居中</option>
+            <option name="fill" value="fill" @{if(userConfig.WallpaperMode == "Fill") { <text> selected="selected" </text>  } }>填充</option>
+            <option name="adapted" value="adapted" @{if(userConfig.WallpaperMode == "Adapted") { <text> selected="selected" </text>  }}>适应</option>
+            <option name="tile" value="tile" @{ if(userConfig.WallpaperMode == "Tile") { <text> selected="selected" </text>  } }>平铺</option>
+            <option name="draw" value="draw" @{ if(userConfig.WallpaperMode == "Draw") { <text> selected="selected" </text>  } }>拉伸</option>
+            <option name="center" value="center" @{ if(userConfig.WallpaperMode == "Center") { <text> selected="selected" </text>  } }>居中</option>
         </select>
     </div>
 </div>
@@ -51,9 +51,13 @@
     </div>
 </div>
 @section ChildrenScript
-    {
-    <script src="~/js/pagelogic/desk_customizewallpaper.js"></script>
+{
     NewCrm.Desk.CustomizeWallpaper.url='@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)'
     NewCrm.Desk.CustomizeWallpaper.userId = '@userConfig.UserId'
+}
+
+@section ScriptLabel
+{
+    <script src="~/js/pagelogic/desk_customizewallpaper.js"></script>
 }
 
