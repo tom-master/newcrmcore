@@ -1,11 +1,4 @@
-﻿NewCrm.Desk = {
-    SystemWallpaper:{
-        wallpaperType: ''
-    }
-};
-
-$("#wallpapertype").val(NewCrm.Desk.SystemWallpaper.wallpaperType);
-
+﻿$("#wallpapertype").val(top.HROS.CONFIG.wallpaperType.toLowerCase());
 $("#wallpapertype").on('change', () => {
     top.HROS.wallpaper.update($('#wallpapertype').val(), '');
 });
