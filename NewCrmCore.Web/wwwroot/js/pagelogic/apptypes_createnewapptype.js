@@ -1,5 +1,7 @@
-﻿NewCrm.AppTypes.CreateNewAppType = {
-    appTypeId: 0
+﻿NewCrm.AppTypes = {
+    CreateNewAppType:{
+        appTypeId: 0
+    }
 };
 
 let f = $('#form').Validform({
