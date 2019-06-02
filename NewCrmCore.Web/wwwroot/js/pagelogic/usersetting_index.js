@@ -1,10 +1,12 @@
-﻿NewCrm.UserSetting.Index = {
-    url: '',
-    uploadUrl: '',
-    id: 0
+﻿NewCrm.UserSetting = {
+    Index: {
+        url: '',
+        uploadUrl: '',
+        id: 0
+    }
 };
-
 $('.title ul > li').on('click', function () {
+    
     let $li = $(this);
     let value = $li.attr('data-value');
     $('.title ul > li').each((k, v) => {

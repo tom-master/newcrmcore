@@ -65,9 +65,11 @@
             </text>
         }
     }
-
-    <script src="~/js/pagelogic/usersetting_index.js"></script>
     NewCrm.UserSetting.Index.url = '@Url.Action("index", "usersetting")';
     NewCrm.UserSetting.Index.uploadUrl = '@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)';
     NewCrm.UserSetting.Index.id = '@Model.Id';
+}
+@section ScriptLabel
+{
+    <script src="~/js/pagelogic/usersetting_index.js"></script>
 }
