@@ -1,5 +1,7 @@
-﻿NewCrm.Security.CreateNewRole = {
-    roleId: 0
+﻿NewCrm.Security = {
+    CreateNewRole:{
+        roleId: 0
+    }
 };
 let f = $('#form').Validform({
     btnSubmit: '#btn-submit',

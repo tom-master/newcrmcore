@@ -81,8 +81,12 @@
     </div>
 </form>
 @section ChildrenScript
-    {
-    <script src="~/js/pagelogic/security_createnewrole.js"></script>
+{
     NewCrm.Security.CreateNewRole.roleId='@roleId'
+}
+
+@section ScriptLabel
+{
+     <script src="~/js/pagelogic/security_createnewrole.js"></script>   
 }
 
