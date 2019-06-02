@@ -27,8 +27,7 @@
             {
                 <text>
                     <label class="radio" style="margin-right: 10px">
-                        <input type="radio" name="desk" value="@i" @
-                               { if (i= =userConfig.DefaultDeskNumber) { <text> checked="checked" </text>  } }>第@{@i}桌面
+                        <input type="radio" name="desk" value="@i"@{if (i==userConfig.DefaultDeskNumber) { <text> checked="checked" </text>  } }>第@{@i}桌面
                         </label>
                 </text>
             }
@@ -148,7 +147,7 @@
         </tr>
     </table>
 </div>
-@section ChildrenScript
+@section ScriptLabel
     {
     <script src="~/js/pagelogic/desk_configdesk.js"></script>
 }
