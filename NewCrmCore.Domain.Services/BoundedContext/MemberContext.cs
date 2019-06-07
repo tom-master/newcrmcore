@@ -317,7 +317,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 							#region 获取appId
 							{
-								var member = mapper.Select<Member>(a => new { a.AppId }).Where(w => w.Id == appId && w.UserId == userId).FirstOrDefault();
+								var member = mapper.Select<Member>(a => new { a.AppId }).Where(w => w.Id == memberId && w.UserId == userId).FirstOrDefault();
 								//var sql = $@"SELECT a.AppId FROM Member AS a WHERE a.Id=@Id AND a.UserId=@UserId AND a.IsDeleted=0";
 								//var parameters = new List<EntityParameter>
 								//{

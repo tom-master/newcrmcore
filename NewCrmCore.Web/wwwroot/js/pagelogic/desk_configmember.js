@@ -1,6 +1,8 @@
-﻿NewCrm.Desk.ConfigMemeber = {
-    url: '',
-    id: 0
+﻿NewCrm.Desk = {
+    ConfigMemeber:{
+        url: '',
+        id: 0
+    }
 };
 
 let uploader = WebUploader.create({

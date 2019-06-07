@@ -121,10 +121,13 @@
         </div>
     </div>
 </form>
-
+@section ScriptLabel
+{
+    <script src="~/js/pagelogic/desk_configmember.js"></script>    
+}
 @section ChildrenScript
 {
-    <script src="~/js/pagelogic/desk_configmember.js"></script>
+
     NewCrm.Desk.ConfigMemeber.url='@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)'
     NewCrm.Desk.ConfigMemeber.id='@Model.Id'
 }
