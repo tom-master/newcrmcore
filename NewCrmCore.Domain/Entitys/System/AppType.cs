@@ -57,7 +57,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             Name = appTypeName;
-            OnPropertyChanged(nameof(Name), Name);
+            OnChanged(nameof(Name), Name);
             return this;
         }
 
@@ -69,21 +69,21 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             Remark = remark ?? "";
-            OnPropertyChanged(nameof(Remark), Remark);
+            OnChanged(nameof(Remark), Remark);
             return this;
         }
 
         public AppType System()
         {
             IsSystem = true;
-            OnPropertyChanged(nameof(IsSystem), IsSystem);
+            OnChanged(nameof(IsSystem), IsSystem);
             return this;
         }
 
         public AppType NotSystem()
         {
             IsSystem = false;
-            OnPropertyChanged(nameof(IsSystem), IsSystem);
+            OnChanged(nameof(IsSystem), IsSystem);
             return this;
         }
     }
