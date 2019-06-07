@@ -188,7 +188,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             Width = width;
-            OnPropertyChanged(nameof(Width), Width);
+            OnChanged(nameof(Width), Width);
             return this;
         }
 
@@ -205,7 +205,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             Height = height;
-            OnPropertyChanged(nameof(Height), Height);
+            OnChanged(nameof(Height), Height);
             return this;
         }
 
@@ -217,7 +217,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             FolderId = folderId;
-            OnPropertyChanged(nameof(FolderId), FolderId);
+            OnChanged(nameof(FolderId), FolderId);
             return this;
         }
 
@@ -234,7 +234,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             Name = name;
-            OnPropertyChanged(nameof(Name), Name);
+            OnChanged(nameof(Name), Name);
             return this;
         }
 
@@ -251,7 +251,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             IconUrl = iconUrl;
-            OnPropertyChanged(nameof(IconUrl), IconUrl);
+            OnChanged(nameof(IconUrl), IconUrl);
             return this;
         }
 
@@ -268,77 +268,77 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             AppUrl = appUrl;
-            OnPropertyChanged(nameof(AppUrl), AppUrl);
+            OnChanged(nameof(AppUrl), AppUrl);
             return this;
         }
 
         public Member OnDock()
         {
             IsOnDock = true;
-            OnPropertyChanged(nameof(IsOnDock), IsOnDock);
+            OnChanged(nameof(IsOnDock), IsOnDock);
             return this;
         }
 
         public Member OutDock()
         {
             IsOnDock = false;
-            OnPropertyChanged(nameof(IsOnDock),IsOnDock);
+            OnChanged(nameof(IsOnDock),IsOnDock);
             return this;
         }
 
         public Member Setbar()
         {
             IsSetbar = true;
-            OnPropertyChanged(nameof(IsSetbar),IsSetbar);
+            OnChanged(nameof(IsSetbar),IsSetbar);
             return this;
         }
 
         public Member NotSetbar()
         {
             IsSetbar = false;
-            OnPropertyChanged(nameof(IsSetbar),IsSetbar);
+            OnChanged(nameof(IsSetbar),IsSetbar);
             return this;
         }
 
         public Member OpenMax()
         {
             IsOpenMax = true;
-            OnPropertyChanged(nameof(IsOpenMax),IsOpenMax);
+            OnChanged(nameof(IsOpenMax),IsOpenMax);
             return this;
         }
 
         public Member NotOpenMax()
         {
             IsOpenMax = false;
-            OnPropertyChanged(nameof(IsOpenMax),IsOpenMax);
+            OnChanged(nameof(IsOpenMax),IsOpenMax);
             return this;
         }
 
         public Member Flash()
         {
             IsFlash = true;
-            OnPropertyChanged(nameof(IsFlash),IsFlash);
+            OnChanged(nameof(IsFlash),IsFlash);
             return this;
         }
 
         public Member NotFlash()
         {
             IsFlash = false;
-            OnPropertyChanged(nameof(IsFlash),IsFlash);
+            OnChanged(nameof(IsFlash),IsFlash);
             return this;
         }
 
         public Member Resize()
         {
             IsResize = true;
-            OnPropertyChanged(nameof(IsResize),IsResize);
+            OnChanged(nameof(IsResize),IsResize);
             return this;
         }
 
         public Member NotResize()
         {
             IsResize = false;
-            OnPropertyChanged(nameof(IsResize),IsResize);
+            OnChanged(nameof(IsResize),IsResize);
             return this;
         }
 
@@ -355,21 +355,21 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             DeskIndex = deskIndex;
-            OnPropertyChanged(nameof(DeskIndex),DeskIndex);
+            OnChanged(nameof(DeskIndex),DeskIndex);
             return this;
         }
 
         public Member IconNotFromUpload()
         {
             IsIconByUpload = false;
-            OnPropertyChanged(nameof(IsIconByUpload),IsIconByUpload);
+            OnChanged(nameof(IsIconByUpload),IsIconByUpload);
             return this;
         }
 
         public Member IconFromUpload()
         {
             IsIconByUpload = true;
-            OnPropertyChanged(nameof(IsIconByUpload),IsIconByUpload);
+            OnChanged(nameof(IsIconByUpload),IsIconByUpload);
             return this;
         }
     }
