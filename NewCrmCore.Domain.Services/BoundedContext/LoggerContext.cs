@@ -63,7 +63,15 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 #region sql 
                 {
 
-                    return mapper.Select<Log>().LeftJoin<User>((a, b) => a.UserId == b.Id).Where(combination).Page(pageIndex, pageSize).ToList();
+                    return mapper.Select<Log>(a => new
+                    {
+                        a.LogLevelEnum,
+                        a.Controller,
+                        a.Action,
+                        a.ExceptionMessage,
+                        a.UserId,
+                        a.AddTime
+                    }).LeftJoin<User>((a, b) => a.UserId == b.Id).Where(combination).Page(pageIndex, pageSize).ToList();
                     // var sql = $@"SELECT
                     //             a.LogLevelEnum,
                     //             a.Controller,
