@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.System;
@@ -9,6 +10,8 @@ using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
+using NewLibCore.Data.SQL.CombinationCondition;
+using NewLibCore.Data.SQL.CombinationCondition.ConcreteCombinationCondition;
 using NewLibCore.Data.SQL.Mapper;
 using NewLibCore.Data.SQL.Mapper.Extension;
 using NewLibCore.Validate;
@@ -192,40 +195,47 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appStyleId, true);
             Parameter.Validate(pageIndex);
             Parameter.Validate(pageSize);
+
             using (var mapper = new EntityMapper())
             {
-                var where = new StringBuilder();
-                where.Append($@" WHERE 1=1 AND a.IsDeleted=0 ");
-                var parameters = new List<EntityParameter>();
 
+                var where = CombinationFactory.Create<App>();
+                //where.Append($@" WHERE 1=1 AND a.IsDeleted=0 ");
+
+                var parameters = new List<EntityParameter>();
                 #region 条件筛选
 
-                if (userId != default(Int32))
+                if (userId != default)
                 {
-                    parameters.Add(new EntityParameter("@userId", userId));
-                    where.Append($@" AND a.UserId=@userId");
+                    where.And(w => w.UserId == userId);
+                    // parameters.Add(new EntityParameter("@userId", userId));
+                    // where.Append($@" AND a.UserId=@userId");
                 }
 
                 //应用名称
                 if (!String.IsNullOrEmpty(searchText))
                 {
-                    parameters.Add(new EntityParameter("@Name", $@"%{searchText}%"));
-                    where.Append($@" AND a.Name LIKE @Name");
+                    where.And(w => w.Name.Contains(searchText));
+                    // parameters.Add(new EntityParameter("@Name", $@"%{searchText}%"));
+                    // where.Append($@" AND a.Name LIKE @Name");
                 }
 
                 //应用所属类型
                 if (appTypeId != 0)
                 {
-                    parameters.Add(new EntityParameter("AppTypeId", appTypeId));
-                    where.Append($@" AND a.AppTypeId=@AppTypeId");
+                    where.And(w => w.AppTypeId == appTypeId);
+                    // parameters.Add(new EntityParameter("AppTypeId", appTypeId));
+                    // where.Append($@" AND a.AppTypeId=@AppTypeId");
                 }
 
                 //应用样式
                 if (appStyleId != 0)
                 {
                     var appStyle = EnumExtensions.ToEnum<AppStyle>(appStyleId);
-                    parameters.Add(new EntityParameter("@AppStyle", appStyle.ToInt32()));
-                    where.Append($@" AND a.AppStyle=@AppStyle");
+                    where.And(w => w.AppStyle == appStyle);
+
+                    // parameters.Add(new EntityParameter("@AppStyle", appStyle.ToInt32()));
+                    // where.Append($@" AND a.AppStyle=@AppStyle");
                 }
 
                 if ((appState + "").Length > 0)
@@ -235,16 +245,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     if (stats[0] == "AppReleaseState")
                     {
                         var appReleaseState = EnumExtensions.ToEnum<AppReleaseState>(Int32.Parse(stats[1]));
-                        parameters.Add(new EntityParameter("AppReleaseState", appReleaseState.ToInt32()));
-                        where.Append($@" AND a.AppReleaseState=@AppReleaseState ");
+                        where.And(w => w.AppReleaseState == appReleaseState);
+
+                        // parameters.Add(new EntityParameter("AppReleaseState", appReleaseState.ToInt32()));
+                        // where.Append($@" AND a.AppReleaseState=@AppReleaseState ");
                     }
 
                     //app应用审核状态
                     if (stats[0] == "AppAuditState")
                     {
                         var appAuditState = EnumExtensions.ToEnum<AppAuditState>(Int32.Parse(stats[1]));
-                        parameters.Add(new EntityParameter("@AppAuditState", appAuditState.ToInt32()));
-                        where.Append($@" AND a.AppAuditState=@AppAuditState");
+                        where.And(w => w.AppAuditState == appAuditState);
+
+                        // parameters.Add(new EntityParameter("@AppAuditState", appAuditState.ToInt32()));
+                        // where.Append($@" AND a.AppAuditState=@AppAuditState");
                     }
                 }
 
@@ -252,27 +266,43 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                 #region totalCount
                 {
-                    var sql = $@"SELECT COUNT(*) FROM newcrm_app AS a {where} ";
-                    totalCount = mapper.ExecuteToSingle<Int32>(sql, parameters);
+                    totalCount = mapper.Select<App>().Where(where).Count();
+                    // var sql = $@"SELECT COUNT(*) FROM newcrm_app AS a {where} ";
+                    // totalCount = mapper.ExecuteToSingle<Int32>(sql, parameters);
                 }
                 #endregion
 
                 #region sql
                 {
-                    var sql = $@"SELECT
-								a.Name,
-								a.AppStyle,
-								a.UseCount,
-								a.Id,
-								a.IconUrl,
-								a.AppAuditState,
-								a.IsRecommand,
-								a.AppTypeId,
-								a.UserId,
-								a.IsIconByUpload
-								FROM newcrm_app AS a {where} LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
+                    return mapper.Select<App>(a => new
+                    {
+                        a.Name,
+                        a.AppStyle,
+                        a.UseCount,
+                        a.Id,
+                        a.IconUrl,
+                        a.AppAuditState,
+                        a.IsRecommand,
+                        a.AppTypeId,
+                        a.UserId,
+                        a.IsIconByUpload
+                    }).Where(where).Page(pageIndex, pageSize).ToList();
 
-                    return mapper.ExecuteToList<App>(sql, parameters);
+
+                    // var sql = $@"SELECT
+                    // 			a.Name,
+                    // 			a.AppStyle,
+                    // 			a.UseCount,
+                    // 			a.Id,
+                    // 			a.IconUrl,
+                    // 			a.AppAuditState,
+                    // 			a.IsRecommand,
+                    // 			a.AppTypeId,
+                    // 			a.UserId,
+                    // 			a.IsIconByUpload
+                    // 			FROM newcrm_app AS a {where} LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
+
+                    // return mapper.ExecuteToList<App>(sql, parameters);
                 }
                 #endregion
 
@@ -343,7 +373,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
-        public async Task<List<App>> GetSystemAppAsync(IEnumerable<Int32> appIds = default(IEnumerable<Int32>))
+        public async Task<List<App>> GetSystemAppAsync(IEnumerable<Int32> appIds = default)
         {
             return await Task.Run(() =>
             {
@@ -354,8 +384,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     // {
                     //     where.Append($@" AND a.Id IN({String.Join(",", appIds)})");
                     // }
-
-                    return mapper.Select<App>(a => new { a.Id, a.Name, a.IconUrl }).Where(w => w.IsSystem && appIds.Contains(w.Id)).ToList();
+                    var where = CombinationFactory.Create<App>(w => w.IsSystem);
+                    if (appIds != default)
+                    {
+                        where.And(w => appIds.Contains(w.Id));
+                    }
+                    return mapper.Select<App>(a => new { a.Id, a.Name, a.IconUrl }).Where(where).ToList();
 
                     //return mapper.Find<App>(a => appIds.Contains(a.Id) && a.IsSystem).ToList();
 

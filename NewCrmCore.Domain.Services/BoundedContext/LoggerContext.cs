@@ -2,66 +2,82 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using NewCrmCore.Domain.Entitys.Agent;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
+using NewCrmCore.Domain.ValueObject;
+using NewLibCore;
+using NewLibCore.Data.SQL.CombinationCondition;
+using NewLibCore.Data.SQL.CombinationCondition.ConcreteCombinationCondition;
 using NewLibCore.Data.SQL.Mapper;
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
 {
-	public class LoggerContext : ILoggerContext
-	{
-		public async Task AddLoggerAsync(Log log)
-		{
-			Parameter.Validate(log);
-			await Task.Run(() =>
-			{
-				using (var mapper = new EntityMapper())
-				{
-					mapper.Add(log);
-				}
-			});
-		}
+    public class LoggerContext : ILoggerContext
+    {
+        public async Task AddLoggerAsync(Log log)
+        {
+            Parameter.Validate(log);
+            await Task.Run(() =>
+            {
+                using (var mapper = new EntityMapper())
+                {
+                    mapper.Add(log);
+                }
+            });
+        }
 
-		public List<Log> GetLogs(String userName, Int32 logLevel, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
-		{
-			Parameter.Validate(userName, true);
-			Parameter.Validate(logLevel);
+        public List<Log> GetLogs(String userName, Int32 logLevel, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
+        {
+            Parameter.Validate(userName, true);
+            Parameter.Validate(logLevel);
 
-			using (var mapper = new EntityMapper())
-			{
-				var where = new StringBuilder();
-				var parameters = new List<EntityParameter>();
+            using (var mapper = new EntityMapper())
+            {
+                // var where = new StringBuilder();
+                // var parameters = new List<EntityParameter>();
 
-				if (!String.IsNullOrEmpty(userName))
-				{
-					parameters.Add(new EntityParameter("@name", userName));
-					where.Append($@" AND a1.Name LIKE CONCAT('%',@name,'%') ");
-				}
 
-				#region totalCount 
-				{
-					var sql = $@"SELECT COUNT(*) FROM Log AS a LEFT JOIN newcrm_user AS a1 ON a.UserId=a1.Id WHERE 1=1 {where}";
-					totalCount = mapper.ExecuteToSingle<Int32>(sql, parameters);
-				}
-				#endregion
+                var level = EnumExtensions.ToEnum<LogLevel>(logLevel);
+                var logWhere = CombinationFactory.Create<Log>(w => w.LogLevelEnum == level);
 
-				#region sql 
-				{
-					var sql = $@"SELECT
-                                a.LogLevelEnum,
-                                a.Controller,
-                                a.Action,
-                                a.ExceptionMessage,
-                                IFNULL(a.UserId,0) AS UserId,
-                                a.AddTime
-                                FROM Log AS a 
-                                LEFT JOIN newcrm_user AS a1 ON a.UserId=a1.Id
-                                WHERE 1=1 {where} ORDER BY a.AddTime DESC LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
-					return mapper.ExecuteToList<Log>(sql, parameters);
-				}
-				#endregion
-			}
-		}
-	}
+                var userWhere = CombinationFactory.Create<User>();
+                if (!String.IsNullOrEmpty(userName))
+                {
+                    userWhere.And(w => w.Name.Contains(userName));
+                    // parameters.Add(new EntityParameter("@name", userName));
+                    // where.Append($@" AND a1.Name LIKE CONCAT('%',@name,'%') ");
+                }
+
+                var combination = logWhere.AppendCombination(userWhere);
+
+                #region totalCount 
+                {
+                    totalCount = mapper.Select<Log>().LeftJoin<User>((a, b) => a.UserId == b.Id).Where(combination).Count();
+                    // var sql = $@"SELECT COUNT(*) FROM Log AS a LEFT JOIN newcrm_user AS a1 ON a.UserId=a1.Id WHERE 1=1 {where}";
+                    // totalCount = mapper.ExecuteToSingle<Int32>(sql, parameters);
+                }
+                #endregion
+
+                #region sql 
+                {
+
+                    return mapper.Select<Log>().LeftJoin<User>((a, b) => a.UserId == b.Id).Where(combination).Page(pageIndex, pageSize).ToList();
+                    // var sql = $@"SELECT
+                    //             a.LogLevelEnum,
+                    //             a.Controller,
+                    //             a.Action,
+                    //             a.ExceptionMessage,
+                    //             IFNULL(a.UserId,0) AS UserId,
+                    //             a.AddTime
+                    //             FROM Log AS a 
+                    //             LEFT JOIN newcrm_user AS a1 ON a.UserId=a1.Id
+                    //             WHERE 1=1 {where} ORDER BY a.AddTime DESC LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
+                    // return mapper.ExecuteToList<Log>(sql, parameters);
+                }
+                #endregion
+            }
+        }
+    }
 }
