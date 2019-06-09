@@ -28,7 +28,7 @@ namespace NewCrmCore.Application.Services.Interface
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        Task<Tuple<Int32, Int32>> GetDevelopAndNotReleaseCountAsync(Int32 userId);
+        Task<(Int32 allCount, Int32 notReleaseCount)> GetDevelopAndNotReleaseCountAsync(Int32 userId);
 
         /// <summary>
         /// 获取所有的应用

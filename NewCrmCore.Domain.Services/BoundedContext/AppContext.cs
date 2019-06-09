@@ -19,7 +19,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 {
     public class AppContext : IAppContext
     {
-        public async Task<Tuple<Int32, Int32>> GetDevelopAndNotReleaseCountAsync(Int32 userId)
+        public async Task<(Int32 allCount, Int32 notReleaseCount)> GetDevelopAndNotReleaseCountAsync(Int32 userId)
         {
             Parameter.Validate(userId);
             return await Task.Run(() =>
@@ -34,7 +34,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                     var result = mapper.Select<App>(a => new { a.Id, a.AppReleaseState }).Where<App>(w => w.UserId == userId).ToList();
                     //var result = mapper.Find<App>(a => a.UserId == userId && !a.IsDeleted, a => new { a.Id, a.AppReleaseState });
-                    return new Tuple<Int32, Int32>(result.Count, result.Count(a => a.AppReleaseState == AppReleaseState.UnRelease));
+                    return (result.Count, result.Count(a => a.AppReleaseState == AppReleaseState.UnRelease));
                 }
             });
         }

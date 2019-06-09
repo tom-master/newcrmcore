@@ -51,7 +51,7 @@ namespace NewCrmCore.Application.Services
             return result;
         }
 
-        public async Task<Tuple<Int32, Int32>> GetDevelopAndNotReleaseCountAsync(Int32 userId)
+        public async Task<(Int32 allCount, Int32 notReleaseCount)> GetDevelopAndNotReleaseCountAsync(Int32 userId)
         {
             Parameter.Validate(userId);
             return await _appContext.GetDevelopAndNotReleaseCountAsync(userId);
