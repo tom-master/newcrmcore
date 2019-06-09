@@ -82,7 +82,7 @@ namespace NewCrmCore.Application.Services
                     {
                         type = member.MemberType.ToString().ToLower(),
                         memberId = member.Id,
-                        appId = member.AppId,
+                        appId = member.Id,
                         name = member.Name,
                         icon = member.IsIconByUpload ? Appsetting.FileUrl + member.IconUrl : member.IconUrl,
                         width = member.Width,
@@ -94,7 +94,7 @@ namespace NewCrmCore.Application.Services
                         {
                             type = app.MemberType.ToString().ToLower(),
                             memberId = app.Id,
-                            appId = app.AppId,
+                            appId = app.Id,
                             name = app.Name,
                             icon = app.IsIconByUpload ? Appsetting.FileUrl + app.IconUrl : app.IconUrl,
                             width = app.Width,
@@ -111,7 +111,7 @@ namespace NewCrmCore.Application.Services
                     {
                         type = member.MemberType.ToString().ToLower(),
                         memberId = member.Id,
-                        appId = member.AppId,
+                        appId = member.Id,
                         name = member.Name,
                         icon = member.IsIconByUpload ? Appsetting.FileUrl + member.IconUrl : member.IconUrl,
                         width = member.Width,
@@ -249,13 +249,14 @@ namespace NewCrmCore.Application.Services
             Parameter.Validate(userId);
             Parameter.Validate(memberDto);
 
-            var member = new Member();
-            
-            member = memberDto.IsIconByUpload ? member.IconFromUpload() : member.IconNotFromUpload();
+            var member = await _memberContext.GetMemberAsync(userId, memberDto.Id, memberDto.MemberType == MemberType.Folder);
+
             member.ModifyIconUrl(memberDto.IconUrl);
             member.ModifyName(memberDto.Name);
             member.ModifyWidth(memberDto.Width);
             member.ModifyHeight(memberDto.Height);
+
+            member = memberDto.IsIconByUpload ? member.IconFromUpload() : member.IconNotFromUpload();
             member = memberDto.IsResize ? member.Resize() : member.NotResize();
             member = memberDto.IsOpenMax ? member.OpenMax() : member.NotOpenMax();
             member = memberDto.IsFlash ? member.Flash() : member.NotFlash();
