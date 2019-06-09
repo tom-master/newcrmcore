@@ -207,48 +207,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			await Task.Run(() =>
 			{
 				using (var mapper = new EntityMapper())
-				{
-					if (member.IsIconByUpload)
-					{
-						member.IconFromUpload();
-					}
-					else
-					{
-						member.IconNotFromUpload();
-					}
-
-					member.ModifyIconUrl(member.IconUrl);
-					member.ModifyName(member.Name);
-					member.ModifyWidth(member.Width);
-					member.ModifyHeight(member.Height);
-
-					if (member.IsResize)
-					{
-						member.Resize();
-					}
-					else
-					{
-						member.NotResize();
-					}
-
-					if (member.IsOpenMax)
-					{
-						member.OpenMax();
-					}
-					else
-					{
-						member.NotOpenMax();
-					}
-
-					if (member.IsFlash)
-					{
-						member.Flash();
-					}
-					else
-					{
-						member.NotFlash();
-					}
-
+				{ 
 					var result = mapper.Modify(member, mem => mem.Id == member.Id && mem.UserId == userId);
 					if (!result)
 					{

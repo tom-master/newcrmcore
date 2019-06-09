@@ -48,7 +48,11 @@ namespace NewCrmCore.Web.Controllers
 
             var user = await _userServices.GetUserAsync(UserId);
             ViewData["UserName"] = user.Name;
-            ViewData["UserApp"] = await _appServices.GetDevelopAndNotReleaseCountAsync(UserId);
+
+            var myApp = await _appServices.GetDevelopAndNotReleaseCountAsync(UserId);
+            ViewData["allCount"] = myApp.allCount;
+            ViewData["notReleaseCount"] = myApp.notReleaseCount;
+
             return View();
         }
 

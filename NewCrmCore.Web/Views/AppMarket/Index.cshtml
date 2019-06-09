@@ -4,8 +4,7 @@
 
     var appTypes = ViewData["AppTypes"] as List<AppTypeDto>;
     var todayRecommendApp = ViewData["TodayRecommendApp"] as TodayRecommendAppDto;
-
-    var userApp = ViewData["UserApp"] as Tuple<Int32, Int32>;
+ 
 }
 @section ChildrenCss
     {
@@ -83,8 +82,8 @@
             <h3>我是开发者</h3>
             <div class="developer">
                 <p>开发者：@ViewData["UserName"]</p>
-                <p>我开发的应用：<font style="font-weight:bold">@userApp.Item1</font> 个</p>
-                <p>未发布的应用：<font style="font-weight:bold">@userApp.Item2</font> 个</p>
+                <p>我开发的应用：<font style="font-weight:bold">@ViewData["allCount"]</font> 个</p>
+                <p>未发布的应用：<font style="font-weight:bold">@ViewData["notReleaseCount"]</font> 个</p>
                 <div class="text-center">
                     <a href="javascript:openDetailIframe2('/appmarket/userappmanage');" class="btn btn-primary">管理我的应用</a>
                     <a href="javascript:openDetailIframe2('/appmarket/userappmanage?appId=0');" class="btn btn-danger">开发新应用</a>

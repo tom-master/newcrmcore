@@ -244,11 +244,23 @@ namespace NewCrmCore.Application.Services
             }
         }
 
-        public async Task ModifyMemberInfoAsync(Int32 userId, MemberDto member)
+        public async Task ModifyMemberInfoAsync(Int32 userId, MemberDto memberDto)
         {
             Parameter.Validate(userId);
-            Parameter.Validate(member);
-            await _memberContext.ModifyMemberInfoAsync(userId, member.ConvertToModel<MemberDto, Member>());
+            Parameter.Validate(memberDto);
+
+            var member = new Member();
+            
+            member = memberDto.IsIconByUpload ? member.IconFromUpload() : member.IconNotFromUpload();
+            member.ModifyIconUrl(memberDto.IconUrl);
+            member.ModifyName(memberDto.Name);
+            member.ModifyWidth(memberDto.Width);
+            member.ModifyHeight(memberDto.Height);
+            member = memberDto.IsResize ? member.Resize() : member.NotResize();
+            member = memberDto.IsOpenMax ? member.OpenMax() : member.NotOpenMax();
+            member = memberDto.IsFlash ? member.Flash() : member.NotFlash();
+
+            await _memberContext.ModifyMemberInfoAsync(userId, member);
             await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(userId));
         }
 
