@@ -37,8 +37,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 // var where = new StringBuilder();
                 // var parameters = new List<EntityParameter>();
-
-
                 var level = EnumExtensions.ToEnum<LogLevel>(logLevel);
                 var logWhere = CombinationFactory.Create<Log>(w => w.LogLevelEnum == level);
 
@@ -54,7 +52,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                 #region totalCount 
                 {
-                    totalCount = mapper.Select<Log>().LeftJoin<User>((a, b) => a.UserId == b.Id).Where(combination).Count();
+                    totalCount = mapper.Select<Log>().LeftJoin<User>((a, b) => a.UserId == b.Id).Where<User>(combination).Count();
                     // var sql = $@"SELECT COUNT(*) FROM Log AS a LEFT JOIN newcrm_user AS a1 ON a.UserId=a1.Id WHERE 1=1 {where}";
                     // totalCount = mapper.ExecuteToSingle<Int32>(sql, parameters);
                 }
@@ -71,7 +69,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         a.ExceptionMessage,
                         a.UserId,
                         a.AddTime
-                    }).LeftJoin<User>((a, b) => a.UserId == b.Id).Where(combination).Page(pageIndex, pageSize).ToList();
+                    }).LeftJoin<User>((a, b) => a.UserId == b.Id)
+                    .Where<User>(combination)
+                    .Page(pageIndex, pageSize)
+                    .OrderBy<Log, DateTime>(a => a.AddTime)
+                    .ToList();
                     // var sql = $@"SELECT
                     //             a.LogLevelEnum,
                     //             a.Controller,
