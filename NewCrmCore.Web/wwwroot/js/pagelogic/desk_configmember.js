@@ -1,5 +1,5 @@
 ﻿NewCrm.Desk = {
-    ConfigMemeber:{
+    ConfigMemeber: {
         url: '',
         id: 0
     }
@@ -89,8 +89,9 @@ let f = $('#form').Validform({
         if (responseText.IsSuccess) {
             NewCrm.msgbox.success('修改成功');
             setTimeout(() => {
-                HROS.app.get();
-                window.parent.$.dialog.list['editdialog'].close();
+                HROS.app.get(() => {
+                    window.parent.$.dialog.list['editdialog'].close();
+                });
             }, 1000);
         } else {
             NewCrm.msgbox.fail(responseText.Message);

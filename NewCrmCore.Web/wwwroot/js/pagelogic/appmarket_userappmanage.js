@@ -51,7 +51,7 @@ function getPageList(current_page) {
         if (responseText.IsSuccess) {
             let tableTemplate = Handlebars.compile($("#table-template").html());
             $('.list-con').html(tableTemplate(responseText));
-            $('.list-count').text(responseText.totalCount);
+            $('.list-count').text(responseText.TotalCount);
             $('#pagination_setting').attr('count', parseInt(responseText.TotalCount));
             initPagination({
                 current_page: current_page,
