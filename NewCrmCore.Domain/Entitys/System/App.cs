@@ -207,7 +207,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             Name = appName;
-            OnChanged(nameof(Name), Name);
+            OnChanged(nameof(Name));
             return this;
         }
 
@@ -227,7 +227,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             IconUrl = iconUrl;
-            OnChanged(nameof(IconUrl), IconUrl);
+            OnChanged(nameof(IconUrl));
             return this;
         }
 
@@ -249,7 +249,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             Width = width;
-            OnChanged(nameof(Width), width);
+            OnChanged(nameof(Width));
             return this;
         }
 
@@ -268,7 +268,7 @@ namespace NewCrmCore.Domain.Entitys.System
                 return this;
             }
 
-            OnChanged(nameof(Height), Height);
+            OnChanged(nameof(Height));
             return this;
         }
 
@@ -278,7 +278,7 @@ namespace NewCrmCore.Domain.Entitys.System
         public App IncreaseUseCount()
         {
             UseCount += 1;
-            OnChanged(nameof(UseCount), UseCount);
+            OnChanged(nameof(UseCount));
             return this;
         }
 
@@ -289,7 +289,7 @@ namespace NewCrmCore.Domain.Entitys.System
         public App DecreaseUseCount()
         {
             UseCount -= 1;
-            OnChanged(nameof(UseCount), UseCount);
+            OnChanged(nameof(UseCount));
             return this;
         }
 
@@ -299,7 +299,7 @@ namespace NewCrmCore.Domain.Entitys.System
         public App Setbar()
         {
             IsSetbar = true;
-            OnChanged(nameof(IsSetbar), IsSetbar);
+            OnChanged(nameof(IsSetbar));
             return this;
         }
 
@@ -309,7 +309,7 @@ namespace NewCrmCore.Domain.Entitys.System
         public App NotSetbar()
         {
             IsSetbar = false;
-            OnChanged(nameof(IsSetbar), IsSetbar);
+            OnChanged(nameof(IsSetbar));
             return this;
         }
 
@@ -319,7 +319,7 @@ namespace NewCrmCore.Domain.Entitys.System
         public App OpenMax()
         {
             IsOpenMax = true;
-            OnChanged(nameof(IsOpenMax), IsOpenMax);
+            OnChanged(nameof(IsOpenMax));
             return this;
         }
 
@@ -329,7 +329,7 @@ namespace NewCrmCore.Domain.Entitys.System
         public App NotOpenMax()
         {
             IsOpenMax = false;
-            OnChanged(nameof(IsOpenMax), IsOpenMax);
+            OnChanged(nameof(IsOpenMax));
             return this;
         }
 
@@ -339,7 +339,7 @@ namespace NewCrmCore.Domain.Entitys.System
         public App System()
         {
             IsSystem = true;
-            OnChanged(nameof(IsSystem), IsSystem);
+            OnChanged(nameof(IsSystem));
             return this;
         }
 
@@ -349,7 +349,7 @@ namespace NewCrmCore.Domain.Entitys.System
         public App NotSystem()
         {
             IsSystem = false;
-            OnChanged(nameof(IsSystem), IsSystem);
+            OnChanged(nameof(IsSystem));
             return this;
         }
 
@@ -359,7 +359,7 @@ namespace NewCrmCore.Domain.Entitys.System
         public App Flash()
         {
             IsFlash = true;
-            OnChanged(nameof(IsFlash), IsFlash);
+            OnChanged(nameof(IsFlash));
             return this;
         }
 
@@ -369,7 +369,7 @@ namespace NewCrmCore.Domain.Entitys.System
         public App NotFlash()
         {
             IsFlash = false;
-            OnChanged(nameof(IsFlash), IsFlash);
+            OnChanged(nameof(IsFlash));
             return this;
         }
 
@@ -379,7 +379,7 @@ namespace NewCrmCore.Domain.Entitys.System
         public App Resize()
         {
             IsResize = true;
-            OnChanged(nameof(IsResize), IsResize);
+            OnChanged(nameof(IsResize));
             return this;
         }
 
@@ -389,7 +389,7 @@ namespace NewCrmCore.Domain.Entitys.System
         public App NotResize()
         {
             IsResize = false;
-            OnChanged(nameof(IsResize), IsResize);
+            OnChanged(nameof(IsResize));
             return this;
         }
 
@@ -404,7 +404,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             AppTypeId = appTypeId;
-            OnChanged(nameof(appTypeId), appTypeId);
+            OnChanged(nameof(appTypeId));
             return this;
         }
 
@@ -414,7 +414,7 @@ namespace NewCrmCore.Domain.Entitys.System
         public App Recommand()
         {
             IsRecommand = true;
-            OnChanged(nameof(IsRecommand), IsRecommand);
+            OnChanged(nameof(IsRecommand));
             return this;
         }
 
@@ -424,77 +424,77 @@ namespace NewCrmCore.Domain.Entitys.System
         public App CancelRecommand()
         {
             IsRecommand = false;
-            OnChanged(nameof(IsRecommand), IsRecommand);
+            OnChanged(nameof(IsRecommand));
             return this;
         }
 
         public App AppRelease()
         {
             AppReleaseState = AppReleaseState.Release;
-            OnChanged(nameof(AppReleaseState), AppReleaseState);
+            OnChanged(nameof(AppReleaseState));
             return this;
         }
 
         public App AppUnrelease()
         {
             AppReleaseState = AppReleaseState.UnRelease;
-            OnChanged(nameof(AppReleaseState), AppReleaseState);
+            OnChanged(nameof(AppReleaseState));
             return this;
         }
 
         public App Wait()
         {
             AppAuditState = AppAuditState.Wait;
-            OnChanged(nameof(AppAuditState), AppAuditState);
+            OnChanged(nameof(AppAuditState));
             return this;
         }
 
         public App Pass()
         {
             AppAuditState = AppAuditState.Pass;
-            OnChanged(nameof(AppAuditState), AppAuditState);
+            OnChanged(nameof(AppAuditState));
             return this;
         }
 
         public App Deny()
         {
             AppAuditState = AppAuditState.Deny;
-            OnChanged(nameof(AppAuditState), AppAuditState);
+            OnChanged(nameof(AppAuditState));
             return this;
         }
 
         public App UnAuditState()
         {
             AppAuditState = AppAuditState.UnAuditState;
-            OnChanged(nameof(AppAuditState), AppAuditState);
+            OnChanged(nameof(AppAuditState));
             return this;
         }
 
         public App StyleToApp()
         {
             AppStyle = AppStyle.App;
-            OnChanged(nameof(AppStyle), AppStyle);
+            OnChanged(nameof(AppStyle));
             return this;
         }
 
         public App StyleToWidget()
         {
             AppStyle = AppStyle.Widget;
-            OnChanged(nameof(AppStyle), AppStyle);
+            OnChanged(nameof(AppStyle));
             return this;
         }
 
         public App IconNotFromUpload()
         {
             IsIconByUpload = false;
-            OnChanged(nameof(IsIconByUpload), IsIconByUpload);
+            OnChanged(nameof(IsIconByUpload));
             return this;
         }
 
         public App IconFromUpload()
         {
             IsIconByUpload = true;
-            OnChanged(nameof(IsIconByUpload), IsIconByUpload);
+            OnChanged(nameof(IsIconByUpload));
             return this;
         }
 
@@ -511,7 +511,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             AppUrl = newAppUrl;
-            OnChanged(nameof(AppUrl), AppUrl);
+            OnChanged(nameof(AppUrl));
             return this;
         }
 
@@ -523,7 +523,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             Remark = newRemark ?? "";
-            OnChanged(nameof(Remark), Remark);
+            OnChanged(nameof(Remark));
             return this;
         }
     }
