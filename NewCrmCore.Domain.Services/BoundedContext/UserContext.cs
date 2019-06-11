@@ -218,7 +218,15 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                 #region sql
                 {
-                    return mapper.Select<User>().InnerJoin<Config>((a, b) => a.Id == b.UserId).Where(where).Page(pageIndex, pageSize).ToList();
+                    return mapper.Select<User, Config>((a, b) => new
+                    {
+                        a.Id,
+                        a.IsAdmin,
+                        a.Name,
+                        a.IsDisable,
+                        b.UserFace,
+                        b.IsModifyUserFace
+                    }).InnerJoin<Config>((a, b) => a.Id == b.UserId).Where(where).Page(pageIndex, pageSize).ToList();
                     // var sql = $@"SELECT 
                     // 			a.Id,
                     // 			a.IsAdmin,
