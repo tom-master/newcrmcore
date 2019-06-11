@@ -188,7 +188,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             Width = width;
-            OnChanged(nameof(Width), Width);
+            OnChanged(nameof(Width));
             return this;
         }
 
@@ -205,7 +205,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             Height = height;
-            OnChanged(nameof(Height), Height);
+            OnChanged(nameof(Height));
             return this;
         }
 
@@ -217,7 +217,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             FolderId = folderId;
-            OnChanged(nameof(FolderId), FolderId);
+            OnChanged(nameof(FolderId));
             return this;
         }
 
@@ -234,7 +234,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             Name = name;
-            OnChanged(nameof(Name), Name);
+            OnChanged(nameof(Name));
             return this;
         }
 
@@ -251,7 +251,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             IconUrl = iconUrl;
-            OnChanged(nameof(IconUrl), IconUrl);
+            OnChanged(nameof(IconUrl));
             return this;
         }
 
@@ -268,77 +268,77 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             AppUrl = appUrl;
-            OnChanged(nameof(AppUrl), AppUrl);
+            OnChanged(nameof(AppUrl));
             return this;
         }
 
         public Member OnDock()
         {
             IsOnDock = true;
-            OnChanged(nameof(IsOnDock), IsOnDock);
+            OnChanged(nameof(IsOnDock));
             return this;
         }
 
         public Member OutDock()
         {
             IsOnDock = false;
-            OnChanged(nameof(IsOnDock),IsOnDock);
+            OnChanged(nameof(IsOnDock));
             return this;
         }
 
         public Member Setbar()
         {
             IsSetbar = true;
-            OnChanged(nameof(IsSetbar),IsSetbar);
+            OnChanged(nameof(IsSetbar));
             return this;
         }
 
         public Member NotSetbar()
         {
             IsSetbar = false;
-            OnChanged(nameof(IsSetbar),IsSetbar);
+            OnChanged(nameof(IsSetbar));
             return this;
         }
 
         public Member OpenMax()
         {
             IsOpenMax = true;
-            OnChanged(nameof(IsOpenMax),IsOpenMax);
+            OnChanged(nameof(IsOpenMax));
             return this;
         }
 
         public Member NotOpenMax()
         {
             IsOpenMax = false;
-            OnChanged(nameof(IsOpenMax),IsOpenMax);
+            OnChanged(nameof(IsOpenMax));
             return this;
         }
 
         public Member Flash()
         {
             IsFlash = true;
-            OnChanged(nameof(IsFlash),IsFlash);
+            OnChanged(nameof(IsFlash));
             return this;
         }
 
         public Member NotFlash()
         {
             IsFlash = false;
-            OnChanged(nameof(IsFlash),IsFlash);
+            OnChanged(nameof(IsFlash));
             return this;
         }
 
         public Member Resize()
         {
             IsResize = true;
-            OnChanged(nameof(IsResize),IsResize);
+            OnChanged(nameof(IsResize));
             return this;
         }
 
         public Member NotResize()
         {
             IsResize = false;
-            OnChanged(nameof(IsResize),IsResize);
+            OnChanged(nameof(IsResize));
             return this;
         }
 
@@ -355,21 +355,21 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             DeskIndex = deskIndex;
-            OnChanged(nameof(DeskIndex),DeskIndex);
+            OnChanged(nameof(DeskIndex));
             return this;
         }
 
         public Member IconNotFromUpload()
         {
             IsIconByUpload = false;
-            OnChanged(nameof(IsIconByUpload),IsIconByUpload);
+            OnChanged(nameof(IsIconByUpload));
             return this;
         }
 
         public Member IconFromUpload()
         {
             IsIconByUpload = true;
-            OnChanged(nameof(IsIconByUpload),IsIconByUpload);
+            OnChanged(nameof(IsIconByUpload));
             return this;
         }
     }
