@@ -89,8 +89,8 @@ let f = $('#form').Validform({
         if (responseText.IsSuccess) {
             NewCrm.msgbox.success('修改成功');
             setTimeout(() => {
-                HROS.app.get(() => {
-                    window.parent.$.dialog.list['editdialog'].close();
+                top.HROS.app.get(() => {
+                    top.$.dialog.list['editdialog'].close();
                 });
             }, 1000);
         } else {
