@@ -123,7 +123,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             UserId = userId;
-            OnChanged(nameof(UserId), UserId);
+            OnChanged(nameof(UserId));
             return this;
         }
 
@@ -140,7 +140,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             Skin = skin;
-            OnChanged(nameof(Skin), Skin);
+            OnChanged(nameof(Skin));
             return this;
         }
 
@@ -157,10 +157,10 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             UserFace = userFace;
-            OnChanged(nameof(UserFace), UserFace);
+            OnChanged(nameof(UserFace));
 
             IsModifyUserFace = true;
-            OnChanged(nameof(IsModifyUserFace), IsModifyUserFace);
+            OnChanged(nameof(IsModifyUserFace));
 
             return this;
         }
@@ -187,7 +187,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             AppSize = appSize;
-            OnChanged(nameof(AppSize), AppSize);
+            OnChanged(nameof(AppSize));
             return this;
         }
 
@@ -213,7 +213,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             AppVerticalSpacing = appVerticalSpacing;
-            OnChanged(nameof(AppVerticalSpacing), AppVerticalSpacing);
+            OnChanged(nameof(AppVerticalSpacing));
             return this;
         }
 
@@ -239,7 +239,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             AppHorizontalSpacing = appHorizontalSpacing;
-            OnChanged(nameof(AppHorizontalSpacing), AppHorizontalSpacing);
+            OnChanged(nameof(AppHorizontalSpacing));
             return this;
         }
 
@@ -256,7 +256,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             DefaultDeskNumber = deskNumber;
-            OnChanged(nameof(DefaultDeskNumber), DefaultDeskNumber);
+            OnChanged(nameof(DefaultDeskNumber));
             return this;
         }
 
@@ -273,7 +273,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             DefaultDeskCount = deskCount;
-            OnChanged(nameof(DefaultDeskCount), DefaultDeskCount);
+            OnChanged(nameof(DefaultDeskCount));
             return this;
         }
 
@@ -285,56 +285,56 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             WallpaperMode = mode;
-            OnChanged(nameof(WallpaperMode), WallpaperMode);
+            OnChanged(nameof(WallpaperMode));
             return this;
         }
 
         public Config DisplayToTile()
         {
             WallpaperMode = WallpaperMode.Tile;
-            OnChanged(nameof(WallpaperMode), WallpaperMode);
+            OnChanged(nameof(WallpaperMode));
             return this;
         }
 
         public Config DisplayToDraw()
         {
             WallpaperMode = WallpaperMode.Draw;
-            OnChanged(nameof(WallpaperMode), WallpaperMode);
+            OnChanged(nameof(WallpaperMode));
             return this;
         }
 
         public Config DisplayToCenter()
         {
             WallpaperMode = WallpaperMode.Center;
-            OnChanged(nameof(WallpaperMode), WallpaperMode);
+            OnChanged(nameof(WallpaperMode));
             return this;
         }
 
         public Config FromBing()
         {
             IsBing = true;
-            OnChanged(nameof(IsBing), IsBing);
+            OnChanged(nameof(IsBing));
             return this;
         }
 
         public Config NotFromBing()
         {
             IsBing = false;
-            OnChanged(nameof(IsBing), IsBing);
+            OnChanged(nameof(IsBing));
             return this;
         }
 
         public Config DirectionToX()
         {
             AppXy = AppAlignMode.X;
-            OnChanged(nameof(AppXy), AppXy);
+            OnChanged(nameof(AppXy));
             return this;
         }
 
         public Config DirectionToY()
         {
             AppXy = AppAlignMode.Y;
-            OnChanged(nameof(AppXy), AppXy);
+            OnChanged(nameof(AppXy));
             return this;
         }
 
@@ -346,7 +346,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             DockPosition = postion;
-            OnChanged(nameof(DockPosition), DockPosition);
+            OnChanged(nameof(DockPosition));
             return this;
         }
 
@@ -358,7 +358,7 @@ namespace NewCrmCore.Domain.Entitys.System
             }
 
             WallpaperId = wallpaperId;
-            OnChanged(nameof(WallpaperId), WallpaperId);
+            OnChanged(nameof(WallpaperId));
             return this;
         }
     }
