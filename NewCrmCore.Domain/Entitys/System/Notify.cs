@@ -44,11 +44,10 @@ namespace NewCrmCore.Domain.Entitys.System
 
     public partial class Notify
     {
-        public Notify Read()
+        public void Read()
         {
             IsRead = true;
             OnChanged(nameof(IsRead));
-            return this;
         }
     }
 }
