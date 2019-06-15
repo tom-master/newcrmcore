@@ -1,18 +1,11 @@
-﻿NewCrm.UserSetting = {
-    Index: {
-        url: '',
-        uploadUrl: '',
-        id: 0
-    }
-};
-$('.title ul > li').on('click', function () {
+﻿$('.title ul > li').on('click', function () {
     
     let $li = $(this);
     let value = $li.attr('data-value');
     $('.title ul > li').each((k, v) => {
         $(v).removeClass('focus');
     });
-    let baseUrl = NewCrm.UserSetting.Index.url;
+    let baseUrl = $('#indexUrl').val();
     if (value === 'baseinfo') {
         location.href = baseUrl + '?target=baseinfo';
     } else if (value === 'usersafe') {
@@ -140,7 +133,7 @@ $('#hidden_frame').on('load', function () {
 let upload = WebUploader.create({
     auto: true,
     swf: '~/js/webuploader-0.1.5/Uploader.swf',
-    server: NewCrm.UserSetting.Index.uploadUrl,
+    server: $('#uploadUrl').val(),
     pick: {
         id: '#upload',
         multiple: false
@@ -151,7 +144,7 @@ let upload = WebUploader.create({
         mimeTypes: 'image/*'
     },
     formData: {
-        userId: NewCrm.UserSetting.Index.id,
+        userId: $('#userId').val(),
         uploadtype: 'face'
     }
 });
@@ -173,7 +166,7 @@ upload.on('uploadSuccess', (file, cb) => {
             Height: cb[0].Height,
             Url: cb[0].Url,
             Source: 3,
-            UserId: NewCrm.UserSetting.Index.id,
+            UserId: $('#userId').val(),
             Md5: cb[0].Md5,
             ShortUrl: ""
         };

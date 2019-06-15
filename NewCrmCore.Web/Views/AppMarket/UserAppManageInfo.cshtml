@@ -1,6 +1,7 @@
 ﻿@using NewLibCore
 @using NewCrmCore.Dto
 @using NewCrmCore.Domain.ValueObject;
+@using NewCrmCore.Infrastructure;
 @model AppDto
 @{
     Layout = "~/Views/Shared/_LayoutRoot.cshtml";
@@ -9,7 +10,7 @@
 @section ChildrenCss
     {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/webuploader/0.1.1/webuploader.css" rel="stylesheet">
+    <link href="/css/webupload/webuploader.css" rel="stylesheet">
     <style>
         * {
             box-sizing: unset;
@@ -52,15 +53,14 @@
             @Html.Partial("~/Views/AppMarket/UserAppManageNewApp.cshtml")
         </text>
     }
+    <input type="hidden" id="uploadUrl" value="@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)">
+    <input type="hidden" id="userId" value="@userId">
+    <input type="hidden" id="appId" value='@Context.Request.Query["AppId"]'>
+    <input type="hidden" id="fileUrl" value="@Appsetting.FileUrl">
 }
 @section ScriptLabel
 {
     <script src="~/js/pagelogic/appmarket_userappmanageinfo.js"></script>
 }
-@section ChildrenScript
-{
-    
-    NewCrm.AppMarket.UserAppManageInfo.url='@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)?userId=@userId&uploadtype=icon'
-    NewCrm.AppMarket.UserAppManageInfo.appId ='@Context.Request.Query["AppId"]'
-}
+ 
 

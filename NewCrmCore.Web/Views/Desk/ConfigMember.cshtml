@@ -5,7 +5,8 @@
 }
 @section ChildrenCss
     {
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/webuploader/0.1.1/webuploader.css" rel="stylesheet">
+        
+    <link href="/css/webupload/webuploader.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
     <style>
         *, ::after, ::before {
@@ -30,8 +31,7 @@
                     <div class="shortcutview">
                         <img src="@(Model.IsIconByUpload?NewCrmCore.Infrastructure.Appsetting.FileUrl+Model.IconUrl:Model.IconUrl)">
                     </div>
-                    <label for="upload" class="ml-2 btn btn-outline-primary btn-sm">选择图片</label>
-                    <input type="file" class="" style="display:none" id="upload">
+                    <div id="upload" class="ml-2 btn btn-outline-primary btn-sm">选择图片</div>
                     <div class="shortcut-selicon">
                         <div class="title">系统推荐的图标：</div>
                         <a href="###"><img src="/images/ui/system-gear.png" valsrc="/images/ui/system-gear.png"></a>
@@ -120,6 +120,9 @@
             <a class="btn btn-primary btn-sm fr" id="btn-submit" href="###" style="margin-right: 10px"><i class="icon-white icon-ok"></i> 确定</a>
         </div>
     </div>
+    <input type="hidden" id="uploadUrl" value="@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)" >
+    <input type="hidden" id="memberId" value="@Model.Id" >
+     <input type="hidden" id="userId" value="@Model.UserId" >
 </form>
 @section ScriptLabel
 {
@@ -127,7 +130,5 @@
 }
 @section ChildrenScript
 {
-
-    NewCrm.Desk.ConfigMemeber.url='@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)'
-    NewCrm.Desk.ConfigMemeber.id='@Model.Id'
+    
 }

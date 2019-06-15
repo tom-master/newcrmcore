@@ -1,10 +1,6 @@
-﻿
-NewCrm.AppMarket = {
-    UserAppManageInfo: {
-        url: '',
-        appId: 0
-    }
-};
+﻿/*<input type="hidden" id="uploadUrl" value="@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)">
+    <input type="hidden" id="userId" value="@userId">
+    <input type="hidden" id="appId" value='@Context.Request.Query["AppId"]'> */
 
 let uploader = WebUploader.create({
     // 选完文件后，是否自动上传。
@@ -12,7 +8,7 @@ let uploader = WebUploader.create({
     // swf文件路径
     swf: '../js/webuploader-0.1.5/Uploader.swf',
     // 文件接收服务端。
-    server: NewCrm.AppMarket.UserAppManageInfo.url,
+    server: $('#uploadUrl').val(),
     // 选择文件的按钮。可选。
     // 内部根据当前运行是创建，可能是input元素，也可能是flash.
     pick: {
@@ -24,6 +20,10 @@ let uploader = WebUploader.create({
         title: 'Images',
         extensions: 'gif,jpg,jpeg,bmp,png',
         mimeTypes: 'image/*'
+    },
+    formData: {
+        userId: $('#userId').val(),
+        uploadtype: 'icon'
     }
 });
 uploader.on('beforeFileQueued', (file) => {
@@ -48,11 +48,13 @@ uploader.on('fileQueued', (file) => {
     }, 48, 48);
 });
 uploader.on('uploadSuccess', (file, cb) => {
+    debugger
     if (cb[0].IsSuccess) {
         let urlPart = cb[0].Url;
-        let appId = NewCrm.AppMarket.UserAppManageInfo.appId;
+        let appId = $('#appId').val();
         if (parseInt(appId) === 0) {
             $('#isIconByUpload').val('1');
+            $('.shortcutview img').attr('src', $('#fileUrl').val() + urlPart)
             $('#val_icon').val(urlPart);
         } else {
             HROS.request.post('/appmarket/modifyicon', { AppId: appId, NewIcon: urlPart }, (responseText) => {

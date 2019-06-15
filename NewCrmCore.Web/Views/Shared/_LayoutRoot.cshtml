@@ -42,14 +42,14 @@
 <environment names="Production" asp-append-version="true">
     <script src="/js/hooray/lib/hooraylibs.js"></script>
     <script src="/js/newcrm.site.min.js"></script>
-    <script src="https://cdn.bootcss.com/webuploader/0.1.1/webuploader.min.js"></script>
+    <script src="/js/webupload/webuploader.min.js"></script>
     <script src="https://cdn.bootcss.com/handlebars.js/4.0.11/handlebars.min.js"></script>
     <script src="/js/signalr/signalr.min.js"></script>
     <script src="/js/lobibox/lobibox.js"></script>
 </environment>
 <script src="~/js/pagelogic/root_layout_init.js"></script>
-@RenderSection("ScriptLabel", false)
 @RenderSection("ChildrenTemplate", required: false)
+@RenderSection("ScriptLabel", false)
 <script>
     $(() => {
 		@RenderSection("ChildrenScript", false)

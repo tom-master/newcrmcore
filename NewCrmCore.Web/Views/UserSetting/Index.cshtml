@@ -7,7 +7,7 @@
 @section ChildrenCss
     {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/webuploader/0.1.1/webuploader.css" rel="stylesheet">
+    <link href="/css/webupload/webuploader.css" rel="stylesheet">
 }
 @section SysCss
     {
@@ -30,6 +30,9 @@
         </li>
     </ul>
 </div>
+<input type="hidden" id="indexUrl" value='@Url.Action("index", "usersetting")' />
+<input type="hidden" id="uploadUrl" value="@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)">
+<input type="hidden" id="userId" value="@Model.Id">
 
 @{
     if (Model != null)
@@ -65,9 +68,6 @@
             </text>
         }
     }
-    NewCrm.UserSetting.Index.url = '@Url.Action("index", "usersetting")';
-    NewCrm.UserSetting.Index.uploadUrl = '@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)';
-    NewCrm.UserSetting.Index.id = '@Model.Id';
 }
 @section ScriptLabel
 {

@@ -1,14 +1,9 @@
-﻿NewCrm.Desk = {
-    ConfigMemeber: {
-        url: '',
-        id: 0
-    }
-};
+﻿
 
 let uploader = WebUploader.create({
     auto: true,
     swf: '~/js/webuploader-0.1.5/Uploader.swf',
-    server: NewCrm.Desk.ConfigMemeber.url,
+    server: $('#uploadUrl').val(),
     pick: {
         id: '#upload',
         multiple: false
@@ -19,7 +14,7 @@ let uploader = WebUploader.create({
         mimeTypes: 'image/*'
     },
     formData: {
-        userId: NewCrm.Desk.ConfigMemeber.id,
+        userId: $('#userId').val(),
         uploadtype: 'icon'
     }
 });
@@ -45,9 +40,10 @@ uploader.on('fileQueued', (file) => {
     }, 48, 48);
 });
 uploader.on('uploadSuccess', (file, cb) => {
+    
     if (cb[0].IsSuccess) {
         let urlPart = cb[0].Url;
-        HROS.request.post('/desk/modifyicon', { MemberId: NewCrm.Desk.ConfigMemeber.Id, NewIcon: urlPart }, (responseText) => {
+        HROS.request.post('/desk/modifyicon', { MemberId: $('#memberId').val(), NewIcon: urlPart }, (responseText) => {
             if (responseText.IsSuccess) {
                 $('#isIconByUpload').val('1');
                 $('.shortcutview img').attr('src', responseText.Model);
