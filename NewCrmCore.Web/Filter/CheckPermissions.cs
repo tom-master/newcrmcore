@@ -16,7 +16,7 @@ using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.Web.Filter
 {
-    public class AuthFilter : IAsyncAuthorizationFilter
+    public class CheckPermissions : IAsyncAuthorizationFilter
     {
         public async Task OnAuthorizationAsync(AuthorizationFilterContext filterContext)
         {

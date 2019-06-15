@@ -48,8 +48,8 @@ namespace NewCrmCore.Web
 
             services.AddMvc(config =>
             {
-                config.Filters.Add(new ErrorFilter());
-                config.Filters.Add(new AuthFilter());
+                config.Filters.Add(new HandleException());
+                config.Filters.Add(new CheckPermissions());
                 config.Filters.Add(new VisitorRecordFilter());
                 config.Filters.Add(new DoNotCheckPermissionAttribute());
             }).AddJsonOptions(op =>

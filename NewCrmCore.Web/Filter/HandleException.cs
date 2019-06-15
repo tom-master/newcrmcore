@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace NewCrmCore.Web.Filter
 {
-    public sealed class ErrorFilter : IExceptionFilter
+    public sealed class HandleException : IExceptionFilter
     {
         public void OnException(ExceptionContext filterContext)
         {
