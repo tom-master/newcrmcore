@@ -1,8 +1,6 @@
-﻿NewCrm.AppTypes = {
-    CreateNewAppType:{
-        appTypeId: 0
-    }
-};
+﻿/**
+ * <input type="hidden" id="typeId" value="@appTypeId">
+ */
 
 let f = $('#form').Validform({
     btnSubmit: '#btn-submit',
@@ -31,7 +29,7 @@ let f = $('#form').Validform({
     },
     callback: (responseText) => {
         if (responseText.IsSuccess) {
-            if (NewCrm.AppTypes.CreateNewAppType.appTypeId) {
+            if ($('#typeId').val()) {
                 $.dialog({
                     id: 'ajaxedit',
                     content: '修改成功，是否继续修改？',

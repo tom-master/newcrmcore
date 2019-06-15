@@ -50,11 +50,8 @@
         <input type="text" id="wallpaperurl" class="form-control" style="width: 350px" placeholder="请输入一个URL地址（建议以 jpg, jpeg, png, gif, html, htm 结尾）" value=""><button type="button" class="btn" id="webWallpaper">应用</button>
     </div>
 </div>
-@section ChildrenScript
-{
-    NewCrm.Desk.CustomizeWallpaper.url='@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)'
-    NewCrm.Desk.CustomizeWallpaper.userId = '@userConfig.UserId'
-}
+<input type="hidden" id="uploadUrl" value="@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)">
+<input type="hidden" id="userId" value="@userConfig.UserId">
 
 @section ScriptLabel
 {

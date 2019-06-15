@@ -1,10 +1,5 @@
-﻿
-NewCrm.AppMarket = {
-    UserAppManageDetail:{
-        app: 0,
-        url: ''
-    }
-};
+﻿/**<input type="hidden" id="app" value="@(AppStyle.App)" />
+<input type="hidden" id="fileUrl" value="@(NewCrmCore.Infrastructure.Appsetting.FileUrl)" /> */
 
 $('html').css({ 'overflow-y': 'hidden' });
 //加载列表
@@ -66,7 +61,7 @@ function getPageList(current_page) {
     });
 
     Handlebars.registerHelper('convertstyle', (appStyle) => {
-        if (appStyle === NewCrm.AppMarket.UserAppManageDetail.app) {
+        if (appStyle === $('#app').val()) {
             return '应用';
         }
         return '挂件';
@@ -74,7 +69,7 @@ function getPageList(current_page) {
 
     Handlebars.registerHelper('appendUrl', (v1, v2) => {
         if (v1) {
-            return NewCrm.AppMarket.UserAppManageDetail.url + v2;
+            return $('#fileUrl').val() + v2;
         }
         return v2;
     });

@@ -129,7 +129,8 @@
         </text>
     }
 }
-
+<input type="hidden" id="app" value="@(AppStyle.App)" />
+<input type="hidden" id="fileUrl" value="@(NewCrmCore.Infrastructure.Appsetting.FileUrl)" />
 @section ChildrenTemplate{
     <script id="table-template" type="text/x-handlebars-template">
         {{#each Model}}
@@ -153,9 +154,4 @@
 @section ScriptLabel
 {
     <script src="~/js/pagelogic/appmarket_userappmanage.js"></script>
-}
-@section ChildrenScript
-{
-    NewCrm.AppMarket.UserAppManageDetail.app='@(AppStyle.App)';
-    NewCrm.AppMarket.UserAppManageDetail.url='@(NewCrmCore.Infrastructure.Appsetting.FileUrl)';
-}
+} 

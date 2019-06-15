@@ -1,8 +1,5 @@
-﻿NewCrm.Security = {
-    CreateNewRole:{
-        roleId: 0
-    }
-};
+﻿/**<input type="hidden" id="roleId" value="@roleId">
+ */
 let f = $('#form').Validform({
     btnSubmit: '#btn-submit',
     postonce: true,
@@ -29,7 +26,7 @@ let f = $('#form').Validform({
     },
     callback: (responseText) => {
         if (responseText.IsSuccess) {
-            if (NewCrm.Security.CreateNewRole.roleId) {
+            if ($('#roleId').val()) {
                 $.dialog({
                     id: 'ajaxedit',
                     content: '修改成功，是否继续修改?',

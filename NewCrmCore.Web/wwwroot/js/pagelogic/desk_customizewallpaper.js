@@ -1,9 +1,5 @@
-﻿NewCrm.Desk = {
-    CustomizeWallpaper:{
-        url: '',
-        userId: ''
-    }
-};
+﻿/**<input type="hidden" id="uploadUrl" value="@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)">
+<input type="hidden" id="userId" value="@userConfig.UserId"> */
 
 (() => {
     HROS.request.get("/desk/getuploadwallpapers", {}, (responseText) => {
@@ -25,7 +21,7 @@ var upload = WebUploader.create({
     // swf文件路径
     swf: '~/js/webuploader-0.1.5/Uploader.swf',
     // 文件接收服务端。
-    server: NewCrm.Desk.CustomizeWallpaper.url,
+    server: $('#uploadUrl').val(),
     // 选择文件的按钮。可选。
     // 内部根据当前运行是创建，可能是input元素，也可能是flash.
     pick: {
@@ -39,7 +35,7 @@ var upload = WebUploader.create({
         mimeTypes: 'image/*'
     },
     formData: {
-        userId: NewCrm.Desk.CustomizeWallpaper.userId,
+        userId: $('#userId').val(),
         uploadtype: 'wallpaper'
     }
 });
@@ -57,7 +53,7 @@ upload.on('uploadSuccess', (file, cb) => {
             Height: cb[0].Height,
             Url: cb[0].Url,
             Source: 3,
-            UserId: NewCrm.Desk.CustomizeWallpaper.userId,
+            UserId: $('#userId').val(),
             Md5: cb[0].Md5,
             ShortUrl: ""
         };

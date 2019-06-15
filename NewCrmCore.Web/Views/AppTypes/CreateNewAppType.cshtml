@@ -98,10 +98,7 @@
         </div>
     </div>
 </form>
-@section ChildrenScript
-{
-    NewCrm.AppTypes.CreateNewAppType.appTypeId='@appTypeId'
-}
+<input type="hidden" id="typeId" value="@appTypeId">
 @section ScriptLabel
 {
     <script src="~/js/pagelogic/apptypes_createnewapptype.js"></script>

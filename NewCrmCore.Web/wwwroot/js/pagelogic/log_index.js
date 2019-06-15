@@ -1,10 +1,9 @@
-﻿NewCrm.Log = {
-    Info: '',
-    Warning: '',
-    Debug: '',
-    Error: '',
-    Exception: ''
-};
+﻿/***
+ * <input type="hidden" id="info" value="@LogLevel.Info"> 
+<input type="hidden" id="warn" value="@LogLevel.Warning"> 
+<input type="hidden" id="debug" value="@LogLevel.Debug"> 
+<input type="hidden" id="error" value="@LogLevel.Error"> 
+<input type="hidden" id="exc" value="@LogLevel.Exception">  */
 
 //加载列表
 getPageList(0);
@@ -46,13 +45,13 @@ Handlebars.registerHelper('cutLongString', (str) => {
 Handlebars.registerHelper('parseLoggerLevel', (str) => {
     if (str === NewCrm.Log.Info) {
         return '信息';
-    } else if (str === NewCrm.Log.Warning) {
+    } else if (str === $('#warn').val()) {
         return '警告';
-    } else if (str === NewCrm.Log.Debug) {
+    } else if (str === $('#debug').val()) {
         return '调试';
-    } else if (str === NewCrm.Log.Error) {
+    } else if (str === $('#error').val()) {
         return '业务错误';
-    } else if (str === NewCrm.Log.Exception) {
+    } else if (str === $('#exc').val()) {
         return '代码异常';
     }
 });

@@ -75,6 +75,11 @@
 <div id="detailIframe" style="background:#fff;position:fixed;z-index:1;top:-100px;left:0;width:100%;height:100%;display:none">
     <iframe frameborder="0" style="width:100%;height:100%"></iframe>
 </div>
+<input type="hidden" id="info" value="@LogLevel.Info"> 
+<input type="hidden" id="warn" value="@LogLevel.Warning"> 
+<input type="hidden" id="debug" value="@LogLevel.Debug"> 
+<input type="hidden" id="error" value="@LogLevel.Error"> 
+<input type="hidden" id="exc" value="@LogLevel.Exception"> 
 
 @section ChildrenTemplate{
     <script id="table-template" type="text/x-handlebars-template">
@@ -94,13 +99,4 @@
 {
     <script src="~/js/pagelogic/log_index.js"></script>
 }
-@section ChildrenScript
-    {
-    
-    NewCrm.Log.Info='@LogLevel.Info';
-    NewCrm.Log.Warning='@LogLevel.Warning';
-    NewCrm.Log.Debug='@LogLevel.Debug';
-    NewCrm.Log.Error='@LogLevel.Error';
-    NewCrm.Log.Exception= '@LogLevel.Exception';
-};
 

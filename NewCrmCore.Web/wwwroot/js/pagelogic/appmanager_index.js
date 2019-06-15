@@ -1,11 +1,11 @@
 ﻿//加载列表
 getPageList(0);
+/**
+ * <input type="hidden" id="wait" value="@(AppAuditState.Wait)" /> 
+<input type="hidden" id="pass" value="@(AppAuditState.Pass)" /> 
+<input type="hidden" id="fileUrl" value="@(NewCrmCore.Infrastructure.Appsetting.FileUrl)" /> 
+ */
 
-NewCrm.AppManager = {
-    wait: 0,
-    pass: 0,
-    url: ''
-};
 
 //删除，推荐
 $('.list-con').on('click', '.do-del', function () {
@@ -74,7 +74,7 @@ function getPageList(current_page) {
     });
 
     Handlebars.registerHelper("isAudit", function (v1, options) {
-        if (v1 === NewCrm.AppManager.pass) {
+        if (v1 === $('#pass').val()) {
             return options.fn(this);
         } else {
             return options.inverse(this);
@@ -91,13 +91,13 @@ function getPageList(current_page) {
 
     Handlebars.registerHelper('appendUrl', (v1, v2) => {
         if (v1) {
-            return NewCrm.AppManager.url + v2;
+            return $('#fileUrl').val() + v2;
         }
         return v2;
     });
 
     Handlebars.registerHelper("compare", function (v1, v2, options) {
-        if (v1 === v2 || v1 === NewCrm.AppManager.wait) {
+        if (v1 === v2 || v1 === $('#wait').val()) {
             return options.fn(this);
         } else {
             return options.inverse(this);
