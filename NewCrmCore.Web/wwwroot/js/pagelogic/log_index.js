@@ -43,7 +43,7 @@ Handlebars.registerHelper('cutLongString', (str) => {
 });
 
 Handlebars.registerHelper('parseLoggerLevel', (str) => {
-    if (str === NewCrm.Log.Info) {
+    if (str === $('#info').val()) {
         return '信息';
     } else if (str === $('#warn').val()) {
         return '警告';
