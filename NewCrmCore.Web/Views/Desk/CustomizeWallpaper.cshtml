@@ -6,7 +6,7 @@
 }
 @section ChildrenCss
     {
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/webuploader/0.1.1/webuploader.css" rel="stylesheet">
+    <link href="/css/webupload/webuploader.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
 }
 @section SysCss
@@ -36,8 +36,7 @@
 </div>
 <div class="wapppapercustom">
     <div class="tip">
-        <label for="upload" class="btn btn-outline-primary btn-sm">上传壁纸</label>
-        <input type="file" id="upload" class="btn btn-mini fr" style="display:none">
+        <label id="upload" class="btn btn-outline-primary btn-sm">上传壁纸</label>
         <strong>自定义壁纸：</strong>最多上传6张，每张上传的壁纸大小不超过1M
     </div>
     <div class="view">
@@ -55,6 +54,7 @@
 
 @section ScriptLabel
 {
+       <script src="/js/webupload/webuploader.min.js"></script>
     <script src="~/js/pagelogic/desk_customizewallpaper.js"></script>
 }
 
