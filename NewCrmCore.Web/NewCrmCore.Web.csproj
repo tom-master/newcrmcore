@@ -12,7 +12,7 @@
     <None Remove="wwwroot\lib\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="bootstrap" Version="4.1.1" />
+    <PackageReference Include="bootstrap" Version="4.3.1" />
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.1.1" />
