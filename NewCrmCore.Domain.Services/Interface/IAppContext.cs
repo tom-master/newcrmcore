@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Dto;
-using NewCrmCore.Infrastructure.CommonTools;
 
 namespace NewCrmCore.Domain.Services.Interface
 {

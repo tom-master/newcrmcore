@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NewLibCore.Data.SQL.Mapper.Extension;
-using NewLibCore.Data.SQL.Mapper.Extension.PropertyExtension;
+using NewLibCore.Data.SQL.Mapper.AttributeExtension;
+using NewLibCore.Data.SQL.Mapper.EntityExtension;
 
 namespace NewCrmCore.Domain.Entitys.System
 {

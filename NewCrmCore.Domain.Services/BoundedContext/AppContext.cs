@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.System;
@@ -13,8 +12,8 @@ using NewLibCore;
 using NewLibCore.Data.SQL.CombinationCondition;
 using NewLibCore.Data.SQL.CombinationCondition.ConcreteCombinationCondition;
 using NewLibCore.Data.SQL.Mapper;
-using NewLibCore.Data.SQL.Mapper.Extension;
 using NewLibCore.Validate;
+
 namespace NewCrmCore.Domain.Services.BoundedContext
 {
     public class AppContext : IAppContext
