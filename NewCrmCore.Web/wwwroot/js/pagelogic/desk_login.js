@@ -4,14 +4,12 @@
     showAllError: true,
     tiptype: (msg, o) => {
         if (!o.obj.is('form')) {
-            let B = o.obj.parents('.control-group');
+            let B = o.obj.parents('form-control');
             let T = B.children('.help-inline');
             if (o.type === 2) {
-                B.removeClass('error');
                 T.text('');
             } else {
-                B.addClass('error');
-                T.text(msg);
+                alert(msg);
             }
         }
     },
