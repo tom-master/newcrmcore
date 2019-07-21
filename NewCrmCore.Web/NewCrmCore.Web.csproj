@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
     <StartupObject></StartupObject>
     <UserSecretsId>51dc46db-85d5-464f-8067-ff4aaab8e42c</UserSecretsId>
@@ -14,17 +14,14 @@
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="4.3.1" />
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.App"  />
+   <!-- <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.Host" Version="1.1.7" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="1.0.2" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="1.0.2" />-->
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
-  <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
-  </ItemGroup>
+ 
   <ItemGroup>
     <None Include="Views\Log\Index.cshtml" />
     <None Include="wwwroot\css\hoorayui\globle.css" />

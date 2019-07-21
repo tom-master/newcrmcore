@@ -41,17 +41,17 @@
         {
             case "baseinfo":
             {
-                Html.RenderPartial("~/Views/UserSetting/BaseInfo.cshtml", Model);
+                @Html.RenderPartialAsync("~/Views/UserSetting/BaseInfo.cshtml", Model);
                 break;
             }
             case "usersafe":
             {
-                Html.RenderPartial("~/Views/UserSetting/UserSafe.cshtml");
+                @Html.RenderPartialAsync("~/Views/UserSetting/UserSafe.cshtml");
                 break;
             }
             default:
             {
-                Html.RenderPartial("~/Views/UserSetting/BaseInfo.cshtml", Model);
+                @Html.RenderPartialAsync("~/Views/UserSetting/BaseInfo.cshtml", Model);
                 break;
             }
         }

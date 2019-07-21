@@ -28,7 +28,7 @@
         if ((AppAuditState)ViewData["AppState"] == AppAuditState.Pass)//已通过
         {
             <text>
-                @Html.Partial("~/Views/AppMarket/UserAppManageDetail.cshtml", Model)
+                @Html.PartialAsync("~/Views/AppMarket/UserAppManageDetail.cshtml", Model)
             </text>
         }
         else
@@ -36,13 +36,13 @@
             if ((AppAuditState)ViewData["AppState"] == AppAuditState.UnAuditState || (AppAuditState)ViewData["AppState"] == AppAuditState.Deny)//未审核或未通过
             {
                 <text>
-                    @Html.Partial("~/Views/AppManager/AppAudit.cshtml", Model)
+                    @Html.PartialAsync("~/Views/AppManager/AppAudit.cshtml", Model)
                 </text>
             }
             else
             {
                 <text>
-                    @Html.Partial("~/Views/AppMarket/UserAppManageEdit.cshtml", Model)
+                    @Html.PartialAsync("~/Views/AppMarket/UserAppManageEdit.cshtml", Model)
                 </text>
             }
         }
@@ -50,7 +50,7 @@
     else
     {
         <text>
-            @Html.Partial("~/Views/AppMarket/UserAppManageNewApp.cshtml")
+            @Html.PartialAsync("~/Views/AppMarket/UserAppManageNewApp.cshtml")
         </text>
     }
     <input type="hidden" id="uploadUrl" value="@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)">
