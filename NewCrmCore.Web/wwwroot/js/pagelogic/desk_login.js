@@ -31,3 +31,10 @@
         }
     }
 });
+
+$(document).keyup((e)=>{
+    let key = e.which;
+    if(key==13){
+        $('#btn-submit').click();
+    }
+})
