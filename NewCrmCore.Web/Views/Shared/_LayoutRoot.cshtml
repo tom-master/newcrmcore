@@ -27,6 +27,7 @@
 <script src="https://cdn.bootcss.com/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 <script src="https://cdn.bootcss.com/mousetrap/1.6.1/mousetrap.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <environment names="Development" asp-append-version="true">
     <script src="/js/hooray/lib/hooraylibs.js"></script>
@@ -45,6 +46,7 @@
     <script src="/js/signalr/signalr.min.js"></script>
     <script src="/js/lobibox/lobibox.js"></script>
 </environment>
+
 <script src="~/js/pagelogic/root_layout_init.js"></script>
 @RenderSection("ChildrenTemplate", required: false)
 @RenderSection("ScriptLabel", false)

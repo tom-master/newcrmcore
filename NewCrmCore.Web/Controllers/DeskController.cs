@@ -13,7 +13,6 @@ using NewCrmCore.Web.Filter;
 using NewLibCore.Validate;
 using NewLibCore;
 using Newtonsoft.Json;
-using Microsoft.AspNetCore.SignalR;
 using System.Linq;
 
 namespace NewCrmCore.Web.Controllers
@@ -70,7 +69,7 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet, DoNotCheckPermission]
         public IActionResult Login()
         {
-            ViewBag.Title="登陆";
+            ViewBag.Title = "登陆";
             var userId = Request.Cookies["User"];
             if (userId != null)
             {
@@ -431,7 +430,7 @@ namespace NewCrmCore.Web.Controllers
 
             response.IsSuccess = true;
             response.Message = "初始化壁纸成功";
-            response.Model = new { result.WallpaperUrl, result.WallpaperSource,result.WallpaperHeigth,result.WallpaperMode,result.WallpaperWidth };
+            response.Model = new { result.WallpaperUrl, result.WallpaperSource, result.WallpaperHeigth, result.WallpaperMode, result.WallpaperWidth };
 
             return Json(response);
         }
