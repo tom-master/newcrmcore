@@ -33,7 +33,7 @@ namespace NewCrmCore.Web.Filter
 
         private String GetCompliteUrl(HttpRequest httpRequest)
         {
-            return $@"{httpRequest.Scheme}://{httpRequest.Host}{httpRequest.PathBase}{httpRequest.Path}{httpRequest.QueryString}";
+            return $@"{httpRequest.Scheme}://{httpRequest.Host}{httpRequest.PathBase}{httpRequest.Path}?{httpRequest.QueryString}";
         }
     }
 }
