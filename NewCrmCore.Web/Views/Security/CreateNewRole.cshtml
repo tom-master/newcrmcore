@@ -26,7 +26,6 @@
 }
 <form action="/security/createrole?roleId=@roleId" method="post" id="form" name="form">
     <div class="creatbox">
-        <input type="hidden" name="token" value="@(await TimeToken.GetFormTokenAsync())" />
         <input type="hidden" id="roleId" name="roleId" value="@roleId" />
         <div class="middle" style="overflow: hidden; position: inherit; bottom: 0px;">
             <div class="input-label">

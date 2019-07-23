@@ -30,16 +30,7 @@ namespace NewCrmCore.Web.Filter
                 ReturnMessage(filterContext, "会话过期,请刷新页面后重新登陆");
                 return;
             }
-
-            if (filterContext.HttpContext.Request.Method.ToLower() == "post")
-            {
-                if (!await ValidateToken(filterContext))
-                {
-                    ReturnMessage(filterContext, "不要重复提交表单!");
-                    return;
-                }
-            }
-
+           
             if (filterContext.HttpContext.Request.Query["type"] == "folder")
             {
                 return;
@@ -85,30 +76,6 @@ namespace NewCrmCore.Web.Filter
                     Content = @"<script>(function(){top.NewCrm.msgbox.fail('" + response.Message + "');})()</script>"
                 };
             }
-        }
-
-        private async Task<Boolean> ValidateToken(AuthorizationFilterContext filterContext)
-        {
-            var requestToken = "";
-            if (filterContext.HttpContext.Request.IsAjaxRequest())
-            {
-                return true;
-            }
-            requestToken = filterContext.HttpContext.Request.Form["token"];
-
-            var cacheToken = await CacheHelper.GetOrSetCacheAsync<String>(new GlobalUniqueTokenCacheKey(requestToken));
-
-            if (String.IsNullOrEmpty(cacheToken))
-            {
-                return false;
-            }
-            if (cacheToken != requestToken)
-            {
-                return false;
-            }
-
-            await CacheHelper.RemoveKeyWhenModify(new GlobalUniqueTokenCacheKey(requestToken));
-            return true;
         }
     }
 }

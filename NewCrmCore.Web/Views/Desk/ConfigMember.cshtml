@@ -22,7 +22,6 @@
     <input type="hidden" name="id" value="@Model.Id">
     <input type="hidden" name="membertype" value="@Model.MemberType" />
     <input type="hidden" id="isIconByUpload" name="isIconByUpload" value="@(Model.IsIconByUpload?1:0)" />
-    <input type="hidden" name="token" value="@(await TimeToken.GetFormTokenAsync())" />
     <div class="creatbox">
         <div class="middle">
             <div class="input-label">
