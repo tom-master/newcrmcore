@@ -7,10 +7,9 @@ using NewCrmCore.Domain.Entitys.Agent;
 using NewCrmCore.Domain.Entitys.Security;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
-using NewCrmCore.Infrastructure.CommonTools;
-using NewLibCore.Data.SQL.CombinationCondition;
-using NewLibCore.Data.SQL.CombinationCondition.ConcreteCombinationCondition;
+using NewCrmCore.Infrastructure.CommonTools; 
 using NewLibCore.Data.SQL.Mapper;
+using NewLibCore.Data.SQL.MergeExpression;
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
@@ -57,7 +56,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 // var where = new StringBuilder();
                 // var parameters = new List<EntityParameter>();
-                var where = CombinationFactory.Create<Role>();
+                var where = MergeFactory.Create<Role>();
                 if (!String.IsNullOrEmpty(roleName))
                 {
                     where.And(w => w.Name.Contains(roleName));

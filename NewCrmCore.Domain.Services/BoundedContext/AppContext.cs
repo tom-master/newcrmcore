@@ -9,9 +9,8 @@ using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
-using NewLibCore.Data.SQL.CombinationCondition;
-using NewLibCore.Data.SQL.CombinationCondition.ConcreteCombinationCondition;
 using NewLibCore.Data.SQL.Mapper;
+using NewLibCore.Data.SQL.MergeExpression;
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
@@ -197,8 +196,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             using (var mapper = new EntityMapper())
             {
-
-                var where = CombinationFactory.Create<App>();
+                
+                var where = MergeFactory.Create<App>();
                 //where.Append($@" WHERE 1=1 AND a.IsDeleted=0 ");
 
                 var parameters = new List<EntityParameter>();
@@ -383,7 +382,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     // {
                     //     where.Append($@" AND a.Id IN({String.Join(",", appIds)})");
                     // }
-                    var where = CombinationFactory.Create<App>(w => w.IsSystem);
+                    var where = MergeFactory.Create<App>(w => w.IsSystem);
                     if (appIds != default)
                     {
                         where.And(w => appIds.Contains(w.Id));

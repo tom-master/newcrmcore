@@ -1,9 +1,8 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using NewLibCore;
 using NewLibCore.Data.Redis.InternalHelper;
-using NewLibCore.InternalExtension;
 
 namespace NewCrmCore.Infrastructure.CommonTools
 {

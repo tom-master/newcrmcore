@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.Agent;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewLibCore;
-using NewLibCore.Data.SQL.CombinationCondition;
-using NewLibCore.Data.SQL.CombinationCondition.ConcreteCombinationCondition;
 using NewLibCore.Data.SQL.Mapper;
+using NewLibCore.Data.SQL.MergeExpression;
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
@@ -38,9 +36,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 // var where = new StringBuilder();
                 // var parameters = new List<EntityParameter>();
                 var level = EnumExtensions.ToEnum<LogLevel>(logLevel);
-                var logWhere = CombinationFactory.Create<Log>(w => w.LogLevelEnum == level);
+                var logWhere = MergeFactory.Create<Log>(w => w.LogLevelEnum == level);
 
-                var userWhere = CombinationFactory.Create<User>();
+                var userWhere = MergeFactory.Create<User>();
                 if (!String.IsNullOrEmpty(userName))
                 {
                     userWhere.And(w => w.Name.Contains(userName));
