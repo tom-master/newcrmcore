@@ -22,7 +22,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(userId);
             return await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     // var sql = $@"SELECT a.Id,a.AppReleaseState FROM App AS a WHERE a.UserId=@userId AND a.IsDeleted=0";
                     // var parameters = new List<EntityParameter>
@@ -41,7 +41,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
 
                     return mapper.Select<AppType>(a => new { a.Id, a.Name, a.IsSystem }).ToList();
@@ -56,7 +56,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(userId);
             return await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     var sql = $@"SELECT 
                             a.UseCount,
@@ -97,7 +97,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(pageIndex, true);
             Parameter.Validate(pageSize);
 
-            using (var mapper = new EntityMapper())
+            var mapper = EntityMapper.CreateMapper();
             {
                 var parameters = new List<EntityParameter>
                 {
@@ -194,9 +194,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(pageIndex);
             Parameter.Validate(pageSize);
 
-            using (var mapper = new EntityMapper())
+            var mapper = EntityMapper.CreateMapper();
             {
-                
+
                 var where = MergeFactory.Create<App>();
                 //where.Append($@" WHERE 1=1 AND a.IsDeleted=0 ");
 
@@ -312,7 +312,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             return await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     var sql = $@"SELECT 
                             a.Name,
@@ -356,7 +356,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             return await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     // var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.AppId=@Id AND a.UserId=@UserId AND a.IsDeleted=0";
                     // var parameters = new List<EntityParameter>
@@ -375,7 +375,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     // var where = new StringBuilder();
                     // if (appIds != default(IEnumerable<Int32>) && appIds.Any())
@@ -402,7 +402,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appTypeName);
             return await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
 
                     return mapper.Select<AppType>().Exist();
@@ -425,7 +425,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(starCount);
             await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     #region 前置条件判断
                     {
@@ -461,7 +461,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     #region app
                     {
@@ -477,7 +477,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             return await Task.Run<App>(async () =>
              {
-                 using (var mapper = new EntityMapper())
+                 var mapper = EntityMapper.CreateMapper();
                  {
                      var app = await GetAppAsync(appId);
                      app.Pass();
@@ -496,7 +496,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             return await Task.Run<App>(async () =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     var app = await GetAppAsync(appId);
                     app.Deny();
@@ -515,7 +515,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     mapper.OpenTransaction();
                     try
@@ -558,7 +558,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     mapper.OpenTransaction();
                     try
@@ -603,7 +603,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             return await Task.Run<App>(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     #region 发布应用
                     {
@@ -640,7 +640,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     if (app.IsIconByUpload)
                     {
@@ -716,7 +716,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appTypeId);
             await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     #region 前置条件验证
                     {
@@ -758,7 +758,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appType);
             await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     #region 前置条件验证
                     {
@@ -797,7 +797,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appTypeId);
             await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     #region 更新应用分类
                     {
@@ -829,7 +829,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(newIcon);
             await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     var app = new App();
                     app.ModifyIconUrl(newIcon);
@@ -849,7 +849,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(deskNum);
             return await Task.Run<App>(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     mapper.OpenTransaction();
                     try
