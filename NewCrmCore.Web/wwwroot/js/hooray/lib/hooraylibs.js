@@ -1450,23 +1450,32 @@ if (typeof define === "function") {
 	window.NewCrm = NewCrm;
 }
 
-NewCrm.msgbox.info = function (msg, timeout) {
+NewCrm.msgbox.info = function (msg) {
 	Lobibox.alert('info', {
 		msg: msg,
+		width: 300
 	})
 };
-NewCrm.msgbox.success = function (msg, timeout) {
+NewCrm.msgbox.success = function (msg) {
 	Lobibox.alert('success', {
 		msg: msg,
+		width: 300
 	})
 };
-NewCrm.msgbox.fail = function (msg, timeout) {
+NewCrm.msgbox.fail = function (msg) {
 	Lobibox.alert('error', {
-		msg: msg || '出现未知错误，请重试',
+		msg: msg || '出现未知错误，请重试', 
+		width: 300
 	})
 };
+NewCrm.msgbox.warning = function (msg) {
+	Lobibox.alert('warning', {
+		msg: msg,
+		width: 300
+	})
+}
 NewCrm.msgbox.loading = function (msg) {
-	 NewCrm.msgbox.show(msg, 6, 10000);
+	NewCrm.msgbox.show(msg, 6, 10000);
 };
 NewCrm.msgbox.close = function () {
 	NewCrm.msgbox._hide();
