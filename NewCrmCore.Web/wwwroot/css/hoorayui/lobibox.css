@@ -352,6 +352,21 @@ body.lobibox-open {
 .lobibox.lobibox-confirm .lobibox-footer {
   background-color: #594343;
 }
+
+.lobibox.lobibox-loading {
+  border: 1px solid rgb(85, 87, 87);
+}
+.lobibox.lobibox-loading .lobibox-header {
+  color: #eeeeee;
+  background-color: rgb(85, 87, 87);
+}
+.lobibox.lobibox-loading .lobibox-body .lobibox-icon {
+  color: rgb(85, 87, 87);
+}
+.lobibox.lobibox-loading .lobibox-footer {
+  background-color: rgb(85, 87, 87);
+}
+
 .lobibox.lobibox-success {
   border: 1px solid #29B87E;
 }

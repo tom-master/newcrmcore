@@ -36,7 +36,7 @@ var Lobibox = Lobibox || {};
     //User can set default properties for alert in the following way
     //Lobibox.alert.DEFAULT_OPTIONS = object;
     Lobibox.alert = function (type, options) {
-        if (["success", "error", "warning", "info"].indexOf(type) > -1) {
+        if (["success", "error", "warning", "info", "loading"].indexOf(type) > -1) {
             return new LobiboxAlert(type, options);
         }
     };
@@ -45,7 +45,6 @@ var Lobibox = Lobibox || {};
     Lobibox.window = function (options) {
         return new LobiboxWindow('window', options);
     };
-
 
     /**
      * Base prototype for all messageboxes and window
@@ -207,9 +206,8 @@ var Lobibox = Lobibox || {};
                     footer.addClass('text-' + me.$options.buttonsAlign);
                 }
             }
-            me.$el = lobibox
-                .addClass(Lobibox.base.OPTIONS.modalClasses[me.$type])
-                ;
+
+            me.$el = lobibox.addClass(Lobibox.base.OPTIONS.modalClasses[me.$type]);
         },
         _setSize: function () {
             var me = this;
@@ -546,7 +544,8 @@ var Lobibox = Lobibox || {};
             'progress': 'lobibox-progress',
             'prompt': 'lobibox-prompt',
             'default': 'lobibox-default',
-            'window': 'lobibox-window'
+            'window': 'lobibox-window',
+            'loading': 'lobibox-loading'
         },
         buttonsAlign: ['left', 'center', 'right'],
         buttons: {

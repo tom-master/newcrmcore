@@ -1285,11 +1285,18 @@ NewCrm.warning = function (msg) {
 		width: 300
 	})
 }
+let loading = [];
 NewCrm.loading = function (msg) {
-	
+	loading.push(Lobibox.alert('loading', {
+		msg: msg,
+		width: 300
+	}))
 };
 NewCrm.close = function () {
-	
+	for (let index = 0; index < loading.length; index++) {
+		let element = loading[index];
+		element.hide()
+	}
 };
 
 /**
