@@ -14,12 +14,12 @@ $('.list-con').on('click', '.do-del', function () {
         ok: () => {
             HROS.request.post('/appmarket/remove', { appId: appId }, (responseText) => {
                 if (responseText.IsSuccess) {
-                    NewCrm.msgbox.success('删除成功!');
+                    NewCrm.success('删除成功!');
                     setTimeout(() => {
                         $('#pagination').trigger('currentPage');
                     }, 1000);
                 } else {
-                    NewCrm.msgbox.fail(responseText.Message);
+                    NewCrm.fail(responseText.Message);
                 }
             });
         },
@@ -56,7 +56,7 @@ function getPageList(current_page) {
                 getPageList: getPageList
             });
         } else {
-            NewCrm.msgbox.fail(responseText.Message);
+            NewCrm.fail(responseText.Message);
         }
     });
 

@@ -17,10 +17,10 @@
     },
     ajaxPost: true,
     postonceTip: () => {
-        NewCrm.msgbox.fail(HROS.CONFIG.postOnce);
+        NewCrm.fail(HROS.CONFIG.postOnce);
     },
     beforeSubmit: (curform) => {
-        NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt);
+        NewCrm.loading(HROS.CONFIG.loadingPrompt);
     },
     callback: (responseText) => {
         if (responseText.IsSuccess) {
@@ -55,7 +55,7 @@
                 });
             }
         } else {
-            NewCrm.msgbox.fail(responseText.Message);
+            NewCrm.fail(responseText.Message);
         }
     }
 });

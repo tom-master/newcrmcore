@@ -21,7 +21,7 @@ $('.list-con').on('click', '.do-del', function () {
 
                     $('#pagination').trigger('currentPage');
                 } else {
-                    NewCrm.msgbox.fail(responseText.Message);
+                    NewCrm.fail(responseText.Message);
                 }
             });
         },
@@ -33,7 +33,7 @@ $('.list-con').on('click', '.do-del', function () {
         if (responseText.IsSuccess) {
             $('#pagination').trigger('currentPage');
         } else {
-            NewCrm.msgbox.fail(responseText.Message);
+            NewCrm.fail(responseText.Message);
         }
     });
 
@@ -69,7 +69,7 @@ function getPageList(current_page) {
                 getPageList: getPageList
             });
         } else {
-            NewCrm.msgbox.fail(responseText.Message);
+            NewCrm.fail(responseText.Message);
         }
     });
 

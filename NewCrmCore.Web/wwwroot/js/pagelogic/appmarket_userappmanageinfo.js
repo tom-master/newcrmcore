@@ -64,12 +64,12 @@ uploader.on('uploadSuccess', (file, cb) => {
                     $('#val_icon').val(urlPart);
                     uploader.removeFile(file);
                 } else {
-                    NewCrm.msgbox.fail("图标保存失败");
+                    NewCrm.fail("图标保存失败");
                 }
             });
         }
     } else {
-        NewCrm.msgbox.fail("图标上传失败");
+        NewCrm.fail("图标上传失败");
     }
 });
 
@@ -93,10 +93,10 @@ let f = $('#form').Validform({
     },
     ajaxPost: true,
     postonceTip: () => {
-        NewCrm.msgbox.fail(HROS.CONFIG.postOnce);
+        NewCrm.fail(HROS.CONFIG.postOnce);
     },
     beforeSubmit: (curform) => {
-        NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt);
+        NewCrm.loading(HROS.CONFIG.loadingPrompt);
     },
     callback: (responseText) => {
         if (responseText.IsSuccess) {
@@ -131,7 +131,7 @@ let f = $('#form').Validform({
                 });
             }
         } else {
-            NewCrm.msgbox.fail(responseText.Message);
+            NewCrm.fail(responseText.Message);
         }
     }
 });
@@ -213,7 +213,7 @@ $('#btn-pass').on('click', function () {
                         window.parent.$('#pagination').trigger('currentPage');
                     });
                 } else {
-                    NewCrm.msgbox.fail(responseText.Message);
+                    NewCrm.fail(responseText.Message);
                 }
             });
 
@@ -233,7 +233,7 @@ $('#btn-unpass').on('click', function () {
                         window.parent.$('#pagination').trigger('currentPage');
                     });
                 } else {
-                    NewCrm.msgbox.fail(responseText.Message);
+                    NewCrm.fail(responseText.Message);
                 }
             });
         },
@@ -253,7 +253,7 @@ $('#btn-release').on('click', function () {
                         window.parent.$('#pagination').trigger('currentPage');
                     });
                 } else {
-                    NewCrm.msgbox.fail(responseText.Message);
+                    NewCrm.fail(responseText.Message);
                 }
             });
         },

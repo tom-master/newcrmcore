@@ -36,7 +36,7 @@ namespace NewCrmCore.Web.Filter
                 filterContext.Result = new ContentResult()
                 {
                     ContentType = "UTF8",
-                    Content = @"<script>(function(){top.NewCrm.msgbox.fail('" + response.Message + "');})()</script>"
+                    Content = @"<script>(function(){top.NewCrm.fail('" + response.Message + "');})()</script>"
                 };
             }
             var userId = 0;

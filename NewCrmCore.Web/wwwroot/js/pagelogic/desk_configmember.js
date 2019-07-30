@@ -20,7 +20,7 @@ let uploader = WebUploader.create({
 });
 uploader.on('beforeFileQueued', (file) => {
     if (file.size > 300 * 1024) {
-        NewCrm.msgbox.info('文件大于300Kb，请压缩后再上传');
+        NewCrm.info('文件大于300Kb，请压缩后再上传');
         return false;
     } else {
         $('.shortcutview img').remove();
@@ -50,11 +50,11 @@ uploader.on('uploadSuccess', (file, cb) => {
                 $('#val_icon').val(urlPart);
                 uploader.removeFile(file);
             } else {
-                NewCrm.msgbox.fail("图标保存失败");
+                NewCrm.fail("图标保存失败");
             }
         });
     } else {
-        NewCrm.msgbox.fail("图标上传失败");
+        NewCrm.fail("图标上传失败");
     }
 });
 let f = $('#form').Validform({
@@ -76,21 +76,21 @@ let f = $('#form').Validform({
     },
     ajaxPost: true,
     postonceTip: () => {
-        NewCrm.msgbox.fail(HROS.CONFIG.postOnce);
+        NewCrm.fail(HROS.CONFIG.postOnce);
     },
     beforeSubmit: (curform) => {
-        NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt);
+        NewCrm.loading(HROS.CONFIG.loadingPrompt);
     },
     callback: (responseText) => {
         if (responseText.IsSuccess) {
-            NewCrm.msgbox.success('修改成功');
+            NewCrm.success('修改成功');
             setTimeout(() => {
                 top.HROS.app.get(() => {
                     top.$.dialog.list['editdialog'].close();
                 });
             }, 1000);
         } else {
-            NewCrm.msgbox.fail(responseText.Message);
+            NewCrm.fail(responseText.Message);
         }
     }
 });

@@ -10,7 +10,7 @@
             });
             $('.view').children('ul').append(liElement);
         } else {
-            NewCrm.msgbox.fail(responseText.Message);
+            NewCrm.fail(responseText.Message);
         }
     });
 })();
@@ -41,7 +41,7 @@ var upload = WebUploader.create({
 });
 upload.on('beforeFileQueued', (file) => {
     if (file.size > 1000 * 1024) {
-        NewCrm.msgbox.info('文件大于1000Kb');
+        NewCrm.info('文件大于1000Kb');
         return false;
     }
 });
@@ -64,11 +64,11 @@ upload.on('uploadSuccess', (file, cb) => {
                 top.HROS.wallpaper.update($('#wallpapertype').val(), responseText.Model.Id);
                 upload.removeFile(file);
             } else {
-                NewCrm.msgbox.fail(responseText.Message);
+                NewCrm.fail(responseText.Message);
             }
         });
     } else {
-        NewCrm.msgbox.fail(cb[0].Message);
+        NewCrm.fail(cb[0].Message);
     }
 });
 
@@ -85,10 +85,10 @@ $('.wapppapercustom .view').on('click', 'li a', function (event) {
     let id = $(this).parent().attr('id');
     HROS.request.post("/Desk/RemoveWallpaper", { wallPaperId: id }, (responseText) => {
         if (responseText.IsSuccess) {
-            NewCrm.msgbox.success('壁纸移除成功');
+            NewCrm.success('壁纸移除成功');
             $('#' + id).remove();
         } else {
-            NewCrm.msgbox.fail(responseText.Message);
+            NewCrm.fail(responseText.Message);
         }
     });
 });
@@ -96,11 +96,11 @@ $('.wapppapercustom .view').on('click', 'li a', function (event) {
 $('#webWallpaper').on('click', () => {
     let webUrl = $('#wallpaperurl').val();
     if (!webUrl) {
-        NewCrm.msgbox.info('请输入一个合法的url地址');
+        NewCrm.info('请输入一个合法的url地址');
     } else {
         HROS.request.post("/desk/webwallpaper", { webUrl: webUrl }, (responseText) => {
             if (parseInt(responseText.Model.Item1) === 0) {
-                NewCrm.msgbox.fail('未能获取到所指定的网络图片');
+                NewCrm.fail('未能获取到所指定的网络图片');
             } else {
                 top.HROS.wallpaper.update($('#wallpapertype').val(), parseInt(responseText.Model.Item1));
             }

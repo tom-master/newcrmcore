@@ -12,7 +12,7 @@ $('.list-con').on('click', '.do-del', function () {
                 if (responseText.IsSuccess) {
                     $('#pagination').trigger('currentPage');
                 } else {
-                    NewCrm.msgbox.fail(responseText.Message);
+                    NewCrm.fail(responseText.Message);
                 }
             });
         },
@@ -41,7 +41,7 @@ function getPageList(current_page) {
             });
 
         } else {
-            NewCrm.msgbox.fail(responseText.Message);
+            NewCrm.fail(responseText.Message);
         }
     });
 }

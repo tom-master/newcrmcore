@@ -13,7 +13,7 @@ function loadAllSkin(callback) {
                 callback && callback();
             }
         } else {
-            NewCrm.msgbox.fail(responseText.Message);
+            NewCrm.fail(responseText.Message);
         }
     });
 }
@@ -25,10 +25,10 @@ function changeSkin() {
         $(this).addClass('selected');
         HROS.request.post('/desk/modifyskin', { skin: skin }, (responseText) => {
             if (responseText.IsSuccess) {
-                top.NewCrm.msgbox.success("皮肤设置成功，如果没有更新请刷新页面");
+                top.NewCrm.success("皮肤设置成功，如果没有更新请刷新页面");
                 setTimeout(() => top.HROS.base.getSkin(skin), 2000);
             } else {
-                NewCrm.msgbox.fail(responseText.Message);
+                NewCrm.fail(responseText.Message);
             }
         });
     });

@@ -135,7 +135,7 @@ function getPageList(current_page) {
                 getPageList: getPageList
             });
         } else {
-            NewCrm.msgbox.fail(responseText.Message);
+            NewCrm.fail(responseText.Message);
         }
     });
 

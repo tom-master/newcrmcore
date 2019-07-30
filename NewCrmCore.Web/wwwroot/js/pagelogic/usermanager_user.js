@@ -17,20 +17,20 @@
     },
     ajaxPost: true,
     postonceTip: () => {
-        NewCrm.msgbox.fail(HROS.CONFIG.postOnce);
+        NewCrm.fail(HROS.CONFIG.postOnce);
     },
     beforeSubmit: (curform) => {
-        NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt);
+        NewCrm.loading(HROS.CONFIG.loadingPrompt);
     },
     callback: (responseText) => {
         let response = responseText;
         if (response.IsSuccess) {
             if ($('input[name="id"]').val()) {
                 if ($('#pwd').val()) {
-                    NewCrm.msgbox.success('您修改了登陆密码，请重新登陆');
+                    NewCrm.success('您修改了登陆密码，请重新登陆');
                     setTimeout(() => top.location.reload(), 1000);
                 } else {
-                    NewCrm.msgbox.success('修改成功!');
+                    NewCrm.success('修改成功!');
                     setTimeout(() => {
                         window.parent.closeDetailIframe(() => window.parent.$('#pagination').trigger('currentPage'));
                     }, 1000);
@@ -52,7 +52,7 @@
                 });
             }
         } else {
-            NewCrm.msgbox.fail(response.Message);
+            NewCrm.fail(response.Message);
         }
     }
 });

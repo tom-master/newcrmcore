@@ -33,10 +33,10 @@ let f1 = $('#form').Validform({
     },
     ajaxPost: false,
     postonceTip: () => {
-        NewCrm.msgbox.fail(HROS.CONFIG.postOnce);
+        NewCrm.fail(HROS.CONFIG.postOnce);
     },
     beforeSubmit: (curform) => {
-        NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt);
+        NewCrm.loading(HROS.CONFIG.loadingPrompt);
     },
     callback: (form) => {
         $.dialog({
@@ -84,10 +84,10 @@ let f2 = $('#form2').Validform({
     },
     ajaxPost: false,
     postonceTip: () => {
-        NewCrm.msgbox.fail(HROS.CONFIG.postOnce);
+        NewCrm.fail(HROS.CONFIG.postOnce);
     },
     beforeSubmit: (curform) => {
-        NewCrm.msgbox.loading(HROS.CONFIG.loadingPrompt);
+        NewCrm.loading(HROS.CONFIG.loadingPrompt);
     },
     callback: (responseText) => {
         $.dialog({
@@ -120,12 +120,12 @@ $('#hidden_frame').on('load', function () {
     if (response) {
         let responseText = JSON.parse($(this).contents().find("body").text());
         if (responseText.IsSuccess) {
-            NewCrm.msgbox.success('您修改了登陆密码，2秒后跳转到登陆界面');
+            NewCrm.success('您修改了登陆密码，2秒后跳转到登陆界面');
             setTimeout(function () {
                 top.location.reload();
             }, 2000);
         } else {
-            NewCrm.msgbox.fail('修改失败');
+            NewCrm.fail('修改失败');
         }
     }
 });
@@ -151,12 +151,12 @@ let upload = WebUploader.create({
 
 upload.on('beforeFileQueued', (file) => {
     if (file.size > 1000 * 1024) {
-        NewCrm.msgbox.info('文件大于1000Kb');
+        NewCrm.info('文件大于1000Kb');
         return false;
     }
 });
 
-upload.on('startUpload', () => NewCrm.msgbox.loading('账户头像上传中...'));
+upload.on('startUpload', () => NewCrm.loading('账户头像上传中...'));
 
 upload.on('uploadSuccess', (file, cb) => {
     if (cb[0].IsSuccess) {
@@ -172,13 +172,13 @@ upload.on('uploadSuccess', (file, cb) => {
         };
         HROS.request.post('/usersetting/modifyface', { userFace: model.Url }, (responseText) => {
             if (responseText.IsSuccess) {
-                NewCrm.msgbox.success('账户头像保存成功');
+                NewCrm.success('账户头像保存成功');
                 top.HROS.startmenu.getAvatar();
             } else {
-                NewCrm.msgbox.fail('账户头像保存失败');
+                NewCrm.fail('账户头像保存失败');
             }
         });
     } else {
-        NewCrm.msgbox.fail('账户头像保存失败');
+        NewCrm.fail('账户头像保存失败');
     }
 });

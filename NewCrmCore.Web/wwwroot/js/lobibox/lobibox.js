@@ -4,8 +4,8 @@ var Lobibox = Lobibox || {};
 (function () {
 
     Lobibox.counter = 0;
-//------------------------------------------------------------------------------
-//------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------
 
     //User can set default properties for prompt in the following way
     //Lobibox.prompt.DEFAULT_OPTIONS = object;
@@ -209,7 +209,7 @@ var Lobibox = Lobibox || {};
             }
             me.$el = lobibox
                 .addClass(Lobibox.base.OPTIONS.modalClasses[me.$type])
-            ;
+                ;
         },
         _setSize: function () {
             var me = this;
@@ -332,12 +332,12 @@ var Lobibox = Lobibox || {};
             var me = this;
             Lobibox.counter++;
             me.$el.attr('data-nth', Lobibox.counter);
-            if (!me.$options.draggable){
-                $(window).on('resize.lobibox-'+me.$el.attr('data-nth'), function(){
+            if (!me.$options.draggable) {
+                $(window).on('resize.lobibox-' + me.$el.attr('data-nth'), function () {
                     me.refreshWidth();
                     me.refreshHeight();
-                    me.$el.css('left', '50%').css('margin-left', '-'+(me.$el.width()/2)+'px');
-                    me.$el.css('top', '50%').css('margin-top', '-'+(me.$el.height()/2)+'px');
+                    me.$el.css('left', '50%').css('margin-left', '-' + (me.$el.width() / 2) + 'px');
+                    me.$el.css('top', '50%').css('margin-top', '-' + (me.$el.height() / 2) + 'px');
                 });
             }
 
@@ -351,14 +351,14 @@ var Lobibox = Lobibox || {};
 
         _afterClose: function () {
             var me = this;
-            if (!me.$options.draggable){
-                $(window).off('resize.lobibox-'+me.$el.attr('data-nth'));
+            if (!me.$options.draggable) {
+                $(window).off('resize.lobibox-' + me.$el.attr('data-nth'));
             }
             me._triggerEvent('closed');
         },
-//------------------------------------------------------------------------------
-//--------------------------PUBLIC METHODS--------------------------------------
-//------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------
+        //--------------------------PUBLIC METHODS--------------------------------------
+        //------------------------------------------------------------------------------
 
         /**
          * Hide the messagebox
@@ -427,11 +427,11 @@ var Lobibox = Lobibox || {};
             return me;
         },
 
-        refreshWidth: function(){
+        refreshWidth: function () {
             this.setWidth(this.$el.width());
         },
 
-        refreshHeight: function(){
+        refreshHeight: function () {
             this.setHeight(this.$el.height());
         },
 
@@ -617,9 +617,9 @@ var Lobibox = Lobibox || {};
         //After messagebox is hidden
         closed: null
     };
-//------------------------------------------------------------------------------
-//-------------------------LobiboxPrompt----------------------------------------
-//------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------
+    //-------------------------LobiboxPrompt----------------------------------------
+    //------------------------------------------------------------------------------
     function LobiboxPrompt(type, options) {
         this.$input = null;
         this.$type = 'prompt';
@@ -703,10 +703,10 @@ var Lobibox = Lobibox || {};
             var me = this,
                 $error = me.$el.find('.lobibox-input-error-message');
 
-            if (me.$options.required && !me.getValue()){
+            if (me.$options.required && !me.getValue()) {
                 me.$input.addClass('invalid');
-                if ($error.length === 0){
-                    me.$el.find('.lobibox-body').append('<p class="lobibox-input-error-message">'+me.$options.errorMessage+'</p>');
+                if ($error.length === 0) {
+                    me.$el.find('.lobibox-body').append('<p class="lobibox-input-error-message">' + me.$options.errorMessage + '</p>');
                     me._position();
                     me.$input.focus();
                 }
@@ -732,13 +732,13 @@ var Lobibox = Lobibox || {};
         required: true,
         errorMessage: 'The field is required'
     };
-//------------------------------------------------------------------------------
-//-------------------------LobiboxConfirm---------------------------------------
-//------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------
+    //-------------------------LobiboxConfirm---------------------------------------
+    //------------------------------------------------------------------------------
     function LobiboxConfirm(options) {
         this.$type = 'confirm';
 
-//        options = $.extend({}, Lobibox.confirm.DEFAULT_OPTIONS, options);
+        //        options = $.extend({}, Lobibox.confirm.DEFAULT_OPTIONS, options);
 
         this.$options = this._processInput(options);
         this._init();
@@ -774,7 +774,7 @@ var Lobibox = Lobibox || {};
             if (me.$options.iconClass) {
                 d.append($('<div class="lobibox-icon-wrapper"></div>')
                     .append('<i class="lobibox-icon ' + me.$options.iconClass + '"></i>'))
-                ;
+                    ;
             }
             d.append('<div class="lobibox-body-text-wrapper"><span class="lobibox-body-text">' + me.$options.msg + '</span></div>');
             me._setContent(d.html());
@@ -789,13 +789,13 @@ var Lobibox = Lobibox || {};
         title: 'Question',
         width: 500
     };
-//------------------------------------------------------------------------------
-//-------------------------LobiboxAlert------------------------------------------
-//------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------
+    //-------------------------LobiboxAlert------------------------------------------
+    //------------------------------------------------------------------------------
     function LobiboxAlert(type, options) {
         this.$type = type;
 
-//        options = $.extend({}, Lobibox.alert.DEFAULT_OPTIONS, Lobibox[type].DEFAULT_OPTIONS, options);
+        //        options = $.extend({}, Lobibox.alert.DEFAULT_OPTIONS, Lobibox[type].DEFAULT_OPTIONS, options);
 
         this.$options = this._processInput(options);
 
@@ -808,7 +808,7 @@ var Lobibox = Lobibox || {};
 
         _processInput: function (options) {
 
-//            ALERT_OPTIONS = $.extend({}, LobiboxAlert.OPTIONS, Lobibox.alert.DEFAULTS);
+            //            ALERT_OPTIONS = $.extend({}, LobiboxAlert.OPTIONS, Lobibox.alert.DEFAULTS);
             var me = this;
             var mergedOptions = LobiboxBase._processInput.call(me, options);
             mergedOptions.buttons = {
@@ -833,7 +833,7 @@ var Lobibox = Lobibox || {};
             if (me.$options.iconClass) {
                 d.append($('<div class="lobibox-icon-wrapper"></div>')
                     .append('<i class="lobibox-icon ' + me.$options.iconClass + '"></i>'))
-                ;
+                    ;
             }
             d.append('<div class="lobibox-body-text-wrapper"><span class="lobibox-body-text">' + me.$options.msg + '</span></div>');
             me._setContent(d.html());
@@ -858,9 +858,9 @@ var Lobibox = Lobibox || {};
     };
     //User can set default options by this variable
     Lobibox.alert.DEFAULTS = {};
-//------------------------------------------------------------------------------
-//-------------------------LobiboxProgress--------------------------------------
-//------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------
+    //-------------------------LobiboxProgress--------------------------------------
+    //------------------------------------------------------------------------------
     function LobiboxProgress(options) {
         this.$type = 'progress';
         this.$progressBarElement = null;
@@ -962,9 +962,9 @@ var Lobibox = Lobibox || {};
         progressUpdated: null,
         progressCompleted: null
     };
-//------------------------------------------------------------------------------
-//-------------------------LobiboxWindow----------------------------------------
-//------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------
+    //-------------------------LobiboxWindow----------------------------------------
+    //------------------------------------------------------------------------------
     function LobiboxWindow(type, options) {
         this.$type = type;
 
@@ -1156,19 +1156,19 @@ var Lobibox = Lobibox || {};
 (function () {
 
     var LobiboxNotify = function (type, options) {
-//------------------------------------------------------------------------------
-//----------------PROTOTYPE VARIABLES-------------------------------------------
-//------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------
+        //----------------PROTOTYPE VARIABLES-------------------------------------------
+        //------------------------------------------------------------------------------
         this.$type = null;
         this.$options = null;
         this.$el = null;
-//------------------------------------------------------------------------------
-//-----------------PRIVATE VARIABLES--------------------------------------------
-//------------------------------------------------------------------------------        
+        //------------------------------------------------------------------------------
+        //-----------------PRIVATE VARIABLES--------------------------------------------
+        //------------------------------------------------------------------------------        
         var me = this;
-//------------------------------------------------------------------------------
-//-----------------PRIVATE FUNCTIONS--------------------------------------------
-//------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------
+        //-----------------PRIVATE FUNCTIONS--------------------------------------------
+        //------------------------------------------------------------------------------
         var _processInput = function (options) {
 
             if (options.size === 'mini' || options.size === 'large') {
@@ -1243,7 +1243,7 @@ var Lobibox = Lobibox || {};
         };
         var _createNotifyWrapper = function () {
             var selector = (me.$options.size === 'large' ? '.lobibox-notify-wrapper-large' : '.lobibox-notify-wrapper')
-                    + "." + me.$options.position.replace(/\s/gi, '.'),
+                + "." + me.$options.position.replace(/\s/gi, '.'),
                 $wrapper;
 
             //var classes = me.$options.position.split(" ");
@@ -1380,9 +1380,9 @@ var Lobibox = Lobibox || {};
             width = Math.min($(window).outerWidth(), width);
             return width;
         };
-//------------------------------------------------------------------------------
-//----------------PROTOTYPE FUNCTIONS-------------------------------------------
-//------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------
+        //----------------PROTOTYPE FUNCTIONS-------------------------------------------
+        //------------------------------------------------------------------------------
         /**
          * Delete the notification
          *
@@ -1461,9 +1461,9 @@ var Lobibox = Lobibox || {};
             });
             me.$el.data('lobibox', me);
         };
-//------------------------------------------------------------------------------
-//------------------------------------------------------------------------------
-//------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------
         this.$type = type;
         this.$options = _processInput(options);
         if (!me.$options.showAfterPrevious || Lobibox.notify.list.length === 0) {

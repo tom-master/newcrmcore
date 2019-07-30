@@ -32,10 +32,10 @@ $('.grade-box ul li').click(function () {
         if (top.HROS.base.checkLogin()) {
             HROS.request.post('/appmarket/modifystar', { AppId: '@Model.Id', StarCount: num }, (responseText) => {
                 if (responseText.IsSuccess) {
-                    NewCrm.msgbox.success("打分成功！");
+                    NewCrm.success("打分成功！");
                     setTimeout(() => { location.reload(); }, 2000);
                 } else {
-                    NewCrm.msgbox.fail(responseText.Message);
+                    NewCrm.fail(responseText.Message);
                 }
             });
         } else {

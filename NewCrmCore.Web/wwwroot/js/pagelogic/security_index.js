@@ -14,9 +14,9 @@ $('.list-con').on('click', '.do-del', function () {
                     setTimeout(() => {
                         $('#pagination').trigger('currentPage');
                     }, 1000);
-                    NewCrm.msgbox.success('删除成功');
+                    NewCrm.success('删除成功');
                 } else {
-                    NewCrm.msgbox.fail(responseText.Message);
+                    NewCrm.fail(responseText.Message);
                 }
             });
         },
@@ -46,7 +46,7 @@ function getPageList(current_page) {
                 getPageList: getPageList
             });
         } else {
-            NewCrm.msgbox.fail(responseText.Message);
+            NewCrm.fail(responseText.Message);
         }
     });
 }
