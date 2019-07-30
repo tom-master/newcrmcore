@@ -51,7 +51,7 @@ namespace NewCrmCore.NotifyCenter
 
         public async Task SendNotify(Int32 userId, Notify notify)
         {
-            using (var mapper = new EntityMapper())
+            var mapper = EntityMapper.CreateMapper();
             {
                 var result = mapper.Add(notify);
                 if (result.Id != 0)
