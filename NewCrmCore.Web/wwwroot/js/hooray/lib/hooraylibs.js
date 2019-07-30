@@ -1285,23 +1285,11 @@ NewCrm.warning = function (msg) {
 		width: 300
 	})
 }
-let loading
 NewCrm.loading = function (msg) {
-	// loading = Lobibox.alert('warning', {
-	// 	msg: msg,
-	// 	width: 300,
-	// 	closeButton: false,
-	// 	closeOnEsc: false,
-	// 	buttons: {
-	// 		ok: {}
-	// 	}
-	// })
+	
 };
 NewCrm.close = function () {
-	// if (loading) {
-	// 	loading.hide();
-	// 	loading.destroy();
-	// }
+	
 };
 
 /**
