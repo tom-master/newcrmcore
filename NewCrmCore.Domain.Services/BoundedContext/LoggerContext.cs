@@ -19,7 +19,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(log);
             await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     mapper.Add(log);
                 }
@@ -31,7 +31,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(userName, true);
             Parameter.Validate(logLevel);
 
-            using (var mapper = new EntityMapper())
+            var mapper = EntityMapper.CreateMapper();
             {
                 // var where = new StringBuilder();
                 // var parameters = new List<EntityParameter>();

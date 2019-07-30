@@ -18,7 +18,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(wallpaper);
             return await Task.Run(() =>
              {
-                 using (var mapper = new EntityMapper())
+                 var mapper = EntityMapper.CreateMapper();
                  {
                      #region 前置条件验证
                      {
@@ -68,7 +68,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     return mapper.Select<Wallpaper>(a => new
                     {
@@ -109,7 +109,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     return mapper.Select<Wallpaper>(a => new
                     {
@@ -149,7 +149,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     return mapper.Select<Wallpaper>(a => new
                     {
@@ -193,7 +193,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 if (Enum.TryParse(newMode, true, out WallpaperMode wallpaperMode))
                 {
-                    using (var mapper = new EntityMapper())
+                    var mapper = EntityMapper.CreateMapper();
                     {
                         var config = new Config();
                         config.ModeTo(wallpaperMode);
@@ -218,7 +218,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     var config = new Config();
                     config.NotFromBing().ModifyWallpaperId(newWallpaperId);
@@ -238,7 +238,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var mapper = new EntityMapper())
+                var mapper = EntityMapper.CreateMapper();
                 {
                     #region 前置条件验证
                     {
