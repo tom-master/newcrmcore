@@ -22,7 +22,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			await Task.Run(() =>
 			{
-				using (var mapper = new EntityMapper())
+				var mapper = EntityMapper.CreateMapper();
 				{
 					var config = new Config();
 					config.ModifyDefaultDeskNumber(newDefaultDeskNumber);
@@ -43,7 +43,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			await Task.Run(() =>
 			{
-				using (var mapper = new EntityMapper())
+				var mapper = EntityMapper.CreateMapper();
 				{
 					var config = new Config();
 					var newPosition = EnumExtensions.ToEnum<DockPosition>(position);
@@ -63,7 +63,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			await Task.Run(() =>
 			{
-				using (var mapper = new EntityMapper())
+				var mapper = EntityMapper.CreateMapper();
 				{
 					var config = new Config();
 					config.DirectionToX();
@@ -82,7 +82,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			await Task.Run(() =>
 			{
-				using (var mapper = new EntityMapper())
+				var mapper = EntityMapper.CreateMapper();
 				{
 					var config = new Config();
 					config.DirectionToY();
@@ -102,7 +102,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			await Task.Run(() =>
 			{
-				using (var mapper = new EntityMapper())
+				var mapper = EntityMapper.CreateMapper();
 				{
 					var config = new Config();
 					config.ModifyAppSize(newSize);
@@ -122,7 +122,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			await Task.Run(() =>
 			{
-				using (var mapper = new EntityMapper())
+				var mapper = EntityMapper.CreateMapper();
 				{
 					var config = new Config();
 					config.ModifyAppVerticalSpacing(newSize);
@@ -142,7 +142,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			await Task.Run(() =>
 			{
-				using (var mapper = new EntityMapper())
+				var mapper = EntityMapper.CreateMapper();
 				{
 					var config = new Config();
 					config.ModifyAppHorizontalSpacing(newSize);
@@ -162,7 +162,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			await Task.Run(() =>
 			{
-				using (var mapper = new EntityMapper())
+				var mapper = EntityMapper.CreateMapper();
 				{
 					var member = new Member();
 					member.OnDock();
@@ -183,7 +183,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			await Task.Run(() =>
 			{
-				using (var mapper = new EntityMapper())
+				var mapper = EntityMapper.CreateMapper();
 				{
 					var member = new Member();
 					member.OutDock().ModifyDeskIndex(deskId);
@@ -204,7 +204,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			await Task.Run(() =>
 			{
-				using (var mapper = new EntityMapper())
+				var mapper = EntityMapper.CreateMapper();
 				{
 					var member = new Member();
 					member.OutDock().ModifyFolderId(folderId);
@@ -224,7 +224,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			await Task.Run(() =>
 			{
-				using (var mapper = new EntityMapper())
+				var mapper = EntityMapper.CreateMapper();
 				{
 					var member = new Member();
 					member.OnDock().ModifyFolderId(0);
@@ -245,7 +245,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			await Task.Run(() =>
 			{
-				using (var mapper = new EntityMapper())
+				var mapper = EntityMapper.CreateMapper();
 				{
 					var member = new Member();
 					member.ModifyFolderId(folderId);
@@ -266,7 +266,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			await Task.Run(() =>
 			{
-				using (var mapper = new EntityMapper())
+				var mapper = EntityMapper.CreateMapper();
 				{
 					var member = new Member();
 					member.ModifyFolderId(0).ModifyDeskIndex(deskId);
@@ -288,7 +288,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			await Task.Run(() =>
 			{
-				using (var mapper = new EntityMapper())
+				var mapper = EntityMapper.CreateMapper();
 				{
 					var member = new Member();
 					member.ModifyFolderId(folderId);
@@ -309,7 +309,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			await Task.Run(() =>
 			{
-				using (var mapper = new EntityMapper())
+				var mapper = EntityMapper.CreateMapper();
 				{
 					mapper.OpenTransaction();
 					try
@@ -363,7 +363,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			await Task.Run(() =>
 			{
-				using (var mapper = new EntityMapper())
+				var mapper = EntityMapper.CreateMapper();
 				{
 					var member = new Member();
 					member.OutDock().ModifyDeskIndex(deskId);
@@ -385,7 +385,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			await Task.Run(() =>
 			{
 				var folder = new Member(folderName, folderImg, 0, userId, deskId, false);
-				using (var mapper = new EntityMapper())
+				var mapper = EntityMapper.CreateMapper();
 				{
 					mapper.Add(folder);
 				}
@@ -398,7 +398,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			Parameter.Validate(userId);
 			await Task.Run(() =>
 			{
-				using (var mapper = new EntityMapper())
+				var mapper = EntityMapper.CreateMapper();
 				{
 					var config = new Config();
 					if (source.ToLower() == WallpaperSource.Bing.ToString().ToLower())
@@ -423,7 +423,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			Parameter.Validate(userId);
 			Parameter.Validate(pageIndex);
 			Parameter.Validate(pageSize);
-			using (var mapper = new EntityMapper())
+			var mapper = EntityMapper.CreateMapper();
 			{
 				var parameters = new List<EntityParameter>
 				{
@@ -469,7 +469,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			Parameter.Validate(notifyIds);
 			await Task.Run(() =>
 			{
-				using (var mapper = new EntityMapper())
+				var mapper = EntityMapper.CreateMapper();
 				{
 					var notify = new Notify();
 					notify.Read();
@@ -489,7 +489,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 			await Task.Run(() =>
 			{
-				using (var mapper = new EntityMapper())
+				var mapper = EntityMapper.CreateMapper();
 				{
 					var config = new Config();
 					config.ModifySkin(newSkin);
