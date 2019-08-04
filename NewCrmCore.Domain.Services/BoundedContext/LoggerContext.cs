@@ -46,7 +46,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     // where.Append($@" AND a1.Name LIKE CONCAT('%',@name,'%') ");
                 }
 
-                var combination = logWhere.AppendCombination(userWhere);
+                var combination = logWhere.Append(userWhere);
 
                 #region totalCount 
                 {

@@ -1,7 +1,7 @@
 ﻿using System;
-using NewCrmCore.Domain.ValueObject;
-using NewLibCore.Data.SQL.Mapper.AttributeExtension;
+using NewCrmCore.Domain.ValueObject; 
 using NewLibCore.Data.SQL.Mapper.EntityExtension;
+using NewLibCore.Data.SQL.Mapper.EntityExtension.EntityAttribute;
 
 namespace NewCrmCore.Domain.Entitys.System
 {

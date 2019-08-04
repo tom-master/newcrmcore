@@ -1,10 +1,9 @@
-﻿using System;
-using NewLibCore.Data.SQL.Mapper.AttributeExtension;
+﻿using System; 
 using NewLibCore.Data.SQL.Mapper.EntityExtension;
+using NewLibCore.Data.SQL.Mapper.EntityExtension.EntityAttribute;
 
 namespace NewCrmCore.Domain.Entitys.System
-{
-
+{ 
     [TableName("newcrm_app_notify")]
     public partial class Notify : EntityBase
     {
