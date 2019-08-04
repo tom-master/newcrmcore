@@ -158,7 +158,6 @@ namespace NewCrmCore.Web.Controllers
             #region 参数验证
             Parameter.Validate(loginParameter);
             #endregion
-
             var response = new ResponseModel<UserDto>();
 
             var user = await _userServices.LoginAsync(loginParameter["username"], loginParameter["password"], Request.HttpContext.Connection.RemoteIpAddress.ToString());
@@ -380,7 +379,9 @@ namespace NewCrmCore.Web.Controllers
         {
             await _userServices.LogoutAsync(UserId);
             Response.Cookies.Append("User", UserId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
-            return new EmptyResult();
+            var response = new ResponseModel();
+            response.IsSuccess = true;
+            return Json(response);
         }
 
         #endregion
