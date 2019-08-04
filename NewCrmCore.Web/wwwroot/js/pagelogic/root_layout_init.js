@@ -30,8 +30,8 @@ closeDetailIframe = (callback) => {
     });
 };
 
-function initPagination(config) {
-    $('#pagination').pagination(parseInt($('#pagination_setting').attr('count')), {
+function initPagination(config) { 
+    $('nav').pagination(parseInt($('#pagination_setting').attr('count')), {
         current_page: config.current_page,
         items_per_page: config.items_per_page,
         num_display_entries: config.num_display_entries,

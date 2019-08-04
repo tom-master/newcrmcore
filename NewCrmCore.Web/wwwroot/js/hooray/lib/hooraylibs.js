@@ -1138,7 +1138,7 @@ var swfobject = function () {
 			if (this.opts.prev_text && (current_page > 0 || this.opts.prev_show_always)) {
 				fragment.append(this.createLink(current_page - 1, current_page, {
 					text: this.opts.prev_text,
-					classes: "prev"
+					classes: "prev page-item"
 				}));
 			}
 			if (interval.start > 0 && this.opts.num_edge_entries > 0) {
@@ -1163,7 +1163,7 @@ var swfobject = function () {
 			if (this.opts.next_text && (current_page < np - 1 || this.opts.next_show_always)) {
 				fragment.append(this.createLink(current_page + 1, current_page, {
 					text: this.opts.next_text,
-					classes: "next"
+					classes: "next page-item"
 				}));
 			}
 			$("li:not(.disabled, .active) a", fragment).click(eventHandler);
@@ -1171,7 +1171,6 @@ var swfobject = function () {
 		}
 	});
 	$.fn.pagination = function (maxentries, opts) {
-
 		opts = $.extend({
 			items_per_page: 10,
 			num_display_entries: 11,
@@ -1262,28 +1261,36 @@ var swfobject = function () {
 
 NewCrm = {};
 NewCrm.info = function (msg) {
-	Lobibox.alert('info', {
-		msg: msg,
-		width: 300
-	})
+	if (!$('.lobibox-info').length) {
+		Lobibox.alert('info', {
+			msg: msg,
+			width: 300
+		})
+	}
 };
 NewCrm.success = function (msg) {
-	Lobibox.alert('success', {
-		msg: msg,
-		width: 300
-	})
+	if (!$('.lobibox-success').length) {
+		Lobibox.alert('success', {
+			msg: msg,
+			width: 300
+		})
+	}
 };
 NewCrm.fail = function (msg) {
-	Lobibox.alert('error', {
-		msg: msg || '出现未知错误，请重试',
-		width: 300
-	})
+	if (!$('.lobibox-error').length) {
+		Lobibox.alert('error', {
+			msg: msg || '出现未知错误，请重试',
+			width: 300
+		})
+	}
 };
 NewCrm.warning = function (msg) {
-	Lobibox.alert('warning', {
-		msg: msg,
-		width: 300
-	})
+	if (!$('.lobibox-warning').length) {
+		Lobibox.alert('warning', {
+			msg: msg,
+			width: 300
+		})
+	}
 }
 let loading = [];
 NewCrm.loading = function (msg) {
