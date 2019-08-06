@@ -70,7 +70,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     }).LeftJoin<User>((a, b) => a.UserId == b.Id)
                     .Where<User>(combination)
                     .Page(pageIndex, pageSize)
-                    .OrderBy<Log, DateTime>(a => a.AddTime)
+                    .OrderByDesc<Log, DateTime>(a => a.AddTime)
                     .ToList();
                     // var sql = $@"SELECT
                     //             a.LogLevelEnum,
