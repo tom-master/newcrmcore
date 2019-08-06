@@ -26,7 +26,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
              {
-                 var mapper = EntityMapper.CreateMapper();
+                 using(var mapper = EntityMapper.CreateMapper())
                  {
                      User user = null;
                      try
@@ -112,7 +112,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
              {
-                 var mapper = EntityMapper.CreateMapper();
+                 using(var mapper = EntityMapper.CreateMapper())
                  {
                      return mapper.Select<Config>(a => new
                      {
@@ -163,7 +163,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<Wallpaper>(a => new
                     {
@@ -204,7 +204,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 // where.Append($@" AND a.IsAdmin=@isAdmin");
             }
 
-            var mapper = EntityMapper.CreateMapper();
+            using(var mapper = EntityMapper.CreateMapper())
             {
                 #region totalCount
                 {
@@ -248,7 +248,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<User, Config>((a, b) => new
                     {
@@ -309,7 +309,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<Role>(a => new
                     {
@@ -338,7 +338,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<RolePower>(a => new { a.RoleId, a.AppId }).ToList();
                     //var sql = $@"SELECT a.RoleId,a.AppId FROM RolePower AS a WHERE a.IsDeleted=0";
@@ -353,7 +353,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     return !(mapper.Select<User>().Where(w => w.Name == userName).Exist());
 
@@ -369,7 +369,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run<String>(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<User>(a => new { a.LoginPassword }).Where(w => w.Id == userId && !w.IsDisable).FirstOrDefault().LoginPassword;
                     //var sql = $@"SELECT a.LoginPassword FROM User AS a WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
@@ -386,7 +386,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     #region 获取锁屏密码
                     {
@@ -410,7 +410,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<App>().Where(w => w.Name == name).Exist();
                     //var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.Name=@name AND a.IsDeleted=0 ";
@@ -430,7 +430,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<App>().Where(w => w.AppUrl == url).Exist();
                     //var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.AppUrl = @url AND a.IsDeleted=0";
@@ -450,7 +450,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     try
                     {
@@ -496,7 +496,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     try
                     {
@@ -566,7 +566,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     mapper.OpenTransaction();
                     try
@@ -632,7 +632,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     var user = new User().Enable();
                     var result = mapper.Modify(user, acc => acc.Id == userId);
@@ -650,7 +650,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
                     #region 前置条件验证
@@ -686,7 +686,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     var config = new Config().ModifyUserFace(newFace);
                     var result = mapper.Modify(config, conf => conf.UserId == userId);
@@ -705,7 +705,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     var user = new User();
                     if (isTogetherSetLockPassword)
@@ -729,7 +729,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     var user = new User().ModifyLockScreenPassword(newScreenPassword);
                     var result = mapper.Modify(user, acc => acc.Id == userId && !acc.IsDisable);
@@ -747,7 +747,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     mapper.OpenTransaction();
 

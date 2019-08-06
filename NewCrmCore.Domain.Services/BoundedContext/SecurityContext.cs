@@ -20,7 +20,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<RolePower>(a => new
                     {
@@ -40,7 +40,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<Role>(a => new { a.Id, a.Name, a.RoleIdentity }).Where(a => a.Id == roleId).FirstOrDefault();
                     //var sql = $@"SELECT a.Id, a.Name, a.RoleIdentity, a.Remark FROM Role AS a WHERE a.Id=@Id AND a.IsDeleted=0";
@@ -52,7 +52,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public List<Role> GetRoles(String roleName, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
-            var mapper = EntityMapper.CreateMapper();
+            using(var mapper = EntityMapper.CreateMapper())
             {
                 // var where = new StringBuilder();
                 // var parameters = new List<EntityParameter>();
@@ -101,7 +101,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     #region 检查app是否为系统app
                     {
@@ -134,7 +134,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<Role>().Where(a => a.Name == name).Exist();
                     //var sql = $@"SELECT COUNT(*) FROM Role AS a WHERE a.Name=@name AND a.IsDeleted=0";
@@ -153,7 +153,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<Role>().Where(a => a.RoleIdentity == name).Exist();
                     //var sql = $@"SELECT COUNT(*) FROM Role AS a WHERE a.RoleIdentity=@RoleIdentity AND a.IsDeleted=0";
@@ -172,7 +172,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     #region 修改角色
                     {
@@ -194,7 +194,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     mapper.OpenTransaction();
                     try
@@ -256,7 +256,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     #region 添加角色
                     {
@@ -279,7 +279,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     throw new BusinessException("权限列表为空");
                 }
 
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     mapper.OpenTransaction();
                     try
@@ -324,7 +324,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                var mapper = EntityMapper.CreateMapper();
+                using(var mapper = EntityMapper.CreateMapper())
                 {
                     #region 添加角色
                     {
