@@ -1,9 +1,10 @@
 ﻿using System;
 using NewCrmCore.Domain.ValueObject;
+using NewLibCore.Data.SQL.Mapper.EntityExtension;
 
 namespace NewCrmCore.Dto
 {
-    public sealed class TodayRecommendAppDto : BaseDto
+    public sealed class TodayRecommendAppDto : EntityBase
     {
 
         public String Name { get; set; }

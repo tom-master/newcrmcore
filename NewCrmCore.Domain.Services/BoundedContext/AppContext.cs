@@ -22,7 +22,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(userId);
             return await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     // var sql = $@"SELECT a.Id,a.AppReleaseState FROM App AS a WHERE a.UserId=@userId AND a.IsDeleted=0";
                     // var parameters = new List<EntityParameter>
@@ -41,7 +41,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
 
                     return mapper.Select<AppType>(a => new { a.Id, a.Name, a.IsSystem }).ToList();
@@ -56,7 +56,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(userId);
             return await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     var sql = $@"SELECT 
                             a.UseCount,
@@ -97,7 +97,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(pageIndex, true);
             Parameter.Validate(pageSize);
 
-            using(var mapper = EntityMapper.CreateMapper())
+            using (var mapper = EntityMapper.CreateMapper())
             {
                 var parameters = new List<EntityParameter>
                 {
@@ -194,7 +194,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(pageIndex);
             Parameter.Validate(pageSize);
 
-            using(var mapper = EntityMapper.CreateMapper())
+            using (var mapper = EntityMapper.CreateMapper())
             {
 
                 var where = MergeFactory.Create<App>();
@@ -312,7 +312,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             return await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     var sql = $@"SELECT 
                             a.Name,
@@ -356,7 +356,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             return await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     // var sql = $@"SELECT COUNT(*) FROM Member AS a WHERE a.AppId=@Id AND a.UserId=@UserId AND a.IsDeleted=0";
                     // var parameters = new List<EntityParameter>
@@ -375,7 +375,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     // var where = new StringBuilder();
                     // if (appIds != default(IEnumerable<Int32>) && appIds.Any())
@@ -402,7 +402,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appTypeName);
             return await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
 
                     return mapper.Select<AppType>().Exist();
@@ -425,7 +425,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(starCount);
             await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     #region 前置条件判断
                     {
@@ -461,7 +461,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     #region app
                     {
@@ -477,11 +477,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             return await Task.Run<App>(async () =>
              {
-                 using(var mapper = EntityMapper.CreateMapper())
+                 using (var mapper = EntityMapper.CreateMapper())
                  {
                      var app = await GetAppAsync(appId);
                      app.Pass();
-                     var result = mapper.Modify(app, a => a.Id == appId);
+                     var result = mapper.Update(app, a => a.Id == appId);
                      if (!result)
                      {
                          throw new BusinessException("应用审核状态更新失败");
@@ -496,11 +496,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             return await Task.Run<App>(async () =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     var app = await GetAppAsync(appId);
                     app.Deny();
-                    var result = mapper.Modify(app, a => a.Id == appId);
+                    var result = mapper.Update(app, a => a.Id == appId);
                     if (!result)
                     {
                         throw new BusinessException("应用审核状态更新失败");
@@ -515,7 +515,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     mapper.OpenTransaction();
                     try
@@ -523,7 +523,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         #region 取消之前的推荐应用
                         {
                             var app = new App().CancelRecommand();
-                            var result = mapper.Modify(app, a => a.IsRecommand);
+                            var result = mapper.Update(app, a => a.IsRecommand);
                             if (!result)
                             {
                                 throw new BusinessException("取消之前的推荐应用失败");
@@ -534,7 +534,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         #region 设置新的推荐应用
                         {
                             var app = new App().Recommand();
-                            var result = mapper.Modify(app, a => a.Id == appId);
+                            var result = mapper.Update(app, a => a.Id == appId);
                             if (!result)
                             {
                                 throw new BusinessException("设置新的推荐应用失败");
@@ -558,7 +558,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     mapper.OpenTransaction();
                     try
@@ -567,7 +567,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var appStar = new AppStar();
                             appStar.Remove();
-                            var result = mapper.Modify(appStar, star => star.AppId == appId);
+                            var result = mapper.Update(appStar, star => star.AppId == appId);
                             if (!result)
                             {
                                 throw new BusinessException("移除应用的评分失败");
@@ -579,7 +579,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var app = new App();
                             app.Remove();
-                            var result = mapper.Modify(app, a => a.Id == appId);
+                            var result = mapper.Update(app, a => a.Id == appId);
                             if (!result)
                             {
                                 throw new BusinessException("移除应用失败");
@@ -603,12 +603,12 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appId);
             return await Task.Run<App>(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     #region 发布应用
                     {
                         var app = new App().AppRelease().Pass();
-                        var result = mapper.Modify(app, a => a.Id == appId);
+                        var result = mapper.Update(app, a => a.Id == appId);
                         if (!result)
                         {
                             throw new BusinessException("发布应用失败");
@@ -640,7 +640,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     if (app.IsIconByUpload)
                     {
@@ -702,7 +702,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         app.UnAuditState();
                     }
-                    var result = mapper.Modify(app, a => a.UserId == userId && a.Id == app.Id);
+                    var result = mapper.Update(app, a => a.UserId == userId && a.Id == app.Id);
                     if (!result)
                     {
                         throw new BusinessException("修改应用信息失败");
@@ -716,7 +716,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appTypeId);
             await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     #region 前置条件验证
                     {
@@ -742,7 +742,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         var appType = new AppType();
                         appType.Remove();
-                        var result = mapper.Modify(appType, type => type.Id == appTypeId);
+                        var result = mapper.Update(appType, type => type.Id == appTypeId);
                         if (!result)
                         {
                             throw new BusinessException("移除应用分类失败");
@@ -758,7 +758,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appType);
             await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     #region 前置条件验证
                     {
@@ -797,7 +797,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(appTypeId);
             await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     #region 更新应用分类
                     {
@@ -811,7 +811,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             appType.NotSystem();
                         }
-                        var result = mapper.Modify(appType, type => type.Id == appTypeId);
+                        var result = mapper.Update(appType, type => type.Id == appTypeId);
                         if (!result)
                         {
                             throw new BusinessException("更新应用分类");
@@ -829,11 +829,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(newIcon);
             await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     var app = new App();
                     app.ModifyIconUrl(newIcon);
-                    var result = mapper.Modify(app, a => a.Id == appId && a.UserId == userId);
+                    var result = mapper.Update(app, a => a.Id == appId && a.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("修改应用图标失败");
@@ -849,7 +849,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(deskNum);
             return await Task.Run<App>(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     mapper.OpenTransaction();
                     try
@@ -923,7 +923,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         #region 更改应用使用数量
                         {
                             app.IncreaseUseCount();
-                            var result = mapper.Modify(app, a => a.Id == appId);
+                            var result = mapper.Update(app, a => a.Id == appId);
                             if (!result)
                             {
                                 throw new BusinessException("修改应用使用数量失败");

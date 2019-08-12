@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NewCrmCore.Domain.ValueObject;
-using NewLibCore.Data.SQL.Mapper.EntityExtension;
-using NewLibCore.Data.SQL.Mapper.EntityExtension.EntityAttribute;
+using NewLibCore.Data.SQL.Mapper.EntityExtension; 
 
 namespace NewCrmCore.Domain.Entitys.Agent
 {

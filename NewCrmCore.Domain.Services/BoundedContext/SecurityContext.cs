@@ -177,7 +177,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     #region 修改角色
                     {
                         role.ModifyRoleName(role.Name);
-                        var result = mapper.Modify(role, r => r.Id == role.Id);
+                        var result = mapper.Update(role, r => r.Id == role.Id);
                         if (!result)
                         {
                             throw new BusinessException("修改角色失败");
@@ -219,7 +219,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var role = new Role();
                             role.Remove();
-                            var result = mapper.Modify(role, r => r.Id == roleId);
+                            var result = mapper.Update(role, r => r.Id == roleId);
                             if (!result)
                             {
                                 throw new BusinessException("删除角色失败");
@@ -231,7 +231,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var rolePower = new RolePower();
                             rolePower.Remove();
-                            var result = mapper.Modify(rolePower, rp => rp.RoleId == roleId);
+                            var result = mapper.Update(rolePower, rp => rp.RoleId == roleId);
                             if (!result)
                             {
                                 throw new BusinessException("移除权限失败");
@@ -288,7 +288,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var rolePower = new RolePower();
                             rolePower.Remove();
-                            var result = mapper.Modify(rolePower, rp => rp.RoleId == roleId);
+                            var result = mapper.Update(rolePower, rp => rp.RoleId == roleId);
                             if (!result)
                             {
                                 throw new BusinessException("移除之前的角色权限失败");

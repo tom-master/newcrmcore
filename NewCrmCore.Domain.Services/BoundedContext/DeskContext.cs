@@ -26,7 +26,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var config = new Config();
 					config.ModifyDefaultDeskNumber(newDefaultDeskNumber);
-					var result = mapper.Modify(config, conf => conf.UserId == userId);
+					var result = mapper.Update(config, conf => conf.UserId == userId);
 					if (!result)
 					{
 						throw new BusinessException("修改默认桌面号失败");
@@ -48,7 +48,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					var config = new Config();
 					var newPosition = EnumExtensions.ToEnum<DockPosition>(position);
 					config.PositionTo(newPosition);
-					var result = mapper.Modify(config, conf => conf.UserId == userId && conf.DefaultDeskNumber == defaultDeskNumber);
+					var result = mapper.Update(config, conf => conf.UserId == userId && conf.DefaultDeskNumber == defaultDeskNumber);
 					if (!result)
 					{
 						throw new BusinessException("修改应用码头位置失败");
@@ -67,7 +67,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var config = new Config();
 					config.DirectionToX();
-					var result = mapper.Modify(config, conf => conf.UserId == userId);
+					var result = mapper.Update(config, conf => conf.UserId == userId);
 					if (!result)
 					{
 						throw new BusinessException("修改桌面应用为X轴失败");
@@ -86,7 +86,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var config = new Config();
 					config.DirectionToY();
-					var result = mapper.Modify(config, conf => conf.UserId == userId);
+					var result = mapper.Update(config, conf => conf.UserId == userId);
 					if (!result)
 					{
 						throw new BusinessException("修改桌面应用为Y轴失败");
@@ -106,7 +106,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var config = new Config();
 					config.ModifyAppSize(newSize);
-					var result = mapper.Modify(config, conf => conf.UserId == userId);
+					var result = mapper.Update(config, conf => conf.UserId == userId);
 					if (!result)
 					{
 						throw new BusinessException("修改桌面应用展示图标大小失败");
@@ -126,7 +126,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var config = new Config();
 					config.ModifyAppVerticalSpacing(newSize);
-					var result = mapper.Modify(config, conf => conf.UserId == userId);
+					var result = mapper.Update(config, conf => conf.UserId == userId);
 					if (!result)
 					{
 						throw new BusinessException("修改桌面应用水平间距失败");
@@ -146,7 +146,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var config = new Config();
 					config.ModifyAppHorizontalSpacing(newSize);
-					var result = mapper.Modify(config, conf => conf.UserId == userId);
+					var result = mapper.Update(config, conf => conf.UserId == userId);
 					if (!result)
 					{
 						throw new BusinessException("修改桌面应用垂直间距失败");
@@ -166,7 +166,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var member = new Member();
 					member.OnDock();
-					var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+					var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
 					if (!result)
 					{
 						throw new BusinessException("将桌面应用移动到应用码头失败");
@@ -187,7 +187,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var member = new Member();
 					member.OutDock().ModifyDeskIndex(deskId);
-					var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+					var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
 					if (!result)
 					{
 						throw new BusinessException("将桌面应用移出应用码头失败");
@@ -208,7 +208,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var member = new Member();
 					member.OutDock().ModifyFolderId(folderId);
-					var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+					var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
 					if (!result)
 					{
 						throw new BusinessException("桌面应用从应用码头移动到文件夹中失败");
@@ -228,7 +228,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var member = new Member();
 					member.OnDock().ModifyFolderId(0);
-					var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+					var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
 					if (!result)
 					{
 						throw new BusinessException("桌面应用从文件夹移动到码头失败");
@@ -249,7 +249,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var member = new Member();
 					member.ModifyFolderId(folderId);
-					var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+					var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
 					if (!result)
 					{
 						throw new BusinessException("桌面应用从桌面移动到文件夹中");
@@ -270,7 +270,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var member = new Member();
 					member.ModifyFolderId(0).ModifyDeskIndex(deskId);
-					var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+					var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
 					if (!result)
 					{
 						throw new BusinessException("桌面应用从文件夹移动到桌面失败");
@@ -292,7 +292,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var member = new Member();
 					member.ModifyFolderId(folderId);
-					var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+					var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
 					if (!result)
 					{
 						throw new BusinessException("桌面应用从文件夹移动到另一个文件夹中失败");
@@ -336,7 +336,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
 						#region 桌面应用移动到其他桌面
 						{
-							var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+							var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
 							if (!result)
 							{
 								throw new BusinessException("桌面应用移动到其他桌面失败");
@@ -367,7 +367,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var member = new Member();
 					member.OutDock().ModifyDeskIndex(deskId);
-					var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+					var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
 					if (!result)
 					{
 						throw new BusinessException("桌面应用从应用码头移动到另一桌面时失败");
@@ -409,7 +409,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					{
 						config.NotFromBing();
 					}
-					var result = mapper.Modify(config, conf => conf.UserId == userId);
+					var result = mapper.Update(config, conf => conf.UserId == userId);
 					if (!result)
 					{
 						throw new BusinessException("修改壁纸来源失败");
@@ -473,7 +473,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var notify = new Notify();
 					notify.Read();
-					var result = mapper.Modify(notify, n => notifyIds.Contains(n.Id));
+					var result = mapper.Update(notify, n => notifyIds.Contains(n.Id));
 					if (!result)
 					{
 						throw new BusinessException("读取消息失败");
@@ -493,7 +493,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var config = new Config();
 					config.ModifySkin(newSkin);
-					var result = mapper.Modify(config, conf => conf.UserId == userId);
+					var result = mapper.Update(config, conf => conf.UserId == userId);
 					if (!result)
 					{
 						throw new BusinessException("修改皮肤失败");

@@ -28,8 +28,8 @@ namespace NewCrmCore.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            MapperConfig.Instance.SwitchToMySql();
-
+            MapperConfig.SwitchToMySql();
+            
             services.AddTransient<IUserServices, UserServices>();
             services.AddTransient<ISecurityServices, SecurityServices>();
             services.AddTransient<IAppServices, AppServices>();

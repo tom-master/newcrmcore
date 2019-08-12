@@ -170,7 +170,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					var member = new Member();
 					member.ModifyName(memberName);
 					member.ModifyIconUrl(memberIcon);
-					var result = mapper.Modify(member, mem => mem.UserId == userId && mem.Id == memberId);
+					var result = mapper.Update(member, mem => mem.UserId == userId && mem.Id == memberId);
 					if (!result)
 					{
 						throw new BusinessException("修改文件夹信息失败");
@@ -190,7 +190,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 				{
 					var member = new Member();
 					member.ModifyIconUrl(newIcon);
-					var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+					var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
 					if (!result)
 					{
 						throw new BusinessException("修改桌面应用图片失败");
@@ -207,7 +207,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 			{
 				using(var mapper = EntityMapper.CreateMapper())
 				{ 
-					var result = mapper.Modify(member, mem => mem.Id == member.Id && mem.UserId == userId);
+					var result = mapper.Update(member, mem => mem.Id == member.Id && mem.UserId == userId);
 					if (!result)
 					{
 						throw new BusinessException("修改桌面应用信息失败");
@@ -260,7 +260,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								{
 									var member = new Member();
 									member.ModifyFolderId(0);
-									var result = mapper.Modify(member, mem => mem.UserId == userId && mem.FolderId == memberId);
+									var result = mapper.Update(member, mem => mem.UserId == userId && mem.FolderId == memberId);
 									if (!result)
 									{
 										throw new BusinessException("将文件夹内的桌面应用移出失败");
@@ -303,7 +303,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 							#region 应用使用量-1
 							{
 								app.DecreaseUseCount();
-								var result = mapper.Modify(app, a => a.Id == appId && a.UserId == app.UserId);
+								var result = mapper.Update(app, a => a.Id == appId && a.UserId == app.UserId);
 								if (!result)
 								{
 									throw new BusinessException("修改应用使用数量失败");
@@ -316,7 +316,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 						{
 							var member = new Member();
 							member.Remove();
-							var result = mapper.Modify(member, mem => mem.Id == memberId && mem.UserId == userId);
+							var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
 							if (!result)
 							{
 								throw new BusinessException("移除桌面应用失败");

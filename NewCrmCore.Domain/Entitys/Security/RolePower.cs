@@ -1,6 +1,5 @@
 ﻿using System; 
 using NewLibCore.Data.SQL.Mapper.EntityExtension;
-using NewLibCore.Data.SQL.Mapper.EntityExtension.EntityAttribute;
 
 namespace NewCrmCore.Domain.Entitys.Security
 {

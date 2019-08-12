@@ -75,7 +75,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                          #region 设置用户在线
                          {
                              user.Online();
-                             var result = mapper.Modify(user, acc => acc.Id == user.Id);
+                             var result = mapper.Update(user, acc => acc.Id == user.Id);
                              if (!result)
                              {
                                  throw new BusinessException("设置用户在线状态失败");
@@ -459,7 +459,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var user = new User();
                             user.Offline();
-                            var result = mapper.Modify(user, acc => acc.Id == userId && !acc.IsDeleted && !acc.IsDisable);
+                            var result = mapper.Update(user, acc => acc.Id == userId && !acc.IsDeleted && !acc.IsDisable);
                             if (!result)
                             {
                                 throw new BusinessException("设置用户下线状态失败");
@@ -471,7 +471,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var online = new Online();
                             online.Remove();
-                            var result = mapper.Modify(online, on => on.UserId == userId && !on.IsDeleted);
+                            var result = mapper.Update(online, on => on.UserId == userId && !on.IsDeleted);
                             if (!result)
                             {
                                 throw new BusinessException("将用户移出在线列表时失败");
@@ -531,7 +531,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         #region 更新用户的配置
                         {
                             user.ModifyConfigId(configId);
-                            var result = mapper.Modify(user, acc => acc.Id == userId);
+                            var result = mapper.Update(user, acc => acc.Id == userId);
                             if (!result)
                             {
                                 throw new BusinessException("更新用户配置失败");
@@ -577,7 +577,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             {
                                 var newPassword = PasswordUtil.CreateDbPassword(user.LoginPassword);
                                 user.ModifyLoginPassword(newPassword);
-                                var result = mapper.Modify(user, acc => acc.Id == user.Id);
+                                var result = mapper.Update(user, acc => acc.Id == user.Id);
                                 if (!result)
                                 {
                                     throw new BusinessException("修改登陆密码失败");
@@ -590,7 +590,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var userRole = new UserRole();
                             userRole.Remove();
-                            var result = mapper.Modify(userRole, acc => acc.UserId == user.Id);
+                            var result = mapper.Update(userRole, acc => acc.UserId == user.Id);
                             if (!result)
                             {
                                 throw new BusinessException("移除用户角色失败");
@@ -607,7 +607,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                     mapper.Add(new UserRole(user.Id, item.RoleId));
                                 }
                             }
-                            var result2 = mapper.Modify(user, ac => ac.Id == user.Id);
+                            var result2 = mapper.Update(user, ac => ac.Id == user.Id);
                             if (!result2)
                             {
                                 throw new BusinessException("修改用户角色失败");
@@ -635,7 +635,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using(var mapper = EntityMapper.CreateMapper())
                 {
                     var user = new User().Enable();
-                    var result = mapper.Modify(user, acc => acc.Id == userId);
+                    var result = mapper.Update(user, acc => acc.Id == userId);
                     if (!result)
                     {
                         throw new BusinessException("用户启用失败");
@@ -669,7 +669,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     #endregion
                     {
                         var user = new User().Disable();
-                        var result = mapper.Modify(user, acc => acc.Id == userId);
+                        var result = mapper.Update(user, acc => acc.Id == userId);
                         if (!result)
                         {
                             throw new BusinessException("用户启用失败");
@@ -689,7 +689,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using(var mapper = EntityMapper.CreateMapper())
                 {
                     var config = new Config().ModifyUserFace(newFace);
-                    var result = mapper.Modify(config, conf => conf.UserId == userId);
+                    var result = mapper.Update(config, conf => conf.UserId == userId);
                     if (!result)
                     {
                         throw new BusinessException("修改用户头像失败");
@@ -713,7 +713,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         user.ModifyLockScreenPassword(newPassword);
                     }
                     user.ModifyLoginPassword(newPassword);
-                    var result = mapper.Modify(user, acc => acc.Id == userId && acc.IsDisable == false);
+                    var result = mapper.Update(user, acc => acc.Id == userId && acc.IsDisable == false);
                     if (!result)
                     {
                         throw new BusinessException("修改登陆密码失败");
@@ -732,7 +732,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using(var mapper = EntityMapper.CreateMapper())
                 {
                     var user = new User().ModifyLockScreenPassword(newScreenPassword);
-                    var result = mapper.Modify(user, acc => acc.Id == userId && !acc.IsDisable);
+                    var result = mapper.Update(user, acc => acc.Id == userId && !acc.IsDisable);
                     if (!result)
                     {
                         throw new BusinessException("修改锁屏密码失败");
@@ -773,7 +773,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var user = new User();
                             user.Remove();
-                            var result = mapper.Modify(user, acc => acc.Id == userId && !acc.IsDisable);
+                            var result = mapper.Update(user, acc => acc.Id == userId && !acc.IsDisable);
                             if (!result)
                             {
                                 throw new BusinessException("移除账户失败");
@@ -785,7 +785,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var config = new Config();
                             config.Remove();
-                            var result = mapper.Modify(config, conf => conf.UserId == userId);
+                            var result = mapper.Update(config, conf => conf.UserId == userId);
                             if (!result)
                             {
                                 throw new BusinessException("移除账户配置失败");
@@ -797,7 +797,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var userRole = new UserRole();
                             userRole.Remove();
-                            var result = mapper.Modify(userRole, accRole => accRole.UserId == userId);
+                            var result = mapper.Update(userRole, accRole => accRole.UserId == userId);
                             if (!result)
                             {
                                 throw new BusinessException("移除账户配置失败");
@@ -809,7 +809,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             var member = new Member();
                             member.Remove();
-                            var result = mapper.Modify(member, mem => mem.UserId == userId);
+                            var result = mapper.Update(member, mem => mem.UserId == userId);
                             if (!result)
                             {
                                 throw new BusinessException("移除账户配置失败");
