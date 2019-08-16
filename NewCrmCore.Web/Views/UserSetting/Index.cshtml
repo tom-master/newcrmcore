@@ -41,17 +41,17 @@
         {
             case "baseinfo":
             {
-                @Html.RenderPartialAsync("~/Views/UserSetting/BaseInfo.cshtml", Model);
+                var result = @Html.RenderPartialAsync("~/Views/UserSetting/BaseInfo.cshtml", Model);
                 break;
             }
             case "usersafe":
             {
-                @Html.RenderPartialAsync("~/Views/UserSetting/UserSafe.cshtml");
+                var result = @Html.RenderPartialAsync("~/Views/UserSetting/UserSafe.cshtml");
                 break;
             }
             default:
             {
-                @Html.RenderPartialAsync("~/Views/UserSetting/BaseInfo.cshtml", Model);
+                var result = @Html.RenderPartialAsync("~/Views/UserSetting/BaseInfo.cshtml", Model);
                 break;
             }
         }
@@ -59,7 +59,7 @@
 }
 
 @section ChildrenScript
-    {
+{
     @{
         if (String.IsNullOrEmpty(requestTarget))
         {
