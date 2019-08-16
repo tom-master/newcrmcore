@@ -1262,7 +1262,7 @@ var swfobject = function () {
 NewCrm = {};
 NewCrm.info = function (msg) {
 	if (!$('.lobibox-info').length) {
-		Lobibox.alert('info', {
+		top.Lobibox.alert('info', {
 			msg: msg,
 			width: 300
 		})
@@ -1270,7 +1270,7 @@ NewCrm.info = function (msg) {
 };
 NewCrm.success = function (msg) {
 	if (!$('.lobibox-success').length) {
-		Lobibox.alert('success', {
+		top.Lobibox.alert('success', {
 			msg: msg,
 			width: 300
 		})
@@ -1278,7 +1278,7 @@ NewCrm.success = function (msg) {
 };
 NewCrm.fail = function (msg) {
 	if (!$('.lobibox-error').length) {
-		Lobibox.alert('error', {
+		top.Lobibox.alert('error', {
 			msg: msg || '出现未知错误，请重试',
 			width: 300
 		})
@@ -1286,7 +1286,7 @@ NewCrm.fail = function (msg) {
 };
 NewCrm.warning = function (msg) {
 	if (!$('.lobibox-warning').length) {
-		Lobibox.alert('warning', {
+		top.Lobibox.alert('warning', {
 			msg: msg,
 			width: 300
 		})
