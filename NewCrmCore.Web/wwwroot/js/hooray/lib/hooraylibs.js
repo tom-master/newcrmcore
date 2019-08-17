@@ -1171,7 +1171,7 @@ var swfobject = function () {
 		}
 	});
 	$.fn.pagination = function (maxentries, opts) {
-		
+
 		opts = $.extend({
 			items_per_page: 10,
 			num_display_entries: 11,
@@ -1201,7 +1201,7 @@ var swfobject = function () {
 			return continuePropagation;
 		}
 		function selectPage(new_current_page) {
-			 
+
 			containers.data("current_page", new_current_page);
 			links = renderer.getLinks(new_current_page, paginationClickHandler);
 			containers.empty();
@@ -1296,10 +1296,12 @@ NewCrm.warning = function (msg) {
 }
 let loading = [];
 NewCrm.loading = function (msg) {
-	// loading.push(Lobibox.alert('loading', {
-	// 	msg: msg,
-	// 	width: 300
-	// }))
+	// if (!$('.lobibox-loading').length) {
+	// 	loading.push(parent.Lobibox.alert('loading', {
+	// 		msg: msg,
+	// 		width: 300
+	// 	}))
+	// } 
 };
 NewCrm.close = function () {
 	// for (let index = 0; index < loading.length; index++) {

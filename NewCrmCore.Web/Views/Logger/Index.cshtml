@@ -68,7 +68,7 @@
             <td colspan="100">
                 <div style="margin-top:10px">
                     <nav id='pagination' aria-label="Page navigation example"></nav>
-                    <input id="pagination_setting" type="hidden" per="10">
+                    <input id="pagination_setting" type="hidden" count="15">
                 </div>
             </td>
         </tr>
@@ -90,7 +90,9 @@
             <td>{{parseLoggerLevel LogLevelEnum}}</td>
             <td>{{Controller}}</td>
             <td>{{Action}}</td>
-            <td>{{ExceptionMessage}}</td>
+            <td onclick='clickcopy(this)' data-completecontent='{{ExceptionMessage}}' style="cursor: pointer;" title="点击复制到剪切板">
+                {{cutLongString ExceptionMessage}}
+            </td>
             <td>{{UserId}}</td>
             <td>{{AddTime}}</td>
         </tr>

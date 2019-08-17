@@ -47,7 +47,7 @@ function getPageList(current_page) {
         appStyleId: $('#appStyle').find("option:selected").attr('value'),
         appState: appStateResult,
         pageIndex: current_page === 0 ? 1 : current_page + 1,
-        pageSize: 7
+        pageSize: 6
     }, (responseText) => {
         if (responseText.IsSuccess) {
             let tableTemplate = Handlebars.compile($("#table-template").html());

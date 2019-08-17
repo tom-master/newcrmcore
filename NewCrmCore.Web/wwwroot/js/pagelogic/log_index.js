@@ -11,12 +11,22 @@ getPageList(0);
 //搜索
 $('a[menu=search]').click(() => getPageList(0));
 
+function clickcopy(ele) {
+    let input = document.createElement('input');
+    document.body.appendChild(input);
+    input.setAttribute('value', ele.getAttribute('data-completecontent'));
+    input.select();
+    document.execCommand('copy');
+    NewCrm.success('复制成功');
+    document.body.removeChild(input);
+}
+
 function getPageList(current_page) {
     HROS.request.get('/logger/getlogs/', {
         userName: $('#userName').val(),
         logLevel: $('#logLevel').find("option:selected").attr('value'),
         pageIndex: current_page === 0 ? 1 : current_page + 1,
-        pageSize: 5
+        pageSize: 9
     }, (responseText) => {
         if (responseText.IsSuccess) {
             let tableTemplate = Handlebars.compile($("#table-template").html());
@@ -37,9 +47,7 @@ function getPageList(current_page) {
 }
 
 Handlebars.registerHelper('cutLongString', (str) => {
-    if (str.length >= 30) {
-        return str.substring(0, 30);
-    }
+    return `${str.substring(0, 15)} ...`;
 });
 
 Handlebars.registerHelper('parseLoggerLevel', (str) => {
