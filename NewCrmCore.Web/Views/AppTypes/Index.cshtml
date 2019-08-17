@@ -9,7 +9,7 @@
     {
     <link rel="stylesheet" href="/css/hoorayui/sys.css" />
 }
-<div style="margin-bottom:10px;background-color:#f5f5f5;border:1px solid #e3e3e3;min-height:20px;padding:9px">
+<div style="background-color:#f5f5f5;min-height:20px;padding:9px">
     <div class="form-inline">
         <label>类目名称：</label>
         <input type="text" name="searchText" id="searchText" class="span2 form-control">
@@ -19,24 +19,20 @@
 </div>
 <table class="list-table">
     <thead>
-        <tr class="col-name">
-            <th>类目名称</th>
-            <th style="width:150px">操作</th>
-        </tr>
-        <tr class="sep-row"><td colspan="100"></td></tr>
         <tr class="toolbar">
             <td colspan="100">
                 <b style="margin:0 10px">符合条件的记录</b>有<font class="list-count">0</font>条
             </td>
         </tr>
-        <tr class="sep-row"><td colspan="100"></td></tr>
     </thead>
     <tbody class="list-con"></tbody>
     <tfoot>
         <tr>
             <td colspan="100">
-               <nav aria-label="Page navigation example"></nav>
-                <input id="pagination_setting" type="hidden" per="15">
+               <div style="margin-top:10px">
+                    <nav aria-label="Page navigation example"></nav>
+                    <input id="pagination_setting" type="hidden" per="15">
+               </div>
             </td>
         </tr>
     </tfoot>
