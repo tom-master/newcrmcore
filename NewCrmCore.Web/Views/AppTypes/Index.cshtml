@@ -8,6 +8,11 @@
 @section SysCss
     {
     <link rel="stylesheet" href="/css/hoorayui/sys.css" />
+    <style>
+          body {
+            margin: 10px 10px 0;
+        }
+    </style>
 }
 <div style="background-color:#f5f5f5;min-height:20px;padding:9px">
     <div class="form-inline">
@@ -20,7 +25,7 @@
 <table class="list-table">
     <thead>
         <tr class="toolbar">
-            <td colspan="100">
+            <td colspan="2" style="">
                 <b style="margin:0 10px">符合条件的记录</b>有<font class="list-count">0</font>条
             </td>
         </tr>
@@ -28,7 +33,7 @@
     <tbody class="list-con"></tbody>
     <tfoot>
         <tr>
-            <td colspan="100">
+            <td colspan="2">
                <div style="margin-top:10px">
                     <nav aria-label="Page navigation example"></nav>
                     <input id="pagination_setting" type="hidden" per="15">
