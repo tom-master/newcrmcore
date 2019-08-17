@@ -102,7 +102,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 					else
 					{
 						parameters.Add(new EntityParameter("@Id", memberId));
-						where.Append($@" AND a.Id=@Id");
+						where.Append($@" AND a.Id=@Id OR a.AppId=@Id");
 					}
 
 					var sql = $@"SELECT 

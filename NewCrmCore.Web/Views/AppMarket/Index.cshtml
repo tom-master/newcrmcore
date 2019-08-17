@@ -38,10 +38,14 @@
 <div class="wrap">
     <div class="col-sub">
         <div class="search-box input-group">
-            <input type="text" name="searchText" class="form-control" id="searchText" placeholder="请输入搜索关键字" style="width:100px" value="">
-            <div class="input-group-append" style="z-index:0">
-                <button id="searchTextRemove" class="btn" style="padding:4px 5px"><i class="oi oi-x"></i></button>
-                <button id="searchTextDo" class="btn" style="padding:4px 5px"><i class="oi oi-magnifying-glass"></i></button>
+            <input type="text" name="searchText" class="form-control" id="searchText" placeholder="请输入搜索关键字" style="padding:0;height:2.2em" value="">
+            <div class="input-group-append" style="height:2.3em" role="group">
+                <button id="searchTextRemove" class="btn btn-outline-secondary" type="button">
+                    <i class="oi oi-x"></i>
+                </button>
+                <button id="searchTextDo" class="btn btn-outline-secondary" type="button">
+                    <i class="oi oi-magnifying-glass"></i>
+                </button>
             </div>
         </div>
         <div class="mbox commend-day">
@@ -104,9 +108,8 @@
             <ul class="app-list"></ul>
             <div style="margin-top:10px">
                 <nav aria-label="Page navigation example"></nav>
-            <input id="pagination_setting" type="hidden" per="5" />
+                <input id="pagination_setting" type="hidden" per="5" />
             </div>
-            
         </div>
     </div>
 </div>

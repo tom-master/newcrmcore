@@ -107,9 +107,9 @@ $('.commend-day').on('click', '.btn-add', function () {
     }
 }).on('click', '.btn-run', function () {
     if ($(this).attr('app_type') === 'app') {
-        top.HROS.window.create($(this).attr('real_app_id'));
+        top.HROS.window.create($(this).attr('real_app_id'),'app');
     } else {
-        top.HROS.widget.create($(this).attr('real_app_id'));
+        top.HROS.widget.create($(this).attr('real_app_id',),'widget');
     }
 });
 function getPageList(current_page) {
