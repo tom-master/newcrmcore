@@ -1,11 +1,5 @@
 ﻿//加载列表
 getPageList(0);
-/**
- * <input type="hidden" id="wait" value="@(AppAuditState.Wait)" /> 
-<input type="hidden" id="pass" value="@(AppAuditState.Pass)" /> 
-<input type="hidden" id="fileUrl" value="@(NewCrmCore.Infrastructure.Appsetting.FileUrl)" /> 
- */
-
 
 //删除，推荐
 $('.list-con').on('click', '.do-del', function () {
@@ -18,7 +12,6 @@ $('.list-con').on('click', '.do-del', function () {
         ok: () => {
             HROS.request.post('/appmanager/remove', { appId: appid }, (responseText) => {
                 if (responseText.IsSuccess) {
-
                     $('#pagination').trigger('currentPage');
                 } else {
                     NewCrm.fail(responseText.Message);

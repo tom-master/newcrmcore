@@ -1171,6 +1171,7 @@ var swfobject = function () {
 		}
 	});
 	$.fn.pagination = function (maxentries, opts) {
+		
 		opts = $.extend({
 			items_per_page: 10,
 			num_display_entries: 11,
@@ -1200,6 +1201,7 @@ var swfobject = function () {
 			return continuePropagation;
 		}
 		function selectPage(new_current_page) {
+			 
 			containers.data("current_page", new_current_page);
 			links = renderer.getLinks(new_current_page, paginationClickHandler);
 			containers.empty();
