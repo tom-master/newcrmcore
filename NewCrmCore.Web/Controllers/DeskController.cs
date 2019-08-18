@@ -153,17 +153,17 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="loginParameter"></param>
         /// <returns></returns>
         [HttpPost, DoNotCheckPermission]
-        public async Task<IActionResult> Landing(IFormCollection loginParameter)
+        public async Task<IActionResult> Landing(UserLogin loginParameter)
         {
             #region 参数验证
             Parameter.Validate(loginParameter);
             #endregion
             var response = new ResponseModel<UserDto>();
 
-            var user = await _userServices.LoginAsync(loginParameter["username"], loginParameter["password"], Request.HttpContext.Connection.RemoteIpAddress.ToString());
+            var user = await _userServices.LoginAsync(loginParameter.UserName, loginParameter.Password, Request.HttpContext.Connection.RemoteIpAddress.ToString());
             if (user != null)
             {
-                var cookieTimeout = (String.IsNullOrEmpty(loginParameter["remerber"]) ? false : Boolean.Parse(loginParameter["remerber"])) ? DateTime.Now.AddDays(7) : DateTime.Now.AddMinutes(60);
+                var cookieTimeout = (loginParameter.Remember) ? DateTime.Now.AddDays(7) : DateTime.Now.AddMinutes(60);
                 response.Message = "登陆成功";
                 response.IsSuccess = true;
 
@@ -1016,8 +1016,8 @@ namespace NewCrmCore.Web.Controllers
             return Json(response);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> PostTest()
+        [HttpPost, HttpGet]
+        public async Task<IActionResult> Test()
         {
             return await Task.Run(async () =>
             {

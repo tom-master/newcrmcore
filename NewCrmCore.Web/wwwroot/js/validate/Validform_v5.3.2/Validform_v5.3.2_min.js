@@ -976,7 +976,6 @@
 			}
 
 			if (flag) {
-
 				var beforeSubmit = settings.beforeSubmit && settings.beforeSubmit(curform);
 				if (beforeSubmit === false) { return false; }
 
@@ -1030,6 +1029,7 @@
 						async: true,
 						data: curform.serializeArray(),
 						success: function (data) {
+
 							if ($.trim(data.status) === "y") {
 								//成功提交;
 								curform[0].validform_status = "posted";
@@ -1044,6 +1044,7 @@
 							curform[0].validform_ajax = null;
 						},
 						error: function (data) {
+							debugger
 							var msg = "status: " + data.status + "; statusText: " + data.statusText;
 
 							Validform.util.showmsg.call(curform, msg, settings.tiptype, { obj: curform, type: 3, sweep: settings.tipSweep }, "byajax");
@@ -1057,7 +1058,25 @@
 					ajaxsetup = $.extend({}, localconfig, ajaxsetup, { dataType: "json" });
 
 					curform[0].validform_ajax = $.ajax(ajaxsetup);
-
+					// var obj = new Object();
+					// var arr = curform.serializeArray();
+					// for (let index = 0; index < arr.length; index++) {
+					// 	let element = arr[index];
+					// 	obj[element.name] = element.value;
+					// }
+					// HROS.request.post(ajaxsetup.url, arr, function (data) {
+					// 	if ($.trim(data.status) === "y") {
+					// 		//成功提交;
+					// 		curform[0].validform_status = "posted";
+					// 		Validform.util.showmsg.call(curform, data.info, settings.tiptype, { obj: curform, type: 2, sweep: settings.tipSweep }, "byajax");
+					// 	} else {
+					// 		//提交出错;
+					// 		curform[0].validform_status = "normal";
+					// 		Validform.util.showmsg.call(curform, data.info, settings.tiptype, { obj: curform, type: 3, sweep: settings.tipSweep }, "byajax");
+					// 	}
+					// 	settings.callback && settings.callback(data);
+					// 	curform[0].validform_ajax = null;
+					// });
 				} else {
 					if (!settings.postonce) {
 						curform[0].validform_status = "normal";

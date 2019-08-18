@@ -58,4 +58,13 @@ namespace NewCrmCore.Dto
         public String Icon { get; set; }
         public Int32 MemberId { get; set; }
     }
+
+    public class UserLogin
+    {
+        public String UserName { get; set; }
+
+        public String Password { get; set; }
+
+        public Boolean Remember { get; set; }
+    }
 }
