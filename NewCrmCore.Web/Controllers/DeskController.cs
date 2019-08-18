@@ -1015,5 +1015,18 @@ namespace NewCrmCore.Web.Controllers
 
             return Json(response);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> PostTest()
+        {
+            return await Task.Run(async () =>
+            {
+                await Task.Delay(5000);
+                var response = new ResponseModel();
+                response.IsSuccess = true;
+                response.Message = "response success";
+                return Json(response);
+            });
+        }
     }
 }
