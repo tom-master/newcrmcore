@@ -144,23 +144,16 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(pageIndex);
             Parameter.Validate(pageSize);
 
-            // var where = new StringBuilder();
-            // where.Append("WHERE 1=1 AND a.IsDeleted=0 ");
             var where = MergeFactory.Create<User>();
-            //var parameters = new List<EntityParameter>();
             if (!String.IsNullOrEmpty(userName))
             {
                 where.And(w => w.Name.Contains(userName));
-                // parameters.Add(new EntityParameter("@name", userName));
-                // where.Append(" AND a.Name=@name");
             }
 
             if (!String.IsNullOrEmpty(userType))
             {
                 var isAdmin = (EnumExtensions.ToEnum<UserType>(Int32.Parse(userType)) == UserType.Admin);
                 where.And(w => w.IsAdmin == isAdmin);
-                // parameters.Add(new EntityParameter("@isAdmin", isAdmin));
-                // where.Append($@" AND a.IsAdmin=@isAdmin");
             }
 
             using(var mapper = EntityMapper.CreateMapper())
@@ -168,8 +161,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 #region totalCount
                 {
                     totalCount = mapper.Select<User>().InnerJoin<Config>((a, b) => a.Id == b.UserId).Where(where).Count();
-                    // var sql = $@"SELECT COUNT(*) FROM newcrm_user AS a INNER JOIN newcrm_user_config AS a1 ON a1.UserId=a.Id AND a1.IsDeleted=0 {where} ";
-                    // totalCount = mapper.ExecuteToSingle<Int32>(sql, parameters);
                 }
                 #endregion
 
@@ -184,18 +175,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         b.UserFace,
                         b.IsModifyUserFace
                     }).InnerJoin<Config>((a, b) => a.Id == b.UserId).Where(where).Page(pageIndex, pageSize).ToList();
-                    // var sql = $@"SELECT 
-                    // 			a.Id,
-                    // 			a.IsAdmin,
-                    // 			a.Name,
-                    // 			a.IsDisable,
-                    // 			a1.UserFace,
-                    //          a1.IsModifyUserFace
-                    //           FROM newcrm_user AS a 
-                    //          INNER JOIN newcrm_user_config AS a1
-                    //          ON a1.UserId=a.Id AND a1.IsDeleted=0
-                    //          {where} LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
-                    // return mapper.ExecuteToList<User>(sql, parameters);
                 }
                 #endregion
             }
@@ -223,41 +202,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         a.AddTime,
                         b.IsModifyUserFace
                     }).InnerJoin<Config>((a, b) => a.Id == b.UserId).Where(w => !w.IsDeleted).FirstOrDefault();
-
-
-                    //return mapper.InnerJoin<User, Config>((a, b) => a.Id == b.UserId).Find<User>(a => !a.IsDisable, a => new
-                    //{
-                    //	a.UserFace,
-                    //	a.Id,
-                    //	a.IsAdmin,
-                    //	a.IsDisable,
-                    //	a.IsOnline,
-                    //	a.Name,
-                    //	a.LockScreenPassword,
-                    //	a.LoginPassword,
-                    //	a.LastLoginTime,
-                    //	a.AddTime,
-                    //	a.IsModifyUserFace
-                    //}).FirstOrDefault();
-
-                    //var sql = $@"SELECT 
-                    //        a1.UserFace,
-                    //        a.Id,
-                    //        a.IsAdmin,
-                    //        a.IsDisable,
-                    //        a.IsOnline,
-                    //        a.Name,
-                    //        a.LockScreenPassword,
-                    //        a.LoginPassword,
-                    //        a.LastLoginTime,
-                    //        a.AddTime,
-                    //        a1.IsModifyUserFace
-                    //        FROM User AS a 
-                    //        INNER JOIN  Config AS a1
-                    //        ON a1.UserId=a.Id
-                    //        WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
-                    //var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
-                    //return mapper.ComplexSqlExecute<User>(sql, parameters);
                 }
             });
         }
