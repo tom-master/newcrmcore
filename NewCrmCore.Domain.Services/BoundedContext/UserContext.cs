@@ -135,10 +135,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         a.Height,
                         a.Source
                     }).Where(w => w.Id == wallPaperId).FirstOrDefault();
-
-                    // var sql = $@"SELECT a.Url,a.Width,a.Height,a.Source FROM Wallpaper AS a WHERE a.Id=@wallpaperId AND a.IsDeleted=0";
-                    // var parameters = new List<EntityParameter> { new EntityParameter("@wallpaperId", wallPaperId) };
-                    // return mapper.Find<Wallpaper>(sql, parameters).FirstOrDefault();
                 }
             });
         }
