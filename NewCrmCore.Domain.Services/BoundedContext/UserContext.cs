@@ -116,27 +116,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                          a.UserId,
                          a.IsModifyUserFace
                      }).Where(w => w.UserId == userId).FirstOrDefault();
-                     //  var sql = $@"SELECT 
-                     // 			a.Id,
-                     // 			a.Skin,  
-                     // 			a.UserFace,
-                     // 			a.AppSize,  
-                     // 			a.AppVerticalSpacing,
-                     // 			a.AppHorizontalSpacing,
-                     // 			a.DefaultDeskNumber,
-                     // 			a.DefaultDeskCount,
-                     // 			a.AppXy,
-                     // 			a.DockPosition,
-                     // 			a.WallpaperMode,
-                     // 			a.WallpaperId,
-                     // 			a.IsBing,
-                     // 			a.UserId,
-                     //             a.IsModifyUserFace,
-                     //             a.WallpaperId
-                     // 			FROM Config AS a WHERE a.UserId=@userId AND a.IsDeleted=0";
-                     //  var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
-                     //  var result = mapper.Find<Config>(sql, parameters).FirstOrDefault();
-                     //  return result;
                  }
              });
         }
