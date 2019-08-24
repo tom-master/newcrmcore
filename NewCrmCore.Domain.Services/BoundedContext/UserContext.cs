@@ -44,22 +44,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                  a.IsAdmin,
                                  b.IsModifyUserFace
                              }).InnerJoin<Config>((a, b) => a.Id == b.UserId).Where(a => a.Name == userName && !a.IsDisable).FirstOrDefault();
-                             //user = mapper.InnerJoin<User, Config>((u, c) => u.Id == c.UserId).Find<User>(a => a.Name == userName && !a.IsDisable, a => new
-                             //{
-                             // a.Id,
-                             // a.Name,
-                             // a.LoginPassword,
-                             // a.UserFace,
-                             // a.IsAdmin,
-                             // a.IsModifyUserFace
-                             //}).FirstOrDefault();
-
-                             //  var sql = @"SELECT a.Id,a.Name,a.LoginPassword,a1.UserFace,a.IsAdmin,a1.IsModifyUserFace
-                             //             FROM User AS a
-                             //             INNER JOIN Config AS a1
-                             //             ON a1.UserId=a.Id 
-                             //             WHERE a.Name=@name AND a.IsDeleted=0 AND a.IsDisable=0";
-                             //  user = mapper.Find<User>(sql, new List<EntityParameter> { new EntityParameter("@name", userName) }).FirstOrDefault();
                              if (user == null)
                              {
                                  throw new BusinessException($"该用户不存在或被禁用{userName}");
