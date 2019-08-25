@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.DrawingCore;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -43,7 +42,7 @@ namespace NewCrmCore.Application.Services
             }).ToList();
         }
 
-        public async Task<Tuple<Int32, String>> AddWallpaperAsync(WallpaperDto wallpaperDto)
+        public async Task<(Int32 wapperId, String url)> AddWallpaperAsync(WallpaperDto wallpaperDto)
         {
             Parameter.Validate(wallpaperDto);
             return await _wallpaperContext.AddWallpaperAsync(wallpaperDto.ConvertToModel<WallpaperDto, Wallpaper>());
@@ -67,7 +66,7 @@ namespace NewCrmCore.Application.Services
             }).ToList();
         }
 
-        public async Task<Tuple<Int32, String>> AddWebWallpaperAsync(Int32 userId, String url)
+        public async Task<(Int32 wapperId, String url)> AddWebWallpaperAsync(Int32 userId, String url)
         {
             Parameter.Validate(userId);
             Parameter.Validate(url);
@@ -79,7 +78,7 @@ namespace NewCrmCore.Application.Services
                 var webWallpaper = await GetUploadWallpaperAsync(md5);
                 if (webWallpaper != null)
                 {
-                    return new Tuple<Int32, String>(webWallpaper.Id, webWallpaper.ShortUrl);
+                    return (webWallpaper.Id, webWallpaper.ShortUrl);
                 }
 
                 var result = await AddWallpaperAsync(new WallpaperDto
@@ -93,7 +92,7 @@ namespace NewCrmCore.Application.Services
                     Md5 = md5,
                     ShortUrl = url
                 });
-                return new Tuple<Int32, String>(result.Item1, result.Item2);
+                return (result.Item1, result.Item2);
             }
         }
 

@@ -278,7 +278,7 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(webUrl);
             #endregion
 
-            var response = new ResponseModel<Tuple<Int32, String>>();
+            var response = new ResponseModel<(Int32 wapperId, String url)>();
 
             var result = _wallpaperServices.AddWebWallpaperAsync(UserId, webUrl);
             response.IsSuccess = true;

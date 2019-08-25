@@ -18,7 +18,7 @@ namespace NewCrmCore.Domain.Services.Interface
         /// </summary>
         /// <param name="wallpaper"></param>
         /// <returns></returns>
-        Task<Tuple<Int32, String>> AddWallpaperAsync(Wallpaper wallpaper);
+        Task<(Int32 wapperId, String url)> AddWallpaperAsync(Wallpaper wallpaper);
 
         /// <summary>
         /// 获取上传的壁纸

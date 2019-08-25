@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
@@ -13,21 +12,15 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 {
     public class WallpaperContext : IWallpaperContext
     {
-        public async Task<Tuple<Int32, String>> AddWallpaperAsync(Wallpaper wallpaper)
+        public async Task<(Int32 wapperId, String url)> AddWallpaperAsync(Wallpaper wallpaper)
         {
             Parameter.Validate(wallpaper);
             return await Task.Run(() =>
              {
-                 using(var mapper = EntityMapper.CreateMapper())
+                 using (var mapper = EntityMapper.CreateMapper())
                  {
                      #region 前置条件验证
                      {
-                         //  var sql = $@"SELECT COUNT(*) FROM Wallpaper AS a WHERE a.UserId=@UserId AND a.IsDeleted=0";
-                         //  var parameters = new List<EntityParameter>
-                         //  {
-                         //     new EntityParameter("@UserId",wallpaper.UserId)
-                         //  };
-                         //  var result = dataStore.FindSingleValue<Int32>(sql, parameters);
                          var result = mapper.Select<Wallpaper>().Where(w => w.UserId == wallpaper.UserId).Count();
                          if (result > 6)
                          {
@@ -39,23 +32,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                      #region 插入壁纸
                      {
                          wallpaper = mapper.Add(wallpaper);
-                         return new Tuple<Int32, String>(wallpaper.Id, wallpaper.Url);
-                     }
-                     #endregion
-
-                     #region 获取返回值
-                     {
-                         //  var sql = $@"SELECT a.Id,a.Url FROM Wallpaper AS a WHERE a.Id=@Id AND a.IsDeleted=0";
-                         //  var parameters = new List<EntityParameter>
-                         //  {
-                         //     new EntityParameter("@Id",newWallpaperId)
-                         //  };
-                         //  var result = dataStore.FindOne<Wallpaper>(sql, parameters);
-                         //  if (result != null)
-                         //  {
-                         //      return new Tuple<Int32, String>(result.Id, result.Url);
-                         //  }
-                         //  return null;
+                         return (wallpaper.Id, wallpaper.Url);
                      }
                      #endregion
                  }
@@ -68,7 +45,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<Wallpaper>(a => new
                     {
@@ -82,23 +59,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         a.Url,
                         a.Width
                     }).Where(a => a.Md5 == md5).FirstOrDefault();
-
-                    // var sql = $@"SELECT
-                    //         a.UserId,
-                    //         a.Height,
-                    //         a.Id,
-                    //         a.Md5,
-                    //         a.ShortUrl,
-                    //         a.Source,
-                    //         a.Title,
-                    //         a.Url,
-                    //         a.Width
-                    //         FROM Wallpaper AS a WHERE a.Md5=@Md5 AND a.IsDeleted=0";
-                    // var parameters = new List<EntityParameter>
-                    // {
-                    //     new EntityParameter("@Md5",md5)
-                    // };
-                    // return dataStore.FindOne<Wallpaper>(sql, parameters);
                 }
             });
         }
@@ -109,7 +69,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<Wallpaper>(a => new
                     {
@@ -123,24 +83,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         a.Url,
                         a.Width
                     }).Where(a => a.UserId == userId && a.Source != WallpaperSource.System).ToList();
-
-                    // var sql = $@"SELECT
-                    //         a.UserId,
-                    //         a.Height,
-                    //         a.Id,
-                    //         a.Md5,
-                    //         a.ShortUrl,
-                    //         a.Source,
-                    //         a.Title,
-                    //         a.Url,
-                    //         a.Width
-                    //         FROM Wallpaper AS a WHERE a.UserId=@UserId AND a.Source<>@Source AND a.IsDeleted=0";
-                    // var parameters = new List<EntityParameter>
-                    // {
-                    //     new EntityParameter("@UserId",userId),
-                    //     new EntityParameter("@Source", WallpaperSource.System.ToInt32())
-                    // };
-                    // return dataStore.Find<Wallpaper>(sql, parameters);
                 }
             });
         }
@@ -149,7 +91,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<Wallpaper>(a => new
                     {
@@ -163,23 +105,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         a.Url,
                         a.Width
                     }).Where(a => a.Source == WallpaperSource.System).ToList();
-
-                    // var sql = $@"SELECT
-                    //         a.UserId,
-                    //         a.Height,
-                    //         a.Id,
-                    //         a.Md5,
-                    //         a.ShortUrl,
-                    //         a.Source,
-                    //         a.Title,
-                    //         a.Url,
-                    //         a.Width
-                    //         FROM Wallpaper AS a WHERE a.Source=@Source AND a.IsDeleted=0";
-                    // var parameters = new List<EntityParameter>
-                    // {
-                    //     new EntityParameter("@Source", WallpaperSource.System.ToInt32())
-                    // };
-                    // return dataStore.Find<Wallpaper>(sql, parameters);
                 }
             });
         }
@@ -193,7 +118,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 if (Enum.TryParse(newMode, true, out WallpaperMode wallpaperMode))
                 {
-                    using(var mapper = EntityMapper.CreateMapper())
+                    using (var mapper = EntityMapper.CreateMapper())
                     {
                         var config = new Config();
                         config.ModeTo(wallpaperMode);
@@ -218,7 +143,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     var config = new Config();
                     config.NotFromBing().ModifyWallpaperId(newWallpaperId);
@@ -238,19 +163,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     #region 前置条件验证
                     {
                         var result = mapper.Select<Config>().Where(a => a.UserId == userId && a.WallpaperId == wallpaperId).Count();
-
-                        // var sql = $@"SELECT COUNT(*) FROM Config AS a WHERE a.UserId=@UserId AND a.WallpaperId=@WallpaperId AND a.IsDeleted=0";
-                        // var parameters = new List<EntityParameter>
-                        // {
-                        //     new EntityParameter("@WallpaperId",wallpaperId),
-                        //     new EntityParameter("@UserId",userId)
-                        // };
-                        // var result = dataStore.FindSingleValue<Int32>(sql, parameters);
                         if (result > 0)
                         {
                             throw new BusinessException("当前壁纸正在使用中，不能删除");

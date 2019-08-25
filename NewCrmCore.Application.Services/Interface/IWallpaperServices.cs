@@ -20,7 +20,7 @@ namespace NewCrmCore.Application.Services.Interface
         /// </summary>
         /// <param name="wallpaperDto"></param>
         /// <returns></returns>
-        Task<Tuple<Int32, String>> AddWallpaperAsync(WallpaperDto wallpaperDto);
+       Task<(Int32 wapperId, String url)> AddWallpaperAsync(WallpaperDto wallpaperDto);
 
         /// <summary>
         /// 根据用户id获取上传的壁纸
@@ -35,7 +35,7 @@ namespace NewCrmCore.Application.Services.Interface
         /// <param name="userId"></param>
         /// <param name="url"></param>
         /// <returns></returns>
-        Task<Tuple<Int32, String>> AddWebWallpaperAsync(Int32 userId, String url);
+        Task<(Int32 wapperId, String url)> AddWebWallpaperAsync(Int32 userId, String url);
 
         /// <summary>
         /// 根据md5获取上传的壁纸
