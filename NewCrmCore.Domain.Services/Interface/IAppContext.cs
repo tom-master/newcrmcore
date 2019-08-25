@@ -55,7 +55,7 @@ namespace NewCrmCore.Domain.Services.Interface
         /// </summary>
         /// <param name="appIds"></param>
         /// <returns></returns>
-        Task<List<App>> GetSystemAppAsync(IEnumerable<Int32> appIds = default(IEnumerable<Int32>));
+        Task<List<App>> GetSystemAppAsync(IEnumerable<Int32> appIds);
 
         /// <summary>
         /// 获取当前账户下已开发和未发布的应用数量
@@ -164,7 +164,7 @@ namespace NewCrmCore.Domain.Services.Interface
         /// <param name="isSystem"></param>
         /// <param name="appTypeId"></param>
         /// <returns></returns>
-        Task ModifyAppTypeAsync(String appTypeName,Boolean isSystem, Int32 appTypeId);
+        Task ModifyAppTypeAsync(String appTypeName, Boolean isSystem, Int32 appTypeId);
 
         /// <summary>
         /// 更改应用图标
