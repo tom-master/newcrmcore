@@ -220,19 +220,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         a.Name,
                         a.RoleIdentity
                     }).InnerJoin<UserRole>((a, b) => a.Id == b.RoleId).Where<UserRole>(a => a.UserId == userId).ToList();
-
-                    //mapper.InnerJoin<Role, UserRole>((a, b) => a.Id == b.RoleId).Find<Role>(a => a);
-
-                    //var sql = $@"SELECT
-                    //			a1.Id,
-                    //			a1.Name,
-                    //			a1.RoleIdentity
-                    //			FROM UserRole AS a
-                    //			INNER JOIN Role AS a1
-                    //			ON a1.Id=a.RoleId AND a1.IsDeleted=0 
-                    //			WHERE a.UserId=@userId AND a.IsDeleted=0 ";
-                    //var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
-                    //return mapper.Find<Role>(sql, parameters);
                 }
             });
         }
@@ -244,8 +231,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using(var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<RolePower>(a => new { a.RoleId, a.AppId }).ToList();
-                    //var sql = $@"SELECT a.RoleId,a.AppId FROM RolePower AS a WHERE a.IsDeleted=0";
-                    //return mapper.Find<RolePower>(sql);
                 }
             });
         }
@@ -259,9 +244,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using(var mapper = EntityMapper.CreateMapper())
                 {
                     return !(mapper.Select<User>().Where(w => w.Name == userName).Exist());
-
-                    //var sql = $@"SELECT COUNT(*) FROM User AS a WHERE a.Name=@name AND a.IsDeleted=0";
-                    //return mapper.FindSingleValue<Int32>(sql, new List<EntityParameter> { new EntityParameter("@name", userName) }) != 0 ? false : true;
                 }
             });
         }
@@ -275,9 +257,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using(var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<User>(a => new { a.LoginPassword }).Where(w => w.Id == userId && !w.IsDisable).FirstOrDefault().LoginPassword;
-                    //var sql = $@"SELECT a.LoginPassword FROM User AS a WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
-                    //var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
-                    //return mapper.FindSingleValue<String>(sql, parameters);
                 }
             });
         }
@@ -293,12 +272,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     #region 获取锁屏密码
                     {
-                        //var sql = $@"SELECT a.LockScreenPassword FROM User AS a WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
-                        //var parameters = new List<EntityParameter>
-                        //{
-                        //	new EntityParameter("@userId",userId)
-                        //};
-                        //var password = mapper.FindSingleValue<String>(sql, parameters);
                         var user = mapper.Select<User>(a => new { a.LockScreenPassword }).Where(w => w.Id == userId && !w.IsDisable).FirstOrDefault();
                         return PasswordUtil.ComparePasswords(user.LockScreenPassword, unlockPassword);
                     }
@@ -316,12 +289,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using(var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<App>().Where(w => w.Name == name).Exist();
-                    //var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.Name=@name AND a.IsDeleted=0 ";
-                    //var parameters = new List<EntityParameter>
-                    //{
-                    //	new EntityParameter("@name",name)
-                    //};
-                    //return mapper.FindSingleValue<Int32>(sql, parameters) > 0;
                 }
 
             });
@@ -336,13 +303,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using(var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<App>().Where(w => w.AppUrl == url).Exist();
-                    //var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.AppUrl = @url AND a.IsDeleted=0";
-                    //var parameters = new List<EntityParameter>
-                    //{
-                    //	new EntityParameter("@url",url)
-                    //};
-
-                    //return mapper.FindSingleValue<Int32>(sql, parameters) > 0;
                 }
             });
         }
@@ -560,10 +520,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         var result = mapper
                         .Select<Role>().InnerJoin<UserRole>((a, b) => a.Id == b.RoleId).Where<UserRole>((a, b) => a.IsAllowDisable && b.UserId == userId).Count();
-
-                        //var sql = $@"SELECT COUNT(*) FROM Role AS a INNER JOIN UserRole AS a1 ON a1.UserId=@userId AND a1.RoleId=a.Id AND a1.IsDeleted=0
-                        //			 WHERE a.IsDeleted=0 AND a.IsAllowDisable=0";
-                        //var result = mapper.FindSingleValue<Int32>(sql, parameters);
                         if (result > 0)
                         {
                             throw new BusinessException("当前用户拥有管理员角色，因此不能禁用或删除");
@@ -659,12 +615,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         #region 前置条件验证
                         {
                             var isAdmin = mapper.Select<User>(a => new { a.IsAdmin }).Where(a => a.Id == userId && !a.IsDisable).FirstOrDefault().IsAdmin;
-                            //var sql = $@"SELECT a.IsAdmin FROM User AS a WHERE a.Id=@userId AND a.IsDeleted=0 AND a.IsDisable=0";
-                            //var parameters = new List<EntityParameter>
-                            //{
-                            //	new EntityParameter("@userId",userId)
-                            //};
-                            //var isAdmin = mapper.FindSingleValue<Boolean>(sql, parameters);
                             if (isAdmin)
                             {
                                 throw new BusinessException("不能删除管理员");
