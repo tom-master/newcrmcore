@@ -33,8 +33,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             using(var mapper = EntityMapper.CreateMapper())
             {
-                // var where = new StringBuilder();
-                // var parameters = new List<EntityParameter>();
                 var level = EnumExtensions.ToEnum<LogLevel>(logLevel);
                 var logWhere = MergeFactory.Create<Log>(w => w.LogLevelEnum == level);
 
@@ -42,8 +40,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 if (!String.IsNullOrEmpty(userName))
                 {
                     userWhere.And(w => w.Name.Contains(userName));
-                    // parameters.Add(new EntityParameter("@name", userName));
-                    // where.Append($@" AND a1.Name LIKE CONCAT('%',@name,'%') ");
                 }
 
                 var combination = logWhere.Append(userWhere);
@@ -51,14 +47,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 #region totalCount 
                 {
                     totalCount = mapper.Select<Log>().LeftJoin<User>((a, b) => a.UserId == b.Id).Where<User>(combination).Count();
-                    // var sql = $@"SELECT COUNT(*) FROM Log AS a LEFT JOIN newcrm_user AS a1 ON a.UserId=a1.Id WHERE 1=1 {where}";
-                    // totalCount = mapper.ExecuteToSingle<Int32>(sql, parameters);
                 }
                 #endregion
 
                 #region sql 
                 {
-
                     return mapper.Select<Log>(a => new
                     {
                         a.LogLevelEnum,
@@ -72,17 +65,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     .Page(pageIndex, pageSize)
                     .OrderByDesc<Log, DateTime>(a => a.AddTime)
                     .ToList();
-                    // var sql = $@"SELECT
-                    //             a.LogLevelEnum,
-                    //             a.Controller,
-                    //             a.Action,
-                    //             a.ExceptionMessage,
-                    //             IFNULL(a.UserId,0) AS UserId,
-                    //             a.AddTime
-                    //             FROM Log AS a 
-                    //             LEFT JOIN newcrm_user AS a1 ON a.UserId=a1.Id
-                    //             WHERE 1=1 {where} ORDER BY a.AddTime DESC LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
-                    // return mapper.ExecuteToList<Log>(sql, parameters);
                 }
                 #endregion
             }
