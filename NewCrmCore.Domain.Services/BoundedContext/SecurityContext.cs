@@ -7,7 +7,7 @@ using NewCrmCore.Domain.Entitys.Agent;
 using NewCrmCore.Domain.Entitys.Security;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
-using NewCrmCore.Infrastructure.CommonTools; 
+using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore.Data.SQL.Mapper;
 using NewLibCore.Data.SQL.MergeExpression;
 using NewLibCore.Validate;
@@ -20,16 +20,13 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<RolePower>(a => new
                     {
                         a.RoleId,
                         a.AppId
                     }).ToList();
-
-                    //var sql = $@"SELECT a.RoleId, a.AppId FROM RolePower AS a WHERE a.IsDeleted=0";
-                    //return mapper.Find<RolePower>(sql);
                 }
             });
         }
@@ -40,35 +37,26 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<Role>(a => new { a.Id, a.Name, a.RoleIdentity }).Where(a => a.Id == roleId).FirstOrDefault();
-                    //var sql = $@"SELECT a.Id, a.Name, a.RoleIdentity, a.Remark FROM Role AS a WHERE a.Id=@Id AND a.IsDeleted=0";
-                    //var parameters = new List<EntityParameter> { new EntityParameter("@Id", roleId) };
-                    //return mapper.FindOne<Role>(sql, parameters);
                 }
             });
         }
 
         public List<Role> GetRoles(String roleName, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
-            using(var mapper = EntityMapper.CreateMapper())
+            using (var mapper = EntityMapper.CreateMapper())
             {
-                // var where = new StringBuilder();
-                // var parameters = new List<EntityParameter>();
                 var where = MergeFactory.Create<Role>();
                 if (!String.IsNullOrEmpty(roleName))
                 {
                     where.And(w => w.Name.Contains(roleName));
-                    // parameters.Add(new EntityParameter("@roleName", $@"%{roleName}%"));
-                    // where.Append($@" AND a.Name LIKE @roleName");
                 }
 
                 #region totalCount
                 {
                     totalCount = mapper.Select<Role>().Where(where).Count();
-                    // var sql = $@"SELECT COUNT(*) FROM newcrm_role AS a WHERE 1=1 {where} AND a.IsDeleted=0";
-                    // totalCount = mapper.ExecuteToSingle<Int32>(sql, parameters);
                 }
                 #endregion
 
@@ -81,16 +69,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         a.Remark,
                         a.Id
                     }).Where(where).ToList();
-                    // var sql = $@"SELECT
-                    // 			a.Name,
-                    // 			a.RoleIdentity,
-                    // 			a.Remark,
-                    // 			a.Id
-                    // 			FROM newcrm_role AS a WHERE 1=1 {where} AND a.IsDeleted=0 LIMIT {pageSize * (pageIndex - 1)},{pageSize}";
-                    // return mapper.ExecuteToList<Role>(sql, parameters);
                 }
                 #endregion
-
             }
         }
 
@@ -101,17 +81,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     #region 检查app是否为系统app
                     {
                         var result = mapper.Select<App>().Where(a => a.Id == accessAppId && a.IsSystem).Count();
-                        //var sql = $@"SELECT COUNT(*) FROM App AS a WHERE a.Id=@Id AND a.IsDeleted=0 AND a.IsSystem=1";
-                        //var parameters = new List<EntityParameter>
-                        //{
-                        //    new EntityParameter("@Id",accessAppId)
-                        //};
-                        //var result = mapper.FindSingleValue<Int32>(sql, parameters);
                         if (result <= 0)
                         {
                             return true;
@@ -120,8 +94,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     #endregion
                     {
                         var result = mapper.Select<RolePower>(a => new { a.AppId }).Where(a => roleIds.Contains(a.RoleId)).ToList();
-                        //var sql = $@"SELECT a.AppId FROM RolePower AS a WHERE a.RoleId IN({String.Join(",", roleIds)}) AND a.IsDeleted=0";
-                        //var result = mapper.Find<RolePower>(sql);
                         return result.Any(a => a.AppId == accessAppId);
                     }
                 }
@@ -134,15 +106,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<Role>().Where(a => a.Name == name).Exist();
-                    //var sql = $@"SELECT COUNT(*) FROM Role AS a WHERE a.Name=@name AND a.IsDeleted=0";
-                    //var parameters = new List<EntityParameter>
-                    //{
-                    //    new EntityParameter("@name",name)
-                    //};
-                    //return mapper.FindSingleValue<Int32>(sql, parameters) > 0;
                 }
             });
         }
@@ -153,15 +119,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     return mapper.Select<Role>().Where(a => a.RoleIdentity == name).Exist();
-                    //var sql = $@"SELECT COUNT(*) FROM Role AS a WHERE a.RoleIdentity=@RoleIdentity AND a.IsDeleted=0";
-                    //var parameters = new List<EntityParameter>
-                    //{
-                    //    new EntityParameter("@RoleIdentity",name)
-                    //};
-                    //return mapper.FindSingleValue<Int32>(sql, parameters) > 0;
                 }
             });
         }
@@ -172,7 +132,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     #region 修改角色
                     {
@@ -194,20 +154,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     mapper.OpenTransaction();
                     try
                     {
-                        //var parameters = new List<EntityParameter>
-                        //{
-                        //    new EntityParameter("@roleId",roleId)
-                        //};
                         #region 前置条件验证
                         {
                             var result = mapper.Select<UserRole>().Where(a => a.RoleId == roleId).Count();
-                            //var sql = $@"SELECT COUNT(*) FROM UserRole AS a WHERE a.RoleId=@roleId AND a.IsDeleted=0";
-                            //var result = mapper.FindSingleValue<Int32>(sql, parameters);
                             if (result > 0)
                             {
                                 throw new BusinessException("当前角色已绑定了账户，无法删除");
@@ -256,7 +210,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     #region 添加角色
                     {
@@ -279,7 +233,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     throw new BusinessException("权限列表为空");
                 }
 
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     mapper.OpenTransaction();
                     try
@@ -324,7 +278,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     #region 添加角色
                     {
