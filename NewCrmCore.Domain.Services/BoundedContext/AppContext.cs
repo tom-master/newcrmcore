@@ -142,7 +142,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 #region totalCount
                 {
                     var sql = $@"SELECT COUNT(*) FROM newcrm_app AS a LEFT JOIN newcrm_app_star AS a1 ON a1.AppId=a.Id AND a1.IsDeleted=0 {where}";
-                    totalCount = mapper.ExecuteToSingle<Int32>(sql, parameters);
+                    totalCount = mapper.SqlQuery<Int32>(sql, parameters);
                 }
                 #endregion
 
