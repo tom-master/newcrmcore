@@ -77,7 +77,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         new EntityParameter("@AppReleaseState", AppReleaseState.Release.ToInt32()),
                         new EntityParameter("@userId",userId)
                     };
-                    return mapper.SqlQuery<TodayRecommendAppDto>(sql, parameters);
+                    return mapper.SqlQuery<TodayRecommendAppDto>(sql, parameters).FirstOrDefault();
                 }
             });
         }
