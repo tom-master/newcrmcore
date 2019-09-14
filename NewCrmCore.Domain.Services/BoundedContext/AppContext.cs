@@ -38,7 +38,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Select<AppType>(a => new { a.Id, a.Name, a.IsSystem }).ToList();
+                    return mapper.Query<AppType>().Select(a => new { a.Id, a.Name, a.IsSystem }).ToList();
                 }
             });
         }
