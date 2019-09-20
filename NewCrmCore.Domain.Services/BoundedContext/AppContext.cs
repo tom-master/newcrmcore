@@ -24,7 +24,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var result = mapper.Select<App>(a => new { a.Id, a.AppReleaseState }).Where<App>(w => w.UserId == userId).ToList();
+                    var result = mapper.Query<App>()
+                    .Where(w => w.UserId == userId)
+                    .Select(a => new { a.Id, a.AppReleaseState }).ToList();
                     return (result.Count, result.Count(a => a.AppReleaseState == AppReleaseState.UnRelease));
                 }
             });
@@ -632,7 +634,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             throw new BusinessException($@"当前分类下存在应用,不能删除当前分类");
                         }
-                   
+
                     }
                     #endregion
 
