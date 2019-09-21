@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq; 
-using NewLibCore.Data.SQL.Mapper.EntityExtension;
+using System.Linq;
+using NewLibCore.Data.SQL.Mapper;
 
 namespace NewCrmCore.Domain.Entitys.Security
 {
