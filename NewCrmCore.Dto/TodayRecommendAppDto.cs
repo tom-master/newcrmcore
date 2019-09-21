@@ -1,6 +1,6 @@
 ﻿using System;
 using NewCrmCore.Domain.ValueObject;
-using NewLibCore.Data.SQL.Mapper.EntityExtension;
+using NewLibCore.Data.SQL.Mapper;
 
 namespace NewCrmCore.Dto
 {

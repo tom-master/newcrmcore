@@ -320,7 +320,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         var set = new StringBuilder();
                         #region 查询桌面应用是否在应用码头中
                         {
-                            var count = mapper.Select<Member>().Where(w => w.Id == 0 && w.UserId == 0 && w.IsOnDock).Count();
+                            var count = mapper.Query<Member>().Where(w => w.Id == 0 && w.UserId == 0 && w.IsOnDock).Count();
                             if (count > 0)
                             {
                                 member.OutDock();
@@ -420,18 +420,19 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             using (var mapper = EntityMapper.CreateMapper())
             {
                 {
-                    totalCount = mapper.Select<Notify>().Where(w => w.ToUserId == userId).Count();
+                    totalCount = mapper.Query<Notify>().Where(w => w.ToUserId == userId).Count();
                 }
 
                 {
-                    return mapper.Select<Notify>(a => new
+                    return mapper.Query<Notify>().Where(w => w.ToUserId == userId)
+                    .Select(a => new
                     {
                         a.Id,
                         a.Title,
                         a.Content,
                         a.IsRead,
                         a.ToUserId
-                    }).Where(w => w.ToUserId == userId).Page(pageIndex, pageSize).ToList();
+                    }).Page(pageIndex, pageSize).ToList();
                 }
             }
         }
