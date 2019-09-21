@@ -101,7 +101,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
              {
                  using (var mapper = EntityMapper.CreateMapper())
                  {
-                     return mapper.Select<Config>(a => new
+                     return mapper.Query<Config>()
+                     .Where(w => w.UserId == userId)
+                     .Select(a => new
                      {
                          a.Id,
                          a.Skin,
@@ -118,7 +120,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                          a.IsBing,
                          a.UserId,
                          a.IsModifyUserFace
-                     }).Where(w => w.UserId == userId).FirstOrDefault();
+                     }).FirstOrDefault();
                  }
              });
         }
@@ -131,13 +133,15 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Select<Wallpaper>(a => new
+                    return mapper.Query<Wallpaper>()
+                    .Where(w => w.Id == wallPaperId)
+                    .Select(a => new
                     {
                         a.Url,
                         a.Width,
                         a.Height,
                         a.Source
-                    }).Where(w => w.Id == wallPaperId).FirstOrDefault();
+                    }).FirstOrDefault();
                 }
             });
         }
@@ -163,13 +167,17 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 #region totalCount
                 {
-                    totalCount = mapper.Select<User>().InnerJoin<Config>((a, b) => a.Id == b.UserId).Where(where).Count();
+                    totalCount = mapper.Query<User>()
+                    .InnerJoin<Config>((a, b) => a.Id == b.UserId)
+                    .Where(where).Count();
                 }
                 #endregion
 
                 #region sql
                 {
-                    return mapper.Select<User, Config>((a, b) => new
+                    return mapper.Query<User>()
+                    .InnerJoin<Config>((a, b) => a.Id == b.UserId)
+                    .Where(where).Select<User, Config>((a, b) => new
                     {
                         a.Id,
                         a.IsAdmin,
@@ -177,7 +185,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         a.IsDisable,
                         b.UserFace,
                         b.IsModifyUserFace
-                    }).InnerJoin<Config>((a, b) => a.Id == b.UserId).Where(where).Page(pageIndex, pageSize).ToList();
+                    }).Page(pageIndex, pageSize)
+                    .ThenByDesc<User, DateTime>(a => a.AddTime).ToList();
                 }
                 #endregion
             }
@@ -191,7 +200,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Select<User, Config>((a, b) => new
+                    return mapper.Query<User>()
+                    .InnerJoin<Config>((a, b) => a.Id == b.UserId)
+                    .Where(w => !w.IsDeleted)
+                    .Select<User, Config>((a, b) => new
                     {
                         b.UserFace,
                         a.Id,
@@ -204,7 +216,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         a.LastLoginTime,
                         a.AddTime,
                         b.IsModifyUserFace
-                    }).InnerJoin<Config>((a, b) => a.Id == b.UserId).Where(w => !w.IsDeleted).FirstOrDefault();
+                    }).FirstOrDefault();
                 }
             });
         }
@@ -217,12 +229,17 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Select<Role>(a => new
+                    return mapper.Query<Role>()
+                    .InnerJoin<UserRole>((a, b) => a.Id == b.RoleId)
+                    .Where<UserRole>(a => a.UserId == userId)
+                    .Select(a => new
                     {
                         a.Id,
                         a.Name,
                         a.RoleIdentity
-                    }).InnerJoin<UserRole>((a, b) => a.Id == b.RoleId).Where<UserRole>(a => a.UserId == userId).ToList();
+                    })
+                    .ThenByDesc<Role, DateTime>(a => a.AddTime)
+                    .ToList();
                 }
             });
         }
@@ -233,7 +250,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Select<RolePower>(a => new { a.RoleId, a.AppId }).ToList();
+                    return mapper.Query<RolePower>()
+                    .Select(a => new { a.RoleId, a.AppId })
+                    .ThenByDesc<RolePower, DateTime>(a => a.AddTime)
+                    .ToList();
                 }
             });
         }
@@ -246,7 +266,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return !(mapper.Select<User>().Where(w => w.Name == userName).Exist());
+                    return mapper.Query<User>().Where(w => w.Name == userName).Count() > 0;
                 }
             });
         }
@@ -259,7 +279,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Select<User>(a => new { a.LoginPassword }).Where(w => w.Id == userId && !w.IsDisable).FirstOrDefault().LoginPassword;
+                    return mapper.Query<User>()
+                    .Where(w => w.Id == userId && !w.IsDisable)
+                    .Select(a => new { a.LoginPassword })
+                    .FirstOrDefault().LoginPassword;
                 }
             });
         }
@@ -275,7 +298,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     #region 获取锁屏密码
                     {
-                        var user = mapper.Select<User>(a => new { a.LockScreenPassword }).Where(w => w.Id == userId && !w.IsDisable).FirstOrDefault();
+                        var user = mapper.Query<User>()
+                        .Where(w => w.Id == userId && !w.IsDisable)
+                        .Select(a => new { a.LockScreenPassword })
+                        .FirstOrDefault();
+
                         return PasswordUtil.ComparePasswords(user.LockScreenPassword, unlockPassword);
                     }
                     #endregion
@@ -291,7 +318,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Select<App>().Where(w => w.Name == name).Exist();
+                    return mapper.Query<App>().Where(w => w.Name == name).Count() > 0;
                 }
 
             });
@@ -305,7 +332,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Select<App>().Where(w => w.AppUrl == url).Exist();
+                    return mapper.Query<App>().Where(w => w.AppUrl == url).Count() > 0;
                 }
             });
         }
@@ -521,8 +548,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
                     #region 前置条件验证
                     {
-                        var result = mapper
-                        .Select<Role>().InnerJoin<UserRole>((a, b) => a.Id == b.RoleId).Where<UserRole>((a, b) => a.IsAllowDisable && b.UserId == userId).Count();
+                        var result = mapper.Query<Role>().InnerJoin<UserRole>((a, b) => a.Id == b.RoleId).Where<UserRole>((a, b) => a.IsAllowDisable && b.UserId == userId).Count();
                         if (result > 0)
                         {
                             throw new BusinessException("当前用户拥有管理员角色，因此不能禁用或删除");
@@ -617,7 +643,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         #region 前置条件验证
                         {
-                            var isAdmin = mapper.Select<User>(a => new { a.IsAdmin }).Where(a => a.Id == userId && !a.IsDisable).FirstOrDefault().IsAdmin;
+                            var isAdmin = mapper.Query<User>()
+                            .Where(a => a.Id == userId && !a.IsDisable)
+                            .Select(a => new { a.IsAdmin })
+                            .FirstOrDefault().IsAdmin;
                             if (isAdmin)
                             {
                                 throw new BusinessException("不能删除管理员");

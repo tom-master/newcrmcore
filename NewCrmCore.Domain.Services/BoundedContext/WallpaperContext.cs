@@ -21,7 +21,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                  {
                      #region 前置条件验证
                      {
-                         var result = mapper.Select<Wallpaper>().Where(w => w.UserId == wallpaper.UserId).Count();
+                         var result = mapper.Query<Wallpaper>().Where(w => w.UserId == wallpaper.UserId).Count();
                          if (result > 6)
                          {
                              throw new BusinessException("最多只能上传6张图片");
@@ -47,7 +47,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Select<Wallpaper>(a => new
+                    return mapper.Query<Wallpaper>()
+                    .Where(a => a.Md5 == md5)
+                    .Select(a => new
                     {
                         a.UserId,
                         a.Height,
@@ -58,7 +60,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         a.Title,
                         a.Url,
                         a.Width
-                    }).Where(a => a.Md5 == md5).FirstOrDefault();
+                    }).FirstOrDefault();
                 }
             });
         }
@@ -71,7 +73,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Select<Wallpaper>(a => new
+                    return mapper.Query<Wallpaper>()
+                    .Where(a => a.UserId == userId && a.Source != WallpaperSource.System)
+                    .Select(a => new
                     {
                         a.UserId,
                         a.Height,
@@ -82,7 +86,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         a.Title,
                         a.Url,
                         a.Width
-                    }).Where(a => a.UserId == userId && a.Source != WallpaperSource.System).ToList();
+                    }).ToList();
                 }
             });
         }
@@ -93,7 +97,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Select<Wallpaper>(a => new
+                    return mapper.Query<Wallpaper>()
+                    .Where(a => a.Source == WallpaperSource.System)
+                    .Select(a => new
                     {
                         a.UserId,
                         a.Height,
@@ -104,7 +110,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         a.Title,
                         a.Url,
                         a.Width
-                    }).Where(a => a.Source == WallpaperSource.System).ToList();
+                    }).ToList();
                 }
             });
         }
@@ -167,7 +173,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     #region 前置条件验证
                     {
-                        var result = mapper.Select<Config>().Where(a => a.UserId == userId && a.WallpaperId == wallpaperId).Count();
+                        var result = mapper.Query<Config>().Where(a => a.UserId == userId && a.WallpaperId == wallpaperId).Count();
                         if (result > 0)
                         {
                             throw new BusinessException("当前壁纸正在使用中，不能删除");
