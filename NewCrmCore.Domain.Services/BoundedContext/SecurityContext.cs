@@ -22,7 +22,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Select<RolePower>(a => new
+                    return mapper.Query<RolePower>().Select(a => new
                     {
                         a.RoleId,
                         a.AppId
@@ -39,7 +39,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Select<Role>(a => new { a.Id, a.Name, a.RoleIdentity }).Where(a => a.Id == roleId).FirstOrDefault();
+                    return mapper.Query<Role>()
+                    .Where(a => a.Id == roleId)
+                    .Select(a => new
+                    {
+                        a.Id,
+                        a.Name,
+                        a.RoleIdentity
+                    }).FirstOrDefault();
                 }
             });
         }
@@ -56,19 +63,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                 #region totalCount
                 {
-                    totalCount = mapper.Select<Role>().Where(where).Count();
+                    totalCount = mapper.Query<Role>().Where(where).Count();
                 }
                 #endregion
 
                 #region sql
                 {
-                    return mapper.Select<Role>(a => new
+                    return mapper.Query<Role>().Where(where)
+                    .Select(a => new
                     {
                         a.Name,
                         a.RoleIdentity,
                         a.Remark,
                         a.Id
-                    }).Where(where).ToList();
+                    }).ToList();
                 }
                 #endregion
             }
@@ -85,7 +93,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     #region 检查app是否为系统app
                     {
-                        var result = mapper.Select<App>().Where(a => a.Id == accessAppId && a.IsSystem).Count();
+                        var result = mapper.Query<App>().Where(a => a.Id == accessAppId && a.IsSystem).Select().Count();
                         if (result <= 0)
                         {
                             return true;
@@ -93,7 +101,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     }
                     #endregion
                     {
-                        var result = mapper.Select<RolePower>(a => new { a.AppId }).Where(a => roleIds.Contains(a.RoleId)).ToList();
+                        var result = mapper.Query<RolePower>().Where(a => roleIds.Contains(a.RoleId)).Select(a => new { a.AppId }).ToList();
                         return result.Any(a => a.AppId == accessAppId);
                     }
                 }
@@ -108,7 +116,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Select<Role>().Where(a => a.Name == name).Exist();
+                    return mapper.Query<Role>().Where(a => a.Name == name).Count() > 0;
                 }
             });
         }
@@ -121,7 +129,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Select<Role>().Where(a => a.RoleIdentity == name).Exist();
+                    return mapper.Query<Role>().Where(a => a.RoleIdentity == name).Count() > 0;
                 }
             });
         }
@@ -161,7 +169,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         #region 前置条件验证
                         {
-                            var result = mapper.Select<UserRole>().Where(a => a.RoleId == roleId).Count();
+                            var result = mapper.Query<UserRole>().Where(a => a.RoleId == roleId).Count();
                             if (result > 0)
                             {
                                 throw new BusinessException("当前角色已绑定了账户，无法删除");
