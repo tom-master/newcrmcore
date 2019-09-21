@@ -343,7 +343,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Select<AppType>().Exist();
+                    return mapper.Query<AppType>().Count() > 0;
                 }
             });
         }
@@ -359,7 +359,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     #region 前置条件判断
                     {
-                        var result = mapper.Select<AppStar>().Where(a => a.UserId == userId && a.AppId == appId).Count();
+                        var result = mapper.Query<AppStar>().Where(a => a.UserId == userId && a.AppId == appId).Count();
                         if (result > 0)
                         {
                             throw new BusinessException("您已为这个应用打分");
@@ -534,7 +534,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                     #region 获取应用名称
                     {
-                        return mapper.Select<App>(a => new { a.Name, a.UserId }).Where(a => a.Id == appId).FirstOrDefault();
+                        return mapper.Query<App>().Where(a => a.Id == appId).Select(a => new { a.Name, a.UserId }).FirstOrDefault();
                     }
                     #endregion
                 }
@@ -629,7 +629,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     #region 前置条件验证
                     {
-                        var result = mapper.Select<App>().Where(a => a.AppTypeId == appTypeId).Count();
+                        var result = mapper.Query<App>().Where(a => a.AppTypeId == appTypeId).Count();
                         if (result > 0)
                         {
                             throw new BusinessException($@"当前分类下存在应用,不能删除当前分类");
@@ -662,7 +662,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     #region 前置条件验证
                     {
-                        var result = mapper.Select<AppType>().Where(a => a.Name == appType.Name).Count();
+                        var result = mapper.Query<AppType>().Where(a => a.Name == appType.Name).Count();
                         if (result > 0)
                         {
                             throw new BusinessException($@"分类:{appType.Name},已存在");
@@ -749,7 +749,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         App app = null;
                         #region 获取app
                         {
-                            app = mapper.Select<App>(a => new
+                            app = mapper.Query<App>().Where(w => w.AppAuditState == AppAuditState.Pass && w.AppReleaseState == AppReleaseState.Release && w.Id == appId)
+                            .Select(a => new
                             {
                                 a.Name,
                                 a.IconUrl,
@@ -762,7 +763,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                                 a.IsFlash,
                                 a.IsIconByUpload,
                                 a.AppStyle
-                            }).Where(w => w.AppAuditState == AppAuditState.Pass && w.AppReleaseState == AppReleaseState.Release && w.Id == appId).FirstOrDefault();
+                            }).FirstOrDefault();
                             if (app == null)
                             {
                                 throw new BusinessException($"获取应用失败，请刷新重试");
