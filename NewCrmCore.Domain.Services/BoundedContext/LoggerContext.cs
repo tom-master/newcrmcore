@@ -19,7 +19,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(log);
             await Task.Run(() =>
             {
-                using(var mapper = EntityMapper.CreateMapper())
+                using (var mapper = EntityMapper.CreateMapper())
                 {
                     mapper.Add(log);
                 }
@@ -31,7 +31,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(userName, true);
             Parameter.Validate(logLevel);
 
-            using(var mapper = EntityMapper.CreateMapper())
+            using (var mapper = EntityMapper.CreateMapper())
             {
                 var level = EnumExtensions.ToEnum<LogLevel>(logLevel);
                 var logWhere = MergeFactory.Create<Log>(w => w.LogLevelEnum == level);
@@ -46,13 +46,17 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                 #region totalCount 
                 {
-                    totalCount = mapper.Select<Log>().LeftJoin<User>((a, b) => a.UserId == b.Id).Where<User>(combination).Count();
+                    totalCount = mapper.Query<Log>()
+                    .LeftJoin<User>((a, b) => a.UserId == b.Id)
+                    .Where<User>(combination).Count();
                 }
                 #endregion
 
                 #region sql 
                 {
-                    return mapper.Select<Log>(a => new
+                    return mapper.Query<Log>().LeftJoin<User>((a, b) => a.UserId == b.Id)
+                    .Where<User>(combination)
+                    .Select(a => new
                     {
                         a.LogLevelEnum,
                         a.Controller,
@@ -60,10 +64,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         a.ExceptionMessage,
                         a.UserId,
                         a.AddTime
-                    }).LeftJoin<User>((a, b) => a.UserId == b.Id)
-                    .Where<User>(combination)
+                    })
                     .Page(pageIndex, pageSize)
-                    .OrderByDesc<Log, DateTime>(a => a.AddTime)
+                    .ThenByDesc<Log, DateTime>(a => a.AddTime)
                     .ToList();
                 }
                 #endregion

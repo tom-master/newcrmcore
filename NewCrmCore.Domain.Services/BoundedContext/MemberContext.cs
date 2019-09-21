@@ -22,7 +22,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Select<Member>(a => new
+                    return mapper.Query<Member>()
+                    .Where(w => w.UserId == userId)
+                    .Select(a => new
                     {
                         a.MemberType,
                         a.Id,
@@ -37,7 +39,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         a.DeskIndex,
                         a.FolderId,
                         a.IsIconByUpload
-                    }).Where(w => w.UserId == userId).ToList();
+                    }).ToList();
                 }
             });
         }
@@ -88,7 +90,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								),0) AS StarCount
 								FROM newcrm_user_member AS a WHERE a.UserId=@UserId {where} AND a.IsDeleted=0";
                     parameters.Add(new EntityParameter("@UserId", userId));
-                    return mapper.ExecuteToSingle<Member>(sql, parameters);
+                    return mapper.SqlQuery(sql, parameters).FirstOrDefault<Member>();
                 }
             });
         }
@@ -101,7 +103,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Select<Member>().Where(w => w.Name == name).Exist();
+                    return mapper.Query<Member>().Where(w => w.Name == name).Count() > 0;
                 }
             });
         }
@@ -183,7 +185,13 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         #region 判断是否为文件夹
                         {
 
-                            var member = mapper.Select<Member>(a => new { a.MemberType }).Where(w => w.Id == memberId && w.UserId == userId).FirstOrDefault();
+                            var member = mapper.Query<Member>()
+                            .Where(w => w.Id == memberId && w.UserId == userId)
+                            .Select(a => new
+                            {
+                                a.MemberType
+                            }).FirstOrDefault();
+
                             isFolder = member.MemberType == MemberType.Folder;
                         }
                         #endregion
@@ -193,7 +201,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         {
                             #region 判断文件夹内是否存在应用，如果存在则移出
                             {
-                                var count = mapper.Select<Member>().Where(w => w.UserId == userId && w.FolderId == memberId).Count();
+                                var count = mapper.Query<Member>().Where(w => w.UserId == userId && w.FolderId == memberId).Count();
                                 if (count > 0)
                                 {
                                     var member = new Member();
@@ -213,14 +221,26 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                             #region 获取appId
                             {
-                                var member = mapper.Select<Member>(a => new { a.AppId }).Where(w => w.Id == memberId && w.UserId == userId).FirstOrDefault();
+                                var member = mapper.Query<Member>()
+                                .Where(w => w.Id == memberId && w.UserId == userId)
+                                .Select(a => new
+                                {
+                                    a.AppId
+                                }).FirstOrDefault();
                                 appId = member.AppId;
                             }
                             #endregion
 
                             #region 查询应用
                             {
-                                app = mapper.Select<App>(a => new { a.Name, a.UseCount, a.UserId }).Where(w => w.Id == appId && w.UserId == userId).FirstOrDefault();
+                                app = mapper.Query<App>()
+                                .Where(w => w.Id == appId && w.UserId == userId)
+                                .Select(a => new
+                                {
+                                    a.Name,
+                                    a.UseCount,
+                                    a.UserId
+                                }).FirstOrDefault();
                             }
                             #endregion
 
