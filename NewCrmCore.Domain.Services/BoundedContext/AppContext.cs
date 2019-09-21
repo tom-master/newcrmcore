@@ -77,7 +77,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         new EntityParameter("@AppReleaseState", AppReleaseState.Release.ToInt32()),
                         new EntityParameter("@userId",userId)
                     };
-                    return mapper.SqlQuery<TodayRecommendAppDto>(sql, parameters).FirstOrDefault();
+                    return mapper.SqlQuery(sql, parameters).FirstOrDefault<TodayRecommendAppDto>();
                 }
             });
         }
@@ -142,7 +142,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 #region totalCount
                 {
                     var sql = $@"SELECT COUNT(*) FROM newcrm_app AS a LEFT JOIN newcrm_app_star AS a1 ON a1.AppId=a.Id AND a1.IsDeleted=0 {where}";
-                    totalCount = mapper.SqlQuery<Int32>(sql, parameters);
+                    totalCount = mapper.SqlQuery(sql, parameters).FirstOrDefault<Int32>();
                 }
                 #endregion
 
@@ -172,7 +172,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                            LEFT JOIN newcrm_user_member AS a1 ON a1.UserId=@userId2 AND a1.AppId=a.Id AND a1.IsDeleted=0
                                 {where} {orderBy} LIMIT {pageSize * (pageIndex - 1)},{pageSize }";
                     parameters.Add(new EntityParameter("@userId2", userId));
-                    return mapper.ExecuteToList<App>(sql, parameters);
+                    return mapper.SqlQuery(sql, parameters).ToList<App>();
                 }
                 #endregion
             }
@@ -239,13 +239,13 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                 #region totalCount
                 {
-                    totalCount = mapper.Select<App>().Where(where).Count();
+                    totalCount = mapper.Query<App>().Where(where).Count();
                 }
                 #endregion
 
                 #region sql
                 {
-                    return mapper.Select<App>(a => new
+                    return mapper.Query<App>().Where(where).Select(a => new
                     {
                         a.Name,
                         a.AppStyle,
@@ -257,7 +257,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         a.AppTypeId,
                         a.UserId,
                         a.IsIconByUpload
-                    }).Where(where).Page(pageIndex, pageSize).ToList();
+                    }).Page(pageIndex, pageSize).ToList();
                 }
                 #endregion
 
@@ -302,7 +302,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     {
                         new EntityParameter("@Id",appId)
                     };
-                    return mapper.ExecuteToSingle<App>(sql, parameters);
+                    return mapper.SqlQuery(sql, parameters).FirstOrDefault<App>();
                 }
             });
         }
@@ -315,7 +315,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Select<Member>().Where(w => w.AppId == appId).Exist();
+                    return mapper.Query<Member>().Where(w => w.AppId == appId).Count() > 0;
                 }
             });
         }
@@ -327,11 +327,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var mapper = EntityMapper.CreateMapper())
                 {
                     var where = MergeFactory.Create<App>(w => w.IsSystem);
-                    if (appIds != default)
+                    if (appIds != null)
                     {
                         where.And(w => appIds.Contains(w.Id));
                     }
-                    return mapper.Select<App>(a => new { a.Id, a.Name, a.IconUrl }).Where(where).ToList();
+                    return mapper.Query<App>().Select(a => new { a.Id, a.Name, a.IconUrl }).Where(where).ToList();
                 }
             });
         }
