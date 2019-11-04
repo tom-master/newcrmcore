@@ -7,12 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure;
-using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
 using NewLibCore;
 using NewLibCore.Validate;
 using NewCrmCore.Domain.ValueObject;
-using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.Web.Controllers
 {
