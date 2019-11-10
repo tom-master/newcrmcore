@@ -186,7 +186,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         b.UserFace,
                         b.IsModifyUserFace
                     }).Page(pageIndex, pageSize)
-                    .ThenByDesc<User, DateTime>(a => a.AddTime).ToList();
+                    .ThenByDesc<DateTime>(a => a.AddTime).ToList();
                 }
                 #endregion
             }
@@ -238,7 +238,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         a.Name,
                         a.RoleIdentity
                     })
-                    .ThenByDesc<Role, DateTime>(a => a.AddTime)
+                    .ThenByDesc<DateTime>(a => a.AddTime)
                     .ToList();
                 }
             });
@@ -252,7 +252,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     return mapper.Query<RolePower>()
                     .Select(a => new { a.RoleId, a.AppId })
-                    .ThenByDesc<RolePower, DateTime>(a => a.AddTime)
+                    .ThenByDesc<DateTime>(a => a.AddTime)
                     .ToList();
                 }
             });

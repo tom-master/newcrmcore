@@ -66,7 +66,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         a.AddTime
                     })
                     .Page(pageIndex, pageSize)
-                    .ThenByDesc<Log, DateTime>(a => a.AddTime)
+                    .ThenByDesc<DateTime>(a => a.AddTime)
                     .ToList();
                 }
                 #endregion
