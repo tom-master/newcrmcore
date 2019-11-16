@@ -1044,7 +1044,7 @@
 							curform[0].validform_ajax = null;
 						},
 						error: function (data) {
-							debugger
+							
 							var msg = "status: " + data.status + "; statusText: " + data.statusText;
 
 							Validform.util.showmsg.call(curform, msg, settings.tiptype, { obj: curform, type: 3, sweep: settings.tipSweep }, "byajax");

@@ -48,7 +48,7 @@ uploader.on('fileQueued', (file) => {
     }, 48, 48);
 });
 uploader.on('uploadSuccess', (file, cb) => {
-    debugger
+    
     if (cb[0].IsSuccess) {
         let urlPart = cb[0].Url;
         let appId = $('#appId').val();

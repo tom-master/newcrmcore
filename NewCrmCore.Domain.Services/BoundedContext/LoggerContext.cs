@@ -31,45 +31,52 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(userName, true);
             Parameter.Validate(logLevel);
 
-            using (var mapper = EntityMapper.CreateMapper())
+            try
             {
-                var level = EnumExtensions.ToEnum<LogLevel>(logLevel);
-                var logWhere = MergeFactory.Create<Log>(w => w.LogLevelEnum == level);
-
-                var userWhere = MergeFactory.Create<User>();
-                if (!String.IsNullOrEmpty(userName))
+                using (var mapper = EntityMapper.CreateMapper())
                 {
-                    userWhere.And(w => w.Name.Contains(userName));
-                }
+                    var level = EnumExtensions.ToEnum<LogLevel>(logLevel);
+                    var logWhere = MergeFactory.Create<Log>(w => w.LogLevelEnum == level);
 
-                var combination = logWhere.Append(userWhere);
-
-                #region totalCount 
-                {
-                    totalCount = mapper.Query<Log>()
-                    .LeftJoin<User>((a, b) => a.UserId == b.Id)
-                    .Where<User>(combination).Count();
-                }
-                #endregion
-
-                #region sql 
-                {
-                    return mapper.Query<Log>().LeftJoin<User>((a, b) => a.UserId == b.Id)
-                    .Where<User>(combination)
-                    .Select(a => new
+                    var userWhere = MergeFactory.Create<User>();
+                    if (!String.IsNullOrEmpty(userName))
                     {
-                        a.LogLevelEnum,
-                        a.Controller,
-                        a.Action,
-                        a.ExceptionMessage,
-                        a.UserId,
-                        a.AddTime
-                    })
-                    .Page(pageIndex, pageSize)
-                    .ThenByDesc<DateTime>(a => a.AddTime)
-                    .ToList();
+                        userWhere.And(w => w.Name.Contains(userName));
+                    }
+
+                    var combination = logWhere.Append(userWhere);
+
+                    #region totalCount 
+                    {
+                        totalCount = mapper.Query<Log>()
+                        .LeftJoin<User>((a, b) => a.UserId == b.Id)
+                        .Where<User>(combination).Count();
+                    }
+                    #endregion
+
+                    #region sql 
+                    {
+                        return mapper.Query<Log>().LeftJoin<User>((a, b) => a.UserId == b.Id)
+                        .Where<User>(combination)
+                        .Select(a => new
+                        {
+                            a.LogLevelEnum,
+                            a.Controller,
+                            a.Action,
+                            a.ExceptionMessage,
+                            a.UserId,
+                            a.AddTime
+                        })
+                        .Page(pageIndex, pageSize)
+                        .ThenByDesc<DateTime>(a => a.AddTime)
+                        .ToList();
+                    }
+                    #endregion
                 }
-                #endregion
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }
