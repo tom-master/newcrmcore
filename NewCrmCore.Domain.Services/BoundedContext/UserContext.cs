@@ -545,7 +545,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var parameters = new List<EntityParameter> { new EntityParameter("@userId", userId) };
+                    var parameters = new List<EntityParameter> { new EntityParameter("userId", userId) };
                     #region 前置条件验证
                     {
                         var result = mapper.Query<Role>().InnerJoin<UserRole>((a, b) => a.Id == b.RoleId).Where<UserRole>((a, b) => a.IsAllowDisable && b.UserId == userId).Count();

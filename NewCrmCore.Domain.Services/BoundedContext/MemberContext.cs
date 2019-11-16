@@ -57,13 +57,13 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     var parameters = new List<EntityParameter>();
                     if (isFolder)
                     {
-                        parameters.Add(new EntityParameter("@Id", memberId));
-                        parameters.Add(new EntityParameter("@MemberType", MemberType.Folder.ToInt32()));
+                        parameters.Add(new EntityParameter("Id", memberId));
+                        parameters.Add(new EntityParameter("MemberType", MemberType.Folder.ToInt32()));
                         where.Append($@" AND a.Id=@Id AND a.MemberType=@MemberType");
                     }
                     else
                     {
-                        parameters.Add(new EntityParameter("@Id", memberId));
+                        parameters.Add(new EntityParameter("Id", memberId));
                         where.Append($@" AND a.Id=@Id OR a.AppId=@Id");
                     }
 
@@ -89,7 +89,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 									SELECT AVG(stars.StartNum) FROM newcrm_app_star AS stars WHERE stars.AppId=a.AppId AND stars.IsDeleted=0 GROUP BY stars.AppId
 								),0) AS StarCount
 								FROM newcrm_user_member AS a WHERE a.UserId=@UserId {where} AND a.IsDeleted=0";
-                    parameters.Add(new EntityParameter("@UserId", userId));
+                    parameters.Add(new EntityParameter("UserId", userId));
                     return mapper.SqlQuery(sql, parameters).FirstOrDefault<Member>();
                 }
             });

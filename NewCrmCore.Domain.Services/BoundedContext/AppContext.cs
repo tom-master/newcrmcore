@@ -73,9 +73,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                     var parameters = new List<EntityParameter>
                     {
-                        new EntityParameter("@AppAuditState", AppAuditState.Pass.ToInt32()),
-                        new EntityParameter("@AppReleaseState", AppReleaseState.Release.ToInt32()),
-                        new EntityParameter("@userId",userId)
+                        new EntityParameter("AppAuditState", AppAuditState.Pass.ToInt32()),
+                        new EntityParameter("AppReleaseState", AppReleaseState.Release.ToInt32()),
+                        new EntityParameter("userId",userId)
                     };
                     return mapper.SqlQuery(sql, parameters).FirstOrDefault<TodayRecommendAppDto>();
                 }
@@ -93,28 +93,28 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 var parameters = new List<EntityParameter>
                 {
-                    new EntityParameter("@AppAuditState", AppAuditState.Pass.ToInt32()),
-                    new EntityParameter("@AppReleaseState", AppReleaseState.Release.ToInt32())
+                    new EntityParameter("AppAuditState", AppAuditState.Pass.ToInt32()),
+                    new EntityParameter("AppReleaseState", AppReleaseState.Release.ToInt32())
                 };
 
                 var where = new StringBuilder();
                 where.Append($@" WHERE 1=1  AND a.IsDeleted=0 AND a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState");
                 if (appTypeId != 0 && appTypeId != -1)//全部app
                 {
-                    parameters.Add(new EntityParameter("@AppTypeId", appTypeId));
+                    parameters.Add(new EntityParameter("AppTypeId", appTypeId));
                     where.Append($@" AND a.AppTypeId=@AppTypeId");
                 }
                 else
                 {
                     if (appTypeId == -1)//用户制作的app
                     {
-                        parameters.Add(new EntityParameter("@userId", userId));
+                        parameters.Add(new EntityParameter("userId", userId));
                         where.Append($@" AND a.UserId=@userId");
                     }
                 }
                 if (!String.IsNullOrEmpty(searchText))//关键字搜索
                 {
-                    parameters.Add(new EntityParameter("@Name", $@"%{searchText}%"));
+                    parameters.Add(new EntityParameter("Name", $@"%{searchText}%"));
                     where.Append($@" AND a.Name LIKE @Name");
                 }
 
@@ -171,7 +171,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                            FROM newcrm_app AS a
 	                            LEFT JOIN newcrm_user_member AS a1 ON a1.UserId=@userId2 AND a1.AppId=a.Id AND a1.IsDeleted=0
                                 {where} {orderBy} LIMIT {pageSize * (pageIndex - 1)},{pageSize }";
-                    parameters.Add(new EntityParameter("@userId2", userId));
+                    parameters.Add(new EntityParameter("userId2", userId));
                     return mapper.SqlQuery(sql, parameters).ToList<App>();
                 }
                 #endregion
@@ -300,7 +300,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             WHERE a.Id=@Id AND a.IsDeleted=0";
                     var parameters = new List<EntityParameter>
                     {
-                        new EntityParameter("@Id",appId)
+                        new EntityParameter("Id",appId)
                     };
                     return mapper.SqlQuery(sql, parameters).FirstOrDefault<App>();
                 }
