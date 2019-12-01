@@ -7,7 +7,7 @@ using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewLibCore;
 using NewLibCore.Data.SQL.Mapper;
-using NewLibCore.Data.SQL.MergeExpression;
+using NewLibCore.Data.SQL.Mapper.Filter; 
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
@@ -36,28 +36,28 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 using (var mapper = EntityMapper.CreateMapper())
                 {
                     var level = EnumExtensions.ToEnum<LogLevel>(logLevel);
-                    var logWhere = MergeFactory.Create<Log>(w => w.LogLevelEnum == level);
+                    var logWhere = FilterFactory.Create<Log>(w => w.LogLevelEnum == level);
 
-                    var userWhere = MergeFactory.Create<User>();
+                    var userWhere = FilterFactory.Create<User>();
                     if (!String.IsNullOrEmpty(userName))
                     {
                         userWhere.And(w => w.Name.Contains(userName));
                     }
 
-                    var combination = logWhere.Append(userWhere);
+                    var filter = logWhere.Append(userWhere);
 
                     #region totalCount 
                     {
                         totalCount = mapper.Query<Log>()
                         .LeftJoin<User>((a, b) => a.UserId == b.Id)
-                        .Where<User>(combination).Count();
+                        .Where<User>(filter).Count();
                     }
                     #endregion
 
                     #region sql 
                     {
                         return mapper.Query<Log>().LeftJoin<User>((a, b) => a.UserId == b.Id)
-                        .Where<User>(combination)
+                        .Where<User>(filter)
                         .Select(a => new
                         {
                             a.LogLevelEnum,

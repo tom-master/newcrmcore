@@ -10,7 +10,7 @@ using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
 using NewLibCore.Data.SQL.Mapper;
-using NewLibCore.Data.SQL.MergeExpression;
+using NewLibCore.Data.SQL.Mapper.Filter;
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
@@ -71,11 +71,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 							LEFT JOIN newcrm_user_member AS a2 ON a2.UserId=@userId AND a2.IsDeleted=0 AND a2.AppId=a.Id
                             WHERE a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState AND a.IsRecommand=1";
 
-                    var parameters = new List<EntityParameter>
+                    var parameters = new List<MapperParameter>
                     {
-                        new EntityParameter("AppAuditState", AppAuditState.Pass.ToInt32()),
-                        new EntityParameter("AppReleaseState", AppReleaseState.Release.ToInt32()),
-                        new EntityParameter("userId",userId)
+                        new MapperParameter("AppAuditState", AppAuditState.Pass.ToInt32()),
+                        new MapperParameter("AppReleaseState", AppReleaseState.Release.ToInt32()),
+                        new MapperParameter("userId",userId)
                     };
                     return mapper.SqlQuery(sql, parameters).FirstOrDefault<TodayRecommendAppDto>();
                 }
@@ -91,30 +91,30 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             using (var mapper = EntityMapper.CreateMapper())
             {
-                var parameters = new List<EntityParameter>
+                var parameters = new List<MapperParameter>
                 {
-                    new EntityParameter("AppAuditState", AppAuditState.Pass.ToInt32()),
-                    new EntityParameter("AppReleaseState", AppReleaseState.Release.ToInt32())
+                    new MapperParameter("AppAuditState", AppAuditState.Pass.ToInt32()),
+                    new MapperParameter("AppReleaseState", AppReleaseState.Release.ToInt32())
                 };
 
                 var where = new StringBuilder();
                 where.Append($@" WHERE 1=1  AND a.IsDeleted=0 AND a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState");
                 if (appTypeId != 0 && appTypeId != -1)//全部app
                 {
-                    parameters.Add(new EntityParameter("AppTypeId", appTypeId));
+                    parameters.Add(new MapperParameter("AppTypeId", appTypeId));
                     where.Append($@" AND a.AppTypeId=@AppTypeId");
                 }
                 else
                 {
                     if (appTypeId == -1)//用户制作的app
                     {
-                        parameters.Add(new EntityParameter("userId", userId));
+                        parameters.Add(new MapperParameter("userId", userId));
                         where.Append($@" AND a.UserId=@userId");
                     }
                 }
                 if (!String.IsNullOrEmpty(searchText))//关键字搜索
                 {
-                    parameters.Add(new EntityParameter("Name", $@"%{searchText}%"));
+                    parameters.Add(new MapperParameter("Name", $@"%{searchText}%"));
                     where.Append($@" AND a.Name LIKE @Name");
                 }
 
@@ -171,7 +171,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                            FROM newcrm_app AS a
 	                            LEFT JOIN newcrm_user_member AS a1 ON a1.UserId=@userId2 AND a1.AppId=a.Id AND a1.IsDeleted=0
                                 {where} {orderBy} LIMIT {pageSize * (pageIndex - 1)},{pageSize }";
-                    parameters.Add(new EntityParameter("userId2", userId));
+                    parameters.Add(new MapperParameter("userId2", userId));
                     return mapper.SqlQuery(sql, parameters).ToList<App>();
                 }
                 #endregion
@@ -189,8 +189,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             using (var mapper = EntityMapper.CreateMapper())
             {
 
-                var where = MergeFactory.Create<App>();
-                var parameters = new List<EntityParameter>();
+                var where = FilterFactory.Create<App>();
+                var parameters = new List<MapperParameter>();
                 #region 条件筛选
 
                 if (userId != default)
@@ -298,9 +298,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             LEFT JOIN newcrm_user AS a2
                             ON a2.Id=a.UserId AND a2.IsDeleted=0 AND a2.IsDisable=0
                             WHERE a.Id=@Id AND a.IsDeleted=0";
-                    var parameters = new List<EntityParameter>
+                    var parameters = new List<MapperParameter>
                     {
-                        new EntityParameter("Id",appId)
+                        new MapperParameter("Id",appId)
                     };
                     return mapper.SqlQuery(sql, parameters).FirstOrDefault<App>();
                 }
@@ -326,7 +326,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var where = MergeFactory.Create<App>(w => w.IsSystem);
+                    var where = FilterFactory.Create<App>(w => w.IsSystem);
                     if (appIds != null)
                     {
                         where.And(w => appIds.Contains(w.Id));

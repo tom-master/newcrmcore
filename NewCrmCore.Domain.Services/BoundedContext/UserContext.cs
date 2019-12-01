@@ -11,7 +11,7 @@ using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
 using NewLibCore.Data.SQL.Mapper;
-using NewLibCore.Data.SQL.MergeExpression;
+using NewLibCore.Data.SQL.Mapper.Filter; 
 using NewLibCore.Security;
 using NewLibCore.Validate;
 
@@ -151,7 +151,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(pageIndex);
             Parameter.Validate(pageSize);
 
-            var where = MergeFactory.Create<User>();
+            var where = FilterFactory.Create<User>();
             if (!String.IsNullOrEmpty(userName))
             {
                 where.And(w => w.Name.Contains(userName));
@@ -545,7 +545,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var parameters = new List<EntityParameter> { new EntityParameter("userId", userId) };
+                    var parameters = new List<MapperParameter> { new MapperParameter("userId", userId) };
                     #region 前置条件验证
                     {
                         var result = mapper.Query<Role>().InnerJoin<UserRole>((a, b) => a.Id == b.RoleId).Where<UserRole>((a, b) => a.IsAllowDisable && b.UserId == userId).Count();

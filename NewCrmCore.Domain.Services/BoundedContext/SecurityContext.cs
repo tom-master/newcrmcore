@@ -9,7 +9,7 @@ using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore.Data.SQL.Mapper;
-using NewLibCore.Data.SQL.MergeExpression;
+using NewLibCore.Data.SQL.Mapper.Filter;
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
@@ -55,7 +55,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             using (var mapper = EntityMapper.CreateMapper())
             {
-                var where = MergeFactory.Create<Role>();
+                var where = FilterFactory.Create<Role>();
                 if (!String.IsNullOrEmpty(roleName))
                 {
                     where.And(w => w.Name.Contains(roleName));
