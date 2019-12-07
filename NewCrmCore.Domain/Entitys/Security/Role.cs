@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NewLibCore.Data.SQL.Mapper;
+using NewLibCore.Data.SQL.Mapper.Validate;
 
 namespace NewCrmCore.Domain.Entitys.Security
 {
