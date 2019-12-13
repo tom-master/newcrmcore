@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NewCrmCore.Dto;
 using Newtonsoft.Json;
 
-namespace NewCrmCore.Web.Controllers.ControllerHelper
+namespace NewCrmCore.Web.Controllers
 {
     public class BaseController : Controller
     {

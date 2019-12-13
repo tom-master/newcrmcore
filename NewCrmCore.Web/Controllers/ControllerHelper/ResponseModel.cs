@@ -1,5 +1,5 @@
 ﻿using System;
-namespace NewCrmCore.Web.Controllers.ControllerHelper
+namespace NewCrmCore.Web.Controllers
 {
     public class ResponseModel<T>
     {
