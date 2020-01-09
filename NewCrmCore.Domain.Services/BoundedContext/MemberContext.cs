@@ -90,7 +90,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 								),0) AS StarCount
 								FROM newcrm_user_member AS a WHERE a.UserId=@UserId {where} AND a.IsDeleted=0";
                     parameters.Add(new MapperParameter("UserId", userId));
-                    return mapper.SqlQuery(sql, parameters).FirstOrDefault<Member>();
+                    return mapper.SqlQuery(sql, parameters.ToArray()).FirstOrDefault<Member>();
                 }
             });
         }

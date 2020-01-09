@@ -77,7 +77,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         new MapperParameter("AppReleaseState", AppReleaseState.Release.ToInt32()),
                         new MapperParameter("userId",userId)
                     };
-                    return mapper.SqlQuery(sql, parameters).FirstOrDefault<TodayRecommendAppDto>();
+                    return mapper.SqlQuery(sql, parameters.ToArray()).FirstOrDefault<TodayRecommendAppDto>();
                 }
             });
         }
@@ -142,7 +142,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 #region totalCount
                 {
                     var sql = $@"SELECT COUNT(*) FROM newcrm_app AS a LEFT JOIN newcrm_app_star AS a1 ON a1.AppId=a.Id AND a1.IsDeleted=0 {where}";
-                    totalCount = mapper.SqlQuery(sql, parameters).FirstOrDefault<Int32>();
+                    totalCount = mapper.SqlQuery(sql, parameters.ToArray()).FirstOrDefault<Int32>();
                 }
                 #endregion
 
@@ -172,7 +172,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                            LEFT JOIN newcrm_user_member AS a1 ON a1.UserId=@userId2 AND a1.AppId=a.Id AND a1.IsDeleted=0
                                 {where} {orderBy} LIMIT {pageSize * (pageIndex - 1)},{pageSize }";
                     parameters.Add(new MapperParameter("userId2", userId));
-                    return mapper.SqlQuery(sql, parameters).ToList<App>();
+                    return mapper.SqlQuery(sql, parameters.ToArray()).ToList<App>();
                 }
                 #endregion
             }
@@ -301,7 +301,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     var parameters = new List<MapperParameter>
                     {
                         new MapperParameter("Id",appId)
-                    };
+                    }.ToArray();
                     return mapper.SqlQuery(sql, parameters).FirstOrDefault<App>();
                 }
             });
