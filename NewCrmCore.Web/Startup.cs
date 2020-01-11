@@ -29,6 +29,7 @@ namespace NewCrmCore.Web
         public void ConfigureServices(IServiceCollection services)
         {
             EntityMapper.InitDefaultSetting();
+            EntityMapper.ConnectionStringName = "NewCrmDatabase";
 
             services.AddTransient<IUserServices, UserServices>();
             services.AddTransient<ISecurityServices, SecurityServices>();
