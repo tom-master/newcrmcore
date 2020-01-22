@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure.CommonTools;
-using NewCrmCore.Web.Controllers.ControllerHelper;
+using NewCrmCore.Web.Controllers;
 using Newtonsoft.Json;
 
 namespace NewCrmCore.Web.Filter
@@ -45,7 +45,7 @@ namespace NewCrmCore.Web.Filter
             {
                 userId = JsonConvert.DeserializeObject<UserDto>(userCookie).Id;
             }
-            
+
             ((ILoggerServices)filterContext.HttpContext.RequestServices.GetService(typeof(ILoggerServices))).AddLoggerAsync(new LogDto
             {
                 Action = filterContext.RouteData.Values["action"].ToString(),

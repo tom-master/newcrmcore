@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Dto;
-using NewCrmCore.Web.Controllers.ControllerHelper;
+using NewCrmCore.Web.Controllers;
 using Newtonsoft.Json;
 
 namespace NewCrmCore.Web.Filter
