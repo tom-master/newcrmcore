@@ -7,9 +7,12 @@ namespace NewCrmCore.Infrastructure.CommonTools
 {
     public class BingHelper
     {
-        private static readonly String _bingUrlPrefix = "https://www.bing.com/";
-        private static DateTime _dateTime;
         private static String _image;
+
+        private static DateTime _dateTime;
+
+        private static readonly String _bingUrlPrefix = "https://www.bing.com/";
+
 
         /// <summary>
         /// 获取每日背景图
