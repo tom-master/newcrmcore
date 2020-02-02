@@ -6,11 +6,6 @@ namespace NewCrmCore.Infrastructure
 {
     public class Appsetting
     {
-        public Appsetting()
-        {
-
-        }
-
         public static String Database
         {
             get

@@ -13,7 +13,6 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
         private static readonly String _bingUrlPrefix = "https://www.bing.com/";
 
-
         /// <summary>
         /// 获取每日背景图
         /// </summary>
