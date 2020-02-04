@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using NewLibCore;
 namespace NewCrmCore.FileServices.Controllers
 {
