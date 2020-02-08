@@ -20,10 +20,10 @@ namespace NewCrmCore.Web.Filter
     {
         public async Task OnAuthorizationAsync(AuthorizationFilterContext filterContext)
         {
-            if (((ControllerActionDescriptor)filterContext.ActionDescriptor).MethodInfo.CustomAttributes.Any(a => a.AttributeType == typeof(DoNotCheckPermissionAttribute)))
-            {
-                return;
-            }
+            // if (((ControllerActionDescriptor)filterContext.ActionDescriptor).MethodInfo.CustomAttributes.Any(a => a.AttributeType == typeof(DoNotCheckPermissionAttribute)))
+            // {
+            //     return;
+            // }
 
             if (filterContext.HttpContext.Request.Cookies["User"] == null)
             {

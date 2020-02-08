@@ -52,7 +52,6 @@ namespace NewCrmCore.Web
                 config.Filters.Add(new HandleException());
                 config.Filters.Add(new CheckPermissions());
                 config.Filters.Add(new VisitorRecordFilter());
-                config.Filters.Add(new DoNotCheckPermissionAttribute());
             }).AddJsonOptions(op =>
             {
                 op.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
