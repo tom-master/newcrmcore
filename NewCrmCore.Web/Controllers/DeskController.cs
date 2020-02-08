@@ -13,6 +13,7 @@ using NewLibCore.Validate;
 using NewLibCore;
 using Newtonsoft.Json;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NewCrmCore.Web.Controllers
 {
@@ -43,7 +44,7 @@ namespace NewCrmCore.Web.Controllers
         /// 桌面
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet,AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             ViewBag.Title = "桌面";
@@ -65,7 +66,7 @@ namespace NewCrmCore.Web.Controllers
         /// 登陆
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet,AllowAnonymous]
         public IActionResult Login()
         {
             ViewBag.Title = "登陆";
@@ -151,7 +152,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <param name="loginParameter"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost,AllowAnonymous]
         public async Task<IActionResult> Landing(UserLogin loginParameter)
         {
             #region 参数验证

@@ -1,18 +1,14 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Dto;
-using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.Web.Controllers.ControllerHelper;
 using Newtonsoft.Json;
-using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.Web.Filter
 {
@@ -20,17 +16,17 @@ namespace NewCrmCore.Web.Filter
     {
         public async Task OnAuthorizationAsync(AuthorizationFilterContext filterContext)
         {
-            // if (((ControllerActionDescriptor)filterContext.ActionDescriptor).MethodInfo.CustomAttributes.Any(a => a.AttributeType == typeof(DoNotCheckPermissionAttribute)))
-            // {
-            //     return;
-            // }
+            if (((ControllerActionDescriptor)filterContext.ActionDescriptor).MethodInfo.CustomAttributes.Any(a => a.AttributeType == typeof(AllowAnonymousAttribute)))
+            {
+                return;
+            }
 
             if (filterContext.HttpContext.Request.Cookies["User"] == null)
             {
                 ReturnMessage(filterContext, "会话过期,请刷新页面后重新登陆");
                 return;
             }
-           
+
             if (filterContext.HttpContext.Request.Query["type"] == "folder")
             {
                 return;
