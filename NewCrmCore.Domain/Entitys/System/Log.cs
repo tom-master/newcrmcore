@@ -59,4 +59,5 @@ namespace NewCrmCore.Domain.Entitys.System
 
         }
     }
+
 }
