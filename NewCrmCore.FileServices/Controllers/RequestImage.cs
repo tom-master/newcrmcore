@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
 using System.DrawingCore;
 using System.DrawingCore.Imaging;
-using System.Linq;
-using System.Threading.Tasks;
 using NewLibCore;
 using System.IO;
 namespace NewCrmCore.FileServices.Controllers
