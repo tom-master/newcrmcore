@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using NewCrmCore.Domain.ValueObject;
 
 namespace NewCrmCore.Dto

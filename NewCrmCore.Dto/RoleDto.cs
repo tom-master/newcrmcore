@@ -16,7 +16,6 @@ namespace NewCrmCore.Dto
         public RoleDto()
         {
             Powers = new List<PowerDto>();
-
         }
     }
 }
