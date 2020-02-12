@@ -24,10 +24,17 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var result = mapper.Query<App>()
-                    .Where(w => w.UserId == userId)
-                    .Select(a => new { a.Id, a.AppReleaseState }).ToList();
-                    return (result.Count, result.Count(a => a.AppReleaseState == AppReleaseState.UnRelease));
+                    try
+                    {
+                        var result = mapper.Query<App>()
+                                        .Where(w => w.UserId == userId)
+                                        .Select(a => new { a.Id, a.AppReleaseState }).ToList();
+                        return (result.Count, result.Count(a => a.AppReleaseState == AppReleaseState.UnRelease));
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
@@ -38,7 +45,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Query<AppType>().Select(a => new { a.Id, a.Name, a.IsSystem }).ToList();
+                    try
+                    {
+                        return mapper.Query<AppType>().Select(a => new { a.Id, a.Name, a.IsSystem }).ToList();
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
