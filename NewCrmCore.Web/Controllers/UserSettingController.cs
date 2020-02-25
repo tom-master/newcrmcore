@@ -45,9 +45,9 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(forms);
             #endregion
 
-            var response = new ResponseModel();
             await _userServices.ModifyLockScreenPasswordAsync(UserId, forms["lockpassword"]);
 
+            var response = new ResponseModel();
             response.Message = "锁屏密码修改成功";
             response.IsSuccess = true;
 
@@ -70,8 +70,9 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(userFace);
             #endregion
 
-            var response = new ResponseModel();
             await _userServices.ModifyUserFaceAsync(UserId, userFace);
+
+            var response = new ResponseModel();
             response.IsSuccess = true;
             response.Model = "头像上传成功";
 
@@ -94,11 +95,11 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(forms);
             #endregion
 
-            var response = new ResponseModel();
 
             await _userServices.ModifyPasswordAsync(UserId, forms["password"], Int32.Parse(forms["lockPwdIsEqLoginPwd"]) == 1);
             Response.Cookies.Append("User", UserId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
 
+            var response = new ResponseModel();
             response.Message = "账户密码修改成功";
             response.IsSuccess = true;
 
