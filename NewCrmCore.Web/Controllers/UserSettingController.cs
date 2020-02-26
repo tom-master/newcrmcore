@@ -47,11 +47,11 @@ namespace NewCrmCore.Web.Controllers
 
             await _userServices.ModifyLockScreenPasswordAsync(UserId, forms["lockpassword"]);
 
-            var response = new ResponseModel();
-            response.Message = "锁屏密码修改成功";
-            response.IsSuccess = true;
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                Message = "锁屏密码修改成功",
+                IsSuccess = true,
+            });
         }
 
         #endregion
@@ -72,11 +72,11 @@ namespace NewCrmCore.Web.Controllers
 
             await _userServices.ModifyUserFaceAsync(UserId, userFace);
 
-            var response = new ResponseModel();
-            response.IsSuccess = true;
-            response.Model = "头像上传成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Model = "头像上传成功"
+            });
         }
 
         #endregion
