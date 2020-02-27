@@ -66,12 +66,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(userId);
             #endregion
 
-            var response = new ResponseModel<String>();
             await _userServices.RemoveUserAsync(userId);
-            response.IsSuccess = true;
-            response.Message = "移除账户成功";
-
-            return Json(response);
+            return Json(new ResponseModel<String>
+            {
+                IsSuccess = true,
+                Message = "移除账户成功"
+            });
         }
 
         #endregion
