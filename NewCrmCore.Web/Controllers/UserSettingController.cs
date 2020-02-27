@@ -95,15 +95,14 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(forms);
             #endregion
 
-
             await _userServices.ModifyPasswordAsync(UserId, forms["password"], Int32.Parse(forms["lockPwdIsEqLoginPwd"]) == 1);
             Response.Cookies.Append("User", UserId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
 
-            var response = new ResponseModel();
-            response.Message = "账户密码修改成功";
-            response.IsSuccess = true;
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                Message = "账户密码修改成功",
+                IsSuccess = true
+            });
         }
 
         #endregion
