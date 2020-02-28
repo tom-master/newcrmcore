@@ -90,12 +90,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(userId);
             #endregion
 
-            var response = new ResponseModel<String>();
             await _userServices.EnableAsync(userId);
-            response.IsSuccess = true;
-            response.Message = "启用账户成功";
-
-            return Json(response);
+            return Json(new ResponseModel<String>
+            {
+                IsSuccess = true,
+                Message = "启用账户成功"
+            });
         }
 
         #endregion
