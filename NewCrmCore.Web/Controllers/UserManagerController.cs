@@ -114,12 +114,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(userId);
             #endregion
 
-            var response = new ResponseModel<String>();
             await _userServices.DisableAsync(userId);
-            response.IsSuccess = true;
-            response.Message = "禁用账户成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "禁用账户成功"
+            });
         }
 
         #endregion
