@@ -110,12 +110,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(roleId);
             #endregion
 
-            var response = new ResponseModel();
             await _securityServices.RemoveRoleAsync(roleId);
-            response.IsSuccess = true;
-            response.Message = "移除角色成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "移除角色成功"
+            });
         }
 
         #endregion
