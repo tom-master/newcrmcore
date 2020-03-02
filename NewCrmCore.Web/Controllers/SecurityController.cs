@@ -143,13 +143,11 @@ namespace NewCrmCore.Web.Controllers
             {
                 await _securityServices.AddNewRoleAsync(WapperRoleDto(forms));
             }
-            var response = new ResponseModel
+            return Json(new ResponseModel
             {
                 IsSuccess = true,
                 Message = "添加角色成功"
-            };
-
-            return Json(response);
+            });
         }
 
         #endregion
