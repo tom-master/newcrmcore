@@ -166,14 +166,16 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(appIds);
             #endregion
 
-            var response = new ResponseModel<IList<AppDto>>();
             var internalAppIds = appIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(Int32.Parse).ToArray();
             var result = await _appServices.GetSystemAppAsync(internalAppIds);
-            response.IsSuccess = true;
-            response.Message = "选择系统app成功";
-            response.Model = result;
 
-            return Json(response);
+            return Json(new ResponseModel<IList<AppDto>>
+            {
+                IsSuccess = true,
+                Message = "选择系统app成功",
+                Model = result
+
+            });
         }
 
         #endregion
