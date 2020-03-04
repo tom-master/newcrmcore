@@ -174,7 +174,6 @@ namespace NewCrmCore.Web.Controllers
                 IsSuccess = true,
                 Message = "选择系统app成功",
                 Model = result
-
             });
         }
 
@@ -193,14 +192,14 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> GetRoles(String roleName, Int32 pageIndex, Int32 pageSize)
         {
             Parameter.Validate(roleName, true);
-            var response = new ResponseModels<IList<RoleDto>>();
             var result = await _securityServices.GetRolesAsync(roleName, pageIndex, pageSize);
-            response.IsSuccess = true;
-            response.Message = "获取角色列表成功";
-            response.Model = result.Models;
-            response.TotalCount = result.TotalCount;
-
-            return Json(response);
+            return Json(new ResponseModels<IList<RoleDto>>
+            {
+                IsSuccess = true,
+                Message = "获取角色列表成功",
+                Model = result.Models,
+                TotalCount = result.TotalCount
+            });
         }
 
         #endregion
