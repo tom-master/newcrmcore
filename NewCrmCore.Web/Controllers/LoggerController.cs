@@ -43,14 +43,14 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> GetLogs(String userName, Int32 loglevel, Int32 pageIndex, Int32 pageSize)
         {
             Parameter.Validate(userName, true);
-            var response = new ResponseModels<IList<LogDto>>();
             var result = await _loggerServices.GetLogsAsync(userName, loglevel, pageIndex, pageSize);
-            response.IsSuccess = true;
-            response.Message = "获取日志列表成功";
-            response.Model = result.Models;
-            response.TotalCount = result.TotalCount;
-
-            return Json(response);
+            return Json(new ResponseModels<IList<LogDto>>
+            {
+                IsSuccess = true,
+                Message = "获取日志列表成功",
+                Model = result.Models,
+                TotalCount = result.TotalCount,
+            });
         }
 
         #endregion
