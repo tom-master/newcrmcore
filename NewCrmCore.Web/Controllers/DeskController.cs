@@ -174,6 +174,11 @@ namespace NewCrmCore.Web.Controllers
                     IsAdmin = user.IsAdmin
                 }), new CookieOptions { Expires = cookieTimeout });
             }
+            else
+            {
+                response.Message = "登陆失败";
+                response.IsSuccess = false;
+            }
             return Json(response);
         }
 
