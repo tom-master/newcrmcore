@@ -198,12 +198,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(wallpaperId);
             #endregion
 
-            var response = new ResponseModel();
             await _wallpaperServices.ModifyWallpaperAsync(UserId, wallpaperId);
-            response.IsSuccess = true;
-            response.Message = "设置壁纸成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "设置壁纸成功"
+            });
         }
 
         #endregion
