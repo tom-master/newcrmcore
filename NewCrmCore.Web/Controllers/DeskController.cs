@@ -222,12 +222,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(wallPaperId);
             #endregion
 
-            var response = new ResponseModel<IList<WallpaperDto>>();
             await _wallpaperServices.RemoveWallpaperAsync(UserId, wallPaperId);
-            response.IsSuccess = true;
-            response.Message = "删除壁纸成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "删除壁纸成功"
+            });
         }
 
         #endregion
