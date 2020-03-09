@@ -246,8 +246,6 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(wallpaper);
             #endregion
 
-            var response = new ResponseModel<dynamic>();
-
             var wallpaperResult = await _wallpaperServices.AddWallpaperAsync(new WallpaperDto
             {
                 Title = wallpaper.Title.Substring(0, 9),
@@ -260,10 +258,12 @@ namespace NewCrmCore.Web.Controllers
                 ShortUrl = ""
             });
 
-            response.Message = "壁纸上传成功";
-            response.IsSuccess = true;
-            response.Model = new { Id = wallpaperResult.Item1, Url = Appsetting.FileUrl + wallpaperResult.Item2 };
-            return Json(response);
+            return Json(new ResponseModel<dynamic>
+            {
+                Message = "壁纸上传成功",
+                IsSuccess = true,
+                Model = new { Id = wallpaperResult.Item1, Url = Appsetting.FileUrl + wallpaperResult.Item2 }
+            });
         }
 
         #endregion
