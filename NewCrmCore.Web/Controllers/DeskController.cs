@@ -282,14 +282,13 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(webUrl);
             #endregion
 
-            var response = new ResponseModel<(Int32 wapperId, String url)>();
-
             var result = _wallpaperServices.AddWebWallpaperAsync(UserId, webUrl);
-            response.IsSuccess = true;
-            response.Message = "网络壁纸保存成功";
-            response.Model = await result;
-
-            return Json(response);
+            return Json(new ResponseModel<(Int32 wapperId, String url)>
+            {
+                IsSuccess = true,
+                Message = "网络壁纸保存成功",
+                Model = await result
+            });
         }
 
         #endregion
