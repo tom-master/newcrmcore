@@ -305,15 +305,14 @@ namespace NewCrmCore.Web.Controllers
         {
             #region 参数验证
             Parameter.Validate(skin);
-            #endregion
-
-            var response = new ResponseModel();
+            #endregion 
 
             await _deskServices.ModifySkinAsync(UserId, skin);
-            response.IsSuccess = true;
-            response.Message = "更换皮肤成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "更换皮肤成功"
+            });
         }
 
         #endregion
