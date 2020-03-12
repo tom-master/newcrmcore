@@ -332,14 +332,13 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(model.NewIcon);
             #endregion
 
-            var response = new ResponseModel<String>();
             await _deskServices.ModifyMemberIconAsync(UserId, model.MemberId, model.NewIcon);
-
-            response.IsSuccess = true;
-            response.Message = "更新图标成功";
-            response.Model = Appsetting.FileUrl + model.NewIcon;
-
-            return Json(response);
+            return Json(new ResponseModel<String>
+            {
+                IsSuccess = true,
+                Message = "更新图标成功",
+                Model = $"{Appsetting.FileUrl}{model.NewIcon}"
+            });
         }
 
         #endregion
