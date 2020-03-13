@@ -380,9 +380,10 @@ namespace NewCrmCore.Web.Controllers
         {
             await _userServices.LogoutAsync(UserId);
             Response.Cookies.Append("User", UserId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
-            var response = new ResponseModel();
-            response.IsSuccess = true;
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true
+            });
         }
 
         #endregion
