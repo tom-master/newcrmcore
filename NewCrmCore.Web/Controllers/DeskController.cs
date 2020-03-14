@@ -397,13 +397,13 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSkin()
         {
-            var response = new ResponseModel<String>();
             var skinName = (await _userServices.GetConfigAsync(UserId)).Skin;
-            response.IsSuccess = true;
-            response.Model = skinName;
-            response.Message = "初始化皮肤成功";
-
-            return Json(response);
+            return Json(new ResponseModel<String>
+            {
+                IsSuccess = true,
+                Model = skinName,
+                Message = "初始化皮肤成功"
+            });
         }
 
         #endregion
