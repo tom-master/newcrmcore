@@ -457,25 +457,28 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(type);
             #endregion
 
-            var response = new ResponseModel<dynamic>();
             var internalMemberResult = type == "folder" ? await _deskServices.GetMemberAsync(UserId, id, true) : await _deskServices.GetMemberAsync(UserId, id);
-            response.IsSuccess = true;
-            response.Message = "创建一个窗口成功";
-            response.Model = new
+
+            var response = new ResponseModel<dynamic>
             {
-                type = internalMemberResult.MemberType,
-                memberId = internalMemberResult.Id,
-                appId = internalMemberResult.AppId,
-                name = internalMemberResult.Name,
-                icon = internalMemberResult.IsIconByUpload ? Appsetting.FileUrl + internalMemberResult.IconUrl : internalMemberResult.IconUrl,
-                width = internalMemberResult.Width,
-                height = internalMemberResult.Height,
-                isOnDock = internalMemberResult.IsOnDock,
-                isOpenMax = internalMemberResult.IsOpenMax,
-                isSetbar = internalMemberResult.IsSetbar,
-                url = internalMemberResult.AppUrl,
-                isResize = internalMemberResult.IsResize,
-                starCount = internalMemberResult.StarCount
+                IsSuccess = true,
+                Message = "创建一个窗口成功",
+                Model = new
+                {
+                    type = internalMemberResult.MemberType,
+                    memberId = internalMemberResult.Id,
+                    appId = internalMemberResult.AppId,
+                    name = internalMemberResult.Name,
+                    icon = internalMemberResult.IsIconByUpload ? Appsetting.FileUrl + internalMemberResult.IconUrl : internalMemberResult.IconUrl,
+                    width = internalMemberResult.Width,
+                    height = internalMemberResult.Height,
+                    isOnDock = internalMemberResult.IsOnDock,
+                    isOpenMax = internalMemberResult.IsOpenMax,
+                    isSetbar = internalMemberResult.IsSetbar,
+                    url = internalMemberResult.AppUrl,
+                    isResize = internalMemberResult.IsResize,
+                    starCount = internalMemberResult.StarCount
+                }
             };
 
             return Json(response);
