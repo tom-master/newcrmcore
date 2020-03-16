@@ -502,12 +502,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(model.DeskId);
             #endregion
 
-            var response = new ResponseModel();
             await _deskServices.CreateNewFolderAsync(model.FolderName, model.FolderImg, model.DeskId, UserId);
-            response.IsSuccess = true;
-            response.Message = "新建文件夹成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "新建文件夹成功"
+            });
         }
 
         #endregion
