@@ -526,12 +526,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(memberId);
             #endregion
 
-            var response = new ResponseModel();
             await _deskServices.UninstallMemberAsync(UserId, memberId);
-            response.IsSuccess = true;
-            response.Message = "卸载成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "卸载成功"
+            });
         }
 
         #endregion
