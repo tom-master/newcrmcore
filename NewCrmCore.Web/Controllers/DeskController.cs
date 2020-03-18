@@ -601,13 +601,12 @@ namespace NewCrmCore.Web.Controllers
                     await _deskServices.DockToOtherDeskAsync(UserId, model.MemberId, model.To);
                     break;
             }
-            var response = new ResponseModel
+
+            return Json(new ResponseModel
             {
                 IsSuccess = true,
                 Message = "移动成功"
-            };
-
-            return Json(response);
+            });
         }
 
         #endregion
@@ -639,12 +638,12 @@ namespace NewCrmCore.Web.Controllers
                 IsIconByUpload = Int32.Parse(forms["isIconByUpload"]) == 1
             };
 
-            var response = new ResponseModel();
             await _deskServices.ModifyMemberInfoAsync(UserId, memberDto);
-            response.IsSuccess = true;
-            response.Message = "修改桌面应用信息成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "修改桌面应用信息成功"
+            });
         }
 
         #endregion
