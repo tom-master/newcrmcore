@@ -657,13 +657,13 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUploadWallPapers()
         {
-            var response = new ResponseModel<IList<WallpaperDto>>();
             var result = await _wallpaperServices.GetUploadWallpaperAsync(UserId);
-            response.IsSuccess = true;
-            response.Message = "载入之前上传的壁纸成功";
-            response.Model = result;
-
-            return Json(response);
+            return Json(new ResponseModel<IList<WallpaperDto>>
+            {
+                IsSuccess = true,
+                Message = "载入之前上传的壁纸成功",
+                Model = result
+            });
         }
 
         #endregion
