@@ -677,15 +677,13 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSkins()
         {
-            var response = new ResponseModel<dynamic>();
-
-            var skinPath = Appsetting.Skin;
-
-            var result = await _deskServices.GetAllSkinAsync(skinPath);
-            response.IsSuccess = true;
-            response.Message = "获取皮肤列表成功";
-            response.Model = new { result, currentSkin = (await _userServices.GetConfigAsync(UserId)).Skin };
-            return Json(response);
+            var result = await _deskServices.GetAllSkinAsync(Appsetting.Skin);
+            return Json(new ResponseModel<dynamic>
+            {
+                IsSuccess = true,
+                Message = "获取皮肤列表成功",
+                Model = new { result, currentSkin = (await _userServices.GetConfigAsync(UserId)).Skin }
+            });
 
         }
 
