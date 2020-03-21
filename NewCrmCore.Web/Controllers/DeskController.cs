@@ -684,7 +684,6 @@ namespace NewCrmCore.Web.Controllers
                 Message = "获取皮肤列表成功",
                 Model = new { result, currentSkin = (await _userServices.GetConfigAsync(UserId)).Skin }
             });
-
         }
 
         #endregion
@@ -704,12 +703,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(model.DeskNum);
             #endregion
 
-            var response = new ResponseModel();
             await _deskServices.ModifyDockPositionAsync(UserId, model.DeskNum, model.Pos);
-            response.IsSuccess = true;
-            response.Message = "更改码头的位置成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "更改码头的位置成功"
+            });
         }
 
         #endregion
