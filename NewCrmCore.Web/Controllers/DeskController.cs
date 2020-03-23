@@ -727,12 +727,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(source);
             #endregion
 
-            var response = new ResponseModel();
             await _deskServices.ModifyWallpaperSourceAsync(source, UserId);
-            response.IsSuccess = true;
-            response.Message = "更改壁纸来源成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "更改壁纸来源成功"
+            });
         }
 
         #endregion
