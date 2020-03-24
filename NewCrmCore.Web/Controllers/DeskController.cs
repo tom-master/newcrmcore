@@ -770,13 +770,13 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUserFace()
         {
-            var response = new ResponseModel<String>();
             var result = (await _userServices.GetConfigAsync(UserId)).UserFace;
-            response.IsSuccess = true;
-            response.Message = "获取用户头像成功";
-            response.Model = Appsetting.FileUrl + result;
-
-            return Json(response);
+            return Json(new ResponseModel<String>
+            {
+                IsSuccess = true,
+                Message = "获取用户头像成功",
+                Model = $"{Appsetting.FileUrl}{result}"
+            });
         }
 
         #endregion
