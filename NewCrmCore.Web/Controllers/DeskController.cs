@@ -751,12 +751,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(appSize);
             #endregion
 
-            var response = new ResponseModel();
             await _appServices.ModifyAppIconSizeAsync(UserId, appSize);
-            response.IsSuccess = true;
-            response.Message = "更改图标大小成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "更改图标大小成功"
+            });
         }
 
         #endregion
