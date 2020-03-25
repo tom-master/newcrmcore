@@ -797,12 +797,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(model.MemberId);
             #endregion
 
-            var response = new ResponseModel();
             await _deskServices.ModifyFolderInfoAsync(UserId, model.Name, model.Icon, model.MemberId);
-            response.IsSuccess = true;
-            response.Message = "修改成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "修改成功"
+            });
         }
 
         #endregion
