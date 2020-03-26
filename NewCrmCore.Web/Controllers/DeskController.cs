@@ -816,13 +816,14 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetDockPos()
         {
-            var response = new ResponseModel<DockPosition>();
             var result = (await _userServices.GetConfigAsync(UserId)).DockPosition;
-            response.IsSuccess = true;
-            response.Message = "初始化应用码头成功";
-            response.Model = result;
 
-            return Json(response);
+            return Json(new ResponseModel<DockPosition>
+            {
+                IsSuccess = true,
+                Message = "初始化应用码头成功",
+                Model = result
+            });
         }
 
         #endregion
