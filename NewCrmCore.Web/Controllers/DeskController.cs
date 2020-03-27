@@ -866,13 +866,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(appXy);
             #endregion
 
-            var response = new ResponseModel();
-
             await _appServices.ModifyAppDirectionAsync(UserId, appXy);
-            response.IsSuccess = true;
-            response.Message = "更换图标排列方向成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "更换图标排列方向成功",
+            });
         }
 
         #endregion
