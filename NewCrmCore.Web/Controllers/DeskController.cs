@@ -890,12 +890,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(wallPaperShowType);
             #endregion
 
-            var response = new ResponseModel();
             await _wallpaperServices.ModifyWallpaperModeAsync(UserId, wallPaperShowType);
-            response.IsSuccess = true;
-            response.Message = "壁纸显示模式设置成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "壁纸显示模式设置成功"
+            });
         }
 
         #endregion
