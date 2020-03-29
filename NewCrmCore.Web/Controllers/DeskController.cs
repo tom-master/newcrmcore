@@ -909,13 +909,13 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUserDeskMembers()
         {
-            var response = new ResponseModel<IDictionary<String, IList<dynamic>>>();
             var result = await _deskServices.GetDeskMembersAsync(UserId);
-            response.IsSuccess = true;
-            response.Message = "获取我的应用成功";
-            response.Model = result;
-
-            return Json(response);
+            return Json(new ResponseModel<IDictionary<String, IList<dynamic>>>
+            {
+                IsSuccess = true,
+                Message = "获取我的应用成功",
+                Model = result
+            });
         }
 
         #endregion
