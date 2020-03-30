@@ -934,12 +934,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(appHorizontal);
             #endregion
 
-            var response = new ResponseModel();
             await _appServices.ModifyAppHorizontalSpacingAsync(UserId, appHorizontal);
-            response.IsSuccess = true;
-            response.Message = "更改图标水平间距成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "更改图标水平间距成功"
+            });
         }
 
         #endregion
