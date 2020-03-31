@@ -958,12 +958,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(appVertical);
             #endregion
 
-            var response = new ResponseModel();
             await _appServices.ModifyAppVerticalSpacingAsync(UserId, appVertical);
-            response.IsSuccess = true;
-            response.Message = "更改图标垂直间距成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "更改图标垂直间距成功"
+            });
         }
 
         #endregion
