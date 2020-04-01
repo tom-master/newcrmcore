@@ -982,12 +982,13 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(pageSize);
             #endregion
 
-            var response = new ResponseModel<PageList<NotifyDto>>();
-            response.IsSuccess = true;
-            response.Model = await _deskServices.CheckUnreadNotifyCount(UserId, pageIndex, pageSize);
-            response.Message = "消息列表获取成功";
-
-            return Json(response);
+            var result = await _deskServices.CheckUnreadNotifyCount(UserId, pageIndex, pageSize);
+            return Json(new ResponseModel<PageList<NotifyDto>>
+            {
+                IsSuccess = true,
+                Model = result,
+                Message = "消息列表获取成功"
+            });
         }
 
         /// <summary>
