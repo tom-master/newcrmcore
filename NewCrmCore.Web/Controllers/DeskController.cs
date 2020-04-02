@@ -1007,28 +1007,16 @@ namespace NewCrmCore.Web.Controllers
 
             if (String.IsNullOrEmpty(notifyId))
             {
-                response.IsSuccess = true;
-                response.Message = "消息读取成功";
+                response.IsSuccess = false;
+                response.Message = "消息读取失败";
                 return Json(response);
             }
+
             await _deskServices.ReadNotify(notifyId.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(Int32.Parse).ToList());
             response.IsSuccess = true;
             response.Message = "消息读取成功";
 
             return Json(response);
-        }
-
-        [HttpPost, HttpGet]
-        public async Task<IActionResult> Test()
-        {
-            return await Task.Run(async () =>
-            {
-                await Task.Delay(5000);
-                var response = new ResponseModel();
-                response.IsSuccess = true;
-                response.Message = "response success";
-                return Json(response);
-            });
         }
     }
 }
