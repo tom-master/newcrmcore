@@ -63,12 +63,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(appTypeId);
             #endregion
 
-            var response = new ResponseModel();
             await _appServices.RemoveAppTypeAsync(appTypeId);
-            response.IsSuccess = true;
-            response.Message = "删除app类型成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "删除app类型成功"
+            });
         }
 
         #endregion
