@@ -64,7 +64,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var sql = $@"SELECT 
+                    try
+                    {
+                        var sql = $@"SELECT 
                             a.UseCount,
                             a.Id,
                             a.Name,
@@ -85,13 +87,18 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 							LEFT JOIN newcrm_user_member AS a2 ON a2.UserId=@userId AND a2.IsDeleted=0 AND a2.AppId=a.Id
                             WHERE a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState AND a.IsRecommand=1";
 
-                    var parameters = new List<MapperParameter>
+                        var parameters = new List<MapperParameter>
+                        {
+                            new MapperParameter("AppAuditState", AppAuditState.Pass.ToInt32()),
+                            new MapperParameter("AppReleaseState", AppReleaseState.Release.ToInt32()),
+                            new MapperParameter("userId",userId)
+                        };
+                        return mapper.SqlQuery(sql, parameters.ToArray()).FirstOrDefault<TodayRecommendAppDto>();
+                    }
+                    catch (System.Exception)
                     {
-                        new MapperParameter("AppAuditState", AppAuditState.Pass.ToInt32()),
-                        new MapperParameter("AppReleaseState", AppReleaseState.Release.ToInt32()),
-                        new MapperParameter("userId",userId)
-                    };
-                    return mapper.SqlQuery(sql, parameters.ToArray()).FirstOrDefault<TodayRecommendAppDto>();
+                        throw;
+                    }
                 }
             });
         }
@@ -105,64 +112,67 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             using (var mapper = EntityMapper.CreateMapper())
             {
-                var parameters = new List<MapperParameter>
+                try
                 {
-                    new MapperParameter("AppAuditState", AppAuditState.Pass.ToInt32()),
-                    new MapperParameter("AppReleaseState", AppReleaseState.Release.ToInt32())
-                };
 
-                var where = new StringBuilder();
-                where.Append($@" WHERE 1=1  AND a.IsDeleted=0 AND a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState");
-                if (appTypeId != 0 && appTypeId != -1)//全部app
-                {
-                    parameters.Add(new MapperParameter("AppTypeId", appTypeId));
-                    where.Append($@" AND a.AppTypeId=@AppTypeId");
-                }
-                else
-                {
-                    if (appTypeId == -1)//用户制作的app
+                    var parameters = new List<MapperParameter>
                     {
-                        parameters.Add(new MapperParameter("userId", userId));
-                        where.Append($@" AND a.UserId=@userId");
+                        new MapperParameter("AppAuditState", AppAuditState.Pass.ToInt32()),
+                        new MapperParameter("AppReleaseState", AppReleaseState.Release.ToInt32())
+                    };
+
+                    var where = new StringBuilder();
+                    where.Append($@" WHERE 1=1  AND a.IsDeleted=0 AND a.AppAuditState=@AppAuditState AND a.AppReleaseState=@AppReleaseState");
+                    if (appTypeId != 0 && appTypeId != -1)//全部app
+                    {
+                        parameters.Add(new MapperParameter("AppTypeId", appTypeId));
+                        where.Append($@" AND a.AppTypeId=@AppTypeId");
                     }
-                }
-                if (!String.IsNullOrEmpty(searchText))//关键字搜索
-                {
-                    parameters.Add(new MapperParameter("Name", $@"%{searchText}%"));
-                    where.Append($@" AND a.Name LIKE @Name");
-                }
-
-                var orderBy = new StringBuilder();
-                switch (orderId)
-                {
-                    case 1:
+                    else
+                    {
+                        if (appTypeId == -1)//用户制作的app
                         {
-                            orderBy.Append($@" ORDER BY a.AddTime DESC");
-                            break;
+                            parameters.Add(new MapperParameter("userId", userId));
+                            where.Append($@" AND a.UserId=@userId");
                         }
-                    case 2:
-                        {
-                            orderBy.Append($@" ORDER BY a.UseCount DESC");
-                            break;
-                        }
-                    case 3:
-                        {
-                            orderBy.Append($@" ORDER BY (SELECT AVG(stars.StartNum) FROM newcrm_app_star AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId) DESC");
-                            break;
-                        }
-                }
+                    }
+                    if (!String.IsNullOrEmpty(searchText))//关键字搜索
+                    {
+                        parameters.Add(new MapperParameter("Name", $@"%{searchText}%"));
+                        where.Append($@" AND a.Name LIKE @Name");
+                    }
 
-                var paging = new PageList<App>();
-                #region totalCount
-                {
-                    var sql = $@"SELECT COUNT(*) FROM newcrm_app AS a LEFT JOIN newcrm_app_star AS a1 ON a1.AppId=a.Id AND a1.IsDeleted=0 {where}";
-                    totalCount = mapper.SqlQuery(sql, parameters.ToArray()).FirstOrDefault<Int32>();
-                }
-                #endregion
+                    var orderBy = new StringBuilder();
+                    switch (orderId)
+                    {
+                        case 1:
+                            {
+                                orderBy.Append($@" ORDER BY a.AddTime DESC");
+                                break;
+                            }
+                        case 2:
+                            {
+                                orderBy.Append($@" ORDER BY a.UseCount DESC");
+                                break;
+                            }
+                        case 3:
+                            {
+                                orderBy.Append($@" ORDER BY (SELECT AVG(stars.StartNum) FROM newcrm_app_star AS stars WHERE stars.AppId=a.Id AND stars.IsDeleted=0 GROUP BY stars.AppId) DESC");
+                                break;
+                            }
+                    }
 
-                #region sql
-                {
-                    var sql = $@"SELECT 
+                    var paging = new PageList<App>();
+                    #region totalCount
+                    {
+                        var sql = $@"SELECT COUNT(*) FROM newcrm_app AS a LEFT JOIN newcrm_app_star AS a1 ON a1.AppId=a.Id AND a1.IsDeleted=0 {where}";
+                        totalCount = mapper.SqlQuery(sql, parameters.ToArray()).FirstOrDefault<Int32>();
+                    }
+                    #endregion
+
+                    #region sql
+                    {
+                        var sql = $@"SELECT 
 	                            a.AppTypeId,
 	                            a.UserId,
 	                            a.AddTime,
@@ -185,10 +195,15 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 	                            FROM newcrm_app AS a
 	                            LEFT JOIN newcrm_user_member AS a1 ON a1.UserId=@userId2 AND a1.AppId=a.Id AND a1.IsDeleted=0
                                 {where} {orderBy} LIMIT {pageSize * (pageIndex - 1)},{pageSize }";
-                    parameters.Add(new MapperParameter("userId2", userId));
-                    return mapper.SqlQuery(sql, parameters.ToArray()).ToList<App>();
+                        parameters.Add(new MapperParameter("userId2", userId));
+                        return mapper.SqlQuery(sql, parameters.ToArray()).ToList<App>();
+                    }
+                    #endregion
                 }
-                #endregion
+                catch (System.Exception)
+                {
+                    throw;
+                }
             }
         }
 
