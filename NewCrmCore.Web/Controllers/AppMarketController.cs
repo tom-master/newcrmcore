@@ -135,12 +135,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(model.StarCount);
             #endregion
 
-            var response = new ResponseModel();
             await _appServices.ModifyAppStarAsync(UserId, model.AppId, model.StarCount);
-            response.IsSuccess = true;
-            response.Message = "打分成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "打分成功"
+            });
         }
 
         #endregion
@@ -160,12 +160,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(model.DeskNum);
             #endregion
 
-            var response = new ResponseModel();
             await _appServices.InstallAppAsync(UserId, model.AppId, model.DeskNum);
-            response.IsSuccess = true;
-            response.Message = "安装成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "安装成功"
+            });
         }
 
         #endregion
