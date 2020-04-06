@@ -185,14 +185,14 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(model.NewIcon);
             #endregion
 
-            var response = new ResponseModel<String>();
             await _appServices.ModifyAppIconAsync(UserId, model.AppId, model.NewIcon);
 
-            response.IsSuccess = true;
-            response.Message = "更新图标成功";
-            response.Model = Appsetting.FileUrl + model.NewIcon;
-
-            return Json(response);
+            return Json(new ResponseModel<String>
+            {
+                IsSuccess = true,
+                Message = "更新图标成功",
+                Model = $@"{Appsetting.FileUrl}{model.NewIcon}"
+            });
         }
 
         #endregion
@@ -211,16 +211,15 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(forms);
             #endregion
 
-            var response = new ResponseModel();
-
             var appDto = WrapperAppDto(forms);
             appDto.UserId = UserId;
             await _appServices.CreateNewAppAsync(appDto);
 
-            response.IsSuccess = true;
-            response.Message = "app创建成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "app创建成功"
+            });
         }
 
         #endregion
