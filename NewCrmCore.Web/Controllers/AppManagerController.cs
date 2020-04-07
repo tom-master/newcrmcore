@@ -72,12 +72,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(appId);
             #endregion
 
-            var response = new ResponseModel();
             await _appServices.PassAsync(appId);
-            response.IsSuccess = true;
-            response.Message = "app审核通过";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "app审核通过"
+            });
         }
 
         #endregion
@@ -96,12 +96,13 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(appId);
             #endregion
 
-            var response = new ResponseModel();
             await _appServices.RemoveAppAsync(appId);
-            response.IsSuccess = true;
-            response.Message = "删除app成功";
 
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "删除app成功"
+            });
         }
 
         #endregion
