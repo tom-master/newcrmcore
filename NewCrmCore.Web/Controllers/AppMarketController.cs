@@ -238,12 +238,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(appId);
             #endregion
 
-            var response = new ResponseModel();
             await _appServices.ReleaseAppAsync(appId);
-            response.IsSuccess = true;
-            response.Message = "app发布成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "app发布成功"
+            });
         }
 
         #endregion
@@ -262,12 +262,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(forms);
             #endregion
 
-            var response = new ResponseModel();
             await _appServices.ModifyUserAppInfoAsync(UserId, WrapperAppDto(forms));
-            response.IsSuccess = true;
-            response.Message = "修改app信息成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "修改app信息成功"
+            });
         }
 
         #endregion
