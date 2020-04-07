@@ -356,12 +356,13 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(appId);
             #endregion
 
-            var response = new ResponseModel();
             await _appServices.RemoveAppAsync(appId);
-            response.IsSuccess = true;
-            response.Message = "删除用户开发的app成功";
 
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "删除用户开发的app成功"
+            });
         }
 
         #endregion
