@@ -121,12 +121,13 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(appId);
             #endregion
 
-            var response = new ResponseModel();
             await _appServices.DenyAsync(appId);
-            response.IsSuccess = true;
-            response.Message = "app审核不通过";
 
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "app审核不通过"
+            });
         }
 
         #endregion
