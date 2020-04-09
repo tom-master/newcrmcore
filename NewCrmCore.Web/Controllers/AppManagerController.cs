@@ -149,19 +149,19 @@ namespace NewCrmCore.Web.Controllers
         {
             Parameter.Validate(searchText, true);
 
-            var response = new ResponseModels<IList<AppDto>>();
             var result = await _appServices.GetUserAppsAsync(0, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize);
             foreach (var appDto in result.Models)
             {
                 appDto.IsCreater = appDto.UserId == UserId;
             }
 
-            response.TotalCount = result.TotalCount;
-            response.IsSuccess = true;
-            response.Message = "获取app列表成功";
-            response.Model = result.Models;
-
-            return Json(response);
+            return Json(new ResponseModels<IList<AppDto>>
+            {
+                TotalCount = result.TotalCount,
+                IsSuccess = true,
+                Message = "获取app列表成功",
+                Model = result.Models
+            });
         }
 
         #endregion
@@ -220,12 +220,12 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(appId);
             #endregion
 
-            var response = new ResponseModel();
             await _appServices.SetTodayRecommandAppAsync(appId);
-            response.IsSuccess = true;
-            response.Message = "设置成功";
-
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "设置成功"
+            });
         }
 
         #endregion
