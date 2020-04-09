@@ -26,7 +26,6 @@ namespace NewCrmCore.Web.Filter
                 Message = businessException ? filterContext.Exception.Message : "出现未知错误，请查看日志",
             };
 
-
             if (isAjaxRequest)
             {
                 filterContext.Result = new JsonResult(response);

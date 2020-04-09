@@ -14,6 +14,8 @@ namespace NewCrmCore.Web.Filter
 {
     public class CheckPermissions : IAsyncAuthorizationFilter
     {
+
+
         public async Task OnAuthorizationAsync(AuthorizationFilterContext filterContext)
         {
             if (((ControllerActionDescriptor)filterContext.ActionDescriptor).MethodInfo.CustomAttributes.Any(a => a.AttributeType == typeof(AllowAnonymousAttribute)))
