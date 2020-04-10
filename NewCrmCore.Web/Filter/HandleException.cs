@@ -38,6 +38,7 @@ namespace NewCrmCore.Web.Filter
                     Content = @"<script>(function(){top.NewCrm.fail('" + response.Message + "');})()</script>"
                 };
             }
+
             var userId = 0;
             var userCookie = filterContext.HttpContext.Request.Cookies["User"];
             if (userCookie != null)
