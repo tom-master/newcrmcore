@@ -217,79 +217,85 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             using (var mapper = EntityMapper.CreateMapper())
             {
-
-                var where = FilterFactory.Create<App>();
-                var parameters = new List<MapperParameter>();
-                #region 条件筛选
-
-                if (userId != default)
+                try
                 {
-                    where.And(w => w.UserId == userId);
-                }
+                    var where = FilterFactory.Create<App>();
+                    var parameters = new List<MapperParameter>();
+                    #region 条件筛选
 
-                //应用名称
-                if (!String.IsNullOrEmpty(searchText))
-                {
-                    where.And(w => w.Name.Contains(searchText));
-                }
-
-                //应用所属类型
-                if (appTypeId != 0)
-                {
-                    where.And(w => w.AppTypeId == appTypeId);
-                }
-
-                //应用样式
-                if (appStyleId != 0)
-                {
-                    var appStyle = EnumExtensions.ToEnum<AppStyle>(appStyleId);
-                    where.And(w => w.AppStyle == appStyle);
-                }
-
-                if ((appState + "").Length > 0)
-                {
-                    //app发布状态
-                    var stats = appState.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (stats[0] == "AppReleaseState")
+                    if (userId != default)
                     {
-                        var appReleaseState = EnumExtensions.ToEnum<AppReleaseState>(Int32.Parse(stats[1]));
-                        where.And(w => w.AppReleaseState == appReleaseState);
+                        where.And(w => w.UserId == userId);
                     }
 
-                    //app应用审核状态
-                    if (stats[0] == "AppAuditState")
+                    //应用名称
+                    if (!String.IsNullOrEmpty(searchText))
                     {
-                        var appAuditState = EnumExtensions.ToEnum<AppAuditState>(Int32.Parse(stats[1]));
-                        where.And(w => w.AppAuditState == appAuditState);
+                        where.And(w => w.Name.Contains(searchText));
                     }
-                }
 
-                #endregion
-
-                #region totalCount
-                {
-                    totalCount = mapper.Query<App>().Where(where).Count();
-                }
-                #endregion
-
-                #region sql
-                {
-                    return mapper.Query<App>().Where(where).Select(a => new
+                    //应用所属类型
+                    if (appTypeId != 0)
                     {
-                        a.Name,
-                        a.AppStyle,
-                        a.UseCount,
-                        a.Id,
-                        a.IconUrl,
-                        a.AppAuditState,
-                        a.IsRecommand,
-                        a.AppTypeId,
-                        a.UserId,
-                        a.IsIconByUpload
-                    }).Page(pageIndex, pageSize).ToList();
-                }
-                #endregion
+                        where.And(w => w.AppTypeId == appTypeId);
+                    }
 
+                    //应用样式
+                    if (appStyleId != 0)
+                    {
+                        var appStyle = EnumExtensions.ToEnum<AppStyle>(appStyleId);
+                        where.And(w => w.AppStyle == appStyle);
+                    }
+
+                    if ((appState + "").Length > 0)
+                    {
+                        //app发布状态
+                        var stats = appState.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        if (stats[0] == "AppReleaseState")
+                        {
+                            var appReleaseState = EnumExtensions.ToEnum<AppReleaseState>(Int32.Parse(stats[1]));
+                            where.And(w => w.AppReleaseState == appReleaseState);
+                        }
+
+                        //app应用审核状态
+                        if (stats[0] == "AppAuditState")
+                        {
+                            var appAuditState = EnumExtensions.ToEnum<AppAuditState>(Int32.Parse(stats[1]));
+                            where.And(w => w.AppAuditState == appAuditState);
+                        }
+                    }
+
+                    #endregion
+
+                    #region totalCount
+                    {
+                        totalCount = mapper.Query<App>().Where(where).Count();
+                    }
+                    #endregion
+
+                    #region sql
+                    {
+                        return mapper.Query<App>().Where(where).Select(a => new
+                        {
+                            a.Name,
+                            a.AppStyle,
+                            a.UseCount,
+                            a.Id,
+                            a.IconUrl,
+                            a.AppAuditState,
+                            a.IsRecommand,
+                            a.AppTypeId,
+                            a.UserId,
+                            a.IsIconByUpload
+                        }).Page(pageIndex, pageSize).ToList();
+                    }
+                    #endregion
+                }
+                catch (System.Exception)
+                {
+
+                    throw;
+                }
             }
         }
 
@@ -300,7 +306,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var sql = $@"SELECT 
+                    try
+                    {
+
+
+                        var sql = $@"SELECT 
                             a.Name,
                             a.IconUrl,
                             a.Remark,
@@ -327,11 +337,16 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             LEFT JOIN newcrm_user AS a2
                             ON a2.Id=a.UserId AND a2.IsDeleted=0 AND a2.IsDisable=0
                             WHERE a.Id=@Id AND a.IsDeleted=0";
-                    var parameters = new List<MapperParameter>
+                        var parameters = new List<MapperParameter>
+                        {
+                            new MapperParameter("Id",appId)
+                        }.ToArray();
+                        return mapper.SqlQuery(sql, parameters).FirstOrDefault<App>();
+                    }
+                    catch (System.Exception)
                     {
-                        new MapperParameter("Id",appId)
-                    }.ToArray();
-                    return mapper.SqlQuery(sql, parameters).FirstOrDefault<App>();
+                        throw;
+                    }
                 }
             });
         }
