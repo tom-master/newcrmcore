@@ -359,7 +359,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Query<Member>().Where(w => w.AppId == appId).Count() > 0;
+                    try
+                    {
+                        return mapper.Query<Member>().Where(w => w.AppId == appId).Count() > 0;
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
@@ -370,12 +377,19 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var where = FilterFactory.Create<App>(w => w.IsSystem);
-                    if (appIds != null)
+                    try
                     {
-                        where.And(w => appIds.Contains(w.Id));
+                        var where = FilterFactory.Create<App>(w => w.IsSystem);
+                        if (appIds != null)
+                        {
+                            where.And(w => appIds.Contains(w.Id));
+                        }
+                        return mapper.Query<App>().Select(a => new { a.Id, a.Name, a.IconUrl }).Where(where).ToList();
                     }
-                    return mapper.Query<App>().Select(a => new { a.Id, a.Name, a.IconUrl }).Where(where).ToList();
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
