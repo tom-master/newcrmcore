@@ -401,7 +401,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Query<AppType>().Count() > 0;
+                    try
+                    {
+                        return mapper.Query<AppType>().Count() > 0;
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
