@@ -422,22 +422,29 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    #region 前置条件判断
+                    try
                     {
-                        var result = mapper.Query<AppStar>().Where(a => a.UserId == userId && a.AppId == appId).Count();
-                        if (result > 0)
+                        #region 前置条件判断
                         {
-                            throw new BusinessException("您已为这个应用打分");
+                            var result = mapper.Query<AppStar>().Where(a => a.UserId == userId && a.AppId == appId).Count();
+                            if (result > 0)
+                            {
+                                throw new BusinessException("您已为这个应用打分");
+                            }
                         }
-                    }
-                    #endregion
+                        #endregion
 
-                    #region sql
-                    {
-                        var appStar = new AppStar(userId, appId, starCount);
-                        mapper.Add(appStar);
+                        #region sql
+                        {
+                            var appStar = new AppStar(userId, appId, starCount);
+                            mapper.Add(appStar);
+                        }
+                        #endregion
                     }
-                    #endregion
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
@@ -448,7 +455,15 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    mapper.Add(app);
+                    try
+                    {
+                        mapper.Add(app);
+                    }
+                    catch (System.Exception)
+                    {
+
+                        throw;
+                    }
                 }
             });
         }
@@ -460,14 +475,21 @@ namespace NewCrmCore.Domain.Services.BoundedContext
              {
                  using (var mapper = EntityMapper.CreateMapper())
                  {
-                     var app = await GetAppAsync(appId);
-                     app.Pass();
-                     var result = mapper.Update(app, a => a.Id == appId);
-                     if (!result)
+                     try
                      {
-                         throw new BusinessException("应用审核状态更新失败");
+                         var app = await GetAppAsync(appId);
+                         app.Pass();
+                         var result = mapper.Update(app, a => a.Id == appId);
+                         if (!result)
+                         {
+                             throw new BusinessException("应用审核状态更新失败");
+                         }
+                         return app;
                      }
-                     return app;
+                     catch (System.Exception)
+                     {
+                         throw;
+                     }
                  }
              });
         }
@@ -479,14 +501,21 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var app = await GetAppAsync(appId);
-                    app.Deny();
-                    var result = mapper.Update(app, a => a.Id == appId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("应用审核状态更新失败");
+                        var app = await GetAppAsync(appId);
+                        app.Deny();
+                        var result = mapper.Update(app, a => a.Id == appId);
+                        if (!result)
+                        {
+                            throw new BusinessException("应用审核状态更新失败");
+                        }
+                        return app;
                     }
-                    return app;
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
@@ -498,36 +527,43 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    mapper.OpenTransaction();
                     try
                     {
-                        #region 取消之前的推荐应用
+                        mapper.OpenTransaction();
+                        try
                         {
-                            var app = new App().CancelRecommand();
-                            var result = mapper.Update(app, a => a.IsRecommand);
-                            if (!result)
+                            #region 取消之前的推荐应用
                             {
-                                throw new BusinessException("取消之前的推荐应用失败");
+                                var app = new App().CancelRecommand();
+                                var result = mapper.Update(app, a => a.IsRecommand);
+                                if (!result)
+                                {
+                                    throw new BusinessException("取消之前的推荐应用失败");
+                                }
                             }
-                        }
-                        #endregion
+                            #endregion
 
-                        #region 设置新的推荐应用
+                            #region 设置新的推荐应用
+                            {
+                                var app = new App().Recommand();
+                                var result = mapper.Update(app, a => a.Id == appId);
+                                if (!result)
+                                {
+                                    throw new BusinessException("设置新的推荐应用失败");
+                                }
+                            }
+                            #endregion
+
+                            mapper.Commit();
+                        }
+                        catch (Exception)
                         {
-                            var app = new App().Recommand();
-                            var result = mapper.Update(app, a => a.Id == appId);
-                            if (!result)
-                            {
-                                throw new BusinessException("设置新的推荐应用失败");
-                            }
+                            mapper.Rollback();
+                            throw;
                         }
-                        #endregion
-
-                        mapper.Commit();
                     }
-                    catch (Exception)
+                    catch (System.Exception)
                     {
-                        mapper.Rollback();
                         throw;
                     }
                 }
