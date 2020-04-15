@@ -622,22 +622,30 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    #region 发布应用
+                    try
                     {
-                        var app = new App().AppRelease().Pass();
-                        var result = mapper.Update(app, a => a.Id == appId);
-                        if (!result)
+                        #region 发布应用
                         {
-                            throw new BusinessException("发布应用失败");
+                            var app = new App().AppRelease().Pass();
+                            var result = mapper.Update(app, a => a.Id == appId);
+                            if (!result)
+                            {
+                                throw new BusinessException("发布应用失败");
+                            }
                         }
-                    }
-                    #endregion
+                        #endregion
 
-                    #region 获取应用名称
-                    {
-                        return mapper.Query<App>().Where(a => a.Id == appId).Select(a => new { a.Name, a.UserId }).FirstOrDefault();
+                        #region 获取应用名称
+                        {
+                            return mapper.Query<App>().Where(a => a.Id == appId).Select(a => new { a.Name, a.UserId }).FirstOrDefault();
+                        }
+                        #endregion
                     }
-                    #endregion
+                    catch (System.Exception)
+                    {
+
+                        throw;
+                    }
                 }
             });
         }
@@ -652,70 +660,78 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    if (app.IsIconByUpload)
+                    try
                     {
-                        app.IconFromUpload();
-                    }
-                    else
-                    {
-                        app.IconNotFromUpload();
-                    }
-                    app.ModifyIconUrl(app.IconUrl);
-                    app.ModifyName(app.Name);
-                    app.ModifyAppTypeId(app.AppTypeId);
-                    app.ModifyUrl(app.AppUrl);
-                    app.ModifyWidth(app.Width);
-                    app.ModifyHeight(app.Height);
-                    if (app.AppStyle == AppStyle.App)
-                    {
-                        app.StyleToApp();
-                    }
-                    else
-                    {
-                        app.StyleToWidget();
-                    }
+                        if (app.IsIconByUpload)
+                        {
+                            app.IconFromUpload();
+                        }
+                        else
+                        {
+                            app.IconNotFromUpload();
+                        }
+                        app.ModifyIconUrl(app.IconUrl);
+                        app.ModifyName(app.Name);
+                        app.ModifyAppTypeId(app.AppTypeId);
+                        app.ModifyUrl(app.AppUrl);
+                        app.ModifyWidth(app.Width);
+                        app.ModifyHeight(app.Height);
+                        if (app.AppStyle == AppStyle.App)
+                        {
+                            app.StyleToApp();
+                        }
+                        else
+                        {
+                            app.StyleToWidget();
+                        }
 
-                    if (app.IsResize)
-                    {
-                        app.Resize();
-                    }
-                    else
-                    {
-                        app.NotResize();
-                    }
+                        if (app.IsResize)
+                        {
+                            app.Resize();
+                        }
+                        else
+                        {
+                            app.NotResize();
+                        }
 
-                    if (app.IsOpenMax)
-                    {
-                        app.OpenMax();
-                    }
-                    else
-                    {
-                        app.NotOpenMax();
-                    }
+                        if (app.IsOpenMax)
+                        {
+                            app.OpenMax();
+                        }
+                        else
+                        {
+                            app.NotOpenMax();
+                        }
 
-                    if (app.IsFlash)
-                    {
-                        app.Flash();
-                    }
-                    else
-                    {
-                        app.NotFlash();
-                    }
+                        if (app.IsFlash)
+                        {
+                            app.Flash();
+                        }
+                        else
+                        {
+                            app.NotFlash();
+                        }
 
-                    app.ModifyRemark(app.Remark);
+                        app.ModifyRemark(app.Remark);
 
-                    if (app.AppAuditState == AppAuditState.Wait)
-                    {
-                        app.Wait();
+                        if (app.AppAuditState == AppAuditState.Wait)
+                        {
+                            app.Wait();
+                        }
+                        else
+                        {
+                            app.UnAuditState();
+                        }
+                        var result = mapper.Update(app, a => a.UserId == userId && a.Id == app.Id);
+                        if (!result)
+                        {
+                            throw new BusinessException("修改应用信息失败");
+                        }
                     }
-                    else
+                    catch (System.Exception)
                     {
-                        app.UnAuditState();
-                    }
-                    var result = mapper.Update(app, a => a.UserId == userId && a.Id == app.Id);
-                    if (!result)
-                    {
-                        throw new BusinessException("修改应用信息失败");
+
+                        throw;
                     }
                 }
             });
