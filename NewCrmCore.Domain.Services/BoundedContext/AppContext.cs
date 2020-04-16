@@ -744,28 +744,36 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    #region 前置条件验证
+                    try
                     {
-                        var result = mapper.Query<App>().Where(a => a.AppTypeId == appTypeId).Count();
-                        if (result > 0)
+                        #region 前置条件验证
                         {
-                            throw new BusinessException($@"当前分类下存在应用,不能删除当前分类");
+                            var result = mapper.Query<App>().Where(a => a.AppTypeId == appTypeId).Count();
+                            if (result > 0)
+                            {
+                                throw new BusinessException($@"当前分类下存在应用,不能删除当前分类");
+                            }
+
                         }
+                        #endregion
 
+                        #region 移除应用分类
+                        {
+                            var appType = new AppType();
+                            appType.Remove();
+                            var result = mapper.Update(appType, type => type.Id == appTypeId);
+                            if (!result)
+                            {
+                                throw new BusinessException("移除应用分类失败");
+                            }
+                        }
+                        #endregion
                     }
-                    #endregion
-
-                    #region 移除应用分类
+                    catch (System.Exception)
                     {
-                        var appType = new AppType();
-                        appType.Remove();
-                        var result = mapper.Update(appType, type => type.Id == appTypeId);
-                        if (!result)
-                        {
-                            throw new BusinessException("移除应用分类失败");
-                        }
+
+                        throw;
                     }
-                    #endregion
                 }
             });
         }
