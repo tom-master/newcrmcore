@@ -771,7 +771,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     }
                     catch (System.Exception)
                     {
-
                         throw;
                     }
                 }
@@ -785,25 +784,33 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    #region 前置条件验证
+                    try
                     {
-                        var result = mapper.Query<AppType>().Where(a => a.Name == appType.Name).Count();
-                        if (result > 0)
+                        #region 前置条件验证
                         {
-                            throw new BusinessException($@"分类:{appType.Name},已存在");
+                            var result = mapper.Query<AppType>().Where(a => a.Name == appType.Name).Count();
+                            if (result > 0)
+                            {
+                                throw new BusinessException($@"分类:{appType.Name},已存在");
+                            }
                         }
-                    }
-                    #endregion
+                        #endregion
 
-                    #region 添加应用分类
-                    {
-                        var result = mapper.Add(appType);
-                        if (result.Id <= 0)
+                        #region 添加应用分类
                         {
-                            throw new BusinessException("添加应用分类失败");
+                            var result = mapper.Add(appType);
+                            if (result.Id <= 0)
+                            {
+                                throw new BusinessException("添加应用分类失败");
+                            }
                         }
+                        #endregion
                     }
-                    #endregion
+                    catch (System.Exception)
+                    {
+
+                        throw;
+                    }
                 }
             });
         }
