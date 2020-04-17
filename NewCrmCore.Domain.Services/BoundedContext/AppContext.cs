@@ -823,25 +823,32 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    #region 更新应用分类
+                    try
                     {
-                        var appType = new AppType();
-                        appType.ModifyName(appTypeName);
-                        if (isSystem)
+                        #region 更新应用分类
                         {
-                            appType.System();
+                            var appType = new AppType();
+                            appType.ModifyName(appTypeName);
+                            if (isSystem)
+                            {
+                                appType.System();
+                            }
+                            else
+                            {
+                                appType.NotSystem();
+                            }
+                            var result = mapper.Update(appType, type => type.Id == appTypeId);
+                            if (!result)
+                            {
+                                throw new BusinessException("更新应用分类");
+                            }
                         }
-                        else
-                        {
-                            appType.NotSystem();
-                        }
-                        var result = mapper.Update(appType, type => type.Id == appTypeId);
-                        if (!result)
-                        {
-                            throw new BusinessException("更新应用分类");
-                        }
+                        #endregion
                     }
-                    #endregion
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
