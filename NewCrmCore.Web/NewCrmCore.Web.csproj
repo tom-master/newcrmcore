@@ -14,7 +14,6 @@
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="4.3.1" />
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
-    <PackageReference Include="Microsoft.AspNetCore.App"  />
    <!-- <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.Host" Version="1.1.7" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.2" />

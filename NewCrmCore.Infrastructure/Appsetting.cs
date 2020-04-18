@@ -6,7 +6,6 @@ namespace NewCrmCore.Infrastructure
 {
     public class Appsetting
     {
-        private static readonly IConfiguration Configuration;
         public Appsetting()
         {
 
