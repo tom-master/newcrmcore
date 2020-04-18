@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/NewCrmCore.Web/bin/Debug/netcoreapp2.2/NewCrmCore.Web.dll",
+            "program": "${workspaceFolder}/NewCrmCore.Web/bin/Debug/netcoreapp3.1/NewCrmCore.Web.dll",
             "args": [],
             "cwd": "${workspaceFolder}/NewCrmCore.Web",
             "stopAtEntry": false,

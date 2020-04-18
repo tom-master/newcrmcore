@@ -29,6 +29,7 @@ namespace NewCrmCore.FileServices
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
