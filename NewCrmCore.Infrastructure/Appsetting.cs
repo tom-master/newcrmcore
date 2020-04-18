@@ -1,11 +1,17 @@
 ﻿using System;
+using Microsoft.Extensions.Configuration;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
-
 namespace NewCrmCore.Infrastructure
 {
     public class Appsetting
     {
+        private static readonly IConfiguration Configuration;
+        public Appsetting()
+        {
+
+        }
+
         public static String Database
         {
             get
