@@ -1,11 +1,9 @@
-using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.SignalR;
-using Microsoft.AspNetCore.SignalR.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using NewCrmCore.Application.Services;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Domain.Services.BoundedContext;
@@ -52,7 +50,7 @@ namespace NewCrmCore.Web
                 config.Filters.Add(new HandleException());
                 config.Filters.Add(new CheckPermissions());
                 config.Filters.Add(new VisitorRecordFilter());
-            }).AddJsonOptions(op =>
+            }).AddNewtonsoftJson(op =>
             {
                 op.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
                 op.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
@@ -62,7 +60,7 @@ namespace NewCrmCore.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -81,15 +79,10 @@ namespace NewCrmCore.Web
 
             app.UseStaticFiles();
 
-            app.UseSignalR(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapHub<NotifyHub>("/hubs");
-            });
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "Default",
-                    template: "{controller}/{action}/{id?}", defaults: new { controller = "desk", action = "index" });
+                endpoints.MapHub<NotifyHub>("/hubs");
+                endpoints.MapControllerRoute("Default", "{controller}/{action}/{id?}", defaults: new { controller = "desk", action = "index" });
             });
         }
     }

@@ -25,14 +25,15 @@
     <div class="fr form-inline">
         <label>显示方式：</label>
         <select name="wallpapertype" class="form-control" id="wallpapertype" style="width: 100px">
-            <option name="fill" value="fill" @{ if (userConfig.WallpaperMode == "fill") { <text> selected="selected" </text>  } }>填充</option>
-            <option name="adapted" value="adapted" @{if (userConfig.WallpaperMode == "adapted") { <text> selected="selected" </text>  }}>适应</option>
-            <option name="tile" value="tile" @{ if (userConfig.WallpaperMode == "tile") { <text> selected="selected" </text>  } }>平铺</option>
-            <option name="draw" value="draw" @{ if (userConfig.WallpaperMode == "draw") { <text> selected="selected" </text>  } }>拉伸</option>
-            <option name="center" value="center" @{ if (userConfig.WallpaperMode == "center") { <text> selected="selected" </text>  } }>居中</option>
+            <option name="fill" value="fill" >填充</option>
+            <option name="adapted" value="adapted" >适应</option>
+            <option name="tile" value="tile" >平铺</option>
+            <option name="draw" value="draw" >拉伸</option>
+            <option name="center" value="center" >居中</option>
         </select>
     </div>
 </div>
+<input type="hidden" id="wallpaperMode" value="@userConfig.WallpaperMode">
 <ul class="wallpaper">
     @for (Int32 i = 0; i < wallpapers.Count; i++)
     {

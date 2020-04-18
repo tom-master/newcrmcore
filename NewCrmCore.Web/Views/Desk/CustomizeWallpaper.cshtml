@@ -26,11 +26,11 @@
     <div class="fr form-inline">
         <label>显示方式：</label>
         <select name="wallpapertype" id="wallpapertype" class="form-control" style="width: 100px">
-            <option name="fill" value="fill" @{if(userConfig.WallpaperMode == "Fill") { <text> selected="selected" </text>  } }>填充</option>
-            <option name="adapted" value="adapted" @{if(userConfig.WallpaperMode == "Adapted") { <text> selected="selected" </text>  }}>适应</option>
-            <option name="tile" value="tile" @{ if(userConfig.WallpaperMode == "Tile") { <text> selected="selected" </text>  } }>平铺</option>
-            <option name="draw" value="draw" @{ if(userConfig.WallpaperMode == "Draw") { <text> selected="selected" </text>  } }>拉伸</option>
-            <option name="center" value="center" @{ if(userConfig.WallpaperMode == "Center") { <text> selected="selected" </text>  } }>居中</option>
+            <option name="fill" value="fill" >填充</option>
+            <option name="adapted" value="adapted">适应</option>
+            <option name="tile" value="tile" >平铺</option>
+            <option name="draw" value="draw" >拉伸</option>
+            <option name="center" value="center">居中</option>
         </select>
     </div>
 </div>
@@ -51,6 +51,7 @@
 </div>
 <input type="hidden" id="uploadUrl" value="@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)">
 <input type="hidden" id="userId" value="@userConfig.UserId">
+<input type="hidden" id="wallpaperMode" value="@userConfig.WallpaperMode">
 
 @section ScriptLabel
 {

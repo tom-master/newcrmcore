@@ -55,9 +55,7 @@
 						@{
 							foreach (var appTypeDto in (List<AppTypeDto>)ViewData["AppTypes"])
 							{
-								<text>
-									<option value="@appTypeDto.Id" @{if(appTypeDto.Id==Model.AppTypeId) { <text> selected="selected" </text>  } }>@appTypeDto.Name</option>
-								</text>
+								@:<option value="@appTypeDto.Id" @{if(appTypeDto.Id==Model.AppTypeId) { <text> selected="selected" </text>  } }>@appTypeDto.Name</option>
 							}
 						}
 					</select>

@@ -26,11 +26,63 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
             var httpClient = new HttpClient();
             var httpResponseMessage = await httpClient.GetAsync($@"{_bingUrlPrefix}HPImageArchive.aspx?format=js&idx=0&n=1");
-            var response = JsonConvert.DeserializeObject<dynamic>(await httpResponseMessage.Content.ReadAsStringAsync());
-            var value = ((JObject)response).First.First.First;
-            _image = $@"{_bingUrlPrefix}{((JProperty)value.ToList()[3]).Value}";
+            var response = JsonConvert.DeserializeObject<BingBackgroundImageModel>(await httpResponseMessage.Content.ReadAsStringAsync());
+            _image = $@"{_bingUrlPrefix}{response.Images[0].Url}";
             _dateTime = DateTime.Now;
             return _image;
         }
     }
+
+    internal class BingBackgroundImageModel
+    {
+        public ImageInfo[] Images { get; set; }
+
+        public ToolsTips ToolsTips { get; set; }
+    }
+
+    internal class ToolsTips
+    {
+
+        public String Loading { get; set; }
+
+        public String Previous { get; set; }
+
+        public String Next { get; set; }
+
+        public String Walle { get; set; }
+
+        public String Walls { get; set; }
+    }
+
+    internal class ImageInfo
+    {
+        public String StartTime { get; set; }
+
+        public String FullStartTime { get; set; }
+
+        public String EndDate { get; set; }
+
+        public String Url { get; set; }
+
+        public String UrlBase { get; set; }
+
+        public String Copyright { get; set; }
+
+        public String Copyrightlink { get; set; }
+
+        public String Title { get; set; }
+
+        public String Quiz { get; set; }
+
+        public String Wp { get; set; }
+
+        public String Hsh { get; set; }
+
+        public String Drk { get; set; }
+
+        public String Top { get; set; }
+
+        public String Bot { get; set; }
+    }
+
 }

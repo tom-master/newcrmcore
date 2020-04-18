@@ -13,6 +13,8 @@
             NewCrm.fail(responseText.Message);
         }
     });
+
+    $('#wallpapertype option[value="' + $('#wallpaperMode').val() + '"]')
 })();
 
 var upload = WebUploader.create({

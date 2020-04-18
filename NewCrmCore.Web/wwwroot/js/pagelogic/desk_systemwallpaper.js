@@ -6,3 +6,5 @@ $("#wallpapertype").on('change', () => {
 $('.wallpaper li').on('click', function () {
     top.HROS.wallpaper.update($('#wallpapertype').val(), $(this).attr('wpid'));
 });
+
+$('#wallpapertype option[value="' + $('#wallpaperMode').val() + '"]')

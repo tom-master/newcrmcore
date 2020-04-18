@@ -52,10 +52,9 @@
 					<select name="val_app_category_id" datatype="*" nullmsg="请选择应用分类">
 						@{
 							foreach (var appTypeDto in (List<AppTypeDto>)ViewData["AppTypes"])
-							{<text>
-									<option value="@appTypeDto.Id" @{ if (appTypeDto.Id==Model.AppTypeId) { <text> selected="selected" </text>  } }>@appTypeDto.Name</option>
-							</text>
-						}
+							{
+								@:<option value="@appTypeDto.Id" @{ if (appTypeDto.Id==Model.AppTypeId) { <text> selected="selected" </text>  } }>@appTypeDto.Name</option>
+							}
 						}
 					</select>
 					<span class="help-inline"></span>
