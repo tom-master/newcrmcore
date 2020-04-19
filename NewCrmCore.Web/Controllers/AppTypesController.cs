@@ -139,15 +139,14 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetTypes(Int32 pageIndex, Int32 pageSize, String searchText)
         {
-            var response = new ResponseModels<IList<AppTypeDto>>();
             var result = (await _appServices.GetAppTypesAsync()).Where(appType => String.IsNullOrEmpty(searchText) || appType.Name.Contains(searchText)).OrderByDescending(d => d.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
-            response.Message = "app类型获取成功";
-            response.IsSuccess = true;
-            response.Model = result;
-            response.TotalCount = result.Count;
-
-            return Json(response);
-
+            return Json(new ResponseModels<IList<AppTypeDto>>
+            {
+                Message = "app类型获取成功",
+                IsSuccess = true,
+                Model = result,
+                TotalCount = result.Count
+            });
         }
 
         #endregion
@@ -172,9 +171,7 @@ namespace NewCrmCore.Web.Controllers
             }
 
             appTypeDto.IsSystem = Int32.Parse(forms["val_issystem"]) == 1;
-
             return appTypeDto;
-
         }
 
         #endregion
