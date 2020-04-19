@@ -417,7 +417,6 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetWallpaper()
         {
-            var response = new ResponseModel<dynamic>();
             var result = await _userServices.GetConfigAsync(UserId);
 
             if (result.WallpaperSource == WallpaperSource.Upload)
@@ -431,11 +430,12 @@ namespace NewCrmCore.Web.Controllers
                 result.WallpaperUrl = await BingHelper.GetEverydayBackgroundImageAsync();
             }
 
-            response.IsSuccess = true;
-            response.Message = "初始化壁纸成功";
-            response.Model = new { result.WallpaperUrl, result.WallpaperSource, result.WallpaperHeigth, result.WallpaperMode, result.WallpaperWidth };
-
-            return Json(response);
+            return Json(new ResponseModel<dynamic>
+            {
+                IsSuccess = true,
+                Message = "初始化壁纸成功",
+                Model = new { result.WallpaperUrl, result.WallpaperSource, result.WallpaperHeigth, result.WallpaperMode, result.WallpaperWidth }
+            });
         }
 
         #endregion
