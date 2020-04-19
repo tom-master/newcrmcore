@@ -88,7 +88,6 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(forms);
             #endregion
 
-            var response = new ResponseModel();
             var appTypeDto = WrapperAppTypeDto(forms);
             if (appTypeId == 0)
             {
@@ -98,10 +97,12 @@ namespace NewCrmCore.Web.Controllers
             {
                 await _appServices.ModifyAppTypeAsync(appTypeDto, appTypeId);
             }
-            response.IsSuccess = true;
-            response.Message = "app类型创建成功";
 
-            return Json(response);
+            return Json(new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "app类型创建成功"
+            });
         }
 
         #endregion
