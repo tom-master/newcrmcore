@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace NewCrmCore.Web.Filter
 {
-    public class CheckPermissions : IAsyncAuthorizationFilter
+    public class CheckPermissions_ : IAsyncAuthorizationFilter
     {
         public async Task OnAuthorizationAsync(AuthorizationFilterContext filterContext)
         {

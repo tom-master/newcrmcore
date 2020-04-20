@@ -69,7 +69,7 @@ namespace NewCrmCore.Web
             services.AddMvc(config =>
             {
                 config.Filters.Add(new HandleException());
-                config.Filters.Add(new CheckPermissions());
+                //  config.Filters.Add(new CheckPermissions());
                 config.Filters.Add(new VisitorRecordFilter());
             }).AddNewtonsoftJson(op =>
             {
@@ -83,6 +83,7 @@ namespace NewCrmCore.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            ///添加jwt验证
             app.UseAuthentication();
             if (env.IsDevelopment())
             {
@@ -97,10 +98,10 @@ namespace NewCrmCore.Web
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
-            //app.UseMvcWithDefaultRoute();
 
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<NotifyHub>("/hubs");

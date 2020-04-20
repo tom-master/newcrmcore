@@ -20,6 +20,7 @@ using System.Text;
 
 namespace NewCrmCore.Web.Controllers
 {
+    [Authorize]
     public class DeskController : BaseController
     {
         private readonly IWallpaperServices _wallpaperServices;
@@ -150,6 +151,10 @@ namespace NewCrmCore.Web.Controllers
 
         #region 登陆
 
+        public async Task<String> Test()
+        {
+            return await Task.Run(() => "wasd");
+        }
         /// <summary>
         /// 登陆
         /// </summary>

@@ -21,6 +21,7 @@
         NewCrm.loading(HROS.CONFIG.loadingPrompt);
     },
     callback: (responseText) => {
+        debugger
         let response = responseText;
         if (response.IsSuccess) {
             location.href = '/desk/index';
@@ -30,9 +31,9 @@
     }
 });
 
-$(document).keyup((e)=>{
+$(document).keyup((e) => {
     let key = e.which;
-    if(key==13){
+    if (key == 13) {
         $('#btn-submit').click();
     }
 })
