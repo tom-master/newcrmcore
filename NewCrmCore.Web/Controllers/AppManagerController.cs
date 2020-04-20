@@ -48,7 +48,7 @@ namespace NewCrmCore.Web.Controllers
             AppDto appResult = null;
             if (appId != 0)// 如果appId为0则是新创建app
             {
-                appResult = await _appServices.GetAppAsync(appId, UserId);
+                appResult = await _appServices.GetAppAsync(appId, UserInfo.Id);
                 ViewData["AppState"] = appResult.AppAuditState;
             }
 
@@ -152,7 +152,7 @@ namespace NewCrmCore.Web.Controllers
             var result = await _appServices.GetUserAppsAsync(0, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize);
             foreach (var appDto in result.Models)
             {
-                appDto.IsCreater = appDto.UserId == UserId;
+                appDto.IsCreater = appDto.UserId == UserInfo.Id;
             }
 
             return Json(new ResponseModels<IList<AppDto>>

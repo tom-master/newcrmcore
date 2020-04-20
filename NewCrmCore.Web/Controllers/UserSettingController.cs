@@ -25,7 +25,7 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var user = await _userServices.GetUserAsync(UserId);
+            var user = await _userServices.GetUserAsync(UserInfo.Id);
             return View(user);
         }
 
@@ -45,7 +45,7 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(forms);
             #endregion
 
-            await _userServices.ModifyLockScreenPasswordAsync(UserId, forms["lockpassword"]);
+            await _userServices.ModifyLockScreenPasswordAsync(UserInfo.Id, forms["lockpassword"]);
 
             return Json(new ResponseModel
             {
@@ -70,7 +70,7 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(userFace);
             #endregion
 
-            await _userServices.ModifyUserFaceAsync(UserId, userFace);
+            await _userServices.ModifyUserFaceAsync(UserInfo.Id, userFace);
 
             return Json(new ResponseModel
             {
@@ -95,8 +95,8 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(forms);
             #endregion
 
-            await _userServices.ModifyPasswordAsync(UserId, forms["password"], Int32.Parse(forms["lockPwdIsEqLoginPwd"]) == 1);
-            Response.Cookies.Append("User", UserId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
+            await _userServices.ModifyPasswordAsync(UserInfo.Id, forms["password"], Int32.Parse(forms["lockPwdIsEqLoginPwd"]) == 1);
+            // Response.Cookies.Append("User", UserId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
 
             return Json(new ResponseModel
             {
@@ -121,7 +121,7 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(param);
             #endregion
 
-            var result = await _userServices.CheckPasswordAsync(UserId, param);
+            var result = await _userServices.CheckPasswordAsync(UserInfo.Id, param);
             return Json(result ? new { status = "y", info = "" } : new { status = "n", info = "原始密码错误" });
         }
 

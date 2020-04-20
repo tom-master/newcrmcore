@@ -35,18 +35,18 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var appTypes = await _appServices.GetAppTypesAsync();
-            if (!IsAdmin)
+            if (!UserInfo.IsAdmin)
             {
                 appTypes = appTypes.Where(w => !w.IsSystem).ToList();
             }
 
             ViewData["AppTypes"] = appTypes;
-            ViewData["TodayRecommendApp"] = await _appServices.GetTodayRecommendAsync(UserId);
+            ViewData["TodayRecommendApp"] = await _appServices.GetTodayRecommendAsync(UserInfo.Id);
 
-            var user = await _userServices.GetUserAsync(UserId);
+            var user = await _userServices.GetUserAsync(UserInfo.Id);
             ViewData["UserName"] = user.Name;
 
-            var myApp = await _appServices.GetDevelopAndNotReleaseCountAsync(UserId);
+            var myApp = await _appServices.GetDevelopAndNotReleaseCountAsync(UserInfo.Id);
             ViewData["allCount"] = myApp.allCount;
             ViewData["notReleaseCount"] = myApp.notReleaseCount;
 
@@ -65,8 +65,8 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(appId);
             #endregion
 
-            ViewData["IsInstallApp"] = await _appServices.IsInstallAppAsync(UserId, appId);
-            var result = await _appServices.GetAppAsync(appId, UserId);
+            ViewData["IsInstallApp"] = await _appServices.IsInstallAppAsync(UserInfo.Id, appId);
+            var result = await _appServices.GetAppAsync(appId, UserInfo.Id);
             ViewData["UserName"] = result.UserName;
 
             return View(result);
@@ -80,7 +80,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> UserAppManage()
         {
             var appTypes = await _appServices.GetAppTypesAsync();
-            if (!IsAdmin)
+            if (!UserInfo.IsAdmin)
             {
                 appTypes = appTypes.Where(w => !w.IsSystem).ToList();
             }
@@ -103,17 +103,17 @@ namespace NewCrmCore.Web.Controllers
             AppDto result = null;
             if (appId != 0)// 如果appId为0则是新创建app
             {
-                result = await _appServices.GetAppAsync(appId, UserId);
+                result = await _appServices.GetAppAsync(appId, UserInfo.Id);
                 ViewData["AppState"] = result.AppAuditState;
             }
             var appTypes = await _appServices.GetAppTypesAsync();
-            if (!IsAdmin)
+            if (!UserInfo.IsAdmin)
             {
                 appTypes = appTypes.Where(w => !w.IsSystem).ToList();
             }
 
             ViewData["AppTypes"] = appTypes;
-            ViewData["UserId"] = UserId;
+            ViewData["UserInfo.Id"] = UserInfo.Id;
             return View(result);
         }
 
@@ -135,7 +135,7 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(model.StarCount);
             #endregion
 
-            await _appServices.ModifyAppStarAsync(UserId, model.AppId, model.StarCount);
+            await _appServices.ModifyAppStarAsync(UserInfo.Id, model.AppId, model.StarCount);
             return Json(new ResponseModel
             {
                 IsSuccess = true,
@@ -160,7 +160,7 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(model.DeskNum);
             #endregion
 
-            await _appServices.InstallAppAsync(UserId, model.AppId, model.DeskNum);
+            await _appServices.InstallAppAsync(UserInfo.Id, model.AppId, model.DeskNum);
             return Json(new ResponseModel
             {
                 IsSuccess = true,
@@ -185,7 +185,7 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(model.NewIcon);
             #endregion
 
-            await _appServices.ModifyAppIconAsync(UserId, model.AppId, model.NewIcon);
+            await _appServices.ModifyAppIconAsync(UserInfo.Id, model.AppId, model.NewIcon);
 
             return Json(new ResponseModel<String>
             {
@@ -212,7 +212,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var appDto = WrapperAppDto(forms);
-            appDto.UserId = UserId;
+            appDto.UserId = UserInfo.Id;
             await _appServices.CreateNewAppAsync(appDto);
 
             return Json(new ResponseModel
@@ -262,7 +262,7 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(forms);
             #endregion
 
-            await _appServices.ModifyUserAppInfoAsync(UserId, WrapperAppDto(forms));
+            await _appServices.ModifyUserAppInfoAsync(UserInfo.Id, WrapperAppDto(forms));
             return Json(new ResponseModel
             {
                 IsSuccess = true,
@@ -289,7 +289,7 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(searchText, true);
 
             var response = new ResponseModels<IList<AppDto>>();
-            var result = await _appServices.GetAppsAsync(UserId, appTypeId, orderId, searchText, pageIndex, pageSize);
+            var result = await _appServices.GetAppsAsync(UserInfo.Id, appTypeId, orderId, searchText, pageIndex, pageSize);
             if (result != null)
             {
                 response.TotalCount = result.TotalCount;
@@ -324,7 +324,7 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(searchText, true);
 
             var response = new ResponseModels<IList<AppDto>>();
-            var result = await _appServices.GetUserAppsAsync(UserId, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize);
+            var result = await _appServices.GetUserAppsAsync(UserInfo.Id, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize);
             if (result != null)
             {
                 response.TotalCount = result.TotalCount;
