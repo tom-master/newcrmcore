@@ -13,6 +13,10 @@ using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore.Validate;
 using NewLibCore;
 using Newtonsoft.Json;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace NewCrmCore.Web.Controllers
 {
@@ -166,13 +170,31 @@ namespace NewCrmCore.Web.Controllers
                 response.Message = "登陆成功";
                 response.IsSuccess = true;
 
-                HttpContext.Response.Cookies.Append($@"User", JsonConvert.SerializeObject(new
-                {
-                    Name = user.Name,
-                    Id = user.Id,
-                    UserFace = user.UserFace,
-                    IsAdmin = user.IsAdmin
-                }), new CookieOptions { Expires = cookieTimeout });
+                var claims = new[]
+                                {
+                    new Claim(JwtRegisteredClaimNames.Nbf,$"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}") ,
+                    new Claim(JwtRegisteredClaimNames.Exp,$"{new DateTimeOffset(DateTime.Now.AddMinutes(30)).ToUnixTimeSeconds()}"),
+                    new Claim(System.Security.Claims.ClaimTypes.Name, user.Name),
+                    new Claim("Id",user.Id.ToString()),
+                    new Claim("UserFace",user.UserFace),
+                    new Claim("IsAdmin",user.IsAdmin.ToString())
+                };
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Appsetting.SecurityKey));
+                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                var token = new JwtSecurityToken(
+                    issuer: Appsetting.Domain,
+                    audience: Appsetting.Domain,
+                    claims: claims,
+                    expires: DateTime.Now.AddMinutes(30),
+                    signingCredentials: creds);
+                response.Token = new JwtSecurityTokenHandler().WriteToken(token);
+                // HttpContext.Response.Cookies.Append($@"User", JsonConvert.SerializeObject(new
+                // {
+                //     Name = user.Name,
+                //     Id = user.Id,
+                //     UserFace = user.UserFace,
+                //     IsAdmin = user.IsAdmin
+                // }), new CookieOptions { Expires = cookieTimeout });
             }
             else
             {
@@ -305,7 +327,7 @@ namespace NewCrmCore.Web.Controllers
         {
             #region 参数验证
             Parameter.Validate(skin);
-            #endregion 
+            #endregion
 
             await _deskServices.ModifySkinAsync(UserId, skin);
             return Json(new ResponseModel

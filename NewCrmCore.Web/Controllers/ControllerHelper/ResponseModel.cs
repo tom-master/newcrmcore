@@ -8,6 +8,7 @@ namespace NewCrmCore.Web.Controllers
             IsSuccess = false;
             Message = "";
             Model = default(T);
+            Token = "";
         }
 
         public Boolean IsSuccess { get; set; }
@@ -15,6 +16,8 @@ namespace NewCrmCore.Web.Controllers
         public String Message { get; set; }
 
         public T Model { get; set; }
+
+        public String Token { get; set; }
 
         public String status
         {
