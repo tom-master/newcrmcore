@@ -101,5 +101,37 @@ namespace NewCrmCore.Infrastructure
                 }
             }
         }
+
+        public static String SecurityKey
+        {
+            get
+            {
+                try
+                {
+                    var str = Host.GetHostVar("SecurityKey");
+                    return str ?? "";
+                }
+                catch (System.Exception)
+                {
+                    throw new EnvVariableGetFailException($@"获取SecurityKey失败");
+                }
+            }
+        }
+        public static String Domain
+        {
+            get
+            {
+                try
+                {
+                    var str = Host.GetHostVar("Domain");
+                    return str ?? "";
+                }
+                catch (System.Exception)
+                {
+                    throw new EnvVariableGetFailException($@"获取Domain失败");
+                }
+            }
+        }
+
     }
 }
