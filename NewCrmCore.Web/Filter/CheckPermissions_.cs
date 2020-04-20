@@ -16,6 +16,7 @@ namespace NewCrmCore.Web.Filter
     {
         public async Task OnAuthorizationAsync(AuthorizationFilterContext filterContext)
         {
+            return;
             if (((ControllerActionDescriptor)filterContext.ActionDescriptor).MethodInfo.CustomAttributes.Any(a => a.AttributeType == typeof(AllowAnonymousAttribute)))
             {
                 return;

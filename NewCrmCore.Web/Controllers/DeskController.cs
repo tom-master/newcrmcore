@@ -17,6 +17,7 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Authentication;
 
 namespace NewCrmCore.Web.Controllers
 {
@@ -49,23 +50,29 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet, AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             ViewBag.Title = "桌面";
-            if (HttpContext.Request.Cookies["User"] != null)
-            {
-                var user = await _userServices.GetUserAsync(UserId);
-                ViewData["User"] = user;
-
-                var config = await _userServices.GetConfigAsync(user.Id);
-                ViewData["UserConfig"] = config;
-                ViewData["Desks"] = config.DefaultDeskCount;
-                return View(user);
-            }
-
-            return RedirectToAction("login", "desk");
+            return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetDesktopInfo()
+        {
+            var user = await _userServices.GetUserAsync(UserId);
+            ViewData["User"] = user;
+
+            var config = await _userServices.GetConfigAsync(user.Id);
+            ViewData["UserConfig"] = config;
+
+            return Json(new ResponseModel<dynamic>
+            {
+                IsSuccess = true,
+                Message = "获取桌面信息成功",
+                Model = { user, config }
+            });
+
+        }
         /// <summary>
         /// 登陆
         /// </summary>
@@ -171,18 +178,16 @@ namespace NewCrmCore.Web.Controllers
             var user = await _userServices.LoginAsync(loginParameter.UserName, loginParameter.Password, Request.HttpContext.Connection.RemoteIpAddress.ToString());
             if (user != null)
             {
-                var cookieTimeout = (loginParameter.Remember) ? DateTime.Now.AddDays(7) : DateTime.Now.AddMinutes(60);
                 response.Message = "登陆成功";
                 response.IsSuccess = true;
 
+
+                var cookieTimeout = (loginParameter.Remember) ? DateTime.Now.AddDays(7) : DateTime.Now.AddMinutes(60);
                 var claims = new[]
-                                {
+                {
                     new Claim(JwtRegisteredClaimNames.Nbf,$"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}") ,
-                    new Claim(JwtRegisteredClaimNames.Exp,$"{new DateTimeOffset(DateTime.Now.AddMinutes(30)).ToUnixTimeSeconds()}"),
-                    new Claim(System.Security.Claims.ClaimTypes.Name, user.Name),
-                    new Claim("Id",user.Id.ToString()),
-                    new Claim("UserFace",user.UserFace),
-                    new Claim("IsAdmin",user.IsAdmin.ToString())
+                    new Claim(JwtRegisteredClaimNames.Exp,$"{new DateTimeOffset(cookieTimeout).ToUnixTimeSeconds()}"),
+                    new Claim("User", JsonConvert.SerializeObject(user)),
                 };
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Appsetting.SecurityKey));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -190,16 +195,12 @@ namespace NewCrmCore.Web.Controllers
                     issuer: Appsetting.Domain,
                     audience: Appsetting.Domain,
                     claims: claims,
-                    expires: DateTime.Now.AddMinutes(30),
+                    expires: cookieTimeout,
                     signingCredentials: creds);
                 response.Token = new JwtSecurityTokenHandler().WriteToken(token);
-                // HttpContext.Response.Cookies.Append($@"User", JsonConvert.SerializeObject(new
-                // {
-                //     Name = user.Name,
-                //     Id = user.Id,
-                //     UserFace = user.UserFace,
-                //     IsAdmin = user.IsAdmin
-                // }), new CookieOptions { Expires = cookieTimeout });
+                response.Model = user;
+
+                HttpContext.Response.Cookies.Append($@"Token", response.Token, new CookieOptions { Expires = cookieTimeout });
             }
             else
             {
