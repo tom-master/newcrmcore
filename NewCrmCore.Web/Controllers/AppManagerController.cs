@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Dto;
@@ -27,7 +28,7 @@ namespace NewCrmCore.Web.Controllers
         /// 首页
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();
@@ -42,7 +43,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<IActionResult> AppAudit(Int32 appId)
         {
             AppDto appResult = null;

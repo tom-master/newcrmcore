@@ -10,6 +10,7 @@ using NewCrmCore.Infrastructure;
 using NewLibCore;
 using NewLibCore.Validate;
 using NewCrmCore.Domain.ValueObject;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NewCrmCore.Web.Controllers
 {
@@ -31,7 +32,7 @@ namespace NewCrmCore.Web.Controllers
         /// 首页
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var appTypes = await _appServices.GetAppTypesAsync();
@@ -58,7 +59,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<IActionResult> AppDetail(Int32 appId)
         {
             #region 参数验证
@@ -76,7 +77,7 @@ namespace NewCrmCore.Web.Controllers
         /// 用户应用管理
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<IActionResult> UserAppManage()
         {
             var appTypes = await _appServices.GetAppTypesAsync();
@@ -97,7 +98,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<IActionResult> UserAppManageInfo(Int32 appId)
         {
             AppDto result = null;

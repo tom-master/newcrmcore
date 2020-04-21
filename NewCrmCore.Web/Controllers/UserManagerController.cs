@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NewCrmCore.Application.Services.Interface;
@@ -28,7 +29,7 @@ namespace NewCrmCore.Web.Controllers
         /// 首页
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public IActionResult Index()
         {
             return View();
@@ -39,7 +40,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public new async Task<IActionResult> User(Int32 userId = 0)
         {
             if (userId != 0)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Dto;
@@ -21,7 +22,7 @@ namespace NewCrmCore.Web.Controllers
         /// <summary>
         /// 首页
         /// </summary> 
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public IActionResult Index()
         {
             return View();

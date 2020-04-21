@@ -4,6 +4,20 @@ namespace NewCrmCore.Infrastructure.CommonTools
 {
     public static class CacheKey
     {
+
+        public class TokenCacheKey : CacheKeyBase
+        {
+            private String _identity;
+            public TokenCacheKey(String identity)
+            {
+                _identity = identity;
+            }
+            protected override string FormatKey()
+            {
+                return String.Format("Token:{0}", _identity);
+            }
+        }
+
         public class ConfigCacheKey : CacheKeyBase
         {
             private Int32 _identity;

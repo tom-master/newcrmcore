@@ -1,24 +1,21 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NewCrmCore.Dto;
 using Newtonsoft.Json;
-using Nito.AsyncEx;
-using Microsoft.AspNetCore.Authentication;
-using System.Linq;
 
 namespace NewCrmCore.Web.Controllers
 {
+    [Authorize]
     public class BaseController : Controller
     {
         public UserDto UserInfo
         {
             get
             {
-                var user = AsyncContext.Run(() => HttpContext.AuthenticateAsync());
-                if (user.Principal != null)
+                var user = Request.Cookies["User"];
+                if (user != null)
                 {
-                    var r = user.Principal.Claims.FirstOrDefault(w => w.Type == "User").Value;
-                    return JsonConvert.DeserializeObject<UserDto>(r);
+                    return JsonConvert.DeserializeObject<UserDto>(user);
                 }
                 return null;
             }

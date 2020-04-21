@@ -12,16 +12,13 @@ using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore.Validate;
 using NewLibCore;
-using Newtonsoft.Json;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.AspNetCore.Authentication;
 
 namespace NewCrmCore.Web.Controllers
 {
-    [Authorize]
     public class DeskController : BaseController
     {
         private readonly IWallpaperServices _wallpaperServices;
@@ -49,7 +46,7 @@ namespace NewCrmCore.Web.Controllers
         /// 桌面
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             ViewBag.Title = "桌面";
@@ -88,7 +85,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <param name="memberId"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<IActionResult> ConfigMember(Int32 memberId)
         {
             #region 参数验证
@@ -103,7 +100,7 @@ namespace NewCrmCore.Web.Controllers
         /// 系统壁纸
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<IActionResult> SystemWallPaper()
         {
             ViewData["UserConfig"] = await _userServices.GetConfigAsync(UserInfo.Id);
@@ -116,7 +113,7 @@ namespace NewCrmCore.Web.Controllers
         /// 自定义壁纸
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<IActionResult> CustomizeWallpaper()
         {
             ViewData["UserConfig"] = await _userServices.GetConfigAsync(UserInfo.Id);
@@ -127,7 +124,7 @@ namespace NewCrmCore.Web.Controllers
         /// 设置皮肤
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public IActionResult ConfigSkin()
         {
             return View();
@@ -137,7 +134,7 @@ namespace NewCrmCore.Web.Controllers
         /// 桌面设置
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<IActionResult> ConfigDesk()
         {
             ViewData["UserConfig"] = await _userServices.GetConfigAsync(UserInfo.Id);
@@ -151,10 +148,6 @@ namespace NewCrmCore.Web.Controllers
 
         #region 登陆
 
-        public async Task<String> Test()
-        {
-            return await Task.Run(() => "wasd");
-        }
         /// <summary>
         /// 登陆
         /// </summary>
@@ -174,16 +167,11 @@ namespace NewCrmCore.Web.Controllers
                 response.Message = "登陆成功";
                 response.IsSuccess = true;
 
-
                 var cookieTimeout = (loginParameter.Remember) ? DateTime.Now.AddDays(7) : DateTime.Now.AddMinutes(60);
                 var claims = new[]
                 {
                     new Claim(JwtRegisteredClaimNames.Nbf,$"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}") ,
                     new Claim(JwtRegisteredClaimNames.Exp,$"{new DateTimeOffset(cookieTimeout).ToUnixTimeSeconds()}"),
-                    new Claim("Name", user.Name),
-                    new Claim("Id",user.Id.ToString()),
-                    new Claim("UserFace",user.UserFace),
-                    new Claim("IsAdmin",user.IsAdmin.ToString())
                 };
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Appsetting.SecurityKey));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -195,8 +183,6 @@ namespace NewCrmCore.Web.Controllers
                     signingCredentials: creds);
                 response.Token = new JwtSecurityTokenHandler().WriteToken(token);
                 response.Model = user;
-
-                HttpContext.Response.Cookies.Append($@"Token", response.Token, new CookieOptions { Expires = cookieTimeout });
             }
             else
             {

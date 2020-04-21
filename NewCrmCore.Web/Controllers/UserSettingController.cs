@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NewCrmCore.Application.Services.Interface;
@@ -22,7 +23,7 @@ namespace NewCrmCore.Web.Controllers
         /// 首页
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var user = await _userServices.GetUserAsync(UserInfo.Id);
