@@ -36,7 +36,9 @@ namespace NewCrmCore.Application.Services
                 Name = user.Name,
                 Id = user.Id,
                 UserFace = user.IsModifyUserFace ? Appsetting.FileUrl + user.UserFace : user.UserFace,
-                IsAdmin = user.IsAdmin
+                IsAdmin = user.IsAdmin,
+                Password = user.LoginPassword,
+                LockScreenPassword = user.LockScreenPassword
             };
         }
 

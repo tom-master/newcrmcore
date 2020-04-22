@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NewCrmCore.Dto;
 using Newtonsoft.Json;
+using Nito.AsyncEx;
 
 namespace NewCrmCore.Web.Controllers
 {
@@ -12,10 +15,11 @@ namespace NewCrmCore.Web.Controllers
         {
             get
             {
-                var user = Request.Cookies["User"];
-                if (user != null)
+                var authResult = AsyncContext.Run(() => HttpContext.AuthenticateAsync());
+                if (authResult != null)
                 {
-                    return JsonConvert.DeserializeObject<UserDto>(user);
+                    var userInfo = authResult.Principal.Claims.FirstOrDefault(w => w.Type == "User").Value;
+                    return JsonConvert.DeserializeObject<UserDto>(userInfo);
                 }
                 return null;
             }

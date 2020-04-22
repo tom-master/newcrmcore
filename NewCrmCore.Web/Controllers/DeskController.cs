@@ -16,18 +16,19 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace NewCrmCore.Web.Controllers
 {
     public class DeskController : BaseController
     {
-        private readonly IWallpaperServices _wallpaperServices;
-
         private readonly IDeskServices _deskServices;
 
         private readonly IAppServices _appServices;
 
         private readonly IUserServices _userServices;
+
+        private readonly IWallpaperServices _wallpaperServices;
 
         public DeskController(IWallpaperServices wallpaperServices,
         IDeskServices deskServices,
@@ -50,7 +51,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> Index()
         {
             ViewBag.Title = "桌面";
-            if (HttpContext.Request.Cookies["User"] != null)
+            if (UserInfo != null)
             {
                 ViewData["User"] = UserInfo;
 
@@ -172,6 +173,7 @@ namespace NewCrmCore.Web.Controllers
                 {
                     new Claim(JwtRegisteredClaimNames.Nbf,$"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}") ,
                     new Claim(JwtRegisteredClaimNames.Exp,$"{new DateTimeOffset(cookieTimeout).ToUnixTimeSeconds()}"),
+                    new Claim("User",JsonConvert.SerializeObject(user))
                 };
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Appsetting.SecurityKey));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
