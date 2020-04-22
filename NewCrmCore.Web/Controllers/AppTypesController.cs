@@ -26,7 +26,7 @@ namespace NewCrmCore.Web.Controllers
         /// 首页
         /// </summary>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
@@ -37,7 +37,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <param name="appTypeId"></param>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> CreateNewAppType(Int32 appTypeId = 0)
         {
             AppTypeDto result = null;

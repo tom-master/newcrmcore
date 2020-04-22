@@ -29,7 +29,7 @@ namespace NewCrmCore.Web.Controllers
         /// 首页
         /// </summary>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
@@ -40,7 +40,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public new async Task<IActionResult> User(Int32 userId = 0)
         {
             if (userId != 0)

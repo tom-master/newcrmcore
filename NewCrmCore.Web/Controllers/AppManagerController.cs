@@ -28,7 +28,7 @@ namespace NewCrmCore.Web.Controllers
         /// 首页
         /// </summary>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();
@@ -43,7 +43,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> AppAudit(Int32 appId)
         {
             AppDto appResult = null;

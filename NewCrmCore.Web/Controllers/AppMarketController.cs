@@ -32,7 +32,7 @@ namespace NewCrmCore.Web.Controllers
         /// 首页
         /// </summary>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var appTypes = await _appServices.GetAppTypesAsync();
@@ -59,7 +59,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> AppDetail(Int32 appId)
         {
             #region 参数验证
@@ -77,7 +77,7 @@ namespace NewCrmCore.Web.Controllers
         /// 用户应用管理
         /// </summary>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> UserAppManage()
         {
             var appTypes = await _appServices.GetAppTypesAsync();
@@ -98,7 +98,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> UserAppManageInfo(Int32 appId)
         {
             AppDto result = null;

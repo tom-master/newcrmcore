@@ -23,7 +23,7 @@ namespace NewCrmCore.Web.Controllers
         /// 首页
         /// </summary>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var user = await _userServices.GetUserAsync(UserInfo.Id);

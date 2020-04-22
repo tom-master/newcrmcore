@@ -31,7 +31,7 @@ namespace NewCrmCore.Web.Controllers
         /// 首页
         /// </summary>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
@@ -42,7 +42,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> CreateNewRole(Int32 roleId = 0)
         {
             if (roleId != 0)
@@ -57,7 +57,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> AttachmentPower(Int32 roleId)
         {
             #region 参数验证
@@ -86,7 +86,7 @@ namespace NewCrmCore.Web.Controllers
         /// 添加系统应用到权限
         /// </summary>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> AddSystemAppGotoPower()
         {
             ViewData["SystemApp"] = await _appServices.GetSystemAppAsync();
