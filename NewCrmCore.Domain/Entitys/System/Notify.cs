@@ -3,7 +3,7 @@ using NewLibCore.Data.SQL.Mapper;
 using NewLibCore.Data.SQL.Mapper.Validate;
 
 namespace NewCrmCore.Domain.Entitys.System
-{ 
+{
     [TableName("newcrm_app_notify")]
     public partial class Notify : EntityBase
     {
@@ -19,7 +19,7 @@ namespace NewCrmCore.Domain.Entitys.System
         [DefaultValue(typeof(Boolean))]
         public Boolean IsRead { get; private set; }
 
-        [Required]
+        [DefaultValue(typeof(Int32), 0)]
         public Int32 UserId { get; private set; }
 
         [Required]

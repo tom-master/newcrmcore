@@ -9,6 +9,7 @@ using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Dto;
 using NewCrmCore.Web.Controllers;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace NewCrmCore.Web.Filter
 {
@@ -16,7 +17,9 @@ namespace NewCrmCore.Web.Filter
     {
         public async Task OnAuthorizationAsync(AuthorizationFilterContext filterContext)
         {
-            if (((ControllerActionDescriptor)filterContext.ActionDescriptor).MethodInfo.CustomAttributes.Any(a => a.AttributeType == typeof(AllowAnonymousAttribute)))
+            var methodInfo = ((ControllerActionDescriptor)filterContext.ActionDescriptor).MethodInfo;
+            var isAllowAnonymous = methodInfo.GetCustomAttributes<AllowAnonymousAttribute>().Any();
+            if (isAllowAnonymous)
             {
                 return;
             }
@@ -69,7 +72,7 @@ namespace NewCrmCore.Web.Filter
                 filterContext.Result = new ContentResult()
                 {
                     ContentType = "utf8",
-                    Content = @"<script>(function(){top.NewCrm.fail('" + response.Message + "');})()</script>"
+                    Content = @"<script>(function(){ debugger ;top.NewCrm.fail('" + response.Message + "');})()</script>"
                 };
             }
         }

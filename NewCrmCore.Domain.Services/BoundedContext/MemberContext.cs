@@ -234,13 +234,13 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                             #region 查询应用
                             {
                                 app = mapper.Query<App>()
-                                .Where(w => w.Id == appId && w.UserId == userId)
-                                .Select(a => new
-                                {
-                                    a.Name,
-                                    a.UseCount,
-                                    a.UserId
-                                }).FirstOrDefault();
+                                .Where(w => w.Id == appId /*&& w.UserId == userId*/)
+                                    .Select(a => new
+                                    {
+                                        a.Name,
+                                        a.UseCount,
+                                        a.UserId
+                                    }).FirstOrDefault();
                             }
                             #endregion
 

@@ -69,7 +69,7 @@ namespace NewCrmCore.Web
             services.AddMvc(config =>
             {
                 config.Filters.Add(new HandleException());
-                //  config.Filters.Add(new CheckPermissions());
+                config.Filters.Add(new CheckPermissions());
                 config.Filters.Add(new VisitorRecordFilter());
             }).AddNewtonsoftJson(op =>
             {

@@ -47,7 +47,7 @@ namespace NewCrmCore.Web.Controllers
         /// 桌面
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             ViewBag.Title = "桌面";
@@ -68,7 +68,7 @@ namespace NewCrmCore.Web.Controllers
         /// 登陆
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public IActionResult Login()
         {
             ViewBag.Title = "登陆";

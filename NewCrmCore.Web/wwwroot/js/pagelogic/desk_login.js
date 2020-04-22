@@ -39,14 +39,6 @@ $('#btn-submit').on('click', () => {
         }, function (responseText) {
             let response = responseText;
             if (response.IsSuccess) {
-                let model = response.Model;
-                HROS.localStorage.set("Token", model.Token)
-                HROS.cookie.set("User", JSON.stringify({
-                    UserFace: model.UserFace,
-                    Name: model.Name,
-                    Id: model.Id,
-                    IsAdmin: model.IsAdmin
-                }));
                 location.href = `/desk/index`;
             } else {
                 NewCrm.fail(response.Message);
