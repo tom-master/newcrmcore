@@ -12,11 +12,10 @@ using Newtonsoft.Json;
 
 namespace NewCrmCore.Web.Filter
 {
-    public class CheckPermissions_ : IAsyncAuthorizationFilter
+    public class CheckPermissions : IAsyncAuthorizationFilter
     {
         public async Task OnAuthorizationAsync(AuthorizationFilterContext filterContext)
         {
-            return;
             if (((ControllerActionDescriptor)filterContext.ActionDescriptor).MethodInfo.CustomAttributes.Any(a => a.AttributeType == typeof(AllowAnonymousAttribute)))
             {
                 return;

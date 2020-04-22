@@ -72,8 +72,7 @@ namespace NewCrmCore.Web.Controllers
         public IActionResult Login()
         {
             ViewBag.Title = "登陆";
-            var userId = Request.Cookies["User"];
-            if (userId != null)
+            if (UserInfo != null)
             {
                 return RedirectToAction("Index", "Desk");
             }
@@ -169,22 +168,24 @@ namespace NewCrmCore.Web.Controllers
                 response.IsSuccess = true;
 
                 var cookieTimeout = (loginParameter.Remember) ? DateTime.Now.AddDays(7) : DateTime.Now.AddMinutes(60);
-                var claims = new[]
-                {
-                    new Claim(JwtRegisteredClaimNames.Nbf,$"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}") ,
-                    new Claim(JwtRegisteredClaimNames.Exp,$"{new DateTimeOffset(cookieTimeout).ToUnixTimeSeconds()}"),
-                    new Claim("User",JsonConvert.SerializeObject(user))
-                };
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Appsetting.SecurityKey));
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                var token = new JwtSecurityToken(
-                    issuer: Appsetting.Domain,
-                    audience: Appsetting.Domain,
-                    claims: claims,
-                    expires: cookieTimeout,
-                    signingCredentials: creds);
-                response.Token = new JwtSecurityTokenHandler().WriteToken(token);
+                // var claims = new[]
+                // {
+                //     new Claim(JwtRegisteredClaimNames.Nbf,$"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}") ,
+                //     new Claim(JwtRegisteredClaimNames.Exp,$"{new DateTimeOffset(cookieTimeout).ToUnixTimeSeconds()}"),
+                //     new Claim("User",JsonConvert.SerializeObject(user))
+                // };
+
+                // var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Appsetting.SecurityKey));
+                // var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                // var token = new JwtSecurityToken(
+                //     issuer: Appsetting.Domain,
+                //     audience: Appsetting.Domain,
+                //     claims: claims,
+                //     expires: cookieTimeout,
+                //     signingCredentials: creds);
+                // response.Token = new JwtSecurityTokenHandler().WriteToken(token);
                 response.Model = user;
+                Response.Cookies.Append("User", JsonConvert.SerializeObject(user), new CookieOptions { Expires = cookieTimeout });
             }
             else
             {
@@ -391,7 +392,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> Logout()
         {
             await _userServices.LogoutAsync(UserInfo.Id);
-            Response.Cookies.Append("User", UserInfo.Id.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
+            InternalLogout();
             return Json(new ResponseModel
             {
                 IsSuccess = true

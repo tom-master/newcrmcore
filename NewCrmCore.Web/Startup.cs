@@ -50,21 +50,21 @@ namespace NewCrmCore.Web
             services.AddTransient<ISecurityContext, SecurityContext>();
             services.AddTransient<IWallpaperContext, WallpaperContext>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,//是否验证Issuer
-                    ValidateAudience = true,//是否验证Audience
-                    ValidateLifetime = true,//是否验证失效时间
-                    ClockSkew = TimeSpan.FromSeconds(30),
-                    ValidateIssuerSigningKey = true,//是否验证SecurityKey
-                    ValidAudience = Appsetting.Domain,//Audience
-                    ValidIssuer = Appsetting.Domain,//Issuer，这两项和前面签发jwt的设置一致
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Appsetting.SecurityKey))//拿到SecurityKey
-                };
-            });
+            // services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            // .AddJwtBearer(options =>
+            // {
+            //     options.TokenValidationParameters = new TokenValidationParameters
+            //     {
+            //         ValidateIssuer = true,//是否验证Issuer
+            //         ValidateAudience = true,//是否验证Audience
+            //         ValidateLifetime = true,//是否验证失效时间
+            //         ClockSkew = TimeSpan.FromSeconds(30),
+            //         ValidateIssuerSigningKey = true,//是否验证SecurityKey
+            //         ValidAudience = Appsetting.Domain,//Audience
+            //         ValidIssuer = Appsetting.Domain,//Issuer，这两项和前面签发jwt的设置一致
+            //         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Appsetting.SecurityKey))//拿到SecurityKey
+            //     };
+            // });
 
             services.AddMvc(config =>
             {
@@ -84,7 +84,7 @@ namespace NewCrmCore.Web
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             ///添加jwt验证
-            app.UseAuthentication();
+            //app.UseAuthentication();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -101,7 +101,7 @@ namespace NewCrmCore.Web
 
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseAuthorization();
+            //app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<NotifyHub>("/hubs");

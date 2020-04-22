@@ -97,8 +97,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _userServices.ModifyPasswordAsync(UserInfo.Id, forms["password"], Int32.Parse(forms["lockPwdIsEqLoginPwd"]) == 1);
-            // Response.Cookies.Append("User", UserId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
-
+            InternalLogout();
             return Json(new ResponseModel
             {
                 Message = "账户密码修改成功",

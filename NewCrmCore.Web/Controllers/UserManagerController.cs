@@ -153,7 +153,7 @@ namespace NewCrmCore.Web.Controllers
                 await _userServices.ModifyUserAsync(dto);
                 if (!String.IsNullOrEmpty(dto.Password))
                 {
-                    //Response.Cookies.Append("User", UserId.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
+                    InternalLogout();
                 }
                 response.Message = "修改账户成功";
                 response.IsSuccess = true;

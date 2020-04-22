@@ -39,23 +39,23 @@ namespace NewCrmCore.Web.Filter
                 };
             }
 
-            // var userId = 0;
-            // var userCookie = filterContext.HttpContext.Request.Cookies["User"];
-            // if (userCookie != null)
-            // {
-            //     userId = JsonConvert.DeserializeObject<UserDto>(userCookie).Id;
-            // }
+            var userId = 0;
+            var userCookie = filterContext.HttpContext.Request.Cookies["User"];
+            if (userCookie != null)
+            {
+                userId = JsonConvert.DeserializeObject<UserDto>(userCookie).Id;
+            }
 
-            // ((ILoggerServices)filterContext.HttpContext.RequestServices.GetService(typeof(ILoggerServices))).AddLoggerAsync(new LogDto
-            // {
-            //     Action = filterContext.RouteData.Values["action"].ToString(),
-            //     Controller = filterContext.RouteData.Values["controller"].ToString(),
-            //     ExceptionMessage = filterContext.Exception.Message,
-            //     Track = filterContext.Exception.StackTrace,
-            //     LogLevelEnum = businessException ? Domain.ValueObject.LogLevel.Error : Domain.ValueObject.LogLevel.Exception,
-            //     AddTime = DateTime.Now.ToString(CultureInfo.CurrentCulture),
-            //     UserId = userId
-            // });
+            ((ILoggerServices)filterContext.HttpContext.RequestServices.GetService(typeof(ILoggerServices))).AddLoggerAsync(new LogDto
+            {
+                Action = filterContext.RouteData.Values["action"].ToString(),
+                Controller = filterContext.RouteData.Values["controller"].ToString(),
+                ExceptionMessage = filterContext.Exception.Message,
+                Track = filterContext.Exception.StackTrace,
+                LogLevelEnum = businessException ? Domain.ValueObject.LogLevel.Error : Domain.ValueObject.LogLevel.Exception,
+                AddTime = DateTime.Now.ToString(CultureInfo.CurrentCulture),
+                UserId = userId
+            });
         }
     }
 
