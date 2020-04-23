@@ -862,12 +862,19 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var app = new App();
-                    app.ModifyIconUrl(newIcon);
-                    var result = mapper.Update(app, a => a.Id == appId && a.UserId == userId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("修改应用图标失败");
+                        var app = new App();
+                        app.ModifyIconUrl(newIcon);
+                        var result = mapper.Update(app, a => a.Id == appId && a.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("修改应用图标失败");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
                     }
                 }
             });
