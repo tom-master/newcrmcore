@@ -18,14 +18,6 @@ namespace NewCrmCore.Web.Controllers
         public String Message { get; set; }
 
         public String Token { get; set; }
-
-        public String status
-        {
-            get
-            {
-                return IsSuccess ? "y" : "n";
-            }
-        }
     }
 
     /// <summary>
