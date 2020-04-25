@@ -23,12 +23,19 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var config = new Config();
-                    config.ModifyDefaultDeskNumber(newDefaultDeskNumber);
-                    var result = mapper.Update(config, conf => conf.UserId == userId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("修改默认桌面号失败");
+                        var config = new Config();
+                        config.ModifyDefaultDeskNumber(newDefaultDeskNumber);
+                        var result = mapper.Update(config, conf => conf.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("修改默认桌面号失败");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
                     }
                 }
             });
@@ -44,13 +51,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var config = new Config();
-                    var newPosition = EnumExtensions.ToEnum<DockPosition>(position);
-                    config.PositionTo(newPosition);
-                    var result = mapper.Update(config, conf => conf.UserId == userId && conf.DefaultDeskNumber == defaultDeskNumber);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("修改应用码头位置失败");
+                        var config = new Config();
+                        var newPosition = EnumExtensions.ToEnum<DockPosition>(position);
+                        config.PositionTo(newPosition);
+                        var result = mapper.Update(config, conf => conf.UserId == userId && conf.DefaultDeskNumber == defaultDeskNumber);
+                        if (!result)
+                        {
+                            throw new BusinessException("修改应用码头位置失败");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
                     }
                 }
             });
@@ -64,12 +78,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var config = new Config();
-                    config.DirectionToX();
-                    var result = mapper.Update(config, conf => conf.UserId == userId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("修改桌面应用为X轴失败");
+                        var config = new Config();
+                        config.DirectionToX();
+                        var result = mapper.Update(config, conf => conf.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("修改桌面应用为X轴失败");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+
+                        throw;
                     }
                 }
             });
@@ -83,12 +105,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var config = new Config();
-                    config.DirectionToY();
-                    var result = mapper.Update(config, conf => conf.UserId == userId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("修改桌面应用为Y轴失败");
+                        var config = new Config();
+                        config.DirectionToY();
+                        var result = mapper.Update(config, conf => conf.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("修改桌面应用为Y轴失败");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+
+                        throw;
                     }
                 }
             });
@@ -103,12 +133,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var config = new Config();
-                    config.ModifyAppSize(newSize);
-                    var result = mapper.Update(config, conf => conf.UserId == userId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("修改桌面应用展示图标大小失败");
+                        var config = new Config();
+                        config.ModifyAppSize(newSize);
+                        var result = mapper.Update(config, conf => conf.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("修改桌面应用展示图标大小失败");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+
+                        throw;
                     }
                 }
             });
