@@ -331,12 +331,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var member = new Member();
-                    member.ModifyFolderId(folderId);
-                    var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("桌面应用从桌面移动到文件夹中");
+                        var member = new Member();
+                        member.ModifyFolderId(folderId);
+                        var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("桌面应用从桌面移动到文件夹中");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+
+                        throw;
                     }
                 }
             });
@@ -352,14 +360,21 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var member = new Member();
-                    member.ModifyFolderId(0).ModifyDeskIndex(deskId);
-                    var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("桌面应用从文件夹移动到桌面失败");
+                        var member = new Member();
+                        member.ModifyFolderId(0).ModifyDeskIndex(deskId);
+                        var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("桌面应用从文件夹移动到桌面失败");
+                        }
                     }
+                    catch (System.Exception)
+                    {
 
+                        throw;
+                    }
                 }
             });
         }
