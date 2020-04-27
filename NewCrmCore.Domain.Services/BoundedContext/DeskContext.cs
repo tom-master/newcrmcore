@@ -389,12 +389,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var member = new Member();
-                    member.ModifyFolderId(folderId);
-                    var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("桌面应用从文件夹移动到另一个文件夹中失败");
+                        var member = new Member();
+                        member.ModifyFolderId(folderId);
+                        var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("桌面应用从文件夹移动到另一个文件夹中失败");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+
+                        throw;
                     }
                 }
             });
