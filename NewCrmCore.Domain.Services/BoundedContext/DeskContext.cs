@@ -404,7 +404,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     }
                     catch (System.Exception)
                     {
-
                         throw;
                     }
                 }
@@ -469,12 +468,19 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var member = new Member();
-                    member.OutDock().ModifyDeskIndex(deskId);
-                    var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("桌面应用从应用码头移动到另一桌面时失败");
+                        var member = new Member();
+                        member.OutDock().ModifyDeskIndex(deskId);
+                        var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("桌面应用从应用码头移动到另一桌面时失败");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
                     }
                 }
             });
@@ -491,7 +497,15 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 var folder = new Member(folderName, folderImg, 0, userId, deskId, false);
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    mapper.Add(folder);
+                    try
+                    {
+                        mapper.Add(folder);
+                    }
+                    catch (System.Exception)
+                    {
+
+                        throw;
+                    }
                 }
             });
         }
@@ -504,19 +518,26 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var config = new Config();
-                    if (source.ToLower() == WallpaperSource.Bing.ToString().ToLower())
+                    try
                     {
-                        config.FromBing();
+                        var config = new Config();
+                        if (source.ToLower() == WallpaperSource.Bing.ToString().ToLower())
+                        {
+                            config.FromBing();
+                        }
+                        else
+                        {
+                            config.NotFromBing();
+                        }
+                        var result = mapper.Update(config, conf => conf.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("修改壁纸来源失败");
+                        }
                     }
-                    else
+                    catch (System.Exception)
                     {
-                        config.NotFromBing();
-                    }
-                    var result = mapper.Update(config, conf => conf.UserId == userId);
-                    if (!result)
-                    {
-                        throw new BusinessException("修改壁纸来源失败");
+                        throw;
                     }
                 }
             });
@@ -529,11 +550,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(pageSize);
             using (var mapper = EntityMapper.CreateMapper())
             {
+                try
                 {
                     totalCount = mapper.Query<Notify>().Where(w => w.ToUserId == userId).Count();
-                }
 
-                {
                     return mapper.Query<Notify>().Where(w => w.ToUserId == userId)
                     .Select(a => new
                     {
@@ -543,6 +563,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                         a.IsRead,
                         a.ToUserId
                     }).Page(pageIndex, pageSize).ToList();
+                }
+                catch (System.Exception)
+                {
+                    throw;
                 }
             }
         }
