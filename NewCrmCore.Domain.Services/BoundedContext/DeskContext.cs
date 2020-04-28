@@ -578,12 +578,19 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var notify = new Notify();
-                    notify.Read();
-                    var result = mapper.Update(notify, n => notifyIds.Contains(n.Id));
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("读取消息失败");
+                        var notify = new Notify();
+                        notify.Read();
+                        var result = mapper.Update(notify, n => notifyIds.Contains(n.Id));
+                        if (!result)
+                        {
+                            throw new BusinessException("读取消息失败");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
                     }
                 }
             });
@@ -598,13 +605,21 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var config = new Config();
-                    config.ModifySkin(newSkin);
-                    var result = mapper.Update(config, conf => conf.UserId == userId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("修改皮肤失败");
+                        var config = new Config();
+                        config.ModifySkin(newSkin);
+                        var result = mapper.Update(config, conf => conf.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("修改皮肤失败");
+                        }
                     }
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
+
                 }
             });
         }
