@@ -7,7 +7,7 @@ using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewLibCore;
 using NewLibCore.Data.SQL.Mapper;
-using NewLibCore.Data.SQL.Mapper.Filter; 
+using NewLibCore.Data.SQL.Mapper.Filter;
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
@@ -21,7 +21,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    mapper.Add(log);
+                    try
+                    {
+                        mapper.Add(log);
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
@@ -35,43 +42,53 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var level = EnumExtensions.ToEnum<LogLevel>(logLevel);
-                    var logWhere = FilterFactory.Create<Log>(w => w.LogLevelEnum == level);
-
-                    var userWhere = FilterFactory.Create<User>();
-                    if (!String.IsNullOrEmpty(userName))
+                    try
                     {
-                        userWhere.And(w => w.Name.Contains(userName));
-                    }
 
-                    var filter = logWhere.Append(userWhere);
 
-                    #region totalCount 
-                    {
-                        totalCount = mapper.Query<Log>()
-                        .LeftJoin<User>((a, b) => a.UserId == b.Id)
-                        .Where<User>(filter).Count();
-                    }
-                    #endregion
+                        var level = EnumExtensions.ToEnum<LogLevel>(logLevel);
+                        var logWhere = FilterFactory.Create<Log>(w => w.LogLevelEnum == level);
 
-                    #region sql 
-                    {
-                        return mapper.Query<Log>().LeftJoin<User>((a, b) => a.UserId == b.Id)
-                        .Where<User>(filter)
-                        .Select(a => new
+                        var userWhere = FilterFactory.Create<User>();
+                        if (!String.IsNullOrEmpty(userName))
                         {
-                            a.LogLevelEnum,
-                            a.Controller,
-                            a.Action,
-                            a.ExceptionMessage,
-                            a.UserId,
-                            a.AddTime
-                        })
-                        .Page(pageIndex, pageSize)
-                        .ThenByDesc<DateTime>(a => a.AddTime)
-                        .ToList();
+                            userWhere.And(w => w.Name.Contains(userName));
+                        }
+
+                        var filter = logWhere.Append(userWhere);
+
+                        #region totalCount 
+                        {
+                            totalCount = mapper.Query<Log>()
+                            .LeftJoin<User>((a, b) => a.UserId == b.Id)
+                            .Where<User>(filter).Count();
+                        }
+                        #endregion
+
+                        #region sql 
+                        {
+                            return mapper.Query<Log>().LeftJoin<User>((a, b) => a.UserId == b.Id)
+                            .Where<User>(filter)
+                            .Select(a => new
+                            {
+                                a.LogLevelEnum,
+                                a.Controller,
+                                a.Action,
+                                a.ExceptionMessage,
+                                a.UserId,
+                                a.AddTime
+                            })
+                            .Page(pageIndex, pageSize)
+                            .ThenByDesc<DateTime>(a => a.AddTime)
+                            .ToList();
+                        }
+                        #endregion
                     }
-                    #endregion
+                    catch (System.Exception)
+                    {
+
+                        throw;
+                    }
                 }
             }
             catch (Exception)
