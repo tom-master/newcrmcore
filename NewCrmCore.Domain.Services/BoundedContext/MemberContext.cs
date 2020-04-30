@@ -22,24 +22,32 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Query<Member>()
-                    .Where(w => w.UserId == userId)
-                    .Select(a => new
+                    try
                     {
-                        a.MemberType,
-                        a.Id,
-                        a.AppId,
-                        a.Name,
-                        a.IconUrl,
-                        a.Width,
-                        a.Height,
-                        a.IsOnDock,
-                        a.IsOpenMax,
-                        a.IsSetbar,
-                        a.DeskIndex,
-                        a.FolderId,
-                        a.IsIconByUpload
-                    }).ToList();
+                        return mapper.Query<Member>()
+                        .Where(w => w.UserId == userId)
+                        .Select(a => new
+                        {
+                            a.MemberType,
+                            a.Id,
+                            a.AppId,
+                            a.Name,
+                            a.IconUrl,
+                            a.Width,
+                            a.Height,
+                            a.IsOnDock,
+                            a.IsOpenMax,
+                            a.IsSetbar,
+                            a.DeskIndex,
+                            a.FolderId,
+                            a.IsIconByUpload
+                        }).ToList();
+                    }
+                    catch (System.Exception)
+                    {
+
+                        throw;
+                    }
                 }
             });
         }
@@ -53,21 +61,23 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var where = new StringBuilder();
-                    var parameters = new List<MapperParameter>();
-                    if (isFolder)
+                    try
                     {
-                        parameters.Add(new MapperParameter("Id", memberId));
-                        parameters.Add(new MapperParameter("MemberType", MemberType.Folder.ToInt32()));
-                        where.Append($@" AND a.Id=@Id AND a.MemberType=@MemberType");
-                    }
-                    else
-                    {
-                        parameters.Add(new MapperParameter("Id", memberId));
-                        where.Append($@" AND a.Id=@Id OR a.AppId=@Id");
-                    }
+                        var where = new StringBuilder();
+                        var parameters = new List<MapperParameter>();
+                        if (isFolder)
+                        {
+                            parameters.Add(new MapperParameter("Id", memberId));
+                            parameters.Add(new MapperParameter("MemberType", MemberType.Folder.ToInt32()));
+                            where.Append($@" AND a.Id=@Id AND a.MemberType=@MemberType");
+                        }
+                        else
+                        {
+                            parameters.Add(new MapperParameter("Id", memberId));
+                            where.Append($@" AND a.Id=@Id OR a.AppId=@Id");
+                        }
 
-                    var sql = $@"SELECT 
+                        var sql = $@"SELECT 
 								a.MemberType,
 								a.AppId,
 								a.AppUrl,
@@ -89,8 +99,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 									SELECT AVG(stars.StartNum) FROM newcrm_app_star AS stars WHERE stars.AppId=a.AppId AND stars.IsDeleted=0 GROUP BY stars.AppId
 								),0) AS StarCount
 								FROM newcrm_user_member AS a WHERE a.UserId=@UserId {where} AND a.IsDeleted=0";
-                    parameters.Add(new MapperParameter("UserId", userId));
-                    return mapper.SqlQuery(sql, parameters.ToArray()).FirstOrDefault<Member>();
+                        parameters.Add(new MapperParameter("UserId", userId));
+                        return mapper.SqlQuery(sql, parameters.ToArray()).FirstOrDefault<Member>();
+                    }
+                    catch (System.Exception)
+                    {
+
+                        throw;
+                    }
                 }
             });
         }
@@ -103,7 +119,15 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Query<Member>().Where(w => w.Name == name).Count() > 0;
+                    try
+                    {
+                        return mapper.Query<Member>().Where(w => w.Name == name).Count() > 0;
+
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
