@@ -165,12 +165,19 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var member = new Member();
-                    member.ModifyIconUrl(newIcon);
-                    var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("修改桌面应用图片失败");
+                        var member = new Member();
+                        member.ModifyIconUrl(newIcon);
+                        var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("修改桌面应用图片失败");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
                     }
                 }
             });
@@ -184,10 +191,17 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var result = mapper.Update(member, mem => mem.Id == member.Id && mem.UserId == userId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("修改桌面应用信息失败");
+                        var result = mapper.Update(member, mem => mem.Id == member.Id && mem.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("修改桌面应用信息失败");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
                     }
                 }
             });
