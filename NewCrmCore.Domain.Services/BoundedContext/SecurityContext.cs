@@ -22,11 +22,18 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Query<RolePower>().Select(a => new
+                    try
                     {
-                        a.RoleId,
-                        a.AppId
-                    }).ToList();
+                        return mapper.Query<RolePower>().Select(a => new
+                        {
+                            a.RoleId,
+                            a.AppId
+                        }).ToList();
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
@@ -39,14 +46,21 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Query<Role>()
-                    .Where(a => a.Id == roleId)
-                    .Select(a => new
+                    try
                     {
-                        a.Id,
-                        a.Name,
-                        a.RoleIdentity
-                    }).FirstOrDefault();
+                        return mapper.Query<Role>()
+                        .Where(a => a.Id == roleId)
+                        .Select(a => new
+                        {
+                            a.Id,
+                            a.Name,
+                            a.RoleIdentity
+                        }).FirstOrDefault();
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
@@ -55,30 +69,40 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             using (var mapper = EntityMapper.CreateMapper())
             {
-                var where = FilterFactory.Create<Role>();
-                if (!String.IsNullOrEmpty(roleName))
+                try
                 {
-                    where.And(w => w.Name.Contains(roleName));
-                }
 
-                #region totalCount
-                {
-                    totalCount = mapper.Query<Role>().Where(where).Count();
-                }
-                #endregion
 
-                #region sql
-                {
-                    return mapper.Query<Role>().Where(where)
-                    .Select(a => new
+                    var where = FilterFactory.Create<Role>();
+                    if (!String.IsNullOrEmpty(roleName))
                     {
-                        a.Name,
-                        a.RoleIdentity,
-                        a.Remark,
-                        a.Id
-                    }).ToList();
+                        where.And(w => w.Name.Contains(roleName));
+                    }
+
+                    #region totalCount
+                    {
+                        totalCount = mapper.Query<Role>().Where(where).Count();
+                    }
+                    #endregion
+
+                    #region sql
+                    {
+                        return mapper.Query<Role>().Where(where)
+                        .Select(a => new
+                        {
+                            a.Name,
+                            a.RoleIdentity,
+                            a.Remark,
+                            a.Id
+                        }).ToList();
+                    }
+                    #endregion
                 }
-                #endregion
+                catch (System.Exception)
+                {
+
+                    throw;
+                }
             }
         }
 
