@@ -10,7 +10,6 @@ using NewCrmCore.Infrastructure;
 using NewLibCore;
 using NewLibCore.Validate;
 using NewCrmCore.Domain.ValueObject;
-using Microsoft.AspNetCore.Authorization;
 
 namespace NewCrmCore.Web.Controllers
 {
