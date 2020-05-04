@@ -11,7 +11,7 @@ using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
 using NewLibCore.Data.SQL.Mapper;
-using NewLibCore.Data.SQL.Mapper.Filter; 
+using NewLibCore.Data.SQL.Mapper.Filter;
 using NewLibCore.Security;
 using NewLibCore.Validate;
 
@@ -101,26 +101,36 @@ namespace NewCrmCore.Domain.Services.BoundedContext
              {
                  using (var mapper = EntityMapper.CreateMapper())
                  {
-                     return mapper.Query<Config>()
-                     .Where(w => w.UserId == userId)
-                     .Select(a => new
+                     try
                      {
-                         a.Id,
-                         a.Skin,
-                         a.UserFace,
-                         a.AppSize,
-                         a.AppVerticalSpacing,
-                         a.AppHorizontalSpacing,
-                         a.DefaultDeskNumber,
-                         a.DefaultDeskCount,
-                         a.AppXy,
-                         a.DockPosition,
-                         a.WallpaperMode,
-                         a.WallpaperId,
-                         a.IsBing,
-                         a.UserId,
-                         a.IsModifyUserFace
-                     }).FirstOrDefault();
+
+
+                         return mapper.Query<Config>()
+                         .Where(w => w.UserId == userId)
+                         .Select(a => new
+                         {
+                             a.Id,
+                             a.Skin,
+                             a.UserFace,
+                             a.AppSize,
+                             a.AppVerticalSpacing,
+                             a.AppHorizontalSpacing,
+                             a.DefaultDeskNumber,
+                             a.DefaultDeskCount,
+                             a.AppXy,
+                             a.DockPosition,
+                             a.WallpaperMode,
+                             a.WallpaperId,
+                             a.IsBing,
+                             a.UserId,
+                             a.IsModifyUserFace
+                         }).FirstOrDefault();
+                     }
+                     catch (System.Exception)
+                     {
+
+                         throw;
+                     }
                  }
              });
         }

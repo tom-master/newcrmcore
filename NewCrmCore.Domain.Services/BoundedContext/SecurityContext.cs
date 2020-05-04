@@ -348,11 +348,18 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    #region 添加角色
+                    try
                     {
-                        mapper.Add(visitorRecord);
+                        #region 添加角色
+                        {
+                            mapper.Add(visitorRecord);
+                        }
+                        #endregion
                     }
-                    #endregion
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
