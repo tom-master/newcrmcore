@@ -7,9 +7,9 @@ using NewCrmCore.Infrastructure.CommonTools;
 using Newtonsoft.Json;
 using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
-namespace NewCrmCore.Web.Controllers
+namespace NewCrmCore.Api.Controllers
 {
-    //[Authorize]
+
     public class NewCrmController : ControllerBase
     {
         public UserDto UserInfo
