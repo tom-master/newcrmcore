@@ -7,7 +7,7 @@ using NewCrmCore.Infrastructure.CommonTools;
 using Newtonsoft.Json;
 using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
-namespace NewCrmCore.Api.Controllers
+namespace NewCrmCore.Api.ControllerHelper
 {
 
     public class NewCrmController : ControllerBase
