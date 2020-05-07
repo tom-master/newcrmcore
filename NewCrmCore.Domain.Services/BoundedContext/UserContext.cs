@@ -384,7 +384,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     return mapper.Query<App>().Where(w => w.Name == name).Count() > 0;
                 }
-
             });
         }
 
