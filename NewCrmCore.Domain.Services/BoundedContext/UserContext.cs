@@ -143,15 +143,22 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Query<Wallpaper>()
-                    .Where(w => w.Id == wallPaperId)
-                    .Select(a => new
+                    try
                     {
-                        a.Url,
-                        a.Width,
-                        a.Height,
-                        a.Source
-                    }).FirstOrDefault();
+                        return mapper.Query<Wallpaper>()
+                        .Where(w => w.Id == wallPaperId)
+                        .Select(a => new
+                        {
+                            a.Url,
+                            a.Width,
+                            a.Height,
+                            a.Source
+                        }).FirstOrDefault();
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
@@ -175,30 +182,40 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             using (var mapper = EntityMapper.CreateMapper())
             {
-                #region totalCount
+                try
                 {
-                    totalCount = mapper.Query<User>()
-                    .InnerJoin<Config>((a, b) => a.Id == b.UserId)
-                    .Where(where).Count();
-                }
-                #endregion
 
-                #region sql
-                {
-                    return mapper.Query<User>()
-                    .InnerJoin<Config>((a, b) => a.Id == b.UserId)
-                    .Where(where).Select<User, Config>((a, b) => new
+
+                    #region totalCount
                     {
-                        a.Id,
-                        a.IsAdmin,
-                        a.Name,
-                        a.IsDisable,
-                        b.UserFace,
-                        b.IsModifyUserFace
-                    }).Page(pageIndex, pageSize)
-                    .ThenByDesc<DateTime>(a => a.AddTime).ToList();
+                        totalCount = mapper.Query<User>()
+                        .InnerJoin<Config>((a, b) => a.Id == b.UserId)
+                        .Where(where).Count();
+                    }
+                    #endregion
+
+                    #region sql
+                    {
+                        return mapper.Query<User>()
+                        .InnerJoin<Config>((a, b) => a.Id == b.UserId)
+                        .Where(where).Select<User, Config>((a, b) => new
+                        {
+                            a.Id,
+                            a.IsAdmin,
+                            a.Name,
+                            a.IsDisable,
+                            b.UserFace,
+                            b.IsModifyUserFace
+                        }).Page(pageIndex, pageSize)
+                        .ThenByDesc<DateTime>(a => a.AddTime).ToList();
+                    }
+                    #endregion
                 }
-                #endregion
+                catch (System.Exception)
+                {
+
+                    throw;
+                }
             }
         }
 
@@ -210,23 +227,30 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Query<User>()
-                    .InnerJoin<Config>((a, b) => a.Id == b.UserId)
-                    .Where(w => !w.IsDeleted)
-                    .Select<User, Config>((a, b) => new
+                    try
                     {
-                        b.UserFace,
-                        a.Id,
-                        a.IsAdmin,
-                        a.IsDisable,
-                        a.IsOnline,
-                        a.Name,
-                        a.LockScreenPassword,
-                        a.LoginPassword,
-                        a.LastLoginTime,
-                        a.AddTime,
-                        b.IsModifyUserFace
-                    }).FirstOrDefault();
+                        return mapper.Query<User>()
+                        .InnerJoin<Config>((a, b) => a.Id == b.UserId)
+                        .Where(w => !w.IsDeleted)
+                        .Select<User, Config>((a, b) => new
+                        {
+                            b.UserFace,
+                            a.Id,
+                            a.IsAdmin,
+                            a.IsDisable,
+                            a.IsOnline,
+                            a.Name,
+                            a.LockScreenPassword,
+                            a.LoginPassword,
+                            a.LastLoginTime,
+                            a.AddTime,
+                            b.IsModifyUserFace
+                        }).FirstOrDefault();
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
@@ -239,17 +263,25 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Query<Role>()
-                    .InnerJoin<UserRole>((a, b) => a.Id == b.RoleId)
-                    .Where<UserRole>(a => a.UserId == userId)
-                    .Select(a => new
+                    try
                     {
-                        a.Id,
-                        a.Name,
-                        a.RoleIdentity
-                    })
-                    .ThenByDesc<DateTime>(a => a.AddTime)
-                    .ToList();
+                        return mapper.Query<Role>()
+                        .InnerJoin<UserRole>((a, b) => a.Id == b.RoleId)
+                        .Where<UserRole>(a => a.UserId == userId)
+                        .Select(a => new
+                        {
+                            a.Id,
+                            a.Name,
+                            a.RoleIdentity
+                        })
+                        .ThenByDesc<DateTime>(a => a.AddTime)
+                        .ToList();
+                    }
+                    catch (System.Exception)
+                    {
+
+                        throw;
+                    }
                 }
             });
         }
