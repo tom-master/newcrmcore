@@ -292,10 +292,17 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Query<RolePower>()
-                    .Select(a => new { a.RoleId, a.AppId })
-                    .ThenByDesc<DateTime>(a => a.AddTime)
-                    .ToList();
+                    try
+                    {
+                        return mapper.Query<RolePower>()
+                        .Select(a => new { a.RoleId, a.AppId })
+                        .ThenByDesc<DateTime>(a => a.AddTime)
+                        .ToList();
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
@@ -308,7 +315,15 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Query<User>().Where(w => w.Name == userName).Count() > 0;
+                    try
+                    {
+                        return mapper.Query<User>().Where(w => w.Name == userName).Count() > 0;
+
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
@@ -321,10 +336,17 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Query<User>()
-                    .Where(w => w.Id == userId && !w.IsDisable)
-                    .Select(a => new { a.LoginPassword })
-                    .FirstOrDefault().LoginPassword;
+                    try
+                    {
+                        return mapper.Query<User>()
+                        .Where(w => w.Id == userId && !w.IsDisable)
+                        .Select(a => new { a.LoginPassword })
+                        .FirstOrDefault().LoginPassword;
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
