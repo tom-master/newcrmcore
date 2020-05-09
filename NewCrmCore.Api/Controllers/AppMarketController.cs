@@ -11,7 +11,7 @@ using NewLibCore;
 using NewLibCore.Validate;
 using NewCrmCore.Domain.ValueObject;
 
-namespace NewCrmCore.Web.Controllers
+namespace NewCrmCore.Api.Controllers
 {
     public class AppMarketController : NewCrmController
     {
