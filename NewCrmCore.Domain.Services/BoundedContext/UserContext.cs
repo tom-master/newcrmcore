@@ -395,7 +395,15 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Query<App>().Where(w => w.AppUrl == url).Count() > 0;
+                    try
+                    {
+                        return mapper.Query<App>().Where(w => w.AppUrl == url).Count() > 0;
+                    }
+                    catch (System.Exception)
+                    {
+
+                        throw;
+                    }
                 }
             });
         }
@@ -590,11 +598,18 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var user = new User().Enable();
-                    var result = mapper.Update(user, acc => acc.Id == userId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("用户启用失败");
+                        var user = new User().Enable();
+                        var result = mapper.Update(user, acc => acc.Id == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("用户启用失败");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
                     }
                 }
             });
@@ -608,23 +623,30 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var parameters = new List<MapperParameter> { new MapperParameter("userId", userId) };
-                    #region 前置条件验证
+                    try
                     {
-                        var result = mapper.Query<Role>().InnerJoin<UserRole>((a, b) => a.Id == b.RoleId).Where<UserRole>((a, b) => a.IsAllowDisable && b.UserId == userId).Count();
-                        if (result > 0)
+                        #region 前置条件验证
                         {
-                            throw new BusinessException("当前用户拥有管理员角色，因此不能禁用或删除");
+                            var result = mapper.Query<Role>().InnerJoin<UserRole>((a, b) => a.Id == b.RoleId).Where<UserRole>((a, b) => a.IsAllowDisable && b.UserId == userId).Count();
+                            if (result > 0)
+                            {
+                                throw new BusinessException("当前用户拥有管理员角色，因此不能禁用或删除");
+                            }
+                        }
+                        #endregion
+                        {
+                            var user = new User().Disable();
+                            var result = mapper.Update(user, acc => acc.Id == userId);
+                            if (!result)
+                            {
+                                throw new BusinessException("用户启用失败");
+                            }
                         }
                     }
-                    #endregion
+                    catch (System.Exception)
                     {
-                        var user = new User().Disable();
-                        var result = mapper.Update(user, acc => acc.Id == userId);
-                        if (!result)
-                        {
-                            throw new BusinessException("用户启用失败");
-                        }
+
+                        throw;
                     }
                 }
             });
