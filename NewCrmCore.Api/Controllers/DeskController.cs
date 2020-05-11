@@ -14,7 +14,7 @@ using NewLibCore.Validate;
 using NewLibCore;
 using Newtonsoft.Json;
 
-namespace NewCrmCore.Web.Controllers
+namespace NewCrmCore.Api.Controllers
 {
     public class DeskController : NewCrmController
     {
