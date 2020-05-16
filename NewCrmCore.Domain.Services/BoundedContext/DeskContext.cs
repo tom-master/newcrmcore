@@ -161,12 +161,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var config = new Config();
-                    config.ModifyAppVerticalSpacing(newSize);
-                    var result = mapper.Update(config, conf => conf.UserId == userId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("修改桌面应用水平间距失败");
+                        var config = new Config();
+                        config.ModifyAppVerticalSpacing(newSize);
+                        var result = mapper.Update(config, conf => conf.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("修改桌面应用水平间距失败");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+
+                        throw;
                     }
                 }
             });
@@ -181,12 +189,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var config = new Config();
-                    config.ModifyAppHorizontalSpacing(newSize);
-                    var result = mapper.Update(config, conf => conf.UserId == userId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("修改桌面应用垂直间距失败");
+                        var config = new Config();
+                        config.ModifyAppHorizontalSpacing(newSize);
+                        var result = mapper.Update(config, conf => conf.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("修改桌面应用垂直间距失败");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+
+                        throw;
                     }
                 }
             });
@@ -201,12 +217,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var member = new Member();
-                    member.OnDock();
-                    var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("将桌面应用移动到应用码头失败");
+                        var member = new Member();
+                        member.OnDock();
+                        var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("将桌面应用移动到应用码头失败");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+
+                        throw;
                     }
                 }
             });
@@ -222,12 +246,19 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var member = new Member();
-                    member.OutDock().ModifyDeskIndex(deskId);
-                    var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("将桌面应用移出应用码头失败");
+                        var member = new Member();
+                        member.OutDock().ModifyDeskIndex(deskId);
+                        var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("将桌面应用移出应用码头失败");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
                     }
                 }
             });
@@ -243,12 +274,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var member = new Member();
-                    member.OutDock().ModifyFolderId(folderId);
-                    var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("桌面应用从应用码头移动到文件夹中失败");
+                        var member = new Member();
+                        member.OutDock().ModifyFolderId(folderId);
+                        var result = mapper.Update(member, mem => mem.Id == memberId && mem.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("桌面应用从应用码头移动到文件夹中失败");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+
+                        throw;
                     }
                 }
             });
