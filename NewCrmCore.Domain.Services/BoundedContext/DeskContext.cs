@@ -379,8 +379,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             });
         }
 
+
+
         public async Task FolderToOtherFolderAsync(Int32 userId, Int32 memberId, Int32 folderId)
         {
+
             Parameter.Validate(userId);
             Parameter.Validate(memberId);
             Parameter.Validate(folderId);
