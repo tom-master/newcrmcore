@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
 
-namespace NewCrmCore.Web.Filter
+namespace NewCrmCore.WebApi.Filter
 {
     public class CheckPermissions : IAsyncAuthorizationFilter
     {

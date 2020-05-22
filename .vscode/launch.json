@@ -9,9 +9,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/NewCrmCore.Web/bin/Debug/netcoreapp3.1/NewCrmCore.Web.dll",
+            "program": "${workspaceFolder}/NewCrmCore.WebApi/bin/Debug/netcoreapp3.1/NewCrmCore.WebApi.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/NewCrmCore.Web",
+            "cwd": "${workspaceFolder}/NewCrmCore.WebApi",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             "launchBrowser": {

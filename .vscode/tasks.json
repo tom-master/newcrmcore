@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/NewCrmCore.Web/NewCrmCore.Web.csproj"
+                "${workspaceFolder}/NewCrmCore.WebApi/NewCrmCore.WebApi.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

@@ -14,10 +14,10 @@ using NewCrmCore.Domain.Services.BoundedContext;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.NotifyCenter;
-using NewCrmCore.Web.Filter;
+using NewCrmCore.WebApi.Filter;
 using NewLibCore.Data.SQL;
 
-namespace NewCrmCore.Web
+namespace NewCrmCore.WebApi
 {
     public class Startup
     {

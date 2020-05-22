@@ -8,7 +8,7 @@ using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure.CommonTools;
 using Newtonsoft.Json;
 
-namespace NewCrmCore.Web.Filter
+namespace NewCrmCore.WebApi.Filter
 {
     public sealed class HandleException : IExceptionFilter
     {

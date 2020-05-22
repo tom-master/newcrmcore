@@ -6,7 +6,7 @@ using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Dto;
 using Newtonsoft.Json;
 
-namespace NewCrmCore.Web.Filter
+namespace NewCrmCore.WebApi.Filter
 {
     public class VisitorRecordFilter : ActionFilterAttribute, IAsyncActionFilter
     {
