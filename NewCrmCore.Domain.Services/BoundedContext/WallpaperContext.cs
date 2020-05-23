@@ -19,22 +19,30 @@ namespace NewCrmCore.Domain.Services.BoundedContext
              {
                  using (var mapper = EntityMapper.CreateMapper())
                  {
-                     #region 前置条件验证
+                     try
                      {
-                         var result = mapper.Query<Wallpaper>().Where(w => w.UserId == wallpaper.UserId).Count();
-                         if (result > 6)
+                         #region 前置条件验证
                          {
-                             throw new BusinessException("最多只能上传6张图片");
+                             var result = mapper.Query<Wallpaper>().Where(w => w.UserId == wallpaper.UserId).Count();
+                             if (result > 6)
+                             {
+                                 throw new BusinessException("最多只能上传6张图片");
+                             }
                          }
-                     }
-                     #endregion
+                         #endregion
 
-                     #region 插入壁纸
-                     {
-                         wallpaper = mapper.Add(wallpaper);
-                         return (wallpaper.Id, wallpaper.Url);
+                         #region 插入壁纸
+                         {
+                             wallpaper = mapper.Add(wallpaper);
+                             return (wallpaper.Id, wallpaper.Url);
+                         }
+                         #endregion
                      }
-                     #endregion
+                     catch (System.Exception)
+                     {
+
+                         throw;
+                     }
                  }
              });
         }
@@ -47,20 +55,27 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Query<Wallpaper>()
-                    .Where(a => a.Md5 == md5)
-                    .Select(a => new
+                    try
                     {
-                        a.UserId,
-                        a.Height,
-                        a.Id,
-                        a.Md5,
-                        a.ShortUrl,
-                        a.Source,
-                        a.Title,
-                        a.Url,
-                        a.Width
-                    }).FirstOrDefault();
+                        return mapper.Query<Wallpaper>()
+                        .Where(a => a.Md5 == md5)
+                        .Select(a => new
+                        {
+                            a.UserId,
+                            a.Height,
+                            a.Id,
+                            a.Md5,
+                            a.ShortUrl,
+                            a.Source,
+                            a.Title,
+                            a.Url,
+                            a.Width
+                        }).FirstOrDefault();
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
@@ -73,20 +88,28 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Query<Wallpaper>()
-                    .Where(a => a.UserId == userId && a.Source != WallpaperSource.System)
-                    .Select(a => new
+                    try
                     {
-                        a.UserId,
-                        a.Height,
-                        a.Id,
-                        a.Md5,
-                        a.ShortUrl,
-                        a.Source,
-                        a.Title,
-                        a.Url,
-                        a.Width
-                    }).ToList();
+
+                        return mapper.Query<Wallpaper>()
+                        .Where(a => a.UserId == userId && a.Source != WallpaperSource.System)
+                        .Select(a => new
+                        {
+                            a.UserId,
+                            a.Height,
+                            a.Id,
+                            a.Md5,
+                            a.ShortUrl,
+                            a.Source,
+                            a.Title,
+                            a.Url,
+                            a.Width
+                        }).ToList();
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
@@ -97,20 +120,27 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Query<Wallpaper>()
-                    .Where(a => a.Source == WallpaperSource.System)
-                    .Select(a => new
+                    try
                     {
-                        a.UserId,
-                        a.Height,
-                        a.Id,
-                        a.Md5,
-                        a.ShortUrl,
-                        a.Source,
-                        a.Title,
-                        a.Url,
-                        a.Width
-                    }).ToList();
+                        return mapper.Query<Wallpaper>()
+                        .Where(a => a.Source == WallpaperSource.System)
+                        .Select(a => new
+                        {
+                            a.UserId,
+                            a.Height,
+                            a.Id,
+                            a.Md5,
+                            a.ShortUrl,
+                            a.Source,
+                            a.Title,
+                            a.Url,
+                            a.Width
+                        }).ToList();
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
@@ -126,12 +156,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 {
                     using (var mapper = EntityMapper.CreateMapper())
                     {
-                        var config = new Config();
-                        config.ModeTo(wallpaperMode);
-                        var result = mapper.Update(config, conf => conf.UserId == userId);
-                        if (!result)
+                        try
                         {
-                            throw new BusinessException("修改壁纸显示失败");
+                            var config = new Config();
+                            config.ModeTo(wallpaperMode);
+                            var result = mapper.Update(config, conf => conf.UserId == userId);
+                            if (!result)
+                            {
+                                throw new BusinessException("修改壁纸显示失败");
+                            }
+                        }
+                        catch (System.Exception)
+                        {
+
+                            throw;
                         }
                     }
                 }
@@ -151,12 +189,20 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var config = new Config();
-                    config.NotFromBing().ModifyWallpaperId(newWallpaperId);
-                    var result = mapper.Update(config, conf => conf.UserId == userId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("修改壁纸失败");
+                        var config = new Config();
+                        config.NotFromBing().ModifyWallpaperId(newWallpaperId);
+                        var result = mapper.Update(config, conf => conf.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("修改壁纸失败");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+
+                        throw;
                     }
                 }
             });
@@ -171,27 +217,34 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    #region 前置条件验证
+                    try
                     {
-                        var result = mapper.Query<Config>().Where(a => a.UserId == userId && a.WallpaperId == wallpaperId).Count();
-                        if (result > 0)
+                        #region 前置条件验证
                         {
-                            throw new BusinessException("当前壁纸正在使用中，不能删除");
+                            var result = mapper.Query<Config>().Where(a => a.UserId == userId && a.WallpaperId == wallpaperId).Count();
+                            if (result > 0)
+                            {
+                                throw new BusinessException("当前壁纸正在使用中，不能删除");
+                            }
                         }
-                    }
-                    #endregion
+                        #endregion
 
-                    #region 移除壁纸
-                    {
-                        var wallpaper = new Wallpaper();
-                        wallpaper.Remove();
-                        var result = mapper.Update(wallpaper, wa => wa.Id == wallpaperId && wa.UserId == userId);
-                        if (!result)
+                        #region 移除壁纸
                         {
-                            throw new BusinessException("移除壁纸失败");
+                            var wallpaper = new Wallpaper();
+                            wallpaper.Remove();
+                            var result = mapper.Update(wallpaper, wa => wa.Id == wallpaperId && wa.UserId == userId);
+                            if (!result)
+                            {
+                                throw new BusinessException("移除壁纸失败");
+                            }
                         }
+                        #endregion
                     }
-                    #endregion
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
