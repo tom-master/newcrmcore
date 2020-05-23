@@ -272,11 +272,19 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    #region 添加角色
+                    try
                     {
-                        mapper.Add(role);
+                        #region 添加角色
+                        {
+                            mapper.Add(role);
+                        }
+                        #endregion
                     }
-                    #endregion
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
+
                 }
             });
         }
