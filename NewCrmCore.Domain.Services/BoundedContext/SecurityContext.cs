@@ -100,7 +100,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 }
                 catch (System.Exception)
                 {
-
                     throw;
                 }
             }
@@ -115,18 +114,25 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    #region 检查app是否为系统app
+                    try
                     {
-                        var result = mapper.Query<App>().Where(a => a.Id == accessAppId && a.IsSystem).Select().Count();
-                        if (result <= 0)
+                        #region 检查app是否为系统app
                         {
-                            return true;
+                            var result = mapper.Query<App>().Where(a => a.Id == accessAppId && a.IsSystem).Select().Count();
+                            if (result <= 0)
+                            {
+                                return true;
+                            }
+                        }
+                        #endregion
+                        {
+                            var result = mapper.Query<RolePower>().Where(a => roleIds.Contains(a.RoleId)).Select(a => new { a.AppId }).ToList();
+                            return result.Any(a => a.AppId == accessAppId);
                         }
                     }
-                    #endregion
+                    catch (System.Exception)
                     {
-                        var result = mapper.Query<RolePower>().Where(a => roleIds.Contains(a.RoleId)).Select(a => new { a.AppId }).ToList();
-                        return result.Any(a => a.AppId == accessAppId);
+                        throw;
                     }
                 }
             });
@@ -140,7 +146,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Query<Role>().Where(a => a.Name == name).Count() > 0;
+                    try
+                    {
+                        return mapper.Query<Role>().Where(a => a.Name == name).Count() > 0;
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
@@ -153,7 +166,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    return mapper.Query<Role>().Where(a => a.RoleIdentity == name).Count() > 0;
+                    try
+                    {
+                        return mapper.Query<Role>().Where(a => a.RoleIdentity == name).Count() > 0;
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
+                    }
                 }
             });
         }
@@ -166,16 +186,24 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    #region 修改角色
+                    try
                     {
-                        role.ModifyRoleName(role.Name);
-                        var result = mapper.Update(role, r => r.Id == role.Id);
-                        if (!result)
+                        #region 修改角色
                         {
-                            throw new BusinessException("修改角色失败");
+                            role.ModifyRoleName(role.Name);
+                            var result = mapper.Update(role, r => r.Id == role.Id);
+                            if (!result)
+                            {
+                                throw new BusinessException("修改角色失败");
+                            }
                         }
+                        #endregion
                     }
-                    #endregion
+                    catch (System.Exception)
+                    {
+
+                        throw;
+                    }
                 }
             });
         }
