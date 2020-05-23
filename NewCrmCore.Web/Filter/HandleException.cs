@@ -17,7 +17,6 @@ namespace NewCrmCore.Web.Filter
         {
             filterContext.ExceptionHandled = true;
 
-            var isAjaxRequest = filterContext.HttpContext.Request.IsAjaxRequest();
             var businessException = filterContext.Exception is BusinessException;
 
             var response = new ResponseModel
@@ -26,6 +25,7 @@ namespace NewCrmCore.Web.Filter
                 Message = businessException ? filterContext.Exception.Message : "出现未知错误，请查看日志",
             };
 
+            var isAjaxRequest = filterContext.HttpContext.Request.IsAjaxRequest();
             if (isAjaxRequest)
             {
                 filterContext.Result = new JsonResult(response);
