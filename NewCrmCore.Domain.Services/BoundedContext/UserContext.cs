@@ -661,11 +661,19 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var config = new Config().ModifyUserFace(newFace);
-                    var result = mapper.Update(config, conf => conf.UserId == userId);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("修改用户头像失败");
+                        var config = new Config().ModifyUserFace(newFace);
+                        var result = mapper.Update(config, conf => conf.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("修改用户头像失败");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+
+                        throw;
                     }
                 }
             });
