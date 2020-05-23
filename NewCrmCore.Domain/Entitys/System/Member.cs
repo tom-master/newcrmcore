@@ -14,7 +14,7 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 应用Id
         /// </summary>
-        [Required]
+        [Required, DefaultValue(0)]
         public Int32 AppId { get; private set; }
 
         /// <summary>

@@ -503,7 +503,6 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     }
                     catch (System.Exception)
                     {
-
                         throw;
                     }
                 }

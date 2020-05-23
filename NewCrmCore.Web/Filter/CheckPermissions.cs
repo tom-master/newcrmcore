@@ -19,7 +19,7 @@ namespace NewCrmCore.Web.Filter
         {
             var methodInfo = ((ControllerActionDescriptor)filterContext.ActionDescriptor).MethodInfo;
             var isAllowAnonymous = methodInfo.GetCustomAttributes<AllowAnonymousAttribute>().Any();
-            if (isAllowAnonymous)
+            if (isAllowAnonymous || filterContext.HttpContext.Request.Query["type"] == "folder")
             {
                 return;
             }
@@ -27,11 +27,6 @@ namespace NewCrmCore.Web.Filter
             if (filterContext.HttpContext.Request.Cookies["User"] == null)
             {
                 ReturnMessage(filterContext, "会话过期,请刷新页面后重新登陆");
-                return;
-            }
-
-            if (filterContext.HttpContext.Request.Query["type"] == "folder")
-            {
                 return;
             }
 
@@ -72,7 +67,7 @@ namespace NewCrmCore.Web.Filter
                 filterContext.Result = new ContentResult()
                 {
                     ContentType = "utf8",
-                    Content = @"<script>(function(){ debugger ;top.NewCrm.fail('" + response.Message + "');})()</script>"
+                    Content = @"<script>(function(){top.NewCrm.fail('" + response.Message + "');})()</script>"
                 };
             }
         }
