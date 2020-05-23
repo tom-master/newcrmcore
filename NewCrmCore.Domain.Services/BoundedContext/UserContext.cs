@@ -688,16 +688,23 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var user = new User();
-                    if (isTogetherSetLockPassword)
+                    try
                     {
-                        user.ModifyLockScreenPassword(newPassword);
+                        var user = new User();
+                        if (isTogetherSetLockPassword)
+                        {
+                            user.ModifyLockScreenPassword(newPassword);
+                        }
+                        user.ModifyLoginPassword(newPassword);
+                        var result = mapper.Update(user, acc => acc.Id == userId && acc.IsDisable == false);
+                        if (!result)
+                        {
+                            throw new BusinessException("修改登陆密码失败");
+                        }
                     }
-                    user.ModifyLoginPassword(newPassword);
-                    var result = mapper.Update(user, acc => acc.Id == userId && acc.IsDisable == false);
-                    if (!result)
+                    catch (System.Exception)
                     {
-                        throw new BusinessException("修改登陆密码失败");
+                        throw;
                     }
                 }
             });
@@ -712,11 +719,18 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 using (var mapper = EntityMapper.CreateMapper())
                 {
-                    var user = new User().ModifyLockScreenPassword(newScreenPassword);
-                    var result = mapper.Update(user, acc => acc.Id == userId && !acc.IsDisable);
-                    if (!result)
+                    try
                     {
-                        throw new BusinessException("修改锁屏密码失败");
+                        var user = new User().ModifyLockScreenPassword(newScreenPassword);
+                        var result = mapper.Update(user, acc => acc.Id == userId && !acc.IsDisable);
+                        if (!result)
+                        {
+                            throw new BusinessException("修改锁屏密码失败");
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+                        throw;
                     }
                 }
             });
