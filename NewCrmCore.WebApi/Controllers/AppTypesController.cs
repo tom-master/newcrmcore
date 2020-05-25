@@ -8,7 +8,7 @@ using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Dto;
 using NewLibCore.Validate;
 
-namespace NewCrmCore.Api.Controllers
+namespace NewCrmCore.WebApi.Controllers
 {
     public class AppTypesController : NewCrmController
     {

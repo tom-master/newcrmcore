@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewCrmCore.Api", "NewCrmCore.Api\NewCrmCore.Api.csproj", "{B066B201-ADF8-4B5D-9F60-80A2AB1F4FED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewCrmCore.WebApi", "NewCrmCore.WebApi\NewCrmCore.WebApi.csproj", "{B066B201-ADF8-4B5D-9F60-80A2AB1F4FED}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewCrmCore.Dto", "NewCrmCore.Dto\NewCrmCore.Dto.csproj", "{5CB0B1E8-5B49-42E4-A9C4-61B43E0C60A0}"
 EndProject

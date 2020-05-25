@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using NewCrmCore.Application.Services.Interface;
 using NewLibCore.Validate;
 
-namespace NewCrmCore.Api.Controllers
+namespace NewCrmCore.WebApi.Controllers
 {
     public class UserSettingController : NewCrmController
     {

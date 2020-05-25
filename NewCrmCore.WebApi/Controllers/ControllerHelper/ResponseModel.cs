@@ -1,5 +1,5 @@
 ﻿using System;
-namespace NewCrmCore.Api.ControllerHelper
+namespace NewCrmCore.WebApi.ControllerHelper
 {
     /// <summary>
     /// 响应基类
