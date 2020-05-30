@@ -9,8 +9,8 @@ using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
-using NewLibCore.Data.SQL.Mapper;
-using NewLibCore.Data.SQL.Mapper.Filter;
+using NewLibCore.Data.SQL;
+using NewLibCore.Data.SQL.Filter;
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Infrastructure.CommonTools;
-using NewLibCore.Data.SQL.Mapper;
+using NewLibCore.Data.SQL;
 using Newtonsoft.Json;
 using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 

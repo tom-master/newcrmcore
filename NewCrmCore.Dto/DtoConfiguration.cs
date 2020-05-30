@@ -4,7 +4,7 @@ using NewCrmCore.Domain.Entitys.Agent;
 using NewCrmCore.Domain.Entitys.Security;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Dto.MapperProfile;
-using NewLibCore.Data.SQL.Mapper;
+using NewLibCore.Data.SQL;
 
 namespace NewCrmCore.Dto
 {
@@ -12,7 +12,6 @@ namespace NewCrmCore.Dto
     {
         static DtoConfiguration()
         {
-
             Mapper.Initialize(d =>
             {
                 d.CreateMap<UserDto, User>();

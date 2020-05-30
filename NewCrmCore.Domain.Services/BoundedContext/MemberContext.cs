@@ -8,7 +8,7 @@ using NewCrmCore.Domain.ValueObject;
 using NewLibCore.Validate;
 using NewLibCore;
 using NewCrmCore.Infrastructure.CommonTools;
-using NewLibCore.Data.SQL.Mapper;
+using NewLibCore.Data.SQL;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
 {

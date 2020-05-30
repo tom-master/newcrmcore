@@ -6,8 +6,8 @@ using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewLibCore;
-using NewLibCore.Data.SQL.Mapper;
-using NewLibCore.Data.SQL.Mapper.Filter;
+using NewLibCore.Data.SQL;
+using NewLibCore.Data.SQL.Filter;
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext

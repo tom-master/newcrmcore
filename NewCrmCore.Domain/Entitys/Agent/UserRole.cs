@@ -1,6 +1,6 @@
 ﻿using System;
-using NewLibCore.Data.SQL.Mapper;
-using NewLibCore.Data.SQL.Mapper.Validate;
+using NewLibCore.Data.SQL;
+using NewLibCore.Data.SQL.Validate;
 
 namespace NewCrmCore.Domain.Entitys.Agent
 {

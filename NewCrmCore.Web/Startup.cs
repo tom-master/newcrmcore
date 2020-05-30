@@ -15,7 +15,7 @@ using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.NotifyCenter;
 using NewCrmCore.Web.Filter;
-using NewLibCore.Data.SQL.Mapper;
+using NewLibCore.Data.SQL;
 
 namespace NewCrmCore.Web
 {
