@@ -41,7 +41,7 @@ namespace NewCrmCore.Domain.Entitys.System
         /// <summary>
         /// 用户id
         /// </summary>
-        [Required]
+        [Required, DefaultValue(0)]
         public Int32 UserId { get; private set; }
 
         public Log(Int32 userId, String controller, String action, LogLevel logLevel, String track, String exceptionMessage)
