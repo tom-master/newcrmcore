@@ -68,9 +68,9 @@ namespace NewCrmCore.Web
 
             services.AddMvc(config =>
             {
-                config.Filters.Add(new HandleException());
-                config.Filters.Add(new CheckPermissions());
-                config.Filters.Add(new VisitorRecordFilter());
+                config.Filters.Add<CheckPermissions>();
+                config.Filters.Add<HandleException>();
+                config.Filters.Add<VisitorRecordFilter>();
             }).AddNewtonsoftJson(op =>
             {
                 op.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
