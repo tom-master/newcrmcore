@@ -29,6 +29,7 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <environment names="Development" asp-append-version="true">
+    <script src="/js/pagelogic/none.js"></script>
     <script src="/js/hooray/lib/hooraylibs.js"></script>
     <script src="/js/hooray/hros.min.js"></script>
     <script src="/js/validate/Validform_v5.3.2/Validform_v5.3.2_min.js"></script>
@@ -50,5 +51,7 @@
 <script>
     $(() => {
 		@RenderSection("ChildrenScript", false)
+
+        
     })
 </script>
