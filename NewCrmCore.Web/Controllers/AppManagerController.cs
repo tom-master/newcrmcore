@@ -52,7 +52,7 @@ namespace NewCrmCore.Web.Controllers
                 appResult = await _appServices.GetAppAsync(appId, UserInfo.Id);
                 ViewData["AppState"] = appResult.AppAuditState;
             }
-
+            ViewData["UniqueToken"] = CreateUniqueTokenAsync(UserInfo.Id);
             ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();
             return View(appResult);
         }
