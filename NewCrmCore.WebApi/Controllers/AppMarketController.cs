@@ -10,6 +10,7 @@ using NewCrmCore.Infrastructure;
 using NewLibCore;
 using NewLibCore.Validate;
 using NewCrmCore.Domain.ValueObject;
+using NewCrmCore.WebApi.ApiHelper;
 
 namespace NewCrmCore.WebApi.Controllers
 {
