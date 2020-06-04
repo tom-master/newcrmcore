@@ -12,10 +12,6 @@ using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore.Validate;
 using NewLibCore;
-using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Newtonsoft.Json;
 
 namespace NewCrmCore.Web.Controllers
