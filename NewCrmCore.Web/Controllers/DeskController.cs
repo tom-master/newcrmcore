@@ -184,8 +184,7 @@ namespace NewCrmCore.Web.Controllers
                 //     expires: cookieTimeout,
                 //     signingCredentials: creds);
                 // response.Token = new JwtSecurityTokenHandler().WriteToken(token);
-                response.Model = user;
-                Response.Cookies.Append("User", JsonConvert.SerializeObject(user), new CookieOptions { Expires = cookieTimeout });
+                Response.Cookies.Append("User", JsonConvert.SerializeObject(new { Id = user.Id, UserFace = user.UserFace, Name = user.Name }), new CookieOptions { Expires = cookieTimeout });
             }
             else
             {
