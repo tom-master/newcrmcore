@@ -48,6 +48,7 @@ namespace NewCrmCore.Web.Controllers
                 ViewData["User"] = await _userServices.GetUserAsync(userId);
             }
             ViewData["Roles"] = (await _securityServices.GetRolesAsync("", 1, 100)).Models;
+            ViewData["UniqueToken"] = CreateUniqueTokenAsync(UserInfo.Id);
             return View();
         }
 

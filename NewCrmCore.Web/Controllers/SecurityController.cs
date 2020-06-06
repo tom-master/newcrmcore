@@ -49,6 +49,7 @@ namespace NewCrmCore.Web.Controllers
             {
                 ViewData["RoleResult"] = await _securityServices.GetRoleAsync(roleId);
             }
+            ViewData["UniqueToken"] = CreateUniqueTokenAsync(UserInfo.Id);
             return View();
         }
 
@@ -75,6 +76,7 @@ namespace NewCrmCore.Web.Controllers
             {
                 result = await _appServices.GetSystemAppAsync(role.Powers.Select(s => s.Id).ToArray());
             }
+            ViewData["UniqueToken"] = CreateUniqueTokenAsync(UserInfo.Id);
             return View(result);
         }
 

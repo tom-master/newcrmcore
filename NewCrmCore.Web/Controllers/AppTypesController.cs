@@ -45,6 +45,7 @@ namespace NewCrmCore.Web.Controllers
             {
                 result = (await _appServices.GetAppTypesAsync()).FirstOrDefault(appType => appType.Id == appTypeId);
             }
+            ViewData["UniqueToken"] = CreateUniqueTokenAsync(UserInfo.Id);
             return View(result);
         }
 

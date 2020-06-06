@@ -46,7 +46,9 @@
             }
             case "usersafe":
             {
-                var result = @Html.RenderPartialAsync("~/Views/UserSetting/UserSafe.cshtml");
+                var data = new ViewDataDictionary(ViewData);
+                data.Add("uniqueToken",ViewData["uniqueToken"]);
+                var result = @Html.RenderPartialAsync("~/Views/UserSetting/UserSafe.cshtml",null,data);
                 break;
             }
             default:

@@ -89,6 +89,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var result = await _deskServices.GetMemberAsync(UserInfo.Id, memberId);
+            ViewData["UniqueToken"] = CreateUniqueTokenAsync(UserInfo.Id);
             return View(result);
         }
 

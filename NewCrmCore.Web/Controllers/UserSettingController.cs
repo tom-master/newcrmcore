@@ -27,6 +27,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userServices.GetUserAsync(UserInfo.Id);
+            ViewData["UniqueToken"] = CreateUniqueTokenAsync(UserInfo.Id);
             return View(user);
         }
 

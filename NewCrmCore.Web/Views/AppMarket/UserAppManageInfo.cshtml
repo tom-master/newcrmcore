@@ -22,8 +22,12 @@
 }
 
 @{
+    var data = new ViewDataDictionary(ViewData);
+    data.Add("uniqueToken",ViewData["uniqueToken"]);
     if (Model != null)
     {
+
+
         if ((AppAuditState)ViewData["AppState"] == AppAuditState.Pass)//已通过
         {
             <text>
@@ -41,7 +45,7 @@
             else
             {
                 <text>
-                    @Html.PartialAsync("~/Views/AppMarket/UserAppManageEdit.cshtml", Model)
+                    @Html.PartialAsync("~/Views/AppMarket/UserAppManageEdit.cshtml", Model,data)
                 </text>
             }
         }
@@ -49,7 +53,7 @@
     else
     {
         <text>
-            @Html.PartialAsync("~/Views/AppMarket/UserAppManageNewApp.cshtml")
+            @Html.PartialAsync("~/Views/AppMarket/UserAppManageNewApp.cshtml",null,data)
         </text>
     }
     <input type="hidden" id="uploadUrl" value="@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)">

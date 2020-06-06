@@ -89,7 +89,6 @@ namespace NewCrmCore.Web.Controllers
             ViewData["AppTypes"] = appTypes;
             ViewData["AppStyles"] = _appServices.GetAppStyles().ToList();
             ViewData["AppStates"] = _appServices.GetAppStates().ToList();
-
             return View();
         }
 
@@ -112,7 +111,7 @@ namespace NewCrmCore.Web.Controllers
             {
                 appTypes = appTypes.Where(w => !w.IsSystem).ToList();
             }
-
+            ViewData["UniqueToken"] = CreateUniqueTokenAsync(UserInfo.Id);
             ViewData["AppTypes"] = appTypes;
             ViewData["UserInfo.Id"] = UserInfo.Id;
             return View(result);
