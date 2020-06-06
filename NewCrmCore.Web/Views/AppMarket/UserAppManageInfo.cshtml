@@ -22,8 +22,6 @@
 }
 
 @{
-    var data = new ViewDataDictionary(ViewData);
-    data.Add("uniqueToken",ViewData["uniqueToken"]);
     if (Model != null)
     {
 
@@ -45,7 +43,7 @@
             else
             {
                 <text>
-                    @Html.PartialAsync("~/Views/AppMarket/UserAppManageEdit.cshtml", Model,data)
+                    @Html.PartialAsync("~/Views/AppMarket/UserAppManageEdit.cshtml", Model)
                 </text>
             }
         }
@@ -53,7 +51,7 @@
     else
     {
         <text>
-            @Html.PartialAsync("~/Views/AppMarket/UserAppManageNewApp.cshtml",null,data)
+            @Html.PartialAsync("~/Views/AppMarket/UserAppManageNewApp.cshtml")
         </text>
     }
     <input type="hidden" id="uploadUrl" value="@(NewCrmCore.Infrastructure.Appsetting.UploadUrl)">
