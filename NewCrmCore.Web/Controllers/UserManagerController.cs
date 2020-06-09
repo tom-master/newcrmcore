@@ -26,30 +26,32 @@ namespace NewCrmCore.Web.Controllers
         #region 页面
 
         /// <summary>
-        /// 首页
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        /// <summary>
         /// 创建新账户
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet]
-        public new async Task<IActionResult> User(Int32 userId = 0)
+        public async Task<IActionResult> InitUserAsync(Int32 userId = 0)
         {
+            UserDto userDto = null;
+            var response = new ResponseModel<dynamic>();
             if (userId != 0)
             {
-                ViewData["User"] = await _userServices.GetUserAsync(userId);
+                userDto = await _userServices.GetUserAsync(userId);
+                if (userDto == null)
+                {
+                    response.Message = "获取用户失败";
+                    response.IsSuccess = false;
+                }
             }
-            ViewData["Roles"] = (await _securityServices.GetRolesAsync("", 1, 100)).Models;
-            ViewData["UniqueToken"] = CreateUniqueTokenAsync(UserInfo.Id);
-            return View();
+            var roleDtos = await _securityServices.GetRolesAsync("", 1, 100);
+            var uniqueToken = await CreateUniqueTokenAsync(UserInfo.Id);
+
+            response.Model = new { roleDtos, userDto, uniqueToken };
+            response.IsSuccess = true;
+            response.Message = "创建新账户初始化成功";
+
+            return Json(response);
         }
 
         #endregion
@@ -181,7 +183,7 @@ namespace NewCrmCore.Web.Controllers
         {
             Parameter.Validate(userName, true);
             Parameter.Validate(userType, true);
-            var response = new ResponseModels<IList<UserDto>>();
+            var response = new ResponsePaging<IList<UserDto>>();
             var result = await _userServices.GetUsersAsync(userName, userType, pageIndex, pageSize);
             if (result != null)
             {
