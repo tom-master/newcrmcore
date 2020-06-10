@@ -28,29 +28,30 @@ namespace NewCrmCore.Web.Controllers
         #region 角色
 
         /// <summary>
-        /// 首页
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        /// <summary>
         /// 创建新角色
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> CreateNewRole(Int32 roleId = 0)
+        public async Task<IActionResult> CreateNewRoleInit(Int32 roleId = 0)
         {
+            var response = new ResponseModel<dynamic>();
+            RoleDto roleDto = null;
             if (roleId != 0)
             {
-                ViewData["RoleResult"] = await _securityServices.GetRoleAsync(roleId);
+                roleDto = await _securityServices.GetRoleAsync(roleId);
+                if (roleDto == null)
+                {
+                    response.IsSuccess = false;
+                    response.Message = "角色初始化失败";
+                    return Json(response);
+                }
             }
-            ViewData["UniqueToken"] = CreateUniqueTokenAsync(UserInfo.Id);
-            return View();
+            var uniqueToken = CreateUniqueTokenAsync(UserInfo.Id);
+            response.Model = new { roleDto, uniqueToken };
+            response.IsSuccess = true;
+            response.Message = "创建新角色初始化成功";
+            return Json(response);
         }
 
         /// <summary>
@@ -59,25 +60,42 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="roleId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> AttachmentPower(Int32 roleId)
+        public async Task<IActionResult> AttachmentPowerInit(Int32 roleId)
         {
             #region 参数验证
             Parameter.Validate(roleId);
             #endregion
 
-            var role = new RoleDto();
+            var roleDto = new RoleDto();
+            var response = new ResponseModel<dynamic>();
             if (roleId != 0)
             {
-                role = await _securityServices.GetRoleAsync(roleId);
-                ViewData["RolePowerResult"] = role;
+                roleDto = await _securityServices.GetRoleAsync(roleId);
+                if (roleDto == null)
+                {
+                    response.IsSuccess = true;
+                    response.Message = "获取角色失败";
+                    return Json(response);
+                }
             }
-            var result = new List<AppDto>();
-            if (role.Powers.Any())
+            var appDtos = new List<AppDto>();
+            if (roleDto.Powers.Any())
             {
-                result = await _appServices.GetSystemAppAsync(role.Powers.Select(s => s.Id).ToArray());
+                appDtos = await _appServices.GetSystemAppAsync(roleDto.Powers.Select(s => s.Id).ToArray());
+                if (appDtos == null)
+                {
+                    response.IsSuccess = false;
+                    response.Message = "获取角色对应的系统应用失败";
+                    return Json(response);
+                }
             }
-            ViewData["UniqueToken"] = CreateUniqueTokenAsync(UserInfo.Id);
-            return View(result);
+            var uniqueToken = CreateUniqueTokenAsync(UserInfo.Id);
+
+            response.Model = new { roleDto, appDtos, uniqueToken };
+            response.IsSuccess = true;
+            response.Message = "附加角色权限初始化成功";
+
+            return Json(response);
         }
 
         #endregion
@@ -91,8 +109,19 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> AddSystemAppGotoPower()
         {
-            ViewData["SystemApp"] = await _appServices.GetSystemAppAsync();
-            return View();
+            var systemApps = await _appServices.GetSystemAppAsync();
+            var response = new ResponseModel<dynamic>();
+            if (systemApps == null || !systemApps.Any())
+            {
+                response.Message = "获取系统应用失败";
+                response.IsSuccess = true;
+                return Json(response);
+            }
+
+            response.Model = new { systemApps };
+            response.IsSuccess = true;
+            response.Message = "添加系统应用到权限初始化成功";
+            return Json(response);
         }
 
         #endregion
@@ -196,7 +225,7 @@ namespace NewCrmCore.Web.Controllers
         {
             Parameter.Validate(roleName, true);
             var result = await _securityServices.GetRolesAsync(roleName, pageIndex, pageSize);
-            return Json(new ResponseModels<IList<RoleDto>>
+            return Json(new ResponsePaging<IList<RoleDto>>
             {
                 IsSuccess = true,
                 Message = "获取角色列表成功",
