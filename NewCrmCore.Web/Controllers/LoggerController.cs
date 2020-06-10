@@ -19,14 +19,6 @@ namespace NewCrmCore.Web.Controllers
         }
 
         #region 页面
-        /// <summary>
-        /// 首页
-        /// </summary> 
-        [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         #endregion
 
@@ -45,7 +37,7 @@ namespace NewCrmCore.Web.Controllers
         {
             Parameter.Validate(userName, true);
             var result = await _loggerServices.GetLogsAsync(userName, loglevel, pageIndex, pageSize);
-            return Json(new ResponseModels<IList<LogDto>>
+            return Json(new ResponsePaging<IList<LogDto>>
             {
                 IsSuccess = true,
                 Message = "获取日志列表成功",
