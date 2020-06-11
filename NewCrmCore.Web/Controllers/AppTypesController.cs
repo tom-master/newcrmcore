@@ -23,30 +23,30 @@ namespace NewCrmCore.Web.Controllers
         #region 类目管理
 
         /// <summary>
-        /// 首页
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        /// <summary>
         /// 创建新的类目
         /// </summary>
         /// <param name="appTypeId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> CreateNewAppType(Int32 appTypeId = 0)
+        public async Task<IActionResult> CreateNewAppTypeInit(Int32 appTypeId = 0)
         {
-            AppTypeDto result = null;
+            AppTypeDto appTypeDto = null;
+            var response = new ResponseModel<dynamic>();
             if (appTypeId != 0)
             {
-                result = (await _appServices.GetAppTypesAsync()).FirstOrDefault(appType => appType.Id == appTypeId);
+                appTypeDto = (await _appServices.GetAppTypesAsync()).FirstOrDefault(appType => appType.Id == appTypeId);
+                if (appTypeDto == null)
+                {
+                    response.IsSuccess = false;
+                    response.Message = "未获取到应用类型";
+                    return Json(response);
+                }
             }
-            ViewData["UniqueToken"] = CreateUniqueTokenAsync(UserInfo.Id);
-            return View(result);
+            var uniqueToken = CreateUniqueTokenAsync(UserInfo.Id);
+            response.Model = new { appTypeDto, uniqueToken };
+            response.IsSuccess = true;
+            response.Message = "创建类目初始化成功";
+            return Json(response);
         }
 
         #endregion
@@ -142,7 +142,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> GetTypes(Int32 pageIndex, Int32 pageSize, String searchText)
         {
             var result = (await _appServices.GetAppTypesAsync()).Where(appType => String.IsNullOrEmpty(searchText) || appType.Name.Contains(searchText)).OrderByDescending(d => d.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
-            return Json(new ResponseModels<IList<AppTypeDto>>
+            return Json(new ResponsePaging<IList<AppTypeDto>>
             {
                 Message = "app类型获取成功",
                 IsSuccess = true,
