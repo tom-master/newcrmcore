@@ -33,7 +33,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> AppMarketInit()
         {
             var appTypes = await _appServices.GetAppTypesAsync();
             if (!UserInfo.IsAdmin)
@@ -41,17 +41,24 @@ namespace NewCrmCore.Web.Controllers
                 appTypes = appTypes.Where(w => !w.IsSystem).ToList();
             }
 
-            ViewData["AppTypes"] = appTypes;
-            ViewData["TodayRecommendApp"] = await _appServices.GetTodayRecommendAsync(UserInfo.Id);
-
+            var todayRecommendApp = await _appServices.GetTodayRecommendAsync(UserInfo.Id);
             var user = await _userServices.GetUserAsync(UserInfo.Id);
-            ViewData["UserName"] = user.Name;
-
             var myApp = await _appServices.GetDevelopAndNotReleaseCountAsync(UserInfo.Id);
-            ViewData["allCount"] = myApp.allCount;
-            ViewData["notReleaseCount"] = myApp.notReleaseCount;
+            var response = new ResponseModel<dynamic>
+            {
+                Model = new
+                {
+                    appTypes,
+                    todayRecommendApp,
+                    UserName = user.Name,
+                    allCount = myApp.allCount,
+                    notReleaseCount = myApp.notReleaseCount
+                },
+                IsSuccess = true,
+                Message = "应用市场初始化成功"
+            };
 
-            return View();
+            return Json(response);
         }
 
         /// <summary>
@@ -60,17 +67,24 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="appId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> AppDetail(Int32 appId)
+        public async Task<IActionResult> AppDetailInit(Int32 appId)
         {
             #region 参数验证
             Parameter.Validate(appId);
             #endregion
 
-            ViewData["IsInstallApp"] = await _appServices.IsInstallAppAsync(UserInfo.Id, appId);
-            var result = await _appServices.GetAppAsync(appId, UserInfo.Id);
-            ViewData["UserName"] = result.UserName;
+            var isInstallApp = await _appServices.IsInstallAppAsync(UserInfo.Id, appId);
+            var appResult = await _appServices.GetAppAsync(appId, UserInfo.Id);
 
-            return View(result);
+            var response = new ResponseModel<dynamic>
+            {
+                Model = new { isInstallApp, appResult.UserName },
+                IsSuccess = true,
+                Message = "应用详情初始化成功"
+            };
+
+
+            return Json(response);
         }
 
         /// <summary>
@@ -78,7 +92,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> UserAppManage()
+        public async Task<IActionResult> UserAppManageInit()
         {
             var appTypes = await _appServices.GetAppTypesAsync();
             if (!UserInfo.IsAdmin)
@@ -86,10 +100,15 @@ namespace NewCrmCore.Web.Controllers
                 appTypes = appTypes.Where(w => !w.IsSystem).ToList();
             }
 
-            ViewData["AppTypes"] = appTypes;
-            ViewData["AppStyles"] = _appServices.GetAppStyles().ToList();
-            ViewData["AppStates"] = _appServices.GetAppStates().ToList();
-            return View();
+            var appStyles = _appServices.GetAppStyles().ToList();
+            var appStates = _appServices.GetAppStates().ToList();
+            var response = new ResponseModel<dynamic>
+            {
+                Model = new { appTypes, appStates, appStyles },
+                IsSuccess = true,
+                Message = "用户应用管理初始化成功"
+            };
+            return Json(response);
         }
 
         /// <summary>
@@ -100,21 +119,30 @@ namespace NewCrmCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> UserAppManageInfo(Int32 appId)
         {
-            AppDto result = null;
+            AppDto appDto = null;
+            var response = new ResponseModel<dynamic>();
             if (appId != 0)// 如果appId为0则是新创建app
             {
-                result = await _appServices.GetAppAsync(appId, UserInfo.Id);
-                ViewData["AppState"] = result.AppAuditState;
+                appDto = await _appServices.GetAppAsync(appId, UserInfo.Id);
+                if (appDto == null)
+                {
+                    response.IsSuccess = false;
+                    response.Message = "未获取到我的应用";
+                    return Json(response);
+                }
             }
             var appTypes = await _appServices.GetAppTypesAsync();
             if (!UserInfo.IsAdmin)
             {
                 appTypes = appTypes.Where(w => !w.IsSystem).ToList();
             }
-            ViewData["UniqueToken"] = CreateUniqueTokenAsync(UserInfo.Id);
-            ViewData["AppTypes"] = appTypes;
-            ViewData["UserInfo.Id"] = UserInfo.Id;
-            return View(result);
+            var uniqueToken = CreateUniqueTokenAsync(UserInfo.Id);
+
+            response.Model = new { appTypes, UserId = UserInfo.Id, appDto };
+            response.IsSuccess = true;
+            response.Message = "我的应用初始化成功";
+
+            return Json(response);
         }
 
 
@@ -288,7 +316,7 @@ namespace NewCrmCore.Web.Controllers
         {
             Parameter.Validate(searchText, true);
 
-            var response = new ResponseModels<IList<AppDto>>();
+            var response = new ResponsePaging<IList<AppDto>>();
             var result = await _appServices.GetAppsAsync(UserInfo.Id, appTypeId, orderId, searchText, pageIndex, pageSize);
             if (result != null)
             {
@@ -323,7 +351,7 @@ namespace NewCrmCore.Web.Controllers
         {
             Parameter.Validate(searchText, true);
 
-            var response = new ResponseModels<IList<AppDto>>();
+            var response = new ResponsePaging<IList<AppDto>>();
             var result = await _appServices.GetUserAppsAsync(UserInfo.Id, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize);
             if (result != null)
             {
