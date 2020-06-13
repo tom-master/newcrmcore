@@ -8,7 +8,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Web.Controllers
 {
-    public class UserSettingController : BaseController
+    public class UserSettingController : NewCrmController
     {
         private IUserServices _userServices;
 
