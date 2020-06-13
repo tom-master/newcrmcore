@@ -28,7 +28,7 @@ namespace NewCrmCore.Web.Controllers
         }
     }
 
-    public class ResponseModels<T> : ResponseModel<T>
+    public class ResponsePaging<T> : ResponseModel<T>
     {
         public Int32 TotalCount { get; set; }
     }

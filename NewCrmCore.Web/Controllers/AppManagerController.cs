@@ -29,13 +29,18 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> AppManagerInit()
         {
-            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();
-            ViewData["AppStyles"] = _appServices.GetAppStyles().ToList();
-            ViewData["AppStates"] = _appServices.GetAppStates().Where(w => w.Name == "未审核" || w.Name == "已发布").ToList();
+            var appTypes = await _appServices.GetAppTypesAsync();
+            var appStyles = _appServices.GetAppStyles().ToList();
+            var appStates = _appServices.GetAppStates().Where(w => w.Name == "未审核" || w.Name == "已发布").ToList();
 
-            return View();
+            return Json(new ResponseModel<dynamic>
+            {
+                Model = new { appTypes, appStyles, appStates },
+                IsSuccess = true,
+                Message = "应用管理初始化成功"
+            });
         }
 
         /// <summary>
@@ -44,17 +49,28 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="appId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> AppAudit(Int32 appId)
+        public async Task<IActionResult> AppAuditInit(Int32 appId)
         {
             AppDto appResult = null;
+            var response = new ResponseModel<dynamic>();
             if (appId != 0)// 如果appId为0则是新创建app
             {
                 appResult = await _appServices.GetAppAsync(appId, UserInfo.Id);
-                ViewData["AppState"] = appResult.AppAuditState;
+                if (appResult == null)
+                {
+                    response.IsSuccess = false;
+                    response.Message = "没有获取到指定的应用";
+                    return Json(response);
+                }
             }
-            ViewData["UniqueToken"] = CreateUniqueTokenAsync(UserInfo.Id);
-            ViewData["AppTypes"] = await _appServices.GetAppTypesAsync();
-            return View(appResult);
+            var uniqueToken = CreateUniqueTokenAsync(UserInfo.Id);
+            var appTypes = await _appServices.GetAppTypesAsync();
+
+            response.Model = new { appResult, uniqueToken, appTypes };
+            response.IsSuccess = true;
+            response.Message = "应用审核初始化成功";
+
+            return Json(response);
         }
 
         #endregion
@@ -156,7 +172,7 @@ namespace NewCrmCore.Web.Controllers
                 appDto.IsCreater = appDto.UserId == UserInfo.Id;
             }
 
-            return Json(new ResponseModels<IList<AppDto>>
+            return Json(new ResponsePaging<IList<AppDto>>
             {
                 TotalCount = result.TotalCount,
                 IsSuccess = true,
