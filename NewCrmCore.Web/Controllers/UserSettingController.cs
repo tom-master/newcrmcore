@@ -24,11 +24,16 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> InitUserSettingAsync()
         {
             var user = await _userServices.GetUserAsync(UserInfo.Id);
-            ViewData["UniqueToken"] = CreateUniqueTokenAsync(UserInfo.Id);
-            return View(user);
+            var uniqueToken = await CreateUniqueTokenAsync(UserInfo.Id);
+            return Json(new ResponseModel<dynamic>
+            {
+                Model = new { user, uniqueToken },
+                Message = "用户设置初始化成功",
+                IsSuccess = true
+            });
         }
 
         #endregion
@@ -41,7 +46,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="forms"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ModifyLockPassword(IFormCollection forms)
+        public async Task<IActionResult> ModifyLockPasswordAsync(IFormCollection forms)
         {
             #region 参数验证
             Parameter.Validate(forms);
@@ -66,7 +71,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="userFace"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ModifyFace(String userFace)
+        public async Task<IActionResult> ModifyFaceAsync(String userFace)
         {
             #region 参数验证
             Parameter.Validate(userFace);
@@ -91,7 +96,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="forms"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ModifyPassword(IFormCollection forms)
+        public async Task<IActionResult> ModifyPasswordAsync(IFormCollection forms)
         {
             #region 参数验证
             Parameter.Validate(forms);
@@ -116,7 +121,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="param"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CheckPassword(String param)
+        public async Task<IActionResult> CheckPasswordAsync(String param)
         {
             #region 参数验证
             Parameter.Validate(param);

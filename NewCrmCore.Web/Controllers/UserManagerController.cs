@@ -64,7 +64,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> RemoveUser(Int32 userId)
+        public async Task<IActionResult> RemoveUserAsync(Int32 userId)
         {
             #region 参数验证
             Parameter.Validate(userId);
@@ -88,7 +88,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Enable(Int32 userId)
+        public async Task<IActionResult> EnableAsync(Int32 userId)
         {
             #region 参数验证
             Parameter.Validate(userId);
@@ -112,7 +112,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Disable(Int32 userId)
+        public async Task<IActionResult> DisableAsync(Int32 userId)
         {
             #region 参数验证
             Parameter.Validate(userId);
@@ -136,7 +136,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="forms"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateUser(IFormCollection forms)
+        public async Task<IActionResult> CreateUserAsync(IFormCollection forms)
         {
             #region 参数验证
             Parameter.Validate(forms);
@@ -179,7 +179,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Users(String userName, String userType, Int32 pageIndex, Int32 pageSize)
+        public async Task<IActionResult> UsersAsync(String userName, String userType, Int32 pageIndex, Int32 pageSize)
         {
             Parameter.Validate(userName, true);
             Parameter.Validate(userType, true);
@@ -206,7 +206,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="param"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CheckName(String param)
+        public async Task<IActionResult> CheckNameAsync(String param)
         {
             #region 参数验证
             Parameter.Validate(param);
