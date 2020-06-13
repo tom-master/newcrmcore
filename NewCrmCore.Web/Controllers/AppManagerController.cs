@@ -29,7 +29,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> AppManagerInit()
+        public async Task<IActionResult> InitAppManagerAsync()
         {
             var appTypes = await _appServices.GetAppTypesAsync();
             var appStyles = _appServices.GetAppStyles().ToList();
@@ -49,14 +49,14 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="appId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> AppAuditInit(Int32 appId)
+        public async Task<IActionResult> InitAppAuditAsync(Int32 appId)
         {
-            AppDto appResult = null;
+            AppDto app = null;
             var response = new ResponseModel<dynamic>();
             if (appId != 0)// 如果appId为0则是新创建app
             {
-                appResult = await _appServices.GetAppAsync(appId, UserInfo.Id);
-                if (appResult == null)
+                app = await _appServices.GetAppAsync(appId, UserInfo.Id);
+                if (app == null)
                 {
                     response.IsSuccess = false;
                     response.Message = "没有获取到指定的应用";
@@ -66,7 +66,7 @@ namespace NewCrmCore.Web.Controllers
             var uniqueToken = CreateUniqueTokenAsync(UserInfo.Id);
             var appTypes = await _appServices.GetAppTypesAsync();
 
-            response.Model = new { appResult, uniqueToken, appTypes };
+            response.Model = new { app, uniqueToken, appTypes };
             response.IsSuccess = true;
             response.Message = "应用审核初始化成功";
 
@@ -83,7 +83,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="appId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Pass(Int32 appId)
+        public async Task<IActionResult> PassAsync(Int32 appId)
         {
             #region 参数验证	
             Parameter.Validate(appId);
@@ -107,7 +107,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="appId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Remove(Int32 appId)
+        public async Task<IActionResult> RemoveAsync(Int32 appId)
         {
             #region 参数验证	
             Parameter.Validate(appId);
@@ -132,7 +132,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="appId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Deny(Int32 appId)
+        public async Task<IActionResult> DenyAsync(Int32 appId)
         {
             #region 参数验证	
             Parameter.Validate(appId);
@@ -162,7 +162,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetApps(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
+        public async Task<IActionResult> GetAppsAsync(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
         {
             Parameter.Validate(searchText, true);
 
@@ -191,7 +191,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="param"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CheckName(String param)
+        public async Task<IActionResult> CheckNameAsync(String param)
         {
             #region 参数验证
             Parameter.Validate(param);
@@ -211,7 +211,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="param"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CheckUrl(String param)
+        public async Task<IActionResult> CheckUrlAsync(String param)
         {
             #region 参数验证
             Parameter.Validate(param);
@@ -231,7 +231,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="appId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Recommend(Int32 appId)
+        public async Task<IActionResult> RecommendAsync(Int32 appId)
         {
             #region 参数验证	
             Parameter.Validate(appId);

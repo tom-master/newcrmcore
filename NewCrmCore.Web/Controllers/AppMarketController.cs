@@ -33,7 +33,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> AppMarketInit()
+        public async Task<IActionResult> InitAppMarketAsync()
         {
             var appTypes = await _appServices.GetAppTypesAsync();
             if (!UserInfo.IsAdmin)
@@ -67,7 +67,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="appId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> AppDetailInit(Int32 appId)
+        public async Task<IActionResult> InitAppDetailAsync(Int32 appId)
         {
             #region 参数验证
             Parameter.Validate(appId);
@@ -92,7 +92,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> UserAppManageInit()
+        public async Task<IActionResult> InitUserAppManageAsync()
         {
             var appTypes = await _appServices.GetAppTypesAsync();
             if (!UserInfo.IsAdmin)
@@ -117,7 +117,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="appId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> UserAppManageInfo(Int32 appId)
+        public async Task<IActionResult> InitUserAppManageInfoAsync(Int32 appId)
         {
             AppDto appDto = null;
             var response = new ResponseModel<dynamic>();
@@ -156,7 +156,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ModifyStar(ModifyStar model)
+        public async Task<IActionResult> ModifyStarAsync(ModifyStar model)
         {
             #region 参数验证
             Parameter.Validate(model.AppId);
@@ -181,7 +181,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Install(Install model)
+        public async Task<IActionResult> InstallAsync(Install model)
         {
             #region 参数验证
             Parameter.Validate(model.AppId);
@@ -206,7 +206,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ModifyIcon(ModifyIconForApp model)
+        public async Task<IActionResult> ModifyIconAsync(ModifyIconForApp model)
         {
             #region 参数验证
             Parameter.Validate(model.AppId);
@@ -233,7 +233,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="forms"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Create(IFormCollection forms)
+        public async Task<IActionResult> CreateAsync(IFormCollection forms)
         {
             #region 参数验证
             Parameter.Validate(forms);
@@ -260,7 +260,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="appId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Release(Int32 appId)
+        public async Task<IActionResult> ReleaseAsync(Int32 appId)
         {
             #region 参数验证
             Parameter.Validate(appId);
@@ -284,7 +284,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="forms"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ModifyInfo(IFormCollection forms)
+        public async Task<IActionResult> ModifyAppInfoAsync(IFormCollection forms)
         {
             #region 参数验证
             Parameter.Validate(forms);
@@ -312,7 +312,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetApps(Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize)
+        public async Task<IActionResult> GetAppsAsync(Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize)
         {
             Parameter.Validate(searchText, true);
 
@@ -347,7 +347,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetUserApps(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
+        public async Task<IActionResult> GetUserAppsAsync(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
         {
             Parameter.Validate(searchText, true);
 
@@ -378,7 +378,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="appId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Remove(Int32 appId)
+        public async Task<IActionResult> RemoveAsync(Int32 appId)
         {
             #region 参数验证
             Parameter.Validate(appId);
