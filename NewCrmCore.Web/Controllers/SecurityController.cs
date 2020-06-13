@@ -33,7 +33,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="roleId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> CreateNewRoleInit(Int32 roleId = 0)
+        public async Task<IActionResult> InitCreateNewRoleAsync(Int32 roleId = 0)
         {
             var response = new ResponseModel<dynamic>();
             RoleDto roleDto = null;
@@ -60,7 +60,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="roleId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> AttachmentPowerInit(Int32 roleId)
+        public async Task<IActionResult> InitAttachmentPowerAsync(Int32 roleId)
         {
             #region 参数验证
             Parameter.Validate(roleId);
@@ -107,7 +107,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> AddSystemAppGotoPower()
+        public async Task<IActionResult> AddSystemAppGotoPowerAsync()
         {
             var systemApps = await _appServices.GetSystemAppAsync();
             var response = new ResponseModel<dynamic>();
@@ -136,7 +136,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="roleId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> RemoveRole(Int32 roleId)
+        public async Task<IActionResult> RemoveRoleAsync(Int32 roleId)
         {
             #region 参数验证
             Parameter.Validate(roleId);
@@ -161,7 +161,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="roleId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateRole(IFormCollection forms, Int32 roleId = 0)
+        public async Task<IActionResult> CreateRoleAsync(IFormCollection forms, Int32 roleId = 0)
         {
             #region 参数验证
             Parameter.Validate(forms);
@@ -192,7 +192,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="appIds"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetSystemApp(String appIds)
+        public async Task<IActionResult> GetSystemAppAsync(String appIds)
         {
             #region 参数验证
             Parameter.Validate(appIds);
@@ -221,7 +221,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetRoles(String roleName, Int32 pageIndex, Int32 pageSize)
+        public async Task<IActionResult> GetRolesAsync(String roleName, Int32 pageIndex, Int32 pageSize)
         {
             Parameter.Validate(roleName, true);
             var result = await _securityServices.GetRolesAsync(roleName, pageIndex, pageSize);
@@ -244,7 +244,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="param"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CheckName(String param)
+        public async Task<IActionResult> CheckNameAsync(String param)
         {
             Parameter.Validate(param);
             var result = await _securityServices.CheckRoleNameAsync(param);
@@ -261,7 +261,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="param"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CheckRoleIdentity(String param)
+        public async Task<IActionResult> CheckRoleIdentityAsync(String param)
         {
             Parameter.Validate(param);
             var result = await _securityServices.CheckRoleIdentityAsync(param);
@@ -278,7 +278,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="forms"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> AddAppToRole(IFormCollection forms)
+        public async Task<IActionResult> AddAppToRoleAsync(IFormCollection forms)
         {
             #region 参数验证
             Parameter.Validate(forms);

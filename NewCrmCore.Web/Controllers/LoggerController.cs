@@ -33,7 +33,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetLogs(String userName, Int32 loglevel, Int32 pageIndex, Int32 pageSize)
+        public async Task<IActionResult> GetLogsAsync(String userName, Int32 loglevel, Int32 pageIndex, Int32 pageSize)
         {
             Parameter.Validate(userName, true);
             var result = await _loggerServices.GetLogsAsync(userName, loglevel, pageIndex, pageSize);
