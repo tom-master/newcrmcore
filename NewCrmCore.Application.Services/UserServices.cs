@@ -47,7 +47,10 @@ namespace NewCrmCore.Application.Services
             Parameter.Validate(userId);
 
             var config = await CacheHelper.GetOrSetCacheAsync(new ConfigCacheKey(userId), () => _userContext.GetConfigAsync(userId));
-
+            if (config == null)
+            {
+                throw new BusinessException("桌面配置信息获取失败");
+            }
             var configDto = new ConfigDto
             {
                 Id = config.Id,

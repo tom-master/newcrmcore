@@ -44,36 +44,25 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet, AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> InitDeskInfoAsync()
         {
-            ViewBag.Title = "桌面";
+            var response = new ResponseModel<dynamic>();
             if (UserInfo != null)
             {
-                ViewData["User"] = UserInfo;
-
                 var config = await _userServices.GetConfigAsync(UserInfo.Id);
-                ViewData["UserConfig"] = config;
-                ViewData["Desks"] = config.DefaultDeskCount;
-                return View();
+                if (config == null)
+                {
+                    response.IsSuccess = true;
+                    response.Message = "获取桌面配置信息失败";
+                    return Json(response);
+                }
+                response.Model = new { UserInfo, config };
+                response.IsSuccess = true;
+                response.Message = "初始化桌面信息成功";
+                return Json(response);
             }
 
             return RedirectToAction("login", "desk");
-        }
-
-        /// <summary>
-        /// 登陆
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet, AllowAnonymous]
-        public IActionResult Login()
-        {
-            ViewBag.Title = "登陆";
-            if (UserInfo != null)
-            {
-                return RedirectToAction("Index", "Desk");
-            }
-
-            return View();
         }
 
         /// <summary>
@@ -82,15 +71,21 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="memberId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> ConfigMember(Int32 memberId)
+        public async Task<IActionResult> ConfigMemberAsync(Int32 memberId)
         {
             #region 参数验证
             Parameter.Validate(memberId);
             #endregion
 
-            var result = await _deskServices.GetMemberAsync(UserInfo.Id, memberId);
-            ViewData["UniqueToken"] = CreateUniqueTokenAsync(UserInfo.Id);
-            return View(result);
+            var member = await _deskServices.GetMemberAsync(UserInfo.Id, memberId);
+            var uniqueToken = CreateUniqueTokenAsync(UserInfo.Id);
+
+            return Json(new ResponseModel<dynamic>
+            {
+                Model = new { member, uniqueToken },
+                IsSuccess = true,
+                Message = "配置用户应用初始化成功"
+            });
         }
 
         /// <summary>
@@ -98,12 +93,16 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> SystemWallPaper()
+        public async Task<IActionResult> SystemWallPaperAsync()
         {
-            ViewData["UserConfig"] = await _userServices.GetConfigAsync(UserInfo.Id);
-            ViewData["Wallpapers"] = await _wallpaperServices.GetWallpapersAsync();
-
-            return View();
+            var config = await _userServices.GetConfigAsync(UserInfo.Id);
+            var wallpapers = await _wallpaperServices.GetWallpapersAsync();
+            return Json(new ResponseModel<dynamic>
+            {
+                Model = new { config, wallpapers },
+                IsSuccess = true,
+                Message = "获取系统壁纸成功"
+            });
         }
 
         /// <summary>
@@ -111,20 +110,15 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> CustomizeWallpaper()
+        public async Task<IActionResult> CustomizeWallpaperAsync()
         {
-            ViewData["UserConfig"] = await _userServices.GetConfigAsync(UserInfo.Id);
-            return View();
-        }
-
-        /// <summary>
-        /// 设置皮肤
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public IActionResult ConfigSkin()
-        {
-            return View();
+            var config = await _userServices.GetConfigAsync(UserInfo.Id);
+            return Json(new ResponseModel<dynamic>
+            {
+                Model = new { config },
+                IsSuccess = true,
+                Message = "自定义壁纸初始化成功"
+            });
         }
 
         /// <summary>
@@ -132,12 +126,15 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> ConfigDesk()
+        public async Task<IActionResult> ConfigDeskAsync()
         {
-            ViewData["UserConfig"] = await _userServices.GetConfigAsync(UserInfo.Id);
-            ViewData["Desks"] = (await _userServices.GetConfigAsync(UserInfo.Id)).DefaultDeskCount;
-
-            return View();
+            var config = await _userServices.GetConfigAsync(UserInfo.Id);
+            return Json(new ResponseModel<dynamic>
+            {
+                Model = new { config },
+                IsSuccess = true,
+                Message = "桌面设置初始化成功"
+            });
         }
 
 
@@ -151,7 +148,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="loginParameter"></param>
         /// <returns></returns>
         [HttpPost, AllowAnonymous]
-        public async Task<IActionResult> Landing(UserLogin loginParameter)
+        public async Task<IActionResult> LandingAsync(UserLogin loginParameter)
         {
             #region 参数验证
             Parameter.Validate(loginParameter);
@@ -201,7 +198,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="wallpaperId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ModifyWallpaper(Int32 wallpaperId)
+        public async Task<IActionResult> ModifyWallpaperAsync(Int32 wallpaperId)
         {
             #region 参数验证
             Parameter.Validate(wallpaperId);
@@ -225,7 +222,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="wallPaperId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> RemoveWallpaper(Int32 wallPaperId)
+        public async Task<IActionResult> RemoveWallpaperAsync(Int32 wallPaperId)
         {
             #region 参数验证
             Parameter.Validate(wallPaperId);
@@ -249,7 +246,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="wallpaper"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> UploadWallPaper(WallpaperDto wallpaper)
+        public async Task<IActionResult> UploadWallPaperAsync(WallpaperDto wallpaper)
         {
             #region 参数验证
             Parameter.Validate(wallpaper);
@@ -285,7 +282,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="webUrl"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> WebWallpaper(String webUrl)
+        public async Task<IActionResult> WebWallpaperAsync(String webUrl)
         {
             #region 参数验证
             Parameter.Validate(webUrl);
@@ -310,7 +307,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="skin"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ModifySkin(String skin)
+        public async Task<IActionResult> ModifySkinAsync(String skin)
         {
             #region 参数验证
             Parameter.Validate(skin);
@@ -334,7 +331,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ModifyIcon(ModifyIconForMember model)
+        public async Task<IActionResult> ModifyIconAsync(ModifyIconForMember model)
         {
             #region 参数验证
             Parameter.Validate(model.MemberId);
@@ -360,7 +357,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="unlockPassword"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> UnlockScreen(String unlockPassword)
+        public async Task<IActionResult> UnlockScreenAsync(String unlockPassword)
         {
             #region 参数验证
             Parameter.Validate(unlockPassword);
@@ -385,7 +382,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> LogoutAsync()
         {
             await _userServices.LogoutAsync(UserInfo.Id);
             InternalLogout();
@@ -404,7 +401,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetSkin()
+        public async Task<IActionResult> GetSkinAsync()
         {
             var skinName = (await _userServices.GetConfigAsync(UserInfo.Id)).Skin;
             return Json(new ResponseModel<String>
@@ -424,7 +421,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetWallpaper()
+        public async Task<IActionResult> GetWallpaperAsync()
         {
             var result = await _userServices.GetConfigAsync(UserInfo.Id);
 
@@ -458,7 +455,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="type"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> CreateWindow(Int32 id, String type)
+        public async Task<IActionResult> CreateWindowAsync(Int32 id, String type)
         {
 
             #region 参数验证
@@ -503,7 +500,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateFolder(CreateFolder model)
+        public async Task<IActionResult> CreateFolderAsync(CreateFolder model)
         {
             #region 参数验证
             Parameter.Validate(model.FolderName);
@@ -529,7 +526,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="memberId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Uninstall(Int32 memberId)
+        public async Task<IActionResult> UninstallAsync(Int32 memberId)
         {
             #region 参数验证 
             Parameter.Validate(memberId);
@@ -553,7 +550,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="param"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CheckName(String param)
+        public async Task<IActionResult> CheckNameAsync(String param)
         {
             #region 参数验证
             Parameter.Validate(param);
@@ -573,7 +570,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> MemberMove(MemberMove model)
+        public async Task<IActionResult> MemberMoveAsync(MemberMove model)
         {
             #region 参数验证
             Parameter.Validate(model.MoveType);
@@ -628,7 +625,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="forms"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ModifyMemberInfo(IFormCollection forms)
+        public async Task<IActionResult> ModifyMemberInfoAsync(IFormCollection forms)
         {
             #region 参数验证
             Parameter.Validate(forms);
@@ -664,7 +661,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetUploadWallPapers()
+        public async Task<IActionResult> GetUploadWallPapersAsync()
         {
             var result = await _wallpaperServices.GetUploadWallpaperAsync(UserInfo.Id);
             return Json(new ResponseModel<IList<WallpaperDto>>
@@ -684,7 +681,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetSkins()
+        public async Task<IActionResult> GetSkinsAsync()
         {
             var result = await _deskServices.GetAllSkinAsync(Appsetting.Skin);
             return Json(new ResponseModel<dynamic>
@@ -705,7 +702,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ModifyDockPosition(ModifyDockPosition model)
+        public async Task<IActionResult> ModifyDockPositionAsync(ModifyDockPosition model)
         {
             #region 参数验证
             Parameter.Validate(model.Pos);
@@ -730,7 +727,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="source"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ModifyWallpaperSource(String source)
+        public async Task<IActionResult> ModifyWallpaperSourceAsync(String source)
         {
             #region 参数验证
             Parameter.Validate(source);
@@ -754,7 +751,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="appSize"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ModifySize(Int32 appSize)
+        public async Task<IActionResult> ModifySizeAsync(Int32 appSize)
         {
             #region 参数验证
             Parameter.Validate(appSize);
@@ -777,7 +774,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetUserFace()
+        public async Task<IActionResult> GetUserFaceAsync()
         {
             var result = (await _userServices.GetConfigAsync(UserInfo.Id)).UserFace;
             return Json(new ResponseModel<String>
@@ -798,7 +795,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ModifyFolderInfo(ModifyFolderInfo model)
+        public async Task<IActionResult> ModifyFolderInfoAsync(ModifyFolderInfo model)
         {
             #region 参数验证
             Parameter.Validate(model.Name);
@@ -823,7 +820,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetDockPos()
+        public async Task<IActionResult> GetDockPosAsync()
         {
             var result = (await _userServices.GetConfigAsync(UserInfo.Id)).DockPosition;
 
@@ -845,7 +842,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="deskNum"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ModifyDefaultDesk(Int32 deskNum)
+        public async Task<IActionResult> ModifyDefaultDeskAsync(Int32 deskNum)
         {
             #region 参数验证
             Parameter.Validate(deskNum);
@@ -869,7 +866,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="appXy"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ModifyXy(String appXy)
+        public async Task<IActionResult> ModifyXyAsync(String appXy)
         {
             #region 参数验证
             Parameter.Validate(appXy);
@@ -893,7 +890,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="wallPaperShowType"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ModifyDisplayModel(String wallPaperShowType)
+        public async Task<IActionResult> ModifyDisplayModelAsync(String wallPaperShowType)
         {
             #region 参数验证
             Parameter.Validate(wallPaperShowType);
@@ -916,7 +913,7 @@ namespace NewCrmCore.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetUserDeskMembers()
+        public async Task<IActionResult> GetUserDeskMembersAsync()
         {
             var result = await _deskServices.GetDeskMembersAsync(UserInfo.Id);
             return Json(new ResponseModel<IDictionary<String, IList<dynamic>>>
@@ -937,7 +934,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="appHorizontal"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ModifyHorizontalSpace(Int32 appHorizontal)
+        public async Task<IActionResult> ModifyHorizontalSpaceAsync(Int32 appHorizontal)
         {
             #region 参数验证
             Parameter.Validate(appHorizontal);
@@ -961,7 +958,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="appVertical"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ModifyVerticalSpace(Int32 appVertical)
+        public async Task<IActionResult> ModifyVerticalSpaceAsync(Int32 appVertical)
         {
             #region 参数验证
             Parameter.Validate(appVertical);
@@ -984,7 +981,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> CheckUnreadNotifyCount(Int32 pageIndex, Int32 pageSize)
+        public async Task<IActionResult> CheckUnreadNotifyCountAsync(Int32 pageIndex, Int32 pageSize)
         {
             #region 参数验证
             Parameter.Validate(pageIndex);
@@ -1006,7 +1003,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="notifyId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ReadNotify(String notifyId)
+        public async Task<IActionResult> ReadNotifyAsync(String notifyId)
         {
             #region 参数验证
             Parameter.Validate(notifyId, true);
