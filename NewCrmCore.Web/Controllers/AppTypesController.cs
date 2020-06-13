@@ -28,7 +28,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="appTypeId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> CreateNewAppTypeInit(Int32 appTypeId = 0)
+        public async Task<IActionResult> InitCreateNewAppTypeAsync(Int32 appTypeId = 0)
         {
             AppTypeDto appTypeDto = null;
             var response = new ResponseModel<dynamic>();
@@ -59,7 +59,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="appTypeId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Remove(Int32 appTypeId)
+        public async Task<IActionResult> RemoveAsync(Int32 appTypeId)
         {
             #region 参数验证
             Parameter.Validate(appTypeId);
@@ -84,7 +84,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="appTypeId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Create(IFormCollection forms, Int32 appTypeId = 0)
+        public async Task<IActionResult> CreateAsync(IFormCollection forms, Int32 appTypeId = 0)
         {
             #region 参数验证
             Parameter.Validate(forms);
@@ -117,7 +117,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="param"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CheckName(String param)
+        public async Task<IActionResult> CheckNameAsync(String param)
         {
             #region 参数验证
             Parameter.Validate(param);
@@ -139,7 +139,7 @@ namespace NewCrmCore.Web.Controllers
         /// <param name="searchText"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetTypes(Int32 pageIndex, Int32 pageSize, String searchText)
+        public async Task<IActionResult> GetTypesAsync(Int32 pageIndex, Int32 pageSize, String searchText)
         {
             var result = (await _appServices.GetAppTypesAsync()).Where(appType => String.IsNullOrEmpty(searchText) || appType.Name.Contains(searchText)).OrderByDescending(d => d.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
             return Json(new ResponsePaging<IList<AppTypeDto>>
