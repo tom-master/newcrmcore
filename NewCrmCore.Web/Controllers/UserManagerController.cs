@@ -11,7 +11,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Web.Controllers
 {
-    public class UserManagerController : BaseController
+    public class UserManagerController : NewCrmController
     {
         private readonly ISecurityServices _securityServices;
 
