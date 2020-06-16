@@ -9,7 +9,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Web.Controllers
 {
-    public class LoggerController : BaseController
+    public class LoggerController : NewCrmController
     {
         private readonly ILoggerServices _loggerServices;
 
