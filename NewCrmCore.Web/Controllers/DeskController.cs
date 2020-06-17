@@ -16,7 +16,7 @@ using Newtonsoft.Json;
 
 namespace NewCrmCore.Web.Controllers
 {
-    public class DeskController : BaseController
+    public class DeskController : NewCrmController
     {
         private readonly IDeskServices _deskServices;
 
