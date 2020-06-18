@@ -11,7 +11,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Web.Controllers
 {
-    public class AppTypesController : BaseController
+    public class AppTypesController : NewCrmController
     {
         private readonly IAppServices _appServices;
 
