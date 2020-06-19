@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace NewCrmCore.Web.Controllers
 {
-    public class AppMarketController : BaseController
+    public class AppMarketController : NewCrmController
     {
         private readonly IAppServices _appServices;
 
