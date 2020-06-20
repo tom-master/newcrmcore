@@ -10,7 +10,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.Web.Controllers
 {
-    public class AppManagerController : BaseController
+    public class AppManagerController : NewCrmController
     {
         private readonly IAppServices _appServices;
 
