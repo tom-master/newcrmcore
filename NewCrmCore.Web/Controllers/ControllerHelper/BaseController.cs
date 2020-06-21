@@ -14,7 +14,7 @@ using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 namespace NewCrmCore.Web.Controllers
 {
     //[Authorize]
-    public class BaseController : Controller
+    public class BaseController : ControllerBase
     {
         public UserDto UserInfo
         {
