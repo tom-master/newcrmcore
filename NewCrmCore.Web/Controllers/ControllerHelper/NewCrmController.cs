@@ -45,5 +45,19 @@ namespace NewCrmCore.Web.Controllers
         {
             await CacheHelper.RemoveKeyWhenModify(new GlobalUniqueTokenCacheKey(userId.ToString()));
         }
+
+        protected IActionResult Json(Object model)
+        {
+            var m = model as ResponseModel;
+            if (m != null)
+            {
+                if (m.IsSuccess)
+                {
+                    return Ok(model);
+                }
+                return BadRequest(model);
+            }
+            throw new BusinessException($@"响应中模型的类型必须为:{nameof(ResponseModel)}类型或派生类型");
+        }
     }
 }

@@ -248,7 +248,20 @@ namespace NewCrmCore.Web.Controllers
         {
             Parameter.Validate(param);
             var result = await _securityServices.CheckRoleNameAsync(param);
-            return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "角色名称已存在" });
+            var response = new ResponseModel();
+            if (!result)
+            {
+                response.Model = "y";
+                response.IsSuccess = true;
+                response.Model = "";
+            }
+            else
+            {
+                response.Model = "n";
+                response.IsSuccess = false;
+                response.Model = "角色名称已存在";
+            }
+            return Json(response);
         }
 
         #endregion
@@ -265,7 +278,20 @@ namespace NewCrmCore.Web.Controllers
         {
             Parameter.Validate(param);
             var result = await _securityServices.CheckRoleIdentityAsync(param);
-            return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "角色标识已存在" });
+            var response = new ResponseModel();
+            if (!result)
+            {
+                response.Model = "y";
+                response.IsSuccess = true;
+                response.Model = "";
+            }
+            else
+            {
+                response.Model = "n";
+                response.IsSuccess = false;
+                response.Model = "角色标识已存在";
+            }
+            return Json(response);
         }
 
         #endregion

@@ -124,7 +124,20 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var result = await _appServices.CheckAppTypeNameAsync(param);
-            return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "类型名称已存在" });
+            var response = new ResponseModel();
+            if (!result)
+            {
+                response.Model = "y";
+                response.IsSuccess = true;
+                response.Model = "";
+            }
+            else
+            {
+                response.Model = "n";
+                response.IsSuccess = false;
+                response.Model = "类型名称已存在";
+            }
+            return Json(response);
         }
 
         #endregion

@@ -198,7 +198,20 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var result = await _userServices.CheckAppNameAsync(param);
-            return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "应用名称已存在" });
+            var response = new ResponseModel();
+            if (!result)
+            {
+                response.Model = "y";
+                response.IsSuccess = true;
+                response.Model = "";
+            }
+            else
+            {
+                response.Model = "n";
+                response.IsSuccess = false;
+                response.Model = "应用名称已存在";
+            }
+            return Json(response);
         }
 
         #endregion
@@ -218,7 +231,20 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var result = await _userServices.CheckAppUrlAsync(param);
-            return Json(!result ? new { status = "y", info = "" } : new { status = "n", info = "应用Url已存在" });
+            var response = new ResponseModel();
+            if (!result)
+            {
+                response.Model = "y";
+                response.IsSuccess = true;
+                response.Model = "";
+            }
+            else
+            {
+                response.Model = "n";
+                response.IsSuccess = false;
+                response.Model = "应用Url已存在";
+            }
+            return Json(response);
         }
 
         #endregion
