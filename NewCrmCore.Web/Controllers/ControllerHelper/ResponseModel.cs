@@ -1,21 +1,18 @@
 ﻿using System;
 namespace NewCrmCore.Web.Controllers
 {
-    public class ResponseModel<T>
+    public class ResponseBase
     {
-        public ResponseModel()
+        public ResponseBase()
         {
             IsSuccess = false;
             Message = "";
-            Model = default(T);
             Token = "";
         }
 
         public Boolean IsSuccess { get; set; }
 
         public String Message { get; set; }
-
-        public T Model { get; set; }
 
         public String Token { get; set; }
 
@@ -28,12 +25,28 @@ namespace NewCrmCore.Web.Controllers
         }
     }
 
+    public class ResponseModel<T> : ResponseBase
+    {
+        public T Model { get; set; }
+
+        public ResponseModel() : base()
+        {
+            Model = default(T);
+        }
+    }
+
     public class ResponsePaging<T> : ResponseModel<T>
     {
         public Int32 TotalCount { get; set; }
+
+        public ResponsePaging()
+        {
+            TotalCount = 0;
+        }
     }
 
-    public class ResponseModel : ResponseModel<String>
+
+    public class ResponseSimple : ResponseModel<String>
     {
 
     }

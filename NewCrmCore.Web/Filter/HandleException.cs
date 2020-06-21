@@ -25,7 +25,7 @@ namespace NewCrmCore.Web.Filter
 
             var businessException = filterContext.Exception is BusinessException;
 
-            var response = new ResponseModel
+            var response = new ResponseSimple
             {
                 IsSuccess = false,
                 Message = businessException ? filterContext.Exception.Message : "出现未知错误，请查看日志",

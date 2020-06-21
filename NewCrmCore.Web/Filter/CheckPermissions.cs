@@ -57,7 +57,7 @@ namespace NewCrmCore.Web.Filter
 
         private void ReturnMessage(AuthorizationFilterContext filterContext, String message)
         {
-            var response = new ResponseModel
+            var response = new ResponseSimple
             {
                 IsSuccess = false,
                 Message = message

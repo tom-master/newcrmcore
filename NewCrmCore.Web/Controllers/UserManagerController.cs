@@ -119,7 +119,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _userServices.DisableAsync(userId);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "禁用账户成功"
@@ -213,7 +213,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var result = await _userServices.CheckUserNameExistAsync(param);
-            var response = new ResponseModel();
+            var response = new ResponseSimple();
             if (!result)
             {
                 response.Model = "y";

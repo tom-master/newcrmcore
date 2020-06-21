@@ -164,7 +164,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _appServices.ModifyAppStarAsync(UserInfo.Id, model.AppId, model.StarCount);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "打分成功"
@@ -189,7 +189,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _appServices.InstallAppAsync(UserInfo.Id, model.AppId, model.DeskNum);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "安装成功"
@@ -243,10 +243,10 @@ namespace NewCrmCore.Web.Controllers
             appDto.UserId = UserInfo.Id;
             await _appServices.CreateNewAppAsync(appDto);
 
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
-                Message = "app创建成功"
+                Message = "应用创建成功"
             });
         }
 
@@ -267,10 +267,10 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _appServices.ReleaseAppAsync(appId);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
-                Message = "app发布成功"
+                Message = "应用发布成功"
             });
         }
 
@@ -291,7 +291,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _appServices.ModifyUserAppInfoAsync(UserInfo.Id, WrapperAppDto(forms));
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "修改app信息成功"
@@ -386,7 +386,7 @@ namespace NewCrmCore.Web.Controllers
 
             await _appServices.RemoveAppAsync(appId);
 
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "删除用户开发的app成功"

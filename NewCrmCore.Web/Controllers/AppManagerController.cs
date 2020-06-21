@@ -90,7 +90,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _appServices.PassAsync(appId);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "app审核通过"
@@ -115,7 +115,7 @@ namespace NewCrmCore.Web.Controllers
 
             await _appServices.RemoveAppAsync(appId);
 
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "删除app成功"
@@ -140,7 +140,7 @@ namespace NewCrmCore.Web.Controllers
 
             await _appServices.DenyAsync(appId);
 
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "app审核不通过"
@@ -198,7 +198,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var result = await _userServices.CheckAppNameAsync(param);
-            var response = new ResponseModel();
+            var response = new ResponseSimple();
             if (!result)
             {
                 response.Model = "y";
@@ -231,7 +231,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var result = await _userServices.CheckAppUrlAsync(param);
-            var response = new ResponseModel();
+            var response = new ResponseSimple();
             if (!result)
             {
                 response.Model = "y";
@@ -264,7 +264,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _appServices.SetTodayRecommandAppAsync(appId);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "设置成功"

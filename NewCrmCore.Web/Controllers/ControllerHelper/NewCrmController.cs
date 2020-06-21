@@ -48,7 +48,7 @@ namespace NewCrmCore.Web.Controllers
 
         protected IActionResult Json(Object model)
         {
-            var m = model as ResponseModel;
+            var m = model as ResponseBase;
             if (m != null)
             {
                 if (m.IsSuccess)
@@ -57,7 +57,7 @@ namespace NewCrmCore.Web.Controllers
                 }
                 return BadRequest(model);
             }
-            throw new BusinessException($@"响应中模型的类型必须为:{nameof(ResponseModel)}类型或派生类型");
+            throw new BusinessException($@"响应中模型的类型必须为:{nameof(ResponseBase)}类型或派生类型");
         }
     }
 }

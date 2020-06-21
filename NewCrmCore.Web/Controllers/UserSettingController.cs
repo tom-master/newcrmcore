@@ -54,7 +54,7 @@ namespace NewCrmCore.Web.Controllers
 
             await _userServices.ModifyLockScreenPasswordAsync(UserInfo.Id, forms["lockpassword"]);
 
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 Message = "锁屏密码修改成功",
                 IsSuccess = true,
@@ -79,7 +79,7 @@ namespace NewCrmCore.Web.Controllers
 
             await _userServices.ModifyUserFaceAsync(UserInfo.Id, userFace);
 
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Model = "头像上传成功"
@@ -104,7 +104,7 @@ namespace NewCrmCore.Web.Controllers
 
             await _userServices.ModifyPasswordAsync(UserInfo.Id, forms["password"], Int32.Parse(forms["lockPwdIsEqLoginPwd"]) == 1);
             InternalLogout();
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 Message = "账户密码修改成功",
                 IsSuccess = true
@@ -128,7 +128,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var result = await _userServices.CheckPasswordAsync(UserInfo.Id, param);
-            var response = new ResponseModel();
+            var response = new ResponseSimple();
             if (!result)
             {
                 response.Model = "y";

@@ -66,7 +66,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _appServices.RemoveAppTypeAsync(appTypeId);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "删除app类型成功"
@@ -100,7 +100,7 @@ namespace NewCrmCore.Web.Controllers
                 await _appServices.ModifyAppTypeAsync(appTypeDto, appTypeId);
             }
 
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "app类型创建成功"
@@ -124,7 +124,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var result = await _appServices.CheckAppTypeNameAsync(param);
-            var response = new ResponseModel();
+            var response = new ResponseSimple();
             if (!result)
             {
                 response.Model = "y";

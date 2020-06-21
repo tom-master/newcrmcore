@@ -205,7 +205,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _wallpaperServices.ModifyWallpaperAsync(UserInfo.Id, wallpaperId);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "设置壁纸成功"
@@ -229,7 +229,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _wallpaperServices.RemoveWallpaperAsync(UserInfo.Id, wallPaperId);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "删除壁纸成功"
@@ -314,7 +314,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _deskServices.ModifySkinAsync(UserInfo.Id, skin);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "更换皮肤成功"
@@ -363,10 +363,11 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(unlockPassword);
             #endregion
 
-            var response = new ResponseModel();
+            var response = new ResponseSimple();
             var result = await _userServices.UnlockScreenAsync(UserInfo.Id, unlockPassword);
             if (result)
             {
+                response.Message = "屏幕解锁成功";
                 response.IsSuccess = true;
             }
 
@@ -386,9 +387,10 @@ namespace NewCrmCore.Web.Controllers
         {
             await _userServices.LogoutAsync(UserInfo.Id);
             InternalLogout();
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
-                IsSuccess = true
+                IsSuccess = true,
+                Message = "注销登陆成功"
             });
         }
 
@@ -404,7 +406,7 @@ namespace NewCrmCore.Web.Controllers
         public async Task<IActionResult> GetSkinAsync()
         {
             var skinName = (await _userServices.GetConfigAsync(UserInfo.Id)).Skin;
-            return Json(new ResponseModel<String>
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Model = skinName,
@@ -509,7 +511,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _deskServices.CreateNewFolderAsync(model.FolderName, model.FolderImg, model.DeskId, UserInfo.Id);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "新建文件夹成功"
@@ -533,7 +535,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _deskServices.UninstallMemberAsync(UserInfo.Id, memberId);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "卸载成功"
@@ -557,7 +559,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             var result = await _deskServices.CheckMemberNameAsync(param);
-            var response = new ResponseModel();
+            var response = new ResponseSimple();
             if (!result)
             {
                 response.Model = "y";
@@ -621,7 +623,7 @@ namespace NewCrmCore.Web.Controllers
                     break;
             }
 
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "移动成功"
@@ -658,7 +660,7 @@ namespace NewCrmCore.Web.Controllers
             };
 
             await _deskServices.ModifyMemberInfoAsync(UserInfo.Id, memberDto);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "修改桌面应用信息成功"
@@ -723,7 +725,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _deskServices.ModifyDockPositionAsync(UserInfo.Id, model.DeskNum, model.Pos);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "更改码头的位置成功"
@@ -747,7 +749,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _deskServices.ModifyWallpaperSourceAsync(source, UserInfo.Id);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "更改壁纸来源成功"
@@ -771,7 +773,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _appServices.ModifyAppIconSizeAsync(UserInfo.Id, appSize);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "更改图标大小成功"
@@ -817,7 +819,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _deskServices.ModifyFolderInfoAsync(UserInfo.Id, model.Name, model.Icon, model.MemberId);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "修改成功"
@@ -862,7 +864,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _deskServices.ModifyDefaultDeskNumberAsync(UserInfo.Id, deskNum);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "更换默认桌面成功"
@@ -886,7 +888,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _appServices.ModifyAppDirectionAsync(UserInfo.Id, appXy);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "更换图标排列方向成功",
@@ -910,7 +912,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _wallpaperServices.ModifyWallpaperModeAsync(UserInfo.Id, wallPaperShowType);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "壁纸显示模式设置成功"
@@ -954,7 +956,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _appServices.ModifyAppHorizontalSpacingAsync(UserInfo.Id, appHorizontal);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "更改图标水平间距成功"
@@ -978,7 +980,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _appServices.ModifyAppVerticalSpacingAsync(UserInfo.Id, appVertical);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "更改图标垂直间距成功"
@@ -1022,7 +1024,7 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(notifyId, true);
             #endregion
 
-            var response = new ResponseModel();
+            var response = new ResponseSimple();
 
             if (String.IsNullOrEmpty(notifyId))
             {

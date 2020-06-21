@@ -143,7 +143,7 @@ namespace NewCrmCore.Web.Controllers
             #endregion
 
             await _securityServices.RemoveRoleAsync(roleId);
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "移除角色成功"
@@ -175,7 +175,7 @@ namespace NewCrmCore.Web.Controllers
             {
                 await _securityServices.AddNewRoleAsync(WapperRoleDto(forms));
             }
-            return Json(new ResponseModel
+            return Json(new ResponseSimple
             {
                 IsSuccess = true,
                 Message = "添加角色成功"
@@ -248,7 +248,7 @@ namespace NewCrmCore.Web.Controllers
         {
             Parameter.Validate(param);
             var result = await _securityServices.CheckRoleNameAsync(param);
-            var response = new ResponseModel();
+            var response = new ResponseSimple();
             if (!result)
             {
                 response.Model = "y";
@@ -278,7 +278,7 @@ namespace NewCrmCore.Web.Controllers
         {
             Parameter.Validate(param);
             var result = await _securityServices.CheckRoleIdentityAsync(param);
-            var response = new ResponseModel();
+            var response = new ResponseSimple();
             if (!result)
             {
                 response.Model = "y";
@@ -310,7 +310,7 @@ namespace NewCrmCore.Web.Controllers
             Parameter.Validate(forms);
             #endregion
 
-            var response = new ResponseModel();
+            var response = new ResponseSimple();
             var powerIds = forms["val_apps_id"].ToString().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(Int32.Parse).ToArray();
             if (powerIds.Any())
             {
