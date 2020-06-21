@@ -203,13 +203,13 @@ namespace NewCrmCore.Web.Controllers
             {
                 response.Model = "y";
                 response.IsSuccess = true;
-                response.Model = "";
+                response.Message = "";
             }
             else
             {
                 response.Model = "n";
                 response.IsSuccess = false;
-                response.Model = "应用名称已存在";
+                response.Message = "应用名称已存在";
             }
             return Json(response);
         }
@@ -236,13 +236,13 @@ namespace NewCrmCore.Web.Controllers
             {
                 response.Model = "y";
                 response.IsSuccess = true;
-                response.Model = "";
+                response.Message = "";
             }
             else
             {
                 response.Model = "n";
                 response.IsSuccess = false;
-                response.Model = "应用Url已存在";
+                response.Message = "应用Url已存在";
             }
             return Json(response);
         }

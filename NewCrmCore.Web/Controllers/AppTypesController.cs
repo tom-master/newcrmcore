@@ -129,13 +129,13 @@ namespace NewCrmCore.Web.Controllers
             {
                 response.Model = "y";
                 response.IsSuccess = true;
-                response.Model = "";
+                response.Message = "";
             }
             else
             {
                 response.Model = "n";
                 response.IsSuccess = false;
-                response.Model = "类型名称已存在";
+                response.Message = "类型名称已存在";
             }
             return Json(response);
         }
