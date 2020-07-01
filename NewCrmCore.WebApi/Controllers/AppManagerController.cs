@@ -10,6 +10,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.WebApi.Controllers
 {
+    [ApiController, Route("api/[controller]")]
     public class AppManagerController : NewCrmController
     {
         private readonly IAppServices _appServices;
