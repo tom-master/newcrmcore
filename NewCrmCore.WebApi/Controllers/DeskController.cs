@@ -17,6 +17,7 @@ using NewCrmCore.WebApi.ApiHelper;
 
 namespace NewCrmCore.WebApi.Controllers
 {
+    [ApiController, Route("api/[controller]")]
     public class DeskController : NewCrmController
     {
         private readonly IDeskServices _deskServices;
