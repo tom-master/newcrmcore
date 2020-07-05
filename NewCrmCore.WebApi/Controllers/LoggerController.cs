@@ -9,6 +9,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.WebApi.Controllers
 {
+    [ApiController, Route("api/[controller]")]
     public class LoggerController : NewCrmController
     {
         private readonly ILoggerServices _loggerServices;
