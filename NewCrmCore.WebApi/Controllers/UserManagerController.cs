@@ -11,6 +11,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.WebApi.Controllers
 {
+    [ApiController, Route("api/[controller]")]
     public class UserManagerController : NewCrmController
     {
         private readonly ISecurityServices _securityServices;
