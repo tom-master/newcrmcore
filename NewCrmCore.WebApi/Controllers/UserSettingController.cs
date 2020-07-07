@@ -8,6 +8,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.WebApi.Controllers
 {
+    [ApiController, Route("api/[controller]")]
     public class UserSettingController : NewCrmController
     {
         private IUserServices _userServices;
