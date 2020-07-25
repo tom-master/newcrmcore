@@ -41,7 +41,7 @@ namespace NewCrmCore.Application.Services.Interface
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        Task<UserDto> GetUserAsync(Int32 userId = default(Int32));
+        Task<UserDto> GetUserAsync(Int32 userId = default);
 
         /// <summary>
         /// 验证相同的用户名是否存在

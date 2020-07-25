@@ -17,7 +17,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(wallpaper);
             return await Task.Run(() =>
              {
-                 using (var mapper = EntityMapper.CreateMapper())
+                 using var mapper = EntityMapper.CreateMapper();
                  {
                      try
                      {
@@ -53,7 +53,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -86,7 +86,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -118,7 +118,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -154,7 +154,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             {
                 if (Enum.TryParse(newMode, true, out WallpaperMode wallpaperMode))
                 {
-                    using (var mapper = EntityMapper.CreateMapper())
+                    using var mapper = EntityMapper.CreateMapper();
                     {
                         try
                         {
@@ -187,7 +187,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -215,36 +215,34 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
+                try
                 {
-                    try
+                    #region 前置条件验证
                     {
-                        #region 前置条件验证
+                        var result = mapper.Query<Config>().Where(a => a.UserId == userId && a.WallpaperId == wallpaperId).Count();
+                        if (result > 0)
                         {
-                            var result = mapper.Query<Config>().Where(a => a.UserId == userId && a.WallpaperId == wallpaperId).Count();
-                            if (result > 0)
-                            {
-                                throw new BusinessException("当前壁纸正在使用中，不能删除");
-                            }
+                            throw new BusinessException("当前壁纸正在使用中，不能删除");
                         }
-                        #endregion
+                    }
+                    #endregion
 
-                        #region 移除壁纸
-                        {
-                            var wallpaper = new Wallpaper();
-                            wallpaper.Remove();
-                            var result = mapper.Update(wallpaper, wa => wa.Id == wallpaperId && wa.UserId == userId);
-                            if (!result)
-                            {
-                                throw new BusinessException("移除壁纸失败");
-                            }
-                        }
-                        #endregion
-                    }
-                    catch (System.Exception)
+                    #region 移除壁纸
                     {
-                        throw;
+                        var wallpaper = new Wallpaper();
+                        wallpaper.Remove();
+                        var result = mapper.Update(wallpaper, wa => wa.Id == wallpaperId && wa.UserId == userId);
+                        if (!result)
+                        {
+                            throw new BusinessException("移除壁纸失败");
+                        }
                     }
+                    #endregion
+                }
+                catch (System.Exception)
+                {
+                    throw;
                 }
             });
         }

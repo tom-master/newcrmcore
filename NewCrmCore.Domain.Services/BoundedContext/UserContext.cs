@@ -26,7 +26,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
              {
-                 using (var mapper = EntityMapper.CreateMapper())
+                 using var mapper = EntityMapper.CreateMapper();
                  {
                      User user = null;
                      try
@@ -99,7 +99,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
              {
-                 using (var mapper = EntityMapper.CreateMapper())
+                 using var mapper = EntityMapper.CreateMapper();
                  {
                      try
                      {
@@ -141,7 +141,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -180,7 +180,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                 where.And(w => w.IsAdmin == isAdmin);
             }
 
-            using (var mapper = EntityMapper.CreateMapper())
+            using var mapper = EntityMapper.CreateMapper();
             {
                 try
                 {
@@ -225,7 +225,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -261,7 +261,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -290,7 +290,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -313,7 +313,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -334,7 +334,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run<String>(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -358,7 +358,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     #region 获取锁屏密码
                     {
@@ -380,7 +380,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     return mapper.Query<App>().Where(w => w.Name == name).Count() > 0;
                 }
@@ -393,7 +393,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -414,7 +414,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -460,7 +460,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -530,7 +530,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     mapper.OpenTransaction();
                     try
@@ -596,7 +596,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -621,7 +621,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -659,7 +659,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -686,7 +686,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -717,7 +717,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -742,7 +742,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     mapper.OpenTransaction();
 

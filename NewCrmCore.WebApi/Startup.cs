@@ -69,22 +69,22 @@ namespace NewCrmCore.WebApi
                 };
             });
 
-            services.AddMvcCore(config =>
+            services.AddControllers(config =>
             {
-                config.Filters.Add<CheckPermissions>();
-                config.Filters.Add<VisitorRecordFilter>();
+                config.SuppressAsyncSuffixInActionNames = false;
             }).AddJsonOptions(options =>
             {
-                options.JsonSerializerOptions.Encoder = JavaScriptEncoder.Create(UnicodeRanges.All);
-            });
 
+                options.JsonSerializerOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+                options.JsonSerializerOptions.Converters.Add(new NewCrmCore.Infrastructure.Converter.BooleanConverter());
+                options.JsonSerializerOptions.Converters.Add(new NewCrmCore.Infrastructure.Converter.Int32Converter());
+            });
             services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //添加jwt验证
             app.UseAuthentication();
             if (env.IsDevelopment())
             {
@@ -103,11 +103,13 @@ namespace NewCrmCore.WebApi
 
             app.UseStaticFiles();
             app.UseRouting();
-            //app.UseAuthorization();
+
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<NotifyHub>("/hubs");
-                endpoints.MapControllerRoute("Default", "{controller}/{action}/{id?}", defaults: new { controller = "desk", action = "index" });
+                endpoints.MapControllers();
+                // endpoints.MapControllerRoute("Default", "{controller}/{action}/{id?}", defaults: new { controller = "desk", action = "index" });
             });
         }
     }

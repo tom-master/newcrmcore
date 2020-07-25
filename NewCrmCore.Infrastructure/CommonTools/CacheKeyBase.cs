@@ -5,9 +5,9 @@ namespace NewCrmCore.Infrastructure.CommonTools
 {
     public abstract class CacheKeyBase
     {
-        private CancellationTokenSource _cancellationTokenSource;
+        private readonly CancellationTokenSource _cancellationTokenSource;
 
-        private Int32 randomSeed = new Random(DateTime.Now.Millisecond).Next(1, 60);
+        private readonly Int32 randomSeed = new Random(DateTime.Now.Millisecond).Next(1, 60);
 
         protected CacheKeyBase()
         {

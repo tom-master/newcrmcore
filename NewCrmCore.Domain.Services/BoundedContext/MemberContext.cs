@@ -20,7 +20,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -59,7 +59,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -117,7 +117,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -142,7 +142,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     var member = new Member();
                     member.ModifyName(memberName);
@@ -163,7 +163,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(newIcon);
             await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -189,7 +189,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(member);
             await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -213,7 +213,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(memberId);
             return await Task.Run<App>(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     mapper.OpenTransaction();
                     try

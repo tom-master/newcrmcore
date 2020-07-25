@@ -12,7 +12,7 @@ namespace NewCrmCore.Application.Services
 {
     public class LoggerServices : ILoggerServices
     {
-        private ILoggerContext _loggerContext;
+        private readonly ILoggerContext _loggerContext;
 
         public LoggerServices(ILoggerContext loggerContext)
         {

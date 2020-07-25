@@ -25,7 +25,7 @@ namespace NewCrmCore.Application.Services.Interface
         /// <param name="memberId"></param>
         /// <param name="isFolder"></param>
         /// <returns></returns>
-        Task<MemberDto> GetMemberAsync(Int32 userId, Int32 memberId, Boolean isFolder = default(Boolean));
+        Task<MemberDto> GetMemberAsync(Int32 userId, Int32 memberId, Boolean isFolder = default);
 
         /// <summary>
         /// 检查桌面应用名称

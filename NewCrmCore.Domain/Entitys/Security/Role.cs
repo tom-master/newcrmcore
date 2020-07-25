@@ -42,7 +42,7 @@ namespace NewCrmCore.Domain.Entitys.Security
         /// <summary>
         /// 实例化一个角色对象
         /// </summary>
-        public Role(String name, String roleIdentity, String remark = default(String), Boolean isAllowDisable = default(Boolean))
+        public Role(String name, String roleIdentity, String remark = default, Boolean isAllowDisable = default)
         {
             Name = name;
             Remark = remark;

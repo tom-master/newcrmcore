@@ -88,7 +88,7 @@ namespace NewCrmCore.Application.Services.Interface
         /// </summary>
         /// <param name="appIds"></param>
         /// <returns></returns>
-        Task<List<AppDto>> GetSystemAppAsync(IEnumerable<Int32> appIds = default(IEnumerable<Int32>));
+        Task<List<AppDto>> GetSystemAppAsync(IEnumerable<Int32> appIds = default);
 
         /// <summary>
         /// 检查应用类型

@@ -44,7 +44,7 @@ namespace NewCrmCore.WebApi.Controllers
 
             var todayRecommendApp = await _appServices.GetTodayRecommendAsync(UserInfo.Id);
             var user = await _userServices.GetUserAsync(UserInfo.Id);
-            var myApp = await _appServices.GetDevelopAndNotReleaseCountAsync(UserInfo.Id);
+            var (allCount, notReleaseCount) = await _appServices.GetDevelopAndNotReleaseCountAsync(UserInfo.Id);
             var response = new ResponseModel<dynamic>
             {
                 Model = new
@@ -52,8 +52,8 @@ namespace NewCrmCore.WebApi.Controllers
                     appTypes,
                     todayRecommendApp,
                     UserName = user.Name,
-                    allCount = myApp.allCount,
-                    notReleaseCount = myApp.notReleaseCount
+                    allCount,
+                    notReleaseCount
                 },
                 IsSuccess = true,
                 Message = "应用市场初始化成功"

@@ -86,16 +86,18 @@ namespace NewCrmCore.Application.Services
             return await Task.Run(() =>
             {
                 var result = _userContext.GetUsers(userName, userType, pageIndex, pageSize, out var totalCount);
-                var pagingModel = new PageList<UserDto>();
-                pagingModel.TotalCount = totalCount;
-                pagingModel.Models = result.Select(s => new UserDto
+                var pagingModel = new PageList<UserDto>
                 {
-                    Id = s.Id,
-                    IsAdmin = s.IsAdmin,
-                    Name = s.Name,
-                    UserFace = s.IsModifyUserFace ? Appsetting.FileUrl + s.UserFace : s.UserFace,
-                    IsDisable = s.IsDisable
-                }).ToList();
+                    TotalCount = totalCount,
+                    Models = result.Select(s => new UserDto
+                    {
+                        Id = s.Id,
+                        IsAdmin = s.IsAdmin,
+                        Name = s.Name,
+                        UserFace = s.IsModifyUserFace ? Appsetting.FileUrl + s.UserFace : s.UserFace,
+                        IsDisable = s.IsDisable
+                    }).ToList()
+                };
 
                 return pagingModel;
             });

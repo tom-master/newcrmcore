@@ -120,13 +120,12 @@ namespace NewCrmCore.Domain.Entitys.System
                     Int32 width,
                     Int32 height,
                     Int32 userId,
-                    Int32 deskIndex,
                     AppStyle appStyle,
-                    Boolean isIconByUpload = default(Boolean),
-                    Boolean isSetbar = default(Boolean),
-                    Boolean isOpenMax = default(Boolean),
-                    Boolean isFlash = default(Boolean),
-                    Boolean isResize = default(Boolean))
+                    Boolean isIconByUpload = default,
+                    Boolean isSetbar = default,
+                    Boolean isOpenMax = default,
+                    Boolean isFlash = default,
+                    Boolean isResize = default)
         {
             AppId = appId;
             Width = width > 800 ? 800 : width;
@@ -152,7 +151,7 @@ namespace NewCrmCore.Domain.Entitys.System
             Int32 appId,
             Int32 userId,
             Int32 deskIndex,
-            Boolean isIconByUpload = default(Boolean))
+            Boolean isIconByUpload = default)
         {
             AppId = appId;
             Width = 800;

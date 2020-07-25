@@ -71,29 +71,27 @@ namespace NewCrmCore.Application.Services
             Parameter.Validate(userId);
             Parameter.Validate(url);
 
-            using (var stream = await new HttpClient().GetStreamAsync(new Uri(url)))
-            using (Image image = Image.FromStream(stream))
+            using var stream = await new HttpClient().GetStreamAsync(new Uri(url));
+            using Image image = Image.FromStream(stream);
+            var md5 = MD.GetMD5(stream);
+            var webWallpaper = await GetUploadWallpaperAsync(md5);
+            if (webWallpaper != null)
             {
-                var md5 = MD.GetMD5(stream);
-                var webWallpaper = await GetUploadWallpaperAsync(md5);
-                if (webWallpaper != null)
-                {
-                    return (webWallpaper.Id, webWallpaper.ShortUrl);
-                }
-
-                var result = await AddWallpaperAsync(new WallpaperDto
-                {
-                    Width = image.Width,
-                    Height = image.Height,
-                    Source = EnumExtensions.ToEnum<WallpaperSource>((Int32)WallpaperSource.Web),
-                    Title = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 5),
-                    Url = url,
-                    UserId = userId,
-                    Md5 = md5,
-                    ShortUrl = url
-                });
-                return (result.Item1, result.Item2);
+                return (webWallpaper.Id, webWallpaper.ShortUrl);
             }
+
+            var result = await AddWallpaperAsync(new WallpaperDto
+            {
+                Width = image.Width,
+                Height = image.Height,
+                Source = EnumExtensions.ToEnum<WallpaperSource>((Int32)WallpaperSource.Web),
+                Title = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 5),
+                Url = url,
+                UserId = userId,
+                Md5 = md5,
+                ShortUrl = url
+            });
+            return (result.wapperId, result.url);
         }
 
         public async Task<WallpaperDto> GetUploadWallpaperAsync(String md5)

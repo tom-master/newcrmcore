@@ -57,12 +57,12 @@ namespace NewCrmCore.WebApi.Filter
 
         private void ReturnMessage(AuthorizationFilterContext filterContext, String message)
         {
-            var response = new ResponseSimple
-            {
-                IsSuccess = false,
-                Message = message
-            };
-            var responseCode = StatusCodes.Status419AuthenticationTimeout;
+            // var response = new ResponseSimple
+            // {
+            //     IsSuccess = false,
+            //     Message = message
+            // };
+            // var responseCode = StatusCodes.Status419AuthenticationTimeout;
             // if (filterContext.HttpContext.Request.IsAjaxRequest())
             // {
             //     filterContext.Result = new JsonResult(response)

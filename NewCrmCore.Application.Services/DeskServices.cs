@@ -306,8 +306,7 @@ namespace NewCrmCore.Application.Services
             Parameter.Validate(pageSize);
             return await Task.Run(() =>
             {
-                var totalCount = 0;
-                var result = _deskContext.CheckUnreadNotifyCount(userId, pageIndex, pageSize, out totalCount);
+                var result = _deskContext.CheckUnreadNotifyCount(userId, pageIndex, pageSize, out int totalCount);
                 return new PageList<NotifyDto>
                 {
                     TotalCount = totalCount,

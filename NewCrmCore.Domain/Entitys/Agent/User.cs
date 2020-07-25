@@ -73,7 +73,7 @@ namespace NewCrmCore.Domain.Entitys.Agent
         /// <summary>
         /// 实例化一个用户对象
         /// </summary>
-        public User(String name, String password, IEnumerable<UserRole> roles, UserType userType = default(UserType))
+        public User(String name, String password, IEnumerable<UserRole> roles, UserType userType = default)
         {
             Name = name;
             LoginPassword = password;

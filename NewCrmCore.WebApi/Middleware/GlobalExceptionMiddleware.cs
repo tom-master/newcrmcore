@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.Text.Json;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -34,10 +35,14 @@ namespace NewCrmCore.WebApi.Middleware
                 var response = new ResponseSimple
                 {
                     IsSuccess = false,
-                    Message = businessException ? ex.Message : "出现未知错误，请查看日志",
+                    Message = ex.Message
                 };
 
-                await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+                var options = new JsonSerializerOptions
+                {
+                    Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(UnicodeRanges.All)
+                };
+                await context.Response.WriteAsync(JsonSerializer.Serialize(response, options));
 
                 await loggerService.AddLoggerAsync(new LogDto
                 {

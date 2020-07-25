@@ -192,7 +192,7 @@ namespace NewCrmCore.Application.Services
             }
         }
 
-        public async Task<List<AppDto>> GetSystemAppAsync(IEnumerable<Int32> appIds = default(IEnumerable<Int32>))
+        public async Task<List<AppDto>> GetSystemAppAsync(IEnumerable<Int32> appIds = default)
         {
             var result = await _appContext.GetSystemAppAsync(appIds);
             return result.Select(app => new AppDto

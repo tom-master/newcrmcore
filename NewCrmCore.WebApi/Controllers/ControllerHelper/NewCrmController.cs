@@ -44,8 +44,7 @@ namespace NewCrmCore.WebApi.ApiHelper
 
         protected IActionResult Json(Object model)
         {
-            var m = model as ResponseBase;
-            if (m != null)
+            if (model is ResponseBase m)
             {
                 if (m.IsSuccess)
                 {

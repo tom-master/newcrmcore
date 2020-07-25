@@ -20,7 +20,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         {
             return await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -44,7 +44,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -67,7 +67,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public List<Role> GetRoles(String roleName, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
-            using (var mapper = EntityMapper.CreateMapper())
+            using var mapper = EntityMapper.CreateMapper();
             {
                 try
                 {
@@ -112,7 +112,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -144,7 +144,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -164,7 +164,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             return await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -184,7 +184,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -214,7 +214,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     mapper.OpenTransaction();
                     try
@@ -270,7 +270,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {
@@ -301,7 +301,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
                     throw new BusinessException("权限列表为空");
                 }
 
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     mapper.OpenTransaction();
                     try
@@ -346,7 +346,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
                 {
                     try
                     {

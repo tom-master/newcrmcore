@@ -11,7 +11,7 @@ namespace NewCrmCore.WebApi.Controllers
     [ApiController, Route("api/[controller]")]
     public class UserSettingController : NewCrmController
     {
-        private IUserServices _userServices;
+        private readonly IUserServices _userServices;
 
         public UserSettingController(IUserServices userServices)
         {

@@ -7,7 +7,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
         public class TokenCacheKey : CacheKeyBase
         {
-            private String _identity;
+            private readonly String _identity;
             public TokenCacheKey(String identity)
             {
                 _identity = identity;
@@ -20,7 +20,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
         public class ConfigCacheKey : CacheKeyBase
         {
-            private Int32 _identity;
+            private readonly Int32 _identity;
 
             public ConfigCacheKey(Int32 identity)
             {
@@ -35,7 +35,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
         public class WallpaperCacheKey : CacheKeyBase
         {
-            private Int32 _identity;
+            private readonly Int32 _identity;
 
             public WallpaperCacheKey(Int32 identity)
             {
@@ -50,7 +50,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
         public class UserCacheKey : CacheKeyBase
         {
-            private Int32 _identity;
+            private readonly Int32 _identity;
 
             public UserCacheKey(Int32 identity)
             {
@@ -65,7 +65,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
         public class UserRoleCacheKey : CacheKeyBase
         {
-            private Int32 _identity;
+            private readonly Int32 _identity;
 
             public UserRoleCacheKey(Int32 identity)
             {
@@ -80,11 +80,9 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
         public class PowersCacheKey : CacheKeyBase
         {
-            private Int32 _identity;
 
-            public PowersCacheKey(Int32 identity)
+            public PowersCacheKey(Int32 _)
             {
-                _identity = identity;
             }
 
             protected override string FormatKey()
@@ -95,7 +93,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
         public class DesktopCacheKey : CacheKeyBase
         {
-            private Int32 _identity;
+            private readonly Int32 _identity;
 
             public DesktopCacheKey(Int32 identity)
             {
@@ -110,7 +108,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
         public class AppTypeCacheKey : CacheKeyBase
         {
-            private Int32 _identity;
+            private readonly Int32 _identity;
 
             public AppTypeCacheKey(Int32 identity = 0)
             {

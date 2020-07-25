@@ -147,16 +147,12 @@ namespace NewCrmCore.Domain.Entitys.System
             Int32 width,
             Int32 height,
             Int32 appTypeId,
-            Boolean isResize,
-            Boolean isOpenMax,
-            Boolean isFlash,
-            Boolean isSetbar,
             AppAuditState appAuditState,
             AppReleaseState appReleaseState,
             AppStyle appStyle = AppStyle.App,
-            Int32 userId = default(Int32),
-            String remark = default(String),
-            Boolean isIconByUpload = default(Boolean))
+            Int32 userId = default,
+            String remark = default,
+            Boolean isIconByUpload = default)
         {
             Name = name;
             IconUrl = iconUrl;

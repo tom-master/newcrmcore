@@ -1,27 +1,26 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Dto;
-using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
+using NewCrmCore.Infrastructure;
+using NewCrmCore.WebApi.ApiHelper;
 using NewLibCore.Validate;
 using NewLibCore;
 using Newtonsoft.Json;
-using NewCrmCore.WebApi.ApiHelper;
-using System.Security.Claims;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
+using System.Linq;
+using System.Security.Claims;
 using System.Text;
-
+using System.Threading.Tasks;
+using System;
 namespace NewCrmCore.WebApi.Controllers
 {
-    [ApiController, Route("api/[controller]")]
+    [ApiController, Authorize, Route("api/[controller]/[action]")]
     public class DeskController : NewCrmController
     {
         private readonly IDeskServices _deskServices;
@@ -60,15 +59,20 @@ namespace NewCrmCore.WebApi.Controllers
                 {
                     response.IsSuccess = true;
                     response.Message = "获取桌面配置信息失败";
-                    return Json(response);
                 }
-                response.Model = new { UserInfo, config };
-                response.IsSuccess = true;
-                response.Message = "初始化桌面信息成功";
-                return Json(response);
+                else
+                {
+                    response.Model = new { UserInfo, config };
+                    response.IsSuccess = true;
+                    response.Message = "初始化桌面信息成功";
+                }
             }
-
-            return RedirectToAction("login", "desk");
+            else
+            {
+                response.IsSuccess = false;
+                response.Message = "会话过期,请重新登陆";
+            }
+            return Json(response);
         }
 
         /// <summary>
@@ -172,7 +176,10 @@ namespace NewCrmCore.WebApi.Controllers
                 {
                     new Claim(JwtRegisteredClaimNames.Nbf,$"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}") ,
                     new Claim(JwtRegisteredClaimNames.Exp,$"{new DateTimeOffset(cookieTimeout).ToUnixTimeSeconds()}"),
-                    new Claim("User",JsonConvert.SerializeObject(user))
+                    new Claim("UserName",user.Name),
+                    new Claim("UserId",user.Id.ToString()),
+                    new Claim("IsAdmin",user.IsAdmin.ToString()),
+                    new Claim("UserFace",user.UserFace)
                 };
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Appsetting.SecurityKey));
@@ -184,7 +191,12 @@ namespace NewCrmCore.WebApi.Controllers
                     expires: cookieTimeout,
                     signingCredentials: creds);
                 response.Token = new JwtSecurityTokenHandler().WriteToken(token);
-                Response.Cookies.Append("User", JsonConvert.SerializeObject(new { Id = user.Id, UserFace = user.UserFace, Name = user.Name }), new CookieOptions { Expires = cookieTimeout });
+                Response.Cookies.Append("User", JsonConvert.SerializeObject(new
+                {
+                    user.Id,
+                    user.UserFace,
+                    user.Name
+                }), new CookieOptions { Expires = cookieTimeout });
             }
             else
             {
@@ -258,7 +270,7 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.Validate(wallpaper);
             #endregion
 
-            var wallpaperResult = await _wallpaperServices.AddWallpaperAsync(new WallpaperDto
+            var (wapperId, url) = await _wallpaperServices.AddWallpaperAsync(new WallpaperDto
             {
                 Title = wallpaper.Title.Substring(0, 9),
                 Width = wallpaper.Width,
@@ -274,7 +286,11 @@ namespace NewCrmCore.WebApi.Controllers
             {
                 Message = "壁纸上传成功",
                 IsSuccess = true,
-                Model = new { Id = wallpaperResult.Item1, Url = Appsetting.FileUrl + wallpaperResult.Item2 }
+                Model = new
+                {
+                    Id = wapperId,
+                    Url = Appsetting.FileUrl + url
+                }
             });
         }
 

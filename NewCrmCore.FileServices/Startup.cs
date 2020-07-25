@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json.Serialization;
 
 namespace NewCrmCore.FileServices
 {
@@ -19,7 +18,12 @@ namespace NewCrmCore.FileServices
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().AddNewtonsoftJson(options => { options.SerializerSettings.ContractResolver = new DefaultContractResolver(); }); ;
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+                options.JsonSerializerOptions.Converters.Add(new NewCrmCore.Infrastructure.Converter.BooleanConverter());
+                options.JsonSerializerOptions.Converters.Add(new NewCrmCore.Infrastructure.Converter.Int32Converter());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

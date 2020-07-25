@@ -19,16 +19,14 @@ namespace NewCrmCore.Domain.Services.BoundedContext
             Parameter.Validate(log);
             await Task.Run(() =>
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
+                try
                 {
-                    try
-                    {
-                        mapper.Add(log);
-                    }
-                    catch (System.Exception)
-                    {
-                        throw;
-                    }
+                    mapper.Add(log);
+                }
+                catch (System.Exception)
+                {
+                    throw;
                 }
             });
         }
@@ -40,55 +38,53 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
             try
             {
-                using (var mapper = EntityMapper.CreateMapper())
+                using var mapper = EntityMapper.CreateMapper();
+                try
                 {
-                    try
+
+
+                    var level = EnumExtensions.ToEnum<LogLevel>(logLevel);
+                    var logWhere = FilterFactory.Create<Log>(w => w.LogLevelEnum == level);
+
+                    var userWhere = FilterFactory.Create<User>();
+                    if (!String.IsNullOrEmpty(userName))
                     {
-
-
-                        var level = EnumExtensions.ToEnum<LogLevel>(logLevel);
-                        var logWhere = FilterFactory.Create<Log>(w => w.LogLevelEnum == level);
-
-                        var userWhere = FilterFactory.Create<User>();
-                        if (!String.IsNullOrEmpty(userName))
-                        {
-                            userWhere.And(w => w.Name.Contains(userName));
-                        }
-
-                        var filter = logWhere.Append(userWhere);
-
-                        #region totalCount 
-                        {
-                            totalCount = mapper.Query<Log>()
-                            .LeftJoin<User>((a, b) => a.UserId == b.Id)
-                            .Where<User>(filter).Count();
-                        }
-                        #endregion
-
-                        #region sql 
-                        {
-                            return mapper.Query<Log>().LeftJoin<User>((a, b) => a.UserId == b.Id)
-                            .Where<User>(filter)
-                            .Select(a => new
-                            {
-                                a.LogLevelEnum,
-                                a.Controller,
-                                a.Action,
-                                a.ExceptionMessage,
-                                a.UserId,
-                                a.AddTime
-                            })
-                            .Page(pageIndex, pageSize)
-                            .ThenByDesc<DateTime>(a => a.AddTime)
-                            .ToList();
-                        }
-                        #endregion
+                        userWhere.And(w => w.Name.Contains(userName));
                     }
-                    catch (System.Exception)
+
+                    var filter = logWhere.Append(userWhere);
+
+                    #region totalCount 
                     {
-
-                        throw;
+                        totalCount = mapper.Query<Log>()
+                        .LeftJoin<User>((a, b) => a.UserId == b.Id)
+                        .Where<User>(filter).Count();
                     }
+                    #endregion
+
+                    #region sql 
+                    {
+                        return mapper.Query<Log>().LeftJoin<User>((a, b) => a.UserId == b.Id)
+                        .Where<User>(filter)
+                        .Select(a => new
+                        {
+                            a.LogLevelEnum,
+                            a.Controller,
+                            a.Action,
+                            a.ExceptionMessage,
+                            a.UserId,
+                            a.AddTime
+                        })
+                        .Page(pageIndex, pageSize)
+                        .ThenByDesc<DateTime>(a => a.AddTime)
+                        .ToList();
+                    }
+                    #endregion
+                }
+                catch (System.Exception)
+                {
+
+                    throw;
                 }
             }
             catch (Exception)

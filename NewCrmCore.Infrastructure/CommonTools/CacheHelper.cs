@@ -52,7 +52,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
                 _cacheQuery.StringSet(cache.GetKey(), dbResult, cache.KeyTimeout);
                 return dbResult;
             }
-            return default(TModel);
+            return default;
         }
 
         /// <summary>

@@ -30,7 +30,7 @@ namespace NewCrmCore.WebApi.ApiHelper
 
         public ResponseModel() : base()
         {
-            Model = default(T);
+            Model = default;
         }
     }
 
