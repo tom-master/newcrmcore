@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using NewCrmCore.Application.Services.Interface;
@@ -11,10 +12,10 @@ using NewCrmCore.WebApi.ApiHelper;
 
 namespace NewCrmCore.WebApi.Middleware
 {
-    public class HandlerGlobalErrorMiddleware
+    public class GlobalExceptionMiddleware
     {
         private readonly RequestDelegate _requestDelegate;
-        public HandlerGlobalErrorMiddleware(RequestDelegate requestDelegate)
+        public GlobalExceptionMiddleware(RequestDelegate requestDelegate)
         {
             _requestDelegate = requestDelegate;
         }
@@ -50,5 +51,14 @@ namespace NewCrmCore.WebApi.Middleware
                 });
             }
         }
+    }
+
+    public static class GlobalExceptionMiddlewareExtension
+    {
+        public static IApplicationBuilder UseGlobalExceptionHandle(this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<GlobalExceptionMiddleware>();
+        }
+
     }
 }

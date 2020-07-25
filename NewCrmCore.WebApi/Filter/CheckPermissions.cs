@@ -63,23 +63,23 @@ namespace NewCrmCore.WebApi.Filter
                 Message = message
             };
             var responseCode = StatusCodes.Status419AuthenticationTimeout;
-            if (filterContext.HttpContext.Request.IsAjaxRequest())
-            {
-                filterContext.Result = new JsonResult(response)
-                {
-                    ContentType = "UTF8",
-                    StatusCode = responseCode
-                };
-            }
-            else
-            {
-                filterContext.Result = new ContentResult()
-                {
-                    StatusCode = responseCode,
-                    ContentType = "utf8",
-                    Content = @"<script>(function(){top.NewCrm.fail('" + response.Message + "');})()</script>"
-                };
-            }
+            // if (filterContext.HttpContext.Request.IsAjaxRequest())
+            // {
+            //     filterContext.Result = new JsonResult(response)
+            //     {
+            //         ContentType = "UTF8",
+            //         StatusCode = responseCode
+            //     };
+            // }
+            // else
+            // {
+            //     filterContext.Result = new ContentResult()
+            //     {
+            //         StatusCode = responseCode,
+            //         ContentType = "utf8",
+            //         Content = @"<script>(function(){top.NewCrm.fail('" + response.Message + "');})()</script>"
+            //     };
+            // }
         }
     }
 }

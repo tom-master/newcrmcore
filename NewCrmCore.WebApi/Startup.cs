@@ -17,6 +17,7 @@ using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.NotifyCenter;
 using NewCrmCore.WebApi.Filter;
+using NewCrmCore.WebApi.Middleware;
 using NewLibCore.Data.SQL;
 
 namespace NewCrmCore.WebApi
@@ -71,7 +72,6 @@ namespace NewCrmCore.WebApi
             services.AddMvcCore(config =>
             {
                 config.Filters.Add<CheckPermissions>();
-                config.Filters.Add<HandleException>();
                 config.Filters.Add<VisitorRecordFilter>();
             }).AddJsonOptions(options =>
             {
@@ -94,6 +94,7 @@ namespace NewCrmCore.WebApi
             {
                 app.UseExceptionHandler("/Error");
             }
+            app.UseGlobalExceptionHandle();
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
