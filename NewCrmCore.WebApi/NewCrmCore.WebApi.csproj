@@ -8,7 +8,6 @@
     <PackageReference Include="bootstrap" Version="4.3.1" />
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.3" />
     <PackageReference Include="Nito.AsyncEx" Version="5.0.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.5.0" />
    <!-- <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.1.1" />

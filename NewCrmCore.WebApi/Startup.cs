@@ -1,5 +1,7 @@
 using System;
 using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -66,15 +68,14 @@ namespace NewCrmCore.WebApi
                 };
             });
 
-            services.AddMvc(config =>
+            services.AddMvcCore(config =>
             {
                 config.Filters.Add<CheckPermissions>();
                 config.Filters.Add<HandleException>();
                 config.Filters.Add<VisitorRecordFilter>();
-            }).AddNewtonsoftJson(op =>
+            }).AddJsonOptions(options =>
             {
-                op.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
-                op.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+                options.JsonSerializerOptions.Encoder = JavaScriptEncoder.Create(UnicodeRanges.All);
             });
 
             services.AddSignalR();
