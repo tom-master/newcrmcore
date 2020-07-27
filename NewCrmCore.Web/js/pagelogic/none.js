@@ -1,1 +1,0 @@
-$(() => { setInterval(() => { debugger }, 1000) })
