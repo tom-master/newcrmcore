@@ -1,6 +1,6 @@
 using System;
 using NewLibCore.Data.SQL;
-using NewLibCore.Data.SQL.IfNullOrZero;
+using NewLibCore.Data.SQL.Validate;
 
 namespace NewCrmCore.Domain.Entitys.System
 {

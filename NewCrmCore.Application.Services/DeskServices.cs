@@ -11,7 +11,7 @@ using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewCrmCore.NotifyCenter;
-using NewLibCore.IfNullOrZero;
+using NewLibCore.Validate;
 using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.Application.Services

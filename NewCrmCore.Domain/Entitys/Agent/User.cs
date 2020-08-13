@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NewCrmCore.Domain.ValueObject;
 using NewLibCore.Data.SQL;
-using NewLibCore.Data.SQL.IfNullOrZero;
+using NewLibCore.Data.SQL.Validate;
 
 namespace NewCrmCore.Domain.Entitys.Agent
 {
