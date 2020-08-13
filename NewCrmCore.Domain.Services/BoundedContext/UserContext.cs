@@ -19,10 +19,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 {
     public class UserContext : IUserContext
     {
-        public async Task<User> ValidateAsync(String userName, String password, String requestIp)
+        public async Task<User> IfNullOrZeroAsync(String userName, String password, String requestIp)
         {
-            Parameter.Validate(userName);
-            Parameter.Validate(password);
+            Parameter.IfNullOrZero(userName);
+            Parameter.IfNullOrZero(password);
 
             return await Task.Run(() =>
              {
@@ -95,7 +95,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Config> GetConfigAsync(Int32 userId)
         {
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
 
             return await Task.Run(() =>
              {
@@ -137,7 +137,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Wallpaper> GetWallpaperAsync(Int32 wallPaperId)
         {
-            Parameter.Validate(wallPaperId);
+            Parameter.IfNullOrZero(wallPaperId);
 
             return await Task.Run(() =>
             {
@@ -165,8 +165,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public List<User> GetUsers(String userName, String userType, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
-            Parameter.Validate(pageIndex);
-            Parameter.Validate(pageSize);
+            Parameter.IfNullOrZero(pageIndex);
+            Parameter.IfNullOrZero(pageSize);
 
             var where = FilterFactory.Create<User>();
             if (!String.IsNullOrEmpty(userName))
@@ -221,7 +221,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<User> GetUserAsync(Int32 userId)
         {
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
 
             return await Task.Run(() =>
             {
@@ -257,7 +257,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<List<Role>> GetRolesAsync(Int32 userId)
         {
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
 
             return await Task.Run(() =>
             {
@@ -309,7 +309,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Boolean> CheckUserNameExistAsync(String userName)
         {
-            Parameter.Validate(userName);
+            Parameter.IfNullOrZero(userName);
 
             return await Task.Run(() =>
             {
@@ -330,7 +330,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<String> GetOldPasswordAsync(Int32 userId)
         {
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
 
             return await Task.Run<String>(() =>
             {
@@ -353,8 +353,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Boolean> UnlockScreenAsync(Int32 userId, String unlockPassword)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(unlockPassword);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(unlockPassword);
 
             return await Task.Run(() =>
             {
@@ -376,7 +376,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Boolean> CheckAppNameAsync(String name)
         {
-            Parameter.Validate(name);
+            Parameter.IfNullOrZero(name);
 
             return await Task.Run(() =>
             {
@@ -389,7 +389,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Boolean> CheckAppUrlAsync(String url)
         {
-            Parameter.Validate(url);
+            Parameter.IfNullOrZero(url);
 
             return await Task.Run(() =>
             {
@@ -410,7 +410,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task LogoutAsync(Int32 userId)
         {
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
 
             await Task.Run(() =>
             {
@@ -456,7 +456,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task AddNewUserAsync(User user)
         {
-            Parameter.Validate(user);
+            Parameter.IfNullOrZero(user);
 
             await Task.Run(() =>
             {
@@ -526,7 +526,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyUserAsync(User user)
         {
-            Parameter.Validate(user);
+            Parameter.IfNullOrZero(user);
 
             await Task.Run(() =>
             {
@@ -592,7 +592,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task EnableAsync(Int32 userId)
         {
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
 
             await Task.Run(() =>
             {
@@ -617,7 +617,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task DisableAsync(Int32 userId)
         {
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
 
             await Task.Run(() =>
             {
@@ -654,8 +654,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyUserFaceAsync(Int32 userId, String newFace)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(newFace);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(newFace);
 
             await Task.Run(() =>
             {
@@ -681,8 +681,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyPasswordAsync(Int32 userId, String newPassword, Boolean isTogetherSetLockPassword)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(newPassword);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(newPassword);
 
             await Task.Run(() =>
             {
@@ -712,8 +712,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyLockScreenPasswordAsync(Int32 userId, String newScreenPassword)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(newScreenPassword);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(newScreenPassword);
 
             await Task.Run(() =>
             {
@@ -738,7 +738,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task RemoveUserAsync(Int32 userId)
         {
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
 
             await Task.Run(() =>
             {

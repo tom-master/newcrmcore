@@ -68,7 +68,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> RemoveUserAsync(Int32 userId)
         {
             #region 参数验证
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
             #endregion
 
             await _userServices.RemoveUserAsync(userId);
@@ -92,7 +92,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> EnableAsync(Int32 userId)
         {
             #region 参数验证
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
             #endregion
 
             await _userServices.EnableAsync(userId);
@@ -116,7 +116,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> DisableAsync(Int32 userId)
         {
             #region 参数验证
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
             #endregion
 
             await _userServices.DisableAsync(userId);
@@ -140,7 +140,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> CreateUserAsync(IFormCollection forms)
         {
             #region 参数验证
-            Parameter.Validate(forms);
+            Parameter.IfNullOrZero(forms);
             #endregion
 
             var response = new ResponseModel<UserDto>();
@@ -182,8 +182,8 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> UsersAsync(String userName, String userType, Int32 pageIndex, Int32 pageSize)
         {
-            Parameter.Validate(userName, true);
-            Parameter.Validate(userType, true);
+            Parameter.IfNullOrZero(userName, true);
+            Parameter.IfNullOrZero(userType, true);
             var response = new ResponsePaging<IList<UserDto>>();
             var result = await _userServices.GetUsersAsync(userName, userType, pageIndex, pageSize);
             if (result != null)
@@ -210,7 +210,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> CheckNameAsync(String param)
         {
             #region 参数验证
-            Parameter.Validate(param);
+            Parameter.IfNullOrZero(param);
             #endregion
 
             var result = await _userServices.CheckUserNameExistAsync(param);

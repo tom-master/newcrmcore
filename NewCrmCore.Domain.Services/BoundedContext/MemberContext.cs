@@ -16,7 +16,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
     {
         public async Task<List<Member>> GetMembersAsync(Int32 userId)
         {
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
 
             return await Task.Run(() =>
             {
@@ -54,8 +54,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Member> GetMemberAsync(Int32 userId, Int32 memberId, Boolean isFolder)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(memberId);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(memberId);
 
             return await Task.Run(() =>
             {
@@ -113,7 +113,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Boolean> CheckMemberNameAsync(String name)
         {
-            Parameter.Validate(name);
+            Parameter.IfNullOrZero(name);
 
             return await Task.Run(() =>
             {
@@ -135,10 +135,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyFolderInfoAsync(Int32 userId, String memberName, String memberIcon, Int32 memberId)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(memberName);
-            Parameter.Validate(memberIcon);
-            Parameter.Validate(memberId);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(memberName);
+            Parameter.IfNullOrZero(memberIcon);
+            Parameter.IfNullOrZero(memberId);
 
             await Task.Run(() =>
             {
@@ -158,9 +158,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyMemberIconAsync(Int32 userId, Int32 memberId, String newIcon)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(memberId);
-            Parameter.Validate(newIcon);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(memberId);
+            Parameter.IfNullOrZero(newIcon);
             await Task.Run(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();
@@ -185,8 +185,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyMemberInfoAsync(Int32 userId, Member member)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(member);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(member);
             await Task.Run(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();
@@ -209,8 +209,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<App> UninstallMemberAsync(Int32 userId, Int32 memberId)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(memberId);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(memberId);
             return await Task.Run<App>(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();

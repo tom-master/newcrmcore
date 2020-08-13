@@ -71,7 +71,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> InitAppDetailAsync(Int32 appId)
         {
             #region 参数验证
-            Parameter.Validate(appId);
+            Parameter.IfNullOrZero(appId);
             #endregion
 
             var isInstallApp = await _appServices.IsInstallAppAsync(UserInfo.Id, appId);
@@ -160,8 +160,8 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyStarAsync(ModifyStar model)
         {
             #region 参数验证
-            Parameter.Validate(model.AppId);
-            Parameter.Validate(model.StarCount);
+            Parameter.IfNullOrZero(model.AppId);
+            Parameter.IfNullOrZero(model.StarCount);
             #endregion
 
             await _appServices.ModifyAppStarAsync(UserInfo.Id, model.AppId, model.StarCount);
@@ -185,8 +185,8 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> InstallAsync(Install model)
         {
             #region 参数验证
-            Parameter.Validate(model.AppId);
-            Parameter.Validate(model.DeskNum);
+            Parameter.IfNullOrZero(model.AppId);
+            Parameter.IfNullOrZero(model.DeskNum);
             #endregion
 
             await _appServices.InstallAppAsync(UserInfo.Id, model.AppId, model.DeskNum);
@@ -210,8 +210,8 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyIconAsync(ModifyIconForApp model)
         {
             #region 参数验证
-            Parameter.Validate(model.AppId);
-            Parameter.Validate(model.NewIcon);
+            Parameter.IfNullOrZero(model.AppId);
+            Parameter.IfNullOrZero(model.NewIcon);
             #endregion
 
             await _appServices.ModifyAppIconAsync(UserInfo.Id, model.AppId, model.NewIcon);
@@ -237,7 +237,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> CreateAsync(IFormCollection forms)
         {
             #region 参数验证
-            Parameter.Validate(forms);
+            Parameter.IfNullOrZero(forms);
             #endregion
 
             var appDto = WrapperAppDto(forms);
@@ -264,7 +264,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ReleaseAsync(Int32 appId)
         {
             #region 参数验证
-            Parameter.Validate(appId);
+            Parameter.IfNullOrZero(appId);
             #endregion
 
             await _appServices.ReleaseAppAsync(appId);
@@ -288,7 +288,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyAppInfoAsync(IFormCollection forms)
         {
             #region 参数验证
-            Parameter.Validate(forms);
+            Parameter.IfNullOrZero(forms);
             #endregion
 
             await _appServices.ModifyUserAppInfoAsync(UserInfo.Id, WrapperAppDto(forms));
@@ -315,7 +315,7 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAppsAsync(Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize)
         {
-            Parameter.Validate(searchText, true);
+            Parameter.IfNullOrZero(searchText, true);
 
             var response = new ResponsePaging<IList<AppDto>>();
             var result = await _appServices.GetAppsAsync(UserInfo.Id, appTypeId, orderId, searchText, pageIndex, pageSize);
@@ -350,7 +350,7 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUserAppsAsync(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
         {
-            Parameter.Validate(searchText, true);
+            Parameter.IfNullOrZero(searchText, true);
 
             var response = new ResponsePaging<IList<AppDto>>();
             var result = await _appServices.GetUserAppsAsync(UserInfo.Id, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize);
@@ -382,7 +382,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> RemoveAsync(Int32 appId)
         {
             #region 参数验证
-            Parameter.Validate(appId);
+            Parameter.IfNullOrZero(appId);
             #endregion
 
             await _appServices.RemoveAppAsync(appId);

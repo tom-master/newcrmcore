@@ -26,11 +26,11 @@ namespace NewCrmCore.Application.Services
 
         public async Task<UserDto> LoginAsync(String userName, String password, String requestIp)
         {
-            Parameter.Validate(userName);
-            Parameter.Validate(password);
-            Parameter.Validate(requestIp);
+            Parameter.IfNullOrZero(userName);
+            Parameter.IfNullOrZero(password);
+            Parameter.IfNullOrZero(requestIp);
 
-            var user = await _userContext.ValidateAsync(userName, password, requestIp);
+            var user = await _userContext.IfNullOrZeroAsync(userName, password, requestIp);
             return new UserDto
             {
                 Name = user.Name,
@@ -44,7 +44,7 @@ namespace NewCrmCore.Application.Services
 
         public async Task<ConfigDto> GetConfigAsync(Int32 userId)
         {
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
 
             var config = await CacheHelper.GetOrSetCacheAsync(new ConfigCacheKey(userId), () => _userContext.GetConfigAsync(userId));
             if (config == null)
@@ -105,7 +105,7 @@ namespace NewCrmCore.Application.Services
 
         public async Task<UserDto> GetUserAsync(Int32 userId)
         {
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
 
             var user = await CacheHelper.GetOrSetCacheAsync(new UserCacheKey(userId), () => _userContext.GetUserAsync(userId));
             if (user == null)
@@ -143,40 +143,40 @@ namespace NewCrmCore.Application.Services
 
         public async Task<Boolean> CheckUserNameExistAsync(String userName)
         {
-            Parameter.Validate(userName);
+            Parameter.IfNullOrZero(userName);
             return await _userContext.CheckUserNameExistAsync(userName);
         }
 
         public async Task<Boolean> CheckPasswordAsync(Int32 userId, String oldUserPassword)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(oldUserPassword);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(oldUserPassword);
             var result = await _userContext.GetOldPasswordAsync(userId);
             return PasswordUtil.ComparePasswords(result, oldUserPassword);
         }
 
         public async Task<Boolean> UnlockScreenAsync(Int32 userId, String unlockPassword)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(unlockPassword);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(unlockPassword);
             return await _userContext.UnlockScreenAsync(userId, unlockPassword);
         }
 
         public async Task<Boolean> CheckAppNameAsync(String name)
         {
-            Parameter.Validate(name);
+            Parameter.IfNullOrZero(name);
             return await _userContext.CheckAppNameAsync(name);
         }
 
         public async Task<Boolean> CheckAppUrlAsync(String url)
         {
-            Parameter.Validate(url);
+            Parameter.IfNullOrZero(url);
             return await _userContext.CheckAppUrlAsync(url);
         }
 
         public async Task AddNewUserAsync(UserDto userDto)
         {
-            Parameter.Validate(userDto);
+            Parameter.IfNullOrZero(userDto);
 
             var user = userDto.ConvertToModel<UserDto, User>();
 
@@ -189,7 +189,7 @@ namespace NewCrmCore.Application.Services
 
         public async Task ModifyUserAsync(UserDto userDto)
         {
-            Parameter.Validate(userDto);
+            Parameter.IfNullOrZero(userDto);
 
             var user = userDto.ConvertToModel<UserDto, User>();
             await _userContext.ModifyUserAsync(user);
@@ -198,27 +198,27 @@ namespace NewCrmCore.Application.Services
 
         public async Task LogoutAsync(Int32 userId)
         {
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
             await _userContext.LogoutAsync(userId);
             await CacheHelper.RemoveKeyWhenModify(new UserCacheKey(userId));
         }
 
         public async Task EnableAsync(Int32 userId)
         {
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
             await _userContext.EnableAsync(userId);
         }
 
         public async Task DisableAsync(Int32 userId)
         {
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
             await _userContext.DisableAsync(userId);
         }
 
         public async Task ModifyUserFaceAsync(Int32 userId, String newFace)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(newFace);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(newFace);
 
             await _userContext.ModifyUserFaceAsync(userId, newFace);
             await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(userId), new UserCacheKey(userId));
@@ -226,7 +226,7 @@ namespace NewCrmCore.Application.Services
 
         public async Task ModifyPasswordAsync(Int32 userId, String newPassword, Boolean isTogetherSetLockPassword)
         {
-            Parameter.Validate(newPassword);
+            Parameter.IfNullOrZero(newPassword);
 
             var password = PasswordUtil.CreateDbPassword(newPassword);
             await _userContext.ModifyPasswordAsync(userId, password, isTogetherSetLockPassword);
@@ -234,7 +234,7 @@ namespace NewCrmCore.Application.Services
 
         public async Task ModifyLockScreenPasswordAsync(Int32 userId, String newScreenPassword)
         {
-            Parameter.Validate(newScreenPassword);
+            Parameter.IfNullOrZero(newScreenPassword);
 
             var newPassword = PasswordUtil.CreateDbPassword(newScreenPassword);
             await _userContext.ModifyLockScreenPasswordAsync(userId, newPassword);
@@ -243,7 +243,7 @@ namespace NewCrmCore.Application.Services
 
         public async Task RemoveUserAsync(Int32 userId)
         {
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
             await _userContext.RemoveUserAsync(userId);
         }
     }

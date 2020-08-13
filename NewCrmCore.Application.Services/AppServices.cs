@@ -38,7 +38,7 @@ namespace NewCrmCore.Application.Services
 
         public async Task<TodayRecommendAppDto> GetTodayRecommendAsync(Int32 userId)
         {
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
 
             var result = await _appContext.GetTodayRecommendAsync(userId);
             result.AppIcon = result.IsIconByUpload ? Appsetting.FileUrl + result.AppIcon : result.AppIcon;
@@ -52,16 +52,16 @@ namespace NewCrmCore.Application.Services
 
         public async Task<(Int32 allCount, Int32 notReleaseCount)> GetDevelopAndNotReleaseCountAsync(Int32 userId)
         {
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
             return await _appContext.GetDevelopAndNotReleaseCountAsync(userId);
         }
 
         public async Task<PageList<AppDto>> GetAppsAsync(Int32 userId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize)
         {
-            Parameter.Validate(userId, true);
-            Parameter.Validate(orderId);
-            Parameter.Validate(pageIndex, true);
-            Parameter.Validate(pageSize);
+            Parameter.IfNullOrZero(userId, true);
+            Parameter.IfNullOrZero(orderId);
+            Parameter.IfNullOrZero(pageIndex, true);
+            Parameter.IfNullOrZero(pageSize);
 
             return await Task.Run(() =>
             {
@@ -89,11 +89,11 @@ namespace NewCrmCore.Application.Services
 
         public async Task<PageList<AppDto>> GetUserAppsAsync(Int32 userId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
         {
-            Parameter.Validate(userId, true);
-            Parameter.Validate(appTypeId, true);
-            Parameter.Validate(appStyleId, true);
-            Parameter.Validate(pageIndex);
-            Parameter.Validate(pageSize);
+            Parameter.IfNullOrZero(userId, true);
+            Parameter.IfNullOrZero(appTypeId, true);
+            Parameter.IfNullOrZero(appStyleId, true);
+            Parameter.IfNullOrZero(pageIndex);
+            Parameter.IfNullOrZero(pageSize);
 
             return await Task.Run(async () =>
             {
@@ -121,7 +121,7 @@ namespace NewCrmCore.Application.Services
 
         public async Task<AppDto> GetAppAsync(Int32 appId, Int32 userId)
         {
-            Parameter.Validate(appId);
+            Parameter.IfNullOrZero(appId);
 
             var result = await _appContext.GetAppAsync(appId);
             var appTypes = await CacheHelper.GetOrSetCacheAsync(new AppTypeCacheKey(), () => GetAppTypesAsync());
@@ -154,8 +154,8 @@ namespace NewCrmCore.Application.Services
 
         public async Task<Boolean> IsInstallAppAsync(Int32 userId, Int32 appId)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(appId);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(appId);
 
             var result = await _appContext.IsInstallAppAsync(userId, appId);
             return result;
@@ -205,14 +205,14 @@ namespace NewCrmCore.Application.Services
 
         public async Task<Boolean> CheckAppTypeNameAsync(String appTypeName)
         {
-            Parameter.Validate(appTypeName);
+            Parameter.IfNullOrZero(appTypeName);
             return await _appContext.CheckAppTypeNameAsync(appTypeName);
         }
 
         public async Task ModifyAppDirectionAsync(Int32 userId, String direction)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(direction);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(direction);
 
             if (direction.ToLower() == "x")
             {
@@ -231,33 +231,33 @@ namespace NewCrmCore.Application.Services
 
         public async Task ModifyAppIconSizeAsync(Int32 userId, Int32 newSize)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(newSize);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(newSize);
             await _deskContext.ModifyMemberDisplayIconSizeAsync(userId, newSize);
             await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(userId));
         }
 
         public async Task ModifyAppVerticalSpacingAsync(Int32 userId, Int32 newSize)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(newSize);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(newSize);
             await _deskContext.ModifyMemberHorizontalSpacingAsync(userId, newSize);
             await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(userId));
         }
 
         public async Task ModifyAppHorizontalSpacingAsync(Int32 userId, Int32 newSize)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(newSize);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(newSize);
             await _deskContext.ModifyMemberVerticalSpacingAsync(userId, newSize);
             await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(userId));
         }
 
         public async Task ModifyAppStarAsync(Int32 userId, Int32 appId, Int32 starCount)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(appId);
-            Parameter.Validate(starCount, true);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(appId);
+            Parameter.IfNullOrZero(starCount, true);
 
             var isInstall = await _appContext.IsInstallAppAsync(userId, appId);
             if (!isInstall)
@@ -269,9 +269,9 @@ namespace NewCrmCore.Application.Services
 
         public async Task InstallAppAsync(Int32 userId, Int32 appId, Int32 deskNum)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(appId);
-            Parameter.Validate(deskNum);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(appId);
+            Parameter.IfNullOrZero(deskNum);
             var app = await _appContext.InstallAsync(userId, appId, deskNum);
             await CacheHelper.RemoveKeyWhenModify(new DesktopCacheKey(userId));
             await _commonNotify.SendNotify(userId, new Notify("应用安装提醒", $@"您选择的 {app.Name} 已安装成功", 0, userId));
@@ -279,14 +279,14 @@ namespace NewCrmCore.Application.Services
 
         public async Task ModifyUserAppInfoAsync(Int32 userId, AppDto appDto)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(appDto);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(appDto);
             await _appContext.ModifyUserAppInfoAsync(userId, appDto.ConvertToModel<AppDto, App>());
         }
 
         public async Task CreateNewAppAsync(AppDto appDto)
         {
-            Parameter.Validate(appDto);
+            Parameter.IfNullOrZero(appDto);
             var app = appDto.ConvertToModel<AppDto, App>();
             var internalApp = new App(app.Name, app.IconUrl, app.AppUrl, app.Width, app.Height, app.AppTypeId, app.AppAuditState, AppReleaseState.UnRelease, app.AppStyle, app.UserId, app.Remark, appDto.IsIconByUpload);
 
@@ -295,63 +295,63 @@ namespace NewCrmCore.Application.Services
 
         public async Task RemoveAppTypeAsync(Int32 appTypeId)
         {
-            Parameter.Validate(appTypeId);
+            Parameter.IfNullOrZero(appTypeId);
             await _appContext.DeleteAppTypeAsync(appTypeId);
             await CacheHelper.RemoveKeyWhenModify(new AppTypeCacheKey());
         }
 
         public async Task CreateNewAppTypeAsync(AppTypeDto appTypeDto)
         {
-            Parameter.Validate(appTypeDto);
+            Parameter.IfNullOrZero(appTypeDto);
             var appType = appTypeDto.ConvertToModel<AppTypeDto, AppType>();
             await _appContext.CreateNewAppTypeAsync(appType);
         }
 
         public async Task ModifyAppTypeAsync(AppTypeDto appTypeDto, Int32 appTypeId)
         {
-            Parameter.Validate(appTypeDto);
-            Parameter.Validate(appTypeId);
+            Parameter.IfNullOrZero(appTypeDto);
+            Parameter.IfNullOrZero(appTypeId);
             await _appContext.ModifyAppTypeAsync(appTypeDto.Name, appTypeDto.IsSystem, appTypeId);
         }
 
         public async Task PassAsync(Int32 appId)
         {
-            Parameter.Validate(appId);
+            Parameter.IfNullOrZero(appId);
             var app = await _appContext.PassAsync(appId);
             await _commonNotify.SendNotify(app.UserId, new Notify("应用审核提醒", $@"您提交的应用 {app.Name} 已审核通过", 0, app.UserId));
         }
 
         public async Task DenyAsync(Int32 appId)
         {
-            Parameter.Validate(appId);
+            Parameter.IfNullOrZero(appId);
             var app = await _appContext.DenyAsync(appId);
             await _commonNotify.SendNotify(app.UserId, new Notify("应用审核提醒", $@"您提交的应用 {app.Name} 未审核通过", 0, app.UserId));
         }
 
         public async Task SetTodayRecommandAppAsync(Int32 appId)
         {
-            Parameter.Validate(appId);
+            Parameter.IfNullOrZero(appId);
             await _appContext.SetTodayRecommandAppAsync(appId);
         }
 
         public async Task RemoveAppAsync(Int32 appId)
         {
-            Parameter.Validate(appId);
+            Parameter.IfNullOrZero(appId);
             await _appContext.RemoveAppAsync(appId);
         }
 
         public async Task ReleaseAppAsync(Int32 appId)
         {
-            Parameter.Validate(appId);
+            Parameter.IfNullOrZero(appId);
             var result = await _appContext.ReleaseAppAsync(appId);
             await _commonNotify.SendNotify(result.UserId, new Notify("应用发布提醒", $@"您的应用 {result.Name} 已发布到应用市场中 ", 0, result.UserId));
         }
 
         public async Task ModifyAppIconAsync(Int32 userId, Int32 appId, String newIcon)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(appId);
-            Parameter.Validate(newIcon);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(appId);
+            Parameter.IfNullOrZero(newIcon);
             await _appContext.ModifyAppIconAsync(userId, appId, newIcon);
         }
 

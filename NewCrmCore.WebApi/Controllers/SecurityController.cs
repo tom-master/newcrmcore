@@ -64,7 +64,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> InitAttachmentPowerAsync(Int32 roleId)
         {
             #region 参数验证
-            Parameter.Validate(roleId);
+            Parameter.IfNullOrZero(roleId);
             #endregion
 
             var roleDto = new RoleDto();
@@ -140,7 +140,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> RemoveRoleAsync(Int32 roleId)
         {
             #region 参数验证
-            Parameter.Validate(roleId);
+            Parameter.IfNullOrZero(roleId);
             #endregion
 
             await _securityServices.RemoveRoleAsync(roleId);
@@ -165,7 +165,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> CreateRoleAsync(IFormCollection forms, Int32 roleId = 0)
         {
             #region 参数验证
-            Parameter.Validate(forms);
+            Parameter.IfNullOrZero(forms);
             #endregion
 
             if (roleId != 0)
@@ -196,7 +196,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> GetSystemAppAsync(String appIds)
         {
             #region 参数验证
-            Parameter.Validate(appIds);
+            Parameter.IfNullOrZero(appIds);
             #endregion
 
             var internalAppIds = appIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(Int32.Parse).ToArray();
@@ -224,7 +224,7 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRolesAsync(String roleName, Int32 pageIndex, Int32 pageSize)
         {
-            Parameter.Validate(roleName, true);
+            Parameter.IfNullOrZero(roleName, true);
             var result = await _securityServices.GetRolesAsync(roleName, pageIndex, pageSize);
             return Json(new ResponsePaging<IList<RoleDto>>
             {
@@ -247,7 +247,7 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CheckNameAsync(String param)
         {
-            Parameter.Validate(param);
+            Parameter.IfNullOrZero(param);
             var result = await _securityServices.CheckRoleNameAsync(param);
             var response = new ResponseSimple();
             if (!result)
@@ -277,7 +277,7 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CheckRoleIdentityAsync(String param)
         {
-            Parameter.Validate(param);
+            Parameter.IfNullOrZero(param);
             var result = await _securityServices.CheckRoleIdentityAsync(param);
             var response = new ResponseSimple();
             if (!result)
@@ -308,7 +308,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> AddAppToRoleAsync(IFormCollection forms)
         {
             #region 参数验证
-            Parameter.Validate(forms);
+            Parameter.IfNullOrZero(forms);
             #endregion
 
             var response = new ResponseSimple();

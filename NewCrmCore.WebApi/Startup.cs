@@ -16,9 +16,8 @@ using NewCrmCore.Domain.Services.BoundedContext;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.NotifyCenter;
-using NewCrmCore.WebApi.Filter;
 using NewCrmCore.WebApi.Middleware;
-using NewLibCore.Data.SQL;
+using NewLibCore.Data.SQL.EMapper;
 
 namespace NewCrmCore.WebApi
 {
@@ -34,8 +33,8 @@ namespace NewCrmCore.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            EntityMapper.InitDefaultSetting();
-            EntityMapper.ConnectionStringName = "NewCrmDatabase";
+            EntityMapperConfig.InitDefaultSetting();
+            EntityMapperConfig.ConnectionStringName = "NewCrmDatabase";
 
             services.AddTransient<IUserServices, UserServices>();
             services.AddTransient<ISecurityServices, SecurityServices>();

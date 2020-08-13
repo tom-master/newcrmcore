@@ -19,7 +19,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
     {
         public async Task<(Int32 allCount, Int32 notReleaseCount)> GetDevelopAndNotReleaseCountAsync(Int32 userId)
         {
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
             return await Task.Run(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();
@@ -55,7 +55,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<TodayRecommendAppDto> GetTodayRecommendAsync(Int32 userId)
         {
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
             return await Task.Run(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();
@@ -99,10 +99,10 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public List<App> GetApps(Int32 userId, Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
-            Parameter.Validate(userId, true);
-            Parameter.Validate(orderId);
-            Parameter.Validate(pageIndex, true);
-            Parameter.Validate(pageSize);
+            Parameter.IfNullOrZero(userId, true);
+            Parameter.IfNullOrZero(orderId);
+            Parameter.IfNullOrZero(pageIndex, true);
+            Parameter.IfNullOrZero(pageSize);
 
             using var mapper = EntityMapper.CreateMapper();
             try
@@ -201,11 +201,11 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public List<App> GetUserApps(Int32 userId, String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
-            Parameter.Validate(userId, true);
-            Parameter.Validate(appTypeId, true);
-            Parameter.Validate(appStyleId, true);
-            Parameter.Validate(pageIndex);
-            Parameter.Validate(pageSize);
+            Parameter.IfNullOrZero(userId, true);
+            Parameter.IfNullOrZero(appTypeId, true);
+            Parameter.IfNullOrZero(appStyleId, true);
+            Parameter.IfNullOrZero(pageIndex);
+            Parameter.IfNullOrZero(pageSize);
 
             using var mapper = EntityMapper.CreateMapper();
             try
@@ -291,7 +291,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<App> GetAppAsync(Int32 appId)
         {
-            Parameter.Validate(appId);
+            Parameter.IfNullOrZero(appId);
             return await Task.Run(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();
@@ -341,8 +341,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Boolean> IsInstallAppAsync(Int32 userId, Int32 appId)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(appId);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(appId);
             return await Task.Run(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();
@@ -380,7 +380,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Boolean> CheckAppTypeNameAsync(String appTypeName)
         {
-            Parameter.Validate(appTypeName);
+            Parameter.IfNullOrZero(appTypeName);
             return await Task.Run(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();
@@ -397,9 +397,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyAppStarAsync(Int32 userId, Int32 appId, Int32 starCount)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(appId);
-            Parameter.Validate(starCount);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(appId);
+            Parameter.IfNullOrZero(starCount);
             await Task.Run(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();
@@ -448,7 +448,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<App> PassAsync(Int32 appId)
         {
-            Parameter.Validate(appId);
+            Parameter.IfNullOrZero(appId);
             return await Task.Run<App>(async () =>
              {
                  using var mapper = EntityMapper.CreateMapper();
@@ -472,7 +472,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<App> DenyAsync(Int32 appId)
         {
-            Parameter.Validate(appId);
+            Parameter.IfNullOrZero(appId);
             return await Task.Run<App>(async () =>
             {
                 using var mapper = EntityMapper.CreateMapper();
@@ -496,7 +496,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task SetTodayRecommandAppAsync(Int32 appId)
         {
-            Parameter.Validate(appId);
+            Parameter.IfNullOrZero(appId);
             await Task.Run(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();
@@ -544,7 +544,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task RemoveAppAsync(Int32 appId)
         {
-            Parameter.Validate(appId);
+            Parameter.IfNullOrZero(appId);
             await Task.Run(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();
@@ -587,7 +587,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<App> ReleaseAppAsync(Int32 appId)
         {
-            Parameter.Validate(appId);
+            Parameter.IfNullOrZero(appId);
             return await Task.Run<App>(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();
@@ -620,9 +620,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyUserAppInfoAsync(Int32 userId, App app)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(userId);
-            Parameter.Validate(app);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(app);
 
             await Task.Run(() =>
             {
@@ -705,7 +705,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task DeleteAppTypeAsync(Int32 appTypeId)
         {
-            Parameter.Validate(appTypeId);
+            Parameter.IfNullOrZero(appTypeId);
             await Task.Run(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();
@@ -743,7 +743,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task CreateNewAppTypeAsync(AppType appType)
         {
-            Parameter.Validate(appType);
+            Parameter.IfNullOrZero(appType);
             await Task.Run(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();
@@ -779,8 +779,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyAppTypeAsync(String appTypeName, Boolean isSystem, Int32 appTypeId)
         {
-            Parameter.Validate(appTypeName);
-            Parameter.Validate(appTypeId);
+            Parameter.IfNullOrZero(appTypeName);
+            Parameter.IfNullOrZero(appTypeId);
             await Task.Run(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();
@@ -815,9 +815,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyAppIconAsync(Int32 userId, Int32 appId, String newIcon)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(appId);
-            Parameter.Validate(newIcon);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(appId);
+            Parameter.IfNullOrZero(newIcon);
             await Task.Run(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();
@@ -840,9 +840,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<App> InstallAsync(Int32 userId, Int32 appId, Int32 deskNum)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(appId);
-            Parameter.Validate(deskNum);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(appId);
+            Parameter.IfNullOrZero(deskNum);
             return await Task.Run<App>(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();

@@ -21,7 +21,7 @@ namespace NewCrmCore.Application.Services
 
         public async Task AddLoggerAsync(LogDto log)
         {
-            Parameter.Validate(log);
+            Parameter.IfNullOrZero(log);
             await _loggerContext.AddLoggerAsync(log.ConvertToModel<LogDto, Log>());
         }
 

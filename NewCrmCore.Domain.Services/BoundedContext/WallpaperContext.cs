@@ -14,7 +14,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
     {
         public async Task<(Int32 wapperId, String url)> AddWallpaperAsync(Wallpaper wallpaper)
         {
-            Parameter.Validate(wallpaper);
+            Parameter.IfNullOrZero(wallpaper);
             return await Task.Run(() =>
              {
                  using var mapper = EntityMapper.CreateMapper();
@@ -49,7 +49,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Wallpaper> GetUploadWallpaperAsync(String md5)
         {
-            Parameter.Validate(md5);
+            Parameter.IfNullOrZero(md5);
 
             return await Task.Run(() =>
             {
@@ -82,7 +82,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<List<Wallpaper>> GetUploadWallpaperAsync(Int32 userId)
         {
-            Parameter.Validate(userId);
+            Parameter.IfNullOrZero(userId);
 
             return await Task.Run(() =>
             {
@@ -147,8 +147,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyWallpaperModeAsync(Int32 userId, String newMode)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(newMode);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(newMode);
 
             await Task.Run(() =>
             {
@@ -182,8 +182,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyWallpaperAsync(Int32 userId, Int32 newWallpaperId)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(newWallpaperId);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(newWallpaperId);
 
             await Task.Run(() =>
             {
@@ -210,8 +210,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task RemoveWallpaperAsync(Int32 userId, Int32 wallpaperId)
         {
-            Parameter.Validate(userId);
-            Parameter.Validate(wallpaperId);
+            Parameter.IfNullOrZero(userId);
+            Parameter.IfNullOrZero(wallpaperId);
 
             await Task.Run(() =>
             {

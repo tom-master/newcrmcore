@@ -17,7 +17,7 @@ namespace NewCrmCore.Domain.Services.Interface
         /// <param name="password"></param>
         /// <param name="requestIp"></param>
         /// <returns></returns>
-        Task<User> ValidateAsync(String userName, String password, String requestIp);
+        Task<User> IfNullOrZeroAsync(String userName, String password, String requestIp);
 
         /// <summary>
         /// 获取配置

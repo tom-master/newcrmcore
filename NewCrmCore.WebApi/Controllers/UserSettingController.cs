@@ -50,7 +50,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyLockPasswordAsync(IFormCollection forms)
         {
             #region 参数验证
-            Parameter.Validate(forms);
+            Parameter.IfNullOrZero(forms);
             #endregion
 
             await _userServices.ModifyLockScreenPasswordAsync(UserInfo.Id, forms["lockpassword"]);
@@ -75,7 +75,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyFaceAsync(String userFace)
         {
             #region 参数验证
-            Parameter.Validate(userFace);
+            Parameter.IfNullOrZero(userFace);
             #endregion
 
             await _userServices.ModifyUserFaceAsync(UserInfo.Id, userFace);
@@ -100,7 +100,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyPasswordAsync(IFormCollection forms)
         {
             #region 参数验证
-            Parameter.Validate(forms);
+            Parameter.IfNullOrZero(forms);
             #endregion
 
             await _userServices.ModifyPasswordAsync(UserInfo.Id, forms["password"], Int32.Parse(forms["lockPwdIsEqLoginPwd"]) == 1);
@@ -125,7 +125,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> CheckPasswordAsync(String param)
         {
             #region 参数验证
-            Parameter.Validate(param);
+            Parameter.IfNullOrZero(param);
             #endregion
 
             var result = await _userServices.CheckPasswordAsync(UserInfo.Id, param);

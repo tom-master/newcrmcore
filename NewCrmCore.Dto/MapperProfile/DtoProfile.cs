@@ -4,7 +4,7 @@ using NewCrmCore.Domain.Entitys.Agent;
 using NewCrmCore.Domain.Entitys.Security;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Domain.ValueObject;
-using NewLibCore.Validate;
+using NewLibCore.IfNullOrZero;
 
 namespace NewCrmCore.Dto.MapperProfile
 {

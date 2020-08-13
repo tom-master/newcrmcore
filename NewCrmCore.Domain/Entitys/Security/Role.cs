@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NewLibCore.Data.SQL;
-using NewLibCore.Data.SQL.Validate;
+using NewLibCore.Data.SQL.IfNullOrZero;
 
 namespace NewCrmCore.Domain.Entitys.Security
 {

@@ -40,7 +40,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Role> GetRoleAsync(Int32 roleId)
         {
-            Parameter.Validate(roleId);
+            Parameter.IfNullOrZero(roleId);
 
             return await Task.Run(() =>
             {
@@ -107,8 +107,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Boolean> CheckPermissionsAsync(Int32 accessAppId, params Int32[] roleIds)
         {
-            Parameter.Validate(accessAppId);
-            Parameter.Validate(roleIds);
+            Parameter.IfNullOrZero(accessAppId);
+            Parameter.IfNullOrZero(roleIds);
 
             return await Task.Run(() =>
             {
@@ -140,7 +140,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Boolean> CheckRoleNameAsync(String name)
         {
-            Parameter.Validate(name);
+            Parameter.IfNullOrZero(name);
 
             return await Task.Run(() =>
             {
@@ -160,7 +160,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task<Boolean> CheckRoleIdentityAsync(String name)
         {
-            Parameter.Validate(name);
+            Parameter.IfNullOrZero(name);
 
             return await Task.Run(() =>
             {
@@ -180,7 +180,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyRoleAsync(Role role)
         {
-            Parameter.Validate(role);
+            Parameter.IfNullOrZero(role);
 
             await Task.Run(() =>
             {
@@ -210,7 +210,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task RemoveRoleAsync(Int32 roleId)
         {
-            Parameter.Validate(roleId);
+            Parameter.IfNullOrZero(roleId);
 
             await Task.Run(() =>
             {
@@ -266,7 +266,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task AddNewRoleAsync(Role role)
         {
-            Parameter.Validate(role);
+            Parameter.IfNullOrZero(role);
 
             await Task.Run(() =>
             {
@@ -291,8 +291,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task AddPowerToCurrentRoleAsync(Int32 roleId, IEnumerable<Int32> powerIds)
         {
-            Parameter.Validate(roleId);
-            Parameter.Validate(powerIds);
+            Parameter.IfNullOrZero(roleId);
+            Parameter.IfNullOrZero(powerIds);
 
             await Task.Run(() =>
             {
@@ -342,7 +342,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task AddVisitorRecord(VisitorRecord visitorRecord)
         {
-            Parameter.Validate(visitorRecord);
+            Parameter.IfNullOrZero(visitorRecord);
 
             await Task.Run(() =>
             {

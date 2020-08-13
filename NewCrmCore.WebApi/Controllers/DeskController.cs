@@ -84,7 +84,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ConfigMemberAsync(Int32 memberId)
         {
             #region 参数验证
-            Parameter.Validate(memberId);
+            Parameter.IfNullOrZero(memberId);
             #endregion
 
             var member = await _deskServices.GetMemberAsync(UserInfo.Id, memberId);
@@ -161,7 +161,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> LoginAsync(UserLogin loginParameter)
         {
             #region 参数验证
-            Parameter.Validate(loginParameter);
+            Parameter.IfNullOrZero(loginParameter);
             #endregion
             var response = new ResponseModel<UserDto>();
 
@@ -219,7 +219,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyWallpaperAsync(Int32 wallpaperId)
         {
             #region 参数验证
-            Parameter.Validate(wallpaperId);
+            Parameter.IfNullOrZero(wallpaperId);
             #endregion
 
             await _wallpaperServices.ModifyWallpaperAsync(UserInfo.Id, wallpaperId);
@@ -243,7 +243,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> RemoveWallpaperAsync(Int32 wallPaperId)
         {
             #region 参数验证
-            Parameter.Validate(wallPaperId);
+            Parameter.IfNullOrZero(wallPaperId);
             #endregion
 
             await _wallpaperServices.RemoveWallpaperAsync(UserInfo.Id, wallPaperId);
@@ -267,7 +267,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> UploadWallPaperAsync(WallpaperDto wallpaper)
         {
             #region 参数验证
-            Parameter.Validate(wallpaper);
+            Parameter.IfNullOrZero(wallpaper);
             #endregion
 
             var (wapperId, url) = await _wallpaperServices.AddWallpaperAsync(new WallpaperDto
@@ -307,7 +307,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> WebWallpaperAsync(String webUrl)
         {
             #region 参数验证
-            Parameter.Validate(webUrl);
+            Parameter.IfNullOrZero(webUrl);
             #endregion
 
             var result = _wallpaperServices.AddWebWallpaperAsync(UserInfo.Id, webUrl);
@@ -332,7 +332,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifySkinAsync(String skin)
         {
             #region 参数验证
-            Parameter.Validate(skin);
+            Parameter.IfNullOrZero(skin);
             #endregion
 
             await _deskServices.ModifySkinAsync(UserInfo.Id, skin);
@@ -356,8 +356,8 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyIconAsync(ModifyIconForMember model)
         {
             #region 参数验证
-            Parameter.Validate(model.MemberId);
-            Parameter.Validate(model.NewIcon);
+            Parameter.IfNullOrZero(model.MemberId);
+            Parameter.IfNullOrZero(model.NewIcon);
             #endregion
 
             await _deskServices.ModifyMemberIconAsync(UserInfo.Id, model.MemberId, model.NewIcon);
@@ -382,7 +382,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> UnlockScreenAsync(String unlockPassword)
         {
             #region 参数验证
-            Parameter.Validate(unlockPassword);
+            Parameter.IfNullOrZero(unlockPassword);
             #endregion
 
             var response = new ResponseSimple();
@@ -483,8 +483,8 @@ namespace NewCrmCore.WebApi.Controllers
         {
 
             #region 参数验证
-            Parameter.Validate(id);
-            Parameter.Validate(type);
+            Parameter.IfNullOrZero(id);
+            Parameter.IfNullOrZero(type);
             #endregion
 
             var internalMemberResult = type == "folder" ? await _deskServices.GetMemberAsync(UserInfo.Id, id, true) : await _deskServices.GetMemberAsync(UserInfo.Id, id);
@@ -527,9 +527,9 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> CreateFolderAsync(CreateFolder model)
         {
             #region 参数验证
-            Parameter.Validate(model.FolderName);
-            Parameter.Validate(model.FolderImg);
-            Parameter.Validate(model.DeskId);
+            Parameter.IfNullOrZero(model.FolderName);
+            Parameter.IfNullOrZero(model.FolderImg);
+            Parameter.IfNullOrZero(model.DeskId);
             #endregion
 
             await _deskServices.CreateNewFolderAsync(model.FolderName, model.FolderImg, model.DeskId, UserInfo.Id);
@@ -553,7 +553,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> UninstallAsync(Int32 memberId)
         {
             #region 参数验证 
-            Parameter.Validate(memberId);
+            Parameter.IfNullOrZero(memberId);
             #endregion
 
             await _deskServices.UninstallMemberAsync(UserInfo.Id, memberId);
@@ -577,7 +577,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> CheckNameAsync(String param)
         {
             #region 参数验证
-            Parameter.Validate(param);
+            Parameter.IfNullOrZero(param);
             #endregion
 
             var result = await _deskServices.CheckMemberNameAsync(param);
@@ -610,8 +610,8 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> MemberMoveAsync(MemberMove model)
         {
             #region 参数验证
-            Parameter.Validate(model.MoveType);
-            Parameter.Validate(model.MemberId);
+            Parameter.IfNullOrZero(model.MoveType);
+            Parameter.IfNullOrZero(model.MemberId);
             #endregion
 
             switch (model.MoveType.ToLower())
@@ -665,7 +665,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyMemberInfoAsync(IFormCollection forms)
         {
             #region 参数验证
-            Parameter.Validate(forms);
+            Parameter.IfNullOrZero(forms);
             #endregion
             var memberDto = new MemberDto
             {
@@ -742,8 +742,8 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyDockPositionAsync(ModifyDockPosition model)
         {
             #region 参数验证
-            Parameter.Validate(model.Pos);
-            Parameter.Validate(model.DeskNum);
+            Parameter.IfNullOrZero(model.Pos);
+            Parameter.IfNullOrZero(model.DeskNum);
             #endregion
 
             await _deskServices.ModifyDockPositionAsync(UserInfo.Id, model.DeskNum, model.Pos);
@@ -767,7 +767,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyWallpaperSourceAsync(String source)
         {
             #region 参数验证
-            Parameter.Validate(source);
+            Parameter.IfNullOrZero(source);
             #endregion
 
             await _deskServices.ModifyWallpaperSourceAsync(source, UserInfo.Id);
@@ -791,7 +791,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifySizeAsync(Int32 appSize)
         {
             #region 参数验证
-            Parameter.Validate(appSize);
+            Parameter.IfNullOrZero(appSize);
             #endregion
 
             await _appServices.ModifyAppIconSizeAsync(UserInfo.Id, appSize);
@@ -835,9 +835,9 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyFolderInfoAsync(ModifyFolderInfo model)
         {
             #region 参数验证
-            Parameter.Validate(model.Name);
-            Parameter.Validate(model.Icon);
-            Parameter.Validate(model.MemberId);
+            Parameter.IfNullOrZero(model.Name);
+            Parameter.IfNullOrZero(model.Icon);
+            Parameter.IfNullOrZero(model.MemberId);
             #endregion
 
             await _deskServices.ModifyFolderInfoAsync(UserInfo.Id, model.Name, model.Icon, model.MemberId);
@@ -882,7 +882,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyDefaultDeskAsync(Int32 deskNum)
         {
             #region 参数验证
-            Parameter.Validate(deskNum);
+            Parameter.IfNullOrZero(deskNum);
             #endregion
 
             await _deskServices.ModifyDefaultDeskNumberAsync(UserInfo.Id, deskNum);
@@ -906,7 +906,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyXyAsync(String appXy)
         {
             #region 参数验证
-            Parameter.Validate(appXy);
+            Parameter.IfNullOrZero(appXy);
             #endregion
 
             await _appServices.ModifyAppDirectionAsync(UserInfo.Id, appXy);
@@ -930,7 +930,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyDisplayModelAsync(String wallPaperShowType)
         {
             #region 参数验证
-            Parameter.Validate(wallPaperShowType);
+            Parameter.IfNullOrZero(wallPaperShowType);
             #endregion
 
             await _wallpaperServices.ModifyWallpaperModeAsync(UserInfo.Id, wallPaperShowType);
@@ -974,7 +974,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyHorizontalSpaceAsync(Int32 appHorizontal)
         {
             #region 参数验证
-            Parameter.Validate(appHorizontal);
+            Parameter.IfNullOrZero(appHorizontal);
             #endregion
 
             await _appServices.ModifyAppHorizontalSpacingAsync(UserInfo.Id, appHorizontal);
@@ -998,7 +998,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyVerticalSpaceAsync(Int32 appVertical)
         {
             #region 参数验证
-            Parameter.Validate(appVertical);
+            Parameter.IfNullOrZero(appVertical);
             #endregion
 
             await _appServices.ModifyAppVerticalSpacingAsync(UserInfo.Id, appVertical);
@@ -1021,8 +1021,8 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> CheckUnreadNotifyCountAsync(Int32 pageIndex, Int32 pageSize)
         {
             #region 参数验证
-            Parameter.Validate(pageIndex);
-            Parameter.Validate(pageSize);
+            Parameter.IfNullOrZero(pageIndex);
+            Parameter.IfNullOrZero(pageSize);
             #endregion
 
             var result = await _deskServices.CheckUnreadNotifyCount(UserInfo.Id, pageIndex, pageSize);
@@ -1043,7 +1043,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ReadNotifyAsync(String notifyId)
         {
             #region 参数验证
-            Parameter.Validate(notifyId, true);
+            Parameter.IfNullOrZero(notifyId, true);
             #endregion
 
             var response = new ResponseSimple();

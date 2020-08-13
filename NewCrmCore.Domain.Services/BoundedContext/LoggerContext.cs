@@ -16,7 +16,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
     {
         public async Task AddLoggerAsync(Log log)
         {
-            Parameter.Validate(log);
+            Parameter.IfNullOrZero(log);
             await Task.Run(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();
@@ -33,8 +33,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public List<Log> GetLogs(String userName, Int32 logLevel, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
-            Parameter.Validate(userName, true);
-            Parameter.Validate(logLevel);
+            Parameter.IfNullOrZero(userName, true);
+            Parameter.IfNullOrZero(logLevel);
 
             try
             {
