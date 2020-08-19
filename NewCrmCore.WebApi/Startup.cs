@@ -55,7 +55,7 @@ namespace NewCrmCore.WebApi
             services.AddTransient<ISecurityContext, SecurityContext>();
             services.AddTransient<IWallpaperContext, WallpaperContext>();
 
-            services.AddCors(options => options.AddPolicy("cors", p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+            services.AddCors(options => options.AddPolicy("cors", p => p.SetIsOriginAllowed(_ => true).AllowAnyHeader().AllowAnyMethod().AllowCredentials()));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API Demo", Version = "v1" });
@@ -77,10 +77,8 @@ namespace NewCrmCore.WebApi
                 };
             });
 
-            services.AddControllers(config =>
-            {
-                config.SuppressAsyncSuffixInActionNames = false;
-            }).AddJsonOptions(options =>
+            services.AddControllers()
+            .AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
                 options.JsonSerializerOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;

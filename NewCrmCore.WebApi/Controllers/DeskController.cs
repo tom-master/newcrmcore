@@ -467,7 +467,7 @@ namespace NewCrmCore.WebApi.Controllers
             {
                 IsSuccess = true,
                 Message = "初始化壁纸成功",
-                Model = new { result.WallpaperUrl, result.WallpaperSource, result.WallpaperHeigth, result.WallpaperMode, result.WallpaperWidth }
+                Model = result
             });
         }
 
@@ -874,8 +874,8 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> GetDockPosAsync()
         {
             var userContext = await GetUserContextAsync();
-            var result = (await _userServices.GetConfigAsync(userContext.Id)).DockPosition;
-            return Json(new ResponseModel<DockPosition>
+            var result = await _userServices.GetConfigAsync(userContext.Id);
+            return Json(new ResponseModel<ConfigDto>
             {
                 IsSuccess = true,
                 Message = "初始化应用码头成功",

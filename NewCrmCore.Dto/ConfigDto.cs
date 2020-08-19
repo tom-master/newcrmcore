@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using NewCrmCore.Domain.ValueObject;
 namespace NewCrmCore.Dto
 {
@@ -16,8 +17,10 @@ namespace NewCrmCore.Dto
 
         public Int32 DefaultDeskNumber { get; set; }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public AppAlignMode AppXy { get; set; }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public DockPosition DockPosition { get; set; }
 
         public String WallpaperUrl { get; set; }
@@ -26,8 +29,10 @@ namespace NewCrmCore.Dto
 
         public Int32 WallpaperHeigth { get; set; }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public WallpaperSource WallpaperSource { get; set; }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public WallpaperMode WallpaperMode { get; set; }
 
         public Int32 DefaultDeskCount { get; set; }
