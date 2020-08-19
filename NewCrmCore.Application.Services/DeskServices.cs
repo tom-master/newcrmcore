@@ -341,7 +341,7 @@ namespace NewCrmCore.Application.Services
                 {
                     var fileName = Path.GetFileName(path);
                     fileName = fileName.Substring(0, fileName.LastIndexOf("."));
-                    var cssPath = path.Substring(path.LastIndexOf("images") - 1).Replace(@"\", "/");
+                    var cssPath = path[(path.LastIndexOf("images") - 1)..].Replace(@"\", "/");
                     dataDictionary.Add(fileName, new
                     {
                         cssPath,

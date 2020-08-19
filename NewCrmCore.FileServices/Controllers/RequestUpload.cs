@@ -82,7 +82,7 @@ namespace NewCrmCore.FileServices.Controllers
             string fileExtension;
             if (file.FileName.StartsWith("__avatar"))
             {
-                fileExtension = file.ContentType.Substring(file.ContentType.LastIndexOf("/", StringComparison.Ordinal) + 1);
+                fileExtension = file.ContentType[(file.ContentType.LastIndexOf("/", StringComparison.Ordinal) + 1)..];
                 if (fileExtension == "jpeg")
                 {
                     fileExtension = "jpg";
@@ -90,7 +90,7 @@ namespace NewCrmCore.FileServices.Controllers
             }
             else
             {
-                fileExtension = file.FileName.Substring(file.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1);
+                fileExtension = file.FileName[(file.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1)..];
             }
 
             return !ExtensionBlackList.Any(d => d.ToLower() == fileExtension) ? fileExtension.ToLower() : "";
