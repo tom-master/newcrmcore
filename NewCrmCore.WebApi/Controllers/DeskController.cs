@@ -48,13 +48,14 @@ namespace NewCrmCore.WebApi.Controllers
         /// 桌面
         /// </summary>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> InitDeskInfoAsync()
         {
             var response = new ResponseModel<dynamic>();
-            if (UserInfo != null)
+            var userContext = await GetUserContextAsync();
+            if (userContext != null)
             {
-                var config = await _userServices.GetConfigAsync(UserInfo.Id);
+                var config = await _userServices.GetConfigAsync(userContext.Id);
                 if (config == null)
                 {
                     response.IsSuccess = true;
@@ -62,7 +63,7 @@ namespace NewCrmCore.WebApi.Controllers
                 }
                 else
                 {
-                    response.Model = new { UserInfo, config };
+                    response.Model = new { userContext, config };
                     response.IsSuccess = true;
                     response.Message = "初始化桌面信息成功";
                 }
@@ -86,9 +87,9 @@ namespace NewCrmCore.WebApi.Controllers
             #region 参数验证
             Parameter.IfNullOrZero(memberId);
             #endregion
-
-            var member = await _deskServices.GetMemberAsync(UserInfo.Id, memberId);
-            var uniqueToken = CreateUniqueTokenAsync(UserInfo.Id);
+            var userContext = await GetUserContextAsync();
+            var member = await _deskServices.GetMemberAsync(userContext.Id, memberId);
+            var uniqueToken = CreateUniqueTokenAsync(userContext.Id);
 
             return Json(new ResponseModel<dynamic>
             {
@@ -105,7 +106,8 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> SystemWallPaperAsync()
         {
-            var config = await _userServices.GetConfigAsync(UserInfo.Id);
+            var userContext = await GetUserContextAsync();
+            var config = await _userServices.GetConfigAsync(userContext.Id);
             var wallpapers = await _wallpaperServices.GetWallpapersAsync();
             return Json(new ResponseModel<dynamic>
             {
@@ -122,7 +124,8 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> CustomizeWallpaperAsync()
         {
-            var config = await _userServices.GetConfigAsync(UserInfo.Id);
+            var userContext = await GetUserContextAsync();
+            var config = await _userServices.GetConfigAsync(userContext.Id);
             return Json(new ResponseModel<dynamic>
             {
                 Model = new { config },
@@ -138,7 +141,8 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> ConfigDeskAsync()
         {
-            var config = await _userServices.GetConfigAsync(UserInfo.Id);
+            var userContext = await GetUserContextAsync();
+            var config = await _userServices.GetConfigAsync(userContext.Id);
             return Json(new ResponseModel<dynamic>
             {
                 Model = new { config },
@@ -191,12 +195,7 @@ namespace NewCrmCore.WebApi.Controllers
                     expires: cookieTimeout,
                     signingCredentials: creds);
                 response.Token = new JwtSecurityTokenHandler().WriteToken(token);
-                Response.Cookies.Append("User", JsonConvert.SerializeObject(new
-                {
-                    user.Id,
-                    user.UserFace,
-                    user.Name
-                }), new CookieOptions { Expires = cookieTimeout });
+                response.Model = user;
             }
             else
             {
@@ -221,8 +220,8 @@ namespace NewCrmCore.WebApi.Controllers
             #region 参数验证
             Parameter.IfNullOrZero(wallpaperId);
             #endregion
-
-            await _wallpaperServices.ModifyWallpaperAsync(UserInfo.Id, wallpaperId);
+            var userContext = await GetUserContextAsync();
+            await _wallpaperServices.ModifyWallpaperAsync(userContext.Id, wallpaperId);
             return Json(new ResponseSimple
             {
                 IsSuccess = true,
@@ -246,7 +245,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(wallPaperId);
             #endregion
 
-            await _wallpaperServices.RemoveWallpaperAsync(UserInfo.Id, wallPaperId);
+            var userContext = await GetUserContextAsync();
+            await _wallpaperServices.RemoveWallpaperAsync(userContext.Id, wallPaperId);
             return Json(new ResponseSimple
             {
                 IsSuccess = true,
@@ -269,7 +269,7 @@ namespace NewCrmCore.WebApi.Controllers
             #region 参数验证
             Parameter.IfNullOrZero(wallpaper);
             #endregion
-
+            var userContext = await GetUserContextAsync();
             var (wapperId, url) = await _wallpaperServices.AddWallpaperAsync(new WallpaperDto
             {
                 Title = wallpaper.Title.Substring(0, 9),
@@ -277,7 +277,7 @@ namespace NewCrmCore.WebApi.Controllers
                 Height = wallpaper.Height,
                 Url = wallpaper.Url,
                 Source = wallpaper.Source,
-                UserId = UserInfo.Id,
+                UserId = userContext.Id,
                 Md5 = wallpaper.Md5,
                 ShortUrl = ""
             });
@@ -309,8 +309,8 @@ namespace NewCrmCore.WebApi.Controllers
             #region 参数验证
             Parameter.IfNullOrZero(webUrl);
             #endregion
-
-            var result = _wallpaperServices.AddWebWallpaperAsync(UserInfo.Id, webUrl);
+            var userContext = await GetUserContextAsync();
+            var result = _wallpaperServices.AddWebWallpaperAsync(userContext.Id, webUrl);
             return Json(new ResponseModel<(Int32 wapperId, String url)>
             {
                 IsSuccess = true,
@@ -334,8 +334,8 @@ namespace NewCrmCore.WebApi.Controllers
             #region 参数验证
             Parameter.IfNullOrZero(skin);
             #endregion
-
-            await _deskServices.ModifySkinAsync(UserInfo.Id, skin);
+            var userContext = await GetUserContextAsync();
+            await _deskServices.ModifySkinAsync(userContext.Id, skin);
             return Json(new ResponseSimple
             {
                 IsSuccess = true,
@@ -359,8 +359,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(model.MemberId);
             Parameter.IfNullOrZero(model.NewIcon);
             #endregion
-
-            await _deskServices.ModifyMemberIconAsync(UserInfo.Id, model.MemberId, model.NewIcon);
+            var userContext = await GetUserContextAsync();
+            await _deskServices.ModifyMemberIconAsync(userContext.Id, model.MemberId, model.NewIcon);
             return Json(new ResponseModel<String>
             {
                 IsSuccess = true,
@@ -385,8 +385,9 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(unlockPassword);
             #endregion
 
+            var userContext = await GetUserContextAsync();
             var response = new ResponseSimple();
-            var result = await _userServices.UnlockScreenAsync(UserInfo.Id, unlockPassword);
+            var result = await _userServices.UnlockScreenAsync(userContext.Id, unlockPassword);
             if (result)
             {
                 response.Message = "屏幕解锁成功";
@@ -407,7 +408,8 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> LogoutAsync()
         {
-            await _userServices.LogoutAsync(UserInfo.Id);
+            var userContext = await GetUserContextAsync();
+            await _userServices.LogoutAsync(userContext.Id);
             InternalLogout();
             return Json(new ResponseSimple
             {
@@ -427,7 +429,8 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSkinAsync()
         {
-            var skinName = (await _userServices.GetConfigAsync(UserInfo.Id)).Skin;
+            var userContext = await GetUserContextAsync();
+            var skinName = (await _userServices.GetConfigAsync(userContext.Id)).Skin;
             return Json(new ResponseSimple
             {
                 IsSuccess = true,
@@ -447,8 +450,8 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetWallpaperAsync()
         {
-            var result = await _userServices.GetConfigAsync(UserInfo.Id);
-
+            var userContext = await GetUserContextAsync();
+            var result = await _userServices.GetConfigAsync(userContext.Id);
             if (result.WallpaperSource == WallpaperSource.Upload)
             {
                 result.WallpaperUrl = Appsetting.FileUrl + result.WallpaperUrl;
@@ -487,7 +490,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(type);
             #endregion
 
-            var internalMemberResult = type == "folder" ? await _deskServices.GetMemberAsync(UserInfo.Id, id, true) : await _deskServices.GetMemberAsync(UserInfo.Id, id);
+            var userContext = await GetUserContextAsync();
+            var internalMemberResult = type == "folder" ? await _deskServices.GetMemberAsync(userContext.Id, id, true) : await _deskServices.GetMemberAsync(userContext.Id, id);
 
             var response = new ResponseModel<dynamic>
             {
@@ -532,7 +536,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(model.DeskId);
             #endregion
 
-            await _deskServices.CreateNewFolderAsync(model.FolderName, model.FolderImg, model.DeskId, UserInfo.Id);
+            var userContext = await GetUserContextAsync();
+            await _deskServices.CreateNewFolderAsync(model.FolderName, model.FolderImg, model.DeskId, userContext.Id);
             return Json(new ResponseSimple
             {
                 IsSuccess = true,
@@ -556,7 +561,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(memberId);
             #endregion
 
-            await _deskServices.UninstallMemberAsync(UserInfo.Id, memberId);
+            var userContext = await GetUserContextAsync();
+            await _deskServices.UninstallMemberAsync(userContext.Id, memberId);
             return Json(new ResponseSimple
             {
                 IsSuccess = true,
@@ -613,35 +619,35 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(model.MoveType);
             Parameter.IfNullOrZero(model.MemberId);
             #endregion
-
+            var userContext = await GetUserContextAsync();
             switch (model.MoveType.ToLower())
             {
                 case "desk-dock": //桌面应用从桌面移动到码头
-                    await _deskServices.MemberInDockAsync(UserInfo.Id, model.MemberId);
+                    await _deskServices.MemberInDockAsync(userContext.Id, model.MemberId);
                     break;
                 case "dock-desk": //桌面应用从码头移动到桌面
-                    await _deskServices.MemberOutDockAsync(UserInfo.Id, model.MemberId, model.To);
+                    await _deskServices.MemberOutDockAsync(userContext.Id, model.MemberId, model.To);
                     break;
                 case "dock-folder": //桌面应用从码头移动到桌面文件夹中
-                    await _deskServices.DockToFolderAsync(UserInfo.Id, model.MemberId, model.To);
+                    await _deskServices.DockToFolderAsync(userContext.Id, model.MemberId, model.To);
                     break;
                 case "folder-dock": //桌面应用从文件夹移动到码头
-                    await _deskServices.FolderToDockAsync(UserInfo.Id, model.MemberId);
+                    await _deskServices.FolderToDockAsync(userContext.Id, model.MemberId);
                     break;
                 case "desk-folder": //桌面应用从桌面移动到文件夹
-                    await _deskServices.DeskToFolderAsync(UserInfo.Id, model.MemberId, model.To);
+                    await _deskServices.DeskToFolderAsync(userContext.Id, model.MemberId, model.To);
                     break;
                 case "folder-desk": //桌面应用从文件夹移动到桌面
-                    await _deskServices.FolderToDeskAsync(UserInfo.Id, model.MemberId, model.To);
+                    await _deskServices.FolderToDeskAsync(userContext.Id, model.MemberId, model.To);
                     break;
                 case "folder-folder": //桌面应用从文件夹移动到另一个文件夹中
-                    await _deskServices.FolderToOtherFolderAsync(UserInfo.Id, model.MemberId, model.To);
+                    await _deskServices.FolderToOtherFolderAsync(userContext.Id, model.MemberId, model.To);
                     break;
                 case "desk-desk": //桌面移动到另一个桌面
-                    await _deskServices.DeskToOtherDeskAsync(UserInfo.Id, model.MemberId, model.To);
+                    await _deskServices.DeskToOtherDeskAsync(userContext.Id, model.MemberId, model.To);
                     break;
                 case "dock-otherdesk"://应用码头移动到另一个桌面
-                    await _deskServices.DockToOtherDeskAsync(UserInfo.Id, model.MemberId, model.To);
+                    await _deskServices.DockToOtherDeskAsync(userContext.Id, model.MemberId, model.To);
                     break;
             }
 
@@ -667,6 +673,7 @@ namespace NewCrmCore.WebApi.Controllers
             #region 参数验证
             Parameter.IfNullOrZero(forms);
             #endregion
+            var userContext = await GetUserContextAsync();
             var memberDto = new MemberDto
             {
                 Id = Int32.Parse(forms["id"]),
@@ -681,7 +688,7 @@ namespace NewCrmCore.WebApi.Controllers
                 IsIconByUpload = Int32.Parse(forms["isIconByUpload"]) == 1
             };
 
-            await _deskServices.ModifyMemberInfoAsync(UserInfo.Id, memberDto);
+            await _deskServices.ModifyMemberInfoAsync(userContext.Id, memberDto);
             return Json(new ResponseSimple
             {
                 IsSuccess = true,
@@ -700,7 +707,8 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUploadWallPapersAsync()
         {
-            var result = await _wallpaperServices.GetUploadWallpaperAsync(UserInfo.Id);
+            var userContext = await GetUserContextAsync();
+            var result = await _wallpaperServices.GetUploadWallpaperAsync(userContext.Id);
             return Json(new ResponseModel<IList<WallpaperDto>>
             {
                 IsSuccess = true,
@@ -720,12 +728,13 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSkinsAsync()
         {
+            var userContext = await GetUserContextAsync();
             var result = await _deskServices.GetAllSkinAsync(Appsetting.Skin);
             return Json(new ResponseModel<dynamic>
             {
                 IsSuccess = true,
                 Message = "获取皮肤列表成功",
-                Model = new { result, currentSkin = (await _userServices.GetConfigAsync(UserInfo.Id)).Skin }
+                Model = new { result, currentSkin = (await _userServices.GetConfigAsync(userContext.Id)).Skin }
             });
         }
 
@@ -746,7 +755,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(model.DeskNum);
             #endregion
 
-            await _deskServices.ModifyDockPositionAsync(UserInfo.Id, model.DeskNum, model.Pos);
+            var userContext = await GetUserContextAsync();
+            await _deskServices.ModifyDockPositionAsync(userContext.Id, model.DeskNum, model.Pos);
             return Json(new ResponseSimple
             {
                 IsSuccess = true,
@@ -770,7 +780,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(source);
             #endregion
 
-            await _deskServices.ModifyWallpaperSourceAsync(source, UserInfo.Id);
+            var userContext = await GetUserContextAsync();
+            await _deskServices.ModifyWallpaperSourceAsync(source, userContext.Id);
             return Json(new ResponseSimple
             {
                 IsSuccess = true,
@@ -794,7 +805,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(appSize);
             #endregion
 
-            await _appServices.ModifyAppIconSizeAsync(UserInfo.Id, appSize);
+            var userContext = await GetUserContextAsync();
+            await _appServices.ModifyAppIconSizeAsync(userContext.Id, appSize);
             return Json(new ResponseSimple
             {
                 IsSuccess = true,
@@ -813,7 +825,8 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUserFaceAsync()
         {
-            var result = (await _userServices.GetConfigAsync(UserInfo.Id)).UserFace;
+            var userContext = await GetUserContextAsync();
+            var result = (await _userServices.GetConfigAsync(userContext.Id)).UserFace;
             return Json(new ResponseModel<String>
             {
                 IsSuccess = true,
@@ -840,7 +853,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(model.MemberId);
             #endregion
 
-            await _deskServices.ModifyFolderInfoAsync(UserInfo.Id, model.Name, model.Icon, model.MemberId);
+            var userContext = await GetUserContextAsync();
+            await _deskServices.ModifyFolderInfoAsync(userContext.Id, model.Name, model.Icon, model.MemberId);
             return Json(new ResponseSimple
             {
                 IsSuccess = true,
@@ -859,8 +873,8 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetDockPosAsync()
         {
-            var result = (await _userServices.GetConfigAsync(UserInfo.Id)).DockPosition;
-
+            var userContext = await GetUserContextAsync();
+            var result = (await _userServices.GetConfigAsync(userContext.Id)).DockPosition;
             return Json(new ResponseModel<DockPosition>
             {
                 IsSuccess = true,
@@ -885,7 +899,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(deskNum);
             #endregion
 
-            await _deskServices.ModifyDefaultDeskNumberAsync(UserInfo.Id, deskNum);
+            var userContext = await GetUserContextAsync();
+            await _deskServices.ModifyDefaultDeskNumberAsync(userContext.Id, deskNum);
             return Json(new ResponseSimple
             {
                 IsSuccess = true,
@@ -909,7 +924,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(appXy);
             #endregion
 
-            await _appServices.ModifyAppDirectionAsync(UserInfo.Id, appXy);
+            var userContext = await GetUserContextAsync();
+            await _appServices.ModifyAppDirectionAsync(userContext.Id, appXy);
             return Json(new ResponseSimple
             {
                 IsSuccess = true,
@@ -933,7 +949,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(wallPaperShowType);
             #endregion
 
-            await _wallpaperServices.ModifyWallpaperModeAsync(UserInfo.Id, wallPaperShowType);
+            var userContext = await GetUserContextAsync();
+            await _wallpaperServices.ModifyWallpaperModeAsync(userContext.Id, wallPaperShowType);
             return Json(new ResponseSimple
             {
                 IsSuccess = true,
@@ -952,7 +969,8 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUserDeskMembersAsync()
         {
-            var result = await _deskServices.GetDeskMembersAsync(UserInfo.Id);
+            var userContext = await GetUserContextAsync();
+            var result = await _deskServices.GetDeskMembersAsync(userContext.Id);
             return Json(new ResponseModel<IDictionary<String, IList<dynamic>>>
             {
                 IsSuccess = true,
@@ -977,7 +995,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(appHorizontal);
             #endregion
 
-            await _appServices.ModifyAppHorizontalSpacingAsync(UserInfo.Id, appHorizontal);
+            var userContext = await GetUserContextAsync();
+            await _appServices.ModifyAppHorizontalSpacingAsync(userContext.Id, appHorizontal);
             return Json(new ResponseSimple
             {
                 IsSuccess = true,
@@ -1001,7 +1020,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(appVertical);
             #endregion
 
-            await _appServices.ModifyAppVerticalSpacingAsync(UserInfo.Id, appVertical);
+            var userContext = await GetUserContextAsync();
+            await _appServices.ModifyAppVerticalSpacingAsync(userContext.Id, appVertical);
             return Json(new ResponseSimple
             {
                 IsSuccess = true,
@@ -1025,7 +1045,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(pageSize);
             #endregion
 
-            var result = await _deskServices.CheckUnreadNotifyCount(UserInfo.Id, pageIndex, pageSize);
+            var userContext = await GetUserContextAsync();
+            var result = await _deskServices.CheckUnreadNotifyCount(userContext.Id, pageIndex, pageSize);
             return Json(new ResponseModel<PageList<NotifyDto>>
             {
                 IsSuccess = true,

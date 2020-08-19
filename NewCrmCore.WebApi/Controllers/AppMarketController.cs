@@ -14,7 +14,7 @@ using NewCrmCore.WebApi.ApiHelper;
 
 namespace NewCrmCore.WebApi.Controllers
 {
-    [ApiController, Route("api/[controller]")]
+    [ApiController, Route("api/[controller]/[action]")]
     public class AppMarketController : NewCrmController
     {
         private readonly IAppServices _appServices;
@@ -37,14 +37,15 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> InitAppMarketAsync()
         {
             var appTypes = await _appServices.GetAppTypesAsync();
-            if (!UserInfo.IsAdmin)
+            var userContext = await GetUserContextAsync();
+            if (!userContext.IsAdmin)
             {
                 appTypes = appTypes.Where(w => !w.IsSystem).ToList();
             }
 
-            var todayRecommendApp = await _appServices.GetTodayRecommendAsync(UserInfo.Id);
-            var user = await _userServices.GetUserAsync(UserInfo.Id);
-            var (allCount, notReleaseCount) = await _appServices.GetDevelopAndNotReleaseCountAsync(UserInfo.Id);
+            var todayRecommendApp = await _appServices.GetTodayRecommendAsync(userContext.Id);
+            var user = await _userServices.GetUserAsync(userContext.Id);
+            var (allCount, notReleaseCount) = await _appServices.GetDevelopAndNotReleaseCountAsync(userContext.Id);
             var response = new ResponseModel<dynamic>
             {
                 Model = new
@@ -73,9 +74,9 @@ namespace NewCrmCore.WebApi.Controllers
             #region 参数验证
             Parameter.IfNullOrZero(appId);
             #endregion
-
-            var isInstallApp = await _appServices.IsInstallAppAsync(UserInfo.Id, appId);
-            var appResult = await _appServices.GetAppAsync(appId, UserInfo.Id);
+            var userContext = await GetUserContextAsync();
+            var isInstallApp = await _appServices.IsInstallAppAsync(userContext.Id, appId);
+            var appResult = await _appServices.GetAppAsync(appId, userContext.Id);
 
             var response = new ResponseModel<dynamic>
             {
@@ -96,7 +97,8 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> InitUserAppManageAsync()
         {
             var appTypes = await _appServices.GetAppTypesAsync();
-            if (!UserInfo.IsAdmin)
+            var userContext = await GetUserContextAsync();
+            if (!userContext.IsAdmin)
             {
                 appTypes = appTypes.Where(w => !w.IsSystem).ToList();
             }
@@ -122,9 +124,10 @@ namespace NewCrmCore.WebApi.Controllers
         {
             AppDto appDto = null;
             var response = new ResponseModel<dynamic>();
+            var userContext = await GetUserContextAsync();
             if (appId != 0)// 如果appId为0则是新创建app
             {
-                appDto = await _appServices.GetAppAsync(appId, UserInfo.Id);
+                appDto = await _appServices.GetAppAsync(appId, userContext.Id);
                 if (appDto == null)
                 {
                     response.IsSuccess = false;
@@ -133,13 +136,13 @@ namespace NewCrmCore.WebApi.Controllers
                 }
             }
             var appTypes = await _appServices.GetAppTypesAsync();
-            if (!UserInfo.IsAdmin)
+            if (!userContext.IsAdmin)
             {
                 appTypes = appTypes.Where(w => !w.IsSystem).ToList();
             }
-            var uniqueToken = CreateUniqueTokenAsync(UserInfo.Id);
+            var uniqueToken = CreateUniqueTokenAsync(userContext.Id);
 
-            response.Model = new { appTypes, UserId = UserInfo.Id, appDto };
+            response.Model = new { appTypes, UserId = userContext.Id, appDto };
             response.IsSuccess = true;
             response.Message = "我的应用初始化成功";
 
@@ -163,8 +166,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(model.AppId);
             Parameter.IfNullOrZero(model.StarCount);
             #endregion
-
-            await _appServices.ModifyAppStarAsync(UserInfo.Id, model.AppId, model.StarCount);
+            var userContext = await GetUserContextAsync();
+            await _appServices.ModifyAppStarAsync(userContext.Id, model.AppId, model.StarCount);
             return Json(new ResponseSimple
             {
                 IsSuccess = true,
@@ -188,8 +191,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(model.AppId);
             Parameter.IfNullOrZero(model.DeskNum);
             #endregion
-
-            await _appServices.InstallAppAsync(UserInfo.Id, model.AppId, model.DeskNum);
+            var userContext = await GetUserContextAsync();
+            await _appServices.InstallAppAsync(userContext.Id, model.AppId, model.DeskNum);
             return Json(new ResponseSimple
             {
                 IsSuccess = true,
@@ -213,8 +216,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(model.AppId);
             Parameter.IfNullOrZero(model.NewIcon);
             #endregion
-
-            await _appServices.ModifyAppIconAsync(UserInfo.Id, model.AppId, model.NewIcon);
+            var userContext = await GetUserContextAsync();
+            await _appServices.ModifyAppIconAsync(userContext.Id, model.AppId, model.NewIcon);
 
             return Json(new ResponseModel<String>
             {
@@ -240,8 +243,9 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(forms);
             #endregion
 
+            var userContext = await GetUserContextAsync();
             var appDto = WrapperAppDto(forms);
-            appDto.UserId = UserInfo.Id;
+            appDto.UserId = userContext.Id;
             await _appServices.CreateNewAppAsync(appDto);
 
             return Json(new ResponseSimple
@@ -290,8 +294,8 @@ namespace NewCrmCore.WebApi.Controllers
             #region 参数验证
             Parameter.IfNullOrZero(forms);
             #endregion
-
-            await _appServices.ModifyUserAppInfoAsync(UserInfo.Id, WrapperAppDto(forms));
+            var userContext = await GetUserContextAsync();
+            await _appServices.ModifyUserAppInfoAsync(userContext.Id, WrapperAppDto(forms));
             return Json(new ResponseSimple
             {
                 IsSuccess = true,
@@ -317,8 +321,9 @@ namespace NewCrmCore.WebApi.Controllers
         {
             Parameter.IfNullOrZero(searchText, true);
 
+            var userContext = await GetUserContextAsync();
             var response = new ResponsePaging<IList<AppDto>>();
-            var result = await _appServices.GetAppsAsync(UserInfo.Id, appTypeId, orderId, searchText, pageIndex, pageSize);
+            var result = await _appServices.GetAppsAsync(userContext.Id, appTypeId, orderId, searchText, pageIndex, pageSize);
             if (result != null)
             {
                 response.TotalCount = result.TotalCount;
@@ -353,7 +358,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(searchText, true);
 
             var response = new ResponsePaging<IList<AppDto>>();
-            var result = await _appServices.GetUserAppsAsync(UserInfo.Id, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize);
+            var userContext = await GetUserContextAsync();
+            var result = await _appServices.GetUserAppsAsync(userContext.Id, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize);
             if (result != null)
             {
                 response.TotalCount = result.TotalCount;

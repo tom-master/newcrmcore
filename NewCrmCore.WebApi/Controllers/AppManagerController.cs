@@ -10,7 +10,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.WebApi.Controllers
 {
-    [ApiController, Route("api/[controller]")]
+    [ApiController, Route("api/[controller]/[action]")]
     public class AppManagerController : NewCrmController
     {
         private readonly IAppServices _appServices;
@@ -53,10 +53,11 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> InitAppAuditAsync(Int32 appId)
         {
             AppDto app = null;
+            var user = await GetUserContextAsync();
             var response = new ResponseModel<dynamic>();
             if (appId != 0)// 如果appId为0则是新创建app
             {
-                app = await _appServices.GetAppAsync(appId, UserInfo.Id);
+                app = await _appServices.GetAppAsync(appId, user.Id);
                 if (app == null)
                 {
                     response.IsSuccess = false;
@@ -64,7 +65,7 @@ namespace NewCrmCore.WebApi.Controllers
                     return Json(response);
                 }
             }
-            var uniqueToken = CreateUniqueTokenAsync(UserInfo.Id);
+            var uniqueToken = CreateUniqueTokenAsync(user.Id);
             var appTypes = await _appServices.GetAppTypesAsync();
 
             response.Model = new { app, uniqueToken, appTypes };
@@ -166,11 +167,11 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> GetAppsAsync(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
         {
             Parameter.IfNullOrZero(searchText, true);
-
+            var user = await GetUserContextAsync();
             var result = await _appServices.GetUserAppsAsync(0, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize);
             foreach (var appDto in result.Models)
             {
-                appDto.IsCreater = appDto.UserId == UserInfo.Id;
+                appDto.IsCreater = appDto.UserId == user.Id;
             }
 
             return Json(new ResponsePaging<IList<AppDto>>

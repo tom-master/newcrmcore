@@ -11,7 +11,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.WebApi.Controllers
 {
-    [ApiController, Route("api/[controller]")]
+    [ApiController, Route("api/[controller]/[action]")]
     public class AppTypesController : NewCrmController
     {
         private readonly IAppServices _appServices;
@@ -43,7 +43,8 @@ namespace NewCrmCore.WebApi.Controllers
                     return Json(response);
                 }
             }
-            var uniqueToken = CreateUniqueTokenAsync(UserInfo.Id);
+            var userContext = await GetUserContextAsync();
+            var uniqueToken = CreateUniqueTokenAsync(userContext.Id);
             response.Model = new { appTypeDto, uniqueToken };
             response.IsSuccess = true;
             response.Message = "创建类目初始化成功";

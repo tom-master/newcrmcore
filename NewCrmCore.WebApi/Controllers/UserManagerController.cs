@@ -11,7 +11,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.WebApi.Controllers
 {
-    [ApiController, Route("api/[controller]")]
+    [ApiController, Route("api/[controller]/[action]")]
     public class UserManagerController : NewCrmController
     {
         private readonly ISecurityServices _securityServices;
@@ -45,8 +45,9 @@ namespace NewCrmCore.WebApi.Controllers
                     response.IsSuccess = false;
                 }
             }
+            var userContext = await GetUserContextAsync();
             var roleDtos = await _securityServices.GetRolesAsync("", 1, 100);
-            var uniqueToken = await CreateUniqueTokenAsync(UserInfo.Id);
+            var uniqueToken = await CreateUniqueTokenAsync(userContext.Id);
 
             response.Model = new { roleDtos, userDto, uniqueToken };
             response.IsSuccess = true;

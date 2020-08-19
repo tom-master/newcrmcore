@@ -11,7 +11,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.WebApi.Controllers
 {
-    [ApiController, Route("api/[controller]")]
+    [ApiController, Route("api/[controller]/[action]")]
     public class SecurityController : NewCrmController
     {
         private readonly ISecurityServices _securityServices;
@@ -48,7 +48,8 @@ namespace NewCrmCore.WebApi.Controllers
                     return Json(response);
                 }
             }
-            var uniqueToken = CreateUniqueTokenAsync(UserInfo.Id);
+            var userContext = await GetUserContextAsync();
+            var uniqueToken = CreateUniqueTokenAsync(userContext.Id);
             response.Model = new { roleDto, uniqueToken };
             response.IsSuccess = true;
             response.Message = "创建新角色初始化成功";
@@ -90,7 +91,8 @@ namespace NewCrmCore.WebApi.Controllers
                     return Json(response);
                 }
             }
-            var uniqueToken = CreateUniqueTokenAsync(UserInfo.Id);
+            var userContext = await GetUserContextAsync();
+            var uniqueToken = CreateUniqueTokenAsync(userContext.Id);
 
             response.Model = new { roleDto, appDtos, uniqueToken };
             response.IsSuccess = true;

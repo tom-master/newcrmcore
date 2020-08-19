@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
+using System.Text.Json;
 using System.Text.Unicode;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -10,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using NewCrmCore.Application.Services;
 using NewCrmCore.Application.Services.Interface;
 using NewCrmCore.Domain.Services.BoundedContext;
@@ -52,6 +55,12 @@ namespace NewCrmCore.WebApi
             services.AddTransient<ISecurityContext, SecurityContext>();
             services.AddTransient<IWallpaperContext, WallpaperContext>();
 
+            services.AddCors(options => options.AddPolicy("cors", p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API Demo", Version = "v1" });
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+            });
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
@@ -73,7 +82,7 @@ namespace NewCrmCore.WebApi
                 config.SuppressAsyncSuffixInActionNames = false;
             }).AddJsonOptions(options =>
             {
-
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
                 options.JsonSerializerOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
                 options.JsonSerializerOptions.Converters.Add(new NewCrmCore.Infrastructure.Converter.BooleanConverter());
                 options.JsonSerializerOptions.Converters.Add(new NewCrmCore.Infrastructure.Converter.Int32Converter());
@@ -93,6 +102,12 @@ namespace NewCrmCore.WebApi
             {
                 app.UseExceptionHandler("/Error");
             }
+            // 添加Swagger有关中间件
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Demo v1");
+            });
             app.UseGlobalExceptionHandle();
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
@@ -104,6 +119,7 @@ namespace NewCrmCore.WebApi
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseCors("cors");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<NotifyHub>("/hubs");

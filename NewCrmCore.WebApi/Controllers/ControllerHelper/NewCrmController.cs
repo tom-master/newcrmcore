@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NewCrmCore.Dto;
@@ -12,17 +14,19 @@ namespace NewCrmCore.WebApi.ApiHelper
 
     public class NewCrmController : ControllerBase
     {
-        public UserDto UserInfo
+        public async Task<UserDto> GetUserContextAsync()
         {
-            get
+            var auth = await HttpContext.AuthenticateAsync().ConfigureAwait(false);
+            var claims = auth.Principal.Claims.ToList();
+            var userId = claims.FirstOrDefault(w => w.Type == "UserId")?.Value;
+            var isAdmin = claims.FirstOrDefault(w => w.Type == "IsAdmin")?.Value;
+            return new UserDto
             {
-                var userInfo = Request.Cookies["User"];
-                if (userInfo != null)
-                {
-                    return JsonConvert.DeserializeObject<UserDto>(userInfo);
-                }
-                return null;
-            }
+                UserFace = claims.FirstOrDefault(w => w.Type == "UserFace")?.Value,
+                Name = claims.FirstOrDefault(w => w.Type == "UserName")?.Value,
+                Id = userId == null ? 0 : Int32.Parse(userId),
+                IsAdmin = isAdmin != null && Boolean.Parse(isAdmin)
+            };
         }
 
         protected void InternalLogout()

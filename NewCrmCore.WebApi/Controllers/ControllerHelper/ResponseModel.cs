@@ -18,6 +18,7 @@ namespace NewCrmCore.WebApi.ApiHelper
         public String Message { get; set; }
 
         public String Token { get; set; }
+
     }
 
     /// <summary>

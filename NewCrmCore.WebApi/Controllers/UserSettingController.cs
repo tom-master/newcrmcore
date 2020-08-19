@@ -8,7 +8,7 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.WebApi.Controllers
 {
-    [ApiController, Route("api/[controller]")]
+    [ApiController, Route("api/[controller]/[action]")]
     public class UserSettingController : NewCrmController
     {
         private readonly IUserServices _userServices;
@@ -27,8 +27,9 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> InitUserSettingAsync()
         {
-            var user = await _userServices.GetUserAsync(UserInfo.Id);
-            var uniqueToken = await CreateUniqueTokenAsync(UserInfo.Id);
+            var userContext = await GetUserContextAsync();
+            var user = await _userServices.GetUserAsync(userContext.Id);
+            var uniqueToken = await CreateUniqueTokenAsync(userContext.Id);
             return Json(new ResponseModel<dynamic>
             {
                 Model = new { user, uniqueToken },
@@ -53,8 +54,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(forms);
             #endregion
 
-            await _userServices.ModifyLockScreenPasswordAsync(UserInfo.Id, forms["lockpassword"]);
-
+            var userContext = await GetUserContextAsync();
+            await _userServices.ModifyLockScreenPasswordAsync(userContext.Id, forms["lockpassword"]);
             return Json(new ResponseSimple
             {
                 Message = "锁屏密码修改成功",
@@ -78,8 +79,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(userFace);
             #endregion
 
-            await _userServices.ModifyUserFaceAsync(UserInfo.Id, userFace);
-
+            var userContext = await GetUserContextAsync();
+            await _userServices.ModifyUserFaceAsync(userContext.Id, userFace);
             return Json(new ResponseSimple
             {
                 IsSuccess = true,
@@ -103,7 +104,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(forms);
             #endregion
 
-            await _userServices.ModifyPasswordAsync(UserInfo.Id, forms["password"], Int32.Parse(forms["lockPwdIsEqLoginPwd"]) == 1);
+            var userContext = await GetUserContextAsync();
+            await _userServices.ModifyPasswordAsync(userContext.Id, forms["password"], Int32.Parse(forms["lockPwdIsEqLoginPwd"]) == 1);
             InternalLogout();
             return Json(new ResponseSimple
             {
@@ -128,7 +130,8 @@ namespace NewCrmCore.WebApi.Controllers
             Parameter.IfNullOrZero(param);
             #endregion
 
-            var result = await _userServices.CheckPasswordAsync(UserInfo.Id, param);
+            var userContext = await GetUserContextAsync();
+            var result = await _userServices.CheckPasswordAsync(userContext.Id, param);
             var response = new ResponseSimple();
             if (!result)
             {
