@@ -14,7 +14,6 @@ using NewCrmCore.WebApi.ApiHelper;
 
 namespace NewCrmCore.WebApi.Controllers
 {
-    [ApiController, Route("api/[controller]/[action]")]
     public class AppMarketController : NewCrmController
     {
         private readonly IAppServices _appServices;

@@ -10,7 +10,6 @@ using NewCrmCore.Infrastructure;
 using NewCrmCore.WebApi.ApiHelper;
 using NewLibCore.Validate;
 using NewLibCore;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -18,9 +17,9 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System;
+
 namespace NewCrmCore.WebApi.Controllers
 {
-    [ApiController, Authorize, Route("api/[controller]/[action]")]
     public class DeskController : NewCrmController
     {
         private readonly IDeskServices _deskServices;
@@ -175,7 +174,7 @@ namespace NewCrmCore.WebApi.Controllers
                 response.Message = "登陆成功";
                 response.IsSuccess = true;
 
-                var cookieTimeout = (loginParameter.Remember) ? DateTime.Now.AddDays(7) : DateTime.Now.AddMinutes(60);
+                var cookieTimeout = (loginParameter.Remember) ? DateTime.Now.AddDays(7) : DateTime.Now.AddHours(1);
                 var claims = new[]
                 {
                     new Claim(JwtRegisteredClaimNames.Nbf,$"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}") ,

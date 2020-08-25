@@ -4,9 +4,12 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +22,7 @@ using NewCrmCore.Domain.Services.BoundedContext;
 using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Infrastructure;
 using NewCrmCore.NotifyCenter;
+using NewCrmCore.WebApi.ApiHelper;
 using NewCrmCore.WebApi.Middleware;
 using NewLibCore.Data.SQL.EMapper;
 
@@ -46,7 +50,6 @@ namespace NewCrmCore.WebApi
             services.AddTransient<IWallpaperServices, WallpaperServices>();
             services.AddTransient<ILoggerServices, LoggerServices>();
             services.AddTransient<CommonNotify>();
-
             services.AddTransient<IUserContext, UserContext>();
             services.AddTransient<IAppContext, Domain.Services.BoundedContext.AppContext>();
             services.AddTransient<IDeskContext, DeskContext>();
@@ -54,8 +57,12 @@ namespace NewCrmCore.WebApi
             services.AddTransient<IMemberContext, MemberContext>();
             services.AddTransient<ISecurityContext, SecurityContext>();
             services.AddTransient<IWallpaperContext, WallpaperContext>();
+            services.AddAntiforgery();
 
-            services.AddCors(options => options.AddPolicy("cors", p => p.SetIsOriginAllowed(_ => true).AllowAnyHeader().AllowAnyMethod().AllowCredentials()));
+            services.AddCors(options => options.AddPolicy("cors", p => p.SetIsOriginAllowed(_ => true)
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials()));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API Demo", Version = "v1" });
@@ -74,6 +81,25 @@ namespace NewCrmCore.WebApi
                     ValidAudience = Appsetting.Domain,//Audience
                     ValidIssuer = Appsetting.Domain,//Issuer，这两项和前面签发jwt的设置一致
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Appsetting.SecurityKey))//拿到SecurityKey
+                };
+                options.Events = new JwtBearerEvents
+                {
+                    OnChallenge = context =>
+                    {
+                        //此处代码为终止.Net Core默认的返回类型和数据结果，这个很重要哦，必须
+                        context.HandleResponse();
+
+                        var payload = JsonSerializer.Serialize(new ResponseBase
+                        {
+                            HttpStatusCode = StatusCodes.Status401Unauthorized,
+                            IsSuccess = false,
+                            Message = "认证过期,清重新登陆"
+                        });
+                        context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+                        context.Response.ContentType = "application/json";
+                        context.Response.WriteAsync(payload);
+                        return Task.FromResult(0);
+                    }
                 };
             });
 

@@ -25,7 +25,7 @@ namespace NewCrmCore.WebApi.Middleware
         {
             try
             {
-                await _requestDelegate.Invoke(context);
+                await _requestDelegate(context);
             }
             catch (Exception ex)
             {

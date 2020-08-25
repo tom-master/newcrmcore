@@ -19,6 +19,8 @@ namespace NewCrmCore.WebApi.ApiHelper
 
         public String Token { get; set; }
 
+        public Int32 HttpStatusCode { get; set; }
+
     }
 
     /// <summary>

@@ -11,7 +11,6 @@ using NewLibCore.Validate;
 
 namespace NewCrmCore.WebApi.Controllers
 {
-    [ApiController, Route("api/[controller]/[action]")]
     public class AppTypesController : NewCrmController
     {
         private readonly IAppServices _appServices;

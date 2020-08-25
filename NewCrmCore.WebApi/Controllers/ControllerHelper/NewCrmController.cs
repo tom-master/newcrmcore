@@ -2,19 +2,19 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure.CommonTools;
-using Newtonsoft.Json;
 using static NewCrmCore.Infrastructure.CommonTools.CacheKey;
 
 namespace NewCrmCore.WebApi.ApiHelper
 {
-
+    [ApiController, Authorize, Route("api/[controller]/[action]")]
     public class NewCrmController : ControllerBase
     {
-        public async Task<UserDto> GetUserContextAsync()
+        protected async Task<UserDto> GetUserContextAsync()
         {
             var auth = await HttpContext.AuthenticateAsync().ConfigureAwait(false);
             var claims = auth.Principal.Claims.ToList();
@@ -48,8 +48,10 @@ namespace NewCrmCore.WebApi.ApiHelper
 
         protected IActionResult Json(Object model)
         {
+
             if (model is ResponseBase m)
             {
+                m.HttpStatusCode = HttpContext.Response.StatusCode;
                 if (m.IsSuccess)
                 {
                     return Ok(model);
