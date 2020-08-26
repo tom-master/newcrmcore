@@ -35,7 +35,7 @@ namespace NewCrmCore.Application.Services
             {
                 Name = user.Name,
                 Id = user.Id,
-                UserFace = user.IsModifyUserFace ? Appsetting.FileUrl + user.UserFace : user.UserFace,
+                UserFace = user.IsModifyUserFace ? $@"{Appsetting.FileUrl}{user.UserFace}" : user.UserFace,
                 IsAdmin = user.IsAdmin,
                 Password = user.LoginPassword,
                 LockScreenPassword = user.LockScreenPassword
@@ -94,7 +94,7 @@ namespace NewCrmCore.Application.Services
                         Id = s.Id,
                         IsAdmin = s.IsAdmin,
                         Name = s.Name,
-                        UserFace = s.IsModifyUserFace ? Appsetting.FileUrl + s.UserFace : s.UserFace,
+                        UserFace = s.IsModifyUserFace ? $@"{Appsetting.FileUrl }{s.UserFace}" : s.UserFace,
                         IsDisable = s.IsDisable
                     }).ToList()
                 };
@@ -118,7 +118,7 @@ namespace NewCrmCore.Application.Services
 
             return new UserDto
             {
-                UserFace = user.IsModifyUserFace ? Appsetting.FileUrl + user.UserFace : user.UserFace,
+                UserFace = user.IsModifyUserFace ? $@"{Appsetting.FileUrl }{user.UserFace}" : user.UserFace,
                 AddTime = user.AddTime.ToString("yyyy-MM-dd"),
                 Id = user.Id,
                 IsAdmin = user.IsAdmin,
