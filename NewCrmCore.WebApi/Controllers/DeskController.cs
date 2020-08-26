@@ -502,7 +502,7 @@ namespace NewCrmCore.WebApi.Controllers
                     memberId = internalMemberResult.Id,
                     appId = internalMemberResult.AppId,
                     name = internalMemberResult.Name,
-                    icon = internalMemberResult.IsIconByUpload ? Appsetting.FileUrl + internalMemberResult.IconUrl : internalMemberResult.IconUrl,
+                    icon = internalMemberResult.IsIconByUpload ? $@"{Appsetting.FileUrl}{ internalMemberResult.IconUrl}" : internalMemberResult.IconUrl,
                     width = internalMemberResult.Width,
                     height = internalMemberResult.Height,
                     isOnDock = internalMemberResult.IsOnDock,

@@ -179,11 +179,9 @@ namespace NewCrmCore.Application.Services
             Parameter.IfNullOrZero(userDto);
 
             var user = userDto.ConvertToModel<UserDto, User>();
-
-            var userType = EnumExtensions.ToEnum<UserType>(user.IsAdmin ? 2 /*管理员*/ : 1 /*用户*/);
             var newPassword = PasswordUtil.CreateDbPassword(user.LoginPassword);
 
-            var internalNewUser = new User(user.Name, newPassword, user.Roles, userType);
+            var internalNewUser = new User(user.Name, newPassword, user.Roles, user.IsAdmin ? UserType.Admin : UserType.User);
             await _userContext.AddNewUserAsync(internalNewUser);
         }
 
