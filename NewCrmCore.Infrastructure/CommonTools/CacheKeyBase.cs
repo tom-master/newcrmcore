@@ -11,7 +11,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
 
         protected CacheKeyBase()
         {
-            _cancellationTokenSource = new CancellationTokenSource(new TimeSpan(0, 0, 10));
+            _cancellationTokenSource = new CancellationTokenSource(new TimeSpan(0, 1, 0));
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
         {
             get
             {
-                return new TimeSpan(0, randomSeed, 0);
+                return new TimeSpan(randomSeed, 0, 0);
             }
         }
 

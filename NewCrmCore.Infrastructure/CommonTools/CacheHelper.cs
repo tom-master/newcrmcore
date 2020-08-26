@@ -25,21 +25,21 @@ namespace NewCrmCore.Infrastructure.CommonTools
         {
 
             TModel cacheResult = null;
-            // try
-            // {
-            //     if (typeof(TModel).IsComplexType())
-            //     {
-            //         cacheResult = await Task.Run(() => _cacheQuery.StringGetAsync<TModel>(cache.GetKey()), cache.CancelToken);
-            //     }
-            //     else
-            //     {
-            //         cacheResult = await Task.Run(() => _cacheQuery.StringGetAsync(cache.GetKey()), cache.CancelToken) as TModel;
-            //     }
-            // }
-            // catch (OperationCanceledException)
-            // {
+            try
+            {
+                if (typeof(TModel).IsComplexType())
+                {
+                    cacheResult = await Task.Run(() => _cacheQuery.StringGetAsync<TModel>(cache.GetKey()), cache.CancelToken);
+                }
+                else
+                {
+                    cacheResult = await Task.Run(() => _cacheQuery.StringGetAsync(cache.GetKey()), cache.CancelToken) as TModel;
+                }
+            }
+            catch (OperationCanceledException)
+            {
 
-            // }
+            }
 
             if (cacheResult != null)
             {
@@ -49,7 +49,7 @@ namespace NewCrmCore.Infrastructure.CommonTools
             if (func != null)
             {
                 var dbResult = await func();
-                // _cacheQuery.StringSet(cache.GetKey(), dbResult, cache.KeyTimeout);
+                _cacheQuery.StringSet(cache.GetKey(), dbResult, cache.KeyTimeout);
                 return dbResult;
             }
             return default;
