@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using NewCrmCore.Domain.ValueObject;
 namespace NewCrmCore.Dto
 {
@@ -11,6 +12,8 @@ namespace NewCrmCore.Dto
         public String Url { get; set; }
 
         public String ShortUrl { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
 
         public WallpaperSource Source { get; set; }
 

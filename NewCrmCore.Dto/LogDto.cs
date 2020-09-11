@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using NewCrmCore.Domain.ValueObject;
 
 namespace NewCrmCore.Dto
@@ -6,6 +7,7 @@ namespace NewCrmCore.Dto
     public sealed class LogDto : BaseDto
     {
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public LogLevel LogLevelEnum { get; set; }
 
         public String Controller { get; set; }

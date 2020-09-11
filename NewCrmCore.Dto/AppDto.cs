@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using NewCrmCore.Domain.ValueObject;
 namespace NewCrmCore.Dto
 {
@@ -18,12 +19,15 @@ namespace NewCrmCore.Dto
 
         public Int32 UserId { get; set; }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public AppAuditState AppAuditState { get; set; }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public AppReleaseState AppReleaseState { get; set; }
 
         public Int32 AppTypeId { get; set; }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public AppStyle AppStyle { get; set; }
 
         public String AppTypeName { get; set; }

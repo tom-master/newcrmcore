@@ -496,9 +496,9 @@ namespace NewCrmCore.WebApi.Controllers
             {
                 IsSuccess = true,
                 Message = "创建一个窗口成功",
-                Model = new
+                Model = new CreateWindowDto
                 {
-                    type = internalMemberResult.MemberType,
+                    type = internalMemberResult.MemberType.ToString(),
                     memberId = internalMemberResult.Id,
                     appId = internalMemberResult.AppId,
                     name = internalMemberResult.Name,

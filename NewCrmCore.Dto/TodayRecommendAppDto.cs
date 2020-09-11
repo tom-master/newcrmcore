@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using NewCrmCore.Domain.ValueObject;
 using NewLibCore.Data.SQL;
 
@@ -19,6 +20,7 @@ namespace NewCrmCore.Dto
 
         public String Remark { get; set; }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public AppStyle Style { get; set; }
 
         public Boolean IsIconByUpload { get; set; }

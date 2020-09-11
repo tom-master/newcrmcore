@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using NewCrmCore.Domain.ValueObject;
 
 namespace NewCrmCore.Dto
@@ -28,6 +29,8 @@ namespace NewCrmCore.Dto
         public Boolean IsFlash { get; set; }
 
         public Boolean IsResize { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
 
         public MemberType MemberType { get; set; }
 
