@@ -44,13 +44,13 @@ namespace NewCrmCore.Application.Services
 
         public async Task<(Int32 wapperId, String url)> AddWallpaperAsync(WallpaperDto wallpaperDto)
         {
-            Parameter.IfNullOrZero(wallpaperDto);
+            Check.IfNullOrZero(wallpaperDto);
             return await _wallpaperContext.AddWallpaperAsync(wallpaperDto.ConvertToModel<WallpaperDto, Wallpaper>());
         }
 
         public async Task<List<WallpaperDto>> GetUploadWallpaperAsync(Int32 userId)
         {
-            Parameter.IfNullOrZero(userId);
+            Check.IfNullOrZero(userId);
             var result = await _wallpaperContext.GetUploadWallpaperAsync(userId);
             return result.Select(s => new WallpaperDto
             {
@@ -68,12 +68,12 @@ namespace NewCrmCore.Application.Services
 
         public async Task<(Int32 wapperId, String url)> AddWebWallpaperAsync(Int32 userId, String url)
         {
-            Parameter.IfNullOrZero(userId);
-            Parameter.IfNullOrZero(url);
+            Check.IfNullOrZero(userId);
+            Check.IfNullOrZero(url);
 
             using var stream = await new HttpClient().GetStreamAsync(new Uri(url));
             using Image image = Image.FromStream(stream);
-            var md5 = MD.GetMD5(stream);
+            var md5 = MD5.Get(stream);
             var webWallpaper = await GetUploadWallpaperAsync(md5);
             if (webWallpaper != null)
             {
@@ -96,7 +96,7 @@ namespace NewCrmCore.Application.Services
 
         public async Task<WallpaperDto> GetUploadWallpaperAsync(String md5)
         {
-            Parameter.IfNullOrZero(md5);
+            Check.IfNullOrZero(md5);
             var result = await _wallpaperContext.GetUploadWallpaperAsync(md5);
             return result == null ? null : new WallpaperDto
             {
@@ -114,24 +114,24 @@ namespace NewCrmCore.Application.Services
 
         public async Task ModifyWallpaperModeAsync(Int32 userId, String newMode)
         {
-            Parameter.IfNullOrZero(userId);
-            Parameter.IfNullOrZero(newMode);
+            Check.IfNullOrZero(userId);
+            Check.IfNullOrZero(newMode);
             await _wallpaperContext.ModifyWallpaperModeAsync(userId, newMode);
             await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(userId));
         }
 
         public async Task ModifyWallpaperAsync(Int32 userId, Int32 newWallpaperId)
         {
-            Parameter.IfNullOrZero(userId);
-            Parameter.IfNullOrZero(newWallpaperId);
+            Check.IfNullOrZero(userId);
+            Check.IfNullOrZero(newWallpaperId);
             await _wallpaperContext.ModifyWallpaperAsync(userId, newWallpaperId);
             await CacheHelper.RemoveKeyWhenModify(new ConfigCacheKey(userId), new WallpaperCacheKey(userId));
         }
 
         public async Task RemoveWallpaperAsync(Int32 userId, Int32 wallpaperId)
         {
-            Parameter.IfNullOrZero(userId);
-            Parameter.IfNullOrZero(wallpaperId);
+            Check.IfNullOrZero(userId);
+            Check.IfNullOrZero(wallpaperId);
             await _wallpaperContext.RemoveWallpaperAsync(userId, wallpaperId);
         }
     }

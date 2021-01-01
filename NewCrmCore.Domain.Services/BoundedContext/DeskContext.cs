@@ -7,7 +7,7 @@ using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
-using NewLibCore.Storage.SQL;
+using NewLibCore.Data.SQL;
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext

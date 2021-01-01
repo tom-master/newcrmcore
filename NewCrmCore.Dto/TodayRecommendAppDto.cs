@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 using NewCrmCore.Domain.ValueObject;
-using NewLibCore.Storage.SQL;
+using NewLibCore.Data.SQL;
 
 namespace NewCrmCore.Dto
 {

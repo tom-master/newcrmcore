@@ -1,7 +1,7 @@
 ﻿using System;
 using NewCrmCore.Domain.ValueObject;
-using NewLibCore.Storage.SQL;
-using NewLibCore.Storage.SQL.Validate;
+using NewLibCore.Data.SQL;
+using NewLibCore.Data.SQL.Validate;
 
 namespace NewCrmCore.Domain.Entitys.System
 {

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using NewLibCore;
-using NewLibCore.Storage.Redis.InternalHelper;
+using NewLibCore.Data.Redis.InternalHelper;
 
 namespace NewCrmCore.Infrastructure.CommonTools
 {

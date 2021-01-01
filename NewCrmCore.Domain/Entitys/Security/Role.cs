@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NewLibCore.Storage.SQL;
-using NewLibCore.Storage.SQL.Validate;
+using NewLibCore.Data.SQL;
+using NewLibCore.Data.SQL.Validate;
 
 namespace NewCrmCore.Domain.Entitys.Security
 {

@@ -10,8 +10,8 @@ using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
-using NewLibCore.Storage.SQL;
-using NewLibCore.Storage.SQL.Filter;
+using NewLibCore.Data.SQL;
+using NewLibCore.Data.SQL.Filter;
 using NewLibCore.Security;
 using NewLibCore.Validate;
 

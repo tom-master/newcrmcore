@@ -23,7 +23,7 @@ namespace NewCrmCore.Application.Services
 
         public async Task<RoleDto> GetRoleAsync(Int32 roleId)
         {
-            Parameter.IfNullOrZero(roleId);
+            Check.IfNullOrZero(roleId);
 
             var result = await _securityContext.GetRoleAsync(roleId);
             if (result == null)
@@ -55,50 +55,50 @@ namespace NewCrmCore.Application.Services
 
         public async Task<Boolean> CheckPermissionsAsync(Int32 accessAppId, params Int32[] roleIds)
         {
-            Parameter.IfNullOrZero(accessAppId);
-            Parameter.IfNullOrZero(roleIds);
+            Check.IfNullOrZero(accessAppId);
+            Check.IfNullOrZero(roleIds);
             return await _securityContext.CheckPermissionsAsync(accessAppId, roleIds);
         }
 
         public async Task<Boolean> CheckRoleNameAsync(String name)
         {
-            Parameter.IfNullOrZero(name);
+            Check.IfNullOrZero(name);
             return await _securityContext.CheckRoleNameAsync(name);
         }
 
         public async Task<Boolean> CheckRoleIdentityAsync(String name)
         {
-            Parameter.IfNullOrZero(name);
+            Check.IfNullOrZero(name);
             return await _securityContext.CheckRoleIdentityAsync(name);
         }
 
         public async Task RemoveRoleAsync(Int32 roleId)
         {
-            Parameter.IfNullOrZero(roleId);
+            Check.IfNullOrZero(roleId);
             await _securityContext.RemoveRoleAsync(roleId);
         }
 
         public async Task AddNewRoleAsync(RoleDto roleDto)
         {
-            Parameter.IfNullOrZero(roleDto);
+            Check.IfNullOrZero(roleDto);
             await _securityContext.AddNewRoleAsync(roleDto.ConvertToModel<RoleDto, Role>());
         }
 
         public async Task ModifyRoleAsync(RoleDto roleDto)
         {
-            Parameter.IfNullOrZero(roleDto);
+            Check.IfNullOrZero(roleDto);
             await _securityContext.ModifyRoleAsync(roleDto.ConvertToModel<RoleDto, Role>());
         }
 
         public async Task AddPowerToCurrentRoleAsync(Int32 roleId, IEnumerable<Int32> powerIds)
         {
-            Parameter.IfNullOrZero(roleId);
+            Check.IfNullOrZero(roleId);
             await _securityContext.AddPowerToCurrentRoleAsync(roleId, powerIds);
         }
 
         public async Task AddVisitorRecord(VisitorRecordDto visitorRecordDto)
         {
-            Parameter.IfNullOrZero(visitorRecordDto);
+            Check.IfNullOrZero(visitorRecordDto);
             await _securityContext.AddVisitorRecord(visitorRecordDto.ConvertToModel<VisitorRecordDto, VisitorRecord>());
         }
     }
