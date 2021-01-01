@@ -63,7 +63,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> RemoveAsync(Int32 appTypeId)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(appTypeId);
+            Check.IfNullOrZero(appTypeId);
             #endregion
 
             await _appServices.RemoveAppTypeAsync(appTypeId);
@@ -88,7 +88,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> CreateAsync(IFormCollection forms, Int32 appTypeId = 0)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(forms);
+            Check.IfNullOrZero(forms);
             #endregion
 
             var appTypeDto = WrapperAppTypeDto(forms);
@@ -121,7 +121,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> CheckNameAsync(String param)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(param);
+            Check.IfNullOrZero(param);
             #endregion
 
             var result = await _appServices.CheckAppTypeNameAsync(param);

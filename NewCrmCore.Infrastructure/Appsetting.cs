@@ -12,7 +12,7 @@ namespace NewCrmCore.Infrastructure
             {
                 try
                 {
-                    var str = Host.GetHostVar("NewCrmDatabase");
+                    var str = ConfigReader.GetHostVar("NewCrmDatabase");
                     return str ?? "";
                 }
                 catch (System.Exception)
@@ -28,7 +28,7 @@ namespace NewCrmCore.Infrastructure
             {
                 try
                 {
-                    var str = Host.GetHostVar("NewCrmRedis");
+                    var str = ConfigReader.GetHostVar("NewCrmRedis");
                     return str ?? "";
                 }
                 catch (System.Exception)
@@ -44,7 +44,7 @@ namespace NewCrmCore.Infrastructure
             {
                 try
                 {
-                    var str = Host.GetHostVar("NewCrmFileUploadUrl");
+                    var str = ConfigReader.GetHostVar("NewCrmFileUploadUrl");
                     return str ?? "";
                 }
                 catch (System.Exception)
@@ -60,7 +60,7 @@ namespace NewCrmCore.Infrastructure
             {
                 try
                 {
-                    var str = Host.GetHostVar("NewCrmFileUrl");
+                    var str = ConfigReader.GetHostVar("NewCrmFileUrl");
                     return str ?? "";
                 }
                 catch (System.Exception)
@@ -76,7 +76,7 @@ namespace NewCrmCore.Infrastructure
             {
                 try
                 {
-                    var str = Host.GetHostVar("NewCrmFileStorage");
+                    var str = ConfigReader.GetHostVar("NewCrmFileStorage");
                     return str ?? "";
                 }
                 catch (System.Exception)
@@ -92,7 +92,7 @@ namespace NewCrmCore.Infrastructure
             {
                 try
                 {
-                    var str = Host.GetHostVar("NewCrmSkin");
+                    var str = ConfigReader.GetHostVar("NewCrmSkin");
                     return str ?? "";
                 }
                 catch (System.Exception)
@@ -108,7 +108,7 @@ namespace NewCrmCore.Infrastructure
             {
                 try
                 {
-                    var str = Host.GetHostVar("SecurityKey");
+                    var str = ConfigReader.GetHostVar("SecurityKey");
                     return str ?? "";
                 }
                 catch (System.Exception)
@@ -123,7 +123,7 @@ namespace NewCrmCore.Infrastructure
             {
                 try
                 {
-                    var str = Host.GetHostVar("Domain");
+                    var str = ConfigReader.GetHostVar("Domain");
                     return str ?? "";
                 }
                 catch (System.Exception)

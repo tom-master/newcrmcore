@@ -84,7 +84,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ConfigMemberAsync(Int32 memberId)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(memberId);
+            Check.IfNullOrZero(memberId);
             #endregion
             var userContext = await GetUserContextAsync();
             var member = await _deskServices.GetMemberAsync(userContext.Id, memberId);
@@ -164,7 +164,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> LoginAsync(UserLogin loginParameter)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(loginParameter);
+            Check.IfNullOrZero(loginParameter);
             #endregion
             var response = new ResponseModel<UserDto>();
 
@@ -217,7 +217,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyWallpaperAsync(Int32 wallpaperId)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(wallpaperId);
+            Check.IfNullOrZero(wallpaperId);
             #endregion
             var userContext = await GetUserContextAsync();
             await _wallpaperServices.ModifyWallpaperAsync(userContext.Id, wallpaperId);
@@ -241,7 +241,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> RemoveWallpaperAsync(Int32 wallPaperId)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(wallPaperId);
+            Check.IfNullOrZero(wallPaperId);
             #endregion
 
             var userContext = await GetUserContextAsync();
@@ -266,7 +266,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> UploadWallPaperAsync(WallpaperDto wallpaper)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(wallpaper);
+            Check.IfNullOrZero(wallpaper);
             #endregion
             var userContext = await GetUserContextAsync();
             var (wapperId, url) = await _wallpaperServices.AddWallpaperAsync(new WallpaperDto
@@ -306,7 +306,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> WebWallpaperAsync(String webUrl)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(webUrl);
+            Check.IfNullOrZero(webUrl);
             #endregion
             var userContext = await GetUserContextAsync();
             var result = _wallpaperServices.AddWebWallpaperAsync(userContext.Id, webUrl);
@@ -331,7 +331,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifySkinAsync(String skin)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(skin);
+            Check.IfNullOrZero(skin);
             #endregion
             var userContext = await GetUserContextAsync();
             await _deskServices.ModifySkinAsync(userContext.Id, skin);
@@ -355,8 +355,8 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyIconAsync(ModifyIconForMember model)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(model.MemberId);
-            Parameter.IfNullOrZero(model.NewIcon);
+            Check.IfNullOrZero(model.MemberId);
+            Check.IfNullOrZero(model.NewIcon);
             #endregion
             var userContext = await GetUserContextAsync();
             await _deskServices.ModifyMemberIconAsync(userContext.Id, model.MemberId, model.NewIcon);
@@ -381,7 +381,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> UnlockScreenAsync(String unlockPassword)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(unlockPassword);
+            Check.IfNullOrZero(unlockPassword);
             #endregion
 
             var userContext = await GetUserContextAsync();
@@ -485,8 +485,8 @@ namespace NewCrmCore.WebApi.Controllers
         {
 
             #region 参数验证
-            Parameter.IfNullOrZero(id);
-            Parameter.IfNullOrZero(type);
+            Check.IfNullOrZero(id);
+            Check.IfNullOrZero(type);
             #endregion
 
             var userContext = await GetUserContextAsync();
@@ -530,9 +530,9 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> CreateFolderAsync(CreateFolder model)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(model.FolderName);
-            Parameter.IfNullOrZero(model.FolderImg);
-            Parameter.IfNullOrZero(model.DeskId);
+            Check.IfNullOrZero(model.FolderName);
+            Check.IfNullOrZero(model.FolderImg);
+            Check.IfNullOrZero(model.DeskId);
             #endregion
 
             var userContext = await GetUserContextAsync();
@@ -557,7 +557,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> UninstallAsync(Int32 memberId)
         {
             #region 参数验证 
-            Parameter.IfNullOrZero(memberId);
+            Check.IfNullOrZero(memberId);
             #endregion
 
             var userContext = await GetUserContextAsync();
@@ -582,7 +582,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> CheckNameAsync(String param)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(param);
+            Check.IfNullOrZero(param);
             #endregion
 
             var result = await _deskServices.CheckMemberNameAsync(param);
@@ -615,8 +615,8 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> MemberMoveAsync(MemberMove model)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(model.MoveType);
-            Parameter.IfNullOrZero(model.MemberId);
+            Check.IfNullOrZero(model.MoveType);
+            Check.IfNullOrZero(model.MemberId);
             #endregion
             var userContext = await GetUserContextAsync();
             switch (model.MoveType.ToLower())
@@ -670,7 +670,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyMemberInfoAsync(IFormCollection forms)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(forms);
+            Check.IfNullOrZero(forms);
             #endregion
             var userContext = await GetUserContextAsync();
             var memberDto = new MemberDto
@@ -750,8 +750,8 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyDockPositionAsync(ModifyDockPosition model)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(model.Pos);
-            Parameter.IfNullOrZero(model.DeskNum);
+            Check.IfNullOrZero(model.Pos);
+            Check.IfNullOrZero(model.DeskNum);
             #endregion
 
             var userContext = await GetUserContextAsync();
@@ -776,7 +776,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyWallpaperSourceAsync(String source)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(source);
+            Check.IfNullOrZero(source);
             #endregion
 
             var userContext = await GetUserContextAsync();
@@ -801,7 +801,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifySizeAsync(Int32 appSize)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(appSize);
+            Check.IfNullOrZero(appSize);
             #endregion
 
             var userContext = await GetUserContextAsync();
@@ -847,9 +847,9 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyFolderInfoAsync(ModifyFolderInfo model)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(model.Name);
-            Parameter.IfNullOrZero(model.Icon);
-            Parameter.IfNullOrZero(model.MemberId);
+            Check.IfNullOrZero(model.Name);
+            Check.IfNullOrZero(model.Icon);
+            Check.IfNullOrZero(model.MemberId);
             #endregion
 
             var userContext = await GetUserContextAsync();
@@ -895,7 +895,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyDefaultDeskAsync(Int32 deskNum)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(deskNum);
+            Check.IfNullOrZero(deskNum);
             #endregion
 
             var userContext = await GetUserContextAsync();
@@ -920,7 +920,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyXyAsync(String appXy)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(appXy);
+            Check.IfNullOrZero(appXy);
             #endregion
 
             var userContext = await GetUserContextAsync();
@@ -945,7 +945,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyDisplayModelAsync(String wallPaperShowType)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(wallPaperShowType);
+            Check.IfNullOrZero(wallPaperShowType);
             #endregion
 
             var userContext = await GetUserContextAsync();
@@ -991,7 +991,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyHorizontalSpaceAsync(Int32 appHorizontal)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(appHorizontal);
+            Check.IfNullOrZero(appHorizontal);
             #endregion
 
             var userContext = await GetUserContextAsync();
@@ -1016,7 +1016,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyVerticalSpaceAsync(Int32 appVertical)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(appVertical);
+            Check.IfNullOrZero(appVertical);
             #endregion
 
             var userContext = await GetUserContextAsync();
@@ -1040,8 +1040,8 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> CheckUnreadNotifyCountAsync(Int32 pageIndex, Int32 pageSize)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(pageIndex);
-            Parameter.IfNullOrZero(pageSize);
+            Check.IfNullOrZero(pageIndex);
+            Check.IfNullOrZero(pageSize);
             #endregion
 
             var userContext = await GetUserContextAsync();
@@ -1063,7 +1063,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ReadNotifyAsync(String notifyId)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(notifyId, true);
+            Check.IfNullOrZero(notifyId, true);
             #endregion
 
             var response = new ResponseSimple();

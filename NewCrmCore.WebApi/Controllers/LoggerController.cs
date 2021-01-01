@@ -35,7 +35,7 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetLogsAsync(String userName, Int32 loglevel, Int32 pageIndex, Int32 pageSize)
         {
-            Parameter.IfNullOrZero(userName, true);
+            Check.IfNullOrZero(userName, true);
             var result = await _loggerServices.GetLogsAsync(userName, loglevel, pageIndex, pageSize);
             return Json(new ResponsePaging<IList<LogDto>>
             {

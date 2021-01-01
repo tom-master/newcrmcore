@@ -87,7 +87,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> PassAsync(Int32 appId)
         {
             #region 参数验证	
-            Parameter.IfNullOrZero(appId);
+            Check.IfNullOrZero(appId);
             #endregion
 
             await _appServices.PassAsync(appId);
@@ -111,7 +111,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> RemoveAsync(Int32 appId)
         {
             #region 参数验证	
-            Parameter.IfNullOrZero(appId);
+            Check.IfNullOrZero(appId);
             #endregion
 
             await _appServices.RemoveAppAsync(appId);
@@ -136,7 +136,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> DenyAsync(Int32 appId)
         {
             #region 参数验证	
-            Parameter.IfNullOrZero(appId);
+            Check.IfNullOrZero(appId);
             #endregion
 
             await _appServices.DenyAsync(appId);
@@ -165,7 +165,7 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAppsAsync(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
         {
-            Parameter.IfNullOrZero(searchText, true);
+            Check.IfNullOrZero(searchText, true);
             var user = await GetUserContextAsync();
             var result = await _appServices.GetUserAppsAsync(0, searchText, appTypeId, appStyleId, appState, pageIndex, pageSize);
             foreach (var appDto in result.Models)
@@ -195,7 +195,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> CheckNameAsync(String param)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(param);
+            Check.IfNullOrZero(param);
             #endregion
 
             var result = await _userServices.CheckAppNameAsync(param);
@@ -228,7 +228,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> CheckUrlAsync(String param)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(param);
+            Check.IfNullOrZero(param);
             #endregion
 
             var result = await _userServices.CheckAppUrlAsync(param);
@@ -261,7 +261,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> RecommendAsync(Int32 appId)
         {
             #region 参数验证	
-            Parameter.IfNullOrZero(appId);
+            Check.IfNullOrZero(appId);
             #endregion
 
             await _appServices.SetTodayRecommandAppAsync(appId);

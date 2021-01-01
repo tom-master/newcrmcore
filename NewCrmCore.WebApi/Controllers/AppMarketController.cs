@@ -71,7 +71,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> InitAppDetailAsync(Int32 appId)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(appId);
+            Check.IfNullOrZero(appId);
             #endregion
             var userContext = await GetUserContextAsync();
             var isInstallApp = await _appServices.IsInstallAppAsync(userContext.Id, appId);
@@ -162,8 +162,8 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyStarAsync(ModifyStar model)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(model.AppId);
-            Parameter.IfNullOrZero(model.StarCount);
+            Check.IfNullOrZero(model.AppId);
+            Check.IfNullOrZero(model.StarCount);
             #endregion
             var userContext = await GetUserContextAsync();
             await _appServices.ModifyAppStarAsync(userContext.Id, model.AppId, model.StarCount);
@@ -187,8 +187,8 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> InstallAsync(Install model)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(model.AppId);
-            Parameter.IfNullOrZero(model.DeskNum);
+            Check.IfNullOrZero(model.AppId);
+            Check.IfNullOrZero(model.DeskNum);
             #endregion
             var userContext = await GetUserContextAsync();
             await _appServices.InstallAppAsync(userContext.Id, model.AppId, model.DeskNum);
@@ -212,8 +212,8 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyIconAsync(ModifyIconForApp model)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(model.AppId);
-            Parameter.IfNullOrZero(model.NewIcon);
+            Check.IfNullOrZero(model.AppId);
+            Check.IfNullOrZero(model.NewIcon);
             #endregion
             var userContext = await GetUserContextAsync();
             await _appServices.ModifyAppIconAsync(userContext.Id, model.AppId, model.NewIcon);
@@ -239,7 +239,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> CreateAsync(IFormCollection forms)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(forms);
+            Check.IfNullOrZero(forms);
             #endregion
 
             var userContext = await GetUserContextAsync();
@@ -267,7 +267,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ReleaseAsync(Int32 appId)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(appId);
+            Check.IfNullOrZero(appId);
             #endregion
 
             await _appServices.ReleaseAppAsync(appId);
@@ -291,7 +291,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> ModifyAppInfoAsync(IFormCollection forms)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(forms);
+            Check.IfNullOrZero(forms);
             #endregion
             var userContext = await GetUserContextAsync();
             await _appServices.ModifyUserAppInfoAsync(userContext.Id, WrapperAppDto(forms));
@@ -318,7 +318,7 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAppsAsync(Int32 appTypeId, Int32 orderId, String searchText, Int32 pageIndex, Int32 pageSize)
         {
-            Parameter.IfNullOrZero(searchText, true);
+            Check.IfNullOrZero(searchText, true);
 
             var userContext = await GetUserContextAsync();
             var response = new ResponsePaging<IList<AppDto>>();
@@ -354,7 +354,7 @@ namespace NewCrmCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUserAppsAsync(String searchText, Int32 appTypeId, Int32 appStyleId, String appState, Int32 pageIndex, Int32 pageSize)
         {
-            Parameter.IfNullOrZero(searchText, true);
+            Check.IfNullOrZero(searchText, true);
 
             var response = new ResponsePaging<IList<AppDto>>();
             var userContext = await GetUserContextAsync();
@@ -387,7 +387,7 @@ namespace NewCrmCore.WebApi.Controllers
         public async Task<IActionResult> RemoveAsync(Int32 appId)
         {
             #region 参数验证
-            Parameter.IfNullOrZero(appId);
+            Check.IfNullOrZero(appId);
             #endregion
 
             await _appServices.RemoveAppAsync(appId);

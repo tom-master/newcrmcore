@@ -10,6 +10,7 @@ using NewCrmCore.Dto;
 using NewCrmCore.Infrastructure.CommonTools;
 using NewLibCore;
 using NewLibCore.Storage.SQL;
+using NewLibCore.Storage.SQL.Extension.Filter;
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
@@ -83,8 +84,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                     var parameters = new List<MapperParameter>
                         {
-                            new MapperParameter("AppAuditState", AppAuditState.Pass.ToInt32()),
-                            new MapperParameter("AppReleaseState", AppReleaseState.Release.ToInt32()),
+                            new MapperParameter("AppAuditState", AppAuditState.Pass.ToValue<Int32>()),
+                            new MapperParameter("AppReleaseState", AppReleaseState.Release.ToValue<Int32>()),
                             new MapperParameter("userId",userId)
                         };
                     return mapper.SqlQuery(sql, parameters.ToArray()).FirstOrDefault<TodayRecommendAppDto>();
@@ -109,8 +110,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
                 var parameters = new List<MapperParameter>
                     {
-                        new MapperParameter("AppAuditState", AppAuditState.Pass.ToInt32()),
-                        new MapperParameter("AppReleaseState", AppReleaseState.Release.ToInt32())
+                        new MapperParameter("AppAuditState", AppAuditState.Pass.ToValue<Int32>()),
+                        new MapperParameter("AppReleaseState", AppReleaseState.Release.ToValue<Int32>())
                     };
 
                 var where = new StringBuilder();

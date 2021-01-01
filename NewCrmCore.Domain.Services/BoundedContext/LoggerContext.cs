@@ -7,7 +7,7 @@ using NewCrmCore.Domain.Services.Interface;
 using NewCrmCore.Domain.ValueObject;
 using NewLibCore;
 using NewLibCore.Storage.SQL;
-using NewLibCore.Storage.SQL.Filter;
+using NewLibCore.Storage.SQL.Extension.Filter;
 using NewLibCore.Validate;
 
 namespace NewCrmCore.Domain.Services.BoundedContext
@@ -16,7 +16,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
     {
         public async Task AddLoggerAsync(Log log)
         {
-            Parameter.IfNullOrZero(log);
+            Check.IfNullOrZero(log);
             await Task.Run(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();
@@ -33,8 +33,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public List<Log> GetLogs(String userName, Int32 logLevel, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
-            Parameter.IfNullOrZero(userName, true);
-            Parameter.IfNullOrZero(logLevel);
+            Check.IfNullOrZero(userName, true);
+            Check.IfNullOrZero(logLevel);
 
             try
             {

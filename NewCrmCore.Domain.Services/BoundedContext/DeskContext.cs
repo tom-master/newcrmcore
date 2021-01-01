@@ -16,8 +16,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
     {
         public async Task ModifyDefaultDeskNumberAsync(Int32 userId, Int32 newDefaultDeskNumber)
         {
-            Parameter.IfNullOrZero(userId);
-            Parameter.IfNullOrZero(newDefaultDeskNumber);
+            Check.IfNullOrZero(userId);
+            Check.IfNullOrZero(newDefaultDeskNumber);
 
             await Task.Run(() =>
             {
@@ -43,9 +43,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyDockPositionAsync(Int32 userId, Int32 defaultDeskNumber, String position)
         {
-            Parameter.IfNullOrZero(userId);
-            Parameter.IfNullOrZero(defaultDeskNumber);
-            Parameter.IfNullOrZero(position);
+            Check.IfNullOrZero(userId);
+            Check.IfNullOrZero(defaultDeskNumber);
+            Check.IfNullOrZero(position);
 
             await Task.Run(() =>
             {
@@ -72,7 +72,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyMemberDirectionToXAsync(Int32 userId)
         {
-            Parameter.IfNullOrZero(userId);
+            Check.IfNullOrZero(userId);
 
             await Task.Run(() =>
             {
@@ -99,7 +99,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyMemberDirectionToYAsync(Int32 userId)
         {
-            Parameter.IfNullOrZero(userId);
+            Check.IfNullOrZero(userId);
 
             await Task.Run(() =>
             {
@@ -126,8 +126,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyMemberDisplayIconSizeAsync(Int32 userId, Int32 newSize)
         {
-            Parameter.IfNullOrZero(userId);
-            Parameter.IfNullOrZero(newSize);
+            Check.IfNullOrZero(userId);
+            Check.IfNullOrZero(newSize);
 
             await Task.Run(() =>
             {
@@ -154,8 +154,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyMemberHorizontalSpacingAsync(Int32 userId, Int32 newSize)
         {
-            Parameter.IfNullOrZero(userId);
-            Parameter.IfNullOrZero(newSize);
+            Check.IfNullOrZero(userId);
+            Check.IfNullOrZero(newSize);
 
             await Task.Run(() =>
             {
@@ -182,8 +182,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyMemberVerticalSpacingAsync(Int32 userId, Int32 newSize)
         {
-            Parameter.IfNullOrZero(userId);
-            Parameter.IfNullOrZero(newSize);
+            Check.IfNullOrZero(userId);
+            Check.IfNullOrZero(newSize);
 
             await Task.Run(() =>
             {
@@ -210,8 +210,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task MemberInDockAsync(Int32 userId, Int32 memberId)
         {
-            Parameter.IfNullOrZero(userId);
-            Parameter.IfNullOrZero(memberId);
+            Check.IfNullOrZero(userId);
+            Check.IfNullOrZero(memberId);
 
             await Task.Run(() =>
             {
@@ -238,9 +238,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task MemberOutDockAsync(Int32 userId, Int32 memberId, Int32 deskId)
         {
-            Parameter.IfNullOrZero(userId);
-            Parameter.IfNullOrZero(memberId);
-            Parameter.IfNullOrZero(deskId);
+            Check.IfNullOrZero(userId);
+            Check.IfNullOrZero(memberId);
+            Check.IfNullOrZero(deskId);
 
             await Task.Run(() =>
             {
@@ -266,9 +266,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task DockToFolderAsync(Int32 userId, Int32 memberId, Int32 folderId)
         {
-            Parameter.IfNullOrZero(userId);
-            Parameter.IfNullOrZero(memberId);
-            Parameter.IfNullOrZero(folderId);
+            Check.IfNullOrZero(userId);
+            Check.IfNullOrZero(memberId);
+            Check.IfNullOrZero(folderId);
 
             await Task.Run(() =>
             {
@@ -295,8 +295,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task FolderToDockAsync(Int32 userId, Int32 memberId)
         {
-            Parameter.IfNullOrZero(userId);
-            Parameter.IfNullOrZero(memberId);
+            Check.IfNullOrZero(userId);
+            Check.IfNullOrZero(memberId);
 
             await Task.Run(() =>
             {
@@ -323,9 +323,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task DeskToFolderAsync(Int32 userId, Int32 memberId, Int32 folderId)
         {
-            Parameter.IfNullOrZero(userId);
-            Parameter.IfNullOrZero(memberId);
-            Parameter.IfNullOrZero(folderId);
+            Check.IfNullOrZero(userId);
+            Check.IfNullOrZero(memberId);
+            Check.IfNullOrZero(folderId);
 
             await Task.Run(() =>
             {
@@ -352,9 +352,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task FolderToDeskAsync(Int32 userId, Int32 memberId, Int32 deskId)
         {
-            Parameter.IfNullOrZero(userId);
-            Parameter.IfNullOrZero(memberId);
-            Parameter.IfNullOrZero(deskId);
+            Check.IfNullOrZero(userId);
+            Check.IfNullOrZero(memberId);
+            Check.IfNullOrZero(deskId);
 
             await Task.Run(() =>
             {
@@ -384,9 +384,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
         public async Task FolderToOtherFolderAsync(Int32 userId, Int32 memberId, Int32 folderId)
         {
 
-            Parameter.IfNullOrZero(userId);
-            Parameter.IfNullOrZero(memberId);
-            Parameter.IfNullOrZero(folderId);
+            Check.IfNullOrZero(userId);
+            Check.IfNullOrZero(memberId);
+            Check.IfNullOrZero(folderId);
 
             await Task.Run(() =>
             {
@@ -412,9 +412,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task DeskToOtherDeskAsync(Int32 userId, Int32 memberId, Int32 deskId)
         {
-            Parameter.IfNullOrZero(userId);
-            Parameter.IfNullOrZero(memberId);
-            Parameter.IfNullOrZero(deskId);
+            Check.IfNullOrZero(userId);
+            Check.IfNullOrZero(memberId);
+            Check.IfNullOrZero(deskId);
 
             await Task.Run(() =>
             {
@@ -460,9 +460,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task DockToOtherDeskAsync(Int32 userId, Int32 memberId, Int32 deskId)
         {
-            Parameter.IfNullOrZero(userId);
-            Parameter.IfNullOrZero(memberId);
-            Parameter.IfNullOrZero(deskId);
+            Check.IfNullOrZero(userId);
+            Check.IfNullOrZero(memberId);
+            Check.IfNullOrZero(deskId);
 
             await Task.Run(() =>
             {
@@ -488,9 +488,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task CreateNewFolderAsync(Int32 deskId, String folderName, String folderImg, Int32 userId)
         {
-            Parameter.IfNullOrZero(deskId);
-            Parameter.IfNullOrZero(folderImg);
-            Parameter.IfNullOrZero(folderName);
+            Check.IfNullOrZero(deskId);
+            Check.IfNullOrZero(folderImg);
+            Check.IfNullOrZero(folderName);
 
             await Task.Run(() =>
             {
@@ -511,8 +511,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifyWallpaperSourceAsync(String source, Int32 userId)
         {
-            Parameter.IfNullOrZero(source);
-            Parameter.IfNullOrZero(userId);
+            Check.IfNullOrZero(source);
+            Check.IfNullOrZero(userId);
             await Task.Run(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();
@@ -544,9 +544,9 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public IList<Notify> CheckUnreadNotifyCount(Int32 userId, Int32 pageIndex, Int32 pageSize, out Int32 totalCount)
         {
-            Parameter.IfNullOrZero(userId);
-            Parameter.IfNullOrZero(pageIndex);
-            Parameter.IfNullOrZero(pageSize);
+            Check.IfNullOrZero(userId);
+            Check.IfNullOrZero(pageIndex);
+            Check.IfNullOrZero(pageSize);
             using var mapper = EntityMapper.CreateMapper();
             {
                 try
@@ -572,7 +572,7 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ReadNotify(IList<Int32> notifyIds)
         {
-            Parameter.IfNullOrZero(notifyIds);
+            Check.IfNullOrZero(notifyIds);
             await Task.Run(() =>
             {
                 using var mapper = EntityMapper.CreateMapper();
@@ -597,8 +597,8 @@ namespace NewCrmCore.Domain.Services.BoundedContext
 
         public async Task ModifySkinAsync(Int32 userId, String newSkin)
         {
-            Parameter.IfNullOrZero(userId);
-            Parameter.IfNullOrZero(newSkin);
+            Check.IfNullOrZero(userId);
+            Check.IfNullOrZero(newSkin);
 
             await Task.Run(() =>
             {

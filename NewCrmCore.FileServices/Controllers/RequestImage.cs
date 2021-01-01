@@ -87,7 +87,7 @@ namespace NewCrmCore.FileServices.Controllers
                 Height = _height,
                 Title = Name,
                 Url = Url,
-                Md5 = MD.GetMD5(File.Open(_originalFullPath, FileMode.Open))
+                Md5 = MD5.Get(File.Open(_originalFullPath, FileMode.Open))
             };
         }
     }
