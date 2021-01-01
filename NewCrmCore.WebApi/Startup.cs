@@ -24,7 +24,7 @@ using NewCrmCore.Infrastructure;
 using NewCrmCore.NotifyCenter;
 using NewCrmCore.WebApi.ApiHelper;
 using NewCrmCore.WebApi.Middleware;
-using NewLibCore.Data.SQL.EMapper;
+using NewLibCore.Storage.SQL.EMapper;
 
 namespace NewCrmCore.WebApi
 {

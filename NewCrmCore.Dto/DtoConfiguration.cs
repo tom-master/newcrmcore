@@ -4,7 +4,7 @@ using NewCrmCore.Domain.Entitys.Agent;
 using NewCrmCore.Domain.Entitys.Security;
 using NewCrmCore.Domain.Entitys.System;
 using NewCrmCore.Dto.MapperProfile;
-using NewLibCore.Data.SQL;
+using NewLibCore.Storage.SQL;
 
 namespace NewCrmCore.Dto
 {

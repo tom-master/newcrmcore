@@ -18,7 +18,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(CODEROOT)\newlibcore\NewLibCore\NewLibCore.csproj" />
-    <ProjectReference Include="$(CODEROOT)\newlibcore\NewLibCore.Data\NewLibCore.Data.csproj" />
+    <ProjectReference Include="$(CODEROOT)\newlibcore\NewLibCore.Storage\NewLibCore.Storage.csproj" />
   </ItemGroup>
   
 
